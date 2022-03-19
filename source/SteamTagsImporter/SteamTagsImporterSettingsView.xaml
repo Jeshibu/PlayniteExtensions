@@ -8,45 +8,49 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
 
-    <StackPanel Margin="20">
-        <StackPanel Orientation="Horizontal">
+    <DockPanel Margin="20">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
             <CheckBox IsChecked="{Binding LimitTagsToFixedAmount}" Content="Limit the amount of tags imported to the first " VerticalAlignment="Center"/>
             <xctk:IntegerUpDown Value="{Binding FixedTagCount}" Width="50" VerticalAlignment="Center" Minimum="1" x:Name="FixedTagCount" IsEnabled="{Binding LimitTagsToFixedAmount}"/>
         </StackPanel>
-        <CheckBox IsChecked="{Binding EnableMenuOptionAllTags}" Content="Automatically add Steam tags to new games" Margin="0,15"/>
+        <CheckBox IsChecked="{Binding EnableMenuOptionAllTags}" Content="Automatically add Steam tags to new games" Margin="0,15" DockPanel.Dock="Top"/>
 
-        <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center">New tags will appear in the available tags. Excluded tags will not be added to games.</TextBlock>
+        <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" DockPanel.Dock="Top">New tags will appear in the available tags. Excluded tags will not be added to games.</TextBlock>
 
-        <StackPanel Margin="0,10,0,0" VerticalAlignment="Stretch">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <StackPanel MinWidth="180" VerticalAlignment="Stretch">
-                    <TextBlock HorizontalAlignment="Center">Available tags</TextBlock>
-                    <ListBox DockPanel.Dock="Top" Name="Whitelist"
-                             SelectionMode="Extended" MinHeight="220"
-                             VerticalAlignment="Stretch"
-                             ItemsSource="{Binding OkayTags}"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel VerticalAlignment="Center">
-                        <StackPanel.Resources>
-                            <Style TargetType="Button">
-                                <Setter Property="FontSize" Value="40"/>
-                                <Setter Property="Margin" Value="20,12"/>
-                                <Setter Property="Padding" Value="6,-15,6,-6"/>
-                            </Style>
-                        </StackPanel.Resources>
-                        <Button Content="→" Command="{Binding BlacklistCommand}" CommandParameter="{Binding SelectedItems, ElementName=Whitelist}" ToolTip="Add to excluded tags"/>
-                        <Button Content="←" Command="{Binding WhitelistCommand}" CommandParameter="{Binding SelectedItems, ElementName=Blacklist}" ToolTip="Remove from excluded tags"/>
-                    </StackPanel>
-                </StackPanel>
-                <StackPanel MinWidth="180">
-                    <TextBlock HorizontalAlignment="Center">Excluded tags</TextBlock>
-                    <ListBox DockPanel.Dock="Top" Name="Blacklist"
-                             SelectionMode="Extended" MinHeight="220"
-                             VerticalAlignment="Stretch"
-                             ItemsSource="{Binding BlacklistedTags}"/>
-                </StackPanel>
+
+        <Grid VerticalAlignment="Stretch" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="Left" Width="*"/>
+                <ColumnDefinition x:Name="Middle" Width="95"/>
+                <ColumnDefinition x:Name="Right" Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="Header" MaxHeight="20"/>
+                <RowDefinition x:Name="Body"/>
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="FontSize" Value="40"/>
+                    <Setter Property="Margin" Value="20,12"/>
+                    <Setter Property="Padding" Value="6,-15,6,-6"/>
+                </Style>
+            </Grid.Resources>
+            <TextBlock HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">Available tags</TextBlock>
+            <TextBlock HorizontalAlignment="Center" Grid.Column="2" Grid.Row="0">Excluded tags</TextBlock>
+            <ListBox DockPanel.Dock="Top" Name="Whitelist"
+                     SelectionMode="Extended" MinHeight="220"
+                     VerticalAlignment="Stretch"
+                     ItemsSource="{Binding OkayTags}"
+                     Grid.Column="0" Grid.Row="1"/>
+            <ListBox DockPanel.Dock="Top" Name="Blacklist"
+                     SelectionMode="Extended" MinHeight="220"
+                     VerticalAlignment="Stretch"
+                     ItemsSource="{Binding BlacklistedTags}"
+                     Grid.Column="2" Grid.Row="1"/>
+            <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
+                <Button Content="→" Command="{Binding BlacklistCommand}" CommandParameter="{Binding SelectedItems, ElementName=Whitelist}" ToolTip="Add to excluded tags"/>
+                <Button Content="←" Command="{Binding WhitelistCommand}" CommandParameter="{Binding SelectedItems, ElementName=Blacklist}" ToolTip="Remove from excluded tags"/>
             </StackPanel>
-        </StackPanel>
-    </StackPanel>
+        </Grid>
+    </DockPanel>
 </UserControl>
