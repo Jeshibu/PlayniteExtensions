@@ -20,7 +20,12 @@ namespace SteamTagsImporter
         private readonly Func<ISteamAppIdUtility> getAppIdUtility;
         private readonly Func<ISteamTagScraper> getTagScraper;
 
-        public SteamTagsImporterSettings Settings { get; set; }
+        private SteamTagsImporterSettings _settings;
+        public SteamTagsImporterSettings Settings
+        {
+            get { return _settings ?? (_settings = new SteamTagsImporterSettings(this)); }
+            set { _settings = value; }
+        }
 
         public override Guid Id { get; } = Guid.Parse("01b67948-33a1-42d5-bd39-e4e8a226d215");
 
@@ -40,12 +45,7 @@ namespace SteamTagsImporter
 
         public override ISettings GetSettings(bool firstRunSettings = false)
         {
-            if (firstRunSettings)
-                Settings = new SteamTagsImporterSettings() { LastAutomaticTagUpdate = DateTime.Now };
-            else
-                Settings = Settings ?? LoadPluginSettings<SteamTagsImporterSettings>();
-
-            return Settings;
+            return Settings ?? (Settings = LoadPluginSettings<SteamTagsImporterSettings>());
         }
 
         public override UserControl GetSettingsView(bool firstRunSettings)
@@ -97,7 +97,7 @@ namespace SteamTagsImporter
                 var tagScraper = getTagScraper();
 
                 //get settings from this thread because ObservableCollection (for OkayTags) does not like being addressed from other threads
-                var settings = LoadPluginSettings<SteamTagsImporterSettings>();
+                var settings = new SteamTagsImporterSettings(this); //this deserializes the settings from storage
 
                 using (PlayniteApi.Database.BufferedUpdate())
                 {
@@ -147,7 +147,7 @@ namespace SteamTagsImporter
                 settings.OkayTags = new System.Collections.ObjectModel.ObservableCollection<string>(sortedWhitelist);
 
                 SavePluginSettings(settings);
-                Settings = settings;
+                Settings = null; //force re-serialization in the main thread to prevent ObservableCollection from throwing yet another fit
             }, new GlobalProgressOptions("Applying Steam tags to games", cancelable: true) { IsIndeterminate = false });
         }
 

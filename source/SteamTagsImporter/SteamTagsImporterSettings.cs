@@ -26,7 +26,7 @@ namespace SteamTagsImporter
 
         public ObservableCollection<string> BlacklistedTags { get; set; } = new ObservableCollection<string>();
 
-        public DateTime LastAutomaticTagUpdate { get; set; } = DateTime.MinValue;
+        public DateTime LastAutomaticTagUpdate { get; set; } = default;
 
         // Parameterless constructor must exist if you want to use LoadPluginSettings method.
         public SteamTagsImporterSettings()
@@ -50,6 +50,11 @@ namespace SteamTagsImporter
                 LastAutomaticTagUpdate = savedSettings.LastAutomaticTagUpdate;
                 OkayTags = new ObservableCollection<string>(savedSettings.OkayTags.OrderBy(a=>a));
                 BlacklistedTags = new ObservableCollection<string>(savedSettings.BlacklistedTags.OrderBy(a=>a));
+            }
+
+            if(LastAutomaticTagUpdate == default)
+            {
+                LastAutomaticTagUpdate = DateTime.Now;
             }
         }
 
