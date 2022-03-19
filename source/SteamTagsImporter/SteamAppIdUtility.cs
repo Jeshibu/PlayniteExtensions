@@ -32,11 +32,14 @@ namespace SteamTagsImporter
             if (game.PluginId == SteamLibraryPluginId)
                 return game.GameId;
 
-            foreach (var link in game.Links)
+            if (game.Links != null)
             {
-                var match = SteamUrlRegex.Match(link.Url);
-                if (match.Success)
-                    return match.Groups["id"].Value;
+                foreach (var link in game.Links)
+                {
+                    var match = SteamUrlRegex.Match(link.Url);
+                    if (match.Success)
+                        return match.Groups["id"].Value;
+                }
             }
 
             if (SteamIdsByTitle.TryGetValue(NormalizeTitle(game.Name), out int appId))
@@ -56,7 +59,8 @@ namespace SteamTagsImporter
                     client.DownloadFile("https://api.steampowered.com/ISteamApps/GetAppList/v2/", tempPath);
                 }
             }
-            var jsonContent = Playnite.SDK.Data.Serialization.FromJsonFile<AppListRoot>(tempPath);
+            var jsonStr = File.ReadAllText(tempPath, Encoding.UTF8);
+            var jsonContent = Newtonsoft.Json.JsonConvert.DeserializeObject<AppListRoot>(jsonStr);
 
             Dictionary<string, int> output = new Dictionary<string, int>(StringComparer.InvariantCultureIgnoreCase);
             foreach (var app in jsonContent.Applist.Apps)

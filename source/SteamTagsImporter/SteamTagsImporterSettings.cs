@@ -48,11 +48,11 @@ namespace SteamTagsImporter
                 FixedTagCount = savedSettings.FixedTagCount;
                 AutomaticallyAddTagsToNewGames = savedSettings.AutomaticallyAddTagsToNewGames;
                 LastAutomaticTagUpdate = savedSettings.LastAutomaticTagUpdate;
-                OkayTags = new ObservableCollection<string>(savedSettings.OkayTags.OrderBy(a=>a));
-                BlacklistedTags = new ObservableCollection<string>(savedSettings.BlacklistedTags.OrderBy(a=>a));
+                OkayTags = new ObservableCollection<string>(savedSettings.OkayTags.OrderBy(a => a));
+                BlacklistedTags = new ObservableCollection<string>(savedSettings.BlacklistedTags.OrderBy(a => a));
             }
 
-            if(LastAutomaticTagUpdate == default)
+            if (LastAutomaticTagUpdate == default)
             {
                 LastAutomaticTagUpdate = DateTime.Now;
             }

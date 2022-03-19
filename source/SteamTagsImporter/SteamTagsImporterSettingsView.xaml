@@ -29,7 +29,7 @@
                 <RowDefinition x:Name="Body"/>
             </Grid.RowDefinitions>
             <Grid.Resources>
-                <Style TargetType="Button">
+                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                     <Setter Property="FontSize" Value="40"/>
                     <Setter Property="Margin" Value="20,12"/>
                     <Setter Property="Padding" Value="6,-15,6,-6"/>

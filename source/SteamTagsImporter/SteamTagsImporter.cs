@@ -106,6 +106,8 @@ namespace SteamTagsImporter
                         if (args.CancelToken.IsCancellationRequested)
                             return;
 
+                        logger.Debug($"Setting tags for {game.Name}");
+
                         try
                         {
                             string appId = appIdUtility.GetSteamGameId(game);
@@ -147,7 +149,7 @@ namespace SteamTagsImporter
                 settings.OkayTags = new System.Collections.ObjectModel.ObservableCollection<string>(sortedWhitelist);
 
                 SavePluginSettings(settings);
-                Settings = null; //force re-serialization in the main thread to prevent ObservableCollection from throwing yet another fit
+                Settings = null; //force re-deserialization in the main thread to prevent ObservableCollection from throwing yet another fit
             }, new GlobalProgressOptions("Applying Steam tags to games", cancelable: true) { IsIndeterminate = false });
         }
 
@@ -160,7 +162,7 @@ namespace SteamTagsImporter
         /// <returns>true if the tag was added, false if not</returns>
         private bool AddTagToGame(SteamTagsImporterSettings settings, Game game, string tagName)
         {
-            bool blacklisted = Settings.BlacklistedTags.Contains(tagName);
+            bool blacklisted = settings.BlacklistedTags.Contains(tagName);
 
             if (blacklisted)
                 return false;
@@ -175,7 +177,7 @@ namespace SteamTagsImporter
                 PlayniteApi.Database.Tags.Add(tag);
             }
 
-            bool whitelisted = Settings.OkayTags.Contains(tagName);
+            bool whitelisted = settings.OkayTags.Contains(tagName);
 
             if (!whitelisted) //add unknown tags to the whitelist
                 settings.OkayTags.Add(tagName);
