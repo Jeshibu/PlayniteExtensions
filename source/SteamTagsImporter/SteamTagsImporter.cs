@@ -95,6 +95,10 @@ namespace SteamTagsImporter
 
                 var appIdUtility = getAppIdUtility();
                 var tagScraper = getTagScraper();
+
+                //get settings from this thread because ObservableCollection (for OkayTags) does not like being addressed from other threads
+                var settings = LoadPluginSettings<SteamTagsImporterSettings>();
+
                 using (PlayniteApi.Database.BufferedUpdate())
                 {
                     foreach (var game in games)
@@ -120,7 +124,7 @@ namespace SteamTagsImporter
                             bool tagsAdded = false;
                             foreach (var tag in tags)
                             {
-                                tagsAdded |= AddTagToGame(game, tag);
+                                tagsAdded |= AddTagToGame(settings, game, tag);
                             }
 
                             if (tagsAdded)
@@ -137,17 +141,30 @@ namespace SteamTagsImporter
                         }
                     }
                 }
+
+                //sort newly added whitelist entries in with the rest
+                var sortedWhitelist = settings.OkayTags.OrderBy(a => a);
+                settings.OkayTags = new System.Collections.ObjectModel.ObservableCollection<string>(sortedWhitelist);
+
+                SavePluginSettings(settings);
+                Settings = settings;
             }, new GlobalProgressOptions("Applying Steam tags to games", cancelable: true) { IsIndeterminate = false });
         }
 
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="settings"></param>
         /// <param name="game"></param>
         /// <param name="tagName"></param>
         /// <returns>true if the tag was added, false if not</returns>
-        private bool AddTagToGame(Game game, string tagName)
+        private bool AddTagToGame(SteamTagsImporterSettings settings, Game game, string tagName)
         {
+            bool blacklisted = Settings.BlacklistedTags.Contains(tagName);
+
+            if (blacklisted)
+                return false;
+
             var tagIds = game.TagIds ?? (game.TagIds = new List<Guid>());
 
             var tag = PlayniteApi.Database.Tags.FirstOrDefault(t => tagName.Equals(t.Name, StringComparison.InvariantCultureIgnoreCase));
@@ -159,10 +176,9 @@ namespace SteamTagsImporter
             }
 
             bool whitelisted = Settings.OkayTags.Contains(tagName);
-            bool blacklisted = Settings.BlacklistedTags.Contains(tagName);
 
-            if (!whitelisted && !blacklisted)
-                Settings.OkayTags.Add(tagName);
+            if (!whitelisted) //add unknown tags to the whitelist
+                settings.OkayTags.Add(tagName);
 
             if (!tagIds.Contains(tag.Id) && !blacklisted)
             {
