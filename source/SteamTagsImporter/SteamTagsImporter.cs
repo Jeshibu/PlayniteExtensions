@@ -45,7 +45,7 @@ namespace SteamTagsImporter
 
         public override ISettings GetSettings(bool firstRunSettings = false)
         {
-            return Settings ?? (Settings = LoadPluginSettings<SteamTagsImporterSettings>());
+            return Settings ?? (Settings = new SteamTagsImporterSettings(this));
         }
 
         public override UserControl GetSettingsView(bool firstRunSettings)
