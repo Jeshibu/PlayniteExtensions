@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32126.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamTagsImporter", "SteamTagsImporter\SteamTagsImporter.csproj", "{4FDF1E89-5BC3-4C72-8FDA-0D580E7A5D5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamTagsImporterTests", "SteamTagsImporterTests\SteamTagsImporterTests.csproj", "{2C136C16-C708-4668-A9DD-B5AD9F00D3FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4FDF1E89-5BC3-4C72-8FDA-0D580E7A5D5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FDF1E89-5BC3-4C72-8FDA-0D580E7A5D5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FDF1E89-5BC3-4C72-8FDA-0D580E7A5D5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FDF1E89-5BC3-4C72-8FDA-0D580E7A5D5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C136C16-C708-4668-A9DD-B5AD9F00D3FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C136C16-C708-4668-A9DD-B5AD9F00D3FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C136C16-C708-4668-A9DD-B5AD9F00D3FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C136C16-C708-4668-A9DD-B5AD9F00D3FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DB10ECF2-6EF3-489B-ACA8-08FBC31314C1}
+	EndGlobalSection
+EndGlobal
