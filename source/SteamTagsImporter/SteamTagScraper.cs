@@ -13,6 +13,18 @@ namespace SteamTagsImporter
     {
         private static readonly Regex TagJsonRegex = new Regex(@"InitAppTagModal\(\s*\d+,\s*(?<json>\[[^\]]+\])", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
+        public Func<string, string> GetSteamStorePageHtmlMethod { get; }
+
+        public SteamTagScraper()
+            : this(GetSteamStorePageHtmlDefault)
+        {
+        }
+
+        public SteamTagScraper(Func<string, string> getSteamStorePageHtmlMethod)
+        {
+            GetSteamStorePageHtmlMethod = getSteamStorePageHtmlMethod;
+        }
+
         private class JsonSteamTag
         {
             public int tagid { get; set; }
@@ -23,7 +35,7 @@ namespace SteamTagsImporter
 
         public IEnumerable<string> GetTags(string appId)
         {
-            var html = GetSteamStorePageHtml(appId);
+            var html = GetSteamStorePageHtmlMethod(appId);
 
             var match = TagJsonRegex.Match(html);
             if (!match.Success)
@@ -31,10 +43,10 @@ namespace SteamTagsImporter
 
             var json = match.Groups["json"].Value;
             var steamTags = Newtonsoft.Json.JsonConvert.DeserializeObject<List<JsonSteamTag>>(json);
-            return steamTags.Select(t => t.name);
+            return steamTags.Select(t => t.name.Trim()); //Trimmed because at least one tag was found to have a space at the end ("Dystopian ")
         }
 
-        private static string GetSteamStorePageHtml(string appId)
+        private static string GetSteamStorePageHtmlDefault(string appId)
         {
             var request = (HttpWebRequest)WebRequest.Create($"https://store.steampowered.com/app/{appId}/");
             var cookies = new CookieContainer(2);
