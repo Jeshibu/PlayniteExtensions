@@ -20,6 +20,8 @@ namespace SteamTagsImporter
 
         public int FixedTagCount { get; set; } = 5;
 
+        public bool LimitTaggingToPcGames { get; set; } = true;
+
         public bool AutomaticallyAddTagsToNewGames { get; set; } = true;
 
         public ObservableCollection<string> OkayTags { get; set; } = new ObservableCollection<string>();
@@ -41,11 +43,12 @@ namespace SteamTagsImporter
             // Load saved settings.
             var savedSettings = plugin.LoadPluginSettings<SteamTagsImporterSettings>();
 
-            // LoadPluginSettings returns null if not saved data is available.
+            // LoadPluginSettings returns null if no saved data is available.
             if (savedSettings != null)
             {
                 LimitTagsToFixedAmount = savedSettings.LimitTagsToFixedAmount;
                 FixedTagCount = savedSettings.FixedTagCount;
+                LimitTaggingToPcGames = savedSettings.LimitTaggingToPcGames;
                 AutomaticallyAddTagsToNewGames = savedSettings.AutomaticallyAddTagsToNewGames;
                 LastAutomaticTagUpdate = savedSettings.LastAutomaticTagUpdate;
                 OkayTags = new ObservableCollection<string>(savedSettings.OkayTags.OrderBy(a => a));

@@ -55,7 +55,7 @@ namespace SteamTagsImporter
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            return new GameMenuItem[] { new GameMenuItem { Description = "Import Steam tags", Action = x => SetTagsAccordingToSettings(x.Games) } };
+            return new GameMenuItem[] { new GameMenuItem { Description = "Import Steam tags", Action = x => SetTags(x.Games) } };
         }
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
@@ -71,33 +71,30 @@ namespace SteamTagsImporter
 
             logger.Debug($"Library update: {games.Count} games");
 
-            SetTagsAccordingToSettings(games);
+            SetTags(games);
 
             Settings.LastAutomaticTagUpdate = DateTime.Now;
             SavePluginSettings(Settings);
         }
 
-        public void SetTagsAccordingToSettings(List<Game> games)
+        public void SetTags(List<Game> games)
         {
-            if (Settings.LimitTagsToFixedAmount)
-                SetTags(games, Settings.FixedTagCount);
-            else
-                SetTags(games);
-        }
+            string baseStatus = "Applying Steam tags to games…";
 
-        public void SetTags(List<Game> games, int? max = null)
-        {
             PlayniteApi.Dialogs.ActivateGlobalProgress(args =>
             {
                 args.ProgressMaxValue = games.Count;
 
-                logger.Debug($"Adding tags to {games.Count} games (tag max: {max})");
+                logger.Debug($"Adding tags to {games.Count} games");
 
                 var appIdUtility = getAppIdUtility();
                 var tagScraper = getTagScraper();
 
                 //get settings from this thread because ObservableCollection (for OkayTags) does not like being addressed from other threads
                 var settings = new SteamTagsImporterSettings(this); //this deserializes the settings from storage
+
+                if (settings.LimitTagsToFixedAmount)
+                    logger.Debug($"Max tags per game: {settings.FixedTagCount}");
 
                 using (PlayniteApi.Database.BufferedUpdate())
                 {
@@ -108,20 +105,31 @@ namespace SteamTagsImporter
 
                         logger.Debug($"Setting tags for {game.Name}");
 
+                        int currentGameIndex = (int)args.CurrentProgressValue + 1;
+
+                        args.Text = $"{baseStatus} {currentGameIndex}/{games.Count}\n\n{game.Name}";
+
                         try
                         {
+                            if (settings.LimitTaggingToPcGames && !IsPcGame(game))
+                            {
+                                logger.Debug($"Skipped {game.Name} because it's not a PC game");
+                                args.CurrentProgressValue = currentGameIndex;
+                                continue;
+                            }
+
                             string appId = appIdUtility.GetSteamGameId(game);
                             if (string.IsNullOrEmpty(appId))
                             {
                                 logger.Debug($"Couldn't find app ID for game {game.Name}");
-                                args.CurrentProgressValue++;
+                                args.CurrentProgressValue = currentGameIndex;
                                 continue;
                             }
 
                             var tags = tagScraper.GetTags(appId);
 
-                            if (max.HasValue)
-                                tags = tags.Take(max.Value);
+                            if (settings.LimitTagsToFixedAmount)
+                                tags = tags.Take(settings.FixedTagCount);
 
                             bool tagsAdded = false;
                             foreach (var tag in tags)
@@ -135,7 +143,7 @@ namespace SteamTagsImporter
                                 PlayniteApi.Database.Games.Update(game);
                             }
 
-                            args.CurrentProgressValue++;
+                            args.CurrentProgressValue = currentGameIndex;
                         }
                         catch (Exception ex)
                         {
@@ -150,7 +158,7 @@ namespace SteamTagsImporter
 
                 SavePluginSettings(settings);
                 Settings = null; //force re-deserialization in the main thread to prevent ObservableCollection from throwing yet another fit
-            }, new GlobalProgressOptions("Applying Steam tags to games", cancelable: true) { IsIndeterminate = false });
+            }, new GlobalProgressOptions(baseStatus, cancelable: true) { IsIndeterminate = false });
         }
 
         /// <summary>
@@ -191,6 +199,21 @@ namespace SteamTagsImporter
             {
                 return false;
             }
+        }
+
+        private static bool IsPcGame(Game game)
+        {
+            var platforms = game.Platforms;
+            if (platforms == null || platforms.Count == 0)
+                return true; //assume games are for PC if not specified
+
+            foreach (var platform in platforms)
+            {
+                if (platform.SpecificationId != null && platform.SpecificationId.StartsWith("pc_"))
+                    return true;
+            }
+
+            return false;
         }
     }
 }

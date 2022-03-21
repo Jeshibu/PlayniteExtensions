@@ -13,7 +13,8 @@
             <CheckBox IsChecked="{Binding LimitTagsToFixedAmount}" Content="Limit the amount of tags imported to the first " VerticalAlignment="Center"/>
             <xctk:IntegerUpDown Value="{Binding FixedTagCount}" Width="50" VerticalAlignment="Center" Minimum="1" x:Name="FixedTagCount" IsEnabled="{Binding LimitTagsToFixedAmount}"/>
         </StackPanel>
-        <CheckBox IsChecked="{Binding AutomaticallyAddTagsToNewGames}" Content="Automatically add Steam tags to new games" Margin="0,15" DockPanel.Dock="Top"/>
+        <CheckBox IsChecked="{Binding LimitTaggingToPcGames}" Content="Only add tags to PC games" Margin="0,15,0,0" DockPanel.Dock="Top"/>
+        <CheckBox IsChecked="{Binding AutomaticallyAddTagsToNewGames}" Content="Automatically add tags to new games" Margin="0,15" DockPanel.Dock="Top"/>
 
         <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" DockPanel.Dock="Top">New tags will appear in the available tags. Excluded tags will not be added to games.</TextBlock>
 

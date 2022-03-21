@@ -1,4 +1,5 @@
-﻿using SteamTagsImporter;
+﻿using Playnite.SDK.Models;
+using SteamTagsImporter;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,7 +40,7 @@ namespace SteamTagsImporterTests
         [Fact]
         public void NullLinkCollectionDoesNotThrowException()
         {
-            var game = new Playnite.SDK.Models.Game("THOR.N");
+            var game = new Game("THOR.N");
             var util = Setup();
             var id = util.GetSteamGameId(game);
         }
@@ -49,7 +50,7 @@ namespace SteamTagsImporterTests
         [InlineData("HalfLife 2", "220")]
         public void GamesCanBeFoundByName(string name, string expectedId)
         {
-            var game = new Playnite.SDK.Models.Game(name);
+            var game = new Game(name);
             var util = Setup();
             var id = util.GetSteamGameId(game);
             Assert.Equal(expectedId, id);
