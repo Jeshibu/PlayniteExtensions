@@ -1,0 +1,11 @@
+AddonId: Barnite_fdcf35cc-edcd-4fc3-8640-bb037d3349fe
+Packages:
+  - Version: 0.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-26
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/barnite0.1/Barnite_0_1.pext
+    Changelog:
+      - Initial release
+      - MobyGames and PriceCharting support
+      - English only
+      - Manual entry only

@@ -13,7 +13,8 @@ namespace Barnite.Scrapers
     {
         public override string Name { get; } = "PriceCharting";
 
-        public PriceChartingScraper(IPlatformUtility platformUtility, Func<string, string> downloadString = null) : base(platformUtility, downloadString)
+        public PriceChartingScraper(IPlatformUtility platformUtility, IWebclient webclient)
+            : base(platformUtility, webclient)
         {
         }
 

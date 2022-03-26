@@ -24,8 +24,27 @@ namespace Barnite
             this.api = api;
         }
 
-        private static Regex TrimCompanyName = new Regex(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
-        private static Regex TrimRegion = new Regex(@"^(pal|jpn?|usa?|ntsc)\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        /// <summary>
+        /// For unit testing purposes only
+        /// </summary>
+        /// <param name="overrideValues"></param>
+        public PlatformUtility(Dictionary<string,string> overrideValues)
+        {
+            platformSpecNameByNormalName = overrideValues;
+        }
+
+        /// <summary>
+        /// For unit testing purposes only
+        /// </summary>
+        /// <param name="platformName"></param>
+        /// <param name="specId"></param>
+        public PlatformUtility(string platformName, string specId)
+        {
+            platformSpecNameByNormalName = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) { { platformName, specId } };
+        }
+
+        private static Regex TrimCompanyName = new Regex(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        private static Regex TrimInput = new Regex(@"^(pal|jpn?|usa?|ntsc)\s+|[™®©]", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
         private static Dictionary<string, string> GetPlatformSpecsByNormalName(IPlayniteAPI api)
         {
@@ -43,17 +62,25 @@ namespace Barnite
             output.Add("DOS", "pc_dos");
             output.Add("Linux", "pc_linux");
             output.Add("Vita", "sony_vita");
+            output.Add("Microsoft Xbox Series X", "xbox_series");
+            output.Add("Microsoft Xbox Series S", "xbox_series");
+            output.Add("Xbox Series X", "xbox_series");
+            output.Add("Xbox Series S", "xbox_series");
+            output.Add("Microsoft Xbox Series X/S", "xbox_series");
+            output.Add("Microsoft Xbox Series S/X", "xbox_series");
+            output.Add("Xbox Series X/S", "xbox_series");
+            output.Add("Xbox Series S/X", "xbox_series");
             return output;
         }
 
         public MetadataProperty GetPlatform(string platformName)
         {
-            string regionlessPlatformName = TrimRegion.Replace(platformName, string.Empty);
+            string sanitizedPlatformName = TrimInput.Replace(platformName, string.Empty);
 
-            if (PlatformSpecNameByNormalName.TryGetValue(regionlessPlatformName, out string specId))
+            if (PlatformSpecNameByNormalName.TryGetValue(sanitizedPlatformName, out string specId))
                 return new MetadataSpecProperty(specId);
 
-            return new MetadataNameProperty(regionlessPlatformName);
+            return new MetadataNameProperty(sanitizedPlatformName);
         }
     }
 }

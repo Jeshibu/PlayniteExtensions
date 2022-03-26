@@ -60,9 +60,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FakePlatformUtility.cs" />
-    <Compile Include="MobyGames\MobyGamesMetadataScraperTests.cs" />
-    <Compile Include="PriceCharting\PriceChartingMetadataScraperTests.cs" />
+    <Compile Include="MobyGames\MobyGamesScraperTests.cs" />
+    <Compile Include="PlayAsia\PlayAsiaScraperLiveTests.cs" />
+    <Compile Include="PlayAsia\PlayAsiaScraperTests.cs" />
+    <Compile Include="FakeStringDownloader.cs" />
+    <Compile Include="PriceCharting\PriceChartingScraperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +78,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MobyGames\cocsearch.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PlayAsia\astralchain.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PlayAsia\cyberpunk2077.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PlayAsia\js_block.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="PriceCharting\gow_details.html">

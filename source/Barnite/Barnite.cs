@@ -26,8 +26,10 @@ namespace Barnite
             };
 
             var platformUtility = new PlatformUtility(api);
-            Scrapers.Add(new MobyGamesScraper(platformUtility));
-            Scrapers.Add(new PriceChartingScraper(platformUtility));
+            var webclient = new Webclient();
+            Scrapers.Add(new MobyGamesScraper(platformUtility, webclient));
+            Scrapers.Add(new PlayAsiaScraper(platformUtility, webclient));
+            Scrapers.Add(new PriceChartingScraper(platformUtility, webclient));
         }
 
         /*
@@ -74,7 +76,10 @@ namespace Barnite
                 args.ProgressMaxValue = Scrapers.Count;
                 foreach (var scraper in Scrapers)
                 {
-                    args.Text = $"Searching {scraper.Name} for {barcode}...";
+                    if (args.CancelToken.IsCancellationRequested)
+                        return;
+
+                    args.Text = $"Searching {scraper.Name} for {barcode}…";
                     try
                     {
                         var data = scraper.GetMetadataFromBarcode(barcode);
@@ -98,7 +103,7 @@ namespace Barnite
                     args.CurrentProgressValue++;
                 }
                 PlayniteApi.Dialogs.ShowMessage($"No game found for {barcode} in {Scrapers.Count} databases", "Barnite");
-            }, new GlobalProgressOptions("Searching barcode databases...") { Cancelable = true, IsIndeterminate = false });
+            }, new GlobalProgressOptions("Searching barcode databases…") { Cancelable = true, IsIndeterminate = false });
         }
     }
 }

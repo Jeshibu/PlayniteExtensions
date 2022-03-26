@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -8,21 +9,15 @@ using System.Web;
 
 namespace Barnite.Scrapers
 {
-    public abstract class MetadataScraper
+    public interface IWebclient
     {
-        public abstract string Name { get; }
+        string DownloadString(string url, CookieCollection cookies = null);
+        string DownloadString(string url, out CookieCollection responseCookies, CookieCollection cookies = null);
+    }
 
-        protected IPlatformUtility PlatformUtility { get; set; }
-
-        protected Func<string, string> DownloadString { get; set; }
-
-        public MetadataScraper(IPlatformUtility platformUtility, Func<string, string> downloadString = null)
-        {
-            PlatformUtility = platformUtility;
-            DownloadString = downloadString ?? DownloadStringDefault;
-        }
-
-        private static string DownloadStringDefault(string url)
+    public class Webclient : IWebclient
+    {
+        public string DownloadString(string url)
         {
             using (var client = new WebClient())
             {
@@ -30,12 +25,61 @@ namespace Barnite.Scrapers
             }
         }
 
+        public string DownloadString(string url, CookieCollection cookies = null)
+        {
+            return DownloadString(url, out _, cookies);
+        }
+
+        public string DownloadString(string url, out CookieCollection responseCookies, CookieCollection cookies = null)
+        {
+            var uri = new Uri(url);
+            var request = WebRequest.CreateHttp(uri);
+            if (cookies != null)
+            {
+                request.CookieContainer = new CookieContainer();
+                foreach (Cookie cookie in cookies)
+                {
+                    request.CookieContainer.Add(cookie);
+                }
+            }
+            using (var response = (HttpWebResponse)request.GetResponse())
+            using (var stream = response.GetResponseStream())
+            using (var reader = new StreamReader(stream))
+            {
+                responseCookies = response.Cookies;
+                return reader.ReadToEnd();
+            }
+        }
+    }
+
+    public abstract class MetadataScraper
+    {
+        public abstract string Name { get; }
+
+        protected IPlatformUtility PlatformUtility { get; set; }
+        protected IWebclient Webclient { get; set; }
+        public bool BlocksRequestsWithoutCookies { get; protected set; }
+
+        private CookieCollection Cookies { get; set; }
+
+        public MetadataScraper(IPlatformUtility platformUtility, IWebclient webclient, bool blocksRequestsWithoutCookies = false)
+        {
+            PlatformUtility = platformUtility;
+            Webclient = webclient;
+            BlocksRequestsWithoutCookies = blocksRequestsWithoutCookies;
+        }
+
         protected abstract string GetSearchUrlFromBarcode(string barcode);
 
         public GameMetadata GetMetadataFromBarcode(string barcode)
         {
             var searchUrl = GetSearchUrlFromBarcode(barcode);
-            var html = DownloadString(searchUrl);
+            var html = Webclient.DownloadString(searchUrl, out var responseCookies, Cookies);
+
+            if (BlocksRequestsWithoutCookies && (Cookies = ScrapeCookieBlockingPageHtml(html, responseCookies))?.Count > 0)
+            {
+                html = Webclient.DownloadString(searchUrl, Cookies);
+            }
 
             var data = ScrapeGameDetailsHtml(html);
             if (data != null)
@@ -45,7 +89,7 @@ namespace Barnite.Scrapers
             var links = ScrapeSearchResultHtml(html).ToList();
             if (links != null && links.Count == 1)
             {
-                html = DownloadString(links[0].Url);
+                html = Webclient.DownloadString(links[0].Url, Cookies);
                 return ScrapeGameDetailsHtml(html);
             }
 
@@ -73,6 +117,12 @@ namespace Barnite.Scrapers
         /// <param name="html"></param>
         /// <returns></returns>
         protected abstract IEnumerable<GameLink> ScrapeSearchResultHtml(string html);
+
+        protected virtual CookieCollection ScrapeCookieBlockingPageHtml(string html, CookieCollection responseCookies)
+        {
+            var cookies = responseCookies ?? new CookieCollection();
+            return cookies;
+        }
     }
 
     public class GameLink

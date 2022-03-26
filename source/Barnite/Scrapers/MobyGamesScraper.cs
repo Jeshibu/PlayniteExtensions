@@ -11,8 +11,8 @@ namespace Barnite.Scrapers
     {
         public override string Name { get; } = "Moby Games";
 
-        public MobyGamesScraper(IPlatformUtility platformUtility, Func<string, string> downloadString = null)
-            : base(platformUtility, downloadString)
+        public MobyGamesScraper(IPlatformUtility platformUtility, IWebclient webclient)
+            : base(platformUtility, webclient)
         {
         }
 

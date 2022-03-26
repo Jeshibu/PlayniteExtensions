@@ -10,10 +10,10 @@ namespace Barnite.Tests.MobyGames
         [Fact]
         public void ScrapingCallOfCthulhuReturnsCorrectMetadata()
         {
-            var fileContents = File.ReadAllText("./MobyGames/coc.html");
-            var scraper = new MobyGamesScraper(new FakePlatformUtility("Xbox", "xbox"), (url) => fileContents);
+            var webclient = new FakeWebclient("https://www.mobygames.com/search/quick?q=093155118706", "./MobyGames/coc.html");
+            var scraper = new MobyGamesScraper(new PlatformUtility("Xbox", "xbox"), webclient);
 
-            var data = scraper.GetMetadataFromBarcode("123");
+            var data = scraper.GetMetadataFromBarcode("093155118706");
 
             Assert.Equal("Call of Cthulhu: Dark Corners of the Earth", data.Name);
             Assert.Single(data.Platforms, new MetadataSpecProperty("xbox"));
