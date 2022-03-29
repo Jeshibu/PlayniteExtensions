@@ -27,9 +27,12 @@ namespace Barnite.Scrapers
 
         private Regex EndBracesTextRegex = new Regex(@"(\s+(\([^)]+\)|\[[^]]+\]))+\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
         private Regex SetCookieRegex = new Regex(@"\bsetCookie\('(?<c_name>\w+)', '(?<value>[.0-9]+)', (?<expiredays>[0-9]+)\);", RegexOptions.Compiled | RegexOptions.Multiline);
-        protected override CookieCollection ScrapeCookieBlockingPageHtml(string html, CookieCollection responseCookies)
+        private Regex JsRedirectRegex = new Regex(@"^\s*window\.location\s*=\s*'(?<url>.+?)'\s*;\s*$", RegexOptions.Compiled | RegexOptions.Multiline);
+        private Regex JsReloadRegex = new Regex(@"^\s*location\.reload\((true)?\)\s*;\s*$", RegexOptions.Compiled | RegexOptions.Multiline);
+
+        protected override CookieCollection ScrapeJsCookies(string html)
         {
-            var cookies = responseCookies ?? new CookieCollection();
+            var cookies = new CookieCollection();
 
             var cookieMatch = SetCookieRegex.Match(html);
             if (!cookieMatch.Success)
@@ -39,7 +42,7 @@ namespace Barnite.Scrapers
             string value = cookieMatch.Groups["value"].Value;
             int expireDays = int.Parse(cookieMatch.Groups["expiredays"].Value);
 
-            var cookie = new Cookie(c_name, value, "/", "www.play-asia.com");
+            var cookie = new Cookie(c_name, value, "/", ".play-asia.com");
 
             cookie.Expires = cookie.TimeStamp.AddDays(expireDays);
 
@@ -77,7 +80,7 @@ namespace Barnite.Scrapers
             var imgSrc = doc.DocumentNode.SelectSingleNode("//img[@class='unvl mainimg_r' and @data-src]")?.Attributes["data-src"].Value;
             if (imgSrc != null)
             {
-                imgSrc = new Uri(baseUri, imgSrc).AbsoluteUri; //make relative URLs absolute
+                imgSrc = GetAbsoluteUrl(imgSrc);
 
                 //remove querystring parameters that shrink the image
                 int questionMarkIndex = imgSrc.IndexOf('?');
@@ -93,6 +96,18 @@ namespace Barnite.Scrapers
         protected override IEnumerable<GameLink> ScrapeSearchResultHtml(string html)
         {
             return new GameLink[0];
+        }
+
+        protected override string ScrapeRedirectUrl(string requestUrl, string html)
+        {
+            var match = JsRedirectRegex.Match(html);
+            if (match.Success)
+                return GetAbsoluteUrl(match.Groups["url"].Value);
+
+            if (JsReloadRegex.IsMatch(html))
+                return requestUrl;
+
+            return null;
         }
     }
 }

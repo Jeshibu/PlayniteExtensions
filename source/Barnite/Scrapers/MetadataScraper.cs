@@ -12,11 +12,20 @@ namespace Barnite.Scrapers
     public interface IWebclient
     {
         string DownloadString(string url, CookieCollection cookies = null);
-        string DownloadString(string url, out CookieCollection responseCookies, CookieCollection cookies = null);
+        string DownloadString(string url, out CookieCollection responseCookies, CookieCollection cookies = null, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null);
     }
 
     public class Webclient : IWebclient
     {
+        private static HttpStatusCode[] HttpRedirectStatusCodes = new[] { HttpStatusCode.Redirect, HttpStatusCode.Moved };
+
+        public int MaxRedirectDepth { get; }
+
+        public Webclient(int maxRedirectDepth = 7)
+        {
+            MaxRedirectDepth = maxRedirectDepth;
+        }
+
         public string DownloadString(string url)
         {
             using (var client = new WebClient())
@@ -27,13 +36,19 @@ namespace Barnite.Scrapers
 
         public string DownloadString(string url, CookieCollection cookies = null)
         {
-            return DownloadString(url, out _, cookies);
+            return DownloadString(url, out _, cookies: cookies, null, null, 0);
         }
 
-        public string DownloadString(string url, out CookieCollection responseCookies, CookieCollection cookies = null)
+        public string DownloadString(string url, out CookieCollection responseCookies, CookieCollection cookies = null, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null)
+        {
+            return DownloadString(url, out responseCookies, cookies, redirectUrlGetFunc, jsCookieGetFunc, 0);
+        }
+
+        private string DownloadString(string url, out CookieCollection responseCookies, CookieCollection cookies = null, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, int depth = 0)
         {
             var uri = new Uri(url);
             var request = WebRequest.CreateHttp(uri);
+            request.AllowAutoRedirect = false; //auto-redirect buries response cookies
             if (cookies != null)
             {
                 request.CookieContainer = new CookieContainer();
@@ -42,13 +57,61 @@ namespace Barnite.Scrapers
                     request.CookieContainer.Add(cookie);
                 }
             }
+
+            if (depth > 0)
+            {
+                request.Referer = uri.GetLeftPart(UriPartial.Authority);
+            }
+
+            string responseContent;
+            string redirectUrl = null;
+
             using (var response = (HttpWebResponse)request.GetResponse())
             using (var stream = response.GetResponseStream())
             using (var reader = new StreamReader(stream))
             {
                 responseCookies = response.Cookies;
-                return reader.ReadToEnd();
+                responseContent = reader.ReadToEnd();
+                if (HttpRedirectStatusCodes.Contains(response.StatusCode))
+                {
+                    redirectUrl = response.Headers[HttpResponseHeader.Location];
+                    if(!string.IsNullOrWhiteSpace(redirectUrl))
+                        redirectUrl = new Uri(new Uri(url), redirectUrl).AbsoluteUri;
+                }
             }
+
+            var jsCookies = jsCookieGetFunc?.Invoke(responseContent);
+            if (jsCookies?.Count != 0)
+            {
+                responseCookies = Combine(responseCookies, jsCookies);
+            }
+
+            redirectUrl = redirectUrl ?? redirectUrlGetFunc?.Invoke(url, responseContent);
+            if (redirectUrl != null)
+            {
+                if (depth > MaxRedirectDepth)
+                    return null;
+
+                string redirectContent = DownloadString(redirectUrl, out var redirectCookies, Combine(responseCookies, cookies), redirectUrlGetFunc, jsCookieGetFunc, depth + 1);
+                responseCookies = Combine(responseCookies, redirectCookies);
+                return redirectContent;
+            }
+            else
+            {
+                return responseContent;
+            }
+        }
+
+        private CookieCollection Combine(CookieCollection a, CookieCollection b)
+        {
+            if (a == null) return b;
+            if (b == null) return a;
+
+            var c = new CookieCollection();
+            c.Add(a);
+            c.Add(b);
+
+            return c;
         }
     }
 
@@ -71,15 +134,20 @@ namespace Barnite.Scrapers
 
         protected abstract string GetSearchUrlFromBarcode(string barcode);
 
+        protected string GetAbsoluteUrl(string relativeUrl)
+        {
+            if (relativeUrl == null)
+                return null;
+
+            var baseUri = new Uri(GetSearchUrlFromBarcode("1"));
+            var absoluteUri = new Uri(baseUri, relativeUrl);
+            return absoluteUri.AbsoluteUri;
+        }
+
         public GameMetadata GetMetadataFromBarcode(string barcode)
         {
             var searchUrl = GetSearchUrlFromBarcode(barcode);
-            var html = Webclient.DownloadString(searchUrl, out var responseCookies, Cookies);
-
-            if (BlocksRequestsWithoutCookies && (Cookies = ScrapeCookieBlockingPageHtml(html, responseCookies))?.Count > 0)
-            {
-                html = Webclient.DownloadString(searchUrl, Cookies);
-            }
+            var html = Webclient.DownloadString(searchUrl, out var responseCookies, Cookies, ScrapeRedirectUrl, ScrapeJsCookies);
 
             var data = ScrapeGameDetailsHtml(html);
             if (data != null)
@@ -118,10 +186,14 @@ namespace Barnite.Scrapers
         /// <returns></returns>
         protected abstract IEnumerable<GameLink> ScrapeSearchResultHtml(string html);
 
-        protected virtual CookieCollection ScrapeCookieBlockingPageHtml(string html, CookieCollection responseCookies)
+        protected virtual CookieCollection ScrapeJsCookies(string html)
         {
-            var cookies = responseCookies ?? new CookieCollection();
-            return cookies;
+            return null;
+        }
+
+        protected virtual string ScrapeRedirectUrl(string requestUrl, string html)
+        {
+            return null;
         }
     }
 

@@ -59,7 +59,7 @@ namespace Barnite.Tests.PlayAsia
                 this.fileToServeForRequestsWithoutCookies = fileToServeForRequestsWithoutCookies;
             }
 
-            public override string DownloadString(string url, out CookieCollection responseCookies, CookieCollection cookies = null)
+            public override string DownloadString(string url, out CookieCollection responseCookies, CookieCollection cookies = null, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null)
             {
                 responseCookies = new CookieCollection();
                 if (cookies == null || cookies.Count == 0)

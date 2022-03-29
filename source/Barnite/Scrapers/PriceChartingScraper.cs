@@ -68,7 +68,7 @@ namespace Barnite.Scrapers
 
             foreach (var a in links)
             {
-                yield return new GameLink { Name = HtmlDecodeAndNormalizeWhitespace(a.InnerText), Url = new Uri(baseUri, a.Attributes["href"].Value).AbsoluteUri };
+                yield return new GameLink { Name = HtmlDecodeAndNormalizeWhitespace(a.InnerText), Url = GetAbsoluteUrl(a.Attributes["href"].Value) };
             }
         }
     }
