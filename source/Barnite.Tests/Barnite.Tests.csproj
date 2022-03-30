@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MobyGames\MobyGamesScraperTests.cs" />
-    <Compile Include="PlayAsia\PlayAsiaScraperLiveTests.cs" />
+    <Compile Include="OGDB\OgdbScraperTests.cs" />
     <Compile Include="PlayAsia\PlayAsiaScraperTests.cs" />
     <Compile Include="FakeStringDownloader.cs" />
     <Compile Include="PriceCharting\PriceChartingScraperTests.cs" />
@@ -78,6 +78,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MobyGames\cocsearch.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OGDB\gowa_details.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OGDB\gowa_search.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="PlayAsia\astralchain.html">

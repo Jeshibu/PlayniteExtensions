@@ -75,7 +75,7 @@ namespace Barnite.Scrapers
                 if (HttpRedirectStatusCodes.Contains(response.StatusCode))
                 {
                     redirectUrl = response.Headers[HttpResponseHeader.Location];
-                    if(!string.IsNullOrWhiteSpace(redirectUrl))
+                    if (!string.IsNullOrWhiteSpace(redirectUrl))
                         redirectUrl = new Uri(new Uri(url), redirectUrl).AbsoluteUri;
                 }
             }
@@ -121,15 +121,13 @@ namespace Barnite.Scrapers
 
         protected IPlatformUtility PlatformUtility { get; set; }
         protected IWebclient Webclient { get; set; }
-        public bool BlocksRequestsWithoutCookies { get; protected set; }
 
         private CookieCollection Cookies { get; set; }
 
-        public MetadataScraper(IPlatformUtility platformUtility, IWebclient webclient, bool blocksRequestsWithoutCookies = false)
+        public MetadataScraper(IPlatformUtility platformUtility, IWebclient webclient)
         {
             PlatformUtility = platformUtility;
             Webclient = webclient;
-            BlocksRequestsWithoutCookies = blocksRequestsWithoutCookies;
         }
 
         protected abstract string GetSearchUrlFromBarcode(string barcode);

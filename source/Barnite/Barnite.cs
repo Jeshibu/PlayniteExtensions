@@ -29,6 +29,7 @@ namespace Barnite
             var webclient = new Webclient();
             Scrapers.Add(new MobyGamesScraper(platformUtility, webclient));
             Scrapers.Add(new PlayAsiaScraper(platformUtility, webclient));
+            Scrapers.Add(new OgdbScraper(platformUtility, webclient));
             Scrapers.Add(new PriceChartingScraper(platformUtility, webclient));
         }
 

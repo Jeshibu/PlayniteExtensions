@@ -14,7 +14,7 @@ namespace Barnite.Scrapers
     public class PlayAsiaScraper : MetadataScraper
     {
         public PlayAsiaScraper(IPlatformUtility platformUtility, IWebclient webclient)
-            : base(platformUtility, webclient, blocksRequestsWithoutCookies: true)
+            : base(platformUtility, webclient)
         {
         }
 
