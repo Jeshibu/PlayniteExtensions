@@ -23,14 +23,8 @@ namespace Barnite.Tests
             FilesByUrl = filesByUrl;
         }
 
-        public virtual string DownloadString(string url, CookieCollection cookies = null)
+        public virtual string DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string,CookieCollection> jsCookieGetFunc = null)
         {
-            return DownloadString(url, out _, cookies);
-        }
-
-        public virtual string DownloadString(string url, out CookieCollection responseCookies, CookieCollection cookies = null, Func<string, string, string> redirectUrlGetFunc = null, Func<string,CookieCollection> jsCookieGetFunc = null)
-        {
-            responseCookies = new CookieCollection();
             CalledUrls.Add(url);
             if (FilesByUrl.TryGetValue(url, out string filePath))
                 return File.ReadAllText(filePath);

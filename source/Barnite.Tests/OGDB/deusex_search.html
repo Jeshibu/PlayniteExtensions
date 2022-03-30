@@ -1,0 +1,217 @@
+<!--
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+/-->
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <META NAME="Reply-to" CONTENT="administration@ogdb.eu">
+  <META NAME="Description" CONTENT="">
+  <META NAME="Keywords" CONTENT="">
+        <META NAME="robots" CONTENT="index,follow,archive">
+    <META NAME="revisit-after" CONTENT="7 days">
+  <title>OGDB - Suchergebnisse</title>
+<link rel="shortcut icon" href="https://ogdb.eu/ogdbsearchplugin.ico" />
+<link rel="stylesheet" href="css/blue.css" type="text/css">
+<link rel="stylesheet" href="css/global.css" type="text/css">
+
+<script type="text/javascript">
+function confirmDelete(node)
+{
+    var reason = prompt("Grund f\u00fcr die L\u00f6schung?");
+
+    if (null !== reason)
+    {
+        node.href += '&reason=' + reason;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+function confirmLock(node)
+{
+    var reason = prompt("Grund f\u00fcr die Sperre?");
+
+    if (null !== reason)
+    {
+        node.href += '&reason=' + reason;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+function verifyAll(node)
+{
+    var verifyall = confirm("Auch Unterelemente verifizieren?");
+
+    if (verifyall)
+    {
+        node.href += '&verifyall=1';
+        return true;
+    }
+    else
+    {
+        return true;
+    }
+}
+
+</script>
+
+</head>
+<body>
+
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+<tr>
+
+<td width="306"><a href="https://ogdb.eu/index.php"><img border="0" src="./system/logo_blue_oben.gif" width="306" height="52" /></a></td>  
+
+<td class="color4"><img border="0" src="./system/ogdb_games.png"></td>
+
+<td class="color4" colspan="3"><div align="right" id="nav_b">2#21.01.2020&nbsp;&nbsp;</div></td>
+</tr><tr>
+<td width="178" class="color3"><a href="https://ogdb.eu/index.php"><img border="0" src="./system/logo_blue_unten.gif" width="178" height="34"></a></td>
+
+
+<td class="color3" width="152"></td>
+<td class="color3"><div align="right" id="nav_b">Nicht eingeloggt&nbsp;&nbsp;
+</div>
+</td>
+</tr>
+</table>
+
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%" height="100%">
+<tbody><tr>
+<td valign="top" class="color2">
+<table width="130" cellspacing="0" cellpadding="0" border="0">
+<tbody><tr><td>
+
+
+<div class="menue"> 
+<form action="https://ogdb.eu/index.php" method="GET"> 
+<input type="hidden" value="simplesearchresults" name="section"> 
+ 
+<div id="nav_b"><strong>Schnellsuche:</strong><br /> 
+<input type="text" style="width: 100px;" name="searchstring" maxlength="256" class="inputtext" /> <input type="submit" style="width:17px; padding-left:5px;" value="&gt;" class="inputtext" /> 
+</div> 
+<input type="hidden" value="AND" name="how"> 
+</form> 
+
+<dl> 
+<dt>Hauptmen&uuml;</dt> 
+<dd><a href="https://ogdb.eu/index.php?section=news">Neuigkeiten</a></dd>
+<dd><a href="https://ogdb.eu/index.php?section=charts">Info &amp; Charts</a></dd> 
+<dd><a href="https://ogdb.eu/index.php?section=titleslist&amp;show=number">Suche/&Uuml;berblick</a></dd> 
+ 
+<dd><a href="http://forum.blood-is-red.de" style="color: orange; font-weight: bold;" target="_blank">Message Board !!!</a></dd>
+<dd><a href="http://www.blood-is-red.de/mw/" target="_blank">Wiki</a></dd>
+<dd><a href="http://www.blood-is-red.de/mw/index.php/OGDB" target="_blank">Tutorial</a></dd> 
+<dd><a href="https://ogdb.eu/index.php?section=rules">Regeln</a></dd> 
+<dd><a href="https://ogdb.eu/index.php?section=faq">F &amp; A</a></dd> 
+<dd><a href="https://ogdb.eu/index.php?section=team">Team</a></dd>
+<dd><a href="https://ogdb.eu/index.php?section=impressum">Impressum</a></dd>
+<dd><a href="https://ogdb.eu/index.php?section=gdpr">Datenschutz</a></dd>
+<dd><a href="https://ogdb.eu/index.php?section=credits">Credits</a></dd>
+<dd><a href="https://ogdb.eu/index.php?section=specialthanks">Special Thanks</a></dd>
+
+</dl> 
+
+ 
+<dl>
+    <dd><a href="https://ogdb.eu/index.php?section=login">Einloggen</a></dd>
+</dl>
+<dl> 
+<dt>Noch kein Konto?</dt> 
+<dd><a href="https://ogdb.eu/index.php?section=rules&registration=yes">Registrieren</a></dd>
+</dl>
+
+<dl>
+    <dd><a href="https://ogdb.eu/index.php?section=accountdelete">Account aufl&ouml;sen</a></dd>
+</dl>
+</div> 
+
+</td></tr>
+</tbody></table>
+</td>
+<td width="40">&nbsp;&nbsp;&nbsp;</td>
+<td width="100%" valign="top">&nbsp;
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+<tr>
+<td class="thead" width="100%">
+Ergebnisse einfacher Suche</td></tr>
+</table>
+
+<script type="text/javascript">
+<!--
+function errorMsg()
+{
+  alert("Ihr Browser ist leider inkompatibel");
+}
+function addEngine(name,ext,cat,type)
+{
+  if(!confirm("Erweiterung instalieren?"))
+    return;
+  
+  if ((typeof window.sidebar == "object") && (typeof
+  window.sidebar.addSearchEngine == "function"))
+  {
+    //cat="Web";
+    //cat=prompt('In what category should this engine be installed?','Web')
+    window.sidebar.addSearchEngine(
+      "https://ogdb.eu/"+name+".src",
+      "https://ogdb.eu/"+name+"."+ext,
+      name,
+      cat );
+  }
+  else
+  {
+    errorMsg();
+  }
+}
+//-->
+</script>
+
+
+<p class="tnorm">Wenn Sie einen Mozilla/Firefox Browser benutzen, k&ouml;nnen Sie hier eine Erweiterung installieren, die ein Suchen direkt aus dem Browser erm&ouml;glicht, ohne, dass Sie die OGDB-Seite vorher selbst aufrufen m&uuml;ssen.<br />
+<span id="ta"><a href="javascript:addEngine('ogdbsearchplugin','png','Web',0)">Erweiterung f&uuml;r die Suche mit Mozilla/Firefox installieren</a></span>
+</p>
+<p class="twide">Ihre Suche nach <i>"788687107112"</i> ergab <i>1</i> Treffer.</p>
+<table border="0" width="100%" cellspacing="1" cellpadding="0" class="tbsearch">
+ 
+        
+        <tr><th class="region regioncolor" colspan="3">Versionen - 1 Treffer</th></tr>
+          <tr onMouseOver="className='srchhover'" onMouseOut="className=''" style=background-color:#F4F4F4> 
+      <td colspan="3">
+      <span id="ta2"><a href="https://ogdb.eu/index.php?section=game&gameid=42819">Deus Ex (Re-Release) [PC - CD-ROM/USA] (2000)</a></span>        </td>
+      </tr>
+              
+        
+       
+
+</table>
+
+<br>
+<table border="0" width="100%" cellpadding="0"><tr><td class="tnorm" width="100%">
+<center>
+<span style="font-size: 7pt;">(c) Online Games-Datenbank 2003-2018 Built on
+    <span style="font-size: 7pt;" id="ta"><a target="_blank" href="http://php.net">PHP</a></span>,
+    <span style="font-size: 7pt;" id="ta"><a target="_blank" href="http://www.mysql.com/">MySQL</a></span>,
+    <span style="font-size: 7pt;" id="ta"><a target="_blank" href="http://www.smarty.net">Smarty</a></span>, and
+    <span style="font-size: 7pt;" id="ta"><a target="_blank" href="http://jquery.com">jQuery</a></span>, 0.2099 sec
+<br />
+Bitte beachten Sie die <span style="font-size: 7pt;" id="ta"><a href="https://ogdb.eu/index.php?section=disclaimer">rechtlichen Hinweise</a></span> sowie unsere <span style="font-size: 7pt;" id="ta"><a href="https://ogdb.eu/index.php?section=gdpr">Datenschutzerklärung</a></span>
+</center></td></tr></table>
+<br>
+<!-- SPACER RECHTS-->
+</td>
+<td width="40">&nbsp;&nbsp;&nbsp;</td></tr></table>
+</body>
+</html>

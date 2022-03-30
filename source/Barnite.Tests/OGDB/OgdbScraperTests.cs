@@ -1,5 +1,6 @@
 ﻿using Barnite.Scrapers;
 using Playnite.SDK.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,29 @@ namespace Barnite.Tests.OGDB
             Assert.Equal(new MetadataNameProperty("Santa Monica Studio, L.L.C."), data.Developers.Single());
             Assert.Equal(new MetadataNameProperty("SONY Computer Entertainment Europe, Ltd."), data.Publishers.Single());
             Assert.Equal(2, stringDownloader.CalledUrls.Count);
+        }
+
+        [Fact]
+        public void ScrapingDeusExReturnsCorrectMetadata()
+        {
+            var stringDownloader = new FakeWebclient();
+            stringDownloader.FilesByUrl.Add("https://ogdb.eu/index.php?section=simplesearchresults&searchstring=788687107112&how=AND", "./OGDB/deusex_search.html");
+            stringDownloader.FilesByUrl.Add("https://ogdb.eu/index.php?section=game&gameid=42819", "./OGDB/deusex_details.html");
+
+            var scraper = new OgdbScraper(new PlatformUtility(new Dictionary<string,string>()), stringDownloader);
+
+            var data = scraper.GetMetadataFromBarcode("788687107112");
+
+            Assert.Equal("Deus Ex", data.Name);
+            Assert.Equal(new MetadataSpecProperty("pc_windows"), data.Platforms.Single());
+            Assert.Equal("https://ogdb.eu/imageview.php?image_id=72411&limit=400", data.CoverImage.Path);
+            Assert.Equal(new ReleaseDate(2000), data.ReleaseDate);
+            Assert.Contains(new MetadataNameProperty("ION Storm Austin, L.L.P."), data.Developers);
+            Assert.Contains(new MetadataNameProperty("Epic Games, Inc."), data.Developers);
+            Assert.Equal(2, data.Developers.Count);
+            Assert.Equal(new MetadataNameProperty("Eidos Interactive, Inc."), data.Publishers.Single());
+            Assert.Equal(2, stringDownloader.CalledUrls.Count);
+
         }
     }
 }

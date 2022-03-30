@@ -87,16 +87,15 @@ namespace Barnite.Scrapers
                                 game.Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_linux") };
                             break;
                         case "erschienen":
-                            if (DateTime.TryParseExact(value, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime releaseDate))
-                                game.ReleaseDate = new ReleaseDate(releaseDate);
+                                game.ReleaseDate = ParseReleaseDate(value);
                             break;
                         case "entwickler":
-                            var devs = valueNode.SelectNodes("a")?.Select(a => HtmlDecodeAndNormalizeWhitespace(a.InnerText));
+                            var devs = valueNode.SelectNodes(".//a")?.Select(a => HtmlDecodeAndNormalizeWhitespace(a.InnerText));
                             if (devs != null)
                                 game.Developers = devs.Select(d => new MetadataNameProperty(d)).ToHashSet<MetadataProperty>();
                             break;
                         case "publisher":
-                            var publishers = valueNode.SelectNodes("a")?.Select(a => HtmlDecodeAndNormalizeWhitespace(a.InnerText));
+                            var publishers = valueNode.SelectNodes(".//a")?.Select(a => HtmlDecodeAndNormalizeWhitespace(a.InnerText));
                             if (publishers != null)
                                 game.Publishers = publishers.Select(d => new MetadataNameProperty(d)).ToHashSet<MetadataProperty>();
                             break;
@@ -120,6 +119,25 @@ namespace Barnite.Scrapers
                     Name = HtmlDecodeAndNormalizeWhitespace(link.InnerText),
                     Url = GetAbsoluteUrl(link.Attributes["href"].Value)
                 };
+            }
+        }
+
+        private ReleaseDate ParseReleaseDate(string releaseDateStr)
+        {
+            if (string.IsNullOrWhiteSpace(releaseDateStr))
+                return new ReleaseDate();
+
+            var segments = releaseDateStr.Split('.');
+            if (!segments.SelectMany(s => s.ToCharArray()).All(char.IsNumber))
+                return new ReleaseDate();
+
+            var segmentNumbers = segments.Select(int.Parse).ToList();
+            switch (segmentNumbers.Count)
+            {
+                case 1: return new ReleaseDate(segmentNumbers[0]);
+                case 2: return new ReleaseDate(segmentNumbers[1], segmentNumbers[0]);
+                case 3: return new ReleaseDate(segmentNumbers[2], segmentNumbers[1], segmentNumbers[0]);
+                default: return new ReleaseDate();
             }
         }
     }
