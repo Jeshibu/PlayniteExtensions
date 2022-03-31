@@ -9,3 +9,10 @@ Packages:
       - MobyGames and PriceCharting support
       - English only
       - Manual entry only
+  - Version: 0.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-31
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/barnite0.2/Barnite_0_2.pext
+    Changelog:
+      - Added Play-Asia and OGDB as data source
+      - Added link to games pointing to the details page that the game was found on
