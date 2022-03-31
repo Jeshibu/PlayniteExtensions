@@ -91,8 +91,9 @@ namespace Barnite
                         else
                         {
                             logger.Debug($"Game found in {scraper.Name} for {barcode}!");
-                            PlayniteApi.Database.ImportGame(data);
-                            PlayniteApi.Dialogs.ShowMessage($"Added {data.Name}!", "Barnite");
+                            var game = PlayniteApi.Database.ImportGame(data);
+                            PlayniteApi.MainView.SelectGame(game.Id);
+                            PlayniteApi.Dialogs.ShowMessage($"Added {data.Name} via {scraper.Name}!\r\nIt's recommended to use metadata plugins to get more data on the game.", "Barnite");
                             return;
                         }
                     }

@@ -112,13 +112,16 @@ namespace Barnite.Scrapers
             doc.LoadHtml(html);
 
             var linkNodes = doc.DocumentNode.SelectNodes("//span[@id='ta2']/a[@href]");
-            foreach (var link in linkNodes)
+            if (linkNodes != null)
             {
-                yield return new GameLink
+                foreach (var link in linkNodes)
                 {
-                    Name = HtmlDecodeAndNormalizeWhitespace(link.InnerText),
-                    Url = GetAbsoluteUrl(link.Attributes["href"].Value)
-                };
+                    yield return new GameLink
+                    {
+                        Name = HtmlDecodeAndNormalizeWhitespace(link.InnerText),
+                        Url = GetAbsoluteUrl(link.Attributes["href"].Value)
+                    };
+                }
             }
         }
 

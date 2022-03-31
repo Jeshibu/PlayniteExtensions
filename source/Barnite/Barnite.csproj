@@ -66,6 +66,7 @@
     <Compile Include="Scrapers\OgdbScraper.cs" />
     <Compile Include="Scrapers\PlayAsiaScraper.cs" />
     <Compile Include="Scrapers\PriceChartingScraper.cs" />
+    <Compile Include="Scrapers\Webclient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">

@@ -23,11 +23,11 @@ namespace Barnite.Tests
             FilesByUrl = filesByUrl;
         }
 
-        public virtual string DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string,CookieCollection> jsCookieGetFunc = null)
+        public virtual DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string,CookieCollection> jsCookieGetFunc = null)
         {
             CalledUrls.Add(url);
             if (FilesByUrl.TryGetValue(url, out string filePath))
-                return File.ReadAllText(filePath);
+                return new DownloadStringResponse(url, File.ReadAllText(filePath));
             else
                 throw new Exception($"Url not accounted for: {url}");
         }

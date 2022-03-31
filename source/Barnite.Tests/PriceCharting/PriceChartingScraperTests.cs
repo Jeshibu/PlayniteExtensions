@@ -23,6 +23,7 @@ namespace Barnite.Tests.PriceCharting
             Assert.Equal("God of War", data.Name);
             Assert.Equal(new MetadataSpecProperty("sony_playstation4"), data.Platforms.Single());
             Assert.Equal("https://commondatastorage.googleapis.com/images.pricecharting.com/AMIfv96gBD8eKKhykpxlo3TZTNYw65pa28xMSZbAJDb1lqbM7U9aB653ksyFUqg3Mv9Y2k1pcz_L1O1aD8PUUsQZMPgY3PO2iO0D6uy9RZpKvwabm7webK0JQLjC4ygH4HreNrhxxfg_wjRnXZ3TvM3CMK3wygIwUA/120.jpg", data.CoverImage?.Path);
+            Assert.Contains(data.Links, l => l.Name == scraper.Name);
             Assert.Equal(2, stringDownloader.CalledUrls.Count);
         }
     }

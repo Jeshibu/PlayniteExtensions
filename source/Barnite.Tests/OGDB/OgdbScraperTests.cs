@@ -27,6 +27,7 @@ namespace Barnite.Tests.OGDB
             Assert.Equal(new ReleaseDate(2013, 03, 12), data.ReleaseDate);
             Assert.Equal(new MetadataNameProperty("Santa Monica Studio, L.L.C."), data.Developers.Single());
             Assert.Equal(new MetadataNameProperty("SONY Computer Entertainment Europe, Ltd."), data.Publishers.Single());
+            Assert.Contains(data.Links, l => l.Name == scraper.Name);
             Assert.Equal(2, stringDownloader.CalledUrls.Count);
         }
 
@@ -49,8 +50,8 @@ namespace Barnite.Tests.OGDB
             Assert.Contains(new MetadataNameProperty("Epic Games, Inc."), data.Developers);
             Assert.Equal(2, data.Developers.Count);
             Assert.Equal(new MetadataNameProperty("Eidos Interactive, Inc."), data.Publishers.Single());
+            Assert.Contains(data.Links, l => l.Name == scraper.Name);
             Assert.Equal(2, stringDownloader.CalledUrls.Count);
-
         }
     }
 }
