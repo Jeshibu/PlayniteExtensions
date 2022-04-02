@@ -9,8 +9,8 @@
     <ProjectGuid>{2C136C16-C708-4668-A9DD-B5AD9F00D3FC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SteamTagsImporterTests</RootNamespace>
-    <AssemblyName>SteamTagsImporterTests</AssemblyName>
+    <RootNamespace>SteamTagsImporter.Tests</RootNamespace>
+    <AssemblyName>SteamTagsImporter.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

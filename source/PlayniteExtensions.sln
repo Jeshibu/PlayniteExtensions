@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamTagsImporter", "SteamTagsImporter\SteamTagsImporter.csproj", "{4FDF1E89-5BC3-4C72-8FDA-0D580E7A5D5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamTagsImporterTests", "SteamTagsImporterTests\SteamTagsImporterTests.csproj", "{2C136C16-C708-4668-A9DD-B5AD9F00D3FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamTagsImporter.Tests", "SteamTagsImporter.Tests\SteamTagsImporter.Tests.csproj", "{2C136C16-C708-4668-A9DD-B5AD9F00D3FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barnite", "Barnite\Barnite.csproj", "{AFA8DE86-101B-4449-A237-2030D7F74CE2}"
 EndProject
