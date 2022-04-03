@@ -38,6 +38,7 @@ namespace LegacyGamesLibrary
                     CoverImage = new MetadataFile(game.GameCoverArt),
                     Description = game.GameDescription,
                     IsInstalled = installation != null,
+                    Source = new MetadataNameProperty("Legacy Games"),
 
                     //the following are probably safe assumptions
                     Features = new HashSet<MetadataProperty> { new MetadataNameProperty("Single-player") },
