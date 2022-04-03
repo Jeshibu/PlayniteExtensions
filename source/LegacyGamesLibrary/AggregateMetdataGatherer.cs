@@ -37,8 +37,11 @@ namespace LegacyGamesLibrary
                     Name = game.GameName,
                     CoverImage = new MetadataFile(game.GameCoverArt),
                     Description = game.GameDescription,
-                    Features = new HashSet<MetadataProperty> { new MetadataNameProperty("Single-player") }, //seems like a safe assumption
                     IsInstalled = installation != null,
+
+                    //the following are probably safe assumptions
+                    Features = new HashSet<MetadataProperty> { new MetadataNameProperty("Single-player") },
+                    Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
                 };
 
                 if (installation != null)
@@ -54,7 +57,7 @@ namespace LegacyGamesLibrary
                             Type = GameActionType.File,
                         },
                     };
-                    metadata.Icon = new MetadataFile($@"{installation.InstDir}\icon.ico");                    
+                    metadata.Icon = new MetadataFile($@"{installation.InstDir}\icon.ico");
                 }
 
                 yield return metadata;
