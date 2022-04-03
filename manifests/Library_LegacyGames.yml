@@ -1,0 +1,8 @@
+AddonId: LegacyGamesLibrary_34c3178f-6e1d-4e27-8885-99d4f031b168
+Packages:
+  - Version: 0.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-03
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.1/LegacyGamesLibrary_0_1.pext
+    Changelog:
+     - Initial release
