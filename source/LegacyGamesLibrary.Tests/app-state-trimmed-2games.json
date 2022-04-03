@@ -1,0 +1,736 @@
+{
+	"settings": {
+		"autostart": false,
+		"check_for_updates": false,
+		"notifications": {
+			"enabled": true
+		},
+		"gameLibraryPath": "C:\\Program Files\\Legacy Games",
+		"gameDownloadPath": "C:\\Users\\USERNAME\\AppData\\Local\\Temp",
+		"rememberme": true
+	},
+	"siteData": {
+		"storeCategories": {
+			"promo_games": [
+				3647,
+				3652,
+				44394,
+				58775
+			],
+			"genres": {
+				"Hidden Object": 21,
+				"Match 3": 22,
+				"Time Management": 23,
+				"Card and Tile": 55,
+				"Puzzle": 137,
+				"Adventure": 138
+			},
+			"packs": {
+				"3 Games": 87,
+				"5 Games": 81,
+				"10 Games": 80,
+				"15 Games": 143
+			},
+			"menuCategory": {
+				"category_id": 104,
+				"menu_label": "INDIE SPOTLIGHT",
+				"header_label": "INDIE GAME SPOTLIGHT",
+				"description": [
+					"Legacy searched the world over to find the very best indie games for your enjoyment.",
+					"Every game featured in our Indie Game Spotlight catalog is highly rated and award-winning!"
+				]
+			}
+		},
+		"newReleases": [
+			{
+				"product_id": 60259,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_NY-Mysteries.jpg"
+			},
+			{
+				"product_id": 59780,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Graffiti-Hits.jpg"
+			},
+			{
+				"product_id": 45120,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Mystery-Case-Files.jpg"
+			},
+			{
+				"product_id": 17551,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Greatest-Hits-3.jpg"
+			}
+		],
+		"catalog": [
+			{
+				"id": 804,
+				"name": "Magical Matches - 10 Pack",
+				"slug": "magical-matches-vol-1-10-pack",
+				"permalink": "https://legacygames.com/product/magical-matches-vol-1-10-pack/",
+				"date_created": "2020-06-26T17:31:48",
+				"date_created_gmt": "2020-06-27T00:31:48",
+				"date_modified": "2022-03-10T01:59:19",
+				"date_modified_gmt": "2022-03-10T09:59:19",
+				"type": "simple",
+				"status": "publish",
+				"featured": false,
+				"catalog_visibility": "visible",
+				"description": "<h3 class=\"long-description-h3-class\" style=\"font-weight: bold; font-size: 20px;\">A premium pack of perplexing puzzles, enchanting tales, and thrilling characters!</h3>\n<h3 class=\"long-description-h3-class\" style=\"font-weight: bold; font-size: 20px;\">Features</h3>\n<ul>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\">An enchanting pack of 10 Match-3 games with adventure stories</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\">Hundreds of puzzles and gorgeous, fantastical artwork</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\">Discover ancient kingdoms, mystical lands, and marvelous characters</li>\n</ul>\n<h3 class=\"long-description-h3-class\" style=\"font-weight: bold; font-size: 20px;\">Games Included</h3>\n<ul>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>Atlantis: Pearls of the Deep:</strong> Join mermaids in dropping and grouping like-colored pearls to save Atlantis!</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>League of Mermaids:</strong> A group of beautiful mermaids needs your help in matching colorful pearls!</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>ClearIt:</strong> An innovative and unique matching game for those looking for a new challenge!</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>ClearIt 2:</strong> Take on new ClearIt challenges in this colorful arcade-style puzzle shooter!</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>Silver Tale:</strong> A dying king needs you to fetch medicine from the bottom of a cave!</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>Runefall:</strong> Rebuild a village’s decimated economy by collecting valuable artifacts!</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>Treasures of the Serengeti:</strong> Complete an array of puzzles to bring instruments back to Asha’s village!</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>Cubis Kingdoms:</strong> Stack 3D blocks to save a cute cartoon kingdom!</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>Cubis Creatures:</strong> A magic trick leaves some cute animals in a trance – help wake them all up!</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>Cubis Gold:</strong> A highly charged arcade game played in all three dimensions.</li>\n</ul>\n",
+				"short_description": "<p>A premium pack of perplexing puzzles, enchanting tales, and thrilling characters!</p>\n",
+				"sku": "7-3411303349-4",
+				"price": "14.99",
+				"regular_price": "14.99",
+				"sale_price": "",
+				"date_on_sale_from": null,
+				"date_on_sale_from_gmt": null,
+				"date_on_sale_to": null,
+				"date_on_sale_to_gmt": null,
+				"on_sale": false,
+				"purchasable": true,
+				"total_sales": 51,
+				"virtual": true,
+				"downloadable": true,
+				"download_limit": 100,
+				"download_expiry": -1,
+				"external_url": "",
+				"button_text": "",
+				"tax_status": "taxable",
+				"tax_class": "",
+				"manage_stock": false,
+				"stock_quantity": null,
+				"backorders": "no",
+				"backorders_allowed": false,
+				"backordered": false,
+				"low_stock_amount": null,
+				"sold_individually": false,
+				"weight": "",
+				"dimensions": {
+					"length": "",
+					"width": "",
+					"height": ""
+				},
+				"shipping_required": false,
+				"shipping_taxable": false,
+				"shipping_class": "",
+				"shipping_class_id": 0,
+				"reviews_allowed": true,
+				"average_rating": "5.00",
+				"rating_count": 2,
+				"upsell_ids": [],
+				"cross_sell_ids": [
+					206,
+					207,
+					2460,
+					210
+				],
+				"parent_id": 0,
+				"purchase_note": "",
+				"categories": [
+					{
+						"id": 80,
+						"name": "10 Game Packs",
+						"slug": "10-game-pack"
+					},
+					{
+						"id": 144,
+						"name": "Fan Faves",
+						"slug": "fan-faves"
+					},
+					{
+						"id": 22,
+						"name": "Match 3",
+						"slug": "match-3-games"
+					}
+				],
+				"tags": [
+					{
+						"id": 65,
+						"name": "magical matches",
+						"slug": "magical-matches"
+					},
+					{
+						"id": 63,
+						"name": "match",
+						"slug": "match"
+					},
+					{
+						"id": 64,
+						"name": "puzzle",
+						"slug": "puzzle"
+					}
+				],
+				"images": [
+					{
+						"id": 27744,
+						"date_created": "2021-09-11T01:29:08",
+						"date_created_gmt": "2021-09-11T15:29:08",
+						"date_modified": "2021-09-11T01:36:47",
+						"date_modified_gmt": "2021-09-11T15:36:47",
+						"src": "https://legacygames.com/wp-content/uploads/Legacy-Games_PC-Casual-Match-3_10pk_Magical-Matches_Box.png",
+						"name": "Legacy Games_PC Casual Match 3_10pk_Magical Matches_Box",
+						"alt": "https://legacygames.com/wp-content/uploads/Legacy-Games_PC-Casual-Match-3_10pk_Magical-Matches.jpg"
+					}
+				],
+				"attributes": [],
+				"default_attributes": [],
+				"variations": [],
+				"grouped_products": [],
+				"menu_order": 0,
+				"related_ids": [
+					61128,
+					206,
+					205,
+					210,
+					207
+				],
+				"meta_data": [],
+				"stock_status": "instock",
+				"_links": {
+					"self": [
+						{
+							"href": "https://legacygames.com/wp-json/wc/v3/products/804"
+						}
+					],
+					"collection": [
+						{
+							"href": "https://legacygames.com/wp-json/wc/v3/products"
+						}
+					]
+				},
+				"product_id": 804,
+				"product_name": "Magical Matches Vol. 1 - 10 Pack",
+				"games": [
+					{
+						"game_id": "df0e1b8f-d738-49d2-9a89-92b4f52e0a28",
+						"game_name": "Atlantis: Pearls of the Deep",
+						"game_description": "Join mermaids in dropping and grouping like-colored pearls to save Atlantis!",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/Legacy-Games_Pearls-of-Atlantis.jpg",
+						"game_installed_size": "72.9 MB",
+						"installer_uuid": "265405f6-2a7b-4852-a831-081d8d808b92"
+					},
+					{
+						"game_id": "6d8e6e17-019a-443c-9a71-0d615b09206f",
+						"game_name": "League of Mermaids",
+						"game_description": "A group of beautiful mermaids needs your help in matching colorful pearls!",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/Legacy-Games_League-of-Mermaids.jpg",
+						"game_installed_size": "80.5 MB",
+						"installer_uuid": "bde90b7d-9509-40f2-8727-04e5b1dc5cfc"
+					},
+					{
+						"game_id": "7e22ce28-9260-4639-a18f-6825ef507d64",
+						"game_name": "ClearIt",
+						"game_description": "An innovative and unique matching game for those looking for a new challenge!",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/Legacy-Games_ClearIt.jpg",
+						"game_installed_size": "88.3 MB",
+						"installer_uuid": "8aa5a74e-e680-4e50-8dfb-eaca6093e9f3"
+					},
+					{
+						"game_id": "91245df2-6676-489f-97c3-5c8fd1f2ac13",
+						"game_name": "ClearIt 2",
+						"game_description": "Take on new ClearIt challenges in this colorful arcade-style puzzle shooter!",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/Legacy-Games_ClearIt-2.jpg",
+						"game_installed_size": "39.1 MB",
+						"installer_uuid": "c7714f89-f761-41e3-9f33-b47021c2313a"
+					},
+					{
+						"game_id": "cadb7388-a57d-4ac2-963e-374274ef9e1c",
+						"game_name": "Silver Tale",
+						"game_description": "A dying king needs you to fetch medicine from the bottom of a cave!",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/Legacy-Games_Silver-Tale.jpg",
+						"game_installed_size": "116.2 MB",
+						"installer_uuid": "f87ee5aa-b8d5-49cd-b06d-cbd959b09425"
+					},
+					{
+						"game_id": "43aa8eee-f780-4e40-a994-86967def7def",
+						"game_name": "Runefall",
+						"game_description": "Rebuild a village's decimated economy by collecting valuable artifacts!",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/Legacy-Games_Runefall.jpg",
+						"game_installed_size": "107.4 MB",
+						"installer_uuid": "1615f4c7-33ad-4ed5-92f3-9c93e5c9e00c"
+					},
+					{
+						"game_id": "26a85b6c-0472-4b71-9327-478adefd7e6d",
+						"game_name": "Treasures of the Serengeti",
+						"game_description": "Complete an array of puzzles to bring instruments back to Asha's village!",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/Legacy-Games_Treasures-of-the-Serengeti.jpg",
+						"game_installed_size": "67.6 MB",
+						"installer_uuid": "a7710607-621b-4985-ad63-97d42a165737"
+					},
+					{
+						"game_id": "79726578-cb87-4e6c-866c-2fbf315d60a5",
+						"game_name": "Cubis Kingdoms",
+						"game_description": "Stack 3D blocks to save a cute cartoon kingdom!",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/Legacy-Games_Cubis-Kingdoms.jpg",
+						"game_installed_size": "146.3 MB",
+						"installer_uuid": "eb63e249-671c-4841-ae97-f0c551093590"
+					},
+					{
+						"game_id": "df7e433d-0853-462e-9f63-062a7d1dd870",
+						"game_name": "Cubis Creatures",
+						"game_description": "A magic trick leaves some cute animals in a trance – help wake them all up!",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/Legacy-Games_Cubis-Creatures.jpg",
+						"game_installed_size": "100.9 MB",
+						"installer_uuid": "24cbbdcd-decb-4a0d-9dd8-1a5661858976"
+					},
+					{
+						"game_id": "3d4030f9-7e16-4918-8297-ec7ca06766d8",
+						"game_name": "Cubis Gold",
+						"game_description": "A magic trick leaves some cute animals in a trance – help wake them all up!",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/Legacy-Games_Cubis-Gold.jpg",
+						"game_installed_size": "2.6 MB",
+						"installer_uuid": "804d643e-5ea5-410d-b940-c2cf60a1ec4f"
+					}
+				],
+				"product_gallery": [
+					"https://legacygames.com/wp-content/uploads/2021/06/Magical-Matches-Vol.1_-Runefall_1.jpg",
+					"https://legacygames.com/wp-content/uploads/2021/06/Magical-Matches-Vol.-1_ClearIt_1.jpg",
+					"https://legacygames.com/wp-content/uploads/2021/06/Magical-Matches-Vol.1_-Cubis-Creatures_1.jpg",
+					"https://legacygames.com/wp-content/uploads/2021/06/Magical-Matches-Vol.1_-Runefall_2.jpg",
+					"https://legacygames.com/wp-content/uploads/2021/06/Magical-Matches-Vol.1_-Cubis-Creatures_2.jpg",
+					"https://legacygames.com/wp-content/uploads/2021/06/Magical-Matches-Vol.1_-Atlantis-Pearls-of-the-Deep_2.jpg",
+					"https://legacygames.com/wp-content/uploads/2021/06/Magical-Matches-Vol.1_-Cubis-Gold-2_2.jpg",
+					"https://legacygames.com/wp-content/uploads/2021/06/Magical-Matches-Vol.1_-League-of-Mermaids_2.jpg",
+					"https://legacygames.com/wp-content/uploads/2021/06/Magical-Matches-Vol.1_-Silver-Tale_2.jpg"
+				]
+			},
+			{
+				"id": 37577,
+				"name": "House of 1000 Doors - 5 Pack",
+				"slug": "house-of-1000-doors-5-pack",
+				"permalink": "https://legacygames.com/product/house-of-1000-doors-5-pack/",
+				"date_created": "2022-01-03T10:47:30",
+				"date_created_gmt": "2022-01-03T18:47:30",
+				"date_modified": "2022-04-01T21:40:06",
+				"date_modified_gmt": "2022-04-02T04:40:06",
+				"type": "simple",
+				"status": "publish",
+				"featured": false,
+				"catalog_visibility": "visible",
+				"description": "<h3 class=\"long-description-h3-class\" style=\"font-weight: bold; font-size: 20px;\">Behind each doorway lays a new adventure.... but so ancient creatures, curses, and peril!</h3>\n<h3 class=\"long-description-h3-class\" style=\"font-size: 20px;\">From the streets of San Francisco to the House of Lancasters, tackle mysterious that will test your bravery and wit! A masked man calling himself the Plague Doctor threatens the peace of one city.... while ancient serpentine beings rupture the foundations of the world itself. What dark forces will you stand against first?</h3>\n<h3 class=\"long-description-h3-class\" style=\"font-weight: bold; font-size: 20px;\">Features</h3>\n<ul>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\">Travel to numerous new worlds, solve mind-bending mysteries, and save all of mankind!</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\">Experience high-quality cinematics with beautiful animation and fully-voiced characters!</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\">Tons of collectibles, achievements, mini-games, and hidden object scenes!</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\">Play special bonus chapters featuring new adventures in two special Collector's Edition games!</li>\n</ul>\n<h3 class=\"long-description-h3-class\" style=\"font-weight: bold; font-size: 20px;\">Games Included</h3>\n<ul>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>Criminal Archives: City on Fire CE:</strong> Lies, corruption and deception are abound as mystery winds its way through the streets of San Francisco. Can you stop the arsons by the masked Plague Doctor?</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>House Of 1000 Doors: Family Secrets:</strong> Step into the House of 1000 Doors, a location where the veil between worlds is thin enough for the departed to finally resolve their unfinished business.</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>House Of 1000 Doors 2: The Palm Of Zoroaster:</strong> Search for the lost items that will break the power of a cursed gem! Can you save the residents of the House of 1000 Doors?</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>House Of 1000 Doors 3: Serpent Flame CE:</strong> Giant snakes have erupted from the Earth's crust... only you and the House of 1000 Doors can save the world from annihilation!</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>House Of 1000 Doors 4: Evil Inside:</strong> Find yourself back in the House of 1000 Doors... only this time, you must stop a deadly infection that corrupts everything it touches! Can you restore the world before it's too late?</li>\n</ul>\n",
+				"short_description": "<p>Behind each doorway lays a new adventure&#8230;. but so ancient creatures, curses, and peril!</p>\n",
+				"sku": "7-3411304099-7",
+				"price": "12.99",
+				"regular_price": "12.99",
+				"sale_price": "",
+				"date_on_sale_from": null,
+				"date_on_sale_from_gmt": null,
+				"date_on_sale_to": null,
+				"date_on_sale_to_gmt": null,
+				"on_sale": false,
+				"purchasable": true,
+				"total_sales": 82,
+				"virtual": true,
+				"downloadable": true,
+				"download_limit": 100,
+				"download_expiry": 0,
+				"external_url": "",
+				"button_text": "",
+				"tax_status": "taxable",
+				"tax_class": "",
+				"manage_stock": false,
+				"stock_quantity": null,
+				"backorders": "no",
+				"backorders_allowed": false,
+				"backordered": false,
+				"low_stock_amount": null,
+				"sold_individually": false,
+				"weight": "",
+				"dimensions": {
+					"length": "",
+					"width": "",
+					"height": ""
+				},
+				"shipping_required": false,
+				"shipping_taxable": false,
+				"shipping_class": "",
+				"shipping_class_id": 0,
+				"reviews_allowed": true,
+				"average_rating": "4.56",
+				"rating_count": 9,
+				"upsell_ids": [],
+				"cross_sell_ids": [
+					204,
+					203,
+					132,
+					205
+				],
+				"parent_id": 0,
+				"purchase_note": "",
+				"categories": [
+					{
+						"id": 81,
+						"name": "5 Game Packs",
+						"slug": "5-game-pack"
+					},
+					{
+						"id": 21,
+						"name": "Hidden Object",
+						"slug": "hidden-object-games"
+					}
+				],
+				"tags": [],
+				"images": [
+					{
+						"id": 43917,
+						"date_created": "2022-01-07T00:15:50",
+						"date_created_gmt": "2022-01-07T16:15:50",
+						"date_modified": "2022-01-07T00:15:56",
+						"date_modified_gmt": "2022-01-07T16:15:56",
+						"src": "https://legacygames.com/wp-content/uploads/5pk_House-of-1000-Doors_Box.png",
+						"name": "5pk_House of 1000 Doors_Box",
+						"alt": "https://legacygames.com/wp-content/uploads/5pk_House-of-1000-Doors.jpg"
+					}
+				],
+				"attributes": [],
+				"default_attributes": [],
+				"variations": [],
+				"grouped_products": [],
+				"menu_order": 0,
+				"related_ids": [
+					201,
+					29453,
+					25202,
+					202,
+					2849
+				],
+				"meta_data": [],
+				"stock_status": "instock",
+				"_links": {
+					"self": [
+						{
+							"href": "https://legacygames.com/wp-json/wc/v3/products/37577"
+						}
+					],
+					"collection": [
+						{
+							"href": "https://legacygames.com/wp-json/wc/v3/products"
+						}
+					]
+				},
+				"product_id": 37577,
+				"product_name": "House of 1000 Doors - 5 Pack",
+				"games": [
+					{
+						"game_id": "0de90276-7dff-455e-8d71-27ff9821d77e",
+						"game_name": "Criminal Archives: City On Fire CE",
+						"game_description": "Lies, corruption and deception are abound as mystery winds its way through the streets of San Francisco. Can you stop the arsons by the masked Plague Doctor?",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/LegacyGames_CriminalArchivesCityOnFireCE.png",
+						"game_installed_size": "1.4 GB",
+						"installer_uuid": "982c0a9a-e280-4095-8eaf-9dfa5592965c"
+					},
+					{
+						"game_id": "657b95ce-c049-4650-b069-3c030360457a",
+						"game_name": "House Of 1000 Doors: Family Secrets",
+						"game_description": "Step into the House of 1000 Doors, a location where the veil between worlds is thin enough for the departed to finally resolve their unfinished business.",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/LegacyGames_HouseOf1000Doors_FamilySecrets.png",
+						"game_installed_size": "375 MB",
+						"installer_uuid": "db01c49e-dc08-4cf2-8dda-bc24b633691d"
+					},
+					{
+						"game_id": "40a9c48d-0706-4cb6-a8d0-754e7581dfb6",
+						"game_name": "House Of 1000 Doors 2: The Palm Of Zoroaster",
+						"game_description": "Search for the lost items that will break the power of a cursed gem! Can you save the residents of the House of 1000 Doors?",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/LegacyGames_HouseOf1000Doors2_PalmOfZoraster.png",
+						"game_installed_size": "391.5 MB",
+						"installer_uuid": "a2865dc5-344d-4e57-8ffa-4c3e676e75b3"
+					},
+					{
+						"game_id": "8b80b469-7930-4ae4-a95b-e25c4e7a7b00",
+						"game_name": "House Of 1000 Doors 3: Serpent Flame CE",
+						"game_description": "Giant snakes have erupted from the Earth's crust... only you and the House of 1000 Doors can save the world from annihilation!",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/LegacyGames_HouseOf1000Doors3_SerpentFlame.png",
+						"game_installed_size": "866.5 MB",
+						"installer_uuid": "a00d0cc1-3d5e-4229-bf86-bd54feb00152"
+					},
+					{
+						"game_id": "69e16768-282b-4c9c-8a00-ec8103060a29",
+						"game_name": "House Of 1000 Doors 4: Evil Inside",
+						"game_description": "Find yourself back in the House of 1000 Doors... only this time, you must stop a deadly infection that corrupts everything it touches! Can you restore the world before it's too late?",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/LegacyGames_HouseOf1000Doors4_EvilInside.png",
+						"game_installed_size": "873 MB",
+						"installer_uuid": "89d3b668-0a53-472c-87fd-1461892893e5"
+					}
+				],
+				"product_gallery": [
+					"https://legacygames.com/wp-content/uploads/CriminalArchives_CityOnFire.jpg",
+					"https://legacygames.com/wp-content/uploads/HouseOf1000Doors_FamilySecrets.jpg",
+					"https://legacygames.com/wp-content/uploads/HouseOf1000Doors_PalmOfZoraster.jpg",
+					"https://legacygames.com/wp-content/uploads/HouseOf1000Doors_SerpentFlame.jpg",
+					"https://legacygames.com/wp-content/uploads/HouseOf1000Doors_EvilInside.jpg"
+				]
+			},            
+			{
+				"id": 59241,
+				"name": "Prime Gaming Giveaway - House of 1000 Doors: Family Secrets",
+				"slug": "primegaming-houseof1000doors",
+				"permalink": "https://legacygames.com/product/primegaming-houseof1000doors/",
+				"date_created": "2022-03-10T10:11:18",
+				"date_created_gmt": "2022-03-10T18:11:18",
+				"date_modified": "2022-03-11T11:26:27",
+				"date_modified_gmt": "2022-03-11T19:26:27",
+				"type": "simple",
+				"status": "private",
+				"featured": false,
+				"catalog_visibility": "hidden",
+				"description": "<p>Roll a cube to pick up and match correct colors on the floor!</p>\n",
+				"short_description": "",
+				"sku": "",
+				"price": "0",
+				"regular_price": "0",
+				"sale_price": "",
+				"date_on_sale_from": null,
+				"date_on_sale_from_gmt": null,
+				"date_on_sale_to": null,
+				"date_on_sale_to_gmt": null,
+				"on_sale": false,
+				"purchasable": true,
+				"total_sales": 4803,
+				"virtual": true,
+				"downloadable": true,
+				"download_limit": -1,
+				"download_expiry": -1,
+				"external_url": "",
+				"button_text": "",
+				"tax_status": "none",
+				"tax_class": "zero-rate",
+				"manage_stock": false,
+				"stock_quantity": null,
+				"backorders": "no",
+				"backorders_allowed": false,
+				"backordered": false,
+				"low_stock_amount": null,
+				"sold_individually": false,
+				"weight": "",
+				"dimensions": {
+					"length": "",
+					"width": "",
+					"height": ""
+				},
+				"shipping_required": false,
+				"shipping_taxable": false,
+				"shipping_class": "",
+				"shipping_class_id": 0,
+				"reviews_allowed": true,
+				"average_rating": "0.00",
+				"rating_count": 0,
+				"upsell_ids": [],
+				"cross_sell_ids": [],
+				"parent_id": 0,
+				"purchase_note": "",
+				"categories": [
+					{
+						"id": 162,
+						"name": "Giveaway",
+						"slug": "giveaway"
+					}
+				],
+				"tags": [],
+				"images": [
+					{
+						"id": 37609,
+						"date_created": "2022-01-03T08:26:02",
+						"date_created_gmt": "2022-01-04T00:26:02",
+						"date_modified": "2022-01-03T08:36:06",
+						"date_modified_gmt": "2022-01-04T00:36:06",
+						"src": "https://legacygames.com/wp-content/uploads/LegacyGames_HouseOf1000Doors_FamilySecrets.png",
+						"name": "LegacyGames_HouseOf1000Doors_FamilySecrets",
+						"alt": ""
+					}
+				],
+				"attributes": [],
+				"default_attributes": [],
+				"variations": [],
+				"grouped_products": [],
+				"menu_order": 0,
+				"related_ids": [],
+				"meta_data": [],
+				"stock_status": "instock",
+				"_links": {
+					"self": [
+						{
+							"href": "https://legacygames.com/wp-json/wc/v3/products/59241"
+						}
+					],
+					"collection": [
+						{
+							"href": "https://legacygames.com/wp-json/wc/v3/products"
+						}
+					]
+				},
+				"product_id": 59241,
+				"product_name": "Prime Gaming Giveaway – House of 1000 Doors: Family Secrets",
+				"games": [
+					{
+						"game_id": "2fa1ca6f-03d8-4aa9-a20f-8e2e839ccbbf",
+						"game_name": "House Of 1000 Doors: Family Secrets",
+						"game_description": "Step into the House of 1000 Doors, a location where the veil between worlds is thin enough for the departed to finally resolve their unfinished business.",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/LegacyGames_HouseOf1000Doors_FamilySecrets.png",
+						"game_installed_size": "375 MB",
+						"installer_uuid": "db01c49e-dc08-4cf2-8dda-bc24b633691d"
+					}
+				],
+				"product_gallery": []
+			},
+			{
+				"id": 3647,
+				"name": "Sign Up Bonus - Atlantis: Pearls of the Deep",
+				"slug": "signup-bonus-atlantis-pearls-of-the-deep",
+				"permalink": "https://legacygames.com/product/signup-bonus-atlantis-pearls-of-the-deep/",
+				"date_created": "2021-03-06T10:08:36",
+				"date_created_gmt": "2021-03-06T18:08:36",
+				"date_modified": "2022-03-05T16:50:48",
+				"date_modified_gmt": "2022-03-06T00:50:48",
+				"type": "simple",
+				"status": "private",
+				"featured": false,
+				"catalog_visibility": "hidden",
+				"description": "<p><span style=\"font-weight: 400;\">Award winning physics-based, Match-3 puzzler. Save Atlantis in this unique physics-based Match-3 game!</span></p>\n",
+				"short_description": "",
+				"sku": "",
+				"price": "0",
+				"regular_price": "0",
+				"sale_price": "",
+				"date_on_sale_from": null,
+				"date_on_sale_from_gmt": null,
+				"date_on_sale_to": null,
+				"date_on_sale_to_gmt": null,
+				"on_sale": false,
+				"purchasable": true,
+				"total_sales": 2819,
+				"virtual": true,
+				"downloadable": true,
+				"download_limit": -1,
+				"download_expiry": -1,
+				"external_url": "",
+				"button_text": "",
+				"tax_status": "none",
+				"tax_class": "zero-rate",
+				"manage_stock": false,
+				"stock_quantity": null,
+				"backorders": "no",
+				"backorders_allowed": false,
+				"backordered": false,
+				"low_stock_amount": null,
+				"sold_individually": false,
+				"weight": "",
+				"dimensions": {
+					"length": "",
+					"width": "",
+					"height": ""
+				},
+				"shipping_required": false,
+				"shipping_taxable": false,
+				"shipping_class": "",
+				"shipping_class_id": 0,
+				"reviews_allowed": true,
+				"average_rating": "4.86",
+				"rating_count": 7,
+				"upsell_ids": [],
+				"cross_sell_ids": [],
+				"parent_id": 0,
+				"purchase_note": "",
+				"categories": [
+					{
+						"id": 162,
+						"name": "Giveaway",
+						"slug": "giveaway"
+					}
+				],
+				"tags": [],
+				"images": [
+					{
+						"id": 5863,
+						"date_created": "2021-04-13T08:04:50",
+						"date_created_gmt": "2021-04-13T15:04:50",
+						"date_modified": "2021-04-13T08:04:50",
+						"date_modified_gmt": "2021-04-13T15:04:50",
+						"src": "https://legacygames.com/wp-content/uploads/2021/04/Screen-Shot-2021-04-09-at-6.45.55-PM.png",
+						"name": "Screen Shot 2021-04-09 at 6.45.55 PM",
+						"alt": ""
+					},
+					{
+						"id": 5863,
+						"date_created": "2021-04-13T08:04:50",
+						"date_created_gmt": "2021-04-13T15:04:50",
+						"date_modified": "2021-04-13T08:04:50",
+						"date_modified_gmt": "2021-04-13T15:04:50",
+						"src": "https://legacygames.com/wp-content/uploads/2021/04/Screen-Shot-2021-04-09-at-6.45.55-PM.png",
+						"name": "Screen Shot 2021-04-09 at 6.45.55 PM",
+						"alt": ""
+					}
+				],
+				"attributes": [],
+				"default_attributes": [],
+				"variations": [],
+				"grouped_products": [],
+				"menu_order": 0,
+				"related_ids": [],
+				"meta_data": [],
+				"stock_status": "instock",
+				"_links": {
+					"self": [
+						{
+							"href": "https://legacygames.com/wp-json/wc/v3/products/3647"
+						}
+					],
+					"collection": [
+						{
+							"href": "https://legacygames.com/wp-json/wc/v3/products"
+						}
+					]
+				},
+				"product_id": 3647,
+				"product_name": "Sign Up Bonus - Atlantis: Pearls of the Deep",
+				"games": [
+					{
+						"game_id": "fcea10c8-0be8-48ca-9478-b7ef36807b7e",
+						"game_name": "Atlantis: Pearls of the Deep",
+						"game_description": "Join mermaids in dropping and grouping like-colored pearls to save Atlantis!",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/2020/04/pearls-e1632180479672.png",
+						"game_installed_size": "72.9 MB",
+						"installer_uuid": "265405f6-2a7b-4852-a831-081d8d808b92"
+					}
+				],
+				"product_gallery": []
+			}
+		],
+		"notificationsData": [
+			{
+				"title": "Best of Moonlight Mysteries - 10 Pack Out Now!",
+				"message": "Plus, get Mystery Case Files - 5 Pack for 30% off! Deal valid until 04/04."
+			}
+		],
+		"installerSlides": [
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Catalog.jpg"
+			},
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Indie-Games.jpg"
+			},
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_PBB.jpg"
+			}
+		],
+		"customersReviews": []
+	},
+	"user": {
+		"token": "Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		"profile": {
+			"id": 0,
+			"date_created_gmt": "2022-01-01T00:00:00",
+			"date_modified_gmt": "2022-01-01T00:00:00",
+			"email": "xxxxxxx@xxxxxxxx.xxx",
+			"first_name": "xxxxxxxxxxxxxxxx",
+			"last_name": "xxxxxxxxxxxxxx",
+			"username": "xxxxxxxxxxxxxxx",
+			"downloads": [
+				{
+					"order_id": 0,
+					"product_id": 59241
+				},
+				{
+					"order_id": 1,
+					"product_id": 3647
+				}
+			]
+		}
+	}
+}
