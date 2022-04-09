@@ -2,9 +2,12 @@
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Controls;
 
 namespace SteamTagsImporter
@@ -25,16 +28,25 @@ namespace SteamTagsImporter
         public override Guid Id { get; } = Guid.Parse("01b67948-33a1-42d5-bd39-e4e8a226d215");
 
         public SteamTagsImporter(IPlayniteAPI api)
-            : this(api, () => new SteamAppIdUtility(), () => new SteamTagScraper())
+            : this(api, null, null)
         {
         }
 
-        public SteamTagsImporter(IPlayniteAPI api, Func<ISteamAppIdUtility> getAppIdUtility, Func<ISteamTagScraper> getTagScraper)
+        private ISteamAppIdUtility GetDefaultSteamAppUtility()
+        {
+            var appListCache = new CachedFileDownloader("https://api.steampowered.com/ISteamApps/GetAppList/v2/",
+                                                        Path.Combine(GetPluginUserDataPath(), "SteamAppList.json"),
+                                                        TimeSpan.FromDays(3),
+                                                        Encoding.UTF8);
+            return new SteamAppIdUtility(appListCache);
+        }
+
+        public SteamTagsImporter(IPlayniteAPI api, Func<ISteamAppIdUtility> getAppIdUtility = null, Func<ISteamTagScraper> getTagScraper = null)
             : base(api)
         {
             this.Settings = new SteamTagsImporterSettings(this);
-            this.getAppIdUtility = getAppIdUtility;
-            this.getTagScraper = getTagScraper;
+            this.getAppIdUtility = getAppIdUtility ?? GetDefaultSteamAppUtility;
+            this.getTagScraper = getTagScraper ?? (() => new SteamTagScraper());
             this.Properties = new GenericPluginProperties { HasSettings = true };
         }
 

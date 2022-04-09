@@ -1,0 +1,8 @@
+AddonId: itchioBundleTagger_fc4fa75e-6e99-4c02-8547-113747efbb82
+Packages:
+  - Version: 0.3
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-09
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.3/itchIoBundleTagger_0_3.pext
+    Changelog:
+    - Initial release

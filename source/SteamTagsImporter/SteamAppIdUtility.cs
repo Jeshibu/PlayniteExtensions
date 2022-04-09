@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,16 +23,11 @@ namespace SteamTagsImporter
             get { return _steamIds ?? (_steamIds = GetSteamIdsByTitle()); }
         }
 
-        public Func<IWebClient> GetWebClient { get; }
+        public ICachedFile SteamAppList { get; }
 
-        public SteamAppIdUtility()
-            : this(() => new WebClientWrapper(new WebClient()))
+        public SteamAppIdUtility(ICachedFile steamAppList)
         {
-        }
-
-        public SteamAppIdUtility(Func<IWebClient> getWebClient)
-        {
-            GetWebClient = getWebClient;
+            SteamAppList = steamAppList;
         }
 
         private static string NormalizeTitle(string title)
@@ -101,31 +97,6 @@ namespace SteamTagsImporter
         {
             public int Appid { get; set; }
             public string Name { get; set; }
-        }
-    }
-
-    public interface IWebClient : IDisposable
-    {
-        void DownloadFile(string address, string fileName);
-    }
-
-    internal class WebClientWrapper : IWebClient
-    {
-        private readonly WebClient webClient;
-
-        public WebClientWrapper(WebClient webClient)
-        {
-            this.webClient = webClient;
-        }
-
-        public void Dispose()
-        {
-            webClient.Dispose();
-        }
-
-        public void DownloadFile(string address, string fileName)
-        {
-            webClient.DownloadFile(address, fileName);
         }
     }
 }

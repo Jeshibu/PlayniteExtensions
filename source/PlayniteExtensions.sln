@@ -15,7 +15,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegacyGamesLibrary", "Legac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegacyGamesLibrary.Tests", "LegacyGamesLibrary.Tests\LegacyGamesLibrary.Tests.csproj", "{7AA53E27-454B-44B4-9795-02B72F42F573}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "itchioBundleTagger", "itchioBundleTagger\itchioBundleTagger.csproj", "{0FC7F312-402B-4466-9E05-721CE2638268}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PlayniteExtensions.Common", "PlayniteExtensions.Common\PlayniteExtensions.Common.shproj", "{646571A9-6445-4F20-9EAD-4F6B7E1073C5}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{0fc7f312-402b-4466-9e05-721ce2638268}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{4fdf1e89-5bc3-4c72-8fda-0d580e7a5d5f}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{646571a9-6445-4f20-9ead-4f6b7e1073c5}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -45,6 +54,10 @@ Global
 		{7AA53E27-454B-44B4-9795-02B72F42F573}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AA53E27-454B-44B4-9795-02B72F42F573}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AA53E27-454B-44B4-9795-02B72F42F573}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FC7F312-402B-4466-9E05-721CE2638268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FC7F312-402B-4466-9E05-721CE2638268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FC7F312-402B-4466-9E05-721CE2638268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FC7F312-402B-4466-9E05-721CE2638268}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using SteamTagsImporter;
 using System;
 using System.Collections.Generic;
@@ -12,28 +13,30 @@ namespace SteamTagsImporter.Tests
 {
     public class SteamAppIdUtilityTests
     {
-        private class FakeWebClient : IWebClient
+        private class FakeCachedFile : ICachedFile
         {
-            public FakeWebClient(string localFilePath)
+            public FakeCachedFile(string localFilePath, Encoding encoding)
             {
                 LocalFilePath = localFilePath;
+                Encoding = encoding;
             }
 
             public string LocalFilePath { get; }
+            public Encoding Encoding { get; }
 
-            public void Dispose()
+            public string GetFileContents()
             {
+                return File.ReadAllText(LocalFilePath, Encoding);
             }
 
-            public void DownloadFile(string address, string fileName)
+            public void RefreshCache()
             {
-                File.Copy(LocalFilePath, fileName, true);
             }
         }
 
         private static SteamAppIdUtility Setup()
         {
-            var scraper = new SteamAppIdUtility(() => new FakeWebClient("./applist.json"));
+            var scraper = new SteamAppIdUtility(new FakeCachedFile("./applist.json", Encoding.UTF8));
             return scraper;
         }
 
@@ -43,6 +46,7 @@ namespace SteamTagsImporter.Tests
             var game = new Game("THOR.N");
             var util = Setup();
             var id = util.GetSteamGameId(game);
+            Assert.Null(id);
         }
 
         [Theory]
