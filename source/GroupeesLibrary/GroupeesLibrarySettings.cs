@@ -15,18 +15,12 @@ namespace GroupeesLibrary
         private int userId;
         private List<Cookie> cookies = new List<Cookie>();
         private Dictionary<string, GameInstallInfo> installData = new Dictionary<string, GameInstallInfo>();
-        private string installationDirectory;
-        private string downloadDirectory;
 
         public int UserId { get => userId; set => SetValue(ref userId, value); }
 
         public List<Cookie> Cookies { get => cookies; set => SetValue(ref cookies, value); }
 
         public Dictionary<string,GameInstallInfo> InstallData { get => installData; set => SetValue(ref installData, value); }
-
-        public string InstallationDirectory { get => installationDirectory; set => SetValue(ref installationDirectory, value); }
-
-        public string DownloadDirectory { get => downloadDirectory; set => SetValue(ref downloadDirectory, value); }
     }
 
     public enum AuthStatus

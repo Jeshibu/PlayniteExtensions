@@ -7,6 +7,7 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
+        <TextBlock TextWrapping="Wrap">Games will only be imported if they've been revealed. The login persistence is pretty flakey right now, and you might need to re-authenticate fairly often.</TextBlock>
         <StackPanel Orientation="Horizontal"
                         DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
             <Button Content="Authenticate"
@@ -19,7 +20,7 @@
                     </PriorityBinding>
                 </TextBlock.Tag>
                 <TextBlock.Style>
-                    <Style TargetType="TextBlock">
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
                         <Style.Triggers>
                             <Trigger Property="Tag" Value="{x:Static groupees:AuthStatus.Checking}">
                                 <Setter Property="Text" Value="Checking..." />
@@ -31,7 +32,7 @@
                                 <Setter Property="Text" Value="Requires authentication" />
                             </Trigger>
                             <Trigger Property="Tag" Value="{x:Static groupees:AuthStatus.Failed}">
-                                <Setter Property="Text" Value="Failed to check" />
+                                <Setter Property="Text" Value="Failed to check authentication status" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
