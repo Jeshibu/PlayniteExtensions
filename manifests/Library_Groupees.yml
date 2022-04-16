@@ -1,0 +1,10 @@
+AddonId: GroupeesLibrary_42ff71aa-34dc-4b12-86b6-1328136c958f
+Packages:
+  - Version: 0.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-16
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/groupees0.1/GroupeesLibrary_0_1.pext
+    Changelog:
+     - Initial release
+     - Manual game (un)install
+     - Known issue - having to re-authenticate frequently
