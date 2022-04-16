@@ -72,12 +72,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GroupeesInstallController.cs" />
     <Compile Include="GroupeesLibrary.cs" />
     <Compile Include="GroupeesLibrarySettings.cs" />
     <Compile Include="GroupeesLibrarySettingsView.xaml.cs">
       <DependentUpon>GroupeesLibrarySettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GroupeesManualInstallController.cs" />
+    <Compile Include="GroupeesManualUninstallController.cs" />
     <Compile Include="GroupeesScraper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

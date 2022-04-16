@@ -102,6 +102,11 @@ namespace GroupeesLibrary
             yield return new GroupeesManualInstallController(args.Game, settings.Settings, PlayniteApi, this);
         }
 
+        public override IEnumerable<UninstallController> GetUninstallActions(GetUninstallActionsArgs args)
+        {
+            yield return new GroupeesManualUninstallController(args.Game, settings.Settings, PlayniteApi, this);
+        }
+
         public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)
         {
             if (!settings.Settings.InstallData.TryGetValue(args.Game.GameId, out var installData))
