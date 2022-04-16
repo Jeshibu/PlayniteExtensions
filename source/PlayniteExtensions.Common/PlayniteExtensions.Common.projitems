@@ -10,5 +10,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CachedFileDownloader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PlayniteConvert.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PluginSettingsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StringExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebDownloader.cs" />
   </ItemGroup>
 </Project>

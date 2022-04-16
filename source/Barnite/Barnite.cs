@@ -1,6 +1,7 @@
 ﻿using Barnite.Scrapers;
 using Playnite.SDK;
 using Playnite.SDK.Plugins;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,7 +27,7 @@ namespace Barnite
             };
 
             var platformUtility = new PlatformUtility(api);
-            var webclient = new Webclient();
+            var webclient = new WebDownloader();
             Scrapers.Add(new MobyGamesScraper(platformUtility, webclient));
             Scrapers.Add(new PlayAsiaScraper(platformUtility, webclient));
             Scrapers.Add(new OgdbScraper(platformUtility, webclient));

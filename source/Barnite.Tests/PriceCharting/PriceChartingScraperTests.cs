@@ -12,7 +12,7 @@ namespace Barnite.Tests.PriceCharting
         [Fact]
         public void ScrapingGodOfWarReturnsCorrectMetadata()
         {
-            var stringDownloader = new FakeWebclient();
+            var stringDownloader = new FakeWebDownloader();
             stringDownloader.FilesByUrl.Add("https://www.pricecharting.com/search-products?category=videogames&q=0711719357476", "./PriceCharting/gow_search.html");
             stringDownloader.FilesByUrl.Add("https://www.pricecharting.com/offers?product=57416", "./PriceCharting/gow_details.html");
 

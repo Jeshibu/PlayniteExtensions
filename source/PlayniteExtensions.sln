@@ -19,11 +19,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "itchioBundleTagger", "itchi
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PlayniteExtensions.Common", "PlayniteExtensions.Common\PlayniteExtensions.Common.shproj", "{646571A9-6445-4F20-9EAD-4F6B7E1073C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupeesLibrary", "GroupeesLibrary\GroupeesLibrary.csproj", "{6CB8C312-70CC-4A45-ACBD-9974EA8611F8}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{0fc7f312-402b-4466-9e05-721ce2638268}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{4fdf1e89-5bc3-4c72-8fda-0d580e7a5d5f}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{646571a9-6445-4f20-9ead-4f6b7e1073c5}*SharedItemsImports = 13
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{6cb8c312-70cc-4a45-acbd-9974ea8611f8}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{afa8de86-101b-4449-a237-2030d7f74ce2}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +62,10 @@ Global
 		{0FC7F312-402B-4466-9E05-721CE2638268}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FC7F312-402B-4466-9E05-721CE2638268}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FC7F312-402B-4466-9E05-721CE2638268}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CB8C312-70CC-4A45-ACBD-9974EA8611F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CB8C312-70CC-4A45-ACBD-9974EA8611F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CB8C312-70CC-4A45-ACBD-9974EA8611F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CB8C312-70CC-4A45-ACBD-9974EA8611F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

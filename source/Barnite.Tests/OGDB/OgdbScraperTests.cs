@@ -13,7 +13,7 @@ namespace Barnite.Tests.OGDB
         [Fact]
         public void ScrapingGodOfWarAscensionsReturnsCorrectMetadata()
         {
-            var stringDownloader = new FakeWebclient();
+            var stringDownloader = new FakeWebDownloader();
             stringDownloader.FilesByUrl.Add("https://ogdb.eu/index.php?section=simplesearchresults&searchstring=711719230151&how=AND", "./OGDB/gowa_search.html");
             stringDownloader.FilesByUrl.Add("https://ogdb.eu/index.php?section=game&gameid=136487", "./OGDB/gowa_details.html");
 
@@ -34,7 +34,7 @@ namespace Barnite.Tests.OGDB
         [Fact]
         public void ScrapingDeusExReturnsCorrectMetadata()
         {
-            var stringDownloader = new FakeWebclient();
+            var stringDownloader = new FakeWebDownloader();
             stringDownloader.FilesByUrl.Add("https://ogdb.eu/index.php?section=simplesearchresults&searchstring=788687107112&how=AND", "./OGDB/deusex_search.html");
             stringDownloader.FilesByUrl.Add("https://ogdb.eu/index.php?section=game&gameid=42819", "./OGDB/deusex_details.html");
 

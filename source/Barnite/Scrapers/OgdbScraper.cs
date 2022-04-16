@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -13,7 +14,7 @@ namespace Barnite.Scrapers
 {
     public class OgdbScraper : MetadataScraper
     {
-        public OgdbScraper(IPlatformUtility platformUtility, IWebclient webclient) : base(platformUtility, webclient)
+        public OgdbScraper(IPlatformUtility platformUtility, IWebDownloader webclient) : base(platformUtility, webclient)
         {
         }
 
@@ -34,7 +35,7 @@ namespace Barnite.Scrapers
             if (name == null)
                 return null;
 
-            name = EndBracesTextRegex.Replace(HtmlDecodeAndNormalizeWhitespace(name), string.Empty);
+            name = EndBracesTextRegex.Replace(name.HtmlDecode(), string.Empty);
 
             if (name == "Ergebnisse einfacher Suche") //search page title
                 return null;
@@ -62,9 +63,9 @@ namespace Barnite.Scrapers
             {
                 foreach (HtmlNode tableRow in tableRows)
                 {
-                    var prop = HtmlDecodeAndNormalizeWhitespace(tableRow.SelectSingleNode("td[@class='tboldc']")?.InnerText)?.TrimEnd(':').ToLowerInvariant();
+                    var prop = tableRow.SelectSingleNode("td[@class='tboldc']")?.InnerText.HtmlDecode().TrimEnd(':').ToLowerInvariant();
                     var valueNode = tableRow.SelectSingleNode("td[starts-with(@class, 'tnorm')]");
-                    var value = HtmlDecodeAndNormalizeWhitespace(valueNode?.InnerText);
+                    var value = valueNode?.InnerText.HtmlDecode();
 
                     if (prop == null || value == null)
                         continue;
@@ -90,12 +91,12 @@ namespace Barnite.Scrapers
                                 game.ReleaseDate = ParseReleaseDate(value);
                             break;
                         case "entwickler":
-                            var devs = valueNode.SelectNodes(".//a")?.Select(a => HtmlDecodeAndNormalizeWhitespace(a.InnerText));
+                            var devs = valueNode.SelectNodes(".//a")?.Select(a => a.InnerText.HtmlDecode());
                             if (devs != null)
                                 game.Developers = devs.Select(d => new MetadataNameProperty(d)).ToHashSet<MetadataProperty>();
                             break;
                         case "publisher":
-                            var publishers = valueNode.SelectNodes(".//a")?.Select(a => HtmlDecodeAndNormalizeWhitespace(a.InnerText));
+                            var publishers = valueNode.SelectNodes(".//a")?.Select(a => a.InnerText.HtmlDecode());
                             if (publishers != null)
                                 game.Publishers = publishers.Select(d => new MetadataNameProperty(d)).ToHashSet<MetadataProperty>();
                             break;
@@ -118,7 +119,7 @@ namespace Barnite.Scrapers
                 {
                     yield return new GameLink
                     {
-                        Name = HtmlDecodeAndNormalizeWhitespace(link.InnerText),
+                        Name = link.InnerText.HtmlDecode(),
                         Url = GetAbsoluteUrl(link.Attributes["href"].Value)
                     };
                 }

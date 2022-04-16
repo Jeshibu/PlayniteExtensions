@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,7 +12,7 @@ namespace Barnite.Scrapers
     {
         public override string Name { get; } = "Moby Games";
 
-        public MobyGamesScraper(IPlatformUtility platformUtility, IWebclient webclient)
+        public MobyGamesScraper(IPlatformUtility platformUtility, IWebDownloader webclient)
             : base(platformUtility, webclient)
         {
         }
@@ -28,7 +29,7 @@ namespace Barnite.Scrapers
             {
                 string property = nodes[i].InnerText;
                 var valueNode = nodes[i + 1];
-                var values = valueNode.SelectNodes("a").Select(n => HtmlDecodeAndNormalizeWhitespace(n.InnerText)).ToArray();
+                var values = valueNode.SelectNodes("a").Select(n => n.InnerText.HtmlDecode()).ToArray();
                 output.Add(new Tuple<string, string[]>(property, values));
             }
             return output;
@@ -43,10 +44,10 @@ namespace Barnite.Scrapers
         {
             var page = new HtmlAgilityPack.HtmlDocument();
             page.LoadHtml(html);
-            var title = HtmlDecodeAndNormalizeWhitespace(page.DocumentNode.SelectSingleNode(@"//h1[@class='niceHeaderTitle']/a[1]")?.InnerText);
+            var title = page.DocumentNode.SelectSingleNode(@"//h1[@class='niceHeaderTitle']/a[1]")?.InnerText.HtmlDecode();
             if (title == null) return null;
 
-            var platformName = HtmlDecodeAndNormalizeWhitespace(page.DocumentNode.SelectSingleNode(@"//h1[@class='niceHeaderTitle']/small/a")?.InnerText);
+            var platformName = page.DocumentNode.SelectSingleNode(@"//h1[@class='niceHeaderTitle']/small/a")?.InnerText.HtmlDecode();
             var data = new GameMetadata
             {
                 Name = title,
@@ -149,7 +150,7 @@ namespace Barnite.Scrapers
 
             foreach (var a in links)
             {
-                yield return new GameLink { Url = a.Attributes["href"].Value, Name = HtmlDecodeAndNormalizeWhitespace(a.InnerText) };
+                yield return new GameLink { Url = a.Attributes["href"].Value, Name = a.InnerText.HtmlDecode() };
             }
         }
     }

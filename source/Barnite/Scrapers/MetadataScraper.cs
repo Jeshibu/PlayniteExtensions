@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,10 @@ namespace Barnite.Scrapers
         public abstract string Name { get; }
 
         protected IPlatformUtility PlatformUtility { get; set; }
-        protected IWebclient Webclient { get; set; }
+        protected IWebDownloader Webclient { get; set; }
 
 
-        public MetadataScraper(IPlatformUtility platformUtility, IWebclient webclient)
+        public MetadataScraper(IPlatformUtility platformUtility, IWebDownloader webclient)
         {
             PlatformUtility = platformUtility;
             Webclient = webclient;
@@ -47,7 +48,7 @@ namespace Barnite.Scrapers
             }
 
             //so that wasn't a game details page; try and parse it as a search result page instead
-            var links = ScrapeSearchResultHtml(response.ResponseContent).ToList();
+            var links = ScrapeSearchResultHtml(response.ResponseContent)?.ToList();
             if (links != null && links.Count == 1)
             {
                 response = Webclient.DownloadString(links[0].Url, ScrapeRedirectUrl, ScrapeJsCookies);
@@ -57,14 +58,6 @@ namespace Barnite.Scrapers
             }
 
             return null;
-        }
-
-        protected static string HtmlDecodeAndNormalizeWhitespace(string input)
-        {
-            if (input == null)
-                return null;
-
-            return Regex.Replace(HttpUtility.HtmlDecode(input), @"\s", " ").Trim();
         }
 
         /// <summary>

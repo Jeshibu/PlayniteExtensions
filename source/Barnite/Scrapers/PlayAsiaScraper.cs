@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Barnite.Scrapers
 {
     public class PlayAsiaScraper : MetadataScraper
     {
-        public PlayAsiaScraper(IPlatformUtility platformUtility, IWebclient webclient)
+        public PlayAsiaScraper(IPlatformUtility platformUtility, IWebDownloader webclient)
             : base(platformUtility, webclient)
         {
         }
@@ -61,7 +62,7 @@ namespace Barnite.Scrapers
 
             name = EndBracesTextRegex.Replace(name, string.Empty);
 
-            var game = new GameMetadata { Name = HtmlDecodeAndNormalizeWhitespace(name) };
+            var game = new GameMetadata { Name = name.HtmlDecode() };
 
             string comptext = doc.DocumentNode.SelectSingleNode("//div[@class='p_table']//div[@id='comptext']")?.InnerText;
             if (comptext != null)
@@ -70,7 +71,7 @@ namespace Barnite.Scrapers
                 if (match.Success)
                 {
                     string platformMatch = match.Groups["platform"].Value;
-                    var platformNames = platformMatch.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).Select(HtmlDecodeAndNormalizeWhitespace);
+                    var platformNames = platformMatch.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).Select(StringExtensions.HtmlDecode);
                     game.Platforms = new HashSet<MetadataProperty>(platformNames.Select(PlatformUtility.GetPlatform));
                 }
             }

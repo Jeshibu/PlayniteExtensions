@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Barnite.Scrapers
     {
         public override string Name { get; } = "PriceCharting";
 
-        public PriceChartingScraper(IPlatformUtility platformUtility, IWebclient webclient)
+        public PriceChartingScraper(IPlatformUtility platformUtility, IWebDownloader webclient)
             : base(platformUtility, webclient)
         {
         }
@@ -32,9 +33,9 @@ namespace Barnite.Scrapers
             if (titleNode == null)
                 return null;
 
-            string title = HtmlDecodeAndNormalizeWhitespace(titleNode.SelectSingleNode("text()")?.InnerText);
+            string title = titleNode.SelectSingleNode("text()")?.InnerText.HtmlDecode();
             title = title?.Trim(' ', '|');
-            string platform = HtmlDecodeAndNormalizeWhitespace(titleNode.SelectSingleNode("a")?.InnerText);
+            string platform = titleNode.SelectSingleNode("a")?.InnerText.HtmlDecode();
             if (title == null || platform == null)
                 return null;
 
@@ -68,7 +69,7 @@ namespace Barnite.Scrapers
 
             foreach (var a in links)
             {
-                yield return new GameLink { Name = HtmlDecodeAndNormalizeWhitespace(a.InnerText), Url = GetAbsoluteUrl(a.Attributes["href"].Value) };
+                yield return new GameLink { Name = a.InnerText.HtmlDecode(), Url = GetAbsoluteUrl(a.Attributes["href"].Value) };
             }
         }
     }

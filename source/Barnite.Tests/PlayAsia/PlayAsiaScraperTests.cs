@@ -16,7 +16,7 @@ namespace Barnite.Tests.PlayAsia
         [Fact]
         public void ScrapingAstralChainReturnsCorrectMetadata()
         {
-            var stringDownloader = new FakeWebclient("https://www.play-asia.com/search/045496424671", "./PlayAsia/astralchain.html");
+            var stringDownloader = new FakeWebDownloader("https://www.play-asia.com/search/045496424671", "./PlayAsia/astralchain.html");
 
             var scraper = new PlayAsiaScraper(new PlatformUtility("Nintendo Switch", "nintendo_switch"), stringDownloader);
 
@@ -30,7 +30,7 @@ namespace Barnite.Tests.PlayAsia
         [Fact]
         public void ScrapingCyberpunk2077ReturnsCorrectMetadata()
         {
-            var stringDownloader = new FakeWebclient("https://www.play-asia.com/search/5902367640767", "./PlayAsia/cyberpunk2077.html");
+            var stringDownloader = new FakeWebDownloader("https://www.play-asia.com/search/5902367640767", "./PlayAsia/cyberpunk2077.html");
 
             var platformSpecIds = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
             {

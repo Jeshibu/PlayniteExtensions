@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="GroupeesLibrary.GroupeesLibrarySettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:groupees="clr-namespace:GroupeesLibrary"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <StackPanel Margin="20">
+        <StackPanel Orientation="Horizontal"
+                        DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
+            <Button Content="Authenticate"
+                        Command="{Binding LoginCommand}"/>
+            <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">
+                <TextBlock.Tag>
+                    <PriorityBinding>
+                        <Binding Path="AuthStatus" IsAsync="True" />
+                        <Binding Source="{x:Static groupees:AuthStatus.Checking}" />
+                    </PriorityBinding>
+                </TextBlock.Tag>
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <Trigger Property="Tag" Value="{x:Static groupees:AuthStatus.Checking}">
+                                <Setter Property="Text" Value="Checking..." />
+                            </Trigger>
+                            <Trigger Property="Tag" Value="{x:Static groupees:AuthStatus.Ok}">
+                                <Setter Property="Text" Value="Logged in" />
+                            </Trigger>
+                            <Trigger Property="Tag" Value="{x:Static groupees:AuthStatus.AuthRequired}">
+                                <Setter Property="Text" Value="Requires authentication" />
+                            </Trigger>
+                            <Trigger Property="Tag" Value="{x:Static groupees:AuthStatus.Failed}">
+                                <Setter Property="Text" Value="Failed to check" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>
