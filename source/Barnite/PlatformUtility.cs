@@ -61,7 +61,6 @@ namespace Barnite
             output.Add("Windows", "pc_windows");
             output.Add("DOS", "pc_dos");
             output.Add("Linux", "pc_linux");
-            output.Add("Vita", "sony_vita");
             output.Add("Microsoft Xbox Series X", "xbox_series");
             output.Add("Microsoft Xbox Series S", "xbox_series");
             output.Add("Xbox Series X", "xbox_series");
@@ -70,6 +69,15 @@ namespace Barnite
             output.Add("Microsoft Xbox Series S/X", "xbox_series");
             output.Add("Xbox Series X/S", "xbox_series");
             output.Add("Xbox Series S/X", "xbox_series");
+            output.Add("PS", "sony_playstation");
+            output.Add("PSX", "sony_playstation");
+            output.Add("PS1", "sony_playstation");
+            output.Add("PS2", "sony_playstation2");
+            output.Add("PS3", "sony_playstation3");
+            output.Add("PS4", "sony_playstation4");
+            output.Add("PS5", "sony_playstation5");
+            output.Add("PSP", "sony_psp");
+            output.Add("Vita", "sony_vita");
             return output;
         }
 
@@ -81,6 +89,11 @@ namespace Barnite
                 return new MetadataSpecProperty(specId);
 
             return new MetadataNameProperty(sanitizedPlatformName);
+        }
+
+        public IEnumerable<string> GetPlatformNames()
+        {
+            return PlatformSpecNameByNormalName.Keys;
         }
     }
 }
