@@ -18,7 +18,8 @@ namespace Barnite.Scrapers
         {
         }
 
-        public override string Name => "OGDB";
+        public override string Name { get; } = "OGDB";
+        public override string WebsiteUrl { get; } = "https://ogdb.eu/";
         private Regex EndBracesTextRegex = new Regex(@"(\s+(\([^)]+\)|\[[^]]+\]))+\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
         protected override string GetSearchUrlFromBarcode(string barcode)

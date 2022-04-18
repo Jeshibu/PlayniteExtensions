@@ -16,6 +16,7 @@ namespace Barnite.Scrapers
         }
 
         public override string Name { get; } = "UPCitemdb";
+        public override string WebsiteUrl { get; } = "https://www.upcitemdb.com";
 
         protected override string GetSearchUrlFromBarcode(string barcode)
         {

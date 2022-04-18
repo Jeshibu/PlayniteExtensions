@@ -11,6 +11,7 @@ namespace Barnite.Scrapers
     public class MobyGamesScraper : MetadataScraper
     {
         public override string Name { get; } = "Moby Games";
+        public override string WebsiteUrl { get; } = "https://www.mobygames.com";
 
         public MobyGamesScraper(IPlatformUtility platformUtility, IWebDownloader webclient)
             : base(platformUtility, webclient)

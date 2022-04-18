@@ -12,6 +12,7 @@ namespace Barnite.Scrapers
     public abstract class MetadataScraper
     {
         public abstract string Name { get; }
+        public abstract string WebsiteUrl { get; }
 
         protected IPlatformUtility PlatformUtility { get; set; }
         protected IWebDownloader Webclient { get; set; }

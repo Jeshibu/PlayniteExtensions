@@ -13,6 +13,7 @@ namespace Barnite.Scrapers
     public class PriceChartingScraper : MetadataScraper
     {
         public override string Name { get; } = "PriceCharting";
+        public override string WebsiteUrl { get; } = "https://www.pricecharting.com";
 
         public PriceChartingScraper(IPlatformUtility platformUtility, IWebDownloader webclient)
             : base(platformUtility, webclient)

@@ -32,6 +32,7 @@ namespace Barnite
             Scrapers.Add(new PlayAsiaScraper(platformUtility, webclient));
             Scrapers.Add(new OgdbScraper(platformUtility, webclient));
             Scrapers.Add(new PriceChartingScraper(platformUtility, webclient));
+            Scrapers.Add(new UpcItemDbScraper(platformUtility, webclient));
         }
 
         /*

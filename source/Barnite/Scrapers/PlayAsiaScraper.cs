@@ -20,6 +20,7 @@ namespace Barnite.Scrapers
         }
 
         public override string Name { get; } = "Play-Asia";
+        public override string WebsiteUrl { get; } = "https://www.play-asia.com";
 
         protected override string GetSearchUrlFromBarcode(string barcode)
         {
