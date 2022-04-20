@@ -99,16 +99,25 @@ namespace GroupeesLibrary
 
         public override IEnumerable<InstallController> GetInstallActions(GetInstallActionsArgs args)
         {
+            if (args.Game.PluginId != Id)
+                yield break;
+
             yield return new GroupeesManualInstallController(args.Game, settings.Settings, PlayniteApi, this);
         }
 
         public override IEnumerable<UninstallController> GetUninstallActions(GetUninstallActionsArgs args)
         {
+            if (args.Game.PluginId != Id)
+                yield break;
+
             yield return new GroupeesManualUninstallController(args.Game, settings.Settings, PlayniteApi, this);
         }
 
         public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)
         {
+            if (args.Game.PluginId != Id)
+                yield break;
+
             if (!settings.Settings.InstallData.TryGetValue(args.Game.GameId, out var installData))
             {
                 logger.Debug($"No install data found for {args.Game.Name}, ID: {args.Game.GameId}");
