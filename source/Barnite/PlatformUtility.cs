@@ -61,6 +61,9 @@ namespace Barnite
             output.Add("Windows", "pc_windows");
             output.Add("DOS", "pc_dos");
             output.Add("Linux", "pc_linux");
+            output.Add("PC CD-ROM", "pc_windows");
+            output.Add("PC DVD", "pc_windows");
+            output.Add("PC DVD-ROM", "pc_windows");
             output.Add("Microsoft Xbox Series X", "xbox_series");
             output.Add("Microsoft Xbox Series S", "xbox_series");
             output.Add("Xbox Series X", "xbox_series");

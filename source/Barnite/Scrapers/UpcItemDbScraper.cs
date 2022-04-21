@@ -11,10 +11,6 @@ namespace Barnite.Scrapers
 {
     public class UpcItemDbScraper : MetadataScraper
     {
-        public UpcItemDbScraper(IPlatformUtility platformUtility, IWebDownloader webclient) : base(platformUtility, webclient)
-        {
-        }
-
         public override string Name { get; } = "UPCitemdb";
         public override string WebsiteUrl { get; } = "https://www.upcitemdb.com";
 
@@ -33,7 +29,7 @@ namespace Barnite.Scrapers
             var item = response.Items[0];
             GameMetadata data = new GameMetadata { Description = item.Description, Platforms = new HashSet<MetadataProperty>() };
 
-            data.Name = Regex.Replace(item.Title, @"(\s*(\((?<platform>[a-z 0-9]+)\)|sealed|used|new))+$", (match) =>
+            data.Name = Regex.Replace(item.Title, @"(\s*(\((?<platform>[a-z 0-9]+)\)|\bsealed|\bused|\bnew)\.?)+$", (match) =>
             {
                 string potentialPlatformName = match.Groups["platform"]?.Value;
                 if (string.IsNullOrEmpty(potentialPlatformName))

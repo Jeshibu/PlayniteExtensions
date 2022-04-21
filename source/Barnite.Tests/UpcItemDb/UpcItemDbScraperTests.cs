@@ -17,7 +17,8 @@ namespace Barnite.Tests.UpcItemDb
             var stringDownloader = new FakeWebDownloader();
             stringDownloader.FilesByUrl.Add("https://api.upcitemdb.com/prod/trial/lookup?upc=045496901431", "./UpcItemDb/pikmin.json");
 
-            var scraper = new UpcItemDbScraper(new PlatformUtility("Wii", "nintendo_wii"), stringDownloader);
+            var scraper = new UpcItemDbScraper();
+            scraper.Initialize(new PlatformUtility("Wii", "nintendo_wii"), stringDownloader);
 
             var data = scraper.GetMetadataFromBarcode("045496901431");
 
@@ -33,7 +34,8 @@ namespace Barnite.Tests.UpcItemDb
             var stringDownloader = new FakeWebDownloader();
             stringDownloader.FilesByUrl.Add("https://api.upcitemdb.com/prod/trial/lookup?upc=0018946010595", "./UpcItemDb/ngs.json");
 
-            var scraper = new UpcItemDbScraper(new PlatformUtility("PS3", "sony_playstation3"), stringDownloader);
+            var scraper = new UpcItemDbScraper();
+            scraper.Initialize(new PlatformUtility("PS3", "sony_playstation3"), stringDownloader);
 
             var data = scraper.GetMetadataFromBarcode("0018946010595");
 
@@ -48,7 +50,8 @@ namespace Barnite.Tests.UpcItemDb
             var stringDownloader = new FakeWebDownloader();
             stringDownloader.FilesByUrl.Add("https://api.upcitemdb.com/prod/trial/lookup?upc=5060073306725", "./UpcItemDb/ngs2.json");
 
-            var scraper = new UpcItemDbScraper(new PlatformUtility("PS3", "sony_playstation3"), stringDownloader);
+            var scraper = new UpcItemDbScraper();
+            scraper.Initialize(new PlatformUtility("PS3", "sony_playstation3"), stringDownloader);
 
             var data = scraper.GetMetadataFromBarcode("5060073306725");
 
@@ -63,7 +66,8 @@ namespace Barnite.Tests.UpcItemDb
             var stringDownloader = new FakeWebDownloader();
             stringDownloader.FilesByUrl.Add("https://api.upcitemdb.com/prod/trial/lookup?upc=5021290041059", "./UpcItemDb/nier.json");
 
-            var scraper = new UpcItemDbScraper(new PlatformUtility("Xbox 360", "xbox360"), stringDownloader);
+            var scraper = new UpcItemDbScraper();
+            scraper.Initialize(new PlatformUtility("Xbox 360", "xbox360"), stringDownloader);
 
             var data = scraper.GetMetadataFromBarcode("5021290041059");
 
@@ -78,13 +82,31 @@ namespace Barnite.Tests.UpcItemDb
             var stringDownloader = new FakeWebDownloader();
             stringDownloader.FilesByUrl.Add("https://api.upcitemdb.com/prod/trial/lookup?upc=5055277016662", "./UpcItemDb/yakuza_dead_souls.json");
 
-            var scraper = new UpcItemDbScraper(new PlatformUtility("PS3", "sony_playstation3"), stringDownloader);
+            var scraper = new UpcItemDbScraper();
+            scraper.Initialize(new PlatformUtility("PS3", "sony_playstation3"), stringDownloader);
 
             var data = scraper.GetMetadataFromBarcode("5055277016662");
 
             Assert.Equal("Yakuza Dead Souls Limited Edition Game", data.Name);
             Assert.Equal(new MetadataSpecProperty("sony_playstation3"), data.Platforms.Single());
             Assert.Equal("Yakuza Dead Souls Limited Edition Game PS3", data.Description);
+        }
+
+        [Fact]
+        public void ScrapingTrackmaniaCorrectMetadata()
+        {
+            var stringDownloader = new FakeWebDownloader();
+            stringDownloader.FilesByUrl.Add("https://api.upcitemdb.com/prod/trial/lookup?upc=3512289014953 ", "./UpcItemDb/tuf.json");
+
+            var scraper = new UpcItemDbScraper();
+            scraper.Initialize(new PlatformUtility("PC DVD", "pc_windows"), stringDownloader);
+
+            var data = scraper.GetMetadataFromBarcode("3512289014953 ");
+
+            Assert.Equal("Trackmania United Forever", data.Name);
+            Assert.Equal(new MetadataSpecProperty("pc_windows"), data.Platforms.Single());
+            Assert.Equal(string.Empty, data.Description);
+            Assert.Equal("https://i2.onbuy.com/product/3b0506aef6364a5092dbfc6bd47d330e-l3294852.jpg", data.CoverImage.Path);
         }
     }
 }

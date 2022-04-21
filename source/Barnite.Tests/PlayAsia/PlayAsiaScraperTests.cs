@@ -18,7 +18,8 @@ namespace Barnite.Tests.PlayAsia
         {
             var stringDownloader = new FakeWebDownloader("https://www.play-asia.com/search/045496424671", "./PlayAsia/astralchain.html");
 
-            var scraper = new PlayAsiaScraper(new PlatformUtility("Nintendo Switch", "nintendo_switch"), stringDownloader);
+            var scraper = new PlayAsiaScraper();
+            scraper.Initialize(new PlatformUtility("Nintendo Switch", "nintendo_switch"), stringDownloader);
 
             var data = scraper.GetMetadataFromBarcode("045496424671");
 
@@ -38,7 +39,8 @@ namespace Barnite.Tests.PlayAsia
                 { "Xbox Series X", "xbox_series" },
             };
 
-            var scraper = new PlayAsiaScraper(new PlatformUtility(platformSpecIds), stringDownloader);
+            var scraper = new PlayAsiaScraper();
+            scraper.Initialize(new PlatformUtility(platformSpecIds), stringDownloader);
 
             var data = scraper.GetMetadataFromBarcode("5902367640767");
 

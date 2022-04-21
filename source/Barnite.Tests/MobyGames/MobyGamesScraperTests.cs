@@ -11,7 +11,8 @@ namespace Barnite.Tests.MobyGames
         public void ScrapingCallOfCthulhuReturnsCorrectMetadata()
         {
             var webclient = new FakeWebDownloader("https://www.mobygames.com/search/quick?q=093155118706", "./MobyGames/coc.html");
-            var scraper = new MobyGamesScraper(new PlatformUtility("Xbox", "xbox"), webclient);
+            var scraper = new MobyGamesScraper();
+            scraper.Initialize(new PlatformUtility("Xbox", "xbox"), webclient);
 
             var data = scraper.GetMetadataFromBarcode("093155118706");
 

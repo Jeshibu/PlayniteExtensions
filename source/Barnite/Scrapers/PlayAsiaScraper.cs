@@ -14,11 +14,6 @@ namespace Barnite.Scrapers
 {
     public class PlayAsiaScraper : MetadataScraper
     {
-        public PlayAsiaScraper(IPlatformUtility platformUtility, IWebDownloader webclient)
-            : base(platformUtility, webclient)
-        {
-        }
-
         public override string Name { get; } = "Play-Asia";
         public override string WebsiteUrl { get; } = "https://www.play-asia.com";
 

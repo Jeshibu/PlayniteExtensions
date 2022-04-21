@@ -14,10 +14,6 @@ namespace Barnite.Scrapers
 {
     public class OgdbScraper : MetadataScraper
     {
-        public OgdbScraper(IPlatformUtility platformUtility, IWebDownloader webclient) : base(platformUtility, webclient)
-        {
-        }
-
         public override string Name { get; } = "OGDB";
         public override string WebsiteUrl { get; } = "https://ogdb.eu/";
         private Regex EndBracesTextRegex = new Regex(@"(\s+(\([^)]+\)|\[[^]]+\]))+\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled);

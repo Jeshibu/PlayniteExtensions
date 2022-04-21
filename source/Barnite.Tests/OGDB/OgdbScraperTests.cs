@@ -17,7 +17,8 @@ namespace Barnite.Tests.OGDB
             stringDownloader.FilesByUrl.Add("https://ogdb.eu/index.php?section=simplesearchresults&searchstring=711719230151&how=AND", "./OGDB/gowa_search.html");
             stringDownloader.FilesByUrl.Add("https://ogdb.eu/index.php?section=game&gameid=136487", "./OGDB/gowa_details.html");
 
-            var scraper = new OgdbScraper(new PlatformUtility("Sony Playstation 3", "sony_playstation3"), stringDownloader);
+            var scraper = new OgdbScraper();
+            scraper.Initialize(new PlatformUtility("Sony Playstation 3", "sony_playstation3"), stringDownloader);
 
             var data = scraper.GetMetadataFromBarcode("711719230151");
 
@@ -38,7 +39,8 @@ namespace Barnite.Tests.OGDB
             stringDownloader.FilesByUrl.Add("https://ogdb.eu/index.php?section=simplesearchresults&searchstring=788687107112&how=AND", "./OGDB/deusex_search.html");
             stringDownloader.FilesByUrl.Add("https://ogdb.eu/index.php?section=game&gameid=42819", "./OGDB/deusex_details.html");
 
-            var scraper = new OgdbScraper(new PlatformUtility(new Dictionary<string,string>()), stringDownloader);
+            var scraper = new OgdbScraper();
+            scraper.Initialize(new PlatformUtility(new Dictionary<string,string>()), stringDownloader);
 
             var data = scraper.GetMetadataFromBarcode("788687107112");
 

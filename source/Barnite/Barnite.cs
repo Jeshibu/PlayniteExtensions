@@ -6,36 +6,38 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Windows.Controls;
 
 namespace Barnite
 {
     public class Barnite : GenericPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private List<MetadataScraper> Scrapers = new List<MetadataScraper>();
+        private ScraperManager _scraperManager;
 
-        //private BarniteSettingsViewModel settings { get; set; }
+        private BarniteSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("fdcf35cc-edcd-4fc3-8640-bb037d3349fe");
 
         public Barnite(IPlayniteAPI api) : base(api)
         {
-            //settings = new BarniteSettingsViewModel(this);
+            settings = new BarniteSettingsViewModel(this, api);            
             Properties = new GenericPluginProperties
             {
-                HasSettings = false
+                HasSettings = true
             };
 
             var platformUtility = new PlatformUtility(api);
             var webclient = new WebDownloader();
-            Scrapers.Add(new MobyGamesScraper(platformUtility, webclient));
-            Scrapers.Add(new PlayAsiaScraper(platformUtility, webclient));
-            Scrapers.Add(new OgdbScraper(platformUtility, webclient));
-            Scrapers.Add(new PriceChartingScraper(platformUtility, webclient));
-            Scrapers.Add(new UpcItemDbScraper(platformUtility, webclient));
+            _scraperManager = new ScraperManager(platformUtility, webclient);
+            _scraperManager.Add<MobyGamesScraper>();
+            _scraperManager.Add<PlayAsiaScraper>();
+            _scraperManager.Add<OgdbScraper>();
+            _scraperManager.Add<PriceChartingScraper>();
+            _scraperManager.Add<UpcItemDbScraper>();
+            _scraperManager.InitializeScraperSettingsCollection(settings.Settings.Scrapers);
         }
 
-        /*
         public override ISettings GetSettings(bool firstRunSettings)
         {
             return settings;
@@ -45,7 +47,7 @@ namespace Barnite
         {
             return new BarniteSettingsView();
         }
-
+        /*
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
             return base.GetMainMenuItems(args);
@@ -76,8 +78,8 @@ namespace Barnite
 
             PlayniteApi.Dialogs.ActivateGlobalProgress((args) =>
             {
-                args.ProgressMaxValue = Scrapers.Count;
-                foreach (var scraper in Scrapers)
+                args.ProgressMaxValue = _scraperManager.Scrapers.Count;
+                foreach (var scraper in _scraperManager.Scrapers)
                 {
                     if (args.CancelToken.IsCancellationRequested)
                         return;
@@ -106,7 +108,7 @@ namespace Barnite
                     }
                     args.CurrentProgressValue++;
                 }
-                PlayniteApi.Dialogs.ShowMessage($"No game found for {barcode} in {Scrapers.Count} databases", "Barnite");
+                PlayniteApi.Dialogs.ShowMessage($"No game found for {barcode} in {_scraperManager.Scrapers.Count} databases", "Barnite");
             }, new GlobalProgressOptions("Searching barcode databases…") { Cancelable = true, IsIndeterminate = false });
         }
     }

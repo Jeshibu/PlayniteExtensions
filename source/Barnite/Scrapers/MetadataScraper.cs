@@ -16,12 +16,15 @@ namespace Barnite.Scrapers
 
         protected IPlatformUtility PlatformUtility { get; set; }
         protected IWebDownloader Webclient { get; set; }
+        public bool Initialized { get; protected set; } = false;
 
+        public MetadataScraper() { }
 
-        public MetadataScraper(IPlatformUtility platformUtility, IWebDownloader webclient)
+        public void Initialize(IPlatformUtility platformUtility, IWebDownloader webclient)
         {
             PlatformUtility = platformUtility;
             Webclient = webclient;
+            Initialized = true;
         }
 
         protected abstract string GetSearchUrlFromBarcode(string barcode);
@@ -38,6 +41,9 @@ namespace Barnite.Scrapers
 
         public GameMetadata GetMetadataFromBarcode(string barcode)
         {
+            if (!Initialized)
+                throw new Exception("Not initialized");
+
             var searchUrl = GetSearchUrlFromBarcode(barcode);
             var response = Webclient.DownloadString(searchUrl, ScrapeRedirectUrl, ScrapeJsCookies);
 

@@ -15,11 +15,6 @@ namespace Barnite.Scrapers
         public override string Name { get; } = "PriceCharting";
         public override string WebsiteUrl { get; } = "https://www.pricecharting.com";
 
-        public PriceChartingScraper(IPlatformUtility platformUtility, IWebDownloader webclient)
-            : base(platformUtility, webclient)
-        {
-        }
-
         protected override string GetSearchUrlFromBarcode(string barcode)
         {
             return "https://www.pricecharting.com/search-products?category=videogames&q=" + HttpUtility.UrlEncode(barcode);

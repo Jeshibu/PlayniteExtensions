@@ -13,11 +13,6 @@ namespace Barnite.Scrapers
         public override string Name { get; } = "Moby Games";
         public override string WebsiteUrl { get; } = "https://www.mobygames.com";
 
-        public MobyGamesScraper(IPlatformUtility platformUtility, IWebDownloader webclient)
-            : base(platformUtility, webclient)
-        {
-        }
-
         private static List<Tuple<string, string[]>> GetDivPropertyValues(HtmlAgilityPack.HtmlDocument doc, string xpath)
         {
             var nodes = doc.DocumentNode.SelectNodes(xpath);

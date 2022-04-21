@@ -61,6 +61,7 @@
       <DependentUpon>BarniteSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="IPlatformUtility.cs" />
+    <Compile Include="ScraperManager.cs" />
     <Compile Include="Scrapers\MetadataScraper.cs" />
     <Compile Include="Scrapers\MobyGamesScraper.cs" />
     <Compile Include="PlatformUtility.cs" />

@@ -16,7 +16,8 @@ namespace Barnite.Tests.PriceCharting
             stringDownloader.FilesByUrl.Add("https://www.pricecharting.com/search-products?category=videogames&q=0711719357476", "./PriceCharting/gow_search.html");
             stringDownloader.FilesByUrl.Add("https://www.pricecharting.com/offers?product=57416", "./PriceCharting/gow_details.html");
 
-            var scraper = new PriceChartingScraper(new PlatformUtility("Playstation 4", "sony_playstation4"), stringDownloader);
+            var scraper = new PriceChartingScraper();
+            scraper.Initialize(new PlatformUtility("Playstation 4", "sony_playstation4"), stringDownloader);
 
             var data = scraper.GetMetadataFromBarcode("0711719357476");
 
