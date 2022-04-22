@@ -33,6 +33,7 @@ namespace Barnite
             _scraperManager.Add<MobyGamesScraper>();
             _scraperManager.Add<PlayAsiaScraper>();
             _scraperManager.Add<OgdbScraper>();
+            _scraperManager.Add<BolScraper>();
             _scraperManager.Add<PriceChartingScraper>();
             _scraperManager.Add<UpcItemDbScraper>();
             _scraperManager.InitializeScraperSettingsCollection(settings.Settings.Scrapers);
