@@ -36,6 +36,7 @@ namespace Barnite
             _scraperManager.Add<BolScraper>();
             _scraperManager.Add<PriceChartingScraper>();
             _scraperManager.Add<UpcItemDbScraper>();
+            _scraperManager.Add<RetroplaceScraper>();
             _scraperManager.InitializeScraperSettingsCollection(settings.Settings.Scrapers);
         }
 

@@ -93,6 +93,9 @@ namespace Barnite
 
         public IEnumerable<MetadataProperty> GetPlatforms(string platformName, bool strict)
         {
+            if (string.IsNullOrWhiteSpace(platformName))
+                return new List<MetadataProperty>();
+
             string sanitizedPlatformName = TrimInput.Replace(platformName, string.Empty);
 
             if (PlatformSpecNameByNormalName.TryGetValue(sanitizedPlatformName, out string[] specIds))

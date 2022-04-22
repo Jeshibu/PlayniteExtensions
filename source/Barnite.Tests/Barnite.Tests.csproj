@@ -67,6 +67,7 @@
     <Compile Include="FakeStringDownloader.cs" />
     <Compile Include="PriceCharting\PriceChartingScraperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Retroplace\RetroplaceScraperTests.cs" />
     <Compile Include="UpcItemDb\UpcItemDbScraperTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +120,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="PriceCharting\gow_search.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Retroplace\killzone.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Retroplace\killzone_search.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UpcItemDb\ngs.json">
