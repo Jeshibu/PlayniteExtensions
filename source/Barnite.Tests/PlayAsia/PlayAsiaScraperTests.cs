@@ -33,10 +33,10 @@ namespace Barnite.Tests.PlayAsia
         {
             var stringDownloader = new FakeWebDownloader("https://www.play-asia.com/search/5902367640767", "./PlayAsia/cyberpunk2077.html");
 
-            var platformSpecIds = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
+            var platformSpecIds = new Dictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase)
             {
-                { "Xbox One", "xbox_one" },
-                { "Xbox Series X", "xbox_series" },
+                { "Xbox One", new[]{ "xbox_one" } },
+                { "Xbox Series X", new[]{ "xbox_series" } },
             };
 
             var scraper = new PlayAsiaScraper();

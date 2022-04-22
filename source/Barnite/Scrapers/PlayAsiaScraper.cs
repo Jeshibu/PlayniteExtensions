@@ -68,7 +68,7 @@ namespace Barnite.Scrapers
                 {
                     string platformMatch = match.Groups["platform"].Value;
                     var platformNames = platformMatch.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).Select(StringExtensions.HtmlDecode);
-                    game.Platforms = new HashSet<MetadataProperty>(platformNames.Select(PlatformUtility.GetPlatform));
+                    game.Platforms = new HashSet<MetadataProperty>(platformNames.SelectMany(PlatformUtility.GetPlatforms));
                 }
             }
 

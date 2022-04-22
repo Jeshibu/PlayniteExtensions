@@ -40,7 +40,7 @@ namespace Barnite.Tests.OGDB
             stringDownloader.FilesByUrl.Add("https://ogdb.eu/index.php?section=game&gameid=42819", "./OGDB/deusex_details.html");
 
             var scraper = new OgdbScraper();
-            scraper.Initialize(new PlatformUtility(new Dictionary<string,string>()), stringDownloader);
+            scraper.Initialize(new PlatformUtility(new Dictionary<string,string[]>()), stringDownloader);
 
             var data = scraper.GetMetadataFromBarcode("788687107112");
 

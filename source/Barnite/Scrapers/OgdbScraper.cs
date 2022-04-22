@@ -74,7 +74,7 @@ namespace Barnite.Scrapers
                                 .Select(p => p.Replace(" - Download", ""))
                                 .Where(p => !p.StartsWith("PC - ")) //these are handled with the Betriebsystem (OS)
                                 .ToArray();
-                            game.Platforms = values.Select(PlatformUtility.GetPlatform).ToHashSet();
+                            game.Platforms = values.SelectMany(PlatformUtility.GetPlatforms).ToHashSet();
                             break;
                         case "betriebsystem":
                             if (value.StartsWith("Windows"))

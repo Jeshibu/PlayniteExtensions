@@ -9,6 +9,24 @@ namespace Barnite
 {
     public static class StringUtility
     {
+        public static string TrimStart(this string s, string remove, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
+        {
+            return TrimStart(s, new[] { remove }, stringComparison);
+        }
+
+        public static string TrimStart(this string s, string[] remove, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
+        {
+            if (s == null)
+                return s;
+
+            foreach (var r in remove)
+            {
+                if (s.StartsWith(r, stringComparison))
+                    s = s.Substring(r.Length);
+            }
+            return s;
+        }
+
         public static string TrimEnd(this string s, string remove, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
         {
             return TrimEnd(s, new[] { remove }, stringComparison);
@@ -21,9 +39,8 @@ namespace Barnite
 
             foreach (var r in remove)
             {
-                int i = s.LastIndexOf(r, stringComparison);
-                if (i != -1 && i + r.Length == s.Length)
-                    return s.Remove(i);
+                if (s.EndsWith(r, stringComparison))
+                    s = s.Remove(s.Length - r.Length);
             }
             return s;
         }

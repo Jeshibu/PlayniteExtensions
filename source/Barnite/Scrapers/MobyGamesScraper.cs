@@ -47,7 +47,7 @@ namespace Barnite.Scrapers
             var data = new GameMetadata
             {
                 Name = title,
-                Platforms = new HashSet<MetadataProperty> { PlatformUtility.GetPlatform(platformName) },
+                Platforms = new HashSet<MetadataProperty>(PlatformUtility.GetPlatforms(platformName)),
                 Genres = new HashSet<MetadataProperty>(),
                 AgeRatings = new HashSet<MetadataProperty>(),
                 Tags = new HashSet<MetadataProperty>(),

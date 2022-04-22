@@ -38,7 +38,7 @@ namespace Barnite.Scrapers
             var data = new GameMetadata
             {
                 Name = title,
-                Platforms = new HashSet<MetadataProperty> { PlatformUtility.GetPlatform(platform) },
+                Platforms = new HashSet<MetadataProperty>(PlatformUtility.GetPlatforms(platform)),
             };
 
             string coverUrl = doc.DocumentNode.SelectSingleNode("//div[@class='cover']/img[@src]")?.Attributes["src"].Value;

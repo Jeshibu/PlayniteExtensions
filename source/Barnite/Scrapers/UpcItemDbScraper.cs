@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Barnite.Scrapers
 {
@@ -16,7 +17,7 @@ namespace Barnite.Scrapers
 
         protected override string GetSearchUrlFromBarcode(string barcode)
         {
-            return $"https://api.upcitemdb.com/prod/trial/lookup?upc={barcode}";
+            return "https://api.upcitemdb.com/prod/trial/lookup?upc=" + HttpUtility.UrlEncode(barcode);
         }
 
         protected override GameMetadata ScrapeGameDetailsHtml(string html)
@@ -35,14 +36,17 @@ namespace Barnite.Scrapers
                 if (string.IsNullOrEmpty(potentialPlatformName))
                     return string.Empty; //remove sealed,new,empty from the end of strings
 
-                var platform = PlatformUtility.GetPlatform(potentialPlatformName);
-                if (platform == null)
+                var platforms = PlatformUtility.GetPlatforms(potentialPlatformName, strict: true).ToList();
+                if (platforms.Count == 0)
                 {
                     return match.Value;
                 }
                 else
                 {
-                    data.Platforms.Add(platform);
+                    foreach (var platform in platforms)
+                    {
+                        data.Platforms.Add(platform);
+                    }
                     return string.Empty; //remove platform name from game name
                 }
             }, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
@@ -52,7 +56,10 @@ namespace Barnite.Scrapers
                 if (data.Name.EndsWith(platformName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     data.Name = data.Name.TrimEnd(platformName).Trim();
-                    data.Platforms.Add(PlatformUtility.GetPlatform(platformName));
+                    foreach (var platform in PlatformUtility.GetPlatforms(platformName))
+                    {
+                        data.Platforms.Add(platform);
+                    }
                 }
             }
 

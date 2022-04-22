@@ -96,12 +96,12 @@ namespace Barnite.Tests.UpcItemDb
         public void ScrapingTrackmaniaCorrectMetadata()
         {
             var stringDownloader = new FakeWebDownloader();
-            stringDownloader.FilesByUrl.Add("https://api.upcitemdb.com/prod/trial/lookup?upc=3512289014953 ", "./UpcItemDb/tuf.json");
+            stringDownloader.FilesByUrl.Add("https://api.upcitemdb.com/prod/trial/lookup?upc=3512289014953", "./UpcItemDb/tuf.json");
 
             var scraper = new UpcItemDbScraper();
             scraper.Initialize(new PlatformUtility("PC DVD", "pc_windows"), stringDownloader);
 
-            var data = scraper.GetMetadataFromBarcode("3512289014953 ");
+            var data = scraper.GetMetadataFromBarcode("3512289014953");
 
             Assert.Equal("Trackmania United Forever", data.Name);
             Assert.Equal(new MetadataSpecProperty("pc_windows"), data.Platforms.Single());

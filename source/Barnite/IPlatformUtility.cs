@@ -5,7 +5,14 @@ namespace Barnite
 {
     public interface IPlatformUtility
     {
-        MetadataProperty GetPlatform(string platformName);
+        IEnumerable<MetadataProperty> GetPlatforms(string platformName);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="platformName"></param>
+        /// <param name="strict">Only return matched platforms</param>
+        /// <returns></returns>
+        IEnumerable<MetadataProperty> GetPlatforms(string platformName, bool strict);
         IEnumerable<string> GetPlatformNames();
     }
 }
