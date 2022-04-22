@@ -78,8 +78,9 @@ namespace Barnite
 
             PlayniteApi.Dialogs.ActivateGlobalProgress((args) =>
             {
-                args.ProgressMaxValue = _scraperManager.Scrapers.Count;
-                foreach (var scraper in _scraperManager.Scrapers)
+                var orderedScrapers = _scraperManager.GetOrderedListFromSettings(settings.Settings.Scrapers);
+                args.ProgressMaxValue = orderedScrapers.Count;
+                foreach (var scraper in orderedScrapers)
                 {
                     if (args.CancelToken.IsCancellationRequested)
                         return;
@@ -108,7 +109,7 @@ namespace Barnite
                     }
                     args.CurrentProgressValue++;
                 }
-                PlayniteApi.Dialogs.ShowMessage($"No game found for {barcode} in {_scraperManager.Scrapers.Count} databases", "Barnite");
+                PlayniteApi.Dialogs.ShowMessage($"No game found for {barcode} in {orderedScrapers.Count} database(s)", "Barnite");
             }, new GlobalProgressOptions("Searching barcode databases…") { Cancelable = true, IsIndeterminate = false });
         }
     }

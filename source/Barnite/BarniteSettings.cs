@@ -23,13 +23,17 @@ namespace Barnite
         }
     }
 
-    public class ScraperSettings
+    public class ScraperSettings : ObservableObject
     {
-        public bool Enabled;
-        public string Name;
-        public string WebsiteUrl;
-        public Type Type;
-        public int Order;
+        private bool enabled;
+        private string name;
+        private string websiteUrl;
+        private int order;
+
+        public bool Enabled { get => enabled; set => SetValue(ref enabled, value); }
+        public string Name { get => name; set => SetValue(ref name, value); }
+        public string WebsiteUrl { get => websiteUrl; set => SetValue(ref websiteUrl, value); }
+        public int Order { get => order; set => SetValue(ref order, value); }
     }
 
     public class BarniteSettingsViewModel : PluginSettingsViewModel<BarniteSettings, Barnite>
@@ -65,6 +69,22 @@ namespace Barnite
             }
         }
 
+        private RelayCommand<ScraperSettings> visitWebsiteCommand;
+        public RelayCommand<ScraperSettings> VisitWebsiteCommand
+        {
+            get
+            {
+                return visitWebsiteCommand ?? (visitWebsiteCommand = new RelayCommand<ScraperSettings>((ss) =>
+                {
+                    try
+                    {
+                        System.Diagnostics.Process.Start(ss.WebsiteUrl);
+                    }
+                    catch { }
+                }));
+            }
+        }
+
         private RelayCommand<ScraperSettings> moveUpCommand;
         public RelayCommand<ScraperSettings> MoveUpCommand
         {
@@ -81,6 +101,8 @@ namespace Barnite
                     items[index - 1].Order = order2;
                     items[index].Order = order1;
                     OnPropertyChanged(nameof(Settings));
+                    ScrapersView.Refresh();
+                    OnPropertyChanged(nameof(ScrapersView));
                 }));
             }
         }
@@ -101,6 +123,8 @@ namespace Barnite
                     items[index].Order = order2;
                     items[index + 1].Order = order1;
                     OnPropertyChanged(nameof(Settings));
+                    ScrapersView.Refresh();
+                    OnPropertyChanged(nameof(ScrapersView));
                 }));
             }
         }

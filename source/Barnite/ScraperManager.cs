@@ -37,7 +37,6 @@ namespace Barnite
                 Enabled = true,
                 Name = scraper.Name,
                 WebsiteUrl = scraper.WebsiteUrl,
-                Type = scraper.GetType(),
             };
         }
 
