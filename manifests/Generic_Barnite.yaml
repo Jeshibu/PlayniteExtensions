@@ -16,3 +16,10 @@ Packages:
     Changelog:
       - Added Play-Asia and OGDB as data source
       - Added link to games pointing to the details page that the game was found on
+  - Version: 0.3
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-22
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/barnite0.3/Barnite_0_3.pext
+    Changelog:
+      - Added settings
+      - Added bol.com as data source
