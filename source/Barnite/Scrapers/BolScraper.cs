@@ -47,36 +47,39 @@ namespace Barnite.Scrapers
             if (coverUrl != null)
                 data.CoverImage = new MetadataFile(coverUrl);
 
-            foreach (var specsNode in specsRows)
+            if (specsRows != null)
             {
-                var specName = specsNode.SelectSingleNode("./*[@class='specs__title']")?.InnerText.HtmlDecode();
-                var value = specsNode.SelectSingleNode("./*[@class='specs__value']")?.InnerText.HtmlDecode();
-                var values = value.Split(new[] { ", ", " | " }, StringSplitOptions.RemoveEmptyEntries);
-                switch (specName)
+                foreach (var specsNode in specsRows)
                 {
-                    case "Merk":
-                        data.Publishers = values.Select(v => new MetadataNameProperty(v)).ToHashSet<MetadataProperty>();
-                        break;
-                    case "Platform":
-                        data.Platforms = values.SelectMany(PlatformUtility.GetPlatforms).ToHashSet();
-                        break;
-                    case "Genre":
-                        data.Genres = values.Select(TranslateGenre).Select(g => new MetadataNameProperty(g)).ToHashSet<MetadataProperty>();
-                        break;
-                    case "PEGI-leeftijd":
-                        data.AgeRatings = values.Select(v => new MetadataNameProperty("PEGI " + v.Replace("+", string.Empty))).ToHashSet<MetadataProperty>();
-                        break;
-                    case "Oorspronkelijke releasedatum":
-                        if (DateTime.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime releaseDate))
-                        {
-                            data.ReleaseDate = new ReleaseDate(releaseDate);
-                        }
-                        break;
-                    case "Regio":
-                        data.Regions = new HashSet<MetadataProperty> { new MetadataNameProperty(value) };
-                        break;
-                    default:
-                        break;
+                    var specName = specsNode.SelectSingleNode("./*[@class='specs__title']")?.InnerText.HtmlDecode();
+                    var value = specsNode.SelectSingleNode("./*[@class='specs__value']")?.InnerText.HtmlDecode();
+                    var values = value.Split(new[] { ", ", " | " }, StringSplitOptions.RemoveEmptyEntries);
+                    switch (specName)
+                    {
+                        case "Merk":
+                            data.Publishers = values.Select(v => new MetadataNameProperty(v)).ToHashSet<MetadataProperty>();
+                            break;
+                        case "Platform":
+                            data.Platforms = values.SelectMany(PlatformUtility.GetPlatforms).ToHashSet();
+                            break;
+                        case "Genre":
+                            data.Genres = values.Select(TranslateGenre).Select(g => new MetadataNameProperty(g)).ToHashSet<MetadataProperty>();
+                            break;
+                        case "PEGI-leeftijd":
+                            data.AgeRatings = values.Select(v => new MetadataNameProperty("PEGI " + v.Replace("+", string.Empty))).ToHashSet<MetadataProperty>();
+                            break;
+                        case "Oorspronkelijke releasedatum":
+                            if (DateTime.TryParseExact(value, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime releaseDate))
+                            {
+                                data.ReleaseDate = new ReleaseDate(releaseDate);
+                            }
+                            break;
+                        case "Regio":
+                            data.Regions = new HashSet<MetadataProperty> { new MetadataNameProperty(value) };
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
@@ -116,6 +119,10 @@ namespace Barnite.Scrapers
             doc.LoadHtml(html);
 
             var links = doc.DocumentNode.SelectNodes("//a[@class='product-title px_list_page_product_click'][@href]");
+
+            if (links == null)
+                yield break;
+
             foreach (var link in links)
             {
                 var url = GetAbsoluteUrl(link.Attributes["href"].Value);                
