@@ -23,3 +23,10 @@ Packages:
     Changelog:
       - Added settings
       - Added bol.com as data source
+  - Version: 0.4
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-23
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/barnite0.4/Barnite_0_4.pext
+    Changelog:
+      - Fixed bol.com NullReferenceException when there are no results
+      - Added retroplace as data source
