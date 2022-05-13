@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="GamersGateLibrary.GamersGateLibrarySettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:gamersgate="clr-namespace:GamersGateLibrary"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <StackPanel Margin="20">
+        <TextBlock TextWrapping="Wrap">GamersGate uses CloudFlare to ward off scrapers such as naughty old us. You're going to be solving a few captchas, and that login will likely only stick for one library refresh. It's better than nothing. Barely.</TextBlock>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
+            <Button Content="Authenticate" Command="{Binding LoginCommand}"/>
+            <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">
+                <TextBlock.Tag>
+                    <PriorityBinding>
+                        <Binding Path="AuthStatus" IsAsync="True" />
+                        <Binding Source="{x:Static gamersgate:AuthStatus.Checking}" />
+                    </PriorityBinding>
+                </TextBlock.Tag>
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                        <Style.Triggers>
+                            <Trigger Property="Tag" Value="{x:Static gamersgate:AuthStatus.Checking}">
+                                <Setter Property="Text" Value="Checking..." />
+                            </Trigger>
+                            <Trigger Property="Tag" Value="{x:Static gamersgate:AuthStatus.Ok}">
+                                <Setter Property="Text" Value="Logged in" />
+                            </Trigger>
+                            <Trigger Property="Tag" Value="{x:Static gamersgate:AuthStatus.AuthRequired}">
+                                <Setter Property="Text" Value="Requires authentication" />
+                            </Trigger>
+                            <Trigger Property="Tag" Value="{x:Static gamersgate:AuthStatus.Failed}">
+                                <Setter Property="Text" Value="Failed to check authentication status" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+        <CheckBox Content="Apply cover images when available (these are small)" IsChecked="{Binding Settings.UseCoverImages}" Margin="0,20" />
+    </StackPanel>
+</UserControl>
