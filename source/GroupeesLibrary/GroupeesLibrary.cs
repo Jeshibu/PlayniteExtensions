@@ -34,7 +34,7 @@ namespace GroupeesLibrary
                 HasSettings = true
             };
             Scraper = new GroupeesScraper();
-            Downloader = new WebDownloader(api);
+            Downloader = new WebDownloader();
         }
 
         public bool IsAuthenticated(GroupeesLibrarySettings s)

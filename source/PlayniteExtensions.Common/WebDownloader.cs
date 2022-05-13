@@ -16,7 +16,7 @@ namespace PlayniteExtensions.Common
         /// The total collection of cookies used both as input for requests and output for responses
         /// </summary>
         CookieCollection Cookies { get; }
-        DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null);
+        DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true);
         string DownloadFile(string url, string targetFolder, CancellationToken cancellationToken, DownloadProgressCallback progressCallback = null);
     }
 
@@ -40,38 +40,30 @@ namespace PlayniteExtensions.Common
 
         public int MaxRedirectDepth { get; }
         public CookieCollection Cookies { get; private set; } = new CookieCollection();
-        public string UserAgent { get; set; }
-        public void SetDefaultUserAgent(IPlayniteAPI playniteAPI)
-        {
-            SetDefaultUserAgent(playniteAPI.ApplicationInfo.ApplicationVersion.ToString(2));
-        }
-
-        public void SetDefaultUserAgent(string playniteVersion)
-        {
-            UserAgent = $"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 Playnite/" + playniteVersion;
-        }
+        public string UserAgent { get; set; } = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:94.0) Gecko/20100101 Firefox/94.0";
+        public string Accept { get; set; } = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
 
         public WebDownloader(int maxRedirectDepth = 7)
         {
             MaxRedirectDepth = maxRedirectDepth;
-            SetDefaultUserAgent("9.16");
         }
 
-        public WebDownloader(IPlayniteAPI playniteAPI, int maxRedirectDepth = 7) : this(maxRedirectDepth)
+        public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true)
         {
-            SetDefaultUserAgent(playniteAPI);
+            return DownloadString(url, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, throwExceptionOnErrorResponse, 0);
         }
 
-        public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null)
-        {
-            return DownloadString(url, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, 0);
-        }
-
-        private DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, int depth = 0)
+        private DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int depth = 0)
         {
             var uri = new Uri(url);
             var request = WebRequest.CreateHttp(uri);
-            request.UserAgent = UserAgent;
+
+            if (UserAgent != null)
+                request.UserAgent = UserAgent;
+
+            if (Accept != null)
+                request.Accept = Accept;
+
             request.AllowAutoRedirect = false; //auto-redirect buries response cookies
             if (Cookies != null)
             {
@@ -95,7 +87,23 @@ namespace PlayniteExtensions.Common
             string responseContent;
             string redirectUrl = null;
 
-            using (var response = (HttpWebResponse)request.GetResponse())
+            HttpWebResponse response;
+            try
+            {
+                response = (HttpWebResponse)request.GetResponse();
+            }
+            catch (WebException webex)
+            {
+                if (throwExceptionOnErrorResponse)
+                    throw;
+
+                if (webex.Response is HttpWebResponse)
+                    response = (HttpWebResponse)webex.Response;
+                else
+                    throw;
+            }
+
+            using (response)
             using (var stream = response.GetResponseStream())
             using (var reader = new StreamReader(stream))
             {
@@ -120,7 +128,7 @@ namespace PlayniteExtensions.Common
                 if (depth > MaxRedirectDepth)
                     return null;
 
-                var redirectOutput = DownloadString(redirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer: url, customHeaders, depth + 1);
+                var redirectOutput = DownloadString(redirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer: url, customHeaders, throwExceptionOnErrorResponse, depth + 1);
                 return redirectOutput;
             }
             else

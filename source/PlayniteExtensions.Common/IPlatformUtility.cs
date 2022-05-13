@@ -1,7 +1,7 @@
 ﻿using Playnite.SDK.Models;
 using System.Collections.Generic;
 
-namespace Barnite
+namespace PlayniteExtensions.Common
 {
     public interface IPlatformUtility
     {
@@ -14,5 +14,13 @@ namespace Barnite
         /// <returns></returns>
         IEnumerable<MetadataProperty> GetPlatforms(string platformName, bool strict);
         IEnumerable<string> GetPlatformNames();
+
+        /// <summary>
+        /// Get rid of and output platforms like "Cities in Motion (Mac)" or "Mad Max [PC]"
+        /// </summary>
+        /// <param name="name">A game name</param>
+        /// <param name="trimmedName">The game name with the platform name removed</param>
+        /// <returns></returns>
+        IEnumerable<MetadataProperty> GetPlatformsFromName(string name, out string trimmedName);
     }
 }

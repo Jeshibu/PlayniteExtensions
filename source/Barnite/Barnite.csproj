@@ -60,19 +60,16 @@
     <Compile Include="BarniteSettingsView.xaml.cs">
       <DependentUpon>BarniteSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IPlatformUtility.cs" />
     <Compile Include="ScraperManager.cs" />
     <Compile Include="Scrapers\BolScraper.cs" />
     <Compile Include="Scrapers\MetadataScraper.cs" />
     <Compile Include="Scrapers\MobyGamesScraper.cs" />
-    <Compile Include="PlatformUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scrapers\OgdbScraper.cs" />
     <Compile Include="Scrapers\PlayAsiaScraper.cs" />
     <Compile Include="Scrapers\PriceChartingScraper.cs" />
     <Compile Include="Scrapers\RetroplaceScraper.cs" />
     <Compile Include="Scrapers\UpcItemDbScraper.cs" />
-    <Compile Include="StringUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">

@@ -74,14 +74,7 @@ namespace GroupeesLibrary
             var savedSettings = plugin.LoadPluginSettings<GroupeesLibrarySettings>();
 
             // LoadPluginSettings returns null if no saved data is available.
-            if (savedSettings != null)
-            {
-                Settings = savedSettings;
-            }
-            else
-            {
-                Settings = new GroupeesLibrarySettings();
-            }
+            Settings = savedSettings ?? new GroupeesLibrarySettings();
         }
 
         public RelayCommand<object> LoginCommand

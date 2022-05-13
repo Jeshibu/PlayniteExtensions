@@ -31,12 +31,7 @@ namespace Barnite.Scrapers
 
         protected string GetAbsoluteUrl(string relativeUrl)
         {
-            if (relativeUrl == null)
-                return null;
-
-            var baseUri = new Uri(GetSearchUrlFromBarcode("1"));
-            var absoluteUri = new Uri(baseUri, relativeUrl);
-            return absoluteUri.AbsoluteUri;
+            return relativeUrl.GetAbsoluteUrl(GetSearchUrlFromBarcode("1"));
         }
 
         public GameMetadata GetMetadataFromBarcode(string barcode)

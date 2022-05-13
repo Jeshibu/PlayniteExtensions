@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Barnite
+namespace PlayniteExtensions.Common
 {
     public class PlatformUtility : IPlatformUtility
     {
@@ -45,6 +45,7 @@ namespace Barnite
 
         private static Regex TrimCompanyName = new Regex(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
         private static Regex TrimInput = new Regex(@"^(pal|jpn?|usa?|ntsc)\s+|[™®©]", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        private static Regex TrimPlatformName = new Regex(@"\s*(\((?<platform>[^()]+)\)|\[(?<platform>[^\[\]]+)\])$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
         private static Dictionary<string, string[]> GetPlatformSpecsByNormalName(IPlayniteAPI api)
         {
@@ -61,9 +62,11 @@ namespace Barnite
             output.Add("Windows", new[] { "pc_windows" });
             output.Add("DOS", new[] { "pc_dos" });
             output.Add("Linux", new[] { "pc_linux" });
+            output.Add("PC", new[] { "pc_windows" });
             output.Add("PC CD-ROM", new[] { "pc_windows" });
             output.Add("PC DVD", new[] { "pc_windows" });
             output.Add("PC DVD-ROM", new[] { "pc_windows" });
+            output.Add("Mac", new[] { "macintosh" });
             output.Add("Microsoft Xbox Series X", new[] { "xbox_series" });
             output.Add("Microsoft Xbox Series S", new[] { "xbox_series" });
             output.Add("Xbox Series X", new[] { "xbox_series" });
@@ -110,6 +113,22 @@ namespace Barnite
         public IEnumerable<string> GetPlatformNames()
         {
             return PlatformSpecNameByNormalName.Keys;
+        }
+
+        public IEnumerable<MetadataProperty> GetPlatformsFromName(string name, out string trimmedName)
+        {
+            IEnumerable<MetadataProperty> platforms = new MetadataProperty[0];
+            trimmedName = TrimPlatformName.Replace(name, match =>
+            {
+                var platformName = match.Groups["platform"].Value;
+                platforms = GetPlatforms(platformName, strict: true);
+
+                if (platforms.Any())
+                    return string.Empty;
+                else
+                    return match.Value;
+            });
+            return platforms;
         }
     }
 }

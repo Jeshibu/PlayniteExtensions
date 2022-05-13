@@ -10,6 +10,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CachedFileDownloader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IPlatformUtility.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PlatformUtility.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlayniteConvert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PluginSettingsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StringExtensions.cs" />

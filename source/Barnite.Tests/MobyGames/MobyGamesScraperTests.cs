@@ -1,5 +1,7 @@
 ﻿using Barnite.Scrapers;
 using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
+using PlayniteExtensions.Tests.Common;
 using System.IO;
 using Xunit;
 

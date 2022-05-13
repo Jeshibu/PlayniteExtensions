@@ -1,12 +1,11 @@
-﻿using Barnite.Scrapers;
-using PlayniteExtensions.Common;
+﻿using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading;
 
-namespace Barnite.Tests
+namespace PlayniteExtensions.Tests.Common
 {
     public class FakeWebDownloader : IWebDownloader
     {
@@ -27,7 +26,7 @@ namespace Barnite.Tests
             FilesByUrl = filesByUrl;
         }
 
-        public virtual DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null)
+        public virtual DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true)
         {
             CalledUrls.Add(url);
             if (FilesByUrl.TryGetValue(url, out string filePath))
