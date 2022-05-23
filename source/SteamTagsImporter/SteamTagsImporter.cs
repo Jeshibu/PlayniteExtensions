@@ -160,7 +160,7 @@ namespace SteamTagsImporter
                 }
 
                 //sort newly added whitelist entries in with the rest
-                var sortedWhitelist = settings.OkayTags.OrderBy(a => a);
+                var sortedWhitelist = settings.OkayTags.Distinct().OrderBy(a => a);
                 settings.OkayTags = new System.Collections.ObjectModel.ObservableCollection<string>(sortedWhitelist);
 
                 SavePluginSettings(settings);
@@ -182,20 +182,22 @@ namespace SteamTagsImporter
             if (blacklisted)
                 return false;
 
-            var tagIds = game.TagIds ?? (game.TagIds = new List<Guid>());
-
-            var tag = PlayniteApi.Database.Tags.FirstOrDefault(t => tagName.Equals(t.Name, StringComparison.InvariantCultureIgnoreCase));
-
-            if (tag == null)
-            {
-                tag = new Tag(tagName);
-                PlayniteApi.Database.Tags.Add(tag);
-            }
-
             bool whitelisted = settings.OkayTags.Contains(tagName);
 
             if (!whitelisted) //add unknown tags to the whitelist
                 settings.OkayTags.Add(tagName);
+
+            string computedTagName = settings.UseTagPrefix ? $"{settings.TagPrefix}{tagName}" : tagName;
+
+            var tag = PlayniteApi.Database.Tags.FirstOrDefault(t => computedTagName.Equals(t.Name, StringComparison.InvariantCultureIgnoreCase));
+
+            if (tag == null)
+            {
+                tag = new Tag(computedTagName);
+                PlayniteApi.Database.Tags.Add(tag);
+            }
+
+            var tagIds = game.TagIds ?? (game.TagIds = new List<Guid>());
 
             if (!tagIds.Contains(tag.Id) && !blacklisted)
             {

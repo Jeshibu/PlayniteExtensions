@@ -24,6 +24,10 @@ namespace SteamTagsImporter
 
         public bool AutomaticallyAddTagsToNewGames { get; set; } = true;
 
+        public bool UseTagPrefix { get; set; } = false;
+
+        public string TagPrefix { get; set; } = string.Empty;
+
         public ObservableCollection<string> OkayTags { get; set; } = new ObservableCollection<string>();
 
         public ObservableCollection<string> BlacklistedTags { get; set; } = new ObservableCollection<string>();
@@ -48,6 +52,8 @@ namespace SteamTagsImporter
             {
                 LimitTagsToFixedAmount = savedSettings.LimitTagsToFixedAmount;
                 FixedTagCount = savedSettings.FixedTagCount;
+                UseTagPrefix = savedSettings.UseTagPrefix;
+                TagPrefix = savedSettings.TagPrefix;
                 LimitTaggingToPcGames = savedSettings.LimitTaggingToPcGames;
                 AutomaticallyAddTagsToNewGames = savedSettings.AutomaticallyAddTagsToNewGames;
                 LastAutomaticTagUpdate = savedSettings.LastAutomaticTagUpdate;

@@ -13,6 +13,10 @@
             <CheckBox IsChecked="{Binding LimitTagsToFixedAmount}" Content="Limit the amount of tags imported to the first " VerticalAlignment="Center"/>
             <xctk:IntegerUpDown Value="{Binding FixedTagCount}" Width="50" VerticalAlignment="Center" Minimum="1" x:Name="FixedTagCount" IsEnabled="{Binding LimitTagsToFixedAmount}"/>
         </StackPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,12,0,0">
+            <CheckBox IsChecked="{Binding UseTagPrefix}" Content="Prefix tag names with: " VerticalAlignment="Center"/>
+            <TextBox Text="{Binding TagPrefix}" Width="200" VerticalAlignment="Center" IsEnabled="{Binding UseTagPrefix}"/>
+        </StackPanel>
         <CheckBox IsChecked="{Binding LimitTaggingToPcGames}" Content="Only add tags to PC games" Margin="0,15,0,0" DockPanel.Dock="Top"/>
         <CheckBox IsChecked="{Binding AutomaticallyAddTagsToNewGames}" Content="Automatically add tags to new games" Margin="0,15" DockPanel.Dock="Top"/>
 
