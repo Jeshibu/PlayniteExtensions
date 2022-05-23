@@ -5,10 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel>
-        <TextBlock Text="Description for Option1:"/>
-        <TextBox Text="{Binding Option1}"/>
-        <TextBlock Text="Description for Option2:"/>
-        <CheckBox IsChecked="{Binding Option2}"/>
+    <StackPanel Margin="20">
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+            <CheckBox IsChecked="{Binding UseTagPrefix}" Content="Prefix tag names with: " VerticalAlignment="Center"/>
+            <TextBox Text="{Binding TagPrefix}" Width="200" VerticalAlignment="Center" IsEnabled="{Binding UseTagPrefix}"/>
+        </StackPanel>
     </StackPanel>
 </UserControl>

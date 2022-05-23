@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using System.Windows.Controls;
 
 namespace itchioBundleTagger
 {
@@ -16,7 +17,7 @@ namespace itchioBundleTagger
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
-        //private itchioBundleTaggerSettings settings { get; set; }
+        private itchioBundleTaggerSettings settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("fc4fa75e-6e99-4c02-8547-113747efbb82");
         private Guid ItchIoLibraryId { get; }
@@ -24,10 +25,10 @@ namespace itchioBundleTagger
 
         public itchioBundleTagger(IPlayniteAPI api) : base(api)
         {
-            //settings = new itchioBundleTaggerSettings(this);
+            settings = new itchioBundleTaggerSettings(this);
             Properties = new GenericPluginProperties()
             {
-                HasSettings = false
+                HasSettings = true
             };
             ItchIoLibraryId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.ItchioLibrary);
             DatabaseFile = new CachedFileDownloader(
@@ -36,6 +37,16 @@ namespace itchioBundleTagger
                 maxCacheAge: TimeSpan.FromDays(180),
                 encoding: Encoding.UTF8,
                 packagedFallbackPath: Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "games.json"));
+        }
+
+        public override ISettings GetSettings(bool firstRunSettings)
+        {
+            return settings;
+        }
+
+        public override UserControl GetSettingsView(bool firstRunView)
+        {
+            return new itchioBundleTaggerSettingsView();
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -66,10 +77,12 @@ namespace itchioBundleTagger
 
         private Tag GetTag(string name)
         {
-            var tag = PlayniteApi.Database.Tags.FirstOrDefault(t => t.Name == name);
+            string computedTagName = settings.UseTagPrefix ? $"{settings.TagPrefix}{name}" : name;
+
+            var tag = PlayniteApi.Database.Tags.FirstOrDefault(t => t.Name == computedTagName);
             if (tag == null)
             {
-                tag = new Tag(name);
+                tag = new Tag(computedTagName);
                 PlayniteApi.Database.Tags.Add(tag);
             }
             return tag;
@@ -103,11 +116,11 @@ namespace itchioBundleTagger
 
                     progressActionArgs.CurrentProgressValue = relevantGames.Count;
 
-                    var steamTag = GetTag("[itch.io] Also available on Steam");
-                    var palestineTag = GetTag("[itch.io] Indie bundle for Palestinian Aid");
-                    var blmTag = GetTag("[itch.io] Bundle for Racial Justice and Equality");
-                    var ukraineTag = GetTag("[itch.io] Bundle for Ukraine");
-                    var ttrpgTag = GetTag("[itch.io] TTRPGs for Trans Rights in Texas!");
+                    var steamTag = GetTag("Also available on Steam");
+                    var palestineTag = GetTag("Indie bundle for Palestinian Aid");
+                    var blmTag = GetTag("Bundle for Racial Justice and Equality");
+                    var ukraineTag = GetTag("Bundle for Ukraine");
+                    var ttrpgTag = GetTag("TTRPGs for Trans Rights in Texas!");
 
                     progressActionArgs.Text = "Setting tags";
 
