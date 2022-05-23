@@ -15,6 +15,10 @@ namespace itchioBundleTagger
 
         public string TagPrefix { get; set; } = "[itch.io] ";
 
+        public bool AddAvailableOnSteamTag { get; set; } = true;
+
+        public bool AddSteamLink { get; set; } = true;
+
         // Parameterless constructor must exist if you want to use LoadPluginSettings method.
         public itchioBundleTaggerSettings()
         {

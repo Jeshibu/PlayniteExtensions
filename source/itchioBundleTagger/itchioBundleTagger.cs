@@ -4,6 +4,7 @@ using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -139,7 +140,25 @@ namespace itchioBundleTagger
                                 continue;
 
                             if (!string.IsNullOrWhiteSpace(data.Steam))
-                                AddTagToGame(game, steamTag);
+                            {
+                                if (settings.AddAvailableOnSteamTag)
+                                    AddTagToGame(game, steamTag);
+
+                                if (settings.AddSteamLink)
+                                {
+                                    List<Link> links = new List<Link>();
+                                    if (game.Links != null)
+                                        links = new List<Link>(game.Links);
+                                    else
+                                        links = new List<Link>();
+
+                                    if (!links.Any(l => l.Url.StartsWith(data.Steam)))
+                                    {
+                                        links.Add(new Link("Steam", data.Steam));
+                                        game.Links = new ObservableCollection<Link>(links); //adding to observablecollections on another thread throws exceptions, so just replace them
+                                    }
+                                }
+                            }
 
                             if (data.Bundles.ContainsKey("pb"))
                                 AddTagToGame(game, palestineTag);
