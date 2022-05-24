@@ -34,6 +34,8 @@ namespace Barnite
             _scraperManager.Add<PlayAsiaScraper>();
             _scraperManager.Add<OgdbScraper>();
             _scraperManager.Add<BolScraper>();
+            _scraperManager.Add<VGCollectScraper>();
+            _scraperManager.Add<RFGenerationScraper>();
             _scraperManager.Add<PriceChartingScraper>();
             _scraperManager.Add<UpcItemDbScraper>();
             _scraperManager.Add<RetroplaceScraper>();

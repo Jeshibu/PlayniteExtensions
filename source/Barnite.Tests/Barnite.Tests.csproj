@@ -67,7 +67,9 @@
     <Compile Include="PriceCharting\PriceChartingScraperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Retroplace\RetroplaceScraperTests.cs" />
+    <Compile Include="RFGeneration\RFGenerationScraperTests.cs" />
     <Compile Include="UpcItemDb\UpcItemDbScraperTests.cs" />
+    <Compile Include="VGCollect\VGCollectScraperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Barnite\Barnite.csproj">
@@ -127,6 +129,12 @@
     <Content Include="Retroplace\killzone_search.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="RFGeneration\ddg-pikmin.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RFGeneration\rfg-pikmin.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="UpcItemDb\ngs.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -140,6 +148,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="UpcItemDb\yakuza_dead_souls.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VGCollect\duckduckgo-monsterhuntertri.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="VGCollect\vgcollect-monsterhuntertri.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

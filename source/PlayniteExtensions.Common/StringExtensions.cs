@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
@@ -19,7 +20,13 @@ namespace PlayniteExtensions.Common
             if (input == null)
                 return null;
 
-            return Regex.Replace(HttpUtility.HtmlDecode(input), @"\s+", " ").Trim();
+            return Regex.Replace(HttpUtility.HtmlDecode(input), @"\s+", match =>
+            {
+                if (match.Value.Contains('\n'))
+                    return Environment.NewLine;
+                else
+                    return " ";
+            }).Trim();
         }
 
         public static string ReplaceInvalidFileNameChars(this string filename)
