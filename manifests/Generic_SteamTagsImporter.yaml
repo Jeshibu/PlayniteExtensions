@@ -87,3 +87,9 @@ Packages:
     - Option to limit tags to PC games
     - Option to get tags for each new game
     - Option to exclude tags
+  - Version: 3.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-05-24
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/steamtagsimporter3.1/Steam_Tags_Importer_3_1.pext
+    Changelog:
+    - Added option to add a prefix to all newly imported Steam tags

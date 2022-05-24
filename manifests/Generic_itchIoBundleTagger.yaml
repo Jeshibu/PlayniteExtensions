@@ -6,3 +6,11 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.3/itchIoBundleTagger_0_3.pext
     Changelog:
     - Initial release
+  - Version: 0.4
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-05-24
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.4/itchIoBundleTagger_0_4.pext
+    Changelog:
+    - Added option to change the [itch.io] tag prefix
+    - Added option to not add the "Also available on Steam" tag
+    - Added option to add link to Steam store page where applicable
