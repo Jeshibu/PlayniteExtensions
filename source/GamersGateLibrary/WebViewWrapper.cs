@@ -14,11 +14,19 @@ namespace GamersGateLibrary
         string DownloadPageSource(string targetUrl);
     }
 
+    /// <summary>
+    /// Intended for use for only one request
+    /// </summary>
     public class WebViewWrapper : IWebViewWrapper
     {
         public WebViewWrapper(IPlayniteAPI playniteAPI, int width = 675, int height = 600)
         {
-            view = System.Windows.Application.Current.Dispatcher.Invoke(() => playniteAPI.WebViews.CreateView(width, height, Colors.Black));
+            view = System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            {
+                var v = playniteAPI.WebViews.CreateView(width, height, Colors.Black);
+                v.Open();
+                return v;
+            });
             view.LoadingChanged += View_LoadingChanged;
         }
 
@@ -27,6 +35,7 @@ namespace GamersGateLibrary
         private readonly object requestLifespanLock = new object();
 
         public string TargetUrl { get; private set; }
+        private TaskCompletionSource<string> DownloadCompletionSource { get; set; }
 
         public string DownloadPageSource(string targetUrl)
         {
@@ -34,19 +43,14 @@ namespace GamersGateLibrary
             {
                 TargetUrl = targetUrl;
 
-                var output = System.Windows.Application.Current.Dispatcher.Invoke(() =>
-                {
-                    view.NavigateAndWait(targetUrl);
-                    string src = view.GetPageSource();
+                view.Navigate(targetUrl);
 
-                    if (!IsTargetUrl() || !IsAuthenticated(src))
-                    {
-                        view.OpenDialog();
-                    }
-                    return src;
-                });
+                DownloadCompletionSource = new TaskCompletionSource<string>();
+                DownloadCompletionSource.Task.Wait();
+                string source = DownloadCompletionSource.Task.Result;
+                DownloadCompletionSource = null;
 
-                return output;
+                return source;
             }
         }
 
@@ -66,17 +70,14 @@ namespace GamersGateLibrary
         {
             try
             {
-                await System.Windows.Application.Current.Dispatcher.InvokeAsync(async () =>
-                {
-                    if (!IsTargetUrl())
-                        return;
+                if (!IsTargetUrl())
+                    return;
 
-                    var source = await view.GetPageSourceAsync();
-                    if (IsAuthenticated(source))
-                        view.Close();
-                    else
-                        return;
-                });
+                var source = await view.GetPageSourceAsync();
+                if (IsAuthenticated(source))
+                {
+                    DownloadCompletionSource?.TrySetResult(source);
+                }
             }
             catch (Exception ex)
             {
@@ -86,7 +87,15 @@ namespace GamersGateLibrary
 
         public void Dispose()
         {
-            view.Dispose();
+            try
+            {
+                view.Close();
+                view.Dispose();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Error disposing WebViewWrapper");
+            }
         }
     }
 }
