@@ -13,9 +13,12 @@ namespace GamersGateLibrary
 {
     public class GamersGateScraper
     {
+        private Random random = new Random();
         private ILogger logger = LogManager.GetLogger();
+        public int MinDelay { get; set; }
+        public int MaxDelay { get; set; }
 
-        public IEnumerable<string> GetAllOrderUrls(IWebDownloader downloader)
+        public IEnumerable<string> GetAllOrderUrls(IWebViewWrapper downloader)
         {
             int page = 1;
             var output = new List<string>();
@@ -32,22 +35,43 @@ namespace GamersGateLibrary
             return output;
         }
 
+        public void SetWebRequestDelay(int minMilliSeconds, int maxMilliSeconds)
+        {
+            MinDelay = minMilliSeconds;
+            MaxDelay = maxMilliSeconds;
+        }
+
+        public Task GetDelayTask()
+        {
+            if (MaxDelay < 1)
+                return Task.CompletedTask;
+
+            var delay = random.Next(MinDelay, MaxDelay);
+            return Task.Delay(delay);
+        }
+
         private static string GetOrderPageUrl(int page)
         {
             return $"https://www.gamersgate.com/account/orders/?page={page}";
         }
 
-        public IEnumerable<string> GetOrderUrls(IWebDownloader downloader, int page, out bool hasNextPage)
+        public IEnumerable<string> GetOrderUrls(IWebViewWrapper downloader, int page, out bool hasNextPage)
         {
             hasNextPage = false;
 
             var url = GetOrderPageUrl(page);
-            var response = downloader.DownloadString(url);
-            if (response.ResponseUrl != url || string.IsNullOrWhiteSpace(response.ResponseContent))
+            var response = downloader.DownloadPageSource(url);
+            var delayTask = GetDelayTask();
+
+            if (string.IsNullOrWhiteSpace(response))
+            {
+                logger.Info("Did not get a response from " + url);
+                delayTask.Wait();
                 return new List<string>();
+            }
 
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(response.ResponseContent);
+            doc.LoadHtml(response);
 
             var pageLinks = doc.DocumentNode.SelectNodes("//div[@class='paginator']//a[@href]");
             if (pageLinks?.Count > 0)
@@ -60,30 +84,42 @@ namespace GamersGateLibrary
             if (links == null || links.Count == 0)
                 return new List<string>();
 
-            return links.Select(l => l.Attributes["href"].Value.GetAbsoluteUrl(url)).ToHashSet(); //hashset because every URL is on the page twice
+            var output = links.Select(l => l.Attributes["href"].Value.GetAbsoluteUrl(url)).ToHashSet(); //hashset because every URL is on the page twice
+
+            delayTask.Wait();
+
+            return output;
         }
 
-        public IEnumerable<GameDetails> GetGamesFromOrder(IWebDownloader downloader, string orderUrl)
+        public IEnumerable<GameDetails> GetGamesFromOrder(IWebViewWrapper downloader, string orderUrl)
         {
-            var response = downloader.DownloadString(orderUrl);
-            if (response.ResponseUrl != orderUrl || string.IsNullOrWhiteSpace(response.ResponseContent))
-                yield break;
+            var output = new List<GameDetails>();
+
+            var response = downloader.DownloadPageSource(orderUrl);
+            var delayTask = GetDelayTask();
+
+            if (string.IsNullOrWhiteSpace(response))
+            {
+                logger.Info("Did not get a response from " + orderUrl);
+                delayTask.Wait();
+                return output;
+            }
 
             HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(response.ResponseContent);
+            doc.LoadHtml(response);
 
             var gameNodes = doc.DocumentNode.SelectNodes("//div[@class='content-sub-container order-item-container']");
             if (gameNodes == null)
             {
                 logger.Info($"No game nodes found in {orderUrl}");
-                yield break;
+                return output;
             }
 
             var orderIdString = doc.DocumentNode.SelectSingleNode("//div[@class='column order-item order-item--date']/a[@class='no-link']")?.InnerText.HtmlDecode().TrimStart('#');
             if (!int.TryParse(orderIdString, out int orderId))
             {
                 logger.Info($"Can't parse order id {orderIdString} in {orderUrl}");
-                yield break;
+                return output;
             }
 
             foreach (var g in gameNodes)
@@ -111,7 +147,7 @@ namespace GamersGateLibrary
                 bool unrevealedKey = contentNode.SelectSingleNode("./div[@class='order-item-description']/form[@id='show_activation_code_form']") != null;
                 string key = contentNode.SelectSingleNode("./div[@class='order-item-description']/div[@class='order-item--key normal']/div[@class='order-item--key-value']")?.InnerText.HtmlDecode();
 
-                yield return new GameDetails
+                output.Add(new GameDetails
                 {
                     Id = id,
                     OrderId = orderId,
@@ -121,8 +157,12 @@ namespace GamersGateLibrary
                     UnrevealedKey = unrevealedKey,
                     Key = key,
                     DownloadUrls = downloadUrls,
-                };
+                });
             }
+
+            delayTask.Wait();
+
+            return output;
         }
 
         private List<DownloadUrl> GetGameDownloadUrls(GameDetails game)
@@ -130,7 +170,7 @@ namespace GamersGateLibrary
             return game.DownloadUrls.Where(u => !u.Description.Contains("Manual") && !u.Description.EndsWith("Demo") && !u.Description.Contains("Patch")).ToList();
         }
 
-        public IEnumerable<GameDetails> GetAllGames(IWebDownloader downloader)
+        public IEnumerable<GameDetails> GetAllGames(IWebViewWrapper downloader)
         {
             var orderUrls = GetAllOrderUrls(downloader);
             var games = new List<GameDetails>();
@@ -138,6 +178,8 @@ namespace GamersGateLibrary
             {
                 games.AddRange(GetGamesFromOrder(downloader, orderUrl));
             }
+
+            #region remove secondary download URLs that are primary in other games (for example a PC game would have a PC and Mac download URL, and the Mac version would have the same Mac download URL)
 
             var singleDownloadUrls = new List<DownloadUrl>();
             foreach (var g in games)
@@ -157,20 +199,15 @@ namespace GamersGateLibrary
                     logger.Info($"Removed {removed} download URLs from {game.Title} because they're the only download URL for another game entry");
             }
 
+            #endregion
+
             return games;
         }
 
         public int? GetLoggedInUserId(IWebDownloader downloader)
         {
             var url = "https://www.gamersgate.com/account/settings/";
-            var response = downloader.DownloadString(url, throwExceptionOnErrorResponse: false, customHeaders: new Dictionary<string, string> {
-                { "Accept-Language", "en-US,en;q=0.9" },
-                { "Upgrade-Insecure-Requests", "1" },
-                { "Sec-Fetch-Dest", "document" },
-                { "Sec-Fetch-Mode", "navigate" },
-                { "Sec-Fetch-Site", "same-origin" },
-                { "Sec-Fetch-User", "?1" },
-            });
+            var response = downloader.DownloadString(url, throwExceptionOnErrorResponse: false);
             if (response.ResponseUrl != url || string.IsNullOrWhiteSpace(response.ResponseContent) || (int)response.StatusCode > 399)
                 return null;
 

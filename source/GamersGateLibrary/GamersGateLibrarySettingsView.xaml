@@ -3,11 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:gamersgate="clr-namespace:GamersGateLibrary"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
-        <TextBlock TextWrapping="Wrap">GamersGate uses CloudFlare to ward off scrapers such as naughty old us. You're going to be solving a few captchas, and that login will likely only stick for one library refresh. It's better than nothing. Barely.</TextBlock>
+        <TextBlock TextWrapping="Wrap">GamersGate uses CloudFlare to ward off scrapers such as us. It's likely that importing will fail, and that login will likely only stick for one library refresh. It's better than nothing. Barely. If you keep getting failures, set your delay time higher.</TextBlock>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
             <Button Content="Authenticate" Command="{Binding LoginCommand}"/>
             <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">
@@ -38,5 +39,21 @@
             </TextBlock>
         </StackPanel>
         <CheckBox Content="Apply cover images when available (these are small)" IsChecked="{Binding Settings.UseCoverImages}" Margin="0,20" />
+        
+        <TextBlock>Web request delay (in milliseconds)</TextBlock>
+        <Grid Width="Auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="25" />
+            </Grid.RowDefinitions>
+            <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Margin="0,0,10,0">Minimum</TextBlock>
+            <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Margin="0,0,10,0">Maximum</TextBlock>
+            <xctk:IntegerUpDown Value="{Binding Settings.MinimumWebRequestDelay}" Width="100" VerticalAlignment="Center" Minimum="0" x:Name="MinimumDelay" Grid.Column="1" Grid.Row="0" />
+            <xctk:IntegerUpDown Value="{Binding Settings.MaximumWebRequestDelay}" Width="100" VerticalAlignment="Center" Minimum="0" x:Name="MaximumDelay" Grid.Column="1" Grid.Row="1"/>
+        </Grid>
     </StackPanel>
 </UserControl>

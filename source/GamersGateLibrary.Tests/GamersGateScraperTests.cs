@@ -13,7 +13,7 @@ namespace GamersGateLibrary.Tests
         [Fact]
         public void ScrapingOrderPageReturnsOrderUrls()
         {
-            var downloader = new FakeWebDownloader("https://www.gamersgate.com/account/orders/?page=1", "orders_page1.html");
+            var downloader = new FakeWebViewWrapper("https://www.gamersgate.com/account/orders/?page=1", "orders_page1.html");
             var scraper = new GamersGateScraper();
 
             var result = scraper.GetOrderUrls(downloader, 1, out _);
@@ -24,7 +24,7 @@ namespace GamersGateLibrary.Tests
         [Fact]
         public void ScrapingAllOrderUrlsReturnsMoreThanTheFirstPage()
         {
-            var downloader = new FakeWebDownloader(new Dictionary<string, string> {
+            var downloader = new FakeWebViewWrapper(new Dictionary<string, string> {
                 { "https://www.gamersgate.com/account/orders/?page=1", "orders_page1.html" },
                 { "https://www.gamersgate.com/account/orders/?page=2", "orders_page2.html" },
             });
@@ -41,7 +41,7 @@ namespace GamersGateLibrary.Tests
         [Fact]
         public void ScrapingOrderReturnsCorrectly()
         {
-            var downloader = new FakeWebDownloader("https://www.gamersgate.com/account/orders/100000003/", "order_100000003.html");
+            var downloader = new FakeWebViewWrapper("https://www.gamersgate.com/account/orders/100000003/", "order_100000003.html");
             var scraper = new GamersGateScraper();
 
             var games = scraper.GetGamesFromOrder(downloader, "https://www.gamersgate.com/account/orders/100000003/");

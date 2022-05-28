@@ -17,12 +17,17 @@ namespace GamersGateLibrary
         private List<Cookie> cookies = new List<Cookie>();
         private Dictionary<string, GameInstallInfo> installData = new Dictionary<string, GameInstallInfo>();
         private bool useCoverImages = true;
+        private int minimumDelay = 2000;
+        private int maximumDelay = 4000;
 
         public List<Cookie> Cookies { get => cookies; set => SetValue(ref cookies, value); }
 
         public Dictionary<string, GameInstallInfo> InstallData { get => installData; set => SetValue(ref installData, value); }
 
         public bool UseCoverImages { get => useCoverImages; set => SetValue(ref useCoverImages, value); }
+
+        public int MinimumWebRequestDelay { get => minimumDelay; set => SetValue(ref minimumDelay, value); }
+        public int MaximumWebRequestDelay { get => maximumDelay; set => SetValue(ref maximumDelay, value); }
     }
 
     public class GameInstallInfo
@@ -150,6 +155,21 @@ namespace GamersGateLibrary
                 PlayniteApi.Dialogs.ShowErrorMessage("Error logging in to GamersGate", "");
                 Logger.Error(e, "Failed to authenticate user.");
             }
+        }
+
+        public override bool VerifySettings(out List<string> errors)
+        {
+            errors = new List<string>();
+            if (Settings.MinimumWebRequestDelay < 0)
+                errors.Add("Minimum web request delay can't be less than 0");
+
+            if (Settings.MaximumWebRequestDelay < 0)
+                errors.Add("Maximum web request delay can't be less than 0");
+
+            if (Settings.MinimumWebRequestDelay > Settings.MaximumWebRequestDelay)
+                errors.Add("Minimum web request delay can't be less than the maximum");
+
+            return errors.Count == 0;
         }
     }
 }

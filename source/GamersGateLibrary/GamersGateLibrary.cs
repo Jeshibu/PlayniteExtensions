@@ -44,7 +44,7 @@ namespace GamersGateLibrary
             if (s.Cookies.Count == 0)
                 return false;
 
-            s.Cookies.ForEach(Downloader.Cookies.Add);
+            //s.Cookies.ForEach(Downloader.Cookies.Add);
             try
             {
                 var userId = Scraper.GetLoggedInUserId(Downloader);
@@ -58,17 +58,19 @@ namespace GamersGateLibrary
             }
             finally
             {
-                settings.Settings.Cookies = Downloader.Cookies.Cast<Cookie>().ToList();
+                settings.Settings.Cookies = Downloader.Cookies?.Cast<Cookie>().ToList() ?? new List<Cookie>();
                 SavePluginSettings(settings.Settings);
             }
         }
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
-            settings.Settings.Cookies.ForEach(Downloader.Cookies.Add);
+            //settings.Settings.Cookies.ForEach(Downloader.Cookies.Add);
+            var webView = new WebViewWrapper(PlayniteApi);
             try
             {
-                var data = Scraper.GetAllGames(Downloader).ToList();
+                Scraper.SetWebRequestDelay(settings.Settings.MinimumWebRequestDelay, settings.Settings.MaximumWebRequestDelay);                
+                var data = Scraper.GetAllGames(webView).ToList();
                 var output = new List<GameMetadata>(data.Count);
                 foreach (var g in data)
                 {
@@ -87,6 +89,7 @@ namespace GamersGateLibrary
                     var metadata = new GameMetadata
                     {
                         GameId = g.Id,
+                        Source = new MetadataNameProperty("GamersGate"),
                     };
                     metadata.Platforms = new HashSet<MetadataProperty>(PlatformUtility.GetPlatformsFromName(g.Title, out string name));
                     metadata.Name = name;
@@ -109,8 +112,9 @@ namespace GamersGateLibrary
             }
             finally
             {
-                settings.Settings.Cookies = Downloader.Cookies.Cast<Cookie>().ToList();
-                SavePluginSettings(settings.Settings);
+                webView.Dispose();
+                //settings.Settings.Cookies = Downloader.Cookies.Cast<Cookie>().ToList();
+                //SavePluginSettings(settings.Settings);
             }
         }
 
