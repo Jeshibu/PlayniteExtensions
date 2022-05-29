@@ -23,7 +23,6 @@ namespace GamersGateLibrary
 
         public override string Name => "GamersGate";
 
-        public IWebDownloader Downloader { get; }
         public GamersGateScraper Scraper { get; }
         public IPlatformUtility PlatformUtility { get; }
 
@@ -34,42 +33,31 @@ namespace GamersGateLibrary
             {
                 HasSettings = true
             };
-            Downloader = new WebDownloader();
             Scraper = new GamersGateScraper();
             PlatformUtility = new PlatformUtility(api);
         }
 
-        public bool IsAuthenticated(GamersGateLibrarySettings s)
-        {
-            if (s.Cookies.Count == 0)
-                return false;
-
-            //s.Cookies.ForEach(Downloader.Cookies.Add);
-            try
-            {
-                var userId = Scraper.GetLoggedInUserId(Downloader);
-                return userId != null;
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "Error checking authentication status");
-                PlayniteApi.Notifications.Add("gamersgate-error", "Error checking GamersGate authentication status: " + ex.Message, NotificationType.Error);
-                return false;
-            }
-            finally
-            {
-                settings.Settings.Cookies = Downloader.Cookies?.Cast<Cookie>().ToList() ?? new List<Cookie>();
-                SavePluginSettings(settings.Settings);
-            }
-        }
-
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
-            //settings.Settings.Cookies.ForEach(Downloader.Cookies.Add);
+            switch (settings.Settings.ImportAction)
+            {
+                case OnImportAction.Prompt:
+                    var result = PlayniteApi.Dialogs.ShowMessage("Import GamersGate games? This will open a browser window because you might encounter CAPTCHAs that you need to solve within 60 seconds. This prompt (or the import as a whole) can be turned off in the add-on settings. Do not close the browser window during the import.", "GamersGate import", System.Windows.MessageBoxButton.OKCancel);
+                    if (result == System.Windows.MessageBoxResult.Cancel)
+                        return new GameMetadata[0];
+                    break;
+                case OnImportAction.DoNothing:
+                    return new GameMetadata[0];
+                case OnImportAction.ImportWithoutPrompt:
+                    break;
+                default:
+                    break;
+            }
+
             var webView = new WebViewWrapper(PlayniteApi);
             try
             {
-                Scraper.SetWebRequestDelay(settings.Settings.MinimumWebRequestDelay, settings.Settings.MaximumWebRequestDelay);                
+                Scraper.SetWebRequestDelay(settings.Settings.MinimumWebRequestDelay, settings.Settings.MaximumWebRequestDelay);
                 var data = Scraper.GetAllGames(webView).ToList();
                 var output = new List<GameMetadata>(data.Count);
                 foreach (var g in data)
@@ -85,6 +73,8 @@ namespace GamersGateLibrary
                         settings.Settings.InstallData.Add(g.Id, installInfo);
                     }
                     installInfo.DownloadUrls = g.DownloadUrls;
+                    installInfo.UnrevealedKey = g.UnrevealedKey;
+                    installInfo.Key = g.Key;
 
                     var metadata = new GameMetadata
                     {
@@ -113,8 +103,6 @@ namespace GamersGateLibrary
             finally
             {
                 webView.Dispose();
-                //settings.Settings.Cookies = Downloader.Cookies.Cast<Cookie>().ToList();
-                //SavePluginSettings(settings.Settings);
             }
         }
 

@@ -57,7 +57,7 @@ namespace GamersGateLibrary
             else if (dialogResult == selectInstallFolderOption)
             {
                 var installationDirectory = PlayniteAPI.Dialogs.SelectFolder();
-                if (string.IsNullOrEmpty(installationDirectory))
+                if (string.IsNullOrWhiteSpace(installationDirectory))
                 {
                     Game.IsInstalling = false;
                     logger.Debug("User cancelled out of install directory selection");

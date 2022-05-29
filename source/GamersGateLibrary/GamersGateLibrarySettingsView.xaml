@@ -8,7 +8,13 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
-        <TextBlock TextWrapping="Wrap">GamersGate uses CloudFlare to ward off scrapers such as us. It's likely that importing will fail, and that login will likely only stick for one library refresh. It's better than nothing. Barely. If you keep getting failures, set your delay time higher.</TextBlock>
+        <TextBlock TextWrapping="Wrap">GamersGate uses CloudFlare to ward off scrapers such as us. It frequently blocks scraping attempts with CAPTCHAs, requiring user intervention. For this reason, the import process opens a web view and requires your presence and attention. You have 60 seconds to move from any CAPTCHA or login page to the intended web page during import. Do not close the web view during import.</TextBlock>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
+            <TextBlock>When importing:</TextBlock>
+            <ComboBox IsEditable="False" Margin="10,0,0,0" MinWidth="150"
+                      SelectedValue="{Binding Settings.ImportAction}"
+                      gamersgate:SelectorBehaviors.EnumSource="{x:Type gamersgate:OnImportAction}"/>
+        </StackPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
             <Button Content="Authenticate" Command="{Binding LoginCommand}"/>
             <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">

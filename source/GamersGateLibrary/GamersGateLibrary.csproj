@@ -67,6 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumExtensions.cs" />
     <Compile Include="GamersGateLibrary.cs" />
     <Compile Include="GamersGateLibrarySettings.cs" />
     <Compile Include="GamersGateLibrarySettingsView.xaml.cs">
@@ -77,6 +78,7 @@
     <Compile Include="GamersGateManualUninstallController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebViewWrapper.cs" />
+    <Compile Include="SelectorBehaviors.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">

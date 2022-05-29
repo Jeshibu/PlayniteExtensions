@@ -11,7 +11,7 @@ namespace GamersGateLibrary
 {
     public interface IWebViewWrapper : IDisposable
     {
-        string DownloadPageSource(string targetUrl);
+        string DownloadPageSource(string targetUrl, int timeoutSeconds = 60);
     }
 
     /// <summary>
@@ -37,20 +37,28 @@ namespace GamersGateLibrary
         public string TargetUrl { get; private set; }
         private TaskCompletionSource<string> DownloadCompletionSource { get; set; }
 
-        public string DownloadPageSource(string targetUrl)
+        public string DownloadPageSource(string targetUrl, int timeoutSeconds = 60)
         {
             lock (requestLifespanLock)
             {
                 TargetUrl = targetUrl;
 
+                DownloadCompletionSource = new TaskCompletionSource<string>();
+
                 view.Navigate(targetUrl);
 
-                DownloadCompletionSource = new TaskCompletionSource<string>();
-                DownloadCompletionSource.Task.Wait();
-                string source = DownloadCompletionSource.Task.Result;
-                DownloadCompletionSource = null;
+                DownloadCompletionSource.Task.Wait(timeoutSeconds * 1000);
+                if (DownloadCompletionSource.Task.IsCompleted)
+                {
+                    string source = DownloadCompletionSource.Task.Result;
+                    DownloadCompletionSource = null;
 
-                return source;
+                    return source;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -89,8 +97,11 @@ namespace GamersGateLibrary
         {
             try
             {
-                view.Close();
-                view.Dispose();
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    view.Close();
+                    view.Dispose();
+                });
             }
             catch (Exception ex)
             {

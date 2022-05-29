@@ -80,7 +80,7 @@ namespace GamersGateLibrary
                 hasNextPage = pageLinks.Any(l => l.Attributes["href"].Value.GetAbsoluteUrl(url) == nextPageUrl);
             }
 
-            var links = doc.DocumentNode.SelectNodes("//div[@class='table orders-table']//a[@href]");
+            var links = doc.DocumentNode.SelectNodes("//div[@class='table orders-table']//a[@href][1]");
             if (links == null || links.Count == 0)
                 return new List<string>();
 

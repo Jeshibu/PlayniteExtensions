@@ -3,6 +3,7 @@ using Playnite.SDK.Data;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -14,13 +15,11 @@ namespace GamersGateLibrary
 {
     public class GamersGateLibrarySettings : ObservableObject
     {
-        private List<Cookie> cookies = new List<Cookie>();
         private Dictionary<string, GameInstallInfo> installData = new Dictionary<string, GameInstallInfo>();
         private bool useCoverImages = true;
         private int minimumDelay = 2000;
         private int maximumDelay = 4000;
-
-        public List<Cookie> Cookies { get => cookies; set => SetValue(ref cookies, value); }
+        private OnImportAction importAction = OnImportAction.Prompt;
 
         public Dictionary<string, GameInstallInfo> InstallData { get => installData; set => SetValue(ref installData, value); }
 
@@ -28,6 +27,7 @@ namespace GamersGateLibrary
 
         public int MinimumWebRequestDelay { get => minimumDelay; set => SetValue(ref minimumDelay, value); }
         public int MaximumWebRequestDelay { get => maximumDelay; set => SetValue(ref maximumDelay, value); }
+        public OnImportAction ImportAction { get => importAction; set => SetValue(ref importAction, value); }
     }
 
     public class GameInstallInfo
@@ -38,6 +38,8 @@ namespace GamersGateLibrary
         public List<DownloadUrl> DownloadUrls { get; set; } = new List<DownloadUrl>();
         public string InstallLocation { get; set; }
         public string RelativeExecutablePath { get; set; }
+        public bool UnrevealedKey { get; set; }
+        public string Key { get; set; }
     }
 
     public class DownloadUrl
@@ -55,20 +57,32 @@ namespace GamersGateLibrary
         Failed
     }
 
+    public enum OnImportAction
+    {
+        [Description("Ask for confirmation")]
+        Prompt = 0,
+
+        [Description("Do nothing")]
+        DoNothing = 1,
+
+        [Description("Import without asking")]
+        ImportWithoutPrompt = 2,
+    }
+
     public class GamersGateLibrarySettingsViewModel : PluginSettingsViewModel<GamersGateLibrarySettings, GamersGateLibrary>
     {
         public AuthStatus AuthStatus
         {
             get
             {
-                if (!Settings.Cookies.Any())
-                {
-                    return AuthStatus.AuthRequired;
-                }
-
+                var view = PlayniteApi.WebViews.CreateOffscreenView();
                 try
                 {
-                    if (Plugin.IsAuthenticated(Settings))
+                    string profileUrl = "https://www.gamersgate.com/account/settings/";
+                    view.NavigateAndWait(profileUrl);
+                    string actualUrl = view.GetCurrentAddress(); //this will be a login URL if not authenticated
+
+                    if (actualUrl == profileUrl)
                         return AuthStatus.Ok;
                     else
                         return AuthStatus.AuthRequired;
@@ -80,7 +94,7 @@ namespace GamersGateLibrary
                 }
                 finally
                 {
-                    Settings.Cookies = Plugin.Downloader.Cookies.Cast<Cookie>().ToList();
+                    view.Dispose();
                 }
             }
         }
@@ -128,7 +142,7 @@ namespace GamersGateLibrary
                                 }
                             }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             Logger.Error(ex, "Error logging into GamersGate");
                         }
@@ -140,12 +154,6 @@ namespace GamersGateLibrary
                     view.DeleteDomainCookies("www.gamersgate.com"); //this is the only one currently hit, the rest is future proofing
                     view.Navigate(loginUrl);
                     view.OpenDialog();
-                }
-
-                if (userId != 0)
-                {
-                    //Settings.UserId = userId; //userId isn't really used anywhere else
-                    Settings.Cookies = cookies;
                 }
 
                 OnPropertyChanged(nameof(AuthStatus));
