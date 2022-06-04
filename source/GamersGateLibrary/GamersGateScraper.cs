@@ -86,6 +86,12 @@ namespace GamersGateLibrary
 
             var output = links.Select(l => l.Attributes["href"].Value.GetAbsoluteUrl(url)).ToHashSet(); //hashset because every URL is on the page twice
 
+            logger.Debug($"Result for order page {page}: {output.Count} orders");
+            foreach (var orderUrl in output)
+            {
+                logger.Debug(orderUrl);
+            }
+
             delayTask.Wait();
 
             return output;

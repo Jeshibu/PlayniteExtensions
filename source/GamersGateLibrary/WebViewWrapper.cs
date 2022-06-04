@@ -41,6 +41,7 @@ namespace GamersGateLibrary
         {
             lock (requestLifespanLock)
             {
+                logger.Debug($"Getting {targetUrl}, timeout {timeoutSeconds} seconds");
                 TargetUrl = targetUrl;
 
                 DownloadCompletionSource = new TaskCompletionSource<string>();
@@ -79,12 +80,21 @@ namespace GamersGateLibrary
             try
             {
                 if (!IsTargetUrl())
+                {
+                    logger.Debug($"Waiting for {TargetUrl}, got {view.GetCurrentAddress()}");
                     return;
+                }
 
                 var source = await view.GetPageSourceAsync();
                 if (IsAuthenticated(source))
                 {
                     DownloadCompletionSource?.TrySetResult(source);
+                    logger.Debug($"Completed request for {TargetUrl}");
+                }
+                else
+                {
+                    logger.Debug($"Source for {TargetUrl} is not authenticated");
+                    return;
                 }
             }
             catch (Exception ex)
