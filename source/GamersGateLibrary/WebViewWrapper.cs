@@ -77,6 +77,9 @@ namespace GamersGateLibrary
 
         private async void View_LoadingChanged(object sender, Playnite.SDK.Events.WebViewLoadingChangedEventArgs e)
         {
+            if (e.IsLoading)
+                return;
+
             try
             {
                 if (!IsTargetUrl())
