@@ -84,7 +84,7 @@ namespace GamersGateLibrary
             if (links == null || links.Count == 0)
                 return new List<string>();
 
-            var output = links.Select(l => l.Attributes["href"].Value.GetAbsoluteUrl(url)).ToHashSet(); //hashset because every URL is on the page twice
+            var output = links.Select(l => l.Attributes["href"].Value.GetAbsoluteUrl(url)).Distinct().ToList();
 
             logger.Debug($"Result for order page {page}: {output.Count} orders");
             foreach (var orderUrl in output)
@@ -151,7 +151,7 @@ namespace GamersGateLibrary
                     .Trim('/');
 
                 bool unrevealedKey = contentNode.SelectSingleNode("./div[@class='order-item-description']/form[@id='show_activation_code_form']") != null;
-                string key = contentNode.SelectSingleNode("./div[@class='order-item-description']/div[@class='order-item--key normal']/div[@class='order-item--key-value']")?.InnerText.HtmlDecode();
+                string key = contentNode.SelectSingleNode("./div[@class='order-item-description']//div[@class='order-item--key-value']")?.InnerText.HtmlDecode();
 
                 output.Add(new GameDetails
                 {

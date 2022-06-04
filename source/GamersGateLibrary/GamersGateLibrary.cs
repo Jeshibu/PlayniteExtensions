@@ -93,6 +93,9 @@ namespace GamersGateLibrary
 
                     output.Add(metadata);
                 }
+
+                SavePluginSettings(settings.Settings);
+
                 return output;
             }
             catch (Exception ex)
