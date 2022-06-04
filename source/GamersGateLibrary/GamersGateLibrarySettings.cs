@@ -40,6 +40,7 @@ namespace GamersGateLibrary
         public string RelativeExecutablePath { get; set; }
         public bool UnrevealedKey { get; set; }
         public string Key { get; set; }
+        public string DRM { get; set; }
     }
 
     public class DownloadUrl

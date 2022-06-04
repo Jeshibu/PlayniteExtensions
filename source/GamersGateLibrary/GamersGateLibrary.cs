@@ -75,6 +75,7 @@ namespace GamersGateLibrary
                     installInfo.DownloadUrls = g.DownloadUrls;
                     installInfo.UnrevealedKey = g.UnrevealedKey;
                     installInfo.Key = g.Key;
+                    installInfo.DRM = g.DRM;
 
                     var metadata = new GameMetadata
                     {
