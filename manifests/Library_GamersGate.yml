@@ -8,3 +8,11 @@ Packages:
      - Initial release
      - Manual game (un)install
      - Will open visible browser window to import library (to allow user to work around CAPTCHAs)
+  - Version: 0.1.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-04
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/gamersgate0.1.1/GamersGateLibrary_0_1_1.pext
+    Changelog:
+     - Fixed web request handling
+     - Stored DRM type
+     - Added more logging
