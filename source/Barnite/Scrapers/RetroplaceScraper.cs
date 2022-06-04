@@ -13,7 +13,7 @@ namespace Barnite.Scrapers
 {
     public class RetroplaceScraper : MetadataScraper
     {
-        public override string Name { get; } = "retroplace";
+        public override string Name { get; } = "Retroplace";
 
         public override string WebsiteUrl { get; } = "https://www.retroplace.com";
 
