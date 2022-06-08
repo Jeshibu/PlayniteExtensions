@@ -31,27 +31,41 @@ namespace PlayniteExtensions.Common
 
         private bool CopyFileFromPackagedFallback()
         {
+            if (string.IsNullOrWhiteSpace(PackagedFallbackPath))
+                return false;
+
             FileInfo packagedFallbackFile = new FileInfo(PackagedFallbackPath);
 
-            if (string.IsNullOrEmpty(PackagedFallbackPath) || !packagedFallbackFile.Exists)
+            if (!packagedFallbackFile.Exists)
                 return false;
 
             File.Copy(PackagedFallbackPath, LocalPath, overwrite: true);
-            File.SetCreationTime(LocalPath, packagedFallbackFile.CreationTime);
-            File.SetLastWriteTime(LocalPath, packagedFallbackFile.CreationTime);
             return true;
+        }
+
+        private bool PackagedFallbackIsNewerThan(FileInfo f)
+        {
+            if (string.IsNullOrWhiteSpace(PackagedFallbackPath))
+                return false;
+
+            FileInfo packagedFallbackFile = new FileInfo(PackagedFallbackPath);
+
+            if (!packagedFallbackFile.Exists || !f.Exists)
+                return false;
+
+            return packagedFallbackFile.LastWriteTime > f.LastWriteTime;
         }
 
         public string GetFileContents()
         {
             var f = new FileInfo(LocalPath);
 
-            if (!f.Exists && CopyFileFromPackagedFallback())
+            if ((!f.Exists || PackagedFallbackIsNewerThan(f)) && CopyFileFromPackagedFallback())
             {
                 f.Refresh();
             }
 
-            if (!f.Exists || f.CreationTime + MaxCacheAge < DateTime.Now)
+            if (!f.Exists || f.LastWriteTime + MaxCacheAge < DateTime.Now)
             {
                 RefreshCache();
             }
