@@ -14,3 +14,10 @@ Packages:
     - Added option to change the [itch.io] tag prefix
     - Added option to not add the "Also available on Steam" tag
     - Added option to add link to Steam store page where applicable
+  - Version: 0.5
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-09
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.5/itchIoBundleTagger_0_5.pext
+    Changelog:
+    - Added support for Queer Games Bundle 2022
+    - Tags are now only added to the database as needed
