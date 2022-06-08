@@ -180,6 +180,9 @@ namespace itchioBundleTagger
                             if (data.Bundles.ContainsKey("ttrpg"))
                                 AddTagToGame(game, "TTRPGs for Trans Rights in Texas!");
 
+                            if (data.Bundles.ContainsKey("queer2022"))
+                                AddTagToGame(game, "Queer Games Bundle 2022");
+
                             PlayniteApi.Database.Games.Update(game);
                             i++;
                             if (i % 10 == 0)
