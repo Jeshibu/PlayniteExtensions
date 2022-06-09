@@ -2,6 +2,7 @@
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -11,44 +12,63 @@ namespace LegacyGamesLibrary
 {
     public class AggregateMetadataGatherer : LibraryMetadataProvider
     {
-        public AggregateMetadataGatherer(ILegacyGamesRegistryReader registryReader, IAppStateReader appStateReader)
+        public AggregateMetadataGatherer(ILegacyGamesRegistryReader registryReader, IAppStateReader appStateReader, IPlayniteAPI playniteAPI)
         {
             RegistryReader = registryReader;
             AppStateReader = appStateReader;
+            PlayniteAPI = playniteAPI;
         }
 
         public ILegacyGamesRegistryReader RegistryReader { get; }
         public IAppStateReader AppStateReader { get; }
+        private IPlayniteAPI PlayniteAPI { get; }
 
         public IEnumerable<GameMetadata> GetGames(CancellationToken cancellationToken)
         {
-            var installedGames = RegistryReader.GetGameData();
-            var ownedGames = AppStateReader.GetUserOwnedGames();
-
-            foreach (var game in ownedGames)
+            try
             {
-                if (cancellationToken.IsCancellationRequested)
-                    yield break;
+                var installedGames = RegistryReader.GetGameData();
+                var ownedGames = AppStateReader.GetUserOwnedGames();
 
-                var installation = installedGames.FirstOrDefault(g => g.InstallerUUID == game.InstallerUUID);
-                var metadata = new GameMetadata
+                var output = new List<GameMetadata>();
+
+                if (ownedGames == null)
                 {
-                    GameId = game.InstallerUUID.ToString(),
-                    Name = game.GameName,
-                    CoverImage = new MetadataFile(game.GameCoverArt),
-                    Description = game.GameDescription,
-                    IsInstalled = installation != null,
-                    Source = new MetadataNameProperty("Legacy Games"),
+                    PlayniteAPI.Notifications.Add(new NotificationMessage("legacy-games-error", $"No Legacy Games games found - check your Legacy Games client installation. Click this message to download it.", NotificationType.Error, () =>
+                    {
+                        try
+                        {
+                            Process.Start("https://legacygames.com/gameslauncher/");
+                        }
+                        catch { }
+                    }));
+                    return output;
+                }
 
-                    //the following are probably safe assumptions
-                    Features = new HashSet<MetadataProperty> { new MetadataNameProperty("Single-player") },
-                    Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
-                };
-
-                if (installation != null)
+                foreach (var game in ownedGames)
                 {
-                    metadata.InstallDirectory = installation.InstDir;
-                    metadata.GameActions = new List<GameAction>
+                    if (cancellationToken.IsCancellationRequested)
+                        return output;
+
+                    var installation = installedGames?.FirstOrDefault(g => g.InstallerUUID == game.InstallerUUID);
+                    var metadata = new GameMetadata
+                    {
+                        GameId = game.InstallerUUID.ToString(),
+                        Name = game.GameName,
+                        CoverImage = new MetadataFile(game.GameCoverArt),
+                        Description = game.GameDescription,
+                        IsInstalled = installation != null,
+                        Source = new MetadataNameProperty("Legacy Games"),
+
+                        //the following are probably safe assumptions
+                        Features = new HashSet<MetadataProperty> { new MetadataNameProperty("Single-player") },
+                        Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
+                    };
+
+                    if (installation != null)
+                    {
+                        metadata.InstallDirectory = installation.InstDir;
+                        metadata.GameActions = new List<GameAction>
                     {
                         new GameAction
                         {
@@ -58,10 +78,17 @@ namespace LegacyGamesLibrary
                             Type = GameActionType.File,
                         },
                     };
-                    metadata.Icon = new MetadataFile($@"{installation.InstDir}\icon.ico");
-                }
+                        metadata.Icon = new MetadataFile($@"{installation.InstDir}\icon.ico");
+                    }
 
-                yield return metadata;
+                    output.Add(metadata);
+                }
+                return output;
+            }
+            catch (Exception ex)
+            {
+                PlayniteAPI.Notifications.Add(new NotificationMessage("legacy-games-error", $"Failed to get Legacy Games games: {ex.Message}", NotificationType.Error));
+                return new GameMetadata[0];
             }
         }
 

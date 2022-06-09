@@ -35,7 +35,7 @@ namespace LegacyGamesLibrary
                 CanShutdownClient = false,
                 HasCustomizedGameImport = false,
             };
-            MetadataGatherer = new AggregateMetadataGatherer(new LegacyGamesRegistryReader(new RegistryValueProvider()), new AppStateReader());
+            MetadataGatherer = new AggregateMetadataGatherer(new LegacyGamesRegistryReader(new RegistryValueProvider()), new AppStateReader(), api);
         }
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)

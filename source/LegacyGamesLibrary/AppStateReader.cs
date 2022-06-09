@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +17,7 @@ namespace LegacyGamesLibrary
     public class AppStateReader : IAppStateReader
     {
         private static readonly string DefaultAppStatePath = Environment.ExpandEnvironmentVariables(@"%APPDATA%\legacy-games-launcher\app-state.json");
+        private ILogger logger = LogManager.GetLogger();
 
         public string AppStatePath { get; }
 
@@ -62,6 +64,12 @@ namespace LegacyGamesLibrary
 
         public IEnumerable<AppStateGame> GetUserOwnedGames()
         {
+            if (!File.Exists(AppStatePath))
+            {
+                logger.Info($"Legacy Games app state file not found in {AppStatePath}");
+                return null;
+            }
+
             var fileContents = File.ReadAllText(AppStatePath);
             var appState = JsonConvert.DeserializeObject<AppStateRoot>(fileContents);
             var ownedBundleIds = appState.User.Profile.Downloads.Select(d => d.ProductId).ToHashSet();

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace LegacyGamesLibrary
 
     public class LegacyGamesRegistryReader : ILegacyGamesRegistryReader
     {
+        ILogger logger = LogManager.GetLogger();
+
         public LegacyGamesRegistryReader(IRegistryValueProvider registryValueProvider)
         {
             RegistryValueProvider = registryValueProvider;
@@ -25,9 +28,15 @@ namespace LegacyGamesLibrary
         {
             string legacyGamesFolder = @"Software\Legacy Games";
             var gameFolderKeys = RegistryValueProvider.GetSubKeysForPath(registryView, RegistryHive.CurrentUser, legacyGamesFolder);
+            if (gameFolderKeys == null)
+            {
+                logger.Info($"Failed to get registry subkeys for {legacyGamesFolder}");
+                yield break;
+            }
+
             foreach (var gameFolderKey in gameFolderKeys)
             {
-                var gameFolder = legacyGamesFolder + "\\" + gameFolderKey;
+                var gameFolder = $@"{legacyGamesFolder}\{gameFolderKey}";
                 yield return new RegistryGameData
                 {
                     InstallerUUID = new Guid(RegistryValueProvider.GetValueForPath(registryView, RegistryHive.CurrentUser, gameFolder, "InstallerUUID")),
@@ -66,8 +75,8 @@ namespace LegacyGamesLibrary
 
             return rootKey
                     .OpenSubKey(path)
-                    .GetSubKeyNames()
-                    .ToList();
+                    ?.GetSubKeyNames()
+                    ?.ToList();
         }
 
         public string GetValueForPath(
@@ -80,8 +89,8 @@ namespace LegacyGamesLibrary
 
             return rootKey
                         .OpenSubKey(path)
-                        .GetValue(keyName)
-                        .ToString();
+                        ?.GetValue(keyName)
+                        ?.ToString();
         }
     }
 }

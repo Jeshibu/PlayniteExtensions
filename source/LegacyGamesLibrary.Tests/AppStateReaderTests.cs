@@ -26,5 +26,13 @@ namespace LegacyGamesLibrary.Tests
             var games = reader.GetUserOwnedGames().ToList();
             Assert.Equal(11, games.Count);
         }
+
+        [Fact]
+        public void GetUserOwnedGamesReturnsNullIfFileIsMissing()
+        {
+            AppStateReader reader = new AppStateReader("./missing-file.json");
+            var games = reader.GetUserOwnedGames();
+            Assert.Null(games);
+        }
     }
 }
