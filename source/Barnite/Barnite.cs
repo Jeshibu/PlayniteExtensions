@@ -1,11 +1,14 @@
 ﻿using Barnite.Scrapers;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace Barnite
@@ -21,10 +24,10 @@ namespace Barnite
 
         public Barnite(IPlayniteAPI api) : base(api)
         {
-            settings = new BarniteSettingsViewModel(this, api);            
+            settings = new BarniteSettingsViewModel(this, api);
             Properties = new GenericPluginProperties
             {
-                HasSettings = true
+                HasSettings = true,
             };
 
             var platformUtility = new PlatformUtility(api);
@@ -40,6 +43,9 @@ namespace Barnite
             _scraperManager.Add<UpcItemDbScraper>();
             _scraperManager.Add<RetroplaceScraper>();
             _scraperManager.InitializeScraperSettingsCollection(settings.Settings.Scrapers);
+
+            var searchContext = new BarcodeSearchContext(_scraperManager, PlayniteApi);
+            Searches = new List<SearchSupport> { new SearchSupport("barcode", "Search by barcode", searchContext) };
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
@@ -51,12 +57,6 @@ namespace Barnite
         {
             return new BarniteSettingsView();
         }
-        /*
-        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
-        {
-            return base.GetMainMenuItems(args);
-        }
-        */
 
         public override IEnumerable<TopPanelItem> GetTopPanelItems()
         {
@@ -78,7 +78,7 @@ namespace Barnite
             if (!inputResult.Result || string.IsNullOrWhiteSpace(inputResult.SelectedString))
                 return;
 
-            string barcode = Regex.Replace(inputResult.SelectedString, @"\s+", string.Empty);
+            string barcode = InputHelper.SanitizeBarcodeInput(inputResult.SelectedString);
 
             PlayniteApi.Dialogs.ActivateGlobalProgress((args) =>
             {
@@ -115,6 +115,72 @@ namespace Barnite
                 }
                 PlayniteApi.Dialogs.ShowMessage($"No game found for {barcode} in {orderedScrapers.Count} database(s)", "Barnite");
             }, new GlobalProgressOptions("Searching barcode databases…") { Cancelable = true, IsIndeterminate = false });
+        }
+    }
+
+    public class InputHelper
+    {
+        public static string SanitizeBarcodeInput(string input)
+        {
+            string barcode = Regex.Replace(input, @"\s+", string.Empty);
+            return barcode;
+        }
+    }
+
+    public class BarcodeSearchContext : SearchContext
+    {
+        public BarcodeSearchContext(ScraperManager scraperManager, IPlayniteAPI playniteAPI)
+        {
+            ScraperManager = scraperManager;
+            PlayniteAPI = playniteAPI;
+            Delay = 300;
+        }
+
+        public ScraperManager ScraperManager { get; }
+        public IPlayniteAPI PlayniteAPI { get; }
+
+        public override IEnumerable<SearchItem> GetSearchResults(GetSearchResultsArgs args)
+        {
+            if (!CouldBeBarcode(args.SearchTerm))
+                yield break;
+
+            string potentialBarcode = InputHelper.SanitizeBarcodeInput(args.SearchTerm);
+
+            var tasks = new List<Task<GameMetadata>>();
+
+            foreach (var scraper in ScraperManager.Scrapers)
+            {
+                var task = Task.Run(() => scraper.GetMetadataFromBarcode(potentialBarcode));
+                tasks.Add(task);
+            }
+
+            foreach (var task in tasks)
+            {
+                task.Wait();
+                if (task.Status != TaskStatus.RanToCompletion)
+                    continue;
+
+                var gameMetadata = task.Result;
+                if (gameMetadata != null)
+                    yield return new SearchItem(gameMetadata.Name, "Add to library", () => AddGameToLibrary(gameMetadata));
+
+                task.Dispose();
+            }
+        }
+
+        private void AddGameToLibrary(GameMetadata metadata)
+        {
+            var game = PlayniteAPI.Database.ImportGame(metadata);
+            PlayniteAPI.MainView.SelectGame(game.Id);
+        }
+
+        private static bool CouldBeBarcode(string str)
+        {
+            if (string.IsNullOrWhiteSpace(str))
+                return false;
+
+            return str.Count(c => !char.IsWhiteSpace(c)) > 8
+                && str.Any(c => char.IsNumber(c));
         }
     }
 }
