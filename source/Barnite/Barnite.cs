@@ -101,7 +101,6 @@ namespace Barnite
                         {
                             logger.Debug($"Game found in {scraper.Name} for {barcode}!");
                             var game = PlayniteApi.Database.ImportGame(data);
-                            PlayniteApi.MainView.SelectGame(game.Id);
                             PlayniteApi.Dialogs.ShowMessage($"Added {data.Name} via {scraper.Name}!\r\nIt's recommended to use metadata plugins to get more data on the game.", "Barnite");
                             return;
                         }
@@ -138,40 +137,81 @@ namespace Barnite
 
         public ScraperManager ScraperManager { get; }
         public IPlayniteAPI PlayniteAPI { get; }
+        private ILogger logger = LogManager.GetLogger();
 
         public override IEnumerable<SearchItem> GetSearchResults(GetSearchResultsArgs args)
         {
             if (!CouldBeBarcode(args.SearchTerm))
+            {
+                logger.Debug($"Skipped '{args.SearchTerm}' because it doesn't look like a barcode");
                 yield break;
+            }
 
             string potentialBarcode = InputHelper.SanitizeBarcodeInput(args.SearchTerm);
+            logger.Debug($"Searching for barcode: {potentialBarcode}");
 
-            var tasks = new List<Task<GameMetadata>>();
+            var tasks = new List<ScraperTaskInfo>();
 
             foreach (var scraper in ScraperManager.Scrapers)
             {
-                var task = Task.Run(() => scraper.GetMetadataFromBarcode(potentialBarcode));
-                tasks.Add(task);
+                tasks.Add(new ScraperTaskInfo(scraper, potentialBarcode));
             }
 
             foreach (var task in tasks)
             {
-                task.Wait();
-                if (task.Status != TaskStatus.RanToCompletion)
+                logger.Debug($"Awaiting {task.Scraper.Name} result for {task.Barcode}");
+                task.ScrapeTask.Wait(args.CancelToken);
+                logger.Debug($"Wait for {task.Scraper.Name} result for {task.Barcode} completed");
+                if (task.ScrapeTask.Status != TaskStatus.RanToCompletion)
+                {
+                    logger.Debug($"Unexpected task status: {task.ScrapeTask.Status}");
                     continue;
+                }
 
-                var gameMetadata = task.Result;
+                var gameMetadata = task.ScrapeTask.Result;
                 if (gameMetadata != null)
-                    yield return new SearchItem(gameMetadata.Name, "Add to library", () => AddGameToLibrary(gameMetadata));
+                {
+                    var action = new SearchItemAction("Add to library", () => AddGameToLibrary(gameMetadata, task.Scraper)) { CloseSearch = true };
+                    var searchItem = new SearchItem(gameMetadata.Name, action) { Description = $"via {task.Scraper.Name}" };
 
-                task.Dispose();
+                    var gameCoverPath = gameMetadata.CoverImage?.Path;
+                    if (!string.IsNullOrEmpty(gameCoverPath))
+                        searchItem.Icon = gameCoverPath;
+
+                    logger.Debug("returning " + searchItem.Name);
+                    yield return searchItem;
+                }
+
+                logger.Debug($"Disposing task to get game metadata from {task.Scraper.Name} for barcode {task.Barcode}");
+                task.ScrapeTask.Dispose();
             }
         }
 
-        private void AddGameToLibrary(GameMetadata metadata)
+        private class ScraperTaskInfo
+        {
+            public ScraperTaskInfo(MetadataScraper scraper, string barcode)
+            {
+                Scraper = scraper;
+                Barcode = barcode;
+                ScrapeTask = Task.Run(() =>
+                {
+                    GameMetadata gameMetadata = scraper.GetMetadataFromBarcode(barcode);
+                    logger.Debug($"{scraper.Name} result for {barcode}: {gameMetadata?.Name}");
+                    return gameMetadata;
+                });
+            }
+
+            public MetadataScraper Scraper { get; }
+            public string Barcode { get; }
+            public Task<GameMetadata> ScrapeTask { get; }
+            private ILogger logger = LogManager.GetLogger();
+        }
+
+        private void AddGameToLibrary(GameMetadata metadata, MetadataScraper scraper)
         {
             var game = PlayniteAPI.Database.ImportGame(metadata);
-            PlayniteAPI.MainView.SelectGame(game.Id);
+            //PlayniteAPI.Dialogs.ShowMessage($"Added {game.Name} via {scraper.Name}!\r\nIt's recommended to use metadata plugins to get more data on the game.", "Barnite");
+            //PlayniteAPI.MainView.SelectGame(game.Id);
         }
 
         private static bool CouldBeBarcode(string str)
