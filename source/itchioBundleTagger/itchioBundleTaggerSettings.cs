@@ -17,6 +17,8 @@ namespace itchioBundleTagger
 
         public bool AddAvailableOnSteamTag { get; set; } = true;
 
+        public bool AddFreeTag { get; set; } = false;
+
         public bool AddSteamLink { get; set; } = true;
 
         // Parameterless constructor must exist if you want to use LoadPluginSettings method.

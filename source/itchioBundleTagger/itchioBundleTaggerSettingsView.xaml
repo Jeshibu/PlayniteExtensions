@@ -10,6 +10,7 @@
             <CheckBox IsChecked="{Binding UseTagPrefix}" Content="Prefix tag names with: " VerticalAlignment="Center"/>
             <TextBox Text="{Binding TagPrefix}" Width="200" VerticalAlignment="Center" IsEnabled="{Binding UseTagPrefix}"/>
         </StackPanel>
+        <CheckBox IsChecked="{Binding AddFreeTag}" Content="Add 'Free' tag if appliccable" Margin="0,20,0,0"/>
         <CheckBox IsChecked="{Binding AddAvailableOnSteamTag}" Content="Add 'Available on Steam' tag if appliccable" Margin="0,20,0,0"/>
         <CheckBox IsChecked="{Binding AddSteamLink}" Content="Add link to Steam store page if appliccable" Margin="0,20,0,0"/>        
     </StackPanel>

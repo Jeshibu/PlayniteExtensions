@@ -168,6 +168,9 @@ namespace itchioBundleTagger
                                 }
                             }
 
+                            if (settings.AddFreeTag && string.IsNullOrWhiteSpace(data.CurrentPrice))
+                                AddTagToGame(game, "Free");
+
                             if (data.Bundles.ContainsKey("pb"))
                                 AddTagToGame(game, "Indie bundle for Palestinian Aid");
 
@@ -208,6 +211,7 @@ namespace itchioBundleTagger
         public string Id;
         public string Title;
         public string Steam;
+        public string CurrentPrice;
         public Dictionary<string, string> Bundles;
     }
 }
