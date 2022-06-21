@@ -21,3 +21,11 @@ Packages:
     Changelog:
     - Added support for Queer Games Bundle 2022
     - Tags are now only added to the database as needed
+  - Version: 0.6
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-21
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.6/itchIoBundleTagger_0_6.pext
+    Changelog:
+    - Added optional "Free" tags to games that are free
+    - Added Dutch localization
+    - Tags are now sticky - if you change the tag prefix or Playnite's language, the tags will be renamed rather than recreated. This requires one new run before changing anything to lock in the tag IDs.
