@@ -3,6 +3,7 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace LegacyGamesLibrary
         // Implementing Client adds ability to open it via special menu in playnite.
         //public override LibraryClient Client { get; } = new LegacyGamesLibraryClient();
 
+        private LegacyGamesRegistryReader RegistryReader { get; }
         private AggregateMetadataGatherer MetadataGatherer { get; }
 
         public LegacyGamesLibrary(IPlayniteAPI api) : base(api)
@@ -35,7 +37,8 @@ namespace LegacyGamesLibrary
                 CanShutdownClient = false,
                 HasCustomizedGameImport = false,
             };
-            MetadataGatherer = new AggregateMetadataGatherer(new LegacyGamesRegistryReader(new RegistryValueProvider()), new AppStateReader(), api);
+            RegistryReader = new LegacyGamesRegistryReader(new RegistryValueProvider());
+            MetadataGatherer = new AggregateMetadataGatherer(RegistryReader, new AppStateReader(), api);
         }
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
@@ -57,5 +60,34 @@ namespace LegacyGamesLibrary
         //{
         //    return new LegacyGamesLibrarySettingsView();
         //}
+
+        public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)
+        {
+            if (args.Game.PluginId != Id)
+                yield break;
+
+            if (!Guid.TryParse(args.Game.GameId, out var installerUUID))
+            {
+                logger.Debug($"Unexpected non-guid ID for {args.Game.Name}: {args.Game.GameId}");
+                PlayniteApi.Dialogs.ShowErrorMessage("Faulty game ID", "Legacy Games launch error");
+            }
+
+            var installData = RegistryReader.GetGameData(Microsoft.Win32.RegistryView.Default).FirstOrDefault(d => d.InstallerUUID == installerUUID);
+
+            if (installData == null)
+            {
+                logger.Debug($"No install data found for {args.Game.Name}, ID: {args.Game.GameId}");
+                PlayniteApi.Dialogs.ShowErrorMessage("No install data found.", "Legacy Games launch error");
+            }
+
+            string path = Path.Combine(installData.InstDir, installData.GameExe);
+
+            yield return new AutomaticPlayController(args.Game)
+            {
+                Path = path,
+                WorkingDir = installData.InstDir,
+                TrackingMode = TrackingMode.Default
+            };
+        }
     }
 }

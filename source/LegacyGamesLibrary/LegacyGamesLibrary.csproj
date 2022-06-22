@@ -53,7 +53,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AggregateMetdataGatherer.cs" />
+    <Compile Include="AggregateMetadataGatherer.cs" />
     <Compile Include="AppStateReader.cs" />
     <Compile Include="LegacyGamesLibraryClient.cs" />
     <Compile Include="LegacyGamesLibrary.cs" />

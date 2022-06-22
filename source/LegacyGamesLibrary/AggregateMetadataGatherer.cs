@@ -68,16 +68,6 @@ namespace LegacyGamesLibrary
                     if (installation != null)
                     {
                         metadata.InstallDirectory = installation.InstDir;
-                        metadata.GameActions = new List<GameAction>
-                    {
-                        new GameAction
-                        {
-                            IsPlayAction = true,
-                            Name = "Play",
-                            Path = $@"{{InstallDir}}\{installation.GameExe}",
-                            Type = GameActionType.File,
-                        },
-                    };
                         metadata.Icon = new MetadataFile($@"{installation.InstDir}\icon.ico");
                     }
 
