@@ -22,6 +22,7 @@ namespace LegacyGamesLibrary
         public ILegacyGamesRegistryReader RegistryReader { get; }
         public IAppStateReader AppStateReader { get; }
         private IPlayniteAPI PlayniteAPI { get; }
+        private ILogger logger = LogManager.GetLogger();
 
         public IEnumerable<GameMetadata> GetGames(CancellationToken cancellationToken)
         {
@@ -77,6 +78,7 @@ namespace LegacyGamesLibrary
             }
             catch (Exception ex)
             {
+                logger.Error(ex, "Failed to gather metadata");
                 PlayniteAPI.Notifications.Add(new NotificationMessage("legacy-games-error", $"Failed to get Legacy Games games: {ex.Message}", NotificationType.Error));
                 return new GameMetadata[0];
             }
