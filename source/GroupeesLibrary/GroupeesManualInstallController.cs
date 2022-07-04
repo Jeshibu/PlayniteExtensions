@@ -84,7 +84,9 @@ namespace GroupeesLibrary
             }
             else if (dialogResult.IsCancel)
             {
-                InvokeOnInstalled(new GameInstalledEventArgs(new GameInstallationData { InstallDirectory = null }));
+                Game.IsInstalled = false;
+                Game.IsInstalling = false;
+                Game.InstallDirectory = null;
             }
         }
     }
