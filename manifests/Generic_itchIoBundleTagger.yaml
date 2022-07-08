@@ -29,3 +29,13 @@ Packages:
     - Added optional "Free" tags to games that are free
     - Added Dutch localization
     - Tags are now sticky - if you change the tag prefix or Playnite's language, the tags will be renamed rather than recreated. This requires one new run before changing anything to lock in the tag IDs.
+  - Version: 0.7
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-08
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.7/itchIoBundleTagger_0_7.pext
+    Changelog:
+    - Added support for new bundle - Worthy of Better, Stronger Together for Reproductive Rights
+    - Added support for new bundle - Indie Bundle for Abortion Funds
+    - Added Spanish localization
+    - Fixed unknown new bundles causing exceptions
+    - Added main menu option to run for all games
