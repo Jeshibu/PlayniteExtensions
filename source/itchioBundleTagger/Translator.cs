@@ -40,7 +40,6 @@ namespace itchioBundleTagger
 
         private string ReadFtl(string language)
         {
-            var assembly = Assembly.GetExecutingAssembly();
             string lang = language.Replace('_', '-');
             var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string path = Path.Combine(basePath, LocalizationFolder, lang + ".ftl");
@@ -93,6 +92,7 @@ namespace itchioBundleTagger
         public string AddSteamLinkSetting => Translate("setting-add-steam-link");
 
         public string ExecuteTagging => Translate("menu-execute-tagging");
+        public string ExecuteTaggingAll => Translate("menu-execute-tagging-all");
         public string RefreshDatabase => Translate("menu-refresh-database");
 
         public string DatabaseRefreshed => Translate("dialog-database-refreshed");

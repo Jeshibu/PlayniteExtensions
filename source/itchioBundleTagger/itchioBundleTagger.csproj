@@ -79,6 +79,9 @@
     <Content Include="games.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Localization\es-ES.ftl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Localization\nl-NL.ftl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

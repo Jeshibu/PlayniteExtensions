@@ -65,6 +65,7 @@ namespace itchioBundleTagger
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
             yield return new MainMenuItem { Description = Translator.RefreshDatabase, Action = DownloadNewDataFile, MenuSection = "@" + Translator.ExtensionName };
+            yield return new MainMenuItem { Description = Translator.ExecuteTaggingAll, Action = TagItchBundleGamesForEverything, MenuSection = "@" + Translator.ExtensionName };
         }
 
         public void DownloadNewDataFile(MainMenuItemActionArgs args)
@@ -100,7 +101,7 @@ namespace itchioBundleTagger
             if (tagIdFromSettings)
                 tag = PlayniteApi.Database.Tags.Get(tagId);
 
-            if(tag != null)
+            if (tag != null)
                 tag.Name = computedTagName; //rename in case of switched localization-name or prefix
 
             if (tag == null)
@@ -127,16 +128,29 @@ namespace itchioBundleTagger
         private void AddTagToGame(Game game, string tagKey)
         {
             var tag = GetTag(tagKey);
+            if (tag is null)
+                return;
+
             AddTagToGame(game, tag);
         }
 
+        private void TagItchBundleGamesForEverything(MainMenuItemActionArgs args)
+        {
+            TagItchBundleGames(PlayniteApi.Database.Games);
+        }
+
         private void TagItchBundleGames(GameMenuItemActionArgs args)
+        {
+            TagItchBundleGames(args.Games);
+        }
+
+        private void TagItchBundleGames(ICollection<Game> games)
         {
             PlayniteApi.Dialogs.ActivateGlobalProgress(progressActionArgs =>
             {
                 try
                 {
-                    var relevantGames = args.Games.Where(g => g.PluginId == ItchIoLibraryId).ToList();
+                    var relevantGames = games.Where(g => g.PluginId == ItchIoLibraryId).ToList();
 
                     if (relevantGames.Count == 0)
                         return;
