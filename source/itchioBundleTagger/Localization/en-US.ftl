@@ -14,6 +14,8 @@ setting-tag-prefix = Prefix tag names with:
 setting-add-free-tag = Add "{ tag-free }" tag if appliccable
 setting-add-steam-tag = Add "{ tag-steam }" tag if appliccable
 setting-add-steam-link = Add link to Steam store page if appliccable
+setting-run-on-library-update = Run after every library import
+setting-show-in-context-menu = Show "{ menu-execute-tagging }" in context (right-click) menu
 
 menu-execute-tagging = Tag itch.io bundles
 menu-execute-tagging-all = Tag itch.io bundles for all games

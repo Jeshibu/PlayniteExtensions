@@ -25,6 +25,10 @@ namespace itchioBundleTagger
 
         public bool AddSteamLink { get; set; } = true;
 
+        public bool RunOnLibraryUpdate { get; set; } = true;
+
+        public bool ShowInContextMenu { get; set; } = false;
+
         public Dictionary<string, Guid> TagIds { get; set; } = new Dictionary<string, Guid>();
 
         // Parameterless constructor must exist if you want to use LoadPluginSettings method.
@@ -41,7 +45,7 @@ namespace itchioBundleTagger
             // Load saved settings.
             var savedSettings = plugin.LoadPluginSettings<itchioBundleTaggerSettings>();
 
-            // LoadPluginSettings returns null if not saved data is available.
+            // LoadPluginSettings returns null if no saved data is available.
             if (savedSettings != null)
             {
                 UseTagPrefix = savedSettings.UseTagPrefix;
@@ -50,6 +54,8 @@ namespace itchioBundleTagger
                 AddFreeTag = savedSettings.AddFreeTag;
                 AddSteamLink = savedSettings.AddSteamLink;
                 TagIds = savedSettings.TagIds;
+                RunOnLibraryUpdate = savedSettings.RunOnLibraryUpdate;
+                ShowInContextMenu = savedSettings.ShowInContextMenu;
             }
         }
 
@@ -94,5 +100,7 @@ namespace itchioBundleTagger
         public string AddFreeTag => Translator.AddFreeTagSetting;
         public string AddAvailableOnSteamTag => Translator.AddSteamTagSetting;
         public string AddSteamLink => Translator.AddSteamLinkSetting;
+        public string RunOnLibraryUpdate => Translator.RunOnLibraryUpdate;
+        public string ShowInContextMenu => Translator.ShowInContextMenu;
     }
 }

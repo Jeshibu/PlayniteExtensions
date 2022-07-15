@@ -90,6 +90,8 @@ namespace itchioBundleTagger
         public string AddFreeTagSetting => Translate("setting-add-free-tag");
         public string AddSteamTagSetting => Translate("setting-add-steam-tag");
         public string AddSteamLinkSetting => Translate("setting-add-steam-link");
+        public string RunOnLibraryUpdate => Translate("setting-run-on-library-update");
+        public string ShowInContextMenu => Translate("setting-show-in-context-menu");
 
         public string ExecuteTagging => Translate("menu-execute-tagging");
         public string ExecuteTaggingAll => Translate("menu-execute-tagging-all");

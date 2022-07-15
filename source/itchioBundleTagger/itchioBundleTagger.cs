@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK;
+using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
@@ -52,14 +53,18 @@ namespace itchioBundleTagger
             return new itchioBundleTaggerSettingsView();
         }
 
+        public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
+        {
+            if (Settings.RunOnLibraryUpdate)
+                TagItchBundleGames(PlayniteApi.Database.Games);
+        }
+
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            var menuItems = new List<GameMenuItem>();
-
-            if (args.Games.Any(g => g.PluginId == ItchIoLibraryId))
-                menuItems.Add(new GameMenuItem { Description = Translator.ExecuteTagging, Action = TagItchBundleGames });
-
-            return menuItems;
+            if (Settings.ShowInContextMenu && args.Games.Any(g => g.PluginId == ItchIoLibraryId))
+                return new[] { new GameMenuItem { Description = Translator.ExecuteTagging, Action = TagItchBundleGames } };
+            else
+                return new GameMenuItem[0];
         }
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
