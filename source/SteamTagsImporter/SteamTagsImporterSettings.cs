@@ -28,6 +28,10 @@ namespace SteamTagsImporter
 
         public string TagPrefix { get; set; } = string.Empty;
 
+        public bool TagDelistedGames { get; set; } = false;
+
+        public string DelistedTagName { get; set; } = "Delisted";
+
         public ObservableCollection<string> OkayTags { get; set; } = new ObservableCollection<string>();
 
         public ObservableCollection<string> BlacklistedTags { get; set; } = new ObservableCollection<string>();
@@ -54,6 +58,8 @@ namespace SteamTagsImporter
                 FixedTagCount = savedSettings.FixedTagCount;
                 UseTagPrefix = savedSettings.UseTagPrefix;
                 TagPrefix = savedSettings.TagPrefix;
+                TagDelistedGames = savedSettings.TagDelistedGames;
+                DelistedTagName = savedSettings.DelistedTagName;
                 LimitTaggingToPcGames = savedSettings.LimitTaggingToPcGames;
                 AutomaticallyAddTagsToNewGames = savedSettings.AutomaticallyAddTagsToNewGames;
                 LastAutomaticTagUpdate = savedSettings.LastAutomaticTagUpdate;

@@ -13,14 +13,14 @@ namespace SteamTagsImporter
     {
         private static readonly Regex TagJsonRegex = new Regex(@"InitAppTagModal\(\s*\d+,\s*(?<json>\[[^\]]+\])", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
-        public Func<string, string> GetSteamStorePageHtmlMethod { get; }
+        public Func<string, Delistable<string>> GetSteamStorePageHtmlMethod { get; }
 
         public SteamTagScraper()
             : this(GetSteamStorePageHtmlDefault)
         {
         }
 
-        public SteamTagScraper(Func<string, string> getSteamStorePageHtmlMethod)
+        public SteamTagScraper(Func<string, Delistable<string>> getSteamStorePageHtmlMethod)
         {
             GetSteamStorePageHtmlMethod = getSteamStorePageHtmlMethod;
         }
@@ -33,20 +33,21 @@ namespace SteamTagsImporter
             public bool browseable { get; set; }
         }
 
-        public IEnumerable<string> GetTags(string appId)
+        public Delistable<IEnumerable<string>> GetTags(string appId)
         {
             var html = GetSteamStorePageHtmlMethod(appId);
 
-            var match = TagJsonRegex.Match(html);
+            var match = TagJsonRegex.Match(html.Value);
             if (!match.Success)
-                return new string[0];
+                return new Delistable<IEnumerable<string>>(new string[0], html.Delisted);
 
             var json = match.Groups["json"].Value;
             var steamTags = Newtonsoft.Json.JsonConvert.DeserializeObject<List<JsonSteamTag>>(json);
-            return steamTags.Select(t => t.name.Trim()); //Trimmed because at least one tag was found to have a space at the end ("Dystopian ")
+            var outputTags = steamTags.Select(t => t.name.Trim()); //Trimmed because at least one tag was found to have a space at the end ("Dystopian ")
+            return new Delistable<IEnumerable<string>>(outputTags, html.Delisted);
         }
 
-        private static string GetSteamStorePageHtmlDefault(string appId)
+        private static Delistable<string> GetSteamStorePageHtmlDefault(string appId)
         {
             var request = (HttpWebRequest)WebRequest.Create($"https://store.steampowered.com/app/{appId}/");
             var cookies = new CookieContainer(2);
@@ -58,8 +59,21 @@ namespace SteamTagsImporter
             using (var responseStream = response.GetResponseStream())
             using (var streamReader = new StreamReader(responseStream))
             {
+                bool delisted = response.ResponseUri?.ToString() == "https://store.steampowered.com/";
                 string html = streamReader.ReadToEnd();
-                return html;
+                return new Delistable<string>(html, delisted);
+            }
+        }
+
+        public class Delistable<T>
+        {
+            public bool Delisted { get; set; }
+            public T Value { get; set; }
+
+            public Delistable(T value, bool delisted)
+            {
+                Value = value;
+                Delisted = delisted;
             }
         }
     }

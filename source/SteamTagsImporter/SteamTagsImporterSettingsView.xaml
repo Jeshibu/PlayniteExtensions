@@ -17,6 +17,10 @@
             <CheckBox IsChecked="{Binding UseTagPrefix}" Content="Prefix tag names with: " VerticalAlignment="Center"/>
             <TextBox Text="{Binding TagPrefix}" Width="200" VerticalAlignment="Center" IsEnabled="{Binding UseTagPrefix}"/>
         </StackPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,12,0,0">
+            <CheckBox IsChecked="{Binding TagDelistedGames}" Content="Tag delisted games as: " VerticalAlignment="Center"/>
+            <TextBox Text="{Binding DelistedTagName}" Width="200" VerticalAlignment="Center" IsEnabled="{Binding TagDelistedGames}"/>
+        </StackPanel>
         <CheckBox IsChecked="{Binding LimitTaggingToPcGames}" Content="Only add tags to PC games" Margin="0,15,0,0" DockPanel.Dock="Top"/>
         <CheckBox IsChecked="{Binding AutomaticallyAddTagsToNewGames}" Content="Automatically add tags to new games" Margin="0,15" DockPanel.Dock="Top"/>
 

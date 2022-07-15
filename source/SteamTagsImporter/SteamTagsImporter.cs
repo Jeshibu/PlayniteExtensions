@@ -133,7 +133,9 @@ namespace SteamTagsImporter
                                 continue;
                             }
 
-                            var tags = tagScraper.GetTags(appId);
+                            var tagScrapeResult = tagScraper.GetTags(appId);
+
+                            var tags = tagScrapeResult.Value;
 
                             if (settings.LimitTagsToFixedAmount)
                                 tags = tags.Take(settings.FixedTagCount);
@@ -143,6 +145,9 @@ namespace SteamTagsImporter
                             {
                                 tagsAdded |= AddTagToGame(settings, game, tag);
                             }
+
+                            if (tagScrapeResult.Delisted && settings.TagDelistedGames)
+                                tagsAdded |= AddTagToGame(settings, game, settings.DelistedTagName);
 
                             if (tagsAdded)
                             {

@@ -13,14 +13,14 @@ namespace SteamTagsImporter.Tests
     {
         private static SteamTagScraper Setup()
         {
-            return new SteamTagScraper(id => File.ReadAllText("./hl2.html"));
+            return new SteamTagScraper(id => new SteamTagScraper.Delistable<string>(File.ReadAllText("./hl2.html"), false));
         }
 
         [Fact]
         public void TagScrapingWorks()
         {
             var scraper = Setup();
-            var tags = scraper.GetTags("220").ToList();
+            var tags = scraper.GetTags("220").Value.ToList();
             Assert.Contains("FPS", tags);
             Assert.Contains("Action", tags);
             Assert.Contains("Sci-fi", tags);
@@ -46,9 +46,9 @@ namespace SteamTagsImporter.Tests
         [Fact]
         public void DelistedGameWillReturnEmptyTagList()
         {
-            var scraper = new SteamTagScraper(id => "<html></html>");
+            var scraper = new SteamTagScraper(id => new SteamTagScraper.Delistable<string>("<html></html>", true));
             var tags = scraper.GetTags("asdf");
-            Assert.Empty(tags);
+            Assert.Empty(tags.Value);
         }
     }
 }
