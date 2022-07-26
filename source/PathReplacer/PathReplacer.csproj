@@ -48,15 +48,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PathReplacementView.xaml.cs">
-      <DependentUpon>PathReplacementView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PathReplacementViewModel.cs" />
     <Compile Include="PathReplacer.cs" />
-    <Compile Include="PathReplacerSettings.cs" />
-    <Compile Include="PathReplacerSettingsView.xaml.cs">
-      <DependentUpon>PathReplacerSettingsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -64,16 +56,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="PathReplacementView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="PathReplacerSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="icon.png">

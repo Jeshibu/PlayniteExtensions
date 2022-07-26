@@ -95,6 +95,10 @@ namespace PathReplacer
                     updated = true;
                 }
             }
+
+            if (updated)
+                game.Modified = DateTime.Now;
+
             return updated;
         }
 
@@ -106,7 +110,7 @@ namespace PathReplacer
         public static bool ShouldReplace(string currentPath, string normalizedFind, string replace, out string newValue)
         {
             string normalizedCurrentPath = NormalizePath(currentPath);
-            if (normalizedCurrentPath != null && normalizedCurrentPath.StartsWith(normalizedFind))
+            if (normalizedCurrentPath != null && normalizedCurrentPath.StartsWith(normalizedFind, StringComparison.InvariantCultureIgnoreCase))
             {
                 newValue = replace + currentPath.Substring(normalizedFind.Length);
                 return true;
