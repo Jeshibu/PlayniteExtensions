@@ -27,10 +27,27 @@ namespace PathReplacer
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
-            yield return new MainMenuItem { MenuSection = "@", Description = "Replace paths", Action = ReplacePaths };
+            yield return new MainMenuItem { MenuSection = "@Path Replacer", Description = "Replace paths for all games", Action = ReplacePathsForAllGames };
+            yield return new MainMenuItem { MenuSection = "@Path Replacer", Description = "Replace paths for visible games", Action = ReplacePathsForVisibleGames };
+            yield return new MainMenuItem { MenuSection = "@Path Replacer", Description = "Replace paths for selected games", Action = ReplacePathsForSelectedGames };
         }
 
-        private void ReplacePaths(MainMenuItemActionArgs obj)
+        private void ReplacePathsForSelectedGames(MainMenuItemActionArgs args)
+        {
+            ReplacePaths(PlayniteApi.MainView.SelectedGames.ToList());
+        }
+
+        private void ReplacePathsForVisibleGames(MainMenuItemActionArgs args)
+        {
+            ReplacePaths(PlayniteApi.MainView.FilteredGames);
+        }
+
+        private void ReplacePathsForAllGames(MainMenuItemActionArgs args)
+        {
+            ReplacePaths(PlayniteApi.Database.Games);
+        }
+
+        private void ReplacePaths(ICollection<Game> games)
         {
             var findDialogResult = PlayniteApi.Dialogs.SelectString(@"Enter the path you want replaced. Only matches at the start of a path will be replaced, so include drive letters and the like.", "Enter path to be replaced", "");
             if (!findDialogResult.Result || string.IsNullOrWhiteSpace(findDialogResult.SelectedString))
@@ -40,6 +57,12 @@ namespace PathReplacer
             if (!replaceDialogResult.Result || string.IsNullOrWhiteSpace(replaceDialogResult.SelectedString))
                 return;
 
+            var includeEmulatorsResult = PlayniteApi.Dialogs.ShowMessage("Also execute this replacement for emulators and auto-scan configurations?", "Execute for emulators?", System.Windows.MessageBoxButton.YesNoCancel);
+            if (includeEmulatorsResult == System.Windows.MessageBoxResult.Cancel)
+                return;
+
+            bool includeEmulators = includeEmulatorsResult == System.Windows.MessageBoxResult.Yes;
+
             string normalizedFind = NormalizePath(findDialogResult.SelectedString);
             string replace = replaceDialogResult.SelectedString;
 
@@ -48,12 +71,16 @@ namespace PathReplacer
 
             PlayniteApi.Dialogs.ActivateGlobalProgress((args) =>
             {
-                var games = PlayniteApi.Database.Games;
                 args.ProgressMaxValue = games.Count;
-                int updated = 0;
-                using (PlayniteApi.Database.BufferedUpdate())
+                if (includeEmulators)
+                    args.ProgressMaxValue += PlayniteApi.Database.Emulators.Count + PlayniteApi.Database.GameScanners.Count;
+
+                int updatedGames = 0, updatedEmulators = 0, updatedAutoScanDirs = 0;
+                var buffer = PlayniteApi.Database.BufferedUpdate();
+                try
                 {
                     int currentProgress = 0;
+
                     foreach (var game in games)
                     {
                         if (args.CancelToken.IsCancellationRequested)
@@ -65,14 +92,84 @@ namespace PathReplacer
 
                         if (ReplacePathsForGame(game, normalizedFind, replace))
                         {
-                            updated++;
+                            updatedGames++;
                             PlayniteApi.Database.Games.Update(game);
-                            logger.Debug($"Updated path(s) for {game.Name}");
+                            logger.Debug($"Updated path(s) for game: {game.Name}");
                         }
                     }
+
+                    if (includeEmulators)
+                    {
+                        foreach (var emulator in PlayniteApi.Database.Emulators)
+                        {
+                            if (args.CancelToken.IsCancellationRequested)
+                                return;
+
+                            currentProgress++;
+                            args.CurrentProgressValue = currentProgress;
+
+                            if (ReplacePathsForEmulator(emulator, normalizedFind, replace))
+                            {
+                                updatedEmulators++;
+                                PlayniteApi.Database.Emulators.Update(emulator);
+                                logger.Debug($"Updated path(s) for emulator: {emulator.Name}");
+                            }
+                        }
+
+                        foreach (var gameScanner in PlayniteApi.Database.GameScanners)
+                        {
+                            if (args.CancelToken.IsCancellationRequested)
+                                return;
+
+                            currentProgress++;
+                            args.CurrentProgressValue = currentProgress;
+
+                            if (ShouldReplace(gameScanner.Directory, normalizedFind, replace, out string newDir))
+                            {
+                                updatedAutoScanDirs++;
+                                gameScanner.Directory = newDir;
+                                PlayniteApi.Database.GameScanners.Update(gameScanner);
+                                logger.Debug($"Updated path for autscan config: {gameScanner.Name}");
+                            }
+                        }
+                    }
+
+                    PlayniteApi.Dialogs.ShowMessage($"Updated paths for {updatedGames} games, {updatedEmulators} emulators, and {updatedAutoScanDirs} auto-scan configurations!");
                 }
-                PlayniteApi.Dialogs.ShowMessage($"Updated paths for {updated} games!");
+                catch (Exception ex)
+                {
+                    logger.Error(ex, "Error while replacing paths");
+                    PlayniteApi.Notifications.Add("pathreplacer-error", $"Error while replacing paths: {ex.Message}", NotificationType.Error);
+                }
+                finally
+                {
+                    buffer.Dispose();
+                }
             }, new GlobalProgressOptions($"Replacing {normalizedFind} with {replace}…", true) { IsIndeterminate = false });
+        }
+
+        public static bool ReplacePathsForEmulator(Emulator emulator, string normalizedFind, string replace)
+        {
+            bool updated = false;
+            if (ShouldReplace(emulator.InstallDir, normalizedFind, replace, out string newInstallDir))
+            {
+                emulator.InstallDir = newInstallDir;
+                updated = true;
+            }
+
+            if (emulator.CustomProfiles == null)
+                return updated;
+
+            foreach (var profile in emulator.CustomProfiles)
+            {
+                if (ShouldReplace(profile.Executable, normalizedFind, replace, out string newExecutable))
+                {
+                    profile.Executable = newExecutable;
+                    updated = true;
+                }
+            }
+
+            return updated;
         }
 
         public static bool ReplacePathsForGame(Game game, string normalizedFind, string replace)
@@ -84,15 +181,15 @@ namespace PathReplacer
                 updated = true;
             }
 
-            if (game.Roms == null)
-                return updated;
-
-            foreach (var rom in game.Roms)
+            if (game.Roms != null)
             {
-                if (ShouldReplace(rom.Path, normalizedFind, replace, out string newRomPath))
+                foreach (var rom in game.Roms)
                 {
-                    rom.Path = newRomPath;
-                    updated = true;
+                    if (ShouldReplace(rom.Path, normalizedFind, replace, out string newRomPath))
+                    {
+                        rom.Path = newRomPath;
+                        updated = true;
+                    }
                 }
             }
 
