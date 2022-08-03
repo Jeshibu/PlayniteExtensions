@@ -4,6 +4,6 @@ namespace SteamTagsImporter
 {
     public interface ISteamTagScraper
     {
-        SteamTagScraper.Delistable<IEnumerable<string>> GetTags(string appId);
+        SteamTagScraper.Delistable<IEnumerable<SteamTag>> GetTags(string appId, string languageKey = null);
     }
 }

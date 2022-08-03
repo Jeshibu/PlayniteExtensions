@@ -3,5 +3,5 @@ Name: Steam Tags Importer
 Author: Jeshibu
 Version: 3.1
 Module: SteamTagsImporter.dll
-Type: GenericPlugin
+Type: MetadataProvider
 Icon: icon.png

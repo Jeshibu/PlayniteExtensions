@@ -22,7 +22,11 @@
             <TextBox Text="{Binding DelistedTagName}" Width="200" VerticalAlignment="Center" IsEnabled="{Binding TagDelistedGames}"/>
         </StackPanel>
         <CheckBox IsChecked="{Binding LimitTaggingToPcGames}" Content="Only add tags to PC games" Margin="0,15,0,0" DockPanel.Dock="Top"/>
-        <CheckBox IsChecked="{Binding AutomaticallyAddTagsToNewGames}" Content="Automatically add tags to new games" Margin="0,15" DockPanel.Dock="Top"/>
+        <CheckBox IsChecked="{Binding AutomaticallyAddTagsToNewGames}" Margin="0,15" DockPanel.Dock="Top">
+            <CheckBox.Content>
+                <TextBlock TextWrapping="Wrap">Automatically add tags to new games (uncheck if you use this plugin as a default metadata source, or it will run twice per game)</TextBlock>
+            </CheckBox.Content>
+        </CheckBox>
 
         <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" DockPanel.Dock="Top">New tags will appear in the available tags. Excluded tags will not be added to games.</TextBlock>
 

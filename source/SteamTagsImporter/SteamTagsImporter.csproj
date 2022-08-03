@@ -71,12 +71,14 @@
     <Compile Include="ISteamTagScraper.cs" />
     <Compile Include="SteamAppIdUtility.cs" />
     <Compile Include="SteamTagScraper.cs" />
+    <Compile Include="SteamTagsGetter.cs" />
     <Compile Include="SteamTagsImporter.cs" />
     <Compile Include="SteamTagsImporterSettings.cs" />
     <Compile Include="SteamTagsImporterSettingsView.xaml.cs">
       <DependentUpon>SteamTagsImporterSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SteamTagsMetadataProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">
