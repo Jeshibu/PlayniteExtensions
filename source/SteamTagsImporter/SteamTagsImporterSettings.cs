@@ -38,6 +38,8 @@ namespace SteamTagsImporter
 
         public DateTime LastAutomaticTagUpdate { get; set; } = default;
 
+        public string LanguageKey { get; set; } = null;
+
         // Parameterless constructor must exist if you want to use LoadPluginSettings method.
         public SteamTagsImporterSettings()
         {
@@ -65,6 +67,7 @@ namespace SteamTagsImporter
                 LastAutomaticTagUpdate = savedSettings.LastAutomaticTagUpdate;
                 OkayTags = new ObservableCollection<string>(savedSettings.OkayTags.OrderBy(a => a));
                 BlacklistedTags = new ObservableCollection<string>(savedSettings.BlacklistedTags.OrderBy(a => a));
+                LanguageKey = savedSettings.LanguageKey;
             }
 
             if (LastAutomaticTagUpdate == default)
@@ -99,6 +102,46 @@ namespace SteamTagsImporter
             // List of errors is presented to user if verification fails.
             errors = new List<string>();
             return true;
+        }
+
+        [DontSerialize]
+        public Dictionary<string, string> Languages
+        {
+            get
+            {
+                return new Dictionary<string, string>
+                {
+                    {null,"Don't specify (results are region dependent)" },
+                    {"schinese","简体中文 (Simplified Chinese)"},
+                    {"tchinese","繁體中文 (Traditional Chinese)"},
+                    {"japanese","日本語 (Japanese)"},
+                    {"koreana","한국어 (Korean)"},
+                    {"thai","ไทย (Thai)"},
+                    {"bulgarian","Български (Bulgarian)"},
+                    {"czech","Čeština (Czech)"},
+                    {"danish","Dansk (Danish)"},
+                    {"german","Deutsch (German)"},
+                    {"english","English"},
+                    {"spanish","Español - España (Spanish - Spain)"},
+                    {"latam","Español - Latinoamérica (Spanish - Latin America)"},
+                    {"greek","Ελληνικά (Greek)"},
+                    {"french","Français (French)"},
+                    {"italian","Italiano (Italian)"},
+                    {"hungarian","Magyar (Hungarian)"},
+                    {"dutch","Nederlands (Dutch)"},
+                    {"norwegian","Norsk (Norwegian)"},
+                    {"polish","Polski (Polish)"},
+                    {"portuguese","Português (Portuguese)"},
+                    {"brazilian","Português - Brasil (Portuguese - Brazil)"},
+                    {"romanian","Română (Romanian)"},
+                    {"russian","Русский (Russian)"},
+                    {"finnish","Suomi (Finnish)"},
+                    {"swedish","Svenska (Swedish)"},
+                    {"turkish","Türkçe (Turkish)"},
+                    {"vietnamese","Tiếng Việt (Vietnamese)"},
+                    {"ukrainian","Українська (Ukrainian)"},
+                };
+            }
         }
 
         [DontSerialize]

@@ -35,7 +35,7 @@ namespace SteamTagsImporter
                 return new SteamTag[0];
             }
 
-            var tagScrapeResult = tagScraper.GetTags(appId);
+            var tagScrapeResult = tagScraper.GetTags(appId, Settings.LanguageKey);
 
             var tags = tagScrapeResult.Value.ToList();
 
