@@ -12,3 +12,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.1.1/LegacyGamesLibrary_0_1_1.pext
     Changelog:
      - Fixed games not being able to launch if installed after import
+  - Version: 0.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-03
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.2/LegacyGamesLibrary_0_2.pext
+    Changelog:
+     - Added Legacy Games client launching from Playnite
+     - Made fetching installed games even more exception-proof
