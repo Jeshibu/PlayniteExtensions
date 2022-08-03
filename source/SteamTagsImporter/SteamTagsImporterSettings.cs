@@ -12,33 +12,45 @@ using System.Windows.Data;
 
 namespace SteamTagsImporter
 {
-    public class SteamTagsImporterSettings : ISettings
+    public class SteamTagsImporterSettings : ObservableObject, ISettings
     {
         private readonly SteamTagsImporter plugin;
+        private bool _limitTagsToFixedAmount = false;
+        private int _fixedTagCount = 5;
+        private bool _limitTaggingToPcGames = true;
+        private bool _automaticallyAddTagsToNewGames = true;
+        private bool _useTagPrefix = false;
+        private string _tagPrefix = string.Empty;
+        private bool _tagDelistedGames = false;
+        private string _delistedTagName = "Delisted";
+        private DateTime _lastAutomaticTagUpdate = default;
+        private string _languageKey = string.Empty;
 
-        public bool LimitTagsToFixedAmount { get; set; } = false;
 
-        public int FixedTagCount { get; set; } = 5;
 
-        public bool LimitTaggingToPcGames { get; set; } = true;
+        public bool LimitTagsToFixedAmount { get { return _limitTagsToFixedAmount; } set { SetValue(ref _limitTagsToFixedAmount, value); } }
 
-        public bool AutomaticallyAddTagsToNewGames { get; set; } = true;
+        public int FixedTagCount { get { return _fixedTagCount; } set { SetValue(ref _fixedTagCount, value); } }
 
-        public bool UseTagPrefix { get; set; } = false;
+        public bool LimitTaggingToPcGames { get { return _limitTaggingToPcGames; } set { SetValue(ref _limitTaggingToPcGames, value); } }
 
-        public string TagPrefix { get; set; } = string.Empty;
+        public bool AutomaticallyAddTagsToNewGames { get { return _automaticallyAddTagsToNewGames; } set { SetValue(ref _automaticallyAddTagsToNewGames, value); } }
 
-        public bool TagDelistedGames { get; set; } = false;
+        public bool UseTagPrefix { get { return _useTagPrefix; } set { SetValue(ref _useTagPrefix, value); } }
 
-        public string DelistedTagName { get; set; } = "Delisted";
+        public string TagPrefix { get { return _tagPrefix; } set { SetValue(ref _tagPrefix, value); } }
+
+        public bool TagDelistedGames { get { return _tagDelistedGames; } set { SetValue(ref _tagDelistedGames, value); } }
+
+        public string DelistedTagName { get { return _delistedTagName; } set { SetValue(ref _delistedTagName, value); } }
+
+        public DateTime LastAutomaticTagUpdate { get { return _lastAutomaticTagUpdate; } set { SetValue(ref _lastAutomaticTagUpdate, value); } }
+
+        public string LanguageKey { get { return _languageKey; } set { SetValue(ref _languageKey, value); } }
 
         public ObservableCollection<string> OkayTags { get; set; } = new ObservableCollection<string>();
 
         public ObservableCollection<string> BlacklistedTags { get; set; } = new ObservableCollection<string>();
-
-        public DateTime LastAutomaticTagUpdate { get; set; } = default;
-
-        public string LanguageKey { get; set; } = null;
 
         // Parameterless constructor must exist if you want to use LoadPluginSettings method.
         public SteamTagsImporterSettings()
@@ -104,44 +116,43 @@ namespace SteamTagsImporter
             return true;
         }
 
+        private Dictionary<string, string> _languages = new Dictionary<string, string>
+        {
+            {string.Empty,"Don't specify (results are region dependent)"},
+            {"schinese","简体中文 (Simplified Chinese)"},
+            {"tchinese","繁體中文 (Traditional Chinese)"},
+            {"japanese","日本語 (Japanese)"},
+            {"koreana","한국어 (Korean)"},
+            {"thai","ไทย (Thai)"},
+            {"bulgarian","Български (Bulgarian)"},
+            {"czech","Čeština (Czech)"},
+            {"danish","Dansk (Danish)"},
+            {"german","Deutsch (German)"},
+            {"english","English"},
+            {"spanish","Español - España (Spanish - Spain)"},
+            {"latam","Español - Latinoamérica (Spanish - Latin America)"},
+            {"greek","Ελληνικά (Greek)"},
+            {"french","Français (French)"},
+            {"italian","Italiano (Italian)"},
+            {"hungarian","Magyar (Hungarian)"},
+            {"dutch","Nederlands (Dutch)"},
+            {"norwegian","Norsk (Norwegian)"},
+            {"polish","Polski (Polish)"},
+            {"portuguese","Português (Portuguese)"},
+            {"brazilian","Português - Brasil (Portuguese - Brazil)"},
+            {"romanian","Română (Romanian)"},
+            {"russian","Русский (Russian)"},
+            {"finnish","Suomi (Finnish)"},
+            {"swedish","Svenska (Swedish)"},
+            {"turkish","Türkçe (Turkish)"},
+            {"vietnamese","Tiếng Việt (Vietnamese)"},
+            {"ukrainian","Українська (Ukrainian)"},
+        };
+
         [DontSerialize]
         public Dictionary<string, string> Languages
         {
-            get
-            {
-                return new Dictionary<string, string>
-                {
-                    {null,"Don't specify (results are region dependent)" },
-                    {"schinese","简体中文 (Simplified Chinese)"},
-                    {"tchinese","繁體中文 (Traditional Chinese)"},
-                    {"japanese","日本語 (Japanese)"},
-                    {"koreana","한국어 (Korean)"},
-                    {"thai","ไทย (Thai)"},
-                    {"bulgarian","Български (Bulgarian)"},
-                    {"czech","Čeština (Czech)"},
-                    {"danish","Dansk (Danish)"},
-                    {"german","Deutsch (German)"},
-                    {"english","English"},
-                    {"spanish","Español - España (Spanish - Spain)"},
-                    {"latam","Español - Latinoamérica (Spanish - Latin America)"},
-                    {"greek","Ελληνικά (Greek)"},
-                    {"french","Français (French)"},
-                    {"italian","Italiano (Italian)"},
-                    {"hungarian","Magyar (Hungarian)"},
-                    {"dutch","Nederlands (Dutch)"},
-                    {"norwegian","Norsk (Norwegian)"},
-                    {"polish","Polski (Polish)"},
-                    {"portuguese","Português (Portuguese)"},
-                    {"brazilian","Português - Brasil (Portuguese - Brazil)"},
-                    {"romanian","Română (Romanian)"},
-                    {"russian","Русский (Russian)"},
-                    {"finnish","Suomi (Finnish)"},
-                    {"swedish","Svenska (Swedish)"},
-                    {"turkish","Türkçe (Turkish)"},
-                    {"vietnamese","Tiếng Việt (Vietnamese)"},
-                    {"ukrainian","Українська (Ukrainian)"},
-                };
-            }
+            get { return _languages; }
         }
 
         [DontSerialize]
