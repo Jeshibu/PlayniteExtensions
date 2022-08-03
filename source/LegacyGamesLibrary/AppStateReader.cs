@@ -72,8 +72,23 @@ namespace LegacyGamesLibrary
 
             var fileContents = File.ReadAllText(AppStatePath);
             var appState = JsonConvert.DeserializeObject<AppStateRoot>(fileContents);
-            var ownedBundleIds = appState.User.Profile.Downloads.Select(d => d.ProductId).ToHashSet();
-            var ownedBundles = appState.SiteData.Catalog.Where(b => ownedBundleIds.Contains(b.Id)).ToList();
+
+            var downloads = appState?.User?.Profile?.Downloads;
+            var catalog = appState?.SiteData?.Catalog;
+
+            if (downloads == null || catalog == null)
+            {
+                if (downloads == null)
+                    logger.Warn($"Missing downloads section in {AppStatePath}");
+
+                if (catalog == null)
+                    logger.Warn($"Missing catalog section in {AppStatePath}");
+
+                return null;
+            }
+
+            var ownedBundleIds = downloads.Select(d => d.ProductId).ToHashSet();
+            var ownedBundles = catalog.Where(b => ownedBundleIds.Contains(b.Id)).ToList();
             var ownedGames = ownedBundles.SelectMany(b => b.Games);
             var gamesByInstallerId = new Dictionary<Guid, AppStateGame>();
             foreach (var bundle in ownedBundles)

@@ -35,7 +35,7 @@ namespace LegacyGamesLibrary
 
                 if (ownedGames == null)
                 {
-                    PlayniteAPI.Notifications.Add(new NotificationMessage("legacy-games-error", $"No Legacy Games games found - check your Legacy Games client installation. Click this message to download it.", NotificationType.Error, () =>
+                    PlayniteAPI.Notifications.Add(new NotificationMessage("legacy-games-error", $"No Legacy Games games found - check your Legacy Games client installation. Click this message to download it. If it's already installed, please open the list of non-installed games there, or install one game.", NotificationType.Error, () =>
                     {
                         try
                         {

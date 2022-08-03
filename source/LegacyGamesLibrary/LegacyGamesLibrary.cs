@@ -15,7 +15,7 @@ namespace LegacyGamesLibrary
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
-        private LegacyGamesLibrarySettingsViewModel settings { get; set; }
+        //private LegacyGamesLibrarySettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("34c3178f-6e1d-4e27-8885-99d4f031b168");
 
@@ -23,14 +23,34 @@ namespace LegacyGamesLibrary
         public override string Name => "Legacy Games";
 
         // Implementing Client adds ability to open it via special menu in playnite.
-        //public override LibraryClient Client { get; } = new LegacyGamesLibraryClient();
+        public override LibraryClient Client
+        {
+            get
+            {
+                try
+                {
+                    string launcherPath = RegistryReader.GetLauncherPath();
+                    if (string.IsNullOrWhiteSpace(launcherPath))
+                        return null;
+
+                    string iconPath = Path.Combine(Path.GetDirectoryName(launcherPath), "uninstallerIcon.ico");
+
+                    return new LegacyGamesLibraryClient(launcherPath, iconPath);
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, "Failed to get client");
+                    return null;
+                }
+            }
+        }
 
         private LegacyGamesRegistryReader RegistryReader { get; }
         private AggregateMetadataGatherer MetadataGatherer { get; }
 
         public LegacyGamesLibrary(IPlayniteAPI api) : base(api)
         {
-            settings = new LegacyGamesLibrarySettingsViewModel(this);
+            //settings = new LegacyGamesLibrarySettingsViewModel(this);
             Properties = new LibraryPluginProperties
             {
                 HasSettings = false,

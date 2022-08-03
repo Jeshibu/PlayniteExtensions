@@ -46,6 +46,30 @@ namespace LegacyGamesLibrary
                 };
             }
         }
+
+        public string GetLauncherPath()
+        {
+            string uninstallFolderPath = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";
+            var uninstallFolderKeys = RegistryValueProvider.GetSubKeysForPath(RegistryView.Registry64, RegistryHive.LocalMachine, uninstallFolderPath);
+            if (uninstallFolderKeys == null)
+            {
+                logger.Info(@"Failed to get registry subkeys for Software\Microsoft\Windows\CurrentVersion\Uninstall");
+                return null;
+            }
+
+            foreach (var subKey in uninstallFolderKeys)
+            {
+                var folder = $@"{uninstallFolderPath}\{subKey}";
+                var name = RegistryValueProvider.GetValueForPath(RegistryView.Registry64, RegistryHive.LocalMachine, folder, "DisplayName");
+                if (string.IsNullOrWhiteSpace(name) || !name.StartsWith("Legacy Games Launcher"))
+                    continue;
+
+                var iconPath = RegistryValueProvider.GetValueForPath(RegistryView.Registry64, RegistryHive.LocalMachine, folder, "DisplayIcon");
+                var dir = System.IO.Path.GetDirectoryName(iconPath);
+                return System.IO.Path.Combine(dir, "Legacy Games Launcher.exe");
+            }
+            return null;
+        }
     }
 
     public class RegistryGameData
@@ -60,6 +84,8 @@ namespace LegacyGamesLibrary
     {
         List<string> GetSubKeysForPath(RegistryView platform, RegistryHive hive, string path);
         string GetValueForPath(RegistryView platform, RegistryHive hive, string path, string keyName);
+        List<string> GetSubKeysForPath(RegistryHive hive, string path);
+        string GetValueForPath(RegistryHive hive, string path, string keyName);
     }
 
     public class RegistryValueProvider : IRegistryValueProvider
@@ -92,5 +118,18 @@ namespace LegacyGamesLibrary
                         ?.GetValue(keyName)
                         ?.ToString();
         }
+
+        public List<string> GetSubKeysForPath(RegistryHive hive, string path)
+        {
+            return GetSubKeysForPath(RegistryView.Registry64, hive, path)
+                ?? GetSubKeysForPath(RegistryView.Registry32, hive, path);
+        }
+
+        public string GetValueForPath(RegistryHive hive, string path, string keyName)
+        {
+            return GetValueForPath(RegistryView.Registry64, hive, path, keyName)
+                ?? GetValueForPath(RegistryView.Registry32, hive, path, keyName);
+        }
+
     }
 }
