@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="GamesSizeCalculator.GamesSizeCalculatorSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <TabControl Margin="20">
+        <TabItem Header="{DynamicResource LOCGame_Sizes_Calculator_Settings_Tab_Settings}">
+            <StackPanel Margin="20">
+                <TextBlock VerticalAlignment="Center" Margin="0,0,0,0">
+                    <Hyperlink NavigateUri="https://github.com/darklinkpower/PlayniteExtensionsCollection/wiki/Games-Size-Calculator"
+                                Command="{x:Static pcmd:GlobalCommands.NavigateUrlCommand}"
+                                CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
+                        <Run Text="{DynamicResource LOCGame_Sizes_Calculator_SettingsHelpLabel}" />
+                    </Hyperlink>
+                </TextBlock>
+                <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel}"
+                            Margin="0,10,0,0"
+                            IsChecked="{Binding Settings.CalculateNewGamesOnLibraryUpdate}"/>
+                <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedLabel}"
+                            Margin="0,10,0,0"
+                            ToolTip="{DynamicResource LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip}"
+                            IsChecked="{Binding Settings.CalculateModifiedGamesOnLibraryUpdate}"/>
+                <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsUseSteamLabel}"
+                            Margin="0,10,0,0"
+                            IsChecked="{Binding Settings.GetUninstalledGameSizeFromSteam}"/>
+                <StackPanel Margin="40,0,0,0"
+                            IsEnabled="{Binding Settings.GetUninstalledGameSizeFromSteam}">
+                    <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsGetUninstalledGameSizeFromSteamLabel}"
+                                Margin="0,10,0,0"
+                                IsChecked="{Binding Settings.GetSizeFromSteamNonSteamGames}"/>
+                    <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsIncludeDlcInSteamCalculationLabel}"
+                                Margin="0,10,0,0"
+                                IsChecked="{Binding Settings.IncludeDlcInSteamCalculation}"/>
+                    <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationLabel}"
+                                Margin="0,10,0,0"
+                                ToolTip="{DynamicResource LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip}"
+                                IsChecked="{Binding Settings.IncludeOptionalInSteamCalculation}"/>
+                </StackPanel>
+                <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsUseGOGLabel}"
+                            Margin="0,10,0,0"
+                            IsChecked="{Binding Settings.GetUninstalledGameSizeFromGog}"/>
+                <StackPanel Margin="40,0,0,0"
+                            IsEnabled="{Binding Settings.GetUninstalledGameSizeFromGog}">
+                    <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesLabel}"
+                              ToolTip="{DynamicResource LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesTooltip}"
+                              Margin="0,10,0,0"
+                              IsChecked="{Binding Settings.GetSizeFromGogNonGogGames}"/>
+                </StackPanel>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="{DynamicResource LOCGame_Sizes_Calculator_Settings_Tab_Steam_Region_Words}" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+            <DockPanel Margin="20">
+                <TextBlock TextWrapping="Wrap" HorizontalAlignment="Center" DockPanel.Dock="Top" Text="{DynamicResource LOCGame_Sizes_Calculator_SettingsRegionWordsExplanationText}"/>
+
+                <Grid VerticalAlignment="Stretch" Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="Left" Width="*"/>
+                        <ColumnDefinition x:Name="Middle" Width="50"/>
+                        <ColumnDefinition x:Name="Right" Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="Header" Height="Auto"/>
+                        <RowDefinition x:Name="Body"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0" Text="{DynamicResource LOCGame_Sizes_Calculator_SettingsRegionWordsHeaderLabel}"/>
+                    <TextBlock HorizontalAlignment="Center" Grid.Column="2" Grid.Row="0" Text="{DynamicResource LOCGame_Sizes_Calculator_SettingsExcludedRegionWordsHeaderLabel}"/>
+                    <TextBox DockPanel.Dock="Top" Name="Whitelist" AcceptsReturn="True"
+                                MinHeight="220"
+                                VerticalAlignment="Stretch"
+                                Text="{Binding RegionWordsString}"
+                                Grid.Column="0" Grid.Row="1"/>
+                    <TextBox DockPanel.Dock="Top" Name="Blacklist" AcceptsReturn="True"
+                                MinHeight="220"
+                                VerticalAlignment="Stretch"
+                                Text="{Binding RegionWordsBlacklistString}"
+                                Grid.Column="2" Grid.Row="1"/>
+                </Grid>
+            </DockPanel>
+        </TabItem>
+    </TabControl>
+</UserControl>
