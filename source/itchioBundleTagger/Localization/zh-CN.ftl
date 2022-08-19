@@ -1,0 +1,24 @@
+﻿﻿extension-name = itch.io Bundle Tagger
+
+tag-free = 免费
+tag-steam = 同时可用于 Steam
+tag-bundle-pb = Palestinian Aid 的独立游戏捆绑包
+tag-bundle-blm = Racial Justice and Equality 的捆绑包
+tag-bundle-ukraine = Ukraine 的捆绑包
+tag-bundle-ttrpg = Trans Rights in Texas! 的 TTRPG
+tag-bundle-queer2022 = Queer 游戏捆绑包 2022
+tag-bundle-wbstrr = 共同的、更美好、更强大的生殖权利的价值
+tag-bundle-abortion = Abortion Funds 的独立游戏捆绑包
+setting-tag-prefix = 用以作为标签前缀：
+setting-add-free-tag = 若适用，添加“{ tag-free }”标签
+setting-add-steam-tag = 若适用，添加“{ tag-steam }”标签
+setting-add-steam-link = 若适用，添加链接到 Steam 商店页
+setting-run-on-library-update = 在每次库导入后运行
+setting-show-in-context-menu = 在上下文菜单中显示“{ menu-execute-tagging }”
+menu-execute-tagging = 添加 itch.io 捆绑包标签
+menu-execute-tagging-all = 为所有游戏添加 itch.io 捆绑包标签
+menu-refresh-database = 刷新 itch.io 捆绑包数据库
+dialog-database-refreshed = 已刷新 itch.io 捆绑包数据库
+progress-start = 正在获取 itch.io 捆绑包数据…
+progress-tagging = 设置标签…
+error-display = 添加 itch.io 捆绑包标签时出错：{ $error }

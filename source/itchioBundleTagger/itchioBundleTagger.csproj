@@ -73,6 +73,9 @@
     <Compile Include="Translator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Localization\zh-CN.ftl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="extension.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -82,12 +85,12 @@
     <None Include="Localization\es-ES.ftl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Localization\nl-NL.ftl">
+    <Content Include="Localization\nl-NL.ftl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Localization\en-US.ftl">
+    </Content>
+    <Content Include="Localization\en-US.ftl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -2,19 +2,23 @@
 
 tag-free = Gratis
 tag-steam = Ook beschikbaar op Steam
-
-setting-tag-prefix = Begin tags met: 
+tag-bundle-pb = Indie bundle for Palestinian Aid
+tag-bundle-blm = Bundle for Racial Justice and Equality
+tag-bundle-ukraine = Bundle for Ukraine
+tag-bundle-ttrpg = TTRPGs for Trans Rights in Texas!
+tag-bundle-queer2022 = Queer Games Bundle 2022
+tag-bundle-wbstrr = Worthy of Better, Stronger Together for Reproductive Rights
+tag-bundle-abortion = Indie Bundle for Abortion Funds
+setting-tag-prefix = Begin tags met:
 setting-add-free-tag = Voeg "{ tag-free }" tag toe waar toepasselijk
 setting-add-steam-tag = Voeg "{ tag-steam }" tag toe waar toepasselijk
 setting-add-steam-link = Voeg link naar Steam toe waar toepasselijk
-
+setting-run-on-library-update = Uitvoeren na elke bibliotheek import
+setting-show-in-context-menu = Toon "{ menu-execute-tagging }" in contextmenu (rechtermuisklik)
 menu-execute-tagging = Tag itch.io bundels
 menu-execute-tagging-all = Tag itch.io bundels voor alle spellen
 menu-refresh-database = Ververs itch.io bundel database
-
 dialog-database-refreshed = itch.io bundel database ververst
-
 progress-start = itch.io bundel data ophalen…
 progress-tagging = Tags toevoegen…
-
-error-display = Fout bij itch.io bundels taggen: { $error}
+error-display = Fout bij itch.io bundels taggen: { $error }
