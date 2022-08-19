@@ -137,6 +137,6 @@ Packages:
     ReleaseDate: 2022-08-19
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/gamessizecalculator1.21/GamesSizeCalculator_1_21.pext
     Changelog:
-    - Added GOG install size fetching
-    - Improved Steam depot inclusion guessing algorithm (and added settings to tweak this)
-    - Moved development from darklinkpower to Jeshibu
+    - 'Added GOG install size fetching'
+    - 'Improved Steam depot inclusion guessing algorithm (and added settings to tweak this)'
+    - 'Moved development from darklinkpower to Jeshibu'
