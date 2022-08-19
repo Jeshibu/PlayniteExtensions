@@ -134,7 +134,7 @@ Packages:
     - 'Added support to obtain estimated install size data from Steam for uninstalled PC games (By Jeshibu)'
   - Version: 1.21
     RequiredApiVersion: 6.2.2
-    ReleaseDate: 2022-07-20
+    ReleaseDate: 2022-08-19
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/gamessizecalculator1.21/GamesSizeCalculator_1_21.pext
     Changelog:
     - Added GOG install size fetching
