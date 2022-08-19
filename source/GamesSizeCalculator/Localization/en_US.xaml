@@ -7,7 +7,7 @@
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedLabel">Automatically calculate the size of a game after if it has been modified on library update</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip">Updates the game file size if it is detected that the game directory or rom file has been updated since the previous automatic detection</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel">Automatically calculate the size of a game after it is added on library update</sys:String>
-    
+
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsUseSteamLabel">For uninstalled PC games, obtain an estimated install size from Steam</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsGetUninstalledGameSizeFromSteamLabel">Apply this data also for games that are not from the Steam library</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeDlcInSteamCalculationLabel">Include all DLC in size calculation</sys:String>
