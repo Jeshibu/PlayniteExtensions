@@ -93,6 +93,12 @@ namespace LegacyGamesLibrary
             var gamesByInstallerId = new Dictionary<Guid, AppStateGame>();
             foreach (var bundle in ownedBundles)
             {
+                if (bundle.Games == null)
+                {
+                    logger.Warn($"No games for bundle {bundle.Id} - {bundle.Name}");
+                    continue;
+                }
+
                 foreach (var game in bundle.Games)
                 {
                     if (gamesByInstallerId.ContainsKey(game.InstallerUUID))

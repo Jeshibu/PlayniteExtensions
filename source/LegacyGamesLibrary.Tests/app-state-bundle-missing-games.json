@@ -1,0 +1,674 @@
+{
+	"settings": {
+		"autostart": false,
+		"checkForUpdates": true,
+		"notifications": {
+			"enabled": true
+		},
+		"gameLibraryPath": [
+			"D:\\Legacy Games"
+		],
+		"gameDownloadPath": "C:\\Users\\Me\\AppData\\Local\\Temp",
+		"rememberme": true
+	},
+	"siteData": {
+		"storeCategories": {
+			"promo_games": [
+				3647,
+				208486,
+				44394,
+				58775
+			],
+			"genres": {
+				"Hidden Object": 21,
+				"Match 3": 22,
+				"Time Management": 23,
+				"Card and Tile": 55,
+				"Puzzle": 137,
+				"Adventure": 138,
+				"Simulation": 165
+			},
+			"packs": {
+				"3 Games": 87,
+				"5 Games": 81,
+				"10 Games": 80,
+				"15 Games": 143
+			},
+			"menuCategory": {
+				"category_id": 100,
+				"menu_label": "NEW RELEASES",
+				"header_label": "NEW RELEASES",
+				"description": [
+					"Great new game packs every week, only at Legacy Games!"
+				]
+			}
+		},
+		"newReleases": [
+			{
+				"product_id": 1575996,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Detective-Stories-2.jpg"
+			},
+			{
+				"product_id": 1507654,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_My-Universe-Design-Star.jpg"
+			},
+			{
+				"product_id": 209413,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Hercule-Poirot.jpg"
+			},
+			{
+				"product_id": 61128,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Best-of-Moonlight-Mysteries.jpg"
+			}
+		],
+		"catalog": [
+			{
+				"id": 99840,
+				"name": "Bonus Game - Rubek",
+				"slug": "bonus-game-rubek",
+				"permalink": "https://legacygames.com/product/bonus-game-rubek/",
+				"date_created": "2022-04-14T03:43:02",
+				"date_created_gmt": "2022-04-14T10:43:02",
+				"date_modified": "2022-07-04T20:05:28",
+				"date_modified_gmt": "2022-07-05T03:05:28",
+				"type": "simple",
+				"status": "publish",
+				"featured": false,
+				"catalog_visibility": "hidden",
+				"description": "<p>Roll a cube to pick up and match correct colors on the floor!</p>\n",
+				"short_description": "",
+				"sku": "",
+				"price": "0",
+				"regular_price": "0",
+				"sale_price": "",
+				"date_on_sale_from": null,
+				"date_on_sale_from_gmt": null,
+				"date_on_sale_to": null,
+				"date_on_sale_to_gmt": null,
+				"on_sale": false,
+				"purchasable": true,
+				"total_sales": 1571,
+				"virtual": true,
+				"downloadable": true,
+				"download_limit": -1,
+				"download_expiry": -1,
+				"external_url": "",
+				"button_text": "",
+				"tax_status": "none",
+				"tax_class": "zero-rate",
+				"manage_stock": false,
+				"stock_quantity": null,
+				"backorders": "no",
+				"backorders_allowed": false,
+				"backordered": false,
+				"low_stock_amount": null,
+				"sold_individually": false,
+				"weight": "",
+				"dimensions": {
+					"length": "",
+					"width": "",
+					"height": ""
+				},
+				"shipping_required": false,
+				"shipping_taxable": false,
+				"shipping_class": "",
+				"shipping_class_id": 0,
+				"reviews_allowed": true,
+				"average_rating": "0.00",
+				"rating_count": 0,
+				"upsell_ids": [],
+				"cross_sell_ids": [],
+				"parent_id": 0,
+				"purchase_note": "",
+				"categories": [
+					{
+						"id": 162,
+						"name": "Giveaway",
+						"slug": "giveaway"
+					}
+				],
+				"tags": [],
+				"images": [
+					{
+						"id": 58774,
+						"date_created": "2022-03-05T09:09:00",
+						"date_created_gmt": "2022-03-06T01:09:00",
+						"date_modified": "2022-04-21T07:10:12",
+						"date_modified_gmt": "2022-04-21T21:10:12",
+						"src": "https://legacygames.com/wp-content/uploads/Legacy-Games_Rubek-1.jpg",
+						"name": "Legacy Games_Rubek",
+						"alt": ""
+					}
+				],
+				"attributes": [],
+				"default_attributes": [],
+				"variations": [],
+				"grouped_products": [],
+				"menu_order": 0,
+				"related_ids": [],
+				"meta_data": [
+					{
+						"id": 2995518,
+						"key": "_wc_facebook_sync_enabled",
+						"value": "yes"
+					},
+					{
+						"id": 2995519,
+						"key": "fb_visibility",
+						"value": "no"
+					},
+					{
+						"id": 2995520,
+						"key": "fb_product_description",
+						"value": ""
+					},
+					{
+						"id": 2995521,
+						"key": "_wc_facebook_product_image_source",
+						"value": "product"
+					},
+					{
+						"id": 2995522,
+						"key": "_wc_facebook_commerce_enabled",
+						"value": "no"
+					},
+					{
+						"id": 2995523,
+						"key": "lmfwc_licensed_product",
+						"value": "0"
+					},
+					{
+						"id": 2995524,
+						"key": "lmfwc_licensed_product_delivered_quantity",
+						"value": "1"
+					},
+					{
+						"id": 2995525,
+						"key": "lmfwc_licensed_product_use_stock",
+						"value": "0"
+					},
+					{
+						"id": 2995526,
+						"key": "lmfwc_licensed_product_assigned_generator",
+						"value": "0"
+					},
+					{
+						"id": 2995527,
+						"key": "lmfwc_licensed_product_use_generator",
+						"value": "0"
+					},
+					{
+						"id": 2995528,
+						"key": "site-sidebar-layout",
+						"value": "default"
+					},
+					{
+						"id": 2995529,
+						"key": "site-content-layout",
+						"value": "default"
+					},
+					{
+						"id": 2995530,
+						"key": "theme-transparent-header-meta",
+						"value": "default"
+					},
+					{
+						"id": 2995531,
+						"key": "stick-header-meta",
+						"value": "default"
+					},
+					{
+						"id": 2995532,
+						"key": "_yoast_wpseo_content_score",
+						"value": "90"
+					},
+					{
+						"id": 2995533,
+						"key": "_yoast_wpseo_estimated-reading-time-minutes",
+						"value": "1"
+					},
+					{
+						"id": 2995534,
+						"key": "_product_feed_status_main-product-catalog",
+						"value": "SAVED"
+					},
+					{
+						"id": 2995536,
+						"key": "screenshot_gallery",
+						"value": ""
+					},
+					{
+						"id": 2995537,
+						"key": "_screenshot_gallery",
+						"value": "field_616a00aeb1a70"
+					},
+					{
+						"id": 2995538,
+						"key": "system_req",
+						"value": "<b>OS:</b> Windows XP/Vista/7/8/10<br>\r\n<b>Processor:</b> 2.4 GHz<br>\r\n<b>Memory:</b> 2 GB RAM<br>\r\n<b>DirectX:</b> 9.0c<br>\r\n<b>Storage:</b> 140 MB"
+					},
+					{
+						"id": 2995539,
+						"key": "_system_req",
+						"value": "field_616a00aeb1ad8"
+					},
+					{
+						"id": 2995540,
+						"key": "special_category_badge",
+						"value": ""
+					},
+					{
+						"id": 2995541,
+						"key": "_special_category_badge",
+						"value": "field_61292ad71f495"
+					},
+					{
+						"id": 2995542,
+						"key": "pack_value",
+						"value": "$0"
+					},
+					{
+						"id": 2995543,
+						"key": "_pack_value",
+						"value": "field_616a00aeb1b37"
+					},
+					{
+						"id": 2995544,
+						"key": "youtube_url",
+						"value": ""
+					},
+					{
+						"id": 2995545,
+						"key": "_youtube_url",
+						"value": "field_616a00aeb1b9d"
+					},
+					{
+						"id": 2995546,
+						"key": "genre_icon",
+						"value": "30514"
+					},
+					{
+						"id": 2995547,
+						"key": "_genre_icon",
+						"value": "field_616a00aeb1ccb"
+					},
+					{
+						"id": 2995548,
+						"key": "pack_genre",
+						"value": "Match 3"
+					},
+					{
+						"id": 2995549,
+						"key": "_pack_genre",
+						"value": "field_616a00aeb1c01"
+					},
+					{
+						"id": 2995550,
+						"key": "genre_url",
+						"value": "https://legacygames.com/match-3-games/"
+					},
+					{
+						"id": 2995551,
+						"key": "_genre_url",
+						"value": "field_61720979cbc94"
+					},
+					{
+						"id": 2995552,
+						"key": "no_of_games_icon",
+						"value": "30498"
+					},
+					{
+						"id": 2995553,
+						"key": "_no_of_games_icon",
+						"value": "field_616a00aeb1d96"
+					},
+					{
+						"id": 2995554,
+						"key": "num_of_games",
+						"value": "Three<br>Games"
+					},
+					{
+						"id": 2995555,
+						"key": "_num_of_games",
+						"value": "field_617204b51cd82"
+					},
+					{
+						"id": 2995556,
+						"key": "no_of_games_url",
+						"value": "https://legacygames.com/three-game-packs"
+					},
+					{
+						"id": 2995557,
+						"key": "_no_of_games_url",
+						"value": "field_61720aafcbc98"
+					},
+					{
+						"id": 2995558,
+						"key": "special_badge_1",
+						"value": ""
+					},
+					{
+						"id": 2995559,
+						"key": "_special_badge_1",
+						"value": "field_616a00aeb224b"
+					},
+					{
+						"id": 2995560,
+						"key": "pack_genre_info",
+						"value": "<b>Genre:</b> Match 3"
+					},
+					{
+						"id": 2995561,
+						"key": "_pack_genre_info",
+						"value": "field_616a00aeb1c66"
+					},
+					{
+						"id": 2995562,
+						"key": "no_of_games",
+						"value": "<b>No of Games:</b> 1"
+					},
+					{
+						"id": 2995563,
+						"key": "_no_of_games",
+						"value": "field_616a00aeb1d30"
+					},
+					{
+						"id": 2995564,
+						"key": "pack_awards",
+						"value": ""
+					},
+					{
+						"id": 2995565,
+						"key": "_pack_awards",
+						"value": "field_616a00aeb1e95"
+					},
+					{
+						"id": 2995566,
+						"key": "review_highlight",
+						"value": ""
+					},
+					{
+						"id": 2995567,
+						"key": "_review_highlight",
+						"value": "field_616a00aeb1f6d"
+					},
+					{
+						"id": 2995568,
+						"key": "pack_short_desc",
+						"value": "Start an exciting adventure with Tri Peaks Solitaire game a.k.a. TriTowers, Triple Peaks, Three Peaks or Pyramid Solitaire!"
+					},
+					{
+						"id": 2995569,
+						"key": "_pack_short_desc",
+						"value": "field_616a00aeb1f03"
+					},
+					{
+						"id": 2995570,
+						"key": "pack_long_desc",
+						"value": "Start an exciting adventure with Tri Peaks Solitaire game a.k.a. TriTowers, Triple Peaks, Three Peaks or Pyramid Solitaire!"
+					},
+					{
+						"id": 2995571,
+						"key": "_pack_long_desc",
+						"value": "field_616a00aeb1fd7"
+					},
+					{
+						"id": 2995572,
+						"key": "pack_feature_list",
+						"value": "<li>Start an exciting adventure with Tri Peaks Solitaire game a.k.a. TriTowers, Triple Peaks, Three Peaks or Pyramid Solitaire!"
+					},
+					{
+						"id": 2995573,
+						"key": "_pack_feature_list",
+						"value": "field_616a00aeb2042"
+					},
+					{
+						"id": 2995574,
+						"key": "related_article_header",
+						"value": ""
+					},
+					{
+						"id": 2995575,
+						"key": "_related_article_header",
+						"value": "field_616a00aeb2119"
+					},
+					{
+						"id": 2995576,
+						"key": "related_articles_url",
+						"value": ""
+					},
+					{
+						"id": 2995577,
+						"key": "_related_articles_url",
+						"value": "field_616a00aeb20ad"
+					},
+					{
+						"id": 2995578,
+						"key": "walmart_amazon_urls",
+						"value": ""
+					},
+					{
+						"id": 2995579,
+						"key": "_walmart_amazon_urls",
+						"value": "field_616a02474b1ee"
+					},
+					{
+						"id": 2995580,
+						"key": "game_1_num_icon",
+						"value": ""
+					},
+					{
+						"id": 2995581,
+						"key": "_game_1_num_icon",
+						"value": "field_616a00aeb23d8"
+					},
+					{
+						"id": 2995582,
+						"key": "game_2_num_icon",
+						"value": ""
+					},
+					{
+						"id": 2995583,
+						"key": "_game_2_num_icon",
+						"value": "field_616a00aeb244e"
+					},
+					{
+						"id": 2995584,
+						"key": "game_3_num_icon",
+						"value": ""
+					},
+					{
+						"id": 2995585,
+						"key": "_game_3_num_icon",
+						"value": "field_616a00aeb24b0"
+					},
+					{
+						"id": 2995586,
+						"key": "game_4_num_icon",
+						"value": ""
+					},
+					{
+						"id": 2995587,
+						"key": "_game_4_num_icon",
+						"value": "field_616a00aeb2519"
+					},
+					{
+						"id": 2995588,
+						"key": "game_5_num_icon",
+						"value": ""
+					},
+					{
+						"id": 2995589,
+						"key": "_game_5_num_icon",
+						"value": "field_616a00aeb2586"
+					},
+					{
+						"id": 2995590,
+						"key": "game_6_num_icon",
+						"value": ""
+					},
+					{
+						"id": 2995591,
+						"key": "_game_6_num_icon",
+						"value": "field_616a00aeb25f7"
+					},
+					{
+						"id": 2995592,
+						"key": "game_7_num_icon",
+						"value": ""
+					},
+					{
+						"id": 2995593,
+						"key": "_game_7_num_icon",
+						"value": "field_616a00aeb2664"
+					},
+					{
+						"id": 2995594,
+						"key": "game_8_num_icon",
+						"value": ""
+					},
+					{
+						"id": 2995595,
+						"key": "_game_8_num_icon",
+						"value": "field_616a00aeb26d1"
+					},
+					{
+						"id": 2995596,
+						"key": "game_9_num_icon",
+						"value": ""
+					},
+					{
+						"id": 2995597,
+						"key": "_game_9_num_icon",
+						"value": "field_616a00aeb2743"
+					},
+					{
+						"id": 2995598,
+						"key": "game_10_num_icon",
+						"value": ""
+					},
+					{
+						"id": 2995599,
+						"key": "_game_10_num_icon",
+						"value": "field_616a00aeb27b2"
+					},
+					{
+						"id": 2995600,
+						"key": "info_pack_value",
+						"value": "<b>Pack Value:</b> $"
+					},
+					{
+						"id": 2995601,
+						"key": "_info_pack_value",
+						"value": "field_618a5c9a25a00"
+					},
+					{
+						"id": 2995602,
+						"key": "game_11_num_icon",
+						"value": ""
+					},
+					{
+						"id": 2995603,
+						"key": "_game_11_num_icon",
+						"value": "field_61f6f8177e3b1"
+					},
+					{
+						"id": 2995604,
+						"key": "game_12_num_icon",
+						"value": ""
+					},
+					{
+						"id": 2995605,
+						"key": "_game_12_num_icon",
+						"value": "field_61f6f88f7e3b8"
+					},
+					{
+						"id": 2995606,
+						"key": "game_13_num_icon",
+						"value": ""
+					},
+					{
+						"id": 2995607,
+						"key": "_game_13_num_icon",
+						"value": "field_61f6f8987e3ba"
+					},
+					{
+						"id": 2995608,
+						"key": "game_14_num_icon",
+						"value": ""
+					},
+					{
+						"id": 2995609,
+						"key": "_game_14_num_icon",
+						"value": "field_61f6f8a07e3bb"
+					},
+					{
+						"id": 2995610,
+						"key": "game_15_num_icon",
+						"value": ""
+					},
+					{
+						"id": 2995611,
+						"key": "_game_15_num_icon",
+						"value": "field_61f6f8967e3b9"
+					},
+					{
+						"id": 2995782,
+						"key": "cmplz_hide_cookiebanner",
+						"value": ""
+					}
+				],
+				"stock_status": "instock",
+				"has_options": false,
+				"_links": {
+					"self": [
+						{
+							"href": "https://legacygames.com/wp-json/wc/v3/products/99840"
+						}
+					],
+					"collection": [
+						{
+							"href": "https://legacygames.com/wp-json/wc/v3/products"
+						}
+					]
+				}
+			}
+		],
+		"notificationsData": [
+			{
+				"title": "NEW RELEASE! Detective Stories Vol. 2 - 3 Game Pack out now!",
+				"message": "Plus, get Doodle God - 3 Game Pack for 30% off! Deal ends 08/22."
+			}
+		],
+		"customersReviews": [],
+		"installerSlides": [
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Indie-Games.jpg"
+			},
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Catalog.jpg"
+			},
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_PBB.jpg"
+			}
+		]
+	},
+	"user": {
+		"token": "REDACTED",
+		"profile": {
+			"id": 0,
+			"date_created_gmt": "REDACTED",
+			"date_modified_gmt": "REDACTED",
+			"email": "REDACTED",
+			"first_name": "REDACTED",
+			"last_name": "REDACTED",
+			"username": "REDACTED",
+			"downloads": [
+				{
+					"order_id": 0,
+					"product_id": 99840
+				}
+			]
+		}
+	}
+}

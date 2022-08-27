@@ -34,5 +34,29 @@ namespace LegacyGamesLibrary.Tests
             var games = reader.GetUserOwnedGames();
             Assert.Null(games);
         }
+
+        [Fact]
+        public void GetUserOwnedGamesReturnsNullIfMissingCatalogSection()
+        {
+            AppStateReader reader = new AppStateReader("./app-state-broken-no-catalog.json");
+            var games = reader.GetUserOwnedGames();
+            Assert.Null(games);
+        }
+
+        [Fact]
+        public void GetUserOwnedGamesReturnsNullIfMissingDownloadsSection()
+        {
+            AppStateReader reader = new AppStateReader("./app-state-broken-no-downloads.json");
+            var games = reader.GetUserOwnedGames();
+            Assert.Null(games);
+        }
+
+        [Fact]
+        public void GetUserOwnedGamesDoesNotThrowIfBundleIsMissingGames()
+        {
+            AppStateReader reader = new AppStateReader("./app-state-bundle-missing-games.json");
+            var games = reader.GetUserOwnedGames();
+            Assert.Empty(games);
+        }
     }
 }

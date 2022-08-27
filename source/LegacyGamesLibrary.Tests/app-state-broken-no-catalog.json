@@ -1,0 +1,103 @@
+{
+	"settings": {
+		"autostart": false,
+		"check_for_updates": false,
+		"notifications": {
+			"enabled": true
+		},
+		"gameLibraryPath": "C:\\Program Files\\Legacy Games",
+		"gameDownloadPath": "C:\\Users\\USERNAME\\AppData\\Local\\Temp",
+		"rememberme": true
+	},
+	"siteData": {
+		"storeCategories": {
+			"promo_games": [
+				3647,
+				3652,
+				44394,
+				58775
+			],
+			"genres": {
+				"Hidden Object": 21,
+				"Match 3": 22,
+				"Time Management": 23,
+				"Card and Tile": 55,
+				"Puzzle": 137,
+				"Adventure": 138
+			},
+			"packs": {
+				"3 Games": 87,
+				"5 Games": 81,
+				"10 Games": 80,
+				"15 Games": 143
+			},
+			"menuCategory": {
+				"category_id": 104,
+				"menu_label": "INDIE SPOTLIGHT",
+				"header_label": "INDIE GAME SPOTLIGHT",
+				"description": [
+					"Legacy searched the world over to find the very best indie games for your enjoyment.",
+					"Every game featured in our Indie Game Spotlight catalog is highly rated and award-winning!"
+				]
+			}
+		},
+		"newReleases": [
+			{
+				"product_id": 60259,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_NY-Mysteries.jpg"
+			},
+			{
+				"product_id": 59780,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Graffiti-Hits.jpg"
+			},
+			{
+				"product_id": 45120,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Mystery-Case-Files.jpg"
+			},
+			{
+				"product_id": 17551,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Greatest-Hits-3.jpg"
+			}
+		],
+		"notificationsData": [
+			{
+				"title": "Best of Moonlight Mysteries - 10 Pack Out Now!",
+				"message": "Plus, get Mystery Case Files - 5 Pack for 30% off! Deal valid until 04/04."
+			}
+		],
+		"installerSlides": [
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Catalog.jpg"
+			},
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Indie-Games.jpg"
+			},
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_PBB.jpg"
+			}
+		],
+		"customersReviews": []
+	},
+	"user": {
+		"token": "Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		"profile": {
+			"id": 0,
+			"date_created_gmt": "2022-01-01T00:00:00",
+			"date_modified_gmt": "2022-01-01T00:00:00",
+			"email": "xxxxxxx@xxxxxxxx.xxx",
+			"first_name": "xxxxxxxxxxxxxxxx",
+			"last_name": "xxxxxxxxxxxxxx",
+			"username": "xxxxxxxxxxxxxxx",
+			"downloads": [
+				{
+					"order_id": 0,
+					"product_id": 59241
+				},
+				{
+					"order_id": 1,
+					"product_id": 3647
+				}
+			]
+		}
+	}
+}
