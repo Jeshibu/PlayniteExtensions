@@ -53,3 +53,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.8.1/itchIoBundleTagger_0_8_1.pext
     Changelog:
     - Made Game.Update call only when games are actually updated (fixes possible performance issues in other extensions listening for game updates)
+  - Version: 0.8.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-09-01
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.8.2/itchIoBundleTagger_0_8_2.pext
+    Changelog:
+    - Fixed "Run after every library import" setting being ignored
