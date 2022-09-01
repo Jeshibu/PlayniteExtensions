@@ -122,21 +122,25 @@ namespace itchioBundleTagger
             return tag;
         }
 
-        private void AddTagToGame(Game game, Tag tag)
+        private bool AddTagToGame(Game game, Tag tag)
         {
             var tagIds = game.TagIds ?? (game.TagIds = new List<Guid>());
 
             if (!tagIds.Contains(tag.Id))
+            {
                 tagIds.Add(tag.Id);
+                return true;
+            }
+            return false;
         }
 
-        private void AddTagToGame(Game game, string tagKey)
+        private bool AddTagToGame(Game game, string tagKey)
         {
             var tag = GetTag(tagKey);
             if (tag is null)
-                return;
+                return false;
 
-            AddTagToGame(game, tag);
+            return AddTagToGame(game, tag);
         }
 
         private void TagItchBundleGamesForEverything(MainMenuItemActionArgs args)
@@ -178,6 +182,8 @@ namespace itchioBundleTagger
                         int i = 0;
                         foreach (var game in relevantGames)
                         {
+                            bool gameUpdated = false;
+
                             if (progressActionArgs.CancelToken.IsCancellationRequested)
                                 return;
 
@@ -187,7 +193,7 @@ namespace itchioBundleTagger
                             if (!string.IsNullOrWhiteSpace(data.Steam))
                             {
                                 if (Settings.AddAvailableOnSteamTag)
-                                    AddTagToGame(game, "steam");
+                                    gameUpdated |= AddTagToGame(game, "steam");
 
                                 if (Settings.AddSteamLink)
                                 {
@@ -201,17 +207,20 @@ namespace itchioBundleTagger
                                     {
                                         links.Add(new Link("Steam", data.Steam));
                                         game.Links = new ObservableCollection<Link>(links); //adding to observablecollections on another thread throws exceptions, so just replace them
+                                        gameUpdated = true;
                                     }
                                 }
                             }
 
                             if (Settings.AddFreeTag && string.IsNullOrWhiteSpace(data.CurrentPrice))
-                                AddTagToGame(game, "free");
+                                gameUpdated |= AddTagToGame(game, "free");
 
                             foreach (var bundleKey in data.Bundles.Keys)
-                                AddTagToGame(game, $"bundle-{bundleKey}");
+                                gameUpdated |= AddTagToGame(game, $"bundle-{bundleKey}");
 
-                            PlayniteApi.Database.Games.Update(game);
+                            if (gameUpdated)
+                                PlayniteApi.Database.Games.Update(game);
+
                             i++;
                             if (i % 10 == 0)
                                 progressActionArgs.CurrentProgressValue = relevantGames.Count + i;
