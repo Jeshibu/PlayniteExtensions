@@ -47,3 +47,9 @@ Packages:
     - Added Simplified Chinese localization (thanks castpower!)
     - Added option to remove right-click (game) menu option
     - Added option to run after every library import
+  - Version: 0.8.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-09-01
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.8.1/itchIoBundleTagger_0_8_1.pext
+    Changelog:
+    - Made Game.Update call only when games are actually updated (fixes possible performance issues in other extensions listening for game updates)
