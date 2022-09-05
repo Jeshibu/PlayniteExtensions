@@ -30,4 +30,5 @@
 
     <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetDirSize">Games Size Calculator: Error while getting directory size in {0} of game {1}. {2}</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetRomFileSize">Games Size Calculator: Error while getting rom file size in {0} of game {1}. {2}</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetOnlineSize">Games Size Calculator: Error while getting estimated install size online from {0} for the game {1}. {2}</sys:String>
 </ResourceDictionary>
