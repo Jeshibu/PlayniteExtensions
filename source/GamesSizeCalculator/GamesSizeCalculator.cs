@@ -178,15 +178,27 @@ namespace GamesSizeCalculator
 
         private ulong GetInstallSizeOnline(Game game, IOnlineSizeCalculator sizeCalculator)
         {
-            var sizeTask = sizeCalculator.GetInstallSizeAsync(game);
-            if (sizeTask.Wait(7000))
+            try
             {
-                return sizeTask.Result ?? 0L;
+                var sizeTask = sizeCalculator.GetInstallSizeAsync(game);
+                if (sizeTask.Wait(7000))
+                {
+                    return sizeTask.Result ?? 0L;
+                }
+                else
+                {
+                    logger.Warn($"Timed out while getting online {sizeCalculator.ServiceName} install size for {game.Name}");
+                    return 0L;
+                }
             }
-            else
+            catch (Exception e)
             {
-                logger.Warn($"Timed out while getting online {sizeCalculator.ServiceName} install size for {game.Name}");
-                return 0L;
+                logger.Error(e, $"Error while getting file size online from {sizeCalculator?.ServiceName} for {game?.Name}");
+                PlayniteApi.Notifications.Messages.Add(
+                    new NotificationMessage("GetOnlineSizeError" + game.Id.ToString(),
+                        string.Format(ResourceProvider.GetString("LOCGame_Sizes_Calculator_NotificationMessageErrorGetOnlineSize"), sizeCalculator.ServiceName, game.Name, e.Message),
+                        NotificationType.Error));
+                return 0;
             }
         }
 
@@ -217,7 +229,7 @@ namespace GamesSizeCalculator
                 //check the preferred online size calculators first (Steam for Steam games, GOG for GOG games, etc)
                 foreach (var sizeCalculator in onlineSizeCalculators)
                 {
-                    if(!sizeCalculator.IsPreferredInstallSizeCalculator(game))
+                    if (!sizeCalculator.IsPreferredInstallSizeCalculator(game))
                     {
                         continue;
                     }
@@ -332,16 +344,12 @@ namespace GamesSizeCalculator
                 {
                     a.CurrentProgressValue++;
                     if (a.CancelToken.IsCancellationRequested)
-                    {
                         break;
-                    }
 
                     if (game.Added != null && game.Added > settings.Settings.LastRefreshOnLibUpdate)
                     {
                         if (!settings.Settings.CalculateNewGamesOnLibraryUpdate)
-                        {
                             continue;
-                        }
 
                         CalculateGameSize(game, onlineSizeCalculators, false);
                     }
@@ -350,9 +358,7 @@ namespace GamesSizeCalculator
                         // To make sure only Version fields filled by the extension are
                         // replaced
                         if (!game.Version.IsNullOrEmpty() && !game.Version.EndsWith(" GB"))
-                        {
                             continue;
-                        }
 
                         CalculateGameSize(game, null, true, true); //don't get install size online for locally installed games
                     }
