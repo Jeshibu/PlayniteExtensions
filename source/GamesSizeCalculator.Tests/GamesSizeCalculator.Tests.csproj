@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="GOG\FakeHttpDownloader.cs" />
     <Compile Include="GOG\GogSizeCalculatorTests.cs" />
+    <Compile Include="LongPathTests.cs" />
     <Compile Include="Steam\FakeSteamApiClient.cs" />
     <Compile Include="Steam\FakeSteamAppIdUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

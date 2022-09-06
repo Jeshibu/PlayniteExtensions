@@ -482,7 +482,7 @@ namespace PluginsCommon
             // Add subdirectory sizes.
             foreach (DirectoryInfo directory in dirInfo.GetDirectories())
             {
-                size += GetDirectorySizeOnDisk(directory);
+                size += GetDirectorySizeOnDisk(directory.FullName);
             }
 
             return size;

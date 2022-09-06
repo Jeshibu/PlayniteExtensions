@@ -107,13 +107,15 @@ namespace GamesSizeCalculator
 
         private ulong GetGameDirectorySize(Game game, DateTime? onlyIfNewerThan = null)
         {
-            if (game.InstallDirectory.IsNullOrEmpty() || !Directory.Exists(game.InstallDirectory))
+            string installDirectory = FileSystem.FixPathLength(game?.InstallDirectory);
+
+            if (installDirectory.IsNullOrEmpty() || !Directory.Exists(installDirectory))
             {
                 return 0;
             }
 
             if (onlyIfNewerThan.HasValue &&
-                (Directory.GetLastWriteTime(game.InstallDirectory) < onlyIfNewerThan.Value))
+                (Directory.GetLastWriteTime(installDirectory) < onlyIfNewerThan.Value))
             {
                 return 0;
             }
