@@ -78,6 +78,7 @@ namespace GamesSizeCalculator
                 using (var steamClient = new SteamApiClient())
                 {
                     var onlineSizeCalculators = GetOnlineSizeCalculators(steamClient);
+                    string progressBase = ResourceProvider.GetString("LOCGame_Sizes_Calculator_DialogMessageCalculatingSizes");
                     foreach (var game in games)
                     {
                         if (a.CancelToken.IsCancellationRequested)
@@ -86,7 +87,7 @@ namespace GamesSizeCalculator
                         }
 
                         a.CurrentProgressValue++;
-                        a.Text = $"{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                        a.Text = $"{progressBase}\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
                         CalculateGameSize(game, onlineSizeCalculators, forceNonEmpty);
                     }
                 }
