@@ -164,3 +164,12 @@ Packages:
     - 'Added GOG install size fetching'
     - 'Improved Steam depot inclusion guessing algorithm (and added settings to tweak this)'
     - 'Moved development from darklinkpower to Jeshibu'
+  - Version: 1.26
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-09-06
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/gamessizecalculator1.26/GamesSizeCalculator_1_26.pext
+    Changelog:
+    - Added Polish localization (by Xenor)
+    - Added error handling to online install size fetching
+    - Fixed long path handling
+    - Added progress description text
