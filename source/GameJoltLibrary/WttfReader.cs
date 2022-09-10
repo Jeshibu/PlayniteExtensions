@@ -64,7 +64,7 @@ namespace GameJoltLibrary
                     //contents deeper than this are up to the dev
                     //WTTF file reported install dir is the package one
                     //By taking the parent directory here as the install dir, hopefully multiple packages (if any) will be located in the same directory
-                    //If, after installing the first package, the user changes their default install directory in the GameJolt client, the install directory in Playnite will be only one of 2 (or more).
+                    //If, after installing the first package, the user changes their default install directory in the Game Jolt client, the install directory in Playnite will be only one of 2 (or more).
                     gameData.InstallDirectory = Directory.GetParent(p.InstallDir).FullName;
                     gameData.IsInstalled = true;
                     gameData.Icon = new MetadataFile(GetExePath(p, p.LaunchOptions.First()));
@@ -109,7 +109,7 @@ namespace GameJoltLibrary
             if (!File.Exists(filePath))
             {
                 logger.Error($"{filePath} does not exist");
-                throw new FileNotFoundException("GameJolt file missing", filePath);
+                throw new FileNotFoundException("Game Jolt file missing", filePath);
             }
 
             var fileContents = File.ReadAllText(filePath);

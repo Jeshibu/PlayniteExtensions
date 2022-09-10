@@ -51,7 +51,7 @@ namespace GameJoltLibrary
             }
             catch (FileNotFoundException)
             {
-                PlayniteApi.Notifications.Add(new NotificationMessage("gamejolt-fnf", "GameJolt library files not found. Check GameJolt client installation.", NotificationType.Error));
+                PlayniteApi.Notifications.Add(new NotificationMessage("gamejolt-fnf", "Game Jolt library files not found. Check Game Jolt client installation.", NotificationType.Error));
                 return new GameMetadata[0];
             }
 
@@ -87,7 +87,7 @@ namespace GameJoltLibrary
             }
             catch (FileNotFoundException)
             {
-                PlayniteApi.Notifications.Add(new NotificationMessage("gamejolt-fnf", "GameJolt library files not found. Check GameJolt client installation.", NotificationType.Error));
+                PlayniteApi.Notifications.Add(new NotificationMessage("gamejolt-fnf", "Game Jolt library files not found. Check Game Jolt client installation.", NotificationType.Error));
                 yield break;
             }
 
