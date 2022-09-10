@@ -1,4 +1,4 @@
-﻿﻿extension-name = itch.io Bundle Tagger
+﻿extension-name = itch.io Bundle Tagger
 
 tag-free = Gratis
 tag-steam = También disponible en Steam
@@ -15,7 +15,10 @@ setting-add-free-tag = Añadir etiqueta "{ tag-free }" si es pertinente
 setting-add-steam-tag = Añadir etiqueta "{ tag-steam }" si es pertinente
 setting-add-steam-link = Añadir enlace a la tienda de Steam si es pertinente
 
+setting-run-on-library-update = Ejecutar después de cada importación de biblioteca
+setting-show-in-context-menu = Mostrar "{ menu-execute-tagging }" en el menú contextual (clic derecho)
 menu-execute-tagging = Etiquetar paquetes de itch.io
+menu-execute-tagging-all = Etiqueta los paquetes itch.io para todos los juegos
 menu-refresh-database = Actualizar la base de datos de paquetes de itch.io
 dialog-database-refreshed = Base de datos de paquetes de itch.io actualizada
 
