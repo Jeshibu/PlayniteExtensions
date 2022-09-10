@@ -27,7 +27,7 @@ namespace GameJoltLibrary.Tests
         {
             var reader = Setup();
             var packages = reader.GetPackages();
-            Assert.Equal(4, packages.Count);
+            Assert.Equal(6, packages.Count);
         }
     }
 }

@@ -60,15 +60,15 @@
                     <TextBlock HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">Available tags</TextBlock>
                     <TextBlock HorizontalAlignment="Center" Grid.Column="2" Grid.Row="0">Excluded tags</TextBlock>
                     <ListBox DockPanel.Dock="Top" Name="Whitelist"
-                    SelectionMode="Extended" MinHeight="220"
-                    VerticalAlignment="Stretch"
-                    ItemsSource="{Binding OkayTags}"
-                    Grid.Column="0" Grid.Row="1"/>
+                             SelectionMode="Extended" MinHeight="220"
+                             VerticalAlignment="Stretch"
+                             ItemsSource="{Binding OkayTags}"
+                             Grid.Column="0" Grid.Row="1"/>
                     <ListBox DockPanel.Dock="Top" Name="Blacklist"
-                    SelectionMode="Extended" MinHeight="220"
-                    VerticalAlignment="Stretch"
-                    ItemsSource="{Binding BlacklistedTags}"
-                    Grid.Column="2" Grid.Row="1"/>
+                             SelectionMode="Extended" MinHeight="220"
+                             VerticalAlignment="Stretch"
+                             ItemsSource="{Binding BlacklistedTags}"
+                             Grid.Column="2" Grid.Row="1"/>
                     <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
                         <Button Content="&#xEA94;" Command="{Binding BlacklistCommand}" CommandParameter="{Binding SelectedItems, ElementName=Whitelist}" ToolTip="Add to excluded tags"/>
                         <Button Content="&#xEA93;" Command="{Binding WhitelistCommand}" CommandParameter="{Binding SelectedItems, ElementName=Blacklist}" ToolTip="Remove from excluded tags"/>
