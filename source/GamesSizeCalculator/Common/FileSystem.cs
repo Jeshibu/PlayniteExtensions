@@ -19,9 +19,10 @@ namespace PluginsCommon
 
     public static partial class FileSystem
     {
-        [DllImport("kernel32.dll")]
-        static extern uint GetCompressedFileSizeW([In, MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
-        [Out, MarshalAs(UnmanagedType.U4)] out uint lpFileSizeHigh);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern uint GetCompressedFileSizeW(
+            [In, MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+            [Out, MarshalAs(UnmanagedType.U4)] out uint lpFileSizeHigh);
 
         [DllImport("kernel32.dll", SetLastError = true, PreserveSig = true)]
         static extern int GetDiskFreeSpaceW([In, MarshalAs(UnmanagedType.LPWStr)] string lpRootPathName,
@@ -413,24 +414,38 @@ namespace PluginsCommon
             return new FileInfo(path).Length;
         }
 
-        
-        public static long GetFileSizeOnDisk(string path)
+
+        private static ulong GetCompressedFileSize(string filename)
+        {
+            // From http://pinvoke.net/default.aspx/kernel32/GetCompressedFileSize.html
+            uint low = GetCompressedFileSizeW(filename, out uint high);
+            int error = Marshal.GetLastWin32Error();
+            if (low == 0xFFFFFFFF && error != 0)
+                throw new System.ComponentModel.Win32Exception(error);
+            else
+                return ((ulong)high << 32) + low;
+        }
+
+        public static ulong GetFileSizeOnDisk(string path)
         {
             return GetFileSizeOnDisk(new FileInfo(FixPathLength(path)));
         }
 
         
-        public static long GetFileSizeOnDisk(FileInfo info)
+        public static ulong GetFileSizeOnDisk(FileInfo info)
         {
             // From https://stackoverflow.com/a/3751135
-            uint dummy, sectorsPerCluster, bytesPerSector;
-            int result = GetDiskFreeSpaceW(info.Directory.Root.FullName, out sectorsPerCluster, out bytesPerSector, out dummy, out dummy);
-            if (result == 0) throw new System.ComponentModel.Win32Exception();
+            uint sectorsPerCluster, bytesPerSector;
+            int freeDiskSpace = GetDiskFreeSpaceW(info.Directory.Root.FullName, out sectorsPerCluster, out bytesPerSector, out _, out _);
+            if (freeDiskSpace == 0)
+                throw new System.ComponentModel.Win32Exception();
+
             uint clusterSize = sectorsPerCluster * bytesPerSector;
-            uint hosize;
-            uint losize = GetCompressedFileSizeW(info.FullName, out hosize);
-            long size = hosize << 32 | losize;
-            return ((size + clusterSize - 1) / clusterSize) * clusterSize;
+            ulong size = GetCompressedFileSize(info.FullName);
+
+            //round up to the nearest multiple of cluster size
+            ulong sizeOnDisk = (size + clusterSize - 1) / clusterSize * clusterSize;
+            return sizeOnDisk;
         }
 
         public static long GetDirectorySize(string path)
@@ -464,14 +479,14 @@ namespace PluginsCommon
             }
         }
 
-        public static long GetDirectorySizeOnDisk(string path)
+        public static ulong GetDirectorySizeOnDisk(string path)
         {
             return GetDirectorySizeOnDisk(new DirectoryInfo(FixPathLength(path)));
         }
 
-        public static long GetDirectorySizeOnDisk(DirectoryInfo dirInfo)
+        public static ulong GetDirectorySizeOnDisk(DirectoryInfo dirInfo)
         {
-            long size = 0;
+            ulong size = 0;
 
             // Add file sizes.
             foreach (FileInfo file in dirInfo.GetFiles())

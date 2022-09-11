@@ -164,7 +164,7 @@ namespace GamesSizeCalculator
 
             try
             {
-                return (ulong)FileSystem.GetFileSizeOnDisk(romPath);
+                return FileSystem.GetFileSizeOnDisk(romPath);
             }
             catch (Exception e)
             {
