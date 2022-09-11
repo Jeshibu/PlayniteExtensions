@@ -104,7 +104,20 @@ namespace GroupeesLibrary
                             if (idMatch.Success)
                             {
                                 userId = int.Parse(idMatch.Groups[1].Value);
-                                cookies.AddRange(view.GetCookies().Where(c => c.Domain.EndsWith("groupees.com")).Select(PlayniteConvert.ToCookie));
+
+                                var viewCookies = view?.GetCookies();
+                                if (viewCookies == null)
+                                {
+                                    Logger.Warn("WebView cookies collection is null. WebView is " + view == null ? "null" : "not null");
+                                    userId = 0; //can't fetch cookies, so remove login info
+                                    view?.Close();
+                                    return;
+                                }
+
+                                cookies.AddRange(viewCookies
+                                    .Where(c => c?.Domain != null && c.Domain.EndsWith("groupees.com"))
+                                    .Select(PlayniteConvert.ToCookie));
+
                                 view.Close();
                             }
                         }

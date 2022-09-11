@@ -13,54 +13,71 @@ namespace SteamTagsImporter
     {
         private static readonly Regex TagJsonRegex = new Regex(@"InitAppTagModal\(\s*\d+,\s*(?<json>\[[^\]]+\])", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
-        public Func<string, string> GetSteamStorePageHtmlMethod { get; }
+        public Func<string, string, Delistable<string>> GetSteamStorePageHtmlMethod { get; }
 
         public SteamTagScraper()
             : this(GetSteamStorePageHtmlDefault)
         {
         }
 
-        public SteamTagScraper(Func<string, string> getSteamStorePageHtmlMethod)
+        public SteamTagScraper(Func<string, string, Delistable<string>> getSteamStorePageHtmlMethod)
         {
             GetSteamStorePageHtmlMethod = getSteamStorePageHtmlMethod;
         }
 
-        private class JsonSteamTag
+        public Delistable<IEnumerable<SteamTag>> GetTags(string appId, string languageKey = null)
         {
-            public int tagid { get; set; }
-            public string name { get; set; }
-            public int count { get; set; }
-            public bool browseable { get; set; }
-        }
+            var html = GetSteamStorePageHtmlMethod(appId, languageKey);
 
-        public IEnumerable<string> GetTags(string appId)
-        {
-            var html = GetSteamStorePageHtmlMethod(appId);
-
-            var match = TagJsonRegex.Match(html);
+            var match = TagJsonRegex.Match(html.Value);
             if (!match.Success)
-                return new string[0];
+                return new Delistable<IEnumerable<SteamTag>>(new SteamTag[0], html.Delisted);
 
             var json = match.Groups["json"].Value;
-            var steamTags = Newtonsoft.Json.JsonConvert.DeserializeObject<List<JsonSteamTag>>(json);
-            return steamTags.Select(t => t.name.Trim()); //Trimmed because at least one tag was found to have a space at the end ("Dystopian ")
+            var steamTags = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SteamTag>>(json);
+            foreach (var tag in steamTags)
+            {
+                tag.Name = tag.Name.Trim(); //Trimmed because at least one tag was found to have a space at the end ("Dystopian ")
+            }
+            return new Delistable<IEnumerable<SteamTag>>(steamTags, html.Delisted);
         }
 
-        private static string GetSteamStorePageHtmlDefault(string appId)
+        private static Delistable<string> GetSteamStorePageHtmlDefault(string appId, string languageKey = null)
         {
             var request = (HttpWebRequest)WebRequest.Create($"https://store.steampowered.com/app/{appId}/");
             var cookies = new CookieContainer(2);
             cookies.Add(new Cookie("wants_mature_content", "1", "/app/" + appId, "store.steampowered.com"));
             cookies.Add(new Cookie("birthtime", "628495201", "/", "store.steampowered.com"));
+            if (languageKey != null)
+                cookies.Add(new Cookie("Steam_Language", languageKey, "/", "store.steampowered.com"));
             request.CookieContainer = cookies;
             request.Timeout = 15000;
             using (var response = request.GetResponse())
             using (var responseStream = response.GetResponseStream())
             using (var streamReader = new StreamReader(responseStream))
             {
+                bool delisted = response.ResponseUri?.ToString() == "https://store.steampowered.com/";
                 string html = streamReader.ReadToEnd();
-                return html;
+                return new Delistable<string>(html, delisted);
             }
         }
+
+        public class Delistable<T>
+        {
+            public bool Delisted { get; set; }
+            public T Value { get; set; }
+
+            public Delistable(T value, bool delisted)
+            {
+                Value = value;
+                Delisted = delisted;
+            }
+        }
+    }
+
+    public class SteamTag
+    {
+        public int TagId { get; set; }
+        public string Name { get; set; }
     }
 }

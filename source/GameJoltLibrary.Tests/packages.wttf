@@ -1,0 +1,316 @@
+{
+  "version": 1,
+  "objects": {
+    "168837": {
+      "id": 168837,
+      "install_dir": "C:\\Users\\USERNAME\\AppData\\Local\\game-jolt-client\\User Data\\Default\\Games\\death-cabin-90316\\Death Cabin (Web)-168837",
+      "install_state": null,
+      "update_state": null,
+      "remove_state": null,
+      "update": null,
+      "download_progress": null,
+      "unpack_progress": null,
+      "patch_paused": null,
+      "patch_queued": null,
+      "run_state": null,
+      "running_pid": null,
+      "game_id": 90316,
+      "title": "Death Cabin (Web)",
+      "description": "",
+      "release": {
+        "id": 197440,
+        "version_number": "1.0.0"
+      },
+      "build": {
+        "id": 246416,
+        "folder": "55eb1ba8b0a8a",
+        "type": "downloadable",
+        "archive_type": "tar.xz",
+        "os_windows": true,
+        "os_windows_64": false,
+        "os_mac": false,
+        "os_mac_64": false,
+        "os_linux": false,
+        "os_linux_64": false,
+        "os_other": false,
+        "modified_on": 1465840220000
+      },
+      "file": {
+        "id": 0,
+        "filename": "",
+        "filesize": ""
+      },
+      "launch_options": [
+        {
+          "id": 165339,
+          "os": "windows",
+          "executable_path": "DeathCabin_Windows/DeathCabin.exe"
+        }
+      ]
+    },
+    "169884": {
+      "id": 169884,
+      "install_dir": "D:\\GameJolt\\death-cabin-90316\\default-169884",
+      "install_state": null,
+      "update_state": null,
+      "remove_state": null,
+      "update": null,
+      "download_progress": null,
+      "unpack_progress": null,
+      "patch_paused": null,
+      "patch_queued": null,
+      "run_state": null,
+      "running_pid": null,
+      "game_id": 90316,
+      "title": null,
+      "description": "",
+      "release": {
+        "id": 200303,
+        "version_number": "1.0.2"
+      },
+      "build": {
+        "id": 251016,
+        "folder": "55fed84e5a5a7",
+        "type": "downloadable",
+        "archive_type": "tar.xz",
+        "os_windows": true,
+        "os_windows_64": false,
+        "os_mac": false,
+        "os_mac_64": false,
+        "os_linux": false,
+        "os_linux_64": false,
+        "os_other": false,
+        "modified_on": 1465840220000
+      },
+      "file": {
+        "id": 0,
+        "filename": "",
+        "filesize": ""
+      },
+      "launch_options": [
+        {
+          "id": 168500,
+          "os": "windows",
+          "executable_path": "DeathCabin_Windows/DeathCabin.exe"
+        }
+      ]
+    },
+    "250258": {
+      "id": 250258,
+      "install_dir": "D:\\GameJolt\\sara-is-missing-201456\\default-250258",
+      "install_state": null,
+      "update_state": null,
+      "remove_state": null,
+      "update": null,
+      "download_progress": null,
+      "unpack_progress": null,
+      "patch_paused": null,
+      "patch_queued": null,
+      "run_state": null,
+      "running_pid": null,
+      "game_id": 201456,
+      "title": null,
+      "description": "",
+      "release": {
+        "id": 312241,
+        "version_number": "1.7.0"
+      },
+      "build": {
+        "id": 403352,
+        "folder": "583e42cac5417",
+        "type": "downloadable",
+        "archive_type": "tar.xz",
+        "os_windows": null,
+        "os_windows_64": true,
+        "os_mac": null,
+        "os_mac_64": null,
+        "os_linux": null,
+        "os_linux_64": null,
+        "os_other": null,
+        "modified_on": 1480475720000
+      },
+      "file": {
+        "id": 0,
+        "filename": "",
+        "filesize": ""
+      },
+      "launch_options": [
+        {
+          "id": 382776,
+          "os": "windows_64",
+          "executable_path": "sim.exe"
+        }
+      ]
+    },
+    "389202": {
+      "id": 389202,
+      "install_dir": "C:\\Users\\USERNAME\\AppData\\Local\\game-jolt-client\\User Data\\Default\\Games\\neontail-333354\\default-389202",
+      "install_state": null,
+      "update_state": null,
+      "remove_state": null,
+      "update": null,
+      "download_progress": null,
+      "unpack_progress": null,
+      "patch_paused": null,
+      "patch_queued": null,
+      "run_state": null,
+      "running_pid": null,
+      "game_id": 333354,
+      "title": null,
+      "description": "",
+      "release": {
+        "id": 929315,
+        "version_number": "18.2.44"
+      },
+      "build": {
+        "id": 1198139,
+        "folder": "623b1ff33d1c3",
+        "type": "downloadable",
+        "archive_type": "tar.gz",
+        "os_windows": false,
+        "os_windows_64": true,
+        "os_mac": null,
+        "os_mac_64": null,
+        "os_linux": null,
+        "os_linux_64": null,
+        "os_other": null,
+        "modified_on": 1648042665000
+      },
+      "file": {
+        "id": 0,
+        "filename": "",
+        "filesize": ""
+      },
+      "launch_options": [
+        {
+          "id": 2188575,
+          "os": "windows_64",
+          "executable_path": "Demo_0.18.2.44_v3/NeonTail.exe"
+        }
+      ]
+    },
+    "535345": {
+      "id": 535345,
+      "install_dir": "D:\\GameJolt\\Sonic-GT-533291\\Sonic GT Release-535345",
+      "install_state": "downloading",
+      "update_state": null,
+      "remove_state": null,
+      "update": null,
+      "download_progress": {
+        "progress": 0.9,
+        "timeLeft": 22,
+        "rate": 5043
+      },
+      "unpack_progress": null,
+      "patch_paused": null,
+      "patch_queued": null,
+      "run_state": null,
+      "running_pid": null,
+      "game_id": 533291,
+      "title": "Sonic GT Release",
+      "description": "",
+      "release": {
+        "id": 706549,
+        "version_number": "10.0.4"
+      },
+      "build": {
+        "id": 898501,
+        "folder": "5f58e9a836659",
+        "type": "downloadable",
+        "archive_type": "tar.gz",
+        "os_windows": true,
+        "os_windows_64": true,
+        "os_mac": null,
+        "os_mac_64": null,
+        "os_linux": null,
+        "os_linux_64": null,
+        "os_other": null,
+        "modified_on": 1599662676000
+      },
+      "file": {
+        "id": 0,
+        "filename": "",
+        "filesize": ""
+      },
+      "launch_options": [
+        {
+          "id": 1544594,
+          "os": "windows",
+          "executable_path": "Sonic GT 10.0.4/Sonic GT.exe"
+        },
+        {
+          "id": 1544595,
+          "os": "windows_64",
+          "executable_path": "Sonic GT 10.0.4/Sonic GT.exe"
+        }
+      ]
+    },
+    "539189": {
+      "id": 539189,
+      "install_dir": "C:\\Users\\USERNAME\\AppData\\Local\\game-jolt-client\\User Data\\Default\\Games\\renzk-attackontitan-537711\\default-539189",
+      "install_state": null,
+      "update_state": null,
+      "remove_state": null,
+      "update": null,
+      "download_progress": null,
+      "unpack_progress": null,
+      "patch_paused": null,
+      "patch_queued": null,
+      "run_state": null,
+      "running_pid": null,
+      "game_id": 537711,
+      "title": null,
+      "description": "",
+      "release": {
+        "id": 710371,
+        "version_number": "1.1.4"
+      },
+      "build": {
+        "id": 903249,
+        "folder": "5f678a98e1517",
+        "type": "downloadable",
+        "archive_type": "tar.gz",
+        "os_windows": null,
+        "os_windows_64": true,
+        "os_mac": null,
+        "os_mac_64": null,
+        "os_linux": null,
+        "os_linux_64": null,
+        "os_other": null,
+        "modified_on": 1600662848000
+      },
+      "file": {
+        "id": 0,
+        "filename": "",
+        "filesize": ""
+      },
+      "launch_options": [
+        {
+          "id": 1556153,
+          "os": "windows_64",
+          "executable_path": "RENZK's Attack on Titan (v1.1d)/RENZK's Attack on Titan.exe"
+        }
+      ]
+    }
+  },
+  "groups": {
+    "game_id": {
+      "90316": [
+        168837,
+        169884
+      ],
+      "201456": [
+        250258
+      ],
+      "333354": [
+        389202
+      ],
+      "533291": [
+        535345
+      ],
+      "537711": [
+        539189
+      ]
+    }
+  }
+}

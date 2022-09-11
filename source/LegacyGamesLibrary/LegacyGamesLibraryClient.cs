@@ -1,6 +1,8 @@
 ﻿using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +11,23 @@ namespace LegacyGamesLibrary
 {
     public class LegacyGamesLibraryClient : LibraryClient
     {
-        public override bool IsInstalled => true;
+        public LegacyGamesLibraryClient(string exePath, string icon)
+        {
+            ExePath = exePath;
+            _icon = icon;
+        }
+
+        private string _icon;
+
+        public override bool IsInstalled => !string.IsNullOrWhiteSpace(ExePath) && File.Exists(ExePath);
+        public override string Icon => _icon;
+
+        public string ExePath { get; }
 
         public override void Open()
         {
-            throw new NotImplementedException();
+            if (IsInstalled)
+                try { Process.Start(ExePath); } catch { }
         }
     }
 }

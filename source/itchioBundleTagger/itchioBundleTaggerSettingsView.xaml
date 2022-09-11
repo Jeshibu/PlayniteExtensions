@@ -6,11 +6,14 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-            <CheckBox IsChecked="{Binding UseTagPrefix}" Content="Prefix tag names with: " VerticalAlignment="Center"/>
-            <TextBox Text="{Binding TagPrefix}" Width="200" VerticalAlignment="Center" IsEnabled="{Binding UseTagPrefix}"/>
+        <CheckBox IsChecked="{Binding RunOnLibraryUpdate}" Content="{Binding Labels.RunOnLibraryUpdate}"/>
+        <CheckBox IsChecked="{Binding ShowInContextMenu}" Content="{Binding Labels.ShowInContextMenu}" Margin="0,20,0,0"/>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,20,0,0">
+            <CheckBox IsChecked="{Binding UseTagPrefix}" Content="{Binding Labels.UseTagPrefix}" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding TagPrefix}" Width="200" VerticalAlignment="Center" IsEnabled="{Binding UseTagPrefix}" Margin="10,0,0,0"/>
         </StackPanel>
-        <CheckBox IsChecked="{Binding AddAvailableOnSteamTag}" Content="Add 'Available on Steam' tag if appliccable" Margin="0,20,0,0"/>
-        <CheckBox IsChecked="{Binding AddSteamLink}" Content="Add link to Steam store page if appliccable" Margin="0,20,0,0"/>        
+        <CheckBox IsChecked="{Binding AddFreeTag}" Content="{Binding Labels.AddFreeTag}" Margin="0,20,0,0"/>
+        <CheckBox IsChecked="{Binding AddAvailableOnSteamTag}" Content="{Binding Labels.AddAvailableOnSteamTag}" Margin="0,20,0,0"/>
+        <CheckBox IsChecked="{Binding AddSteamLink}" Content="{Binding Labels.AddSteamLink}" Margin="0,20,0,0"/>        
     </StackPanel>
 </UserControl>

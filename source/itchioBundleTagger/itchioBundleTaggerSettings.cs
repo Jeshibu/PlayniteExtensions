@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,32 +12,50 @@ namespace itchioBundleTagger
     {
         private readonly itchioBundleTagger plugin;
 
+        [DontSerialize]
+        public Labels Labels { get; }
+
         public bool UseTagPrefix { get; set; } = true;
 
         public string TagPrefix { get; set; } = "[itch.io] ";
 
         public bool AddAvailableOnSteamTag { get; set; } = true;
 
+        public bool AddFreeTag { get; set; } = false;
+
         public bool AddSteamLink { get; set; } = true;
+
+        public bool RunOnLibraryUpdate { get; set; } = true;
+
+        public bool ShowInContextMenu { get; set; } = false;
+
+        public Dictionary<string, Guid> TagIds { get; set; } = new Dictionary<string, Guid>();
 
         // Parameterless constructor must exist if you want to use LoadPluginSettings method.
         public itchioBundleTaggerSettings()
         {
         }
 
-        public itchioBundleTaggerSettings(itchioBundleTagger plugin)
+        public itchioBundleTaggerSettings(itchioBundleTagger plugin, itchIoTranslator translator)
         {
             // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
             this.plugin = plugin;
+            Labels = new Labels(translator);
 
             // Load saved settings.
             var savedSettings = plugin.LoadPluginSettings<itchioBundleTaggerSettings>();
 
-            // LoadPluginSettings returns null if not saved data is available.
+            // LoadPluginSettings returns null if no saved data is available.
             if (savedSettings != null)
             {
                 UseTagPrefix = savedSettings.UseTagPrefix;
                 TagPrefix = savedSettings.TagPrefix;
+                AddAvailableOnSteamTag = savedSettings.AddAvailableOnSteamTag;
+                AddFreeTag = savedSettings.AddFreeTag;
+                AddSteamLink = savedSettings.AddSteamLink;
+                TagIds = savedSettings.TagIds;
+                RunOnLibraryUpdate = savedSettings.RunOnLibraryUpdate;
+                ShowInContextMenu = savedSettings.ShowInContextMenu;
             }
         }
 
@@ -66,5 +85,22 @@ namespace itchioBundleTagger
             errors = new List<string>();
             return true;
         }
+    }
+
+    public class Labels
+    {
+        public Labels(itchIoTranslator translator)
+        {
+            Translator = translator;
+        }
+
+        private itchIoTranslator Translator { get; }
+
+        public string UseTagPrefix => Translator.TagPrefixSetting;
+        public string AddFreeTag => Translator.AddFreeTagSetting;
+        public string AddAvailableOnSteamTag => Translator.AddSteamTagSetting;
+        public string AddSteamLink => Translator.AddSteamLinkSetting;
+        public string RunOnLibraryUpdate => Translator.RunOnLibraryUpdate;
+        public string ShowInContextMenu => Translator.ShowInContextMenu;
     }
 }

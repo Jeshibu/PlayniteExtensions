@@ -22,6 +22,7 @@ namespace LegacyGamesLibrary
         public ILegacyGamesRegistryReader RegistryReader { get; }
         public IAppStateReader AppStateReader { get; }
         private IPlayniteAPI PlayniteAPI { get; }
+        private ILogger logger = LogManager.GetLogger();
 
         public IEnumerable<GameMetadata> GetGames(CancellationToken cancellationToken)
         {
@@ -34,7 +35,7 @@ namespace LegacyGamesLibrary
 
                 if (ownedGames == null)
                 {
-                    PlayniteAPI.Notifications.Add(new NotificationMessage("legacy-games-error", $"No Legacy Games games found - check your Legacy Games client installation. Click this message to download it.", NotificationType.Error, () =>
+                    PlayniteAPI.Notifications.Add(new NotificationMessage("legacy-games-error", $"No Legacy Games games found - check your Legacy Games client installation. Click this message to download it. If it's already installed, please open the list of non-installed games there, or install one game.", NotificationType.Error, () =>
                     {
                         try
                         {
@@ -68,16 +69,6 @@ namespace LegacyGamesLibrary
                     if (installation != null)
                     {
                         metadata.InstallDirectory = installation.InstDir;
-                        metadata.GameActions = new List<GameAction>
-                    {
-                        new GameAction
-                        {
-                            IsPlayAction = true,
-                            Name = "Play",
-                            Path = $@"{{InstallDir}}\{installation.GameExe}",
-                            Type = GameActionType.File,
-                        },
-                    };
                         metadata.Icon = new MetadataFile($@"{installation.InstDir}\icon.ico");
                     }
 
@@ -87,6 +78,7 @@ namespace LegacyGamesLibrary
             }
             catch (Exception ex)
             {
+                logger.Error(ex, "Failed to gather metadata");
                 PlayniteAPI.Notifications.Add(new NotificationMessage("legacy-games-error", $"Failed to get Legacy Games games: {ex.Message}", NotificationType.Error));
                 return new GameMetadata[0];
             }

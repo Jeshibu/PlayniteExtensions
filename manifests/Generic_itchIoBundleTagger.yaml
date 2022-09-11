@@ -21,3 +21,41 @@ Packages:
     Changelog:
     - Added support for Queer Games Bundle 2022
     - Tags are now only added to the database as needed
+  - Version: 0.6
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-06-21
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.6/itchIoBundleTagger_0_6.pext
+    Changelog:
+    - Added optional "Free" tags to games that are free
+    - Added Dutch localization
+    - Tags are now sticky - if you change the tag prefix or Playnite's language, the tags will be renamed rather than recreated. This requires one new run before changing anything to lock in the tag IDs.
+  - Version: 0.7
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-07-08
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.7/itchIoBundleTagger_0_7.pext
+    Changelog:
+    - Added support for new bundle - Worthy of Better, Stronger Together for Reproductive Rights
+    - Added support for new bundle - Indie Bundle for Abortion Funds
+    - Added Spanish localization (thanks BanCrash!)
+    - Fixed unknown new bundles causing exceptions
+    - Added main menu option to run for all games
+  - Version: 0.8
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-19
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.8/itchIoBundleTagger_0_8.pext
+    Changelog:
+    - Added Simplified Chinese localization (thanks castpower!)
+    - Added option to remove right-click (game) menu option
+    - Added option to run after every library import
+  - Version: 0.8.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-09-01
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.8.1/itchIoBundleTagger_0_8_1.pext
+    Changelog:
+    - Made Game.Update call only when games are actually updated (fixes possible performance issues in other extensions listening for game updates)
+  - Version: 0.8.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-09-01
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.8.2/itchIoBundleTagger_0_8_2.pext
+    Changelog:
+    - Fixed "Run after every library import" setting being ignored
