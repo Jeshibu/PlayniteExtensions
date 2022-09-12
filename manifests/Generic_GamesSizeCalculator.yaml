@@ -181,3 +181,9 @@ Packages:
     - Fixed size calculation for large files (>4GB)
     - Reduced progress message updates to optimize execution time
     - Updated localizations
+  - Version: 1.27.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-09-12
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/gamessizecalculator1.27.1/GamesSizeCalculator_1_27_1.pext
+    Changelog:
+    - Fixed long path handling regression
