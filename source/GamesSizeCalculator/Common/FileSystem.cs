@@ -441,7 +441,7 @@ namespace PluginsCommon
                 throw new System.ComponentModel.Win32Exception();
 
             uint clusterSize = sectorsPerCluster * bytesPerSector;
-            ulong size = GetCompressedFileSize(info.FullName);
+            ulong size = GetCompressedFileSize(FixPathLength(info.FullName));
 
             //round up to the nearest multiple of cluster size
             ulong sizeOnDisk = (size + clusterSize - 1) / clusterSize * clusterSize;
