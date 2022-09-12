@@ -23,7 +23,7 @@ namespace GamesSizeCalculator.Tests
             }
 
             var size = FileSystem.GetDirectorySizeOnDisk("./LongPath");
-            Assert.NotEqual(0, size);
+            Assert.NotEqual(0UL, size);
         }
     }
 }
