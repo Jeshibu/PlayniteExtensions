@@ -173,7 +173,7 @@ Packages:
     - Added error handling to online install size fetching
     - Fixed long path handling
     - Added progress description text
-  - Version: 1.26
+  - Version: 1.27
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-09-12
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/gamessizecalculator1.27/GamesSizeCalculator_1_27.pext
