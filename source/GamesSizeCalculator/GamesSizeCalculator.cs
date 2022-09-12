@@ -87,8 +87,21 @@ namespace GamesSizeCalculator
                         }
 
                         a.CurrentProgressValue++;
-                        a.Text = $"{progressBase}\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
-                        CalculateGameSize(game, onlineSizeCalculators, forceNonEmpty);
+
+                        var calcMethod = GetGameSizeCalculationMethod(game, onlineSizeCalculators, forceNonEmpty);
+
+                        if (calcMethod == GameSizeCalculationMethod.None)
+                        {
+                            if (a.Text != progressBase)
+                            {
+                                a.Text = progressBase;
+                            }
+                        }
+                        else
+                        {
+                            a.Text = $"{progressBase}\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                            CalculateGameSize(game, onlineSizeCalculators, calcMethod);
+                        }
                     }
                 }
             }, progressOptions);
@@ -106,24 +119,29 @@ namespace GamesSizeCalculator
             return new SteamAppIdUtility(appListCache);
         }
 
-        private ulong GetGameDirectorySize(Game game, DateTime? onlyIfNewerThan = null)
+        private bool ShouldCalculateGameDirectorySize(Game game, DateTime? onlyIfNewerThan = null)
         {
             string installDirectory = FileSystem.FixPathLength(game?.InstallDirectory);
 
             if (installDirectory.IsNullOrEmpty() || !Directory.Exists(installDirectory))
             {
-                return 0;
+                return false;
             }
 
             if (onlyIfNewerThan.HasValue &&
                 (Directory.GetLastWriteTime(installDirectory) < onlyIfNewerThan.Value))
             {
-                return 0;
+                return false;
             }
 
+            return true;
+        }
+
+        private ulong GetGameDirectorySize(Game game)
+        {
             try
             {
-                return (ulong)FileSystem.GetDirectorySizeOnDisk(game.InstallDirectory);
+                return FileSystem.GetDirectorySizeOnDisk(game.InstallDirectory);
             }
             catch (Exception e)
             {
@@ -138,29 +156,51 @@ namespace GamesSizeCalculator
             }
         }
 
-        private ulong GetGameRomSize(Game game, DateTime? onlyIfNewerThan = null)
+        private string GetRomPath(Game game)
         {
-            var romPath = FileSystem.FixPathLength(game.Roms.First().Path);
+            var romPath = game.Roms.First().Path;
             if (romPath.IsNullOrEmpty())
             {
-                return 0;
+                return null;
             }
 
             if (!game.InstallDirectory.IsNullOrEmpty())
             {
-                romPath = romPath.Replace("{InstallDir}", game.InstallDirectory).Replace("\\\\", "\\");
+                romPath = romPath.Replace("{InstallDir}", game.InstallDirectory).Replace(@"\\", @"\");
+            }
+
+            romPath = FileSystem.FixPathLength(romPath);
+
+            return romPath;
+        }
+
+        private bool ShouldCalculateRomSize(Game game, DateTime? onlyIfNewerThan = null)
+        {
+            var romPath = GetRomPath(game);
+            if (romPath.IsNullOrEmpty())
+            {
+                return false;
             }
 
             if (!FileSystem.FileExists(romPath))
             {
-                return 0;
+                return false;
             }
 
             if (onlyIfNewerThan.HasValue &&
                 (File.GetLastWriteTime(romPath) < onlyIfNewerThan))
             {
-                return 0;
+                return false;
             }
+
+            return true;
+        }
+
+        private ulong GetGameRomSize(Game game)
+        {
+            var romPath = GetRomPath(game);
+            if (romPath.IsNullOrEmpty())
+                return 0;
 
             try
             {
@@ -205,63 +245,98 @@ namespace GamesSizeCalculator
             }
         }
 
-        private void CalculateGameSize(Game game, ICollection<IOnlineSizeCalculator> onlineSizeCalculators, bool forceNonEmpty, bool onlyIfNewerThanSetting = false)
+        private ulong GetInstallSizeOnline(Game game, ICollection<IOnlineSizeCalculator> onlineSizeCalculators)
         {
-            if (!forceNonEmpty && !game.Version.IsNullOrEmpty())
-            {
-                return;
-            }
-
-            var onlyIfNewerThan = onlyIfNewerThanSetting ? settings.Settings.LastRefreshOnLibUpdate : (DateTime?)null;
-
             ulong size = 0;
-            if (game.IsInstalled)
+
+            var alreadyRan = new List<IOnlineSizeCalculator>();
+            //check the preferred online size calculators first (Steam for Steam games, GOG for GOG games, etc)
+            foreach (var sizeCalculator in onlineSizeCalculators)
             {
-                if (game.Roms.HasItems())
+                if (!sizeCalculator.IsPreferredInstallSizeCalculator(game))
                 {
-                    size = GetGameRomSize(game, onlyIfNewerThan);
+                    continue;
                 }
-                else
+
+                size = GetInstallSizeOnline(game, sizeCalculator);
+                alreadyRan.Add(sizeCalculator);
+                if (size != 0)
                 {
-                    size = GetGameDirectorySize(game, onlyIfNewerThan);
+                    break;
                 }
             }
-            else if (onlineSizeCalculators?.Count > 0 && PlayniteUtilities.IsGamePcGame(game))
+
+            //go through every online size calculator as a fallback
+            if (size == 0)
             {
-                var alreadyRan = new List<IOnlineSizeCalculator>();
-                //check the preferred online size calculators first (Steam for Steam games, GOG for GOG games, etc)
                 foreach (var sizeCalculator in onlineSizeCalculators)
                 {
-                    if (!sizeCalculator.IsPreferredInstallSizeCalculator(game))
+                    if (alreadyRan.Contains(sizeCalculator))
                     {
                         continue;
                     }
 
                     size = GetInstallSizeOnline(game, sizeCalculator);
-                    alreadyRan.Add(sizeCalculator);
                     if (size != 0)
                     {
                         break;
                     }
                 }
+            }
 
-                //go through every online size calculator as a fallback
-                if (size == 0)
+            return size;
+        }
+
+        private enum GameSizeCalculationMethod
+        {
+            None,
+            Directory,
+            ROM,
+            Online,
+        }
+
+        private GameSizeCalculationMethod GetGameSizeCalculationMethod(Game game, ICollection<IOnlineSizeCalculator> onlineSizeCalculators, bool forceNonEmpty, bool onlyIfNewerThanSetting = false)
+        {
+            if (!forceNonEmpty && !game.Version.IsNullOrEmpty())
+            {
+                return GameSizeCalculationMethod.None;
+            }
+
+            var onlyIfNewerThan = onlyIfNewerThanSetting ? settings.Settings.LastRefreshOnLibUpdate : (DateTime?)null;
+
+            if (game.IsInstalled)
+            {
+                if (game.Roms.HasItems())
                 {
-                    foreach (var sizeCalculator in onlineSizeCalculators)
-                    {
-                        if (alreadyRan.Contains(sizeCalculator))
-                        {
-                            continue;
-                        }
-
-                        size = GetInstallSizeOnline(game, sizeCalculator);
-                        if (size != 0)
-                        {
-                            break;
-                        }
-                    }
+                    return ShouldCalculateRomSize(game, onlyIfNewerThan) ? GameSizeCalculationMethod.ROM : GameSizeCalculationMethod.None;
                 }
+                else
+                {
+                    return ShouldCalculateGameDirectorySize(game, onlyIfNewerThan) ? GameSizeCalculationMethod.Directory : GameSizeCalculationMethod.None;
+                }
+            }
+            else if (onlineSizeCalculators?.Count > 0 && PlayniteUtilities.IsGamePcGame(game))
+            {
+                return GameSizeCalculationMethod.Online;
+            }
+
+            return GameSizeCalculationMethod.None;
+        }
+
+        private void CalculateGameSize(Game game, ICollection<IOnlineSizeCalculator> onlineSizeCalculators, GameSizeCalculationMethod sizeCalculationMethod)
+        {
+            ulong size = 0;
+            switch (sizeCalculationMethod)
+            {
+                case GameSizeCalculationMethod.Directory:
+                    size = GetGameDirectorySize(game);
+                    break;
+                case GameSizeCalculationMethod.ROM:
+                    size = GetGameRomSize(game);
+                    break;
+                case GameSizeCalculationMethod.Online:
+                    size = GetInstallSizeOnline(game, onlineSizeCalculators);
+                    break;
             }
 
             if (size == 0)
@@ -350,14 +425,15 @@ namespace GamesSizeCalculator
                         break;
 
                     a.CurrentProgressValue++;
-                    a.Text = $"{progressBase}\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+
+                    GameSizeCalculationMethod calcMethod = GameSizeCalculationMethod.None;
 
                     if (game.Added != null && game.Added > settings.Settings.LastRefreshOnLibUpdate)
                     {
                         if (!settings.Settings.CalculateNewGamesOnLibraryUpdate)
                             continue;
 
-                        CalculateGameSize(game, onlineSizeCalculators, false);
+                        calcMethod = GetGameSizeCalculationMethod(game, onlineSizeCalculators, false);
                     }
                     else if (settings.Settings.CalculateModifiedGamesOnLibraryUpdate)
                     {
@@ -366,9 +442,23 @@ namespace GamesSizeCalculator
                         if (!game.Version.IsNullOrEmpty() && !game.Version.EndsWith(" GB"))
                             continue;
 
-                        CalculateGameSize(game, null, true, true); //don't get install size online for locally installed games
+                        //don't get install size online for locally installed games: online size calculators = null
+                        calcMethod = GetGameSizeCalculationMethod(game, null, true, true);
                     }
-                };
+
+                    if (calcMethod == GameSizeCalculationMethod.None)
+                    {
+                        if (a.Text != progressBase)
+                        {
+                            a.Text = progressBase;
+                        }
+                    }
+                    else
+                    {
+                        a.Text = $"{progressBase}\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
+                        CalculateGameSize(game, null, calcMethod);
+                    }
+                }
             }
         }
     }
