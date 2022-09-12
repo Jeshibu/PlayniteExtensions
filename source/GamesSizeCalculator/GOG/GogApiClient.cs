@@ -47,7 +47,7 @@ namespace GamesSizeCalculator.GOG
 
                 if (line.TrimStart().StartsWith("window.activeFeatures"))
                 {
-                    var desData = Newtonsoft.Json.JsonConvert.DeserializeObject<StorePageResult>(stringData.TrimEnd(';'));
+                    var desData = Newtonsoft.Json.JsonConvert.DeserializeObject<StorePageResult>(stringData.TrimEnd(';', '\r', '\n'));
                     if (desData.cardProduct == null)
                     {
                         return null;
