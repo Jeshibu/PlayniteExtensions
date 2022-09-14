@@ -51,7 +51,7 @@ namespace GamesSizeCalculator
                     MenuSection = "Games Size Calculator",
                     Action = a =>
                     {
-                        UpdateGamesListSizes(args.Games.Distinct().ToList(), false);
+                        UpdateGamesListSizes(args.Games, false);
                     }
                 },
                 new GameMenuItem
@@ -60,51 +60,15 @@ namespace GamesSizeCalculator
                     MenuSection = "Games Size Calculator",
                     Action = a =>
                     {
-                        UpdateGamesListSizes(args.Games.Distinct().ToList(), true);
+                        UpdateGamesListSizes(args.Games, true);
                     }
                 }
             };
         }
 
-        private void UpdateGamesListSizes(List<Game> games, bool forceNonEmpty)
+        private void UpdateGamesListSizes(IEnumerable<Game> games, bool overwrite)
         {
-            var progressOptions = new GlobalProgressOptions(ResourceProvider.GetString("LOCGame_Sizes_Calculator_DialogMessageCalculatingSizes"), true);
-            progressOptions.IsIndeterminate = false;
-            PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
-            {
-                a.ProgressMaxValue = games.Count();
-
-                using (PlayniteApi.Database.BufferedUpdate())
-                using (var steamClient = new SteamApiClient())
-                {
-                    var onlineSizeCalculators = GetOnlineSizeCalculators(steamClient);
-                    string progressBase = ResourceProvider.GetString("LOCGame_Sizes_Calculator_DialogMessageCalculatingSizes");
-                    foreach (var game in games)
-                    {
-                        if (a.CancelToken.IsCancellationRequested)
-                        {
-                            break;
-                        }
-
-                        a.CurrentProgressValue++;
-
-                        var calcMethod = GetGameSizeCalculationMethod(game, onlineSizeCalculators, forceNonEmpty);
-
-                        if (calcMethod == GameSizeCalculationMethod.None)
-                        {
-                            if (a.Text != progressBase)
-                            {
-                                a.Text = progressBase;
-                            }
-                        }
-                        else
-                        {
-                            a.Text = $"{progressBase}\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
-                            CalculateGameSize(game, onlineSizeCalculators, calcMethod);
-                        }
-                    }
-                }
-            }, progressOptions);
+            UpdateGameSizes(games.Distinct().ToList(), overwrite, false);
 
             PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCGame_Sizes_Calculator_DialogMessageDone"));
         }
@@ -295,9 +259,9 @@ namespace GamesSizeCalculator
             Online,
         }
 
-        private GameSizeCalculationMethod GetGameSizeCalculationMethod(Game game, ICollection<IOnlineSizeCalculator> onlineSizeCalculators, bool forceNonEmpty, bool onlyIfNewerThanSetting = false)
+        private GameSizeCalculationMethod GetGameSizeCalculationMethod(Game game, ICollection<IOnlineSizeCalculator> onlineSizeCalculators, bool overwrite, bool onlyIfNewerThanSetting = false)
         {
-            if (!forceNonEmpty && !game.Version.IsNullOrEmpty())
+            if (!overwrite && !game.Version.IsNullOrEmpty())
             {
                 return GameSizeCalculationMethod.None;
             }
@@ -406,60 +370,89 @@ namespace GamesSizeCalculator
         private void ProcessGamesOnLibUpdate(GlobalProgressActionArgs a)
         {
             ICollection<Game> games = PlayniteApi.Database.Games;
-            if (!settings.Settings.GetUninstalledGameSizeFromSteam)
+            if (!settings.Settings.GetUninstalledGameSizeFromSteam && !settings.Settings.GetUninstalledGameSizeFromGog)
             {
                 games = PlayniteApi.Database.Games.Where(x => x.IsInstalled).ToList();
             }
 
-            a.ProgressMaxValue = games.Count;
+            UpdateGameSizes(games, overwrite: false, onlyNewOrModified: true);
+        }
 
-            using (PlayniteApi.Database.BufferedUpdate())
-            using (var steamClient = new SteamApiClient())
+        private void UpdateGameSizes(ICollection<Game> games, bool overwrite, bool onlyNewOrModified)
+        {
+            string progressBase = ResourceProvider.GetString("LOCGame_Sizes_Calculator_DialogMessageCalculatingSizes");
+
+            var progressOptions = new GlobalProgressOptions(progressBase, true);
+            progressOptions.IsIndeterminate = false;
+            PlayniteApi.Dialogs.ActivateGlobalProgress((a) =>
             {
-                var onlineSizeCalculators = GetOnlineSizeCalculators(steamClient);
-                string progressBase = ResourceProvider.GetString("LOCGame_Sizes_Calculator_DialogMessageCalculatingSizes");
+                a.ProgressMaxValue = games.Count;
 
-                foreach (var game in games)
+                using (PlayniteApi.Database.BufferedUpdate())
+                using (var steamClient = new SteamApiClient())
                 {
-                    if (a.CancelToken.IsCancellationRequested)
-                        break;
-
-                    a.CurrentProgressValue++;
-
-                    GameSizeCalculationMethod calcMethod = GameSizeCalculationMethod.None;
-
-                    if (game.Added != null && game.Added > settings.Settings.LastRefreshOnLibUpdate)
+                    var onlineSizeCalculators = GetOnlineSizeCalculators(steamClient);
+                    var workload = new Dictionary<Game, GameSizeCalculationMethod>();
+                    //loop 1: check which games need to be calculated
+                    foreach (var game in games)
                     {
-                        if (!settings.Settings.CalculateNewGamesOnLibraryUpdate)
-                            continue;
+                        if (a.CancelToken.IsCancellationRequested)
+                            break;
 
-                        calcMethod = GetGameSizeCalculationMethod(game, onlineSizeCalculators, false);
-                    }
-                    else if (settings.Settings.CalculateModifiedGamesOnLibraryUpdate)
-                    {
-                        // To make sure only Version fields filled by the extension are
-                        // replaced
-                        if (!game.Version.IsNullOrEmpty() && !game.Version.EndsWith(" GB"))
-                            continue;
+                        a.CurrentProgressValue++;
 
-                        //don't get install size online for locally installed games: online size calculators = null
-                        calcMethod = GetGameSizeCalculationMethod(game, null, true, true);
-                    }
+                        GameSizeCalculationMethod calcMethod = GameSizeCalculationMethod.None;
 
-                    if (calcMethod == GameSizeCalculationMethod.None)
-                    {
-                        if (a.Text != progressBase)
+                        if (onlyNewOrModified)
                         {
-                            a.Text = progressBase;
+                            if (game.Added != null && game.Added > settings.Settings.LastRefreshOnLibUpdate)
+                            {
+                                if (!settings.Settings.CalculateNewGamesOnLibraryUpdate)
+                                    continue;
+
+                                calcMethod = GetGameSizeCalculationMethod(game, onlineSizeCalculators, false);
+                            }
+                            else if (settings.Settings.CalculateModifiedGamesOnLibraryUpdate)
+                            {
+                                // To make sure only Version fields filled by the extension are
+                                // replaced
+                                if (!game.Version.IsNullOrEmpty() && !game.Version.EndsWith(" GB"))
+                                    continue;
+
+                                //don't get install size online for locally installed games: online size calculators = null
+                                calcMethod = GetGameSizeCalculationMethod(game, null, true, true);
+                            }
+                        }
+                        else
+                        {
+                            calcMethod = GetGameSizeCalculationMethod(game, onlineSizeCalculators, overwrite);
+                        }
+
+                        if (calcMethod != GameSizeCalculationMethod.None && !workload.ContainsKey(game))
+                        {
+                            workload.Add(game, calcMethod);
                         }
                     }
-                    else
+
+                    if (workload.Count == 0)
+                        return;
+
+                    a.CurrentProgressValue = 0;
+                    a.ProgressMaxValue = workload.Count;
+
+                    //loop 2: calculate (splitting these results in a more accurate progress bar)
+                    foreach (var item in workload)
                     {
+                        var game = item.Key;
+                        var calcMethod = item.Value;
+
+                        a.CurrentProgressValue++;
                         a.Text = $"{progressBase}\n{a.CurrentProgressValue}/{a.ProgressMaxValue}\n{game.Name}";
-                        CalculateGameSize(game, null, calcMethod);
+
+                        CalculateGameSize(game, onlineSizeCalculators, calcMethod);
                     }
                 }
-            }
+            }, new GlobalProgressOptions(progressBase, true) { IsIndeterminate = false });
         }
     }
 }
