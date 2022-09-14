@@ -61,6 +61,7 @@ namespace PlayniteExtensions.Common
             output.Add("3DO", new[] { "3do" });
             output.Add("Windows", new[] { "pc_windows" });
             output.Add("DOS", new[] { "pc_dos" });
+            output.Add("MS-DOS", new[] { "pc_dos" });
             output.Add("Linux", new[] { "pc_linux" });
             output.Add("PC", new[] { "pc_windows" });
             output.Add("PC CD-ROM", new[] { "pc_windows" });

@@ -49,7 +49,7 @@ namespace Barnite.Scrapers
                 int limitIndex = coverUrl.IndexOf("&limit=");
                 if (limitIndex != -1)
                 {
-                    coverUrl = coverUrl.Remove(limitIndex) + "&limit=400";
+                    coverUrl = coverUrl.Remove(limitIndex) + "&limit=600";
                 }
 
                 game.CoverImage = new MetadataFile(coverUrl);
@@ -79,13 +79,13 @@ namespace Barnite.Scrapers
                         case "betriebsystem":
                             if (value.StartsWith("Windows"))
                                 game.Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") };
-                            else if (value == "MS-DOS")
-                                game.Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_dos") };
                             else if (value.Contains("Linux"))
                                 game.Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_linux") };
+                            else
+                                game.Platforms = PlatformUtility.GetPlatforms(value).ToHashSet();
                             break;
                         case "erschienen":
-                                game.ReleaseDate = ParseReleaseDate(value);
+                            game.ReleaseDate = ParseReleaseDate(value);
                             break;
                         case "entwickler":
                             var devs = valueNode.SelectNodes(".//a")?.Select(a => a.InnerText.HtmlDecode());

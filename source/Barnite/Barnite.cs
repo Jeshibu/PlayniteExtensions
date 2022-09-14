@@ -132,7 +132,8 @@ namespace Barnite
         {
             ScraperManager = scraperManager;
             PlayniteAPI = playniteAPI;
-            Delay = 300;
+            Delay = 700;
+            Label = "Barcode:";
         }
 
         public ScraperManager ScraperManager { get; }
@@ -211,7 +212,7 @@ namespace Barnite
         {
             var game = PlayniteAPI.Database.ImportGame(metadata);
             //PlayniteAPI.Dialogs.ShowMessage($"Added {game.Name} via {scraper.Name}!\r\nIt's recommended to use metadata plugins to get more data on the game.", "Barnite");
-            //PlayniteAPI.MainView.SelectGame(game.Id);
+            PlayniteAPI.MainView.SelectGame(game.Id);
         }
 
         private static bool CouldBeBarcode(string str)
@@ -219,7 +220,7 @@ namespace Barnite
             if (string.IsNullOrWhiteSpace(str))
                 return false;
 
-            return str.Count(c => !char.IsWhiteSpace(c)) > 8
+            return str.Count(c => !char.IsWhiteSpace(c)) > 7
                 && str.Any(c => char.IsNumber(c));
         }
     }

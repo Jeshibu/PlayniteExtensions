@@ -30,7 +30,7 @@ namespace Barnite.Scrapers
             var item = response.Items[0];
             GameMetadata data = new GameMetadata { Description = item.Description, Platforms = new HashSet<MetadataProperty>() };
 
-            data.Name = Regex.Replace(item.Title, @"(\s*(\((?<platform>[a-z 0-9]+)\)|\bsealed|\bused|\bnew)\.?)+$", (match) =>
+            data.Name = Regex.Replace(item.Title, @"(\s*([\[(](?<platform>[a-z 0-9]+)[\])]|\bsealed|\bused|\bnew)\.?)+$", (match) =>
             {
                 string potentialPlatformName = match.Groups["platform"]?.Value;
                 if (string.IsNullOrEmpty(potentialPlatformName))
