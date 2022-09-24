@@ -3,10 +3,6 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <sys:String x:Key="LOCGame_Sizes_Calculator_Settings_Tab_Settings">Settings</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_Settings_Tab_Steam_Region_Words">Steam region-word filtering</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsHelpLabel">Help</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedLabel">Automatically calculate the size of a game after if it has been modified on library update</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip">Updates the game file size if it is detected that the game directory or rom file has been updated since the previous automatic detection</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel">Automatically calculate the size of a game after it is added on library update</sys:String>
 
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsUseSteamLabel">For uninstalled PC games, obtain an estimated install size from Steam</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsGetUninstalledGameSizeFromSteamLabel">Apply this data also for games that are not from the Steam library</sys:String>
@@ -22,13 +18,5 @@
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsRegionWordsHeaderLabel">Region-words</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsExcludedRegionWordsHeaderLabel">Excluded region-words</sys:String>
 
-    <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptionCalculateSizesSelGames">Calculate sizes of selected games</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptinoCalculateSizesSelGamesForce">Calculate sizes of selected games (Force overwrite)</sys:String>
-
-    <sys:String x:Key="LOCGame_Sizes_Calculator_DialogMessageCalculatingSizes">Calculating sizes…</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_DialogMessageDone">Done</sys:String>
-
-    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetDirSize">Games Size Calculator: Error while getting directory size in {0} of game {1}. {2}</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetRomFileSize">Games Size Calculator: Error while getting rom file size in {0} of game {1}. {2}</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetOnlineSize">Games Size Calculator: Error while getting estimated install size online from {0} for the game {1}. {2}</sys:String>
 </ResourceDictionary>
