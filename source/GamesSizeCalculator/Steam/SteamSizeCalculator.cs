@@ -75,9 +75,12 @@ namespace GamesSizeCalculator.SteamSizeCalculation
         private void RemoveRegionalDepots(ref List<DepotInfo> allDepots)
         {
             var parsedDepots = allDepots.Select(ParseDepotName).ToList();
-            var blacklistedDepots = parsedDepots.Where(d => Settings.DepotRegionWordsBlacklist.Contains(d.RegionWord, StringComparer.InvariantCultureIgnoreCase)).ToList();
+            var blacklistedDepots = parsedDepots.Where(d => Settings.DepotRegionWordsBlacklist.Contains(d.RegionWord, StringComparer.InvariantCultureIgnoreCase)).OrderBy(d => d.Depot.FileSize).ToList();
             foreach (var d in blacklistedDepots)
             {
+                if (allDepots.Count(x => !x.IsDLC) == 1 && !d.Depot.IsDLC)
+                    break;
+
                 logger.Trace($"Removing depot {d.BaseName} due to blacklisted region word: {d.RegionWord}");
                 parsedDepots.Remove(d);
                 allDepots.Remove(d.Depot);
@@ -88,10 +91,8 @@ namespace GamesSizeCalculator.SteamSizeCalculation
             {
                 var key = group.Key;
                 var orderedDepots = group.OrderBy(d => d.Depot.Optional).ThenBy(d => d.RegionWord == null ? -2 : Settings.DepotRegionWords.IndexOf(d.RegionWord)).ToList();
-                if (orderedDepots.Count == 1)
-                {
+                if (orderedDepots.Count == 1 || string.IsNullOrWhiteSpace(key))
                     continue;
-                }
 
                 StringBuilder logStringBuilder = new StringBuilder($"Depot group {key}, {orderedDepots.Count} depots: ");
                 logStringBuilder.AppendLine();
@@ -131,10 +132,22 @@ namespace GamesSizeCalculator.SteamSizeCalculation
             }
 
             var words = str.Split(new[] { ' ', '_', '-' }, StringSplitOptions.RemoveEmptyEntries);
+            if (words.Length == 0)
+            {
+                regionalWord = string.Empty;
+                return string.Empty;
+            }
+
             var wordsStack = new Stack<string>(words);
             var lastWord = wordsStack.Pop();
             if (new[] { "content", "depot" }.Contains(lastWord, StringComparer.InvariantCultureIgnoreCase))
             {
+                if (wordsStack.Count == 0)
+                {
+                    regionalWord = string.Empty;
+                    return string.Empty;
+                }
+
                 lastWord = wordsStack.Pop();
             }
 
