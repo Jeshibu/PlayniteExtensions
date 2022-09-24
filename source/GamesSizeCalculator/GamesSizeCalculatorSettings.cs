@@ -62,7 +62,10 @@ namespace GamesSizeCalculator
             "jp",
             "japanese",
             "fr",
-            "french"
+            "french",
+            "tr/mena",
+            "sea",
+            "tw"
         };
 
         [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
