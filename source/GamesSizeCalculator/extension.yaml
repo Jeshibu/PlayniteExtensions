@@ -1,9 +1,9 @@
 Id: GamesSizeCalculator_97cc59db-3f80-4852-8bfc-a80304f9efe9
 Name: Games Size Calculator
-Author: darklinkpower & Jeshibu
-Version: 1.27.1
+Author: Jeshibu
+Version: 1.28
 Module: GamesSizeCalculator.dll
-Type: GenericPlugin
+Type: MetadataProvider
 Icon: icon.png
 Links:
     - Name: GitHub

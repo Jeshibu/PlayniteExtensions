@@ -187,3 +187,13 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/gamessizecalculator1.27.1/GamesSizeCalculator_1_27_1.pext
     Changelog:
     - Fixed long path handling regression
+  - Version: 1.28
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2022-09-24
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/gamessizecalculator1.28/GamesSizeCalculator_1_28.pext
+    Changelog:
+    - ⚠⚠⚠ATTENTION⚠⚠⚠ - This is now a Metadata Source type plugin! This means it won't be found under the "Generic" headers in the Add-ons window anymore.
+    - ⚠⚠⚠ATTENTION⚠⚠⚠ - Removed all right mouse menu options, use the metadata fetching process now (ctrl+D, or the button at the bottom left of the game edit window)
+    - Removed all local install size calculation (handled by Playnite itself now)
+    - Switched from Version field to Install Size field (the values won't carry over, you will have to re-scan)
+    - Improved Steam install size calculation in some circumstances
