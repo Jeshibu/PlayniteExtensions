@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamesSizeCalculator", "Game
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamesSizeCalculator.Tests", "GamesSizeCalculator.Tests\GamesSizeCalculator.Tests.csproj", "{38E86445-58F1-493A-AD0E-A529B33EC396}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViveportLibrary", "ViveportLibrary\ViveportLibrary.csproj", "{F2627B24-E712-4108-BE62-646374C1BC42}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{0fc7f312-402b-4466-9e05-721ce2638268}*SharedItemsImports = 4
