@@ -1,0 +1,10 @@
+AddonId: RawgLibrary
+Packages:
+  - Version: 0.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-10-01
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/rawg0.1/RawgLibrary_0_1.pext
+    Changelog:
+     - Initial release
+     - Library import
+     - Collections import
