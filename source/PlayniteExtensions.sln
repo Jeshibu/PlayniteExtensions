@@ -41,18 +41,33 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamesSizeCalculator.Tests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViveportLibrary", "ViveportLibrary\ViveportLibrary.csproj", "{F2627B24-E712-4108-BE62-646374C1BC42}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RawgLibrary", "RawgLibrary\RawgLibrary.csproj", "{861BDD63-6F90-4EA0-A14F-E21248729B46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RawgMetadata", "RawgMetadata\RawgMetadata.csproj", "{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Rawg.Common", "Rawg.Common\Rawg.Common.shproj", "{298ABB0D-9B79-4BFD-9CDD-AE26E2672A5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RawgMetadata.Tests", "RawgMetadata.Tests\RawgMetadata.Tests.csproj", "{CA48E071-851A-4309-8E61-200F2B4B4782}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{0fc7f312-402b-4466-9e05-721ce2638268}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{1dc1dc66-f223-45c4-b86b-223114a630f8}*SharedItemsImports = 4
+		Rawg.Common\Rawg.Common.projitems*{298abb0d-9b79-4bfd-9cdd-ae26e2672a5f}*SharedItemsImports = 13
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{4fdf1e89-5bc3-4c72-8fda-0d580e7a5d5f}*SharedItemsImports = 4
 		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{55b6d58f-97e4-4364-bb36-d1b3f47c41a4}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{646571a9-6445-4f20-9ead-4f6b7e1073c5}*SharedItemsImports = 13
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{6cb8c312-70cc-4a45-acbd-9974ea8611f8}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{861bdd63-6f90-4ea0-a14f-e21248729b46}*SharedItemsImports = 4
+		Rawg.Common\Rawg.Common.projitems*{861bdd63-6f90-4ea0-a14f-e21248729b46}*SharedItemsImports = 4
 		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{956848b6-6b29-4810-8802-3a8bc01c855f}*SharedItemsImports = 13
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{a54423d1-8e7a-4339-b0d5-24e7cefe469b}*SharedItemsImports = 4
+		Rawg.Common\Rawg.Common.projitems*{a54423d1-8e7a-4339-b0d5-24e7cefe469b}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{a971e332-d479-48a2-9238-0659c64f30f5}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{afa8de86-101b-4449-a237-2030d7f74ce2}*SharedItemsImports = 4
+		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{ca48e071-851a-4309-8e61-200f2b4b4782}*SharedItemsImports = 4
 		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{d539c1ad-040e-4da2-b2be-c2ccc4f147f8}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{f2627b24-e712-4108-be62-646374c1bc42}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +138,22 @@ Global
 		{38E86445-58F1-493A-AD0E-A529B33EC396}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38E86445-58F1-493A-AD0E-A529B33EC396}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38E86445-58F1-493A-AD0E-A529B33EC396}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2627B24-E712-4108-BE62-646374C1BC42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2627B24-E712-4108-BE62-646374C1BC42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2627B24-E712-4108-BE62-646374C1BC42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2627B24-E712-4108-BE62-646374C1BC42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{861BDD63-6F90-4EA0-A14F-E21248729B46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{861BDD63-6F90-4EA0-A14F-E21248729B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{861BDD63-6F90-4EA0-A14F-E21248729B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{861BDD63-6F90-4EA0-A14F-E21248729B46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA48E071-851A-4309-8E61-200F2B4B4782}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA48E071-851A-4309-8E61-200F2B4B4782}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA48E071-851A-4309-8E61-200F2B4B4782}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA48E071-851A-4309-8E61-200F2B4B4782}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
