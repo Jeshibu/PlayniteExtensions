@@ -1,0 +1,110 @@
+{
+	"settings": {
+		"autostart": false,
+		"check_for_updates": false,
+		"notifications": {
+			"enabled": true
+		},
+		"gameLibraryPath": "C:\\Program Files\\Legacy Games",
+		"gameDownloadPath": "C:\\Users\\USERNAME\\AppData\\Local\\Temp",
+		"rememberme": true
+	},
+	"siteData": {
+		"storeCategories": {
+			"promo_games": [
+				3647,
+				208486,
+				44394,
+				58775
+			],
+			"genres": {
+				"Hidden Object": 21,
+				"Match 3": 22,
+				"Time Management": 23,
+				"Card and Tile": 55,
+				"Puzzle": 137,
+				"Adventure": 138,
+				"Simulation": 165
+			},
+			"packs": {
+				"3 Games": 87,
+				"5 Games": 81,
+				"10 Games": 80,
+				"15 Games": 143
+			},
+			"menuCategory": {
+				"category_id": 100,
+				"menu_label": "NEW RELEASES",
+				"header_label": "NEW RELEASES",
+				"description": [
+					"Great new game packs every week, only at Legacy Games!"
+				]
+			}
+		},
+		"newReleases": [
+			{
+				"product_id": 1317096,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Ancient-Aliens.jpg"
+			},
+			{
+				"product_id": 1772601,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Medieval-Myths-2.jpg"
+			},
+			{
+				"product_id": 1575996,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Detective-Stories-2.jpg"
+			},
+			{
+				"product_id": 61128,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Best-of-Moonlight-Mysteries.jpg"
+			}
+		],
+		"notificationsData": [
+			{
+				"title": "NEW RELEASE! Ancient Aliens: The Game - 2 Game Pack out now!",
+				"message": "Plus, save up to 30% on Time Champs - 5 Game Pack! Deal ends 10/03."
+			}
+		],
+		"installerSlides": [
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Ancient-Aliens_Out-Now.jpg"
+			},
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Indie-Games.jpg"
+			},
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Catalog.jpg"
+			},
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_PBB.jpg"
+			}
+		],
+		"customersReviews": [],
+		"giveawayCatalog": []
+	},
+	"user": {
+		"token": "Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		"profile": {
+			"id": 0,
+			"date_created_gmt": "2022-01-01T00:00:00",
+			"date_modified_gmt": "2022-01-01T00:00:00",
+			"email": "xxxxxxx@xxxxxxxx.xxx",
+			"first_name": "xxxxxxxxxxxxxxxx",
+			"last_name": "xxxxxxxxxxxxxx",
+			"username": "xxxxxxxxxxxxxxx"
+		},
+		"isWpUser": true,
+		"giveawayDownloads": [
+			{
+				"product_id": "59241",
+				"game_id": "db01c49e-dc08-4cf2-8dda-bc24b633691d",
+				"order_id": "123"
+			},
+			{
+				"product_id": "3647",
+				"game_id": "265405f6-2a7b-4852-a831-081d8d808b92",
+				"order_id": "129"
+			}
+		]
+	}
+}

@@ -1,0 +1,208 @@
+{
+	"settings": {
+		"autostart": false,
+		"check_for_updates": false,
+		"notifications": {
+			"enabled": true
+		},
+		"gameLibraryPath": "C:\\Program Files\\Legacy Games",
+		"gameDownloadPath": "C:\\Users\\USERNAME\\AppData\\Local\\Temp",
+		"rememberme": true
+	},
+	"siteData": {
+		"storeCategories": {
+			"promo_games": [
+				3647,
+				208486,
+				44394,
+				58775
+			],
+			"genres": {
+				"Hidden Object": 21,
+				"Match 3": 22,
+				"Time Management": 23,
+				"Card and Tile": 55,
+				"Puzzle": 137,
+				"Adventure": 138,
+				"Simulation": 165
+			},
+			"packs": {
+				"3 Games": 87,
+				"5 Games": 81,
+				"10 Games": 80,
+				"15 Games": 143
+			},
+			"menuCategory": {
+				"category_id": 100,
+				"menu_label": "NEW RELEASES",
+				"header_label": "NEW RELEASES",
+				"description": [
+					"Great new game packs every week, only at Legacy Games!"
+				]
+			}
+		},
+		"newReleases": [
+			{
+				"product_id": 1317096,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Ancient-Aliens.jpg"
+			},
+			{
+				"product_id": 1772601,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Medieval-Myths-2.jpg"
+			},
+			{
+				"product_id": 1575996,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Detective-Stories-2.jpg"
+			},
+			{
+				"product_id": 61128,
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Best-of-Moonlight-Mysteries.jpg"
+			}
+		],
+		"catalog": [
+			{
+				"id": 99840,
+				"name": "Bonus Game - Rubek",
+				"slug": "bonus-game-rubek",
+				"permalink": "https://legacygames.com/product/bonus-game-rubek/",
+				"date_created": "2022-04-14T03:43:02",
+				"date_created_gmt": "2022-04-14T10:43:02",
+				"date_modified": "2022-08-29T09:00:20",
+				"date_modified_gmt": "2022-08-29T16:00:20",
+				"type": "simple",
+				"status": "private",
+				"featured": false,
+				"catalog_visibility": "hidden",
+				"description": "<p>Roll a cube to pick up and match correct colors on the floor!</p>\n",
+				"short_description": "",
+				"sku": "",
+				"price": "0",
+				"regular_price": "0",
+				"sale_price": "",
+				"date_on_sale_from": null,
+				"date_on_sale_from_gmt": null,
+				"date_on_sale_to": null,
+				"date_on_sale_to_gmt": null,
+				"on_sale": false,
+				"purchasable": true,
+				"total_sales": 1669,
+				"virtual": true,
+				"downloadable": true,
+				"download_limit": -1,
+				"download_expiry": -1,
+				"external_url": "",
+				"button_text": "",
+				"tax_status": "none",
+				"tax_class": "zero-rate",
+				"manage_stock": false,
+				"stock_quantity": null,
+				"backorders": "no",
+				"backorders_allowed": false,
+				"backordered": false,
+				"low_stock_amount": null,
+				"sold_individually": true,
+				"weight": "",
+				"dimensions": {
+					"length": "",
+					"width": "",
+					"height": ""
+				},
+				"shipping_required": false,
+				"shipping_taxable": false,
+				"shipping_class": "",
+				"shipping_class_id": 0,
+				"reviews_allowed": true,
+				"average_rating": "0.00",
+				"rating_count": 0,
+				"upsell_ids": [],
+				"cross_sell_ids": [],
+				"parent_id": 0,
+				"purchase_note": "",
+				"categories": [
+					{
+						"id": 162,
+						"name": "Giveaway",
+						"slug": "giveaway"
+					}
+				],
+				"tags": [],
+				"images": [
+					{
+						"id": 58774,
+						"date_created": "2022-03-05T09:09:00",
+						"date_created_gmt": "2022-03-06T01:09:00",
+						"date_modified": "2022-04-21T07:10:12",
+						"date_modified_gmt": "2022-04-21T21:10:12",
+						"src": "https://legacygames.com/wp-content/uploads/Legacy-Games_Rubek-1.jpg",
+						"name": "Legacy Games_Rubek",
+						"alt": ""
+					}
+				],
+				"attributes": [],
+				"default_attributes": [],
+				"variations": [],
+				"grouped_products": [],
+				"menu_order": 0,
+				"related_ids": [],
+				"meta_data": [],
+
+				"stock_status": "instock",
+				"has_options": false,
+				"_links": {
+					"self": [
+						{
+							"href": "https://legacygames.com/wp-json/wc/v3/products/99840"
+						}
+					],
+					"collection": [
+						{
+							"href": "https://legacygames.com/wp-json/wc/v3/products"
+						}
+					]
+				}
+			}
+		],
+		"notificationsData": [
+			{
+				"title": "NEW RELEASE! Ancient Aliens: The Game - 2 Game Pack out now!",
+				"message": "Plus, save up to 30% on Time Champs - 5 Game Pack! Deal ends 10/03."
+			}
+		],
+		"installerSlides": [
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Ancient-Aliens_Out-Now.jpg"
+			},
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Indie-Games.jpg"
+			},
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_Catalog.jpg"
+			},
+			{
+				"image_url": "https://legacygames.com/wp-content/uploads/LGL_PBB.jpg"
+			}
+		],
+		"customersReviews": [],
+		"giveawayCatalog": []
+	},
+	"user": {
+		"token": "REDACTED",
+		"profile": {
+			"id": 0,
+			"date_created_gmt": "REDACTED",
+			"date_modified_gmt": "REDACTED",
+			"email": "REDACTED",
+			"first_name": "REDACTED",
+			"last_name": "REDACTED",
+			"username": "REDACTED"
+		},
+		"isWpUser": true,
+		"giveawayDownloads": [
+			{
+				"product_id": "99840",
+				"game_id": "uhhhh none?",
+				"order_id": "123"
+			}
+		]
+	}
+}

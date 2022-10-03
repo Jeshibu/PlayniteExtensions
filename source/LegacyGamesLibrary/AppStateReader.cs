@@ -48,11 +48,13 @@ namespace LegacyGamesLibrary
 
         private class AppStateUser
         {
+            public List<AppStateUserDownloadLicense> GiveawayDownloads;
             public AppStateUserProfile Profile;
         }
 
         private class AppStateUserProfile
         {
+            [Obsolete("No longer exists as of Legacy Games app version 1.6.4")]
             public List<AppStateUserDownloadLicense> Downloads;
         }
 
@@ -73,7 +75,8 @@ namespace LegacyGamesLibrary
             var fileContents = File.ReadAllText(AppStatePath);
             var appState = JsonConvert.DeserializeObject<AppStateRoot>(fileContents);
 
-            var downloads = appState?.User?.Profile?.Downloads;
+            var user = appState?.User;
+            var downloads = user?.GiveawayDownloads ?? user?.Profile?.Downloads;
             var catalog = appState?.SiteData?.Catalog;
 
             if (downloads == null || catalog == null)
