@@ -106,7 +106,7 @@ namespace LegacyGamesLibrary.Tests
         {
             AppStateReader reader = new AppStateReader("./app-state-giveaway-only.json");
             var games = reader.GetUserOwnedGames().ToList();
-            Assert.Equal(1, games.Count);
+            Assert.Single(games);
         }
     }
 }

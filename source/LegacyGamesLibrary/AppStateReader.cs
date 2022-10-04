@@ -97,8 +97,11 @@ namespace LegacyGamesLibrary
             foreach (int ownedBundleId in ownedBundleIds)
             {
                 var bundle = catalog.FirstOrDefault(b => b.Id == ownedBundleId);
-                if (bundle == null)
+                if (bundle == null || bundle.Games == null || bundle.Games.Count == 0)
+                {
+                    logger.Info($"No catalog bundle found with games for {ownedBundleId}. Catalog entry: {bundle?.Name}");
                     bundle = appState?.SiteData?.GiveawayCatalog?.FirstOrDefault(b => b.Id == ownedBundleId);
+                }
 
                 if (bundle == null)
                     logger.Warn($"Could not find a bundle with ID {ownedBundleId}");
