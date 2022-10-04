@@ -53,6 +53,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{0fc7f312-402b-4466-9e05-721ce2638268}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{1dc1dc66-f223-45c4-b86b-223114a630f8}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{2351b5c1-6e28-4b79-a1d9-90fda53b5417}*SharedItemsImports = 4
 		Rawg.Common\Rawg.Common.projitems*{298abb0d-9b79-4bfd-9cdd-ae26e2672a5f}*SharedItemsImports = 13
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{4fdf1e89-5bc3-4c72-8fda-0d580e7a5d5f}*SharedItemsImports = 4
 		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{55b6d58f-97e4-4364-bb36-d1b3f47c41a4}*SharedItemsImports = 4

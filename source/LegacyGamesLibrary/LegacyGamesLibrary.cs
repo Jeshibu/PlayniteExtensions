@@ -15,7 +15,7 @@ namespace LegacyGamesLibrary
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
-        //private LegacyGamesLibrarySettingsViewModel settings { get; set; }
+        private LegacyGamesLibrarySettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("34c3178f-6e1d-4e27-8885-99d4f031b168");
 
@@ -50,10 +50,10 @@ namespace LegacyGamesLibrary
 
         public LegacyGamesLibrary(IPlayniteAPI api) : base(api)
         {
-            //settings = new LegacyGamesLibrarySettingsViewModel(this);
+            settings = new LegacyGamesLibrarySettingsViewModel(this);
             Properties = new LibraryPluginProperties
             {
-                HasSettings = false,
+                HasSettings = true,
                 CanShutdownClient = false,
                 HasCustomizedGameImport = false,
             };
@@ -63,7 +63,7 @@ namespace LegacyGamesLibrary
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
-            return MetadataGatherer.GetGames(args.CancelToken);
+            return MetadataGatherer.GetGames(args.CancelToken, settings.Settings.UseCovers);
         }
 
         public override LibraryMetadataProvider GetMetadataDownloader()
@@ -71,15 +71,15 @@ namespace LegacyGamesLibrary
             return MetadataGatherer;
         }
 
-        //public override ISettings GetSettings(bool firstRunSettings)
-        //{
-        //    return settings;
-        //}
+        public override ISettings GetSettings(bool firstRunSettings)
+        {
+            return settings;
+        }
 
-        //public override UserControl GetSettingsView(bool firstRunSettings)
-        //{
-        //    return new LegacyGamesLibrarySettingsView();
-        //}
+        public override UserControl GetSettingsView(bool firstRunSettings)
+        {
+            return new LegacyGamesLibrarySettingsView();
+        }
 
         public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)
         {

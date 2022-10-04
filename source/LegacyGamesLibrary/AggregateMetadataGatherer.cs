@@ -26,7 +26,7 @@ namespace LegacyGamesLibrary
         private IPlayniteAPI PlayniteAPI { get; }
         private ILogger logger = LogManager.GetLogger();
 
-        public IEnumerable<GameMetadata> GetGames(CancellationToken cancellationToken)
+        public IEnumerable<GameMetadata> GetGames(CancellationToken cancellationToken, bool userCovers = true)
         {
             try
             {
@@ -58,7 +58,6 @@ namespace LegacyGamesLibrary
                     {
                         GameId = game.InstallerUUID.ToString(),
                         Name = game.GameName,
-                        CoverImage = new MetadataFile(game.GameCoverArt),
                         Description = game.GameDescription,
                         InstallSize = ParseInstallSizeString(game.GameInstalledSize),
                         IsInstalled = installation != null,
@@ -68,6 +67,9 @@ namespace LegacyGamesLibrary
                         Features = new HashSet<MetadataProperty> { new MetadataNameProperty("Single-player") },
                         Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
                     };
+
+                    if (userCovers)
+                        metadata.CoverImage = new MetadataFile(game.GameCoverArt);
 
                     if (installation != null)
                     {

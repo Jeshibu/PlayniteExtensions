@@ -10,39 +10,15 @@ namespace LegacyGamesLibrary
 {
     public class LegacyGamesLibrarySettings : ObservableObject
     {
-        private string option1 = string.Empty;
-        private bool option2 = false;
-        private bool optionThatWontBeSaved = false;
+        private bool useCovers = false;
 
-        public string Option1 { get => option1; set => SetValue(ref option1, value); }
-        public bool Option2 { get => option2; set => SetValue(ref option2, value); }
-        // Playnite serializes settings object to a JSON object and saves it as text file.
-        // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
-        [DontSerialize]
-        public bool OptionThatWontBeSaved { get => optionThatWontBeSaved; set => SetValue(ref optionThatWontBeSaved, value); }
+        public bool UseCovers { get => useCovers; set => SetValue(ref useCovers, value); }
     }
 
-    public class LegacyGamesLibrarySettingsViewModel : ObservableObject, ISettings
+    public class LegacyGamesLibrarySettingsViewModel : PluginSettingsViewModel<LegacyGamesLibrarySettings, LegacyGamesLibrary>
     {
-        private readonly LegacyGamesLibrary plugin;
-        private LegacyGamesLibrarySettings editingClone { get; set; }
-
-        private LegacyGamesLibrarySettings settings;
-        public LegacyGamesLibrarySettings Settings
+        public LegacyGamesLibrarySettingsViewModel(LegacyGamesLibrary plugin) : base(plugin, plugin.PlayniteApi)
         {
-            get => settings;
-            set
-            {
-                settings = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public LegacyGamesLibrarySettingsViewModel(LegacyGamesLibrary plugin)
-        {
-            // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
-            this.plugin = plugin;
-
             // Load saved settings.
             var savedSettings = plugin.LoadPluginSettings<LegacyGamesLibrarySettings>();
 
@@ -55,35 +31,6 @@ namespace LegacyGamesLibrary
             {
                 Settings = new LegacyGamesLibrarySettings();
             }
-        }
-
-        public void BeginEdit()
-        {
-            // Code executed when settings view is opened and user starts editing values.
-            editingClone = Serialization.GetClone(Settings);
-        }
-
-        public void CancelEdit()
-        {
-            // Code executed when user decides to cancel any changes made since BeginEdit was called.
-            // This method should revert any changes made to Option1 and Option2.
-            Settings = editingClone;
-        }
-
-        public void EndEdit()
-        {
-            // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and Option2.
-            plugin.SavePluginSettings(Settings);
-        }
-
-        public bool VerifySettings(out List<string> errors)
-        {
-            // Code execute when user decides to confirm changes made since BeginEdit was called.
-            // Executed before EndEdit is called and EndEdit is not called if false is returned.
-            // List of errors is presented to user if verification fails.
-            errors = new List<string>();
-            return true;
         }
     }
 }

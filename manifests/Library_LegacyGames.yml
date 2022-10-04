@@ -25,3 +25,11 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.2.1/LegacyGamesLibrary_0_2_1.pext
     Changelog:
      - Fixed exception when user owns bundles that have no games field
+  - Version: 0.3
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2022-10-04
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.3/LegacyGamesLibrary_0_3.pext
+    Changelog:
+     - Updated to the new Legacy Games client (1.6.4) file structure. The old file structure can also still be read.
+     - Added install size metadata
+     - Added option to not supply Legacy Games covers (square) before metadata collection
