@@ -100,5 +100,13 @@ namespace LegacyGamesLibrary.Tests
             var games = reader.GetUserOwnedGames();
             Assert.Empty(games);
         }
+
+        [Fact]
+        public void GetUserOwnedGamesReturnsGamesThatAreOnlyInTheGiveawaySection()
+        {
+            AppStateReader reader = new AppStateReader("./app-state-giveaway-only.json");
+            var games = reader.GetUserOwnedGames().ToList();
+            Assert.Equal(1, games.Count);
+        }
     }
 }

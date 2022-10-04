@@ -1,0 +1,223 @@
+{
+	"settings": {
+		"autostart": false,
+		"check_for_updates": false,
+		"notifications": {
+			"enabled": true
+		},
+		"gameLibraryPath": "C:\\Program Files\\Legacy Games",
+		"gameDownloadPath": "C:\\Users\\USERNAME\\AppData\\Local\\Temp",
+		"rememberme": true
+	},
+	"siteData": {
+		"storeCategories": {},
+		"newReleases": [],
+		"catalog": [
+            {
+				"id": 148640,
+				"name": "Glass Masquerade - 3 Pack",
+				"slug": "glass-masquerade-3-pack",
+				"permalink": "https://legacygames.com/product/glass-masquerade-3-pack/",
+				"date_created": "2022-04-21T10:33:36",
+				"date_created_gmt": "2022-04-21T17:33:36",
+				"date_modified": "2022-09-06T11:14:13",
+				"date_modified_gmt": "2022-09-06T18:14:13",
+				"type": "simple",
+				"status": "publish",
+				"featured": false,
+				"catalog_visibility": "visible",
+				"description": "<h3 class=\"long-description-h3-class\" style=\"font-weight: bold; font-size: 20px;\">Relax as you complete stained glass puzzles with distinct visual styles!</h3>\n<h3 class=\"long-description-h3-class\" style=\"font-weight: bold; font-size: 20px;\">Meet two small yet incredible game development teams, Onyx Lute and Xigma Games, with their puzzle games: the Glass Masquerade series and Rubek!</h3>\n<h3 class=\"long-description-h3-class\" style=\"font-weight: bold; font-size: 20px;\">You’ve never seen a puzzle game series quite like Glass Masquerade before! Immerse yourself in the majesty of the stained glass mosaics and clock faces. The first game lets you enjoy puzzling together exquisite art inspired from countries all around the world, and the sequel, Glass Masquerade 2: Illusions, dives into stunning surrealism and fantasy. Both games are notorious for the charm, imagination, and soothing gameplay that leaves puzzle players of all kinds happy and relaxed.</h3>\n<h3 class=\"long-description-h3-class\" style=\"font-weight: bold; font-size: 20px;\">From expert puzzle game developer, Xigma Games, comes an award-winning puzzle game: Rubek. Use your wits to solve puzzles in this original, innovative game. Move a block around the map, pick up colors, and land just perfectly on target. With simple and snappy mechanics alongside increasingly difficult puzzles, you’ll soon learn why Rubek won Mumbai’s Best Mobile and Tablet Puzzle award of 2017.</h3>\n<h3 class=\"long-description-h3-class\" style=\"font-weight: bold; font-size: 20px;\">Discover these hidden gems of indie puzzle games, and lose yourself in the relaxing fun of the Glass Masquerade 3 Pack!</h3>\n<h3 class=\"long-description-h3-class\" style=\"font-weight: bold; font-size: 20px;\">Features</h3>\n<ul>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\">Complete 50+ beautiful and intricately designed stained glass jigsaw puzzles in the Glass Masquerade series</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\">Journey around the world – each glass puzzle is inspired by a different country</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\">44 extra puzzles of free DLC included for the Glass Masquerade games to keep the fun going</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\">Relax to the incredible, soothing soundtracks by composer Nikita Sevalnev</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\">Wrack your brain around colors and pathing in the delightfully mind-bending Rubek</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\">Enjoy endless hours of calming gameplay with no time limits</li>\n</ul>\n<h3 class=\"long-description-h3-class\" style=\"font-weight: bold; font-size: 20px;\">Games Included</h3>\n<ul>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>Glass Masquerade: Origins: </strong>Take part in piecing together beautiful stained glass art inspired by cultures from around the world!</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>Glass Masquerade 2: Illusions:</strong> Welcome back to the Glass Masquerade! In this sequel, combine hidden glass pieces to free yourself from a tangled dream.</li>\n<li class=\"long-description-h3-class\" style=\"font-size: 20px;\"><strong>Rubek:</strong> Roll and match colors in this mind bending puzzle.</li>\n</ul>\n",
+				"short_description": "<p><span data-sheets-value=\"{&quot;1&quot;:2,&quot;2&quot;:&quot;Relax as you complete stained glass puzzles with distinct visual styles!&quot;}\" data-sheets-userformat=\"{&quot;2&quot;:13187,&quot;3&quot;:{&quot;1&quot;:0},&quot;4&quot;:{&quot;1&quot;:2,&quot;2&quot;:14281427},&quot;10&quot;:0,&quot;11&quot;:3,&quot;12&quot;:0,&quot;15&quot;:&quot;Arial&quot;,&quot;16&quot;:9}\">Relax as you complete stained glass puzzles with distinct visual styles!</span></p>\n",
+				"sku": "7-3411304539-8",
+				"price": "9.99",
+				"regular_price": "9.99",
+				"sale_price": "",
+				"date_on_sale_from": null,
+				"date_on_sale_from_gmt": null,
+				"date_on_sale_to": null,
+				"date_on_sale_to_gmt": null,
+				"on_sale": false,
+				"purchasable": true,
+				"total_sales": 39,
+				"virtual": true,
+				"downloadable": true,
+				"download_limit": 100,
+				"download_expiry": 0,
+				"external_url": "",
+				"button_text": "",
+				"tax_status": "taxable",
+				"tax_class": "",
+				"manage_stock": false,
+				"stock_quantity": null,
+				"backorders": "no",
+				"backorders_allowed": false,
+				"backordered": false,
+				"low_stock_amount": null,
+				"sold_individually": true,
+				"weight": "",
+				"dimensions": {
+					"length": "",
+					"width": "",
+					"height": ""
+				},
+				"shipping_required": false,
+				"shipping_taxable": false,
+				"shipping_class": "",
+				"shipping_class_id": 0,
+				"reviews_allowed": true,
+				"average_rating": "3.50",
+				"rating_count": 2,
+				"upsell_ids": [],
+				"cross_sell_ids": [
+					22290,
+					22049
+				],
+				"parent_id": 0,
+				"purchase_note": "",
+				"categories": [
+					{
+						"id": 87,
+						"name": "3 Game Packs",
+						"slug": "3-game-pack"
+					},
+					{
+						"id": 104,
+						"name": "Indie Spotlight",
+						"slug": "indie-spotlight"
+					},
+					{
+						"id": 137,
+						"name": "Puzzle",
+						"slug": "puzzle-pc-games"
+					}
+				],
+				"tags": [],
+				"images": [
+					{
+						"id": 151225,
+						"date_created": "2022-04-21T10:39:44",
+						"date_created_gmt": "2022-04-22T00:39:44",
+						"date_modified": "2022-04-21T10:39:59",
+						"date_modified_gmt": "2022-04-22T00:39:59",
+						"src": "https://legacygames.com/wp-content/uploads/3pk_Glass-Masquerade_Box.png",
+						"name": "3pk_Glass Masquerade_Box",
+						"alt": "https://legacygames.com/wp-content/uploads/3pk_Glass-Masquerade.jpg"
+					}
+				],
+				"attributes": [
+					{
+						"id": 0,
+						"name": "Blurb",
+						"position": 0,
+						"visible": false,
+						"variation": false,
+						"options": [
+							"Don’t just experience the stories—shape them! See the world as never before in these unique story games, through the eyes and ears of your fellow travelers."
+						]
+					}
+				],
+				"default_attributes": [],
+				"variations": [],
+				"grouped_products": [],
+				"menu_order": 0,
+				"related_ids": [
+					31250,
+					33765,
+					35330,
+					57507,
+					6847
+				],
+				"meta_data": [],
+				"stock_status": "instock",
+				"has_options": false,
+				"_links": {
+					"self": [
+						{
+							"href": "https://legacygames.com/wp-json/wc/v3/products/148640"
+						}
+					],
+					"collection": [
+						{
+							"href": "https://legacygames.com/wp-json/wc/v3/products"
+						}
+					]
+				},
+				"product_id": 148640,
+				"product_name": "Glass Masquerade - 3 Pack",
+				"games": [
+					{
+						"game_id": "478a26e0-8c21-484b-ac73-09e1db50bd0e",
+						"game_name": "Glass Masquerade: Origins",
+						"game_description": "Take part in piecing together beautiful stained glass art inspired by cultures from around the world!",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/LegacyGames_GlassMasqueradeOrigins.jpg",
+						"game_installed_size": "277.4 MB",
+						"installer_uuid": "76eb33b8-790a-4813-9cd5-e1097469bcb7"
+					},
+					{
+						"game_id": "561656e4-387f-4386-9f98-9f284879f468",
+						"game_name": "Glass Masquerade 2: Illusions",
+						"game_description": "Welcome back to the Glass Masquerade! In this sequel, combine hidden glass pieces to free yourself from a tangled dream.",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/LegacyGames_GlassMasquerade2Illusions.jpg",
+						"game_installed_size": "205.5 MB",
+						"installer_uuid": "d615faa4-8e30-4a71-a72c-2a5f13251fe5"
+					},
+					{
+						"game_id": "47f86376-a092-4a41-a0dc-5d5eb334f099",
+						"game_name": "Rubek",
+						"game_description": "Roll and match colors in this mind bending puzzle.",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/Legacy-Games_Rubek-1.jpg",
+						"game_installed_size": "21 MB",
+						"installer_uuid": "e66ea487-c3c7-4416-b942-8e606d0aca80"
+					}
+				],
+				"product_gallery": [
+					"https://legacygames.com/wp-content/uploads/LegacyGames_GlassMasqueradeOrigins-1.jpg",
+					"https://legacygames.com/wp-content/uploads/LegacyGames_GlassMasquerade2Illusions-1.jpg",
+					"https://legacygames.com/wp-content/uploads/3D-Puzzles_Rubek_01.jpg"
+				]
+			}
+        ],
+		"notificationsData": [],
+		"installerSlides": [],
+		"customersReviews": [],
+		"giveawayCatalog": [
+			{
+				"id": 1765508,
+				"name": "Glass Masquerade: Origins",
+				"product_id": 1765508,
+				"games": [
+					{
+						"game_id": "ecdf160e-cd80-4362-bf9e-55b56a895350",
+						"game_name": "Glass Masquerade: Origins",
+						"game_description": "Take part in piecing together beautiful stained glass art inspired by cultures from around the world!",
+						"game_coverart": "https://legacygames.com/wp-content/uploads/LegacyGames_GlassMasqueradeOrigins.jpg",
+						"game_installed_size": "277.4 MB",
+						"installer_uuid": "76eb33b8-790a-4813-9cd5-e1097469bcb7"
+					}
+				],
+				"purchasable": false,
+				"catalog_visibility": "hidden"
+			}
+		]
+	},
+	"user": {
+		"token": "Basic xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		"profile": {
+			"id": 0,
+			"date_created_gmt": "2022-01-01T00:00:00",
+			"date_modified_gmt": "2022-01-01T00:00:00",
+			"email": "xxxxxxx@xxxxxxxx.xxx",
+			"first_name": "xxxxxxxxxxxxxxxx",
+			"last_name": "xxxxxxxxxxxxxx",
+			"username": "xxxxxxxxxxxxxxx"
+		},
+		"isWpUser": true,
+		"giveawayDownloads": [
+			{
+				"product_id": "1765508",
+				"game_id": "76eb33b8-790a-4813-9cd5-e1097469bcb7",
+				"order_id": "g000000"
+			}
+		]
+	}
+}

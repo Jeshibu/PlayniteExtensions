@@ -35,6 +35,7 @@ namespace LegacyGamesLibrary
         private class AppStateSiteData
         {
             public List<AppStateBundle> Catalog;
+            public List<AppStateBundle> GiveawayCatalog;
         }
 
         private class AppStateBundle
@@ -91,7 +92,20 @@ namespace LegacyGamesLibrary
             }
 
             var ownedBundleIds = downloads.Select(d => d.ProductId).ToHashSet();
-            var ownedBundles = catalog.Where(b => ownedBundleIds.Contains(b.Id)).ToList();
+
+            var ownedBundles = new List<AppStateBundle>();
+            foreach (int ownedBundleId in ownedBundleIds)
+            {
+                var bundle = catalog.FirstOrDefault(b => b.Id == ownedBundleId);
+                if (bundle == null)
+                    bundle = appState?.SiteData?.GiveawayCatalog?.FirstOrDefault(b => b.Id == ownedBundleId);
+
+                if (bundle == null)
+                    logger.Warn($"Could not find a bundle with ID {ownedBundleId}");
+                else
+                    ownedBundles.Add(bundle);
+            }
+
             var ownedGames = ownedBundles.SelectMany(b => b.Games);
             var gamesByInstallerId = new Dictionary<Guid, AppStateGame>();
             foreach (var bundle in ownedBundles)
