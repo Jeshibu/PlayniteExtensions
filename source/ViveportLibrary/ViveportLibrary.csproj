@@ -52,7 +52,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InstalledAppsReader.cs" />
+    <Compile Include="AppDataReader.cs" />
     <Compile Include="ViveportLibraryClient.cs" />
     <Compile Include="ViveportLibrary.cs" />
     <Compile Include="ViveportLibrarySettings.cs" />

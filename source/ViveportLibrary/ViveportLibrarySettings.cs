@@ -11,8 +11,10 @@ namespace ViveportLibrary
     public class ViveportLibrarySettings : ObservableObject
     {
         private bool useCovers = false;
+        private bool importHeadsetsAsPlatforms = true;
 
         public bool UseCovers { get => useCovers; set => SetValue(ref useCovers, value); }
+        public bool ImportHeadsetsAsPlatforms { get => importHeadsetsAsPlatforms; set => SetValue(ref importHeadsetsAsPlatforms, value); }
     }
 
     public class ViveportLibrarySettingsViewModel : PluginSettingsViewModel<ViveportLibrarySettings, ViveportLibrary>

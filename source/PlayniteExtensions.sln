@@ -49,6 +49,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Rawg.Common", "Rawg.Common\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RawgMetadata.Tests", "RawgMetadata.Tests\RawgMetadata.Tests.csproj", "{CA48E071-851A-4309-8E61-200F2B4B4782}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViveportLibrary.Tests", "ViveportLibrary.Tests\ViveportLibrary.Tests.csproj", "{DD635A7D-A7C0-4454-8C00-1E05F94E492D}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{0fc7f312-402b-4466-9e05-721ce2638268}*SharedItemsImports = 4
@@ -155,6 +157,10 @@ Global
 		{CA48E071-851A-4309-8E61-200F2B4B4782}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA48E071-851A-4309-8E61-200F2B4B4782}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA48E071-851A-4309-8E61-200F2B4B4782}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD635A7D-A7C0-4454-8C00-1E05F94E492D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD635A7D-A7C0-4454-8C00-1E05F94E492D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD635A7D-A7C0-4454-8C00-1E05F94E492D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD635A7D-A7C0-4454-8C00-1E05F94E492D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
