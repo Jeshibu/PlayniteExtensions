@@ -86,5 +86,20 @@ namespace PlayniteExtensions.Common
         {
             return CompanyFormRegex.Replace(s, string.Empty);
         }
+
+        private static Regex deflateRegex = new Regex(@"[^\p{L}\p{N}]+", RegexOptions.Compiled);
+
+        /// <summary>
+        /// Remove all characters except letters and numbers. Useful to compare game titles like "S.T.A.L.K.E.R. - Call of Pripyat" and "STALKER: Call of Pripyat"
+        /// </summary>
+        /// <param name="gameName"></param>
+        /// <returns></returns>
+        public static string Deflate(this string gameName)
+        {
+            if (string.IsNullOrEmpty(gameName))
+                return null;
+
+            return deflateRegex.Replace(gameName, string.Empty);
+        }
     }
 }

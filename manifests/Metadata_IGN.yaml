@@ -1,0 +1,8 @@
+AddonId: IgnMetadata
+Packages:
+  - Version: 0.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-10-23
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ign0.1/IgnMetadata_0_1.pext
+    Changelog:
+     - Initial release
