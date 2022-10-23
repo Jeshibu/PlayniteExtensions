@@ -1,7 +1,7 @@
 ﻿Id: IgnMetadata_6024e3a9-de7e-4848-9101-7a2f818e7e47
 Name: IGN Metadata Provider
 Author: Jeshibu
-Version: 0.1
+Version: 0.2
 Module: IgnMetadata.dll
 Type: MetadataProvider
 Icon: icon.png

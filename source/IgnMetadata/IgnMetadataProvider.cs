@@ -158,7 +158,7 @@ namespace IgnMetadata
 
             var platforms = data.ObjectRegions.SelectMany(r => r.Releases).SelectMany(r => r.PlatformAttributes).Select(x => x.Name).ToHashSet();
 
-            return platforms.SelectMany(platformUtility.GetPlatforms);
+            return platforms.SelectMany(platformUtility.GetPlatforms).ToHashSet();
         }
 
         private IgnGame GetSearchResultData()

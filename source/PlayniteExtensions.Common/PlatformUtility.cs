@@ -58,35 +58,41 @@ namespace PlayniteExtensions.Common
                 if (!output.ContainsKey(nameWithoutCompany))
                     output.Add(nameWithoutCompany, new[] { platform.SpecificationId });
             }
-            output.Add("3DO", new[] { "3do" });
-            output.Add("Windows", new[] { "pc_windows" });
-            output.Add("DOS", new[] { "pc_dos" });
-            output.Add("Linux", new[] { "pc_linux" });
-            output.Add("PC", new[] { "pc_windows" });
-            output.Add("PC CD-ROM", new[] { "pc_windows" });
-            output.Add("PC DVD", new[] { "pc_windows" });
-            output.Add("PC DVD-ROM", new[] { "pc_windows" });
-            output.Add("Mac", new[] { "macintosh" });
-            output.Add("Microsoft Xbox Series X", new[] { "xbox_series" });
-            output.Add("Microsoft Xbox Series S", new[] { "xbox_series" });
-            output.Add("Xbox Series X", new[] { "xbox_series" });
-            output.Add("Xbox Series S", new[] { "xbox_series" });
-            output.Add("Microsoft Xbox Series X/S", new[] { "xbox_series" });
-            output.Add("Microsoft Xbox Series S/X", new[] { "xbox_series" });
-            output.Add("Xbox Series X/S", new[] { "xbox_series" });
-            output.Add("Xbox Series S/X", new[] { "xbox_series" });
-            output.Add("PS", new[] { "sony_playstation" });
-            output.Add("PSX", new[] { "sony_playstation" });
-            output.Add("PS1", new[] { "sony_playstation" });
-            output.Add("PS2", new[] { "sony_playstation2" });
-            output.Add("PS3", new[] { "sony_playstation3" });
-            output.Add("PS4", new[] { "sony_playstation4" });
-            output.Add("PS5", new[] { "sony_playstation5" });
-            output.Add("PSP", new[] { "sony_psp" });
-            output.Add("Vita", new[] { "sony_vita" });
-            output.Add("PS4/5", new[] { "sony_playstation4", "sony_playstation5" });
-            output.Add("Playstation 4/5", new[] { "sony_playstation4", "sony_playstation5" });
+            TryAddPlatformByName(output, "3DO", "3do");
+            TryAddPlatformByName(output, new[] { "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM" }, new[] { "pc_windows" });
+            TryAddPlatformByName(output, "DOS", "pc_dos");
+            TryAddPlatformByName(output, "Linux", "pc_linux");
+            TryAddPlatformByName(output, "Mac", "macintosh");
+            TryAddPlatformByName(output, new[] { "Microsoft Xbox Series X", "Microsoft Xbox Series S", "Xbox Series X", "Xbox Series S", "Microsoft Xbox Series X/S", "Microsoft Xbox Series S/X", "Xbox Series X/S", "Xbox Series S/X", "Xbox Series X|S", }, new[] { "xbox_series" });
+            TryAddPlatformByName(output, new[] { "PS", "PS1", "PSX" }, new[] { "sony_playstation" });
+            TryAddPlatformByName(output, "PS2", "sony_playstation2");
+            TryAddPlatformByName(output, "PS3", "sony_playstation3");
+            TryAddPlatformByName(output, "PS4", "sony_playstation4");
+            TryAddPlatformByName(output, "PS5", "sony_playstation5");
+            TryAddPlatformByName(output, "PSP", "sony_psp");
+            TryAddPlatformByName(output, "Vita", "sony_vita");
+            TryAddPlatformByName(output, "PS4/5", new[] { "sony_playstation4", "sony_playstation5" });
+            TryAddPlatformByName(output, "Playstation 4/5", new[] { "sony_playstation4", "sony_playstation5" });
             return output;
+        }
+
+        private static bool TryAddPlatformByName(Dictionary<string, string[]> dict, string platformName, params string[] platformSpecNames)
+        {
+            if (dict.ContainsKey(platformName))
+                return false;
+
+            dict.Add(platformName, platformSpecNames);
+            return true;
+        }
+
+        private static bool TryAddPlatformByName(Dictionary<string, string[]> dict, string[] platformNames, params string[] platformSpecNames)
+        {
+            bool success = true;
+            foreach (var platformName in platformNames)
+            {
+                success &= TryAddPlatformByName(dict, platformName, platformSpecNames);
+            }
+            return success;
         }
 
         public IEnumerable<MetadataProperty> GetPlatforms(string platformName)
