@@ -14,19 +14,21 @@ namespace LegacyGamesLibrary
 {
     public class AggregateMetadataGatherer : LibraryMetadataProvider
     {
-        public AggregateMetadataGatherer(ILegacyGamesRegistryReader registryReader, IAppStateReader appStateReader, IPlayniteAPI playniteAPI)
+        public AggregateMetadataGatherer(ILegacyGamesRegistryReader registryReader, IAppStateReader appStateReader, IPlayniteAPI playniteAPI, LegacyGamesLibrarySettings settings)
         {
             RegistryReader = registryReader;
             AppStateReader = appStateReader;
             PlayniteAPI = playniteAPI;
+            Settings = settings;
         }
 
         public ILegacyGamesRegistryReader RegistryReader { get; }
         public IAppStateReader AppStateReader { get; }
         private IPlayniteAPI PlayniteAPI { get; }
         private ILogger logger = LogManager.GetLogger();
+        private LegacyGamesLibrarySettings Settings { get; }
 
-        public IEnumerable<GameMetadata> GetGames(CancellationToken cancellationToken, bool userCovers = true)
+        public IEnumerable<GameMetadata> GetGames(CancellationToken cancellationToken)
         {
             try
             {
@@ -68,8 +70,11 @@ namespace LegacyGamesLibrary
                         Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
                     };
 
-                    if (userCovers)
+                    if (Settings.UseCovers)
                         metadata.CoverImage = new MetadataFile(game.GameCoverArt);
+
+                    if (Settings.NormalizeGameNames && metadata.Name.EndsWith(" CE"))
+                        metadata.Name = metadata.Name.Remove(metadata.Name.Length - 3) + " Collector's Edition";
 
                     if (installation != null)
                     {

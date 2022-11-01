@@ -564,60 +564,16 @@
 			"email": "xxxxxxx@xxxxxxxx.xxx",
 			"first_name": "xxxxxxxxxxxxxxxx",
 			"last_name": "xxxxxxxxxxxxxx",
-			"username": "xxxxxxxxxxxxxxx"
+			"username": "xxxxxxxxxxxxxxx",
+			"downloads": [
+				{
+					"order_id": 123456,
+					"product_id": 804
+				}
+			]
 		},
 		"isWpUser": true,
 		"giveawayDownloads": [
-            {
-                "product_id": "804",
-				"game_id": "265405f6-2a7b-4852-a831-081d8d808b92",
-                "order_id": "2"
-            },
-            {
-                "product_id": "804",
-				"game_id": "bde90b7d-9509-40f2-8727-04e5b1dc5cfc",
-                "order_id": "2"
-            },
-            {
-                "product_id": "804",
-				"game_id": "8aa5a74e-e680-4e50-8dfb-eaca6093e9f3",
-                "order_id": "2"
-            },
-            {
-                "product_id": "804",
-				"game_id": "c7714f89-f761-41e3-9f33-b47021c2313a",
-                "order_id": "2"
-            },
-            {
-                "product_id": "804",
-				"game_id": "f87ee5aa-b8d5-49cd-b06d-cbd959b09425",
-                "order_id": "2"
-            },
-            {
-                "product_id": "804",
-				"game_id": "1615f4c7-33ad-4ed5-92f3-9c93e5c9e00c",
-                "order_id": "2"
-            },
-            {
-                "product_id": "804",
-				"game_id": "a7710607-621b-4985-ad63-97d42a165737",
-                "order_id": "2"
-            },
-            {
-                "product_id": "804",
-				"game_id": "eb63e249-671c-4841-ae97-f0c551093590",
-                "order_id": "2"
-            },
-            {
-                "product_id": "804",
-				"game_id": "24cbbdcd-decb-4a0d-9dd8-1a5661858976",
-                "order_id": "2"
-            },
-            {
-                "product_id": "804",
-				"game_id": "804d643e-5ea5-410d-b940-c2cf60a1ec4f",
-                "order_id": "2"
-            },
 			{
 				"product_id": "59241",
 				"game_id": "db01c49e-dc08-4cf2-8dda-bc24b633691d",

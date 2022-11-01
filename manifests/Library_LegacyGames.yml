@@ -39,3 +39,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.3.1/LegacyGamesLibrary_0_3_1.pext
     Changelog:
      - Fixed recent giveaway games sometimes not being imported
+  - Version: 0.4
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2022-11-01
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.4/LegacyGamesLibrary_0_4.pext
+    Changelog:
+     - Fixed purchased games not importing if you had any giveaway games
+     - Normalize game titles for better metadata matching (CE -> Collector's Edition)

@@ -55,7 +55,6 @@ namespace LegacyGamesLibrary
 
         private class AppStateUserProfile
         {
-            [Obsolete("No longer exists as of Legacy Games app version 1.6.4")]
             public List<AppStateUserDownloadLicense> Downloads;
         }
 
@@ -77,10 +76,15 @@ namespace LegacyGamesLibrary
             var appState = JsonConvert.DeserializeObject<AppStateRoot>(fileContents);
 
             var user = appState?.User;
-            var downloads = user?.GiveawayDownloads ?? user?.Profile?.Downloads;
+            var downloads = new List<AppStateUserDownloadLicense>();
+            if (user?.GiveawayDownloads != null)
+                downloads.AddRange(user.GiveawayDownloads);
+            if (user?.Profile?.Downloads != null)
+                downloads.AddRange(user.Profile.Downloads);
+
             var catalog = appState?.SiteData?.Catalog;
 
-            if (downloads == null || catalog == null)
+            if (downloads.Count == 0 || catalog == null)
             {
                 if (downloads == null)
                     logger.Warn($"Missing downloads section in {AppStatePath}");

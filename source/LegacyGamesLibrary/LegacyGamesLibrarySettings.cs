@@ -10,9 +10,8 @@ namespace LegacyGamesLibrary
 {
     public class LegacyGamesLibrarySettings : ObservableObject
     {
-        private bool useCovers = false;
-
-        public bool UseCovers { get => useCovers; set => SetValue(ref useCovers, value); }
+        public bool UseCovers { get; set; } = false;
+        public bool NormalizeGameNames { get; set; } = true;
     }
 
     public class LegacyGamesLibrarySettingsViewModel : PluginSettingsViewModel<LegacyGamesLibrarySettings, LegacyGamesLibrary>
