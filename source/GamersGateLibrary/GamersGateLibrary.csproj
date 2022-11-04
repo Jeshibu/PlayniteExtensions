@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HtmlAgilityPack, Version=1.11.45.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.11.45\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.11.46.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.46\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Playnite.SDK, Version=6.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\PlayniteSDK.6.2.2\lib\net462\Playnite.SDK.dll</HintPath>
