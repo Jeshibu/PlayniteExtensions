@@ -18,10 +18,8 @@ namespace ViveportLibrary
 
         public override Guid Id { get; } = Guid.Parse("97d85dbd-ad52-4834-bf4b-f6681f1445cc");
 
-        // Change to something more appropriate
-        public override string Name => "Viveport";
+        public override string Name { get; } = "Viveport";
 
-        // Implementing Client adds ability to open it via special menu in playnite.
         public override LibraryClient Client { get; } = new ViveportLibraryClient();
 
         private IAppDataReader AppDataReader { get; }

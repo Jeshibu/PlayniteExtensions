@@ -5,10 +5,10 @@ Packages:
     ReleaseDate: 2022-10-23
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ign0.1/IgnMetadata_0_1.pext
     Changelog:
-     - Initial release
+    - Initial release
   - Version: 0.2
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-10-23
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ign0.2/IgnMetadata_0_2.pext
     Changelog:
-     - Fixed exception in platform parsing
+    - Fixed possible exception in platform parsing
