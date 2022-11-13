@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -16,6 +17,8 @@ namespace GroupeesLibrary
     public class GroupeesLibrary : LibraryPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly string iconPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "icon.png");
+        public override string LibraryIcon { get; } = iconPath;
 
         private GroupeesLibrarySettingsViewModel settings { get; set; }
 

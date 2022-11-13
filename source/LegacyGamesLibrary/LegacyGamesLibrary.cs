@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -14,6 +15,8 @@ namespace LegacyGamesLibrary
     public class LegacyGamesLibrary : LibraryPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private static readonly string iconPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "icon.png");
+        public override string LibraryIcon { get; } = iconPath;
 
         private LegacyGamesLibrarySettingsViewModel settings { get; set; }
 
