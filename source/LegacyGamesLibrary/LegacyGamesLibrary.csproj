@@ -63,6 +63,7 @@
       <DependentUpon>LegacyGamesLibrarySettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="LegacyGamesRegistryReader.cs" />
+    <Compile Include="LegacyGamesUninstallController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

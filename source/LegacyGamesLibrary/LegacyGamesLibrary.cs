@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace LegacyGamesLibrary
@@ -110,5 +109,11 @@ namespace LegacyGamesLibrary
                 TrackingMode = TrackingMode.Default
             };
         }
+
+        public override IEnumerable<UninstallController> GetUninstallActions(GetUninstallActionsArgs args)
+        {
+            yield return new LegacyGamesUninstallController(args.Game, RegistryReader);
+        }
     }
+
 }
