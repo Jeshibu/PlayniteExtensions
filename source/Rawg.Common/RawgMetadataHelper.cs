@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,20 +12,15 @@ namespace Rawg.Common
     public class RawgMetadataHelper
     {
         private static Regex yearRegex = new Regex(@" \([0-9]{4}\)$", RegexOptions.Compiled);
-        private static Regex deflateRegex = new Regex(@"[^\p{L}\p{N}]+", RegexOptions.Compiled);
+
         public static string StripYear(string gameName)
         {
             return yearRegex.Replace(gameName, string.Empty);
         }
 
-        public static string DeflateString(string gameName)
-        {
-            return deflateRegex.Replace(gameName, string.Empty);
-        }
-
         public static string NormalizeNameForComparison(string gameName)
         {
-            return DeflateString(StripYear(gameName));
+            return StripYear(gameName).Deflate();
         }
 
         public static MetadataProperty GetPlatform(RawgPlatform platform)
@@ -119,7 +115,7 @@ namespace Rawg.Common
             }
         }
 
-        public static ReleaseDate? ParseReleaseDate(RawgSearchResultGame data, ILogger logger)
+        public static ReleaseDate? ParseReleaseDate(RawgGameBase data, ILogger logger)
         {
             if (string.IsNullOrWhiteSpace(data.Released))
                 return null;
@@ -158,10 +154,15 @@ namespace Rawg.Common
             return Convert.ToInt32(userScore.Value * 20);
         }
 
-        public static List<Link> GetLinks(RawgGame data)
+        public static Link GetRawgLink(RawgGameBase data)
+        {
+            return new Link("RAWG", $"https://rawg.io/games/{data.Id}");
+        }
+
+        public static List<Link> GetLinks(RawgGameDetails data)
         {
             var links = new List<Link>();
-            links.Add(new Link("RAWG", $"https://rawg.io/games/{data.Slug}"));
+            links.Add(GetRawgLink(data));
 
             if (!string.IsNullOrWhiteSpace(data.Website))
                 links.Add(new Link("Website", data.Website));

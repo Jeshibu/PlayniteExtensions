@@ -50,13 +50,13 @@ namespace RawgLibrary
             if (rawgApiClient != null)
                 return rawgApiClient;
 
-            if (string.IsNullOrWhiteSpace(settings.Settings.ApiKey))
+            if (string.IsNullOrWhiteSpace(settings.Settings.UserToken))
             {
-                PlayniteApi.Notifications.Add(new NotificationMessage("rawg-library-no-apikey", "No API key set. Please set it in the RAWG Metadata extension settings. (click this notification)", NotificationType.Error, OpenSettings));
+                PlayniteApi.Notifications.Add(new NotificationMessage("rawg-library-no-token", "Not authenticated. Please log in in the RAWG Library extension settings. (click this notification)", NotificationType.Error, OpenSettings));
                 return null;
             }
 
-            return rawgApiClient ?? (rawgApiClient = new RawgApiClient(new WebDownloader(), settings.Settings.ApiKey));
+            return rawgApiClient ?? (rawgApiClient = new RawgApiClient(new WebDownloader(), settings.Settings.User?.ApiKey));
         }
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
@@ -72,13 +72,13 @@ namespace RawgLibrary
 
                 if (settings.Settings.ImportUserLibrary)
                 {
-                    if (string.IsNullOrWhiteSpace(settings.Settings.Username))
+                    if (string.IsNullOrWhiteSpace(settings.Settings.UserToken))
                     {
-                        PlayniteApi.Notifications.Add(new NotificationMessage("rawg-library-no-username", "No username set. Please set it in the RAWG Metadata extension settings. (click this notification)", NotificationType.Error, OpenSettings));
+                        PlayniteApi.Notifications.Add(new NotificationMessage("rawg-library-no-token", "Not authenticated. Please log in in the RAWG Library extension settings. (click this notification)", NotificationType.Error, OpenSettings));
                         return output;
                     }
 
-                    var userLibrary = client.GetUserLibrary(settings.Settings.Username);
+                    var userLibrary = client.GetCurrentUserLibrary(settings.Settings.UserToken);
                     output.AddRange(userLibrary?.Results?.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings.LanguageCode)));
                 }
 

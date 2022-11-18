@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="RawgLibrary.LoginPrompt"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RawgLibrary"
+             mc:Ignorable="d" Height="172.548" Width="471">
+    <Grid Margin="20">
+        <Grid.Resources>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Name="LabelColumn" Width="auto"/>
+            <ColumnDefinition Name="TextboxColumn" Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Name="EmailRow" Height="auto"/>
+            <RowDefinition Name="PasswordRow" Height="auto"/>
+            <RowDefinition Name="ButtonRow" Height="auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="0" Grid.Row="0" Margin="10" Text="Email address:" HorizontalAlignment="Right"/>
+        <TextBox Name="TextBoxEmailAddress" Grid.Column="1" Grid.Row="0" Margin="10"/>
+        <TextBlock Grid.Column="0" Grid.Row="1" Margin="10" Text="Password:" HorizontalAlignment="Right"/>
+        <PasswordBox Name="TextBoxPassword" Grid.Column="1" Grid.Row="1" Margin="10"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right">
+            <Button Content="OK" Name="ButtonOK" Margin="10" Padding="20,5" Click="ButtonOK_Click"/>
+            <Button Content="Cancel" Name="ButtonCancel" Margin="10" Padding="10,5" Click="ButtonCancel_Click"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -28,7 +28,7 @@ namespace RawgLibrary
             return ToGameMetadata(data, logger, languageCode);
         }
 
-        public static GameMetadata ToGameMetadata(RawgGame data, ILogger logger, string languageCode)
+        public static GameMetadata ToGameMetadata(RawgGameDetails data, ILogger logger, string languageCode)
         {
             var gameMetadata = new GameMetadata
             {
@@ -46,6 +46,11 @@ namespace RawgLibrary
                 Publishers = data.Publishers?.Select(p => new MetadataNameProperty(p.Name)).ToHashSet<MetadataProperty>(),
                 Links = RawgMetadataHelper.GetLinks(data),
             };
+
+            if(data.UserGame!= null)
+            {
+                //data.UserGame.Status
+            }
 
             return gameMetadata;
         }

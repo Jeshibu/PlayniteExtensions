@@ -13,13 +13,13 @@ namespace RawgMetadata
 {
     public class RawgMetadataProvider : OnDemandMetadataProvider
     {
-        private RawgGame foundGameData;
+        private RawgGameDetails foundGameData;
         private readonly MetadataRequestOptions options;
         private readonly RawgMetadata plugin;
         private readonly RawgApiClient client;
         private readonly string languageCode;
         private readonly ILogger logger = LogManager.GetLogger();
-        private RawgGame FoundGameData
+        private RawgGameDetails FoundGameData
         {
             get { return foundGameData; }
             set
@@ -28,7 +28,7 @@ namespace RawgMetadata
                 FoundSearchResult = value;
             }
         }
-        private RawgSearchResultGame FoundSearchResult { get; set; }
+        private RawgGameBase FoundSearchResult { get; set; }
 
         public override List<MetadataField> AvailableFields { get; } = new List<MetadataField>
         {
@@ -176,7 +176,7 @@ namespace RawgMetadata
             return links;
         }
 
-        private RawgSearchResultGame GetSearchResult()
+        private RawgGameBase GetSearchResult()
         {
             if (FoundSearchResult != null)
                 return FoundSearchResult;
@@ -186,14 +186,14 @@ namespace RawgMetadata
             {
                 if (string.IsNullOrWhiteSpace(options.GameData.Name))
                 {
-                    return FoundSearchResult = new RawgSearchResultGame();
+                    return FoundSearchResult = new RawgGameBase();
                 }
 
                 var searchResult = client.SearchGames(options.GameData.Name);
 
                 if (searchResult == null || searchResult.Results == null)
                 {
-                    return FoundSearchResult = new RawgSearchResultGame();
+                    return FoundSearchResult = new RawgGameBase();
                 }
 
                 var nameToMatch = RawgMetadataHelper.NormalizeNameForComparison(options.GameData.Name);
@@ -207,7 +207,7 @@ namespace RawgMetadata
                     }
                 }
 
-                return FoundSearchResult = new RawgSearchResultGame();
+                return FoundSearchResult = new RawgGameBase();
             }
             else
             {
@@ -226,34 +226,34 @@ namespace RawgMetadata
                 }, options.GameData.Name, string.Empty);
 
 
-                return FoundSearchResult = ((GenericSearchResultGame)selectedGame)?.Game ?? new RawgSearchResultGame();
+                return FoundSearchResult = ((GenericSearchResultGame)selectedGame)?.Game ?? new RawgGameBase();
             }
         }
 
-        private RawgGame GetFullGameDetails()
+        private RawgGameDetails GetFullGameDetails()
         {
             if (FoundGameData != null)
                 return FoundGameData;
 
             var searchResult = GetSearchResult();
             if (IsEmpty(searchResult))
-                return FoundGameData = new RawgGame();
+                return FoundGameData = new RawgGameDetails();
 
-            FoundGameData = client.GetGame(searchResult.Slug) ?? new RawgGame();
+            FoundGameData = client.GetGame(searchResult.Slug) ?? new RawgGameDetails();
             return FoundGameData;
         }
 
         private class GenericSearchResultGame : GenericItemOption
         {
-            public GenericSearchResultGame(RawgSearchResultGame g) : base(g.Name, g.Released)
+            public GenericSearchResultGame(RawgGameBase g) : base(g.Name, g.Released)
             {
                 Game = g;
             }
 
-            public RawgSearchResultGame Game { get; set; }
+            public RawgGameBase Game { get; set; }
         }
 
-        private bool IsEmpty(RawgSearchResultGame rawgGame)
+        private bool IsEmpty(RawgGameBase rawgGame)
         {
             return rawgGame?.Slug == null;
         }

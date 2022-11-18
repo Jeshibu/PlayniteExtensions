@@ -8,18 +8,34 @@ using System.Threading.Tasks;
 using Rawg.Common;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using Playnite.SDK.Models;
+using System.Collections.ObjectModel;
 
 namespace RawgLibrary
 {
     public class RawgLibrarySettings : RawgBaseSettings
     {
-        private string username;
+        //private string username;
+        private string userToken;
         private bool importUserLibrary = true;
         private List<RawgCollectionSetting> collections = new List<RawgCollectionSetting>();
+        private Dictionary<string, Guid?> rawgToPlayniteStatuses;
+        private Dictionary<int, int> rawgToPlayniteRatings;
+        private Dictionary<Guid, string> playniteToRawgStatuses;
+        private Dictionary<int, Range> playniteToRawgRatings;
+        private RawgUser user;
 
-        public string Username { get => username; set => SetValue(ref username, value); }
+
+        //[Obsolete]
+        //public string Username { get => username; set => SetValue(ref username, value); }
+        public string UserToken { get => userToken; set => SetValue(ref userToken, value); }
         public bool ImportUserLibrary { get => importUserLibrary; set => SetValue(ref importUserLibrary, value); }
         public List<RawgCollectionSetting> Collections { get => collections; set => SetValue(ref collections, value); }
+        public Dictionary<string, Guid?> RawgToPlayniteStatuses { get => rawgToPlayniteStatuses; set => SetValue(ref rawgToPlayniteStatuses, value); }
+        public Dictionary<int, int> RawgToPlayniteRatings { get => rawgToPlayniteRatings; set => SetValue(ref rawgToPlayniteRatings, value); }
+        public Dictionary<Guid, string> PlayniteToRawgStatuses { get => playniteToRawgStatuses; set => SetValue(ref playniteToRawgStatuses, value); }
+        public Dictionary<int, Range> PlayniteToRawgRatings { get => playniteToRawgRatings; set => SetValue(ref playniteToRawgRatings, value); }
+        public RawgUser User { get => user; set => SetValue(ref user, value); }
     }
 
     public class RawgCollectionSetting : ObservableObject
@@ -59,7 +75,19 @@ namespace RawgLibrary
             }
         }
 
-        public RelayCommand<object> LoginCommand
+        public override void BeginEdit()
+        {
+            base.BeginEdit();
+            InitializeCollections();
+        }
+
+        public override void EndEdit()
+        {
+            SetSettingsCollections();
+            base.EndEdit();
+        }
+
+        public RelayCommand<object> GetApiKeyCommand
         {
             get => new RelayCommand<object>(a =>
             {
@@ -75,32 +103,176 @@ namespace RawgLibrary
             });
         }
 
-        public RelayCommand<object> RefreshCollectionsCommand
+        public RelayCommand<object> LoginCommand
         {
             get => new RelayCommand<object>(a =>
             {
-                try
+                var window = Plugin.PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
+                var loginPrompt = new LoginPrompt(window);
+                window.Content = loginPrompt;
+                window.SizeToContent = System.Windows.SizeToContent.WidthAndHeight;
+                var dialogResult = window.ShowDialog();
+                if (dialogResult == true)
                 {
-                    var client = GetApiClient();
-                    if (client == null || string.IsNullOrWhiteSpace(Settings.Username))
+                    Settings.User = null;
+                    Settings.UserToken = null;
+                    string email = loginPrompt.EmailAddress;
+                    string password = loginPrompt.Password;
+                    if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+                    {
+                        Plugin.PlayniteApi.Dialogs.ShowErrorMessage("Email or password empty. Login failed.", "Login failed");
                         return;
+                    }
 
-                    var apiCollections = client.GetCollections(Settings.Username);
-                    Settings.Collections = apiCollections.Results.Select(c => new RawgCollectionSetting(c)).ToList();
-                }
-                catch(Exception ex)
-                {
-                    PlayniteApi.Dialogs.ShowErrorMessage("Error fetching user collections: " + ex.Message, "Error");
+                    string token;
+                    try
+                    {
+                        var client = GetApiClient();
+                        token = client.Login(email, password);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error(ex, "Login failed");
+                        Plugin.PlayniteApi.Dialogs.ShowErrorMessage($"Login failed: {ex.Message}", "Login failed");
+                        return;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(token))
+                    {
+                        Plugin.PlayniteApi.Dialogs.ShowErrorMessage("Empty token, login failed.", "Login failed");
+                        return;
+                    }
+                    Settings.UserToken = token;
+                    RefreshCollections();
+                    OnPropertyChanged(nameof(AuthenticationStatus));
                 }
             });
         }
 
+        private void RefreshCollections()
+        {
+            try
+            {
+                var client = GetApiClient();
+                var apiCollections = client.GetCurrentUserCollections(Settings.UserToken);
+                Settings.Collections = apiCollections.Results.Select(c => new RawgCollectionSetting(c)).ToList();
+            }
+            catch (Exception ex)
+            {
+                PlayniteApi.Dialogs.ShowErrorMessage("Error fetching user collections: " + ex.Message, "Error");
+            }
+        }
+
+        public RelayCommand<object> RefreshCollectionsCommand
+        {
+            get => new RelayCommand<object>(a =>
+            {
+                RefreshCollections();
+            });
+        }
+
+        public string AuthenticationStatus
+        {
+            get
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(Settings.UserToken))
+                        return "❌ Not authenticated";
+
+                    var client = GetApiClient();
+                    var user = client.GetCurrentUser(Settings.UserToken);
+                    Settings.User = user;
+                    string output = $"✔ Authenticated as {user.Username}\n";
+                    if (user.ApiKey != null)
+                        output += "✔ API key present";
+                    else
+                        output += "❌ API key not present";
+                    return output;
+                }
+                catch (Exception ex)
+                {
+                    return $"❌ Error: {ex.Message}";
+                }
+            }
+        }
+
         private RawgApiClient GetApiClient()
         {
-            if (string.IsNullOrWhiteSpace(Settings.ApiKey))
-                return null;
-
             return new RawgApiClient(Plugin.Downloader, Settings.ApiKey);
         }
+
+        public ObservableCollection<RawgToPlayniteStatus> RawgToPlayniteStatuses { get; set; }
+        public ObservableCollection<RawgToPlayniteRating> RawgToPlayniteRatings { get; set; }
+        public ObservableCollection<PlayniteToRawgStatus> PlayniteToRawgStatuses { get; set; }
+        public ObservableCollection<PlayniteToRawgRating> PlayniteToRawgRatings { get; set; }
+        public ICollection<CompletionStatus> PlayniteCompletionStatuses { get; set; }
+        public Dictionary<string, string> RawgCompletionStatuses { get => RawgMapping.RawgCompletionStatuses; }
+
+        private void InitializeCollections()
+        {
+            PlayniteCompletionStatuses = PlayniteApi.Database.CompletionStatuses;
+            RawgToPlayniteStatuses = RawgMapping.GetRawgToPlayniteCompletionStatuses(PlayniteApi, Settings).ToObservable();
+            RawgToPlayniteRatings = RawgMapping.GetRawgToPlayniteRatings(Settings).ToObservable();
+            PlayniteToRawgStatuses = RawgMapping.GetPlayniteToRawgStatuses(PlayniteApi, Settings).ToObservable();
+            PlayniteToRawgRatings = RawgMapping.GetPlayniteToRawgRatings(Settings).ToObservable();
+        }
+
+        private void SetSettingsCollections()
+        {
+            Settings.RawgToPlayniteStatuses = RawgToPlayniteStatuses.ToDictionary(x => x.Id, x => x?.PlayniteCompletionStatusId);
+            Settings.RawgToPlayniteRatings = RawgToPlayniteRatings.ToDictionary(x => x.Id, x => x.PlayniteRating);
+            Settings.PlayniteToRawgStatuses = PlayniteToRawgStatuses.ToDictionary(x => x.PlayniteCompletionStatus.Id, x => x.RawgStatusId);
+            Settings.PlayniteToRawgRatings = PlayniteToRawgRatings.ToDictionary(x => x.Id, x => x.Range);
+        }
+
+        private class RawgStatusData
+        {
+            public string Key;
+            public string Description;
+            public string PlayniteDefaultStatus;
+
+            public RawgStatusData(string key, string description, string playniteDefaultStatus)
+            {
+                Key = key;
+                Description = description;
+                PlayniteDefaultStatus = playniteDefaultStatus;
+            }
+        }
+
+        private class RawgRatingDefault
+        {
+            public RawgRatingDefault(int id, string description, string minPlayniteRating, string maxPlayniteRating, string playniteRating)
+            {
+                Id = id;
+                Description = description;
+                MinPlayniteRating = minPlayniteRating;
+                MaxPlayniteRating = maxPlayniteRating;
+                PlayniteRating = playniteRating;
+            }
+
+            public int Id { get; }
+            public string Description { get; }
+            public string MinPlayniteRating { get; }
+            public string MaxPlayniteRating { get; }
+            public string PlayniteRating { get; }
+        }
+
+        /*
+    owned
+    UncategorizedactiveI'll pick the category later
+    playing
+    Currently playingI play the game regularly
+    beaten
+    CompletedI reached my goal in the game
+    dropped
+    PlayedI gave up and won't play it anymore
+    yet
+    Not playedI'll play it later
+
+        "Not Played", "Played", "Beaten", "Completed", "Playing", "Abandoned", "On Hold", "Plan to Play"
+         */
     }
+
+
 }

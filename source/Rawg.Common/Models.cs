@@ -25,7 +25,7 @@ namespace Rawg.Common
         public RawgObject Platform { get; set; }
     }
 
-    public class RawgSearchResultGame : RawgObject
+    public class RawgGameBase : RawgObject
     {
         public string Released { get; set; }
 
@@ -40,6 +40,12 @@ namespace Rawg.Common
 
         public RawgLocalizedObject[] Tags { get; set; }
         public RawgObject[] Genres { get; set; }
+
+        //below properties are only in calls with a user token, not those with an api key
+        [JsonProperty("user_game")]
+        public RawgUserGame UserGame { get; set; }
+        [JsonProperty("user_rating")]
+        public int UserRating { get; set; }
     }
 
     public class RawgResult<T>
@@ -52,13 +58,13 @@ namespace Rawg.Common
 
     public class RawGameSearchResult
     {
-        public RawgSearchResultGame[] Results { get; set; }
+        public RawgGameBase[] Results { get; set; }
         public int Count { get; set; }
         public string Next { get; set; }
         public string Previous { get; set; }
     }
 
-    public class RawgGame : RawgSearchResultGame
+    public class RawgGameDetails : RawgGameBase
     {
         [JsonProperty("name_original")]
         public string NameOriginal { get; set; }
@@ -71,9 +77,29 @@ namespace Rawg.Common
         public string RedditUrl { get; set; }
     }
 
+    public class RawgUserGame
+    {
+        public string Status { get; set; }
+        public DateTime Added { get; set; }
+        public RawgObject[] Platforms { get; set; }
+    }
+
     public class RawgCollection : RawgObject
     {
         [JsonProperty("games_count")]
         public int GamesCount { get; set; }
+    }
+
+    public class RawgUser
+    {
+        public string Username { get; set; }
+
+        public string Slug { get; set; }
+
+        [JsonProperty("game_count")]
+        public int GameCount { get; set; }
+
+        [JsonProperty("api_key")]
+        public string ApiKey { get; set; }
     }
 }

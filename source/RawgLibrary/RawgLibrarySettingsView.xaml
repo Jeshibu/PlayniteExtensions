@@ -5,44 +5,163 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel Margin="20">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="Left" Width="auto"/>
-                <ColumnDefinition x:Name="Middle" Width="*"/>
-                <ColumnDefinition x:Name="Right" Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition x:Name="Row1" Height="auto"/>
-                <RowDefinition x:Name="Spacing1" Height="15"/>
-                <RowDefinition x:Name="Row2" Height="auto"/>
-                <RowDefinition x:Name="Spacing2" Height="15"/>
-                <RowDefinition x:Name="Row3" Height="auto"/>
-                <RowDefinition x:Name="Row3AndAHalf" Height="auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock Text="RAWG API Key:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBox Name="ApiKeyTextbox" Text="{Binding Settings.ApiKey}" Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
-            <Button Content="Get API Key" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"
-                        Command="{Binding LoginCommand}" Margin="10,0,0,0"/>
+    <TabControl Margin="20">
+        <TabControl.Resources>
+            <Style TargetType="DataGrid">
+                <Setter Property="MinHeight" Value="120"/>
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="CanUserAddRows" Value="False"/>
+                <Setter Property="CanUserDeleteRows" Value="False"/>
+            </Style>
+        </TabControl.Resources>
+        <TabItem Header="Account">
+            <StackPanel Margin="20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="Left" Width="auto"/>
+                        <ColumnDefinition x:Name="Middle" Width="*"/>
+                        <ColumnDefinition x:Name="Right" Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="Row1" Height="auto"/>
+                        <RowDefinition x:Name="Spacing1" Height="15"/>
+                        <RowDefinition x:Name="Row2" Height="auto"/>
+                        <RowDefinition x:Name="Spacing2" Height="15"/>
+                        <RowDefinition x:Name="Row3" Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Button Content="Authenticate" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Command="{Binding LoginCommand}"/>
+                    <TextBlock Text="{Binding AuthenticationStatus}" Margin="10,0,0,0" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/>
+                    <Button Content="Get API Key" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center"
+                        Command="{Binding GetApiKeyCommand}" Margin="10,0,0,0"/>
 
-            <TextBlock Text="Tag language code:" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" ToolTip="Tags are limited to ones with the specified language code, to filter out other languages"/>
-            <TextBox Name="LanguageCodeTextbox" Text="{Binding Settings.LanguageCode}" Margin="10,0,0,0" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/>
-            <Button Content="Language codes" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center"
+                    <TextBlock Text="Tag language code:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" ToolTip="Tags are limited to ones with the specified language code, to filter out other languages"/>
+                    <TextBox Name="LanguageCodeTextbox" Text="{Binding Settings.LanguageCode}" Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
+                    <Button Content="Language codes" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"
                         Command="{Binding LanguageCodesReferenceCommand}" Margin="10,0,0,0"/>
 
-            <TextBlock Text="Username:" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" ToolTip="Use the lowercase name you see in your profile URL, without the @"/>
-            <TextBox Name="UsernameTextbox" Text="{Binding Settings.Username}" Margin="10,0,0,0" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center"/>
-            <Button Content="Refresh collections" Grid.Column="2" Grid.Row="4" VerticalAlignment="Center"
+                    <Button Content="Refresh collections" Grid.Column="2" Grid.Row="4" VerticalAlignment="Center"
                         Command="{Binding RefreshCollectionsCommand}" Margin="10,0,0,0"/>
-            <CheckBox Content="Import user library" IsChecked="{Binding Settings.ImportUserLibrary}" Grid.Column="1" Grid.Row="5" Margin="10,5,0,0"/>
-        </Grid>
+                    <CheckBox Content="Import user library" IsChecked="{Binding Settings.ImportUserLibrary}" Grid.Column="1" Grid.Row="4" Margin="10,5,0,0"/>
+                </Grid>
 
-        <TextBlock Margin="0,20,0,0">Import games from the following collections:</TextBlock>
-        <DataGrid ItemsSource="{Binding Settings.Collections}" MinHeight="150" AutoGenerateColumns="false" CanUserAddRows="False" CanUserDeleteRows="false" HeadersVisibility="None">
-            <DataGrid.Columns>
-                <DataGridCheckBoxColumn Header="" Binding="{Binding Import}"/>
-                <DataGridTextColumn Header="Collection name" Binding="{Binding Name}" Width="*" IsReadOnly="True"/>
-            </DataGrid.Columns>
-        </DataGrid>
-    </StackPanel>
+                <TextBlock Margin="0,20,0,0">Import games from the following collections:</TextBlock>
+                <DataGrid ItemsSource="{Binding Settings.Collections}" HeadersVisibility="None">
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Header="" Binding="{Binding Import}"/>
+                        <DataGridTextColumn Header="Collection name" Binding="{Binding Name}" Width="*" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Mapping from RAWG">
+            <StackPanel Margin="20">
+                <TextBlock Text="Completion statuses"/>
+                <!--<Grid>
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                            <Setter Property="Margin" Value="20,0"/>
+                        </Style>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="IsEditable" Value="False"/>
+                            <Setter Property="IsReadOnly" Value="True"/>
+                            <Setter Property="Margin" Value="0,3"/>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto" MinWidth="150"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Uncategorized (owned)" Grid.Column="0" Grid.Row="0"/>
+                    <ComboBox Name="RawgStatusOwnedMapping" Grid.Column="1" Grid.Row="0"/>
+                    
+                    <TextBlock Text="Currently playing (playing)" Grid.Column="0" Grid.Row="1"/>
+                    <ComboBox Name="RawgStatusPlayingMapping" Grid.Column="1" Grid.Row="1"/>
+                    
+                    <TextBlock Text="Completed (beaten)" Grid.Column="0" Grid.Row="2"/>
+                    <ComboBox Name="RawgStatusBeatenMapping" Grid.Column="1" Grid.Row="2"/>
+
+                    <TextBlock Text="Played (dropped)" Grid.Column="0" Grid.Row="3"/>
+                    <TextBlock Text="Not played (yet)" Grid.Column="0" Grid.Row="5"/>
+    playing
+    toplay
+    beaten
+    dropped
+    yet
+    owned
+                    owned
+UncategorizedactiveI'll pick the category later
+playing
+Currently playingI play the game regularly
+beaten
+CompletedI reached my goal in the game
+dropped
+PlayedI gave up and won't play it anymore
+yet
+Not playedI'll play it later
+                </Grid>-->
+                <DataGrid ItemsSource="{Binding RawgToPlayniteStatuses}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Width="auto" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Status" Width="auto" Binding="{Binding Description}"/>
+                        <DataGridComboBoxColumn Header="Playnite status" Width="*" ItemsSource="{Binding DataContext.PlayniteCompletionStatuses}" SelectedItemBinding="{Binding PlayniteCompletionStatus}" DisplayMemberPath="Name"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <TextBlock Text="User rating mapping" Margin="0,20,0,0"/>
+                <DataGrid ItemsSource="{Binding RawgToPlayniteRatings}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ID" Width="auto" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="Rating" Width="auto" Binding="{Binding Description}"/>
+                        <DataGridTemplateColumn Header="User rating">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Width="30" Text="{Binding PlayniteRatingString}"/>
+                                    <!--<xctk:IntegerUpDown Minimum="0" Maximum="100" Width="30" Value="{Binding PlayniteRating}"/>-->
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Mapping to RAWG">
+            <StackPanel Margin="20">
+                <TextBlock Text="Completion statuses"/>
+                <DataGrid ItemsSource="{Binding PlayniteToRawgStatuses}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Playnite Status" Width="auto" Binding="{Binding PlayniteCompletionStatus.Name}"/>
+                        <DataGridComboBoxColumn Header="RAWG status" Width="*" ItemsSource="{Binding DataContext.RawgCompletionStatuses}" SelectedValueBinding="{Binding RawgStatusId}" DisplayMemberPath="Value" SelectedValuePath="Key"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <TextBlock Text="User rating mapping" Margin="0,20,0,0"/>
+                <DataGrid ItemsSource="{Binding PlayniteToRawgRatings}">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Playnite user rating range">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBox Width="30" Text="{Binding Range.MinString}"/>
+                                        <TextBlock Margin="5,0,5,0" Text="to"/>
+                                        <TextBox Width="30" Text="{Binding Range.MaxString}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="ID" Width="auto" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="RAWG rating" Width="auto" Binding="{Binding Description}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
 </UserControl>
