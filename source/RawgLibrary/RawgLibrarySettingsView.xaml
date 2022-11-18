@@ -56,58 +56,6 @@
         <TabItem Header="Mapping from RAWG">
             <StackPanel Margin="20">
                 <TextBlock Text="Completion statuses"/>
-                <!--<Grid>
-                    <Grid.Resources>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="Margin" Value="20,0"/>
-                        </Style>
-                        <Style TargetType="ComboBox">
-                            <Setter Property="IsEditable" Value="False"/>
-                            <Setter Property="IsReadOnly" Value="True"/>
-                            <Setter Property="Margin" Value="0,3"/>
-                        </Style>
-                    </Grid.Resources>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto" MinWidth="150"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="Uncategorized (owned)" Grid.Column="0" Grid.Row="0"/>
-                    <ComboBox Name="RawgStatusOwnedMapping" Grid.Column="1" Grid.Row="0"/>
-                    
-                    <TextBlock Text="Currently playing (playing)" Grid.Column="0" Grid.Row="1"/>
-                    <ComboBox Name="RawgStatusPlayingMapping" Grid.Column="1" Grid.Row="1"/>
-                    
-                    <TextBlock Text="Completed (beaten)" Grid.Column="0" Grid.Row="2"/>
-                    <ComboBox Name="RawgStatusBeatenMapping" Grid.Column="1" Grid.Row="2"/>
-
-                    <TextBlock Text="Played (dropped)" Grid.Column="0" Grid.Row="3"/>
-                    <TextBlock Text="Not played (yet)" Grid.Column="0" Grid.Row="5"/>
-    playing
-    toplay
-    beaten
-    dropped
-    yet
-    owned
-                    owned
-UncategorizedactiveI'll pick the category later
-playing
-Currently playingI play the game regularly
-beaten
-CompletedI reached my goal in the game
-dropped
-PlayedI gave up and won't play it anymore
-yet
-Not playedI'll play it later
-                </Grid>-->
                 <DataGrid ItemsSource="{Binding RawgToPlayniteStatuses}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="ID" Width="auto" Binding="{Binding Id}"/>
@@ -125,7 +73,6 @@ Not playedI'll play it later
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBox Width="30" Text="{Binding PlayniteRatingString}"/>
-                                    <!--<xctk:IntegerUpDown Minimum="0" Maximum="100" Width="30" Value="{Binding PlayniteRating}"/>-->
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
