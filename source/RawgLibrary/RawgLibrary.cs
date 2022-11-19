@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -16,7 +17,7 @@ namespace RawgLibrary
 {
     public class RawgLibrary : LibraryPlugin
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private readonly ILogger logger = LogManager.GetLogger();
         private static readonly string iconPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "icon.jpg");
         public override string LibraryIcon { get; } = iconPath;
 
@@ -79,7 +80,7 @@ namespace RawgLibrary
                     }
 
                     var userLibrary = client.GetCurrentUserLibrary(settings.Settings.UserToken);
-                    output.AddRange(userLibrary?.Results?.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings.LanguageCode)));
+                    output.AddRange(userLibrary?.Results?.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings.LanguageCode, settings.Settings)));
                 }
 
                 foreach (var collectionSettings in settings.Settings.Collections)
@@ -88,7 +89,7 @@ namespace RawgLibrary
                         continue;
 
                     var collectionGames = client.GetCollectionGames(collectionSettings.Collection.Id.ToString());
-                    output.AddRange(collectionGames?.Results?.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings.LanguageCode)));
+                    output.AddRange(collectionGames?.Results?.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings.LanguageCode, settings.Settings)));
                 }
             }
             catch (Exception ex)
@@ -112,6 +113,121 @@ namespace RawgLibrary
         public override LibraryMetadataProvider GetMetadataDownloader()
         {
             return base.GetMetadataDownloader();
+        }
+
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        {
+            yield return new GameMenuItem { Description = "Sync to RAWG", Action = SyncGamesToRawg };
+        }
+
+        private void SyncGamesToRawg(GameMenuItemActionArgs args)
+        {
+            PlayniteApi.Dialogs.ActivateGlobalProgress(progressArgs =>
+            {
+                progressArgs.ProgressMaxValue = args.Games.Count;
+                try
+                {
+                    PlayniteApi.Database.Games.BeginBufferUpdate();
+                    foreach (var g in args.Games)
+                    {
+                        if (progressArgs.CancelToken.IsCancellationRequested)
+                            return;
+                        progressArgs.CurrentProgressValue++;
+                        SyncGameToRawg(g);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, "Error syncing to RAWG");
+                }
+                finally
+                {
+                    PlayniteApi.Database.Games.EndBufferUpdate();
+                }
+            }, new GlobalProgressOptions("Syncing games to RAWG", true) { IsIndeterminate = false });
+        }
+
+        private void SyncGameToRawg(Game game)
+        {
+            var rawgId = GetRawgIdFromGame(game);
+            string token = settings.Settings.UserToken;
+            var client = GetApiClient();
+            if (rawgId == null || token == null || client == null)
+                return;
+
+            if (!settings.Settings.PlayniteToRawgStatuses.TryGetValue(game.CompletionStatusId, out string rawgStatus))
+            {
+                logger.Warn($"No RAWG status configured for Playnite completion status {game.CompletionStatus.Name}");
+                return;
+            }
+            else
+            {
+                logger.Info($"Updating RAWG game {game.Name}");
+                if (!client.UpdateGameCompletionStatus(token, rawgId.Value, rawgStatus))
+                {
+                    logger.Info($"Adding RAWG game {game.Name}");
+                    client.AddGameToLibrary(token, rawgId.Value, rawgStatus);
+                }
+            }
+
+            if (game.UserScore.HasValue)
+            {
+                int userScore = game.UserScore.Value;
+                foreach (var ratingsMapping in settings.Settings.PlayniteToRawgRatings)
+                {
+                    if (ratingsMapping.Value.Min <= userScore && userScore <= ratingsMapping.Value.Max)
+                    {
+                        logger.Info($"Rating RAWG game {game.Name}");
+                        client.RateGame(token, rawgId.Value, ratingsMapping.Key);
+                        break;
+                    }
+                    logger.Warn($"No user score mapping found for Playnite user score {game.UserScore}");
+                }
+            }
+        }
+
+        private static Regex rawgGameUrlRegex = new Regex(@"^https://rawg\.io/games/(?<id>[0-9]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        private int? GetRawgIdFromGame(Game game)
+        {
+            if (game.Links != null)
+            {
+                foreach (var link in game.Links)
+                {
+                    var match = rawgGameUrlRegex.Match(link.Url);
+                    if (!match.Success)
+                        continue;
+                    int id = int.Parse(match.Groups["id"].Value);
+                    return id;
+                }
+            }
+
+            var client = GetApiClient();
+            string searchString;
+            if (game.ReleaseYear.HasValue)
+                searchString = $"{game.Name} {game.ReleaseYear}";
+            else
+                searchString = game.Name;
+            var result = client.SearchGames(searchString);
+            if (result?.Results == null)
+                return null;
+
+            var gameName = RawgMetadataHelper.NormalizeNameForComparison(game.Name);
+            foreach (var g in result.Results)
+            {
+                var resultName = RawgMetadataHelper.NormalizeNameForComparison(g.Name);
+                if (gameName.Equals(resultName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    if (game.Links == null)
+                        game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>();
+                    else
+                        game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>(game.Links);
+
+                    game.Links.Add(RawgMetadataHelper.GetRawgLink(g));
+                    return g.Id;
+                }
+            }
+            return null;
         }
     }
 }

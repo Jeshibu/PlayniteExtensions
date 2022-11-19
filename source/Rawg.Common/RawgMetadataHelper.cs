@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace Rawg.Common
 {
-    public class RawgMetadataHelper
+    public static class RawgMetadataHelper
     {
         private static Regex yearRegex = new Regex(@" \([0-9]{4}\)$", RegexOptions.Compiled);
 

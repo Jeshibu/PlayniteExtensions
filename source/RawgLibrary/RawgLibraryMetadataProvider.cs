@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
 using Rawg.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,12 +9,14 @@ namespace RawgLibrary
 {
     public class RawgLibraryMetadataProvider : LibraryMetadataProvider
     {
+        private readonly RawgLibrarySettings settings;
         private readonly RawgApiClient client;
         private readonly string languageCode;
         private readonly ILogger logger = LogManager.GetLogger();
 
-        public RawgLibraryMetadataProvider(RawgApiClient client, string languageCode = "eng")
+        public RawgLibraryMetadataProvider(RawgLibrarySettings settings, RawgApiClient client, string languageCode = "eng")
         {
+            this.settings = settings;
             this.client = client;
             this.languageCode = languageCode;
         }
@@ -25,10 +28,10 @@ namespace RawgLibrary
             if (data == null)
                 return new GameMetadata();
 
-            return ToGameMetadata(data, logger, languageCode);
+            return ToGameMetadata(data, logger, languageCode, settings);
         }
 
-        public static GameMetadata ToGameMetadata(RawgGameDetails data, ILogger logger, string languageCode)
+        public static GameMetadata ToGameMetadata(RawgGameDetails data, ILogger logger, string languageCode, RawgLibrarySettings settings)
         {
             var gameMetadata = new GameMetadata
             {
@@ -47,9 +50,16 @@ namespace RawgLibrary
                 Links = RawgMetadataHelper.GetLinks(data),
             };
 
-            if(data.UserGame!= null)
+            if (data.UserGame != null)
             {
-                //data.UserGame.Status
+                if (settings.RawgToPlayniteStatuses.TryGetValue(data.UserGame.Status, out Guid? statusId) && statusId.HasValue)
+                {
+                    gameMetadata.CompletionStatus = new MetadataIdProperty(statusId.Value);
+                }
+                if (data.UserRating != 0 && settings.RawgToPlayniteRatings.TryGetValue(data.UserRating, out int playniteRating))
+                {
+                    gameMetadata.UserScore = playniteRating;
+                }
             }
 
             return gameMetadata;

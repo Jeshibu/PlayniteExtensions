@@ -118,25 +118,33 @@ namespace Rawg.Common
                                 { "game", gameId },
                                 { "status", completionStatus },
                             });
-            var result = GetAuthenticated<Dictionary<string, object>>(token, request);
-
-            if (result.TryGetValue("game", out object game))
+            try
             {
-                if (game is int resultGameId && resultGameId == gameId)
+                var result = GetAuthenticated<Dictionary<string, object>>(token, request);
+
+                if (result.TryGetValue("game", out object game))
                 {
-                    return true;
+                    if (game is int resultGameId && resultGameId == gameId)
+                    {
+                        return true;
+                    }
+                    else if (game is Newtonsoft.Json.Linq.JArray errorMessages)
+                    {
+                        string err = string.Join(", ", errorMessages);
+                        logger.Warn($"Error adding {gameId} to library: {err}");
+                        if (err == "This game is already in this profile")
+                            return false;
+                        else
+                            throw new Exception(err);
+                    }
                 }
-                else if (game is string[] errorMessages)
-                {
-                    string err = string.Join(", ", errorMessages);
-                    logger.Warn($"Error adding {gameId} to library: {err}");
-                    if (err == "This game is already in this profile")
-                        return false;
-                    else
-                        throw new Exception(err);
-                }
+                throw new Exception("Error adding game to library: " + JsonConvert.SerializeObject(result));
             }
-            throw new Exception("Error adding game to library: " + JsonConvert.SerializeObject(result));
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"Error adding game {gameId} to library");
+                return false;
+            }
         }
 
         public bool UpdateGameCompletionStatus(string token, int gameId, string completionStatus)
@@ -146,15 +154,35 @@ namespace Rawg.Common
                             {
                                 { "status", completionStatus },
                             });
-            var result = GetAuthenticated<Dictionary<string, object>>(token, request);
-
-            if (result.TryGetValue("game", out object game))
+            try
             {
-                if (game is int resultGameId && resultGameId == gameId)
-                    return true;
+                var result = GetAuthenticated<Dictionary<string, object>>(token, request);
+
+                if (result.TryGetValue("game", out object game))
+                {
+                    if (game is long resultGameId && resultGameId == gameId)
+                        return true;
+                }
+                logger.Warn($"Error updating {gameId} status: " + JsonConvert.SerializeObject(result));
+                return false;
             }
-            logger.Warn($"Error updating {gameId} status: " + JsonConvert.SerializeObject(result));
-            return false;
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"Error updating game {gameId} completion status");
+                return false;
+            }
+        }
+
+        public Dictionary<string, object> RateGame(string token, int gameId, int rating, bool addToLibrary = false)
+        {
+            var request = new RestRequest("reviews", Method.Post)
+                            .AddJsonBody(new Dictionary<string, object> {
+                                { "game", gameId },
+                                { "rating", rating },
+                                { "add_to_library", addToLibrary },
+                            });
+            var result = GetAuthenticated<Dictionary<string, object>>(token, request);
+            return result;
         }
 
         private class LoginResponse
