@@ -11,21 +11,24 @@ namespace RawgLibrary
 {
     public class Range
     {
-        public int Min;
-        public int Max;
+        private int min;
+        private int max;
+
+        public int Min { get => min; set => min = value; }
+        public int Max { get => max; set => max = value; }
 
         [DontSerialize]
-        public string MinString { get => Min.ToString(); set => int.TryParse(value, out Min); }
+        public string MinString { get => Min.ToString(); set => int.TryParse(value, out min); }
 
         [DontSerialize]
-        public string MaxString { get => Max.ToString(); set => int.TryParse(value, out Max); }
+        public string MaxString { get => Max.ToString(); set => int.TryParse(value, out max); }
     }
 
     public class RawgToPlayniteStatus
     {
-        public string Id;
-        public string Description;
-        public Guid PlayniteCompletionStatusId;
+        public string Id { get; set; }
+        public string Description { get; set; }
+        public Guid PlayniteCompletionStatusId { get; set; }
 
         public RawgToPlayniteStatus(string id, string description, Guid playniteCompletionStatusId)
         {
@@ -37,15 +40,17 @@ namespace RawgLibrary
 
     public class RawgToPlayniteRating
     {
-        public int Id;
-        public string Description;
-        public int PlayniteRating;
+        private int playniteRating;
+
+        public int Id { get; set; }
+        public string Description { get; set; }
+        public int PlayniteRating { get => playniteRating; set => playniteRating = value; }
         public string PlayniteRatingString
         {
             get => PlayniteRating.ToString();
             set
             {
-                if (!int.TryParse(value, out PlayniteRating))
+                if (!int.TryParse(value, out playniteRating))
                     PlayniteRating = -1;
             }
         }
@@ -66,8 +71,8 @@ namespace RawgLibrary
             RawgStatusId = rawgStatusId;
         }
 
-        public CompletionStatus PlayniteCompletionStatus;
-        public string RawgStatusId;
+        public CompletionStatus PlayniteCompletionStatus { get; set; }
+        public string RawgStatusId { get; set; }
     }
 
     public class PlayniteToRawgRating
@@ -78,9 +83,9 @@ namespace RawgLibrary
             Description = description;
             Range = range;
         }
-        public int Id;
-        public string Description;
-        public Range Range;
+        public int Id { get; set; }
+        public string Description { get; set; }
+        public Range Range { get; set; }
     }
 
     public static class RawgMapping

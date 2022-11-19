@@ -56,7 +56,8 @@
                                 <GridViewColumn Header="Playnite status" Width="Auto">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <ComboBox ItemsSource="{Binding DataContext.PlayniteCompletionStatuses}" SelectedValue="{Binding PlayniteCompletionStatusId}" DisplayMemberPath="Name"/>
+                                            <ComboBox ItemsSource="{Binding DataContext.PlayniteCompletionStatuses, RelativeSource={RelativeSource FindAncestor, AncestorType=TabControl}}"
+                                                      SelectedValue="{Binding PlayniteCompletionStatusId}" DisplayMemberPath="Name" SelectedValuePath="Id" MinWidth="200"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -95,7 +96,8 @@
                                 <GridViewColumn Header="RAWG status" Width="Auto">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <ComboBox ItemsSource="{Binding DataContext.RawgCompletionStatuses}" SelectedValue="{Binding RawgStatusId}" SelectedValuePath="Key" DisplayMemberPath="Name"/>
+                                            <ComboBox ItemsSource="{Binding DataContext.RawgCompletionStatuses, RelativeSource={RelativeSource FindAncestor, AncestorType=TabControl}}"
+                                                      SelectedValue="{Binding RawgStatusId}" SelectedValuePath="Key" DisplayMemberPath="Value" MinWidth="200"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
