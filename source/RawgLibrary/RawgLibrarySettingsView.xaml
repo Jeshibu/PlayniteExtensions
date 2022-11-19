@@ -6,18 +6,6 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <TabControl Margin="20">
-        <TabControl.Resources>
-            <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
-                <Setter Property="MinHeight" Value="120"/>
-                <Setter Property="AutoGenerateColumns" Value="False"/>
-                <Setter Property="CanUserAddRows" Value="False"/>
-                <Setter Property="CanUserDeleteRows" Value="False"/>
-                <Setter Property="SelectionMode" Value="Single"/>
-                <Setter Property="SelectionUnit" Value="FullRow"/>
-                <Setter Property="CanUserResizeRows" Value="False"/>
-                <Setter Property="HeadersVisibility" Value="Column"/>
-            </Style>
-        </TabControl.Resources>
         <TabItem Header="Account">
             <StackPanel Margin="20">
                 <Grid>
@@ -64,7 +52,6 @@
                     <ListView.View>
                         <GridView>
                             <GridView.Columns>
-                                <!--<GridViewColumn Header="RAWG ID" DisplayMemberBinding="{Binding Id}" Width="Auto"/>-->
                                 <GridViewColumn Header="RAWG Status" DisplayMemberBinding="{Binding Description}" Width="Auto"/>
                                 <GridViewColumn Header="Playnite status" Width="Auto">
                                     <GridViewColumn.CellTemplate>
@@ -83,7 +70,6 @@
                     <ListView.View>
                         <GridView>
                             <GridView.Columns>
-                                <!--<GridViewColumn Header="RAWG ID" DisplayMemberBinding="{Binding Id}" Width="Auto"/>-->
                                 <GridViewColumn Header="RAWG rating" DisplayMemberBinding="{Binding Description}" Width="Auto"/>
                                 <GridViewColumn Header="Playnite rating" Width="Auto">
                                     <GridViewColumn.CellTemplate>
