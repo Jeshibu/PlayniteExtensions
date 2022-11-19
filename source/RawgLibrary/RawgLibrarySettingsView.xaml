@@ -37,12 +37,27 @@
                 </Grid>
 
                 <TextBlock Margin="0,20,0,0">Import games from the following collections:</TextBlock>
-                <DataGrid ItemsSource="{Binding Settings.Collections}" HeadersVisibility="None">
-                    <DataGrid.Columns>
-                        <DataGridCheckBoxColumn Header="" Binding="{Binding Import}"/>
-                        <DataGridTextColumn Header="Collection name" Binding="{Binding Name}" Width="*" IsReadOnly="True"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <ListView ItemsSource="{Binding Settings.Collections}" MinHeight="120" Height="Auto">
+                    <ListView.Resources>
+                        <Style TargetType="GridViewColumnHeader">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </Style>
+                    </ListView.Resources>
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="" Width="Auto">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding Import}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Collection name" DisplayMemberBinding="{Binding Name}"/>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </StackPanel>
         </TabItem>
         <TabItem Header="Mapping from RAWG">
