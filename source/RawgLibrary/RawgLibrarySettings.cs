@@ -202,16 +202,24 @@ namespace RawgLibrary
             return new RawgApiClient(Plugin.Downloader, Settings.ApiKey);
         }
 
-        public ObservableCollection<RawgToPlayniteStatus> RawgToPlayniteStatuses { get; set; }
-        public ObservableCollection<RawgToPlayniteRating> RawgToPlayniteRatings { get; set; }
-        public ObservableCollection<PlayniteToRawgStatus> PlayniteToRawgStatuses { get; set; }
-        public ObservableCollection<PlayniteToRawgRating> PlayniteToRawgRatings { get; set; }
-        public ICollection<CompletionStatus> PlayniteCompletionStatuses { get; set; }
-        public Dictionary<string, string> RawgCompletionStatuses { get => RawgMapping.RawgCompletionStatuses; }
+        private ObservableCollection<RawgToPlayniteStatus> rawgToPlayniteStatuses;
+        private ObservableCollection<RawgToPlayniteRating> rawgToPlayniteRatings;
+        private ObservableCollection<PlayniteToRawgStatus> playniteToRawgStatuses;
+        private ObservableCollection<PlayniteToRawgRating> playniteToRawgRatings;
+        private ICollection<CompletionStatus> playniteCompletionStatuses;
+        private Dictionary<string, string> rawgCompletionStatuses;
+
+        public ObservableCollection<RawgToPlayniteStatus> RawgToPlayniteStatuses { get => rawgToPlayniteStatuses; set => SetValue(ref rawgToPlayniteStatuses, value); }
+        public ObservableCollection<RawgToPlayniteRating> RawgToPlayniteRatings { get => rawgToPlayniteRatings; set => SetValue(ref rawgToPlayniteRatings, value); }
+        public ObservableCollection<PlayniteToRawgStatus> PlayniteToRawgStatuses { get => playniteToRawgStatuses; set => SetValue(ref playniteToRawgStatuses, value); }
+        public ObservableCollection<PlayniteToRawgRating> PlayniteToRawgRatings { get => playniteToRawgRatings; set => SetValue(ref playniteToRawgRatings, value); }
+        public ICollection<CompletionStatus> PlayniteCompletionStatuses { get => playniteCompletionStatuses; set => SetValue(ref playniteCompletionStatuses, value); }
+        public Dictionary<string, string> RawgCompletionStatuses { get => rawgCompletionStatuses; set => SetValue(ref rawgCompletionStatuses, value); }
 
         private void InitializeCollections()
         {
             PlayniteCompletionStatuses = PlayniteApi.Database.CompletionStatuses;
+            RawgCompletionStatuses = RawgMapping.RawgCompletionStatuses;
             RawgToPlayniteStatuses = RawgMapping.GetRawgToPlayniteCompletionStatuses(PlayniteApi, Settings).ToObservable();
             RawgToPlayniteRatings = RawgMapping.GetRawgToPlayniteRatings(Settings).ToObservable();
             PlayniteToRawgStatuses = RawgMapping.GetPlayniteToRawgStatuses(PlayniteApi, Settings).ToObservable();

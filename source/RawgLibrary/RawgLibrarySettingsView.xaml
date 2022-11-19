@@ -7,11 +7,15 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <TabControl Margin="20">
         <TabControl.Resources>
-            <Style TargetType="DataGrid">
+            <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
                 <Setter Property="MinHeight" Value="120"/>
                 <Setter Property="AutoGenerateColumns" Value="False"/>
                 <Setter Property="CanUserAddRows" Value="False"/>
                 <Setter Property="CanUserDeleteRows" Value="False"/>
+                <Setter Property="SelectionMode" Value="Single"/>
+                <Setter Property="SelectionUnit" Value="FullRow"/>
+                <Setter Property="CanUserResizeRows" Value="False"/>
+                <Setter Property="HeadersVisibility" Value="Column"/>
             </Style>
         </TabControl.Resources>
         <TabItem Header="Account">
@@ -56,58 +60,85 @@
         <TabItem Header="Mapping from RAWG">
             <StackPanel Margin="20">
                 <TextBlock Text="Completion statuses"/>
-                <DataGrid ItemsSource="{Binding RawgToPlayniteStatuses}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Width="auto" Binding="{Binding Id}"/>
-                        <DataGridTextColumn Header="Status" Width="auto" Binding="{Binding Description}"/>
-                        <DataGridComboBoxColumn Header="Playnite status" Width="*" ItemsSource="{Binding DataContext.PlayniteCompletionStatuses}" SelectedItemBinding="{Binding PlayniteCompletionStatus}" DisplayMemberPath="Name"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <ListView ItemsSource="{Binding RawgToPlayniteStatuses}" MinHeight="120" Height="Auto">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <!--<GridViewColumn Header="RAWG ID" DisplayMemberBinding="{Binding Id}" Width="Auto"/>-->
+                                <GridViewColumn Header="RAWG Status" DisplayMemberBinding="{Binding Description}" Width="Auto"/>
+                                <GridViewColumn Header="Playnite status" Width="Auto">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding DataContext.PlayniteCompletionStatuses}" SelectedValue="{Binding PlayniteCompletionStatusId}" DisplayMemberPath="Name"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
 
                 <TextBlock Text="User rating mapping" Margin="0,20,0,0"/>
-                <DataGrid ItemsSource="{Binding RawgToPlayniteRatings}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="ID" Width="auto" Binding="{Binding Id}"/>
-                        <DataGridTextColumn Header="Rating" Width="auto" Binding="{Binding Description}"/>
-                        <DataGridTemplateColumn Header="User rating">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox Width="30" Text="{Binding PlayniteRatingString}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <ListView ItemsSource="{Binding RawgToPlayniteRatings}" MinHeight="120" Height="Auto">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <!--<GridViewColumn Header="RAWG ID" DisplayMemberBinding="{Binding Id}" Width="Auto"/>-->
+                                <GridViewColumn Header="RAWG rating" DisplayMemberBinding="{Binding Description}" Width="Auto"/>
+                                <GridViewColumn Header="Playnite rating" Width="Auto">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Width="50" Text="{Binding PlayniteRatingString}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </StackPanel>
         </TabItem>
         <TabItem Header="Mapping to RAWG">
             <StackPanel Margin="20">
                 <TextBlock Text="Completion statuses"/>
-                <DataGrid ItemsSource="{Binding PlayniteToRawgStatuses}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Playnite Status" Width="auto" Binding="{Binding PlayniteCompletionStatus.Name}"/>
-                        <DataGridComboBoxColumn Header="RAWG status" Width="*" ItemsSource="{Binding DataContext.RawgCompletionStatuses}" SelectedValueBinding="{Binding RawgStatusId}" DisplayMemberPath="Value" SelectedValuePath="Key"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <ListView ItemsSource="{Binding PlayniteToRawgStatuses}" MinHeight="120" Height="Auto">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="Playnite Status" DisplayMemberBinding="{Binding PlayniteCompletionStatus.Name}" Width="Auto"/>
+                                <GridViewColumn Header="RAWG status" Width="Auto">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding DataContext.RawgCompletionStatuses}" SelectedValue="{Binding RawgStatusId}" SelectedValuePath="Key" DisplayMemberPath="Name"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
 
-                <TextBlock Text="User rating mapping" Margin="0,20,0,0"/>
-                <DataGrid ItemsSource="{Binding PlayniteToRawgRatings}">
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Playnite user rating range">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBox Width="30" Text="{Binding Range.MinString}"/>
-                                        <TextBlock Margin="5,0,5,0" Text="to"/>
-                                        <TextBox Width="30" Text="{Binding Range.MaxString}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="ID" Width="auto" Binding="{Binding Id}"/>
-                        <DataGridTextColumn Header="RAWG rating" Width="auto" Binding="{Binding Description}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                <TextBlock Text="User ratings" Margin="0,20,0,0"/>
+                <ListView ItemsSource="{Binding PlayniteToRawgRatings}" MinHeight="120" Height="Auto">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="Playnite user rating range" Width="Auto">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBox Width="50" Text="{Binding Range.MinString}"/>
+                                                <TextBlock Margin="5,0,5,0" Text="to"/>
+                                                <TextBox Width="50" Text="{Binding Range.MaxString}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="RAWG rating" Width="Auto" DisplayMemberBinding="{Binding Description}"/>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </StackPanel>
         </TabItem>
     </TabControl>
