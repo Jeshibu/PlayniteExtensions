@@ -150,9 +150,15 @@ namespace RawgLibrary
         private void SyncGameToRawg(Game game)
         {
             var rawgId = GetRawgIdFromGame(game);
+            if (rawgId == null)
+            {
+                logger.Warn($"Could not find the game {game.Name} on RAWG");
+                return;
+            }
+
             string token = settings.Settings.UserToken;
             var client = GetApiClient();
-            if (rawgId == null || token == null || client == null)
+            if (token == null || client == null)
                 return;
 
             if (!settings.Settings.PlayniteToRawgStatuses.TryGetValue(game.CompletionStatusId, out string rawgStatus))
@@ -203,31 +209,8 @@ namespace RawgLibrary
             }
 
             var client = GetApiClient();
-            string searchString;
-            if (game.ReleaseYear.HasValue)
-                searchString = $"{game.Name} {game.ReleaseYear}";
-            else
-                searchString = game.Name;
-            var result = client.SearchGames(searchString);
-            if (result?.Results == null)
-                return null;
-
-            var gameName = RawgMetadataHelper.NormalizeNameForComparison(game.Name);
-            foreach (var g in result.Results)
-            {
-                var resultName = RawgMetadataHelper.NormalizeNameForComparison(g.Name);
-                if (gameName.Equals(resultName, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    if (game.Links == null)
-                        game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>();
-                    else
-                        game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>(game.Links);
-
-                    game.Links.Add(RawgMetadataHelper.GetRawgLink(g));
-                    return g.Id;
-                }
-            }
-            return null;
+            var searchResultGame = RawgMetadataHelper.GetExactTitleMatch(game, client);
+            return searchResultGame?.Id;
         }
     }
 }

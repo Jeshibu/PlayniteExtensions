@@ -172,5 +172,37 @@ namespace Rawg.Common
 
             return links;
         }
+
+        public static RawgGameBase GetExactTitleMatch(Game game, RawgApiClient client)
+        {
+            if (string.IsNullOrWhiteSpace(game?.Name))
+                return null;
+
+            string searchString;
+            if (game.ReleaseYear.HasValue)
+                searchString = $"{game.Name} {game.ReleaseYear}";
+            else
+                searchString = game.Name;
+            var result = client.SearchGames(searchString);
+            if (result?.Results == null)
+                return null;
+
+            var gameName = NormalizeNameForComparison(game.Name);
+            foreach (var g in result.Results)
+            {
+                var resultName = NormalizeNameForComparison(g.Name);
+                if (gameName.Equals(resultName, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    if (game.Links == null)
+                        game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>();
+                    else
+                        game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>(game.Links);
+
+                    game.Links.Add(GetRawgLink(g));
+                    return g;
+                }
+            }
+            return null;
+        }
     }
 }

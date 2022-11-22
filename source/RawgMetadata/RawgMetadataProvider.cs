@@ -165,7 +165,7 @@ namespace RawgMetadata
                 return base.GetLinks(args);
 
             var links = new List<Link>();
-            links.Add(new Link("RAWG", $"https://rawg.io/games/{data.Slug}"));
+            links.Add(new Link("RAWG", $"https://rawg.io/games/{data.Id}"));
 
             if (!string.IsNullOrWhiteSpace(data.Website))
                 links.Add(new Link("Website", data.Website));
@@ -184,30 +184,8 @@ namespace RawgMetadata
 
             if (options.IsBackgroundDownload)
             {
-                if (string.IsNullOrWhiteSpace(options.GameData.Name))
-                {
-                    return FoundSearchResult = new RawgGameBase();
-                }
-
-                var searchResult = client.SearchGames(options.GameData.Name);
-
-                if (searchResult == null || searchResult.Results == null)
-                {
-                    return FoundSearchResult = new RawgGameBase();
-                }
-
-                var nameToMatch = RawgMetadataHelper.NormalizeNameForComparison(options.GameData.Name);
-
-                foreach (var g in searchResult.Results)
-                {
-                    var normalizedGameName = RawgMetadataHelper.NormalizeNameForComparison(g.Name);
-                    if (nameToMatch.Equals(normalizedGameName, StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        return FoundSearchResult = g;
-                    }
-                }
-
-                return FoundSearchResult = new RawgGameBase();
+                var searchResult = RawgMetadataHelper.GetExactTitleMatch(options.GameData, client);
+                return FoundSearchResult = searchResult ?? new RawgGameBase();
             }
             else
             {
