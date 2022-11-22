@@ -43,8 +43,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RawgMetadata", "RawgMetadat
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Rawg.Common", "Rawg.Common\Rawg.Common.shproj", "{298ABB0D-9B79-4BFD-9CDD-AE26E2672A5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RawgMetadata.Tests", "RawgMetadata.Tests\RawgMetadata.Tests.csproj", "{CA48E071-851A-4309-8E61-200F2B4B4782}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViveportLibrary.Tests", "ViveportLibrary.Tests\ViveportLibrary.Tests.csproj", "{DD635A7D-A7C0-4454-8C00-1E05F94E492D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IgnMetadata", "IgnMetadata\IgnMetadata.csproj", "{AC1B23EE-BDC9-4273-9F4B-4F414482541B}"
@@ -66,7 +64,6 @@ Global
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{a971e332-d479-48a2-9238-0659c64f30f5}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{ac1b23ee-bdc9-4273-9f4b-4f414482541b}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{afa8de86-101b-4449-a237-2030d7f74ce2}*SharedItemsImports = 4
-		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{ca48e071-851a-4309-8e61-200f2b4b4782}*SharedItemsImports = 4
 		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{d539c1ad-040e-4da2-b2be-c2ccc4f147f8}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{f2627b24-e712-4108-be62-646374c1bc42}*SharedItemsImports = 4
 	EndGlobalSection
@@ -143,10 +140,6 @@ Global
 		{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CA48E071-851A-4309-8E61-200F2B4B4782}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA48E071-851A-4309-8E61-200F2B4B4782}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA48E071-851A-4309-8E61-200F2B4B4782}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA48E071-851A-4309-8E61-200F2B4B4782}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DD635A7D-A7C0-4454-8C00-1E05F94E492D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD635A7D-A7C0-4454-8C00-1E05F94E492D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD635A7D-A7C0-4454-8C00-1E05F94E492D}.Release|Any CPU.ActiveCfg = Release|Any CPU
