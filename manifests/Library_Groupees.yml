@@ -14,3 +14,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/groupees0.2/GroupeesLibrary_0_2.pext
     Changelog:
      - Fixed play/install/uninstall actions running for non-Groupees games
+  - Version: 0.2.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-11-23
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2022-11-23/GroupeesLibrary_0_2_1.pext
+    Changelog:
+     - Fixed missing icon in "Update Game Library" menu

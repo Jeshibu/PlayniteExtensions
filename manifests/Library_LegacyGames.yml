@@ -53,3 +53,10 @@ Packages:
     Changelog:
      - Implemented uninstalling games (installing still isn't in)
      - Added library icon
+  - Version: 0.6
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2022-11-23
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2022-11-23/LegacyGamesLibrary_0_6.pext
+    Changelog:
+     - Fixed uninstall option being available for non Legacy Games games
+     - Implemented installing games

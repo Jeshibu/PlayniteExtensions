@@ -8,3 +8,15 @@ Packages:
      - Initial release
      - Library import
      - Collections import
+  - Version: 0.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-11-23
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2022-11-23/RawgLibrary_0_2.pext
+    Changelog:
+     - Fixed library only fetching the first 20 games
+     - Fixed missing icon in "Update Game Library" menu
+     - Switched to username/password authentication (to facilitate the following points)
+     - Added completion status fetching (with options to set the mapping to Playnite statuses)
+     - Added user score fetching (with options to set the mapping to Playnite user score)
+     - Added Playnite completion status syncing to RAWG (with options to set the mapping to RAWG statuses)
+     - Added Playnite user score syncing to RAWG (with options to set the mapping to RAWG ratings)

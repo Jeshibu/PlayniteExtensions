@@ -6,3 +6,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/rawg0.1/RawgMetadata_0_1.pext
     Changelog:
      - Initial release
+  - Version: 0.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-11-23
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2022-11-23/RawgMetadata_0_2.pext
+    Changelog:
+     - Made RAWG game links be in the ID format to make RAWG library syncing faster
