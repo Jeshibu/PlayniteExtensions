@@ -59,7 +59,7 @@ namespace RawgMetadata
                 return null;
             }
 
-            return rawgApiClient ?? (rawgApiClient = new RawgApiClient(new WebDownloader(), settings.Settings.ApiKey));
+            return rawgApiClient ?? (rawgApiClient = new RawgApiClient(settings.Settings.ApiKey));
         }
 
         private void OpenSettings()

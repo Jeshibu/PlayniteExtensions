@@ -15,7 +15,6 @@ namespace RawgLibrary
 {
     public class RawgLibrarySettings : RawgBaseSettings
     {
-        //private string username;
         private string userToken;
         private bool importUserLibrary = true;
         private List<RawgCollectionSetting> collections = new List<RawgCollectionSetting>();
@@ -26,8 +25,6 @@ namespace RawgLibrary
         private RawgUser user;
 
 
-        //[Obsolete]
-        //public string Username { get => username; set => SetValue(ref username, value); }
         public string UserToken { get => userToken; set => SetValue(ref userToken, value); }
         public bool ImportUserLibrary { get => importUserLibrary; set => SetValue(ref importUserLibrary, value); }
         public List<RawgCollectionSetting> Collections { get => collections; set => SetValue(ref collections, value); }
@@ -155,7 +152,7 @@ namespace RawgLibrary
             {
                 var client = GetApiClient();
                 var apiCollections = client.GetCurrentUserCollections(Settings.UserToken);
-                Settings.Collections = apiCollections.Results.Select(c => new RawgCollectionSetting(c)).ToList();
+                Settings.Collections = apiCollections.Select(c => new RawgCollectionSetting(c)).ToList();
             }
             catch (Exception ex)
             {
@@ -199,7 +196,7 @@ namespace RawgLibrary
 
         private RawgApiClient GetApiClient()
         {
-            return new RawgApiClient(Plugin.Downloader, Settings.ApiKey);
+            return new RawgApiClient(Settings.ApiKey);
         }
 
         private ObservableCollection<RawgToPlayniteStatus> rawgToPlayniteStatuses;

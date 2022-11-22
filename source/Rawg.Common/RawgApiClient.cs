@@ -17,23 +17,20 @@ namespace Rawg.Common
     public class RawgApiClient
     {
 
-        public RawgApiClient(IWebDownloader downloader, string key)
+        public RawgApiClient(string key)
         {
-            Downloader = downloader;
             Key = HttpUtility.UrlEncode(key);
             restClient = new RestClient(new RestClientOptions { BaseUrl = new Uri("https://rawg.io/api/"), MaxTimeout = 10000 });
         }
 
-        public IWebDownloader Downloader { get; }
         public string Key { get; set; }
         private ILogger logger = LogManager.GetLogger();
         private RestClient restClient;
 
-        private T Get<T>(string url)
+        private T Get<T>(string resource)
         {
-            var response = Downloader.DownloadString(url, throwExceptionOnErrorResponse: true);
-            var output = JsonConvert.DeserializeObject<T>(response.ResponseContent);
-            return output;
+            var request = new RestRequest(resource);
+            return Get<T>(request);
         }
 
         private T Get<T>(RestRequest request)
@@ -45,35 +42,51 @@ namespace Rawg.Common
             return output;
         }
 
-        private T GetAuthenticated<T>(string token, RestRequest request)
+        private List<T> GetAllPages<T>(string resource)
         {
-            request.AddHeader("token", $"Token {token}");
-            return Get<T>(request);
+            var request = new RestRequest(resource);
+            return GetAllPages<T>(request);
         }
+
+        private List<T> GetAllPages<T>(RestRequest request)
+        {
+            var output = new List<T>();
+            RawgResult<T> result;
+            do
+            {
+                result = Get<RawgResult<T>>(request);
+                if (result?.Results != null)
+                    output.AddRange(result.Results);
+
+                request.Resource = result?.Next?.TrimStart("https://api.rawg.io/api/");
+            } while (result?.Next != null);
+            return output;
+        }
+
 
         public RawgGameDetails GetGame(string slugOrId)
         {
-            return Get<RawgGameDetails>($"https://api.rawg.io/api/games/{slugOrId}?key={Key}");
+            return Get<RawgGameDetails>($"games/{slugOrId}?key={Key}");
         }
 
         public RawgResult<RawgGameBase> SearchGames(string query)
         {
-            return Get<RawgResult<RawgGameBase>>($"https://rawg.io/api/games?key={Key}&search={HttpUtility.UrlEncode(query)}");
+            return Get<RawgResult<RawgGameBase>>($"games?key={Key}&search={HttpUtility.UrlEncode(query)}");
         }
 
-        public RawgResult<RawgCollection> GetCollections(string username)
+        public ICollection<RawgCollection> GetCollections(string username)
         {
-            return Get<RawgResult<RawgCollection>>($"https://rawg.io/api/users/{username}/collections?key={Key}");
+            return GetAllPages<RawgCollection>($"users/{username}/collections?key={Key}");
         }
 
-        public RawgResult<RawgGameDetails> GetCollectionGames(string collectionSlugOrId)
+        public ICollection<RawgGameDetails> GetCollectionGames(string collectionSlugOrId)
         {
-            return Get<RawgResult<RawgGameDetails>>($"https://rawg.io/api/collections/{collectionSlugOrId}/games?key={Key}");
+            return GetAllPages<RawgGameDetails>($"collections/{collectionSlugOrId}/games?key={Key}");
         }
 
-        public RawgResult<RawgGameDetails> GetUserLibrary(string username)
+        public ICollection<RawgGameDetails> GetUserLibrary(string username)
         {
-            return Get<RawgResult<RawgGameDetails>>($"https://rawg.io/api/users/{username}/games?key={Key}");
+            return GetAllPages<RawgGameDetails>($"users/{username}/games?key={Key}");
         }
 
         public string Login(string username, string password)
@@ -88,31 +101,32 @@ namespace Rawg.Common
 
         public RawgUser GetCurrentUser(string token)
         {
-            var request = new RestRequest("users/current");
-            return GetAuthenticated<RawgUser>(token, request);
+            var request = new RestRequest("users/current").AddToken(token);
+            return Get<RawgUser>(request);
         }
 
-        public RawgResult<RawgCollection> GetCurrentUserCollections(string token)
+        public ICollection<RawgCollection> GetCurrentUserCollections(string token)
         {
-            var request = new RestRequest("users/current/collections");
-            return GetAuthenticated<RawgResult<RawgCollection>>(token, request);
+            var request = new RestRequest("users/current/collections").AddToken(token);
+            return GetAllPages<RawgCollection>(request);
         }
 
-        public RawgResult<RawgGameDetails> GetCurrentUserCollectionGames(string collectionSlugOrId, string token)
+        public ICollection<RawgGameDetails> GetCurrentUserCollectionGames(string collectionSlugOrId, string token)
         {
-            var request = new RestRequest($"collections/{collectionSlugOrId}/games");
-            return GetAuthenticated<RawgResult<RawgGameDetails>>(token, request);
+            var request = new RestRequest($"collections/{collectionSlugOrId}/games").AddToken(token);
+            return GetAllPages<RawgGameDetails>(request);
         }
 
-        public RawgResult<RawgGameDetails> GetCurrentUserLibrary(string token)
+        public ICollection<RawgGameDetails> GetCurrentUserLibrary(string token)
         {
-            var request = new RestRequest("users/current/games");
-            return GetAuthenticated<RawgResult<RawgGameDetails>>(token, request);
+            var request = new RestRequest("users/current/games").AddToken(token);
+            return GetAllPages<RawgGameDetails>(request);
         }
 
         public bool AddGameToLibrary(string token, int gameId, string completionStatus)
         {
             var request = new RestRequest("users/current/games", Method.Post)
+                            .AddToken(token)
                             .AddJsonBody(new Dictionary<string, object>
                             {
                                 { "game", gameId },
@@ -120,7 +134,7 @@ namespace Rawg.Common
                             });
             try
             {
-                var result = GetAuthenticated<Dictionary<string, object>>(token, request);
+                var result = Get<Dictionary<string, object>>(request);
 
                 if (result.TryGetValue("game", out object game))
                 {
@@ -150,13 +164,14 @@ namespace Rawg.Common
         public bool UpdateGameCompletionStatus(string token, int gameId, string completionStatus)
         {
             var request = new RestRequest($"users/current/games/{gameId}", Method.Patch)
+                            .AddToken(token)
                             .AddJsonBody(new Dictionary<string, object>
                             {
                                 { "status", completionStatus },
                             });
             try
             {
-                var result = GetAuthenticated<Dictionary<string, object>>(token, request);
+                var result = Get<Dictionary<string, object>>(request);
 
                 if (result.TryGetValue("game", out object game))
                 {
@@ -176,12 +191,13 @@ namespace Rawg.Common
         public Dictionary<string, object> RateGame(string token, int gameId, int rating, bool addToLibrary = false)
         {
             var request = new RestRequest("reviews", Method.Post)
+                            .AddToken(token)
                             .AddJsonBody(new Dictionary<string, object> {
                                 { "game", gameId },
                                 { "rating", rating },
                                 { "add_to_library", addToLibrary },
                             });
-            var result = GetAuthenticated<Dictionary<string, object>>(token, request);
+            var result = Get<Dictionary<string, object>>(request);
             return result;
         }
 
@@ -190,4 +206,14 @@ namespace Rawg.Common
             public string Key;
         }
     }
+
+    internal static class RawgApiClientHelpers
+    {
+        internal static RestRequest AddToken(this RestRequest request, string token)
+        {
+            request.AddHeader("token", $"Token {token}");
+            return request;
+        }
+    }
+
 }

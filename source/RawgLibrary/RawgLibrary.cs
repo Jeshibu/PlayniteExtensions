@@ -57,7 +57,7 @@ namespace RawgLibrary
                 return null;
             }
 
-            return rawgApiClient ?? (rawgApiClient = new RawgApiClient(new WebDownloader(), settings.Settings.User?.ApiKey));
+            return rawgApiClient ?? (rawgApiClient = new RawgApiClient(settings.Settings.User?.ApiKey));
         }
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
@@ -80,7 +80,8 @@ namespace RawgLibrary
                     }
 
                     var userLibrary = client.GetCurrentUserLibrary(settings.Settings.UserToken);
-                    output.AddRange(userLibrary?.Results?.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings.LanguageCode, settings.Settings)));
+                    if (userLibrary != null)
+                        output.AddRange(userLibrary?.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings.LanguageCode, settings.Settings)));
                 }
 
                 foreach (var collectionSettings in settings.Settings.Collections)
@@ -89,7 +90,8 @@ namespace RawgLibrary
                         continue;
 
                     var collectionGames = client.GetCollectionGames(collectionSettings.Collection.Id.ToString());
-                    output.AddRange(collectionGames?.Results?.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings.LanguageCode, settings.Settings)));
+                    if (collectionGames != null)
+                        output.AddRange(collectionGames?.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings.LanguageCode, settings.Settings)));
                 }
             }
             catch (Exception ex)
