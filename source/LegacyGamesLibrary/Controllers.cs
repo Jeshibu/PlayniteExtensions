@@ -3,15 +3,11 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Interop;
 
 namespace LegacyGamesLibrary
 {
@@ -105,7 +101,9 @@ namespace LegacyGamesLibrary
             if (!File.Exists(launcherPath))
                 throw new Exception("Can't launch Legacy Games Launcher. Installation not found.");
 
-            playniteAPI.Dialogs.ShowMessage("Installation is manual via the Legacy Games Launcher. After the game is installed there it will be registered in Playnite as installed automatically.");
+            playniteAPI.Dialogs.ShowMessage("Use the Legacy Games Launcher to install the game. \nIt will be properly marked as installed in Playnite automatically.", "User action required");
+
+            Process.Start(launcherPath);
 
             StartInstallWatcher();
         }

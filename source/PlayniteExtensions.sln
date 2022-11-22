@@ -27,10 +27,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamersGateLibrary.Tests", "
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PlayniteExtensions.Tests.Common", "PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.shproj", "{956848B6-6B29-4810-8802-3A8BC01C855F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameJoltLibrary", "GameJoltLibrary\GameJoltLibrary.csproj", "{1DC1DC66-F223-45C4-B86B-223114A630F8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameJoltLibrary.Tests", "GameJoltLibrary.Tests\GameJoltLibrary.Tests.csproj", "{28378D84-899D-4E54-8D94-417C1F7ED1C0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathReplacer", "PathReplacer\PathReplacer.csproj", "{7DD35ABF-B109-4EB6-BCD4-6C30BACD722F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathReplacer.Tests", "PathReplacer.Tests\PathReplacer.Tests.csproj", "{57ABD0A2-5E96-44D2-A253-DDB89BC35612}"
@@ -56,7 +52,6 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{0fc7f312-402b-4466-9e05-721ce2638268}*SharedItemsImports = 4
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{1dc1dc66-f223-45c4-b86b-223114a630f8}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{2351b5c1-6e28-4b79-a1d9-90fda53b5417}*SharedItemsImports = 4
 		Rawg.Common\Rawg.Common.projitems*{298abb0d-9b79-4bfd-9cdd-ae26e2672a5f}*SharedItemsImports = 13
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{4fdf1e89-5bc3-4c72-8fda-0d580e7a5d5f}*SharedItemsImports = 4
@@ -120,14 +115,6 @@ Global
 		{55B6D58F-97E4-4364-BB36-D1B3F47C41A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55B6D58F-97E4-4364-BB36-D1B3F47C41A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55B6D58F-97E4-4364-BB36-D1B3F47C41A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1DC1DC66-F223-45C4-B86B-223114A630F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1DC1DC66-F223-45C4-B86B-223114A630F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1DC1DC66-F223-45C4-B86B-223114A630F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1DC1DC66-F223-45C4-B86B-223114A630F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{28378D84-899D-4E54-8D94-417C1F7ED1C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28378D84-899D-4E54-8D94-417C1F7ED1C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28378D84-899D-4E54-8D94-417C1F7ED1C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{28378D84-899D-4E54-8D94-417C1F7ED1C0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7DD35ABF-B109-4EB6-BCD4-6C30BACD722F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7DD35ABF-B109-4EB6-BCD4-6C30BACD722F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7DD35ABF-B109-4EB6-BCD4-6C30BACD722F}.Release|Any CPU.ActiveCfg = Release|Any CPU
