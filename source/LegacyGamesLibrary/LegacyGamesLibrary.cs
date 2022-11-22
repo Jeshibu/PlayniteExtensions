@@ -121,8 +121,7 @@ namespace LegacyGamesLibrary
         {
             if (args.Game.PluginId == Id)
             {
-                //PlayniteApi.Dialogs.ShowMessage("Installation is manual via the Legacy Games Launcher. After the game is installed there it will be registered in Playnite as installed automatically.");
-                yield return new LegacyGamesInstallController(args.Game, RegistryReader);
+                yield return new LegacyGamesInstallController(args.Game, RegistryReader, PlayniteApi);
             }
         }
     }
