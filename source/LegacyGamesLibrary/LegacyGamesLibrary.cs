@@ -3,6 +3,7 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -112,8 +113,17 @@ namespace LegacyGamesLibrary
 
         public override IEnumerable<UninstallController> GetUninstallActions(GetUninstallActionsArgs args)
         {
-            yield return new LegacyGamesUninstallController(args.Game, RegistryReader);
+            if (args.Game.PluginId == Id)
+                yield return new LegacyGamesUninstallController(args.Game, RegistryReader);
+        }
+
+        public override IEnumerable<InstallController> GetInstallActions(GetInstallActionsArgs args)
+        {
+            if (args.Game.PluginId == Id)
+            {
+                //PlayniteApi.Dialogs.ShowMessage("Installation is manual via the Legacy Games Launcher. After the game is installed there it will be registered in Playnite as installed automatically.");
+                yield return new LegacyGamesInstallController(args.Game, RegistryReader);
+            }
         }
     }
-
 }
