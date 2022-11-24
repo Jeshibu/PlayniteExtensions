@@ -4,14 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ViveportLibrary
 {
     public interface IAppDataReader
     {
         IEnumerable<InstalledAppData> GetInstalledApps();
+
         IEnumerable<LicensedAppData> GetLicensedApps();
     }
 
@@ -39,7 +38,8 @@ namespace ViveportLibrary
             }
 
             var fileContents = File.ReadAllText(AppStatePath);
-            var apps = JsonConvert.DeserializeObject<InstalledAppData[]>(fileContents);
+            var apps = JsonConvert.DeserializeObject<InstalledAppData[]>(fileContents)
+                ?.Where(x => x.AppId != null).ToArray();
 
             return apps;
         }
@@ -72,12 +72,16 @@ namespace ViveportLibrary
     {
         [JsonProperty("appId")]
         public string AppId;
+
         [JsonProperty("title")]
         public string Title;
+
         [JsonProperty("imageUri")]
         public string ImageUri;
+
         [JsonProperty("path")]
         public string Path;
+
         [JsonProperty("uri")]
         public string StartupUri;
     }
