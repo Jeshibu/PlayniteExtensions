@@ -36,7 +36,7 @@ namespace RawgLibrary
             var gameMetadata = new GameMetadata
             {
                 GameId = data.Id.ToString(),
-                Name = data.Name,
+                Name = RawgMetadataHelper.StripYear(data.Name),
                 Description = data.Description,
                 ReleaseDate = RawgMetadataHelper.ParseReleaseDate(data, logger),
                 CriticScore = data.Metacritic,

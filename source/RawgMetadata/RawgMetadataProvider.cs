@@ -60,7 +60,7 @@ namespace RawgMetadata
             if (IsEmpty(data))
                 return base.GetName(args);
 
-            return FoundSearchResult.Name;
+            return RawgMetadataHelper.StripYear(FoundSearchResult.Name);
         }
 
         public override string GetDescription(GetMetadataFieldArgs args)
