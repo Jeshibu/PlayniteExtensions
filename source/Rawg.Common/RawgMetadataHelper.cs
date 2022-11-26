@@ -128,7 +128,7 @@ namespace Rawg.Common
             }
             catch (Exception ex)
             {
-                logger.Warn(ex, $"Could not parse release date <{data.Released}> for {data.Name}");
+                logger?.Warn(ex, $"Could not parse release date <{data.Released}> for {data.Name}");
                 return null;
             }
 
@@ -141,7 +141,7 @@ namespace Rawg.Common
                 case 3:
                     return new ReleaseDate(numberSegments[0], numberSegments[1], numberSegments[2]);
                 default:
-                    logger.Warn($"Could not parse release date <{data.Released}> for {data.Name}");
+                    logger?.Warn($"Could not parse release date <{data.Released}> for {data.Name}");
                     return null;
             }
         }
@@ -173,7 +173,7 @@ namespace Rawg.Common
             return links;
         }
 
-        public static RawgGameBase GetExactTitleMatch(Game game, RawgApiClient client)
+        public static RawgGameBase GetExactTitleMatch(Game game, RawgApiClient client, IPlayniteAPI playniteApi)
         {
             if (string.IsNullOrWhiteSpace(game?.Name))
                 return null;
@@ -187,22 +187,70 @@ namespace Rawg.Common
             if (result?.Results == null)
                 return null;
 
-            var gameName = NormalizeNameForComparison(game.Name);
-            foreach (var g in result.Results)
-            {
-                var resultName = NormalizeNameForComparison(g.Name);
-                if (gameName.Equals(resultName, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    if (game.Links == null)
-                        game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>();
-                    else
-                        game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>(game.Links);
+            var foundGame =
+                MatchGame(game, result.Results, playniteApi, matchPlatform: true, matchReleaseYear: true, matchNameExact: true)
+                ?? MatchGame(game, result.Results, playniteApi, matchPlatform: true, matchReleaseYear: true, matchNameExact: false)
+                ?? MatchGame(game, result.Results, playniteApi, matchPlatform: true, matchReleaseYear: false, matchNameExact: true)
+                ?? MatchGame(game, result.Results, playniteApi, matchPlatform: false, matchReleaseYear: true, matchNameExact: false)
+                ?? MatchGame(game, result.Results, playniteApi);
+            return foundGame;
+        }
 
-                    game.Links.Add(GetRawgLink(g));
-                    return g;
+        private static RawgGameBase MatchGame(Game game, IEnumerable<RawgGameBase> searchResults, IPlayniteAPI playniteApi, bool matchPlatform = false, bool matchReleaseYear = false, bool matchNameExact = false)
+        {
+            string normalizedGameName = matchNameExact ? StripYear(game.Name) : NormalizeNameForComparison(game.Name);
+            foreach (var searchResultGame in searchResults)
+            {
+                string searchResultGameName = matchNameExact ? StripYear(searchResultGame.Name) : NormalizeNameForComparison(searchResultGame.Name);
+
+                if (!normalizedGameName.Equals(searchResultGameName, StringComparison.InvariantCultureIgnoreCase))
+                    continue;
+
+
+                if (matchPlatform && searchResultGame.Platforms.Any() && game.PlatformIds.Any())
+                {
+                    var gamePlatforms = game.Platforms;
+                    bool matched = false;
+                    foreach (var rawgPlatform in searchResultGame.Platforms)
+                    {
+                        var p = GetPlatform(rawgPlatform);
+                        foreach (var playnitePlatform in gamePlatforms)
+                        {
+                            if ((p is MetadataSpecProperty platformSpec && platformSpec.Id == playnitePlatform.SpecificationId)
+                                || (p is MetadataNameProperty platformName && platformName.Name == playnitePlatform.Name))
+                            {
+                                matched = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!matched)
+                        continue;
                 }
+
+                var releaseDate = ParseReleaseDate(searchResultGame, null);
+                if (matchReleaseYear && game.ReleaseYear.HasValue && releaseDate.HasValue && releaseDate?.Year != game.ReleaseYear)
+                    continue;
+
+                SetLink(game, searchResultGame, playniteApi);
+                return searchResultGame;
             }
             return null;
+        }
+
+        private static void SetLink(Game game, RawgGameBase rawgGame, IPlayniteAPI playniteApi)
+        {
+            var rawgLink = GetRawgLink(rawgGame);
+            if (game.Links?.Any(l => l.Url == rawgLink.Url) == true)
+                return;
+
+            if (game.Links == null)
+                game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>();
+            else
+                game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>(game.Links);
+
+            game.Links.Add(rawgLink);
+            playniteApi.Database.Games.Update(game);
         }
     }
 }

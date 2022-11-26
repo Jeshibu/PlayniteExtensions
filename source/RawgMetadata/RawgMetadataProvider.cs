@@ -184,7 +184,7 @@ namespace RawgMetadata
 
             if (options.IsBackgroundDownload)
             {
-                var searchResult = RawgMetadataHelper.GetExactTitleMatch(options.GameData, client);
+                var searchResult = RawgMetadataHelper.GetExactTitleMatch(options.GameData, client, plugin.PlayniteApi);
                 return FoundSearchResult = searchResult ?? new RawgGameBase();
             }
             else

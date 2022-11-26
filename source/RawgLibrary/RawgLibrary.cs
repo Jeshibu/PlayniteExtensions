@@ -211,7 +211,7 @@ namespace RawgLibrary
             }
 
             var client = GetApiClient();
-            var searchResultGame = RawgMetadataHelper.GetExactTitleMatch(game, client);
+            var searchResultGame = RawgMetadataHelper.GetExactTitleMatch(game, client, PlayniteApi);
             return searchResultGame?.Id;
         }
     }
