@@ -12,9 +12,13 @@ namespace ViveportLibrary
     {
         private bool useCovers = false;
         private bool importHeadsetsAsPlatforms = true;
+        private bool tagSubscriptionGames = false;
+        private string subscriptionTagName = "Subscription";
 
         public bool UseCovers { get => useCovers; set => SetValue(ref useCovers, value); }
         public bool ImportHeadsetsAsPlatforms { get => importHeadsetsAsPlatforms; set => SetValue(ref importHeadsetsAsPlatforms, value); }
+        public bool TagSubscriptionGames { get => tagSubscriptionGames; set => SetValue(ref tagSubscriptionGames, value); }
+        public string SubscriptionTagName { get => subscriptionTagName; set => SetValue(ref subscriptionTagName, value); }
     }
 
     public class ViveportLibrarySettingsViewModel : PluginSettingsViewModel<ViveportLibrarySettings, ViveportLibrary>
@@ -23,6 +27,14 @@ namespace ViveportLibrary
         {
             // Load saved settings.
             Settings = LoadSavedSettings() ?? new ViveportLibrarySettings();
+        }
+
+        public RelayCommand<object> SetSubscriptionTagsCommand
+        {
+            get => new RelayCommand<object>(a =>
+            {
+                Plugin.SetSubscriptionTags();
+            });
         }
     }
 }

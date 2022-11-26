@@ -11,22 +11,27 @@ namespace ViveportLibrary
     {
         IEnumerable<InstalledAppData> GetInstalledApps();
 
-        IEnumerable<LicensedAppData> GetLicensedApps();
+        IEnumerable<AppMetadata> GetAppMetadata();
+
+        IEnumerable<LicenseData> GetLicenseData();
     }
 
     public class AppDataReader : IAppDataReader
     {
         private static readonly string DefaultAppStatePath = Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\HTC\Viveport\installed_apps.json");
         private static readonly string DefaultContentMetadataPath = Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\HTC\Viveport\content_metadata2.pref");
+        private static readonly string DefaultLicenseDataPath = Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\HTC\Viveport\content_licensing2.pref");
         private ILogger logger = LogManager.GetLogger();
 
         public string AppStatePath { get; }
         public string ContentMetadataPath { get; }
+        public string LicenseDataPath { get; }
 
-        public AppDataReader(string appStatePath = null, string contentMetadataPath = null)
+        public AppDataReader(string appStatePath = null, string contentMetadataPath = null, string licenseDataPath = null)
         {
             AppStatePath = appStatePath ?? DefaultAppStatePath;
             ContentMetadataPath = contentMetadataPath ?? DefaultContentMetadataPath;
+            LicenseDataPath = licenseDataPath ?? DefaultLicenseDataPath;
         }
 
         public IEnumerable<InstalledAppData> GetInstalledApps()
@@ -44,24 +49,48 @@ namespace ViveportLibrary
             return apps;
         }
 
-        public IEnumerable<LicensedAppData> GetLicensedApps()
+        public IEnumerable<AppMetadata> GetAppMetadata()
         {
             if (!File.Exists(ContentMetadataPath))
             {
-                logger.Error($"Viveport licensed games file not found in {ContentMetadataPath}");
+                logger.Error($"Viveport metadata file not found in {ContentMetadataPath}");
                 return null;
             }
 
             var fileContents = File.ReadAllText(ContentMetadataPath);
             var items = JsonConvert.DeserializeObject<Dictionary<string, string>>(fileContents);
-            var output = new List<LicensedAppData>();
+            var output = new List<AppMetadata>();
             foreach (var kvp in items)
             {
                 if (!kvp.Key.EndsWith("_data"))
                     continue;
 
-                var appData = JsonConvert.DeserializeObject<LicensedAppData>(kvp.Value);
-                output.Add(appData);
+                var appData = JsonConvert.DeserializeObject<AppMetadata>(kvp.Value);
+                if (appData.Id != null)
+                    output.Add(appData);
+            }
+
+            return output;
+        }
+
+        public IEnumerable<LicenseData> GetLicenseData()
+        {
+            if (!File.Exists(LicenseDataPath))
+            {
+                logger.Error($"Viveport licensed games file not found in {LicenseDataPath}");
+                return null;
+            }
+
+            var fileContents = File.ReadAllText(LicenseDataPath);
+            var items = JsonConvert.DeserializeObject<Dictionary<string, string>>(fileContents);
+            var output = new List<LicenseData>();
+            foreach (var kvp in items)
+            {
+                if (!kvp.Key.EndsWith("_data"))
+                    continue;
+
+                var licenseData = JsonConvert.DeserializeObject<LicenseData[]>(kvp.Value);
+                output.AddRange(licenseData.Where(l => l.AppId != null));
             }
 
             return output;
@@ -86,7 +115,7 @@ namespace ViveportLibrary
         public string StartupUri;
     }
 
-    public class LicensedAppData
+    public class AppMetadata
     {
         public string Id;
 
@@ -118,5 +147,14 @@ namespace ViveportLibrary
 
         [JsonProperty("w")]
         public int Width;
+    }
+
+    public class LicenseData
+    {
+        public string AppId;
+        public ulong? CreatedTime;
+        public ulong? ExpiryTime;
+        public ulong? OwnershipEndTime;
+        public string Licensing;
     }
 }

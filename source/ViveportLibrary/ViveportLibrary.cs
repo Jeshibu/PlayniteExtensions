@@ -47,17 +47,20 @@ namespace ViveportLibrary
                 yield break;
             }
 
-            var licensedApps = AppDataReader.GetLicensedApps();
-            if (licensedApps == null)
+            var allAppMetadata = AppDataReader.GetAppMetadata();
+            if (allAppMetadata == null)
             {
                 PlayniteApi.Notifications.Add(new NotificationMessage("viveport-installed-app-reader-error", "Couldn't read the Viveport licensed apps. Check your Viveport desktop client installation.", NotificationType.Error));
                 yield break;
             }
 
-            var installedDict = installedApps.ToDictionary(x => x.AppId);
-            var licensedDict = licensedApps.ToDictionary(x => x.Id);
+            var allLicenseData = AppDataReader.GetLicenseData();
 
-            var keys = licensedDict.Keys.ToHashSet();
+            var installedDict = installedApps.ToDictionary(x => x.AppId);
+            var metadataDict = allAppMetadata.ToDictionary(x => x.Id);
+            var licenseDict = allLicenseData?.ToDictionary(x => x.AppId) ?? new Dictionary<string, LicenseData>();
+
+            var keys = metadataDict.Keys.ToHashSet();
             foreach (var key in installedDict.Keys)
                 keys.Add(key);
 
@@ -65,13 +68,13 @@ namespace ViveportLibrary
             {
                 installedDict.TryGetValue(key, out var installedAppData);
 
-                if (!licensedDict.TryGetValue(key, out var licensedAppData))
-                    logger.Warn($"Couldn't find license data for app {key} ({installedAppData?.Title})");
+                if (!metadataDict.TryGetValue(key, out var appMetadata))
+                    logger.Warn($"Couldn't find metadata for app {key} ({installedAppData?.Title})");
 
                 var game = new GameMetadata
                 {
                     GameId = key,
-                    Name = licensedAppData.Title ?? installedAppData.Title,
+                    Name = appMetadata.Title ?? installedAppData.Title,
                     Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
                     InstallDirectory = installedAppData?.Path,
                     IsInstalled = installedAppData != null,
@@ -81,7 +84,7 @@ namespace ViveportLibrary
                 if (settings.Settings.UseCovers)
                 {
                     string coverUrl = installedAppData?.ImageUri;
-                    if (coverUrl == null && licensedAppData != null && licensedAppData.Thumbnails.TryGetValue("medium", out var thumbnail))
+                    if (coverUrl == null && appMetadata != null && appMetadata.Thumbnails.TryGetValue("medium", out var thumbnail))
                     {
                         coverUrl = thumbnail.Url;
                     }
@@ -90,9 +93,17 @@ namespace ViveportLibrary
                         game.CoverImage = new MetadataFile(coverUrl);
                 }
 
-                if (licensedAppData != null && settings.Settings.ImportHeadsetsAsPlatforms)
+                if (settings.Settings.TagSubscriptionGames
+                    && !string.IsNullOrWhiteSpace(settings.Settings.SubscriptionTagName)
+                    && licenseDict.TryGetValue(key, out var licenseData)
+                    && licenseData.Licensing == "rsu")
                 {
-                    foreach (var platform in licensedAppData.SupportedDeviceList)
+                    game.Tags = new HashSet<MetadataProperty> { new MetadataNameProperty(settings.Settings.SubscriptionTagName) };
+                }
+
+                if (appMetadata != null && settings.Settings.ImportHeadsetsAsPlatforms)
+                {
+                    foreach (var platform in appMetadata.SupportedDeviceList)
                     {
                         if (platform == "VStreaming")
                             continue; //what the hell is VStreaming anyway
@@ -163,6 +174,49 @@ namespace ViveportLibrary
                 TrackingMode = TrackingMode.Directory,
                 TrackingPath = args.Game.InstallDirectory,
             };
+        }
+        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        {
+            yield return new MainMenuItem { MenuSection = "@Viveport", Description = $"Tag all Viveport Infinity games as {settings?.Settings?.SubscriptionTagName}", Action = a => SetSubscriptionTags() };
+        }
+
+        public void SetSubscriptionTags()
+        {
+            if (string.IsNullOrWhiteSpace(settings.Settings.SubscriptionTagName))
+            {
+                PlayniteApi.Dialogs.ShowErrorMessage("Tag name setting is empty", "Error setting tag");
+                return;
+            }
+
+            var games = PlayniteApi.Database.Games.Where(g => g.PluginId == Id).ToList();
+            PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
+            {
+                a.ProgressMaxValue = games.Count + 1;
+                a.CurrentProgressValue++;
+                var licenses = AppDataReader.GetLicenseData().ToDictionary(x => x.AppId);
+
+                using (PlayniteApi.Database.BufferedUpdate())
+                {
+                    var subscriptionTag = PlayniteApi.Database.Tags.Add(settings.Settings.SubscriptionTagName);
+
+                    foreach (var game in games)
+                    {
+                        a.CurrentProgressValue++;
+                        if (a.CancelToken.IsCancellationRequested)
+                            break;
+
+                        if (!licenses.TryGetValue(game.GameId, out var license))
+                            continue;
+
+                        if (license.Licensing == "rsu" && game.TagIds?.Contains(subscriptionTag.Id) == false)
+                        {
+                            var tagIds = game.TagIds ?? new List<Guid>();
+                            tagIds.Add(subscriptionTag.Id);
+                            game.TagIds = tagIds;
+                        }
+                    }
+                }
+            }, new GlobalProgressOptions("Settings Viveport subscription tag", true) { IsIndeterminate = false });
         }
     }
 }

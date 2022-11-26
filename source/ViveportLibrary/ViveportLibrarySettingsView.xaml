@@ -8,5 +8,10 @@
     <StackPanel Margin="20">
         <CheckBox IsChecked="{Binding Settings.UseCovers}" Content="Use covers from installed games (horizontal, set before metadata collection)"/>
         <CheckBox IsChecked="{Binding Settings.ImportHeadsetsAsPlatforms}" Content="Set compatible headsets in the Platform field" Margin="0,20"/>
+        <StackPanel Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding Settings.TagSubscriptionGames}" Content="Tag games that are part of Viveport Infinity as" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding Settings.SubscriptionTagName}" Margin="5,0" Width="150"/>
+        </StackPanel>
+        <Button Command="{Binding SetSubscriptionTagsCommand}" Content="Set tag for all Viveport games" Margin="20" Height="30" Width="300"/>
     </StackPanel>
 </UserControl>
