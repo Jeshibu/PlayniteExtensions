@@ -215,7 +215,8 @@ namespace RawgLibrary
 
         private void InitializeCollections()
         {
-            PlayniteCompletionStatuses = PlayniteApi.Database.CompletionStatuses;
+            PlayniteCompletionStatuses = PlayniteApi.Database.CompletionStatuses.ToList();
+            PlayniteCompletionStatuses.Add(new CompletionStatus { Id = Guid.Empty, Name = "Default (configure in Library > Library Manager)" });
             RawgCompletionStatuses = RawgMapping.RawgCompletionStatuses;
             RawgToPlayniteStatuses = RawgMapping.GetRawgToPlayniteCompletionStatuses(PlayniteApi, Settings).ToObservable();
             RawgToPlayniteRatings = RawgMapping.GetRawgToPlayniteRatings(Settings).ToObservable();

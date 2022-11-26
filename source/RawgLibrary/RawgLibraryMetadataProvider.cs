@@ -52,14 +52,11 @@ namespace RawgLibrary
 
             if (data.UserGame != null)
             {
-                if (settings.RawgToPlayniteStatuses.TryGetValue(data.UserGame.Status, out Guid? statusId) && statusId.HasValue)
-                {
+                if (settings.RawgToPlayniteStatuses.TryGetValue(data.UserGame.Status, out Guid? statusId) && statusId.HasValue && statusId != Guid.Empty)
                     gameMetadata.CompletionStatus = new MetadataIdProperty(statusId.Value);
-                }
+
                 if (data.UserRating != 0 && settings.RawgToPlayniteRatings.TryGetValue(data.UserRating, out int playniteRating))
-                {
                     gameMetadata.UserScore = playniteRating;
-                }
             }
 
             return gameMetadata;

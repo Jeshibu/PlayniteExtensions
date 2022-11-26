@@ -100,6 +100,7 @@ namespace RawgLibrary
             { "beaten", "Completed" },
             { "dropped", "Played" },
             { "yet", "Not played" },
+            { "toplay", "Wishlist" },
         };
 
         private static Dictionary<string, string> RawgToPlayniteStatusDefaults = new Dictionary<string, string>
@@ -109,6 +110,7 @@ namespace RawgLibrary
             { "beaten", "Beaten" },
             { "dropped", "Abandoned" },
             { "yet", "Not Played" },
+            { "toplay", "Wishlist" }, //there's no default completion status for this, just try and see if Wishlist exists
         };
 
         public static Dictionary<int, string> RawgRatings = new Dictionary<int, string>
@@ -129,6 +131,9 @@ namespace RawgLibrary
             { "Abandoned", "dropped" },
             { "On Hold", "owned" },
             { "Plan to Play", "yet" },
+            { "Wislist", "toplay" },
+            { "Wishlisted", "toplay" },
+            { "None", "owned" },
         };
 
         public static IEnumerable<RawgToPlayniteStatus> GetRawgToPlayniteCompletionStatuses(IPlayniteAPI playniteAPI, RawgLibrarySettings settings)
@@ -140,10 +145,18 @@ namespace RawgLibrary
                 CompletionStatus playniteStatus = null;
 
                 if (settings?.RawgToPlayniteStatuses != null && settings.RawgToPlayniteStatuses.TryGetValue(cs.Key, out Guid? id) && id.HasValue)
-                    playniteStatus = playniteStatuses[id.Value];
+                {
+                    if (id == Guid.Empty)
+                        playniteStatus = new CompletionStatus("Default") { Id = Guid.Empty };
+                    else
+                        playniteStatus = playniteStatuses[id.Value];
+                }
 
                 if (playniteStatus == null && RawgToPlayniteStatusDefaults.TryGetValue(cs.Key, out string playniteStatusName))
                     playniteStatus = playniteStatuses.FirstOrDefault(s => s.Name.Equals(playniteStatusName, StringComparison.InvariantCultureIgnoreCase));
+
+                if (playniteStatus == null)
+                    playniteStatus = playniteStatuses[playniteAPI.ApplicationSettings.CompletionStatus.DefaultStatus];
 
                 if (playniteStatus == null)
                     playniteStatus = playniteStatuses.FirstOrDefault();
@@ -168,7 +181,8 @@ namespace RawgLibrary
 
         public static IEnumerable<PlayniteToRawgStatus> GetPlayniteToRawgStatuses(IPlayniteAPI playniteAPI, RawgLibrarySettings settings)
         {
-            var playniteStatuses = playniteAPI.Database.CompletionStatuses;
+            var playniteStatuses = playniteAPI.Database.CompletionStatuses.ToList();
+            playniteStatuses.Add(new CompletionStatus { Id = Guid.Empty, Name = "None" });
 
             foreach (var playniteStatus in playniteStatuses)
             {
