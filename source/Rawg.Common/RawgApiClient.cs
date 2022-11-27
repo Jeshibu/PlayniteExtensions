@@ -117,9 +117,23 @@ namespace Rawg.Common
             return GetAllPages<RawgGameDetails>(request);
         }
 
-        public ICollection<RawgGameDetails> GetCurrentUserLibrary(string token)
+        public ICollection<RawgGameDetails> GetCurrentUserLibrary(string token, string[] statuses = null)
         {
             var request = new RestRequest("users/current/games").AddToken(token);
+
+            if(statuses != null && statuses.Any())
+            {
+                request.AddQueryParameter("statuses", string.Join(",", statuses));
+            }
+
+            return GetAllPages<RawgGameDetails>(request);
+        }
+
+        public ICollection<RawgGameDetails> GetCurrentUserWishlist(string token)
+        {
+            var request = new RestRequest("users/current/games")
+                         .AddToken(token)
+                         .AddQueryParameter("statuses", "toplay");
             return GetAllPages<RawgGameDetails>(request);
         }
 
@@ -157,6 +171,21 @@ namespace Rawg.Common
             catch (Exception ex)
             {
                 logger.Error(ex, $"Error adding game {gameId} to library");
+                return false;
+            }
+        }
+
+        public bool DeleteGameFromLibrary(string token, int gameId)
+        {
+            var request = new RestRequest($"users/current/games/{gameId}", Method.Delete).AddToken(token);
+            try
+            {
+                var result = Get<string>(request);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"Error deleting game {gameId}");
                 return false;
             }
         }

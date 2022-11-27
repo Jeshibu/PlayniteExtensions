@@ -42,12 +42,13 @@ namespace Rawg.Common
                     return new MetadataSpecProperty("xbox_series");
 
                 case "playstation1":
+                    return new MetadataSpecProperty("sony_playstation");
                 case "playstation2":
                 case "playstation3":
                 case "playstation4":
                 case "playstation5":
                 case "psp":
-                    return new MetadataSpecProperty($"sony_" + platform.Platform.Slug);
+                    return new MetadataSpecProperty("sony_" + platform.Platform.Slug);
                 case "ps-vita":
                     return new MetadataSpecProperty("sony_vita");
 
@@ -238,8 +239,13 @@ namespace Rawg.Common
             return null;
         }
 
+        private static Guid RawgLibraryId = Guid.Parse("e894b739-2d6e-41ee-aed4-2ea898e29803");
+
         private static void SetLink(Game game, RawgGameBase rawgGame, IPlayniteAPI playniteApi)
         {
+            if (game.PluginId == RawgLibraryId)
+                return;
+
             var rawgLink = GetRawgLink(rawgGame);
             if (game.Links?.Any(l => l.Url == rawgLink.Url) == true)
                 return;

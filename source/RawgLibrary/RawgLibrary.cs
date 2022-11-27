@@ -25,7 +25,8 @@ namespace RawgLibrary
 
         private RawgApiClient rawgApiClient = null;
 
-        public override Guid Id { get; } = Guid.Parse("e894b739-2d6e-41ee-aed4-2ea898e29803");
+        public static Guid PluginId = Guid.Parse("e894b739-2d6e-41ee-aed4-2ea898e29803");
+        public override Guid Id { get; } = PluginId;
 
         public override string Name { get; } = "RAWG";
 
@@ -79,9 +80,11 @@ namespace RawgLibrary
                         return output;
                     }
 
-                    var userLibrary = client.GetCurrentUserLibrary(settings.Settings.UserToken);
+                    var statusesToImport = settings.Settings.RawgToPlayniteStatuses?.Where(rtps => rtps.Value != RawgMapping.DoNotImportId).Select(x => x.Key).ToArray();
+
+                    var userLibrary = client.GetCurrentUserLibrary(settings.Settings.UserToken, statusesToImport);
                     if (userLibrary != null)
-                        output.AddRange(userLibrary?.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings.LanguageCode, settings.Settings)));
+                        output.AddRange(userLibrary.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings.LanguageCode, settings.Settings)));
                 }
 
                 foreach (var collectionSettings in settings.Settings.Collections)
@@ -91,11 +94,12 @@ namespace RawgLibrary
 
                     var collectionGames = client.GetCollectionGames(collectionSettings.Collection.Id.ToString());
                     if (collectionGames != null)
-                        output.AddRange(collectionGames?.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings.LanguageCode, settings.Settings)));
+                        output.AddRange(collectionGames.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings.LanguageCode, settings.Settings)));
                 }
             }
             catch (Exception ex)
             {
+                logger.Error(ex, "Error while importing RAWG library");
                 PlayniteApi.Notifications.Add(new NotificationMessage("rawg-library-error", "Error while importing RAWG library: " + ex.Message, NotificationType.Error));
             }
 
@@ -119,7 +123,9 @@ namespace RawgLibrary
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            yield return new GameMenuItem { Description = "Sync to RAWG", Action = SyncGamesToRawg };
+            yield return new GameMenuItem { MenuSection = "RAWG", Description = "Sync to RAWG library", Action = SyncGamesToRawg };
+            if (args.Games.Any(g => GetRawgIdFromGameLinks(g) != null))
+                yield return new GameMenuItem { MenuSection = "RAWG", Description = "Delete from RAWG library", Action = a => DeleteGamesFromRawgLibrary(a.Games) };
         }
 
         private void SyncGamesToRawg(GameMenuItemActionArgs args)
@@ -196,23 +202,75 @@ namespace RawgLibrary
 
         private static Regex rawgGameUrlRegex = new Regex(@"^https://rawg\.io/games/(?<id>[0-9]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        private int? GetRawgIdFromGame(Game game)
+        private int? GetRawgIdFromGameLinks(Game game)
         {
-            if (game.Links != null)
-            {
-                foreach (var link in game.Links)
-                {
-                    var match = rawgGameUrlRegex.Match(link.Url);
-                    if (!match.Success)
-                        continue;
-                    int id = int.Parse(match.Groups["id"].Value);
-                    return id;
-                }
-            }
+            if (game.PluginId == Id && int.TryParse(game.GameId, out int rawgId))
+                return rawgId;
 
-            var client = GetApiClient();
+            if (game.Links == null)
+                return null;
+
+            foreach (var link in game.Links)
+            {
+                var match = rawgGameUrlRegex.Match(link.Url);
+                if (!match.Success)
+                    continue;
+                int id = int.Parse(match.Groups["id"].Value);
+                return id;
+            }
+            return null;
+        }
+
+        private int? GetRawgIdFromGame(Game game, RawgApiClient client = null)
+        {
+            var id = GetRawgIdFromGameLinks(game);
+            if (id.HasValue)
+                return id;
+
+            client = client ?? GetApiClient();
+            if (client == null)
+                return null;
+
             var searchResultGame = RawgMetadataHelper.GetExactTitleMatch(game, client, PlayniteApi);
             return searchResultGame?.Id;
+        }
+
+        public void DeleteGamesFromRawgLibrary(ICollection<Game> games)
+        {
+            var client = GetApiClient();
+            if (client == null || games?.Any() != true)
+                return;
+
+            PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
+            {
+                a.ProgressMaxValue = games.Count;
+                try
+                {
+                    PlayniteApi.Database.Games.BeginBufferUpdate();
+                    foreach (var game in games)
+                    {
+                        if (a.CancelToken.IsCancellationRequested)
+                            return;
+
+                        a.CurrentProgressValue++;
+                        var id = GetRawgIdFromGame(game);
+                        if (id == null)
+                            continue;
+
+                        client.DeleteGameFromLibrary(settings.Settings.UserToken, id.Value);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, "Error deleting games");
+                    PlayniteApi.Notifications.Add("rawg-delete-error", $"Error deleting games from RAWG library: {ex?.Message}", NotificationType.Error);
+                }
+                finally
+                {
+                    PlayniteApi.Database.Games.EndBufferUpdate();
+                }
+            }, new GlobalProgressOptions("Deleting games from RAWG Library", true) { IsIndeterminate = false });
+
         }
     }
 }

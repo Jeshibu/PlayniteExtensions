@@ -91,6 +91,7 @@ namespace RawgLibrary
     public static class RawgMapping
     {
         private static ILogger logger = LogManager.GetLogger();
+        public static Guid DoNotImportId = new Guid("6e18323f-8798-455c-851c-79bf34d83466");
 
         //"Not Played", "Played", "Beaten", "Completed", "Playing", "Abandoned", "On Hold", "Plan to Play"
         public static Dictionary<string, string> RawgCompletionStatuses = new Dictionary<string, string>
