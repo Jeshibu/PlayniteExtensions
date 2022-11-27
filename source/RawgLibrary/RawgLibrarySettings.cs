@@ -200,7 +200,7 @@ namespace RawgLibrary
 
         private RawgApiClient GetApiClient()
         {
-            return new RawgApiClient(Settings.ApiKey);
+            return new RawgApiClient(Settings.User?.ApiKey);
         }
 
         private ObservableCollection<RawgToPlayniteStatus> rawgToPlayniteStatuses;

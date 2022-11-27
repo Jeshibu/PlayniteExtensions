@@ -19,7 +19,7 @@ namespace Rawg.Common
 
         public RawgApiClient(string key)
         {
-            Key = HttpUtility.UrlEncode(key);
+            Key = key == null ? key : HttpUtility.UrlEncode(key);
             restClient = new RestClient(new RestClientOptions { BaseUrl = new Uri("https://rawg.io/api/"), MaxTimeout = 10000 });
         }
 

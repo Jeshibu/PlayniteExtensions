@@ -45,55 +45,68 @@ namespace RawgLibrary
 
         private void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> e)
         {
-            if (!settings.Settings.AutoSyncCompletionStatus && !settings.Settings.AutoSyncUserScore)
+            if (!settings.Settings.AutoSyncNewGames && !settings.Settings.AutoSyncDeletedGames)
                 return;
 
             var client = GetApiClient();
             var token = settings.Settings.UserToken;
+            if (token == null)
+            {
+                string error = "Could not automatically sync game updates: no user token";
+                logger.Warn(error);
+                PlayniteApi.Notifications.Add("rawg-sync-error", error, NotificationType.Error);
+                return;
+            }
 
             PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
             {
-                var addedItems = e.AddedItems ?? new List<Game>();
+                //var addedItems = e.AddedItems ?? new List<Game>();
                 var removedItems = e.RemovedItems ?? new List<Game>();
-                a.ProgressMaxValue = addedItems.Count + removedItems.Count;
+                a.ProgressMaxValue = /*addedItems.Count +*/ removedItems.Count;
                 try
                 {
-                    foreach (var game in addedItems)
+                    //if (settings.Settings.AutoSyncNewGames)
+                    //{
+                    //    foreach (var game in addedItems)
+                    //    {
+                    //        if (a.CancelToken.IsCancellationRequested)
+                    //            break;
+
+                    //        a.CurrentProgressValue++;
+                    //        if (game.PluginId == Id) //skip imports from RAWG library
+                    //            continue;
+                    //        if (game.PluginId == Guid.Empty && game.Name == "New Game") //newly added custom games won't have relevant data yet
+                    //            continue;
+
+                    //        var gameId = GetRawgIdFromGame(game, client, setLink: false); //TODO: once collection merging is in, set setLink to true again
+                    //        if (gameId == null)
+                    //            continue;
+
+                    //        if (SyncCompletionStatus(game, gameId.Value, client, token))
+                    //            logger.Info($"Synced {game.Name} (RAWG id {gameId}) to status {game.CompletionStatus?.Name}");
+                    //        else
+                    //            logger.Info($"Could not sync {game.Name} (RAWG id {gameId}) to status {game.CompletionStatus?.Name}");
+                    //    }
+                    //}
+
+                    if (settings.Settings.AutoSyncDeletedGames)
                     {
-                        if (a.CancelToken.IsCancellationRequested)
-                            break;
+                        foreach (var game in removedItems)
+                        {
+                            if (a.CancelToken.IsCancellationRequested)
+                                break;
 
-                        a.CurrentProgressValue++;
-                        if (game.PluginId == Id)
-                            continue; //skip imports from RAWG library
+                            a.CurrentProgressValue++;
 
-                        var gameId = GetRawgIdFromGame(game, client);
-                        if (gameId == null)
-                            continue;
+                            var gameId = GetRawgIdFromGame(game, client, setLink: false);
+                            if (gameId == null)
+                                continue;
 
-                        if (SyncCompletionStatus(game, gameId.Value, client, token))
-                            logger.Info($"Synced {game.Name} (RAWG id {gameId}) to status {game.CompletionStatus?.Name}");
-                        else
-                            logger.Info($"Could not sync {game.Name} (RAWG id {gameId}) to status {game.CompletionStatus?.Name}");
-                    }
-
-                    foreach (var game in removedItems)
-                    {
-                        if (a.CancelToken.IsCancellationRequested)
-                            break;
-
-                        a.CurrentProgressValue++;
-                        if (game.PluginId == Id)
-                            continue; //skip imports from RAWG library
-
-                        var gameId = GetRawgIdFromGame(game, client, setLink: false);
-                        if (gameId == null)
-                            continue;
-
-                        if (client.DeleteGameFromLibrary(token, gameId.Value))
-                            logger.Info($"Deleted {game.Name} from RAWG library (RAWG id {gameId})");
-                        else
-                            logger.Info($"Could not delete {game.Name} from RAWG library (RAWG id {gameId})");
+                            if (client.DeleteGameFromLibrary(token, gameId.Value))
+                                logger.Info($"Deleted {game.Name} from RAWG library (RAWG id {gameId})");
+                            else
+                                logger.Info($"Could not delete {game.Name} from RAWG library (RAWG id {gameId})");
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -107,11 +120,18 @@ namespace RawgLibrary
 
         private void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> e)
         {
-            if (!settings.Settings.AutoSyncCompletionStatus && !settings.Settings.AutoSyncUserScore)
+            if (!settings.Settings.AutoSyncCompletionStatus && !settings.Settings.AutoSyncUserScore && !settings.Settings.AutoSyncNewGames)
                 return;
 
             var client = GetApiClient();
             var token = settings.Settings.UserToken;
+            if (token == null)
+            {
+                string error = "Could not automatically sync game updates: no user token";
+                logger.Warn(error);
+                PlayniteApi.Notifications.Add("rawg-sync-error", error, NotificationType.Error);
+                return;
+            }
 
             PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
             {
@@ -125,13 +145,14 @@ namespace RawgLibrary
 
                         a.CurrentProgressValue++;
 
-                        var gameId = GetRawgIdFromGame(item.NewData, client);
-                        if (gameId == null)
-                            continue;
+                        int gameId = -1;
 
                         if (settings.Settings.AutoSyncCompletionStatus && item.OldData.CompletionStatusId != item.NewData.CompletionStatusId)
                         {
-                            if (SyncCompletionStatus(item.NewData, gameId.Value, client, token))
+                            if (gameId == -1 && !TryGetRawgIdFromGame(item.NewData, client, true, out gameId))
+                                continue;
+
+                            if (SyncCompletionStatus(item.NewData, gameId, client, token))
                                 logger.Info($"Synced {item.NewData.Name} (RAWG id {gameId}) to status {item.NewData.CompletionStatus?.Name}");
                             else
                                 logger.Info($"Could not sync {item.NewData.Name} (RAWG id {gameId}) to status {item.NewData.CompletionStatus?.Name}");
@@ -142,7 +163,24 @@ namespace RawgLibrary
 
                         if (settings.Settings.AutoSyncUserScore && item.OldData.UserScore != item.NewData.UserScore)
                         {
-                            SyncUserScore(item.NewData, gameId.Value, client, token);
+                            if (gameId == -1 && !TryGetRawgIdFromGame(item.NewData, client, true, out gameId))
+                                continue;
+
+                            SyncUserScore(item.NewData, gameId, client, token);
+                        }
+
+                        if (settings.Settings.AutoSyncNewGames
+                            && item.OldData.PluginId == Guid.Empty
+                            && item.OldData.Name == "New Game"
+                            && item.OldData.Name != item.NewData.Name)
+                        {
+                            if (gameId == -1 && !TryGetRawgIdFromGame(item.NewData, client, true, out gameId))
+                                continue;
+                            
+                            if (SyncCompletionStatus(item.NewData, gameId, client, token))
+                                logger.Info($"Synced {item.NewData.Name} (RAWG id {gameId}) to status {item.NewData.CompletionStatus?.Name}");
+                            else
+                                logger.Info($"Could not sync {item.NewData.Name} (RAWG id {gameId}) to status {item.NewData.CompletionStatus?.Name}");
                         }
                     }
                 }
@@ -237,8 +275,7 @@ namespace RawgLibrary
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             yield return new GameMenuItem { MenuSection = "RAWG", Description = "Sync to RAWG library", Action = SyncGamesToRawg };
-            if (args.Games.Any(g => GetRawgIdFromGameLinks(g) != null))
-                yield return new GameMenuItem { MenuSection = "RAWG", Description = "Delete from RAWG library", Action = a => DeleteGamesFromRawgLibrary(a.Games) };
+            yield return new GameMenuItem { MenuSection = "RAWG", Description = "Delete from RAWG library", Action = a => DeleteGamesFromRawgLibrary(a.Games) };
         }
 
         private void SyncGamesToRawg(GameMenuItemActionArgs args)
@@ -353,6 +390,12 @@ namespace RawgLibrary
                 return id;
             }
             return null;
+        }
+
+        private bool TryGetRawgIdFromGame(Game game, RawgApiClient client, bool setLink, out int rawgId)
+        {
+            rawgId = GetRawgIdFromGame(game, client, setLink) ?? -1;
+            return rawgId != -1;
         }
 
         private int? GetRawgIdFromGame(Game game, RawgApiClient client = null, bool setLink = true)

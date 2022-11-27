@@ -208,7 +208,7 @@ namespace Rawg.Common
                     continue;
 
 
-                if (matchPlatform && searchResultGame.Platforms.Any() && game.PlatformIds.Any())
+                if (matchPlatform && searchResultGame.Platforms?.Any() == true && game.PlatformIds?.Any() == true)
                 {
                     var gamePlatforms = game.Platforms;
                     bool matched = false;
@@ -242,9 +242,21 @@ namespace Rawg.Common
 
         private static Guid RawgLibraryId = Guid.Parse("e894b739-2d6e-41ee-aed4-2ea898e29803");
 
+        /// <summary>
+        /// Set a link to more easily find the RAWG game in the future. This saves having to search for the game every time, which would burn through API key use limits.
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="rawgGame"></param>
+        /// <param name="playniteApi"></param>
         private static void SetLink(Game game, RawgGameBase rawgGame, IPlayniteAPI playniteApi)
         {
+            //The link doesn't need to be set if the RAWG ID is already the GameId
             if (game.PluginId == RawgLibraryId)
+                return;
+
+            //TODO: remove once metadata collection merging is in
+            //This is here to prevent new games from getting this link and metadata collection then not happening for the game's links
+            if (game.Links == null || game.Links.Count == 0)
                 return;
 
             var rawgLink = GetRawgLink(rawgGame);
