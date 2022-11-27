@@ -25,8 +25,7 @@ namespace RawgLibrary
 
         private RawgApiClient rawgApiClient = null;
 
-        public static Guid PluginId = Guid.Parse("e894b739-2d6e-41ee-aed4-2ea898e29803");
-        public override Guid Id { get; } = PluginId;
+        public override Guid Id { get; } = Guid.Parse("e894b739-2d6e-41ee-aed4-2ea898e29803");
 
         public override string Name { get; } = "RAWG";
 
@@ -40,6 +39,130 @@ namespace RawgLibrary
             {
                 HasSettings = true
             };
+            api.Database.Games.ItemUpdated += Games_ItemUpdated;
+            api.Database.Games.ItemCollectionChanged += Games_ItemCollectionChanged;
+        }
+
+        private void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> e)
+        {
+            if (!settings.Settings.AutoSyncCompletionStatus && !settings.Settings.AutoSyncUserScore)
+                return;
+
+            var client = GetApiClient();
+            var token = settings.Settings.UserToken;
+
+            PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
+            {
+                var addedItems = e.AddedItems ?? new List<Game>();
+                var removedItems = e.RemovedItems ?? new List<Game>();
+                a.ProgressMaxValue = addedItems.Count + removedItems.Count;
+                try
+                {
+                    PlayniteApi.Database.Games.BeginBufferUpdate();
+                    foreach (var game in addedItems)
+                    {
+                        if (a.CancelToken.IsCancellationRequested)
+                            break;
+
+                        a.CurrentProgressValue++;
+                        if (game.PluginId == Id)
+                            continue; //skip imports from RAWG library
+
+                        var gameId = GetRawgIdFromGame(game, client);
+                        if (gameId == null)
+                            continue;
+
+                        if (SyncCompletionStatus(game, gameId.Value, client, token))
+                            logger.Info($"Synced {game.Name} (RAWG id {gameId}) to status {game.CompletionStatus?.Name}");
+                        else
+                            logger.Info($"Could not sync {game.Name} (RAWG id {gameId}) to status {game.CompletionStatus?.Name}");
+                    }
+
+                    foreach (var game in removedItems)
+                    {
+                        if (a.CancelToken.IsCancellationRequested)
+                            break;
+
+                        a.CurrentProgressValue++;
+                        if (game.PluginId == Id)
+                            continue; //skip imports from RAWG library
+
+                        var gameId = GetRawgIdFromGame(game, client, setLink: false);
+                        if (gameId == null)
+                            continue;
+
+                        if (client.DeleteGameFromLibrary(token, gameId.Value))
+                            logger.Info($"Deleted {game.Name} from RAWG library (RAWG id {gameId})");
+                        else
+                            logger.Info($"Could not delete {game.Name} from RAWG library (RAWG id {gameId})");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, "Error syncing new/deleted games to RAWG library");
+                    PlayniteApi.Notifications.Add("rawg-sync-error", $"Error syncing new/deleted to RAWG library: {ex?.Message}", NotificationType.Error);
+                }
+                finally
+                {
+                    PlayniteApi.Database.Games.EndBufferUpdate();
+                }
+            }
+            , new GlobalProgressOptions("Syncing new/deleted games to RAWG library", cancelable: true) { IsIndeterminate = false });
+        }
+
+        private void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> e)
+        {
+            if (!settings.Settings.AutoSyncCompletionStatus && !settings.Settings.AutoSyncUserScore)
+                return;
+
+            var client = GetApiClient();
+            var token = settings.Settings.UserToken;
+
+            PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
+            {
+                a.ProgressMaxValue = e.UpdatedItems.Count;
+                try
+                {
+                    PlayniteApi.Database.Games.BeginBufferUpdate();
+                    foreach (var item in e.UpdatedItems)
+                    {
+                        if (a.CancelToken.IsCancellationRequested)
+                            break;
+
+                        a.CurrentProgressValue++;
+
+                        var gameId = GetRawgIdFromGame(item.NewData, client);
+                        if (gameId == null)
+                            continue;
+
+                        if (settings.Settings.AutoSyncCompletionStatus && item.OldData.CompletionStatusId != item.NewData.CompletionStatusId)
+                        {
+                            if (SyncCompletionStatus(item.NewData, gameId.Value, client, token))
+                                logger.Info($"Synced {item.NewData.Name} (RAWG id {gameId}) to status {item.NewData.CompletionStatus?.Name}");
+                            else
+                                logger.Info($"Could not sync {item.NewData.Name} (RAWG id {gameId}) to status {item.NewData.CompletionStatus?.Name}");
+                        }
+
+                        if (a.CancelToken.IsCancellationRequested)
+                            break;
+
+                        if (settings.Settings.AutoSyncUserScore && item.OldData.UserScore != item.NewData.UserScore)
+                        {
+                            SyncUserScore(item.NewData, gameId.Value, client, token);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, "Error syncing to RAWG library");
+                    PlayniteApi.Notifications.Add("rawg-sync-error", $"Error syncing to RAWG library: {ex?.Message}", NotificationType.Error);
+                }
+                finally
+                {
+                    PlayniteApi.Database.Games.EndBufferUpdate();
+                }
+            }
+            , new GlobalProgressOptions("Syncing changes to RAWG library", cancelable: true) { IsIndeterminate = false });
         }
 
         private void OpenSettings()
@@ -155,6 +278,54 @@ namespace RawgLibrary
             }, new GlobalProgressOptions("Syncing games to RAWG", true) { IsIndeterminate = false });
         }
 
+        private bool SyncCompletionStatus(Game game, int rawgId, RawgApiClient client, string token)
+        {
+            if (!settings.Settings.PlayniteToRawgStatuses.TryGetValue(game.CompletionStatusId, out string rawgStatus))
+            {
+                logger.Warn($"No RAWG status configured for Playnite completion status {game.CompletionStatus.Name}");
+                return false;
+            }
+            else
+            {
+                logger.Info($"Updating RAWG game {game.Name}");
+                if (client.UpdateGameCompletionStatus(token, rawgId, rawgStatus))
+                {
+                    return true;
+                }
+                else
+                {
+                    logger.Info($"Adding RAWG game {game.Name}");
+                    return client.AddGameToLibrary(token, rawgId, rawgStatus);
+                }
+            }
+        }
+
+        private void SyncUserScore(Game game, int rawgId, RawgApiClient client, string token)
+        {
+            if (game.UserScore.HasValue)
+            {
+                int userScore = game.UserScore.Value;
+                foreach (var ratingsMapping in settings.Settings.PlayniteToRawgRatings)
+                {
+                    if (ratingsMapping.Value.Min <= userScore && userScore <= ratingsMapping.Value.Max)
+                    {
+                        logger.Info($"Rating RAWG game {game.Name}");
+                        client.RateGame(token, rawgId, ratingsMapping.Key);
+                        break;
+                    }
+                    logger.Warn($"No user score mapping found for Playnite user score {game.UserScore}");
+                }
+            }
+            else
+            {
+                var review = client.GetCurrentUserReview(token, rawgId);
+                if (review != null && string.IsNullOrWhiteSpace(review.Text)) //don't delete reviews people spent time writing
+                {
+                    client.DeleteReview(token, review.Id);
+                }
+            }
+        }
+
         private void SyncGameToRawg(Game game)
         {
             var rawgId = GetRawgIdFromGame(game);
@@ -169,35 +340,8 @@ namespace RawgLibrary
             if (token == null || client == null)
                 return;
 
-            if (!settings.Settings.PlayniteToRawgStatuses.TryGetValue(game.CompletionStatusId, out string rawgStatus))
-            {
-                logger.Warn($"No RAWG status configured for Playnite completion status {game.CompletionStatus.Name}");
-                return;
-            }
-            else
-            {
-                logger.Info($"Updating RAWG game {game.Name}");
-                if (!client.UpdateGameCompletionStatus(token, rawgId.Value, rawgStatus))
-                {
-                    logger.Info($"Adding RAWG game {game.Name}");
-                    client.AddGameToLibrary(token, rawgId.Value, rawgStatus);
-                }
-            }
-
-            if (game.UserScore.HasValue)
-            {
-                int userScore = game.UserScore.Value;
-                foreach (var ratingsMapping in settings.Settings.PlayniteToRawgRatings)
-                {
-                    if (ratingsMapping.Value.Min <= userScore && userScore <= ratingsMapping.Value.Max)
-                    {
-                        logger.Info($"Rating RAWG game {game.Name}");
-                        client.RateGame(token, rawgId.Value, ratingsMapping.Key);
-                        break;
-                    }
-                    logger.Warn($"No user score mapping found for Playnite user score {game.UserScore}");
-                }
-            }
+            SyncCompletionStatus(game, rawgId.Value, client, token);
+            SyncUserScore(game, rawgId.Value, client, token);
         }
 
         private static Regex rawgGameUrlRegex = new Regex(@"^https://rawg\.io/games/(?<id>[0-9]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -221,7 +365,7 @@ namespace RawgLibrary
             return null;
         }
 
-        private int? GetRawgIdFromGame(Game game, RawgApiClient client = null)
+        private int? GetRawgIdFromGame(Game game, RawgApiClient client = null, bool setLink = true)
         {
             var id = GetRawgIdFromGameLinks(game);
             if (id.HasValue)
@@ -231,7 +375,7 @@ namespace RawgLibrary
             if (client == null)
                 return null;
 
-            var searchResultGame = RawgMetadataHelper.GetExactTitleMatch(game, client, PlayniteApi);
+            var searchResultGame = RawgMetadataHelper.GetExactTitleMatch(game, client, PlayniteApi, setLink);
             return searchResultGame?.Id;
         }
 
@@ -239,6 +383,9 @@ namespace RawgLibrary
         {
             var client = GetApiClient();
             if (client == null || games?.Any() != true)
+                return;
+
+            if (PlayniteApi.Dialogs.ShowMessage("This will delete the selected games from your online RAWG library. Are you sure?", "Deletion confirmation", System.Windows.MessageBoxButton.YesNo) != System.Windows.MessageBoxResult.Yes)
                 return;
 
             PlayniteApi.Dialogs.ActivateGlobalProgress(a =>

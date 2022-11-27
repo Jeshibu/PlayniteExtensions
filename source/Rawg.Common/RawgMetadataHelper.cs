@@ -174,7 +174,7 @@ namespace Rawg.Common
             return links;
         }
 
-        public static RawgGameBase GetExactTitleMatch(Game game, RawgApiClient client, IPlayniteAPI playniteApi)
+        public static RawgGameBase GetExactTitleMatch(Game game, RawgApiClient client, IPlayniteAPI playniteApi, bool setLink = true)
         {
             if (string.IsNullOrWhiteSpace(game?.Name))
                 return null;
@@ -189,15 +189,15 @@ namespace Rawg.Common
                 return null;
 
             var foundGame =
-                MatchGame(game, result.Results, playniteApi, matchPlatform: true, matchReleaseYear: true, matchNameExact: true)
-                ?? MatchGame(game, result.Results, playniteApi, matchPlatform: true, matchReleaseYear: true, matchNameExact: false)
-                ?? MatchGame(game, result.Results, playniteApi, matchPlatform: true, matchReleaseYear: false, matchNameExact: true)
-                ?? MatchGame(game, result.Results, playniteApi, matchPlatform: false, matchReleaseYear: true, matchNameExact: false)
-                ?? MatchGame(game, result.Results, playniteApi);
+                MatchGame(game, result.Results, playniteApi, matchPlatform: true, matchReleaseYear: true, matchNameExact: true, setLink)
+                ?? MatchGame(game, result.Results, playniteApi, matchPlatform: true, matchReleaseYear: true, matchNameExact: false, setLink)
+                ?? MatchGame(game, result.Results, playniteApi, matchPlatform: true, matchReleaseYear: false, matchNameExact: true, setLink)
+                ?? MatchGame(game, result.Results, playniteApi, matchPlatform: false, matchReleaseYear: true, matchNameExact: false, setLink)
+                ?? MatchGame(game, result.Results, playniteApi, setLink: setLink);
             return foundGame;
         }
 
-        private static RawgGameBase MatchGame(Game game, IEnumerable<RawgGameBase> searchResults, IPlayniteAPI playniteApi, bool matchPlatform = false, bool matchReleaseYear = false, bool matchNameExact = false)
+        private static RawgGameBase MatchGame(Game game, IEnumerable<RawgGameBase> searchResults, IPlayniteAPI playniteApi, bool matchPlatform = false, bool matchReleaseYear = false, bool matchNameExact = false, bool setLink = true)
         {
             string normalizedGameName = matchNameExact ? StripYear(game.Name) : NormalizeNameForComparison(game.Name);
             foreach (var searchResultGame in searchResults)
@@ -233,7 +233,8 @@ namespace Rawg.Common
                 if (matchReleaseYear && game.ReleaseYear.HasValue && releaseDate.HasValue && releaseDate?.Year != game.ReleaseYear)
                     continue;
 
-                SetLink(game, searchResultGame, playniteApi);
+                if (setLink)
+                    SetLink(game, searchResultGame, playniteApi);
                 return searchResultGame;
             }
             return null;

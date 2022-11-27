@@ -33,6 +33,10 @@ namespace RawgLibrary
         public Dictionary<Guid, string> PlayniteToRawgStatuses { get => playniteToRawgStatuses; set => SetValue(ref playniteToRawgStatuses, value); }
         public Dictionary<int, Range> PlayniteToRawgRatings { get => playniteToRawgRatings; set => SetValue(ref playniteToRawgRatings, value); }
         public RawgUser User { get => user; set => SetValue(ref user, value); }
+        public bool AutoSyncCompletionStatus { get; set; }
+        public bool AutoSyncUserScore { get; set; }
+        public bool AutoSyncNewGames { get; set; }
+        public bool AutoSyncDeletedGames { get; set; }
     }
 
     public class RawgCollectionSetting : ObservableObject

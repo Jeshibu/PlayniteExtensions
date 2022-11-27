@@ -230,6 +230,20 @@ namespace Rawg.Common
             return result;
         }
 
+        public RawgReview GetCurrentUserReview(string token, int gameId)
+        {
+            var request = new RestRequest($"games/{gameId}/reviews", Method.Get).AddToken(token);
+            var result = Get<RawgGameReviews>(request);
+            return result?.Your;
+        }
+
+        public RawgReview DeleteReview(string token, long reviewId)
+        {
+            var request = new RestRequest($"reviews/{reviewId}", Method.Delete).AddToken(token);
+            var result = Get<RawgReview>(request);
+            return result;
+        }
+
         private class LoginResponse
         {
             public string Key;
@@ -245,4 +259,16 @@ namespace Rawg.Common
         }
     }
 
+    public class RawgGameReviews:RawgResult<RawgReview>
+    {
+        public RawgReview Your { get; set; }
+    }
+
+    public class RawgReview
+    {
+        public long Id { get; set; }
+        public int Game { get; set; }
+        public int Rating { get; set; }
+        public string Text { get; set; }
+    }
 }
