@@ -58,7 +58,6 @@ namespace RawgLibrary
                 a.ProgressMaxValue = addedItems.Count + removedItems.Count;
                 try
                 {
-                    PlayniteApi.Database.Games.BeginBufferUpdate();
                     foreach (var game in addedItems)
                     {
                         if (a.CancelToken.IsCancellationRequested)
@@ -102,10 +101,6 @@ namespace RawgLibrary
                     logger.Error(ex, "Error syncing new/deleted games to RAWG library");
                     PlayniteApi.Notifications.Add("rawg-sync-error", $"Error syncing new/deleted to RAWG library: {ex?.Message}", NotificationType.Error);
                 }
-                finally
-                {
-                    PlayniteApi.Database.Games.EndBufferUpdate();
-                }
             }
             , new GlobalProgressOptions("Syncing new/deleted games to RAWG library", cancelable: true) { IsIndeterminate = false });
         }
@@ -123,7 +118,6 @@ namespace RawgLibrary
                 a.ProgressMaxValue = e.UpdatedItems.Count;
                 try
                 {
-                    PlayniteApi.Database.Games.BeginBufferUpdate();
                     foreach (var item in e.UpdatedItems)
                     {
                         if (a.CancelToken.IsCancellationRequested)
@@ -156,10 +150,6 @@ namespace RawgLibrary
                 {
                     logger.Error(ex, "Error syncing to RAWG library");
                     PlayniteApi.Notifications.Add("rawg-sync-error", $"Error syncing to RAWG library: {ex?.Message}", NotificationType.Error);
-                }
-                finally
-                {
-                    PlayniteApi.Database.Games.EndBufferUpdate();
                 }
             }
             , new GlobalProgressOptions("Syncing changes to RAWG library", cancelable: true) { IsIndeterminate = false });

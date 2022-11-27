@@ -38,6 +38,8 @@ namespace Rawg.Common
             var response = restClient.Execute(request);
             logger.Trace(response.ResponseUri.ToString());
             logger.Trace(response.Content);
+            if (string.IsNullOrWhiteSpace(response.Content))
+                return default(T);
             var output = JsonConvert.DeserializeObject<T>(response.Content);
             return output;
         }
@@ -180,8 +182,16 @@ namespace Rawg.Common
             var request = new RestRequest($"users/current/games/{gameId}", Method.Delete).AddToken(token);
             try
             {
-                var result = Get<string>(request);
-                return true;
+                var result = Get<Dictionary<string,object>>(request);
+                if (result != null && result.ContainsKey("detail"))
+                {
+                    logger.Info($"Could not delete RAWG game {gameId} from user library: {result["detail"]}");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
             catch (Exception ex)
             {
