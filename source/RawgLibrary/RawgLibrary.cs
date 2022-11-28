@@ -45,7 +45,7 @@ namespace RawgLibrary
 
         private void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> e)
         {
-            if (!settings.Settings.AutoSyncNewGames && !settings.Settings.AutoSyncDeletedGames)
+            if (/*!settings.Settings.AutoSyncNewGames &&*/ !settings.Settings.AutoSyncDeletedGames)
                 return;
 
             var client = GetApiClient();
