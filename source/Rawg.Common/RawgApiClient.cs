@@ -19,7 +19,7 @@ namespace Rawg.Common
 
         public RawgApiClient(string key)
         {
-            Key = key == null ? key : HttpUtility.UrlEncode(key);
+            Key = key;
             restClient = new RestClient(new RestClientOptions { BaseUrl = new Uri("https://rawg.io/api/"), MaxTimeout = 10000 });
         }
 
@@ -27,28 +27,31 @@ namespace Rawg.Common
         private ILogger logger = LogManager.GetLogger();
         private RestClient restClient;
 
-        private T Get<T>(string resource)
+        private T Execute<T>(RestRequest request)
         {
-            var request = new RestRequest(resource);
-            return Get<T>(request);
+            return Execute<T>(request, out _);
         }
 
-        private T Get<T>(RestRequest request)
+        private T Execute<T>(RestRequest request, out System.Net.HttpStatusCode statusCode)
         {
-            logger.Trace($"{request.Method} {request.Resource}");
+            statusCode = System.Net.HttpStatusCode.NotImplemented;
+
+            logger.Debug($"{request.Method} {request.Resource}");
             var response = restClient.Execute(request);
-            logger.Trace(response.ResponseUri.ToString());
-            logger.Trace(response.Content);
+            if(response == null)
+            {
+                logger.Debug("No response");
+                return default(T);
+            }
+            statusCode = response.StatusCode;
+
+            string logContent = response.Content?.Replace($"key={Key}", "key=REDACTED");
+            logger.Debug($"Response code {response.StatusCode} Content: {logContent}");
+
             if (string.IsNullOrWhiteSpace(response.Content))
                 return default(T);
             var output = JsonConvert.DeserializeObject<T>(response.Content);
             return output;
-        }
-
-        private List<T> GetAllPages<T>(string resource)
-        {
-            var request = new RestRequest(resource);
-            return GetAllPages<T>(request);
         }
 
         private List<T> GetAllPages<T>(RestRequest request)
@@ -57,11 +60,15 @@ namespace Rawg.Common
             RawgResult<T> result;
             do
             {
-                result = Get<RawgResult<T>>(request);
+                result = Execute<RawgResult<T>>(request);
                 if (result?.Results != null)
                     output.AddRange(result.Results);
 
-                request.Resource = result?.Next?.TrimStart("https://api.rawg.io/api/");
+                request.Resource = result?.Next?
+                    .TrimStart("https://api.rawg.io/api/")
+                    .Replace($"&key={Key}", "")
+                    .Replace($"key={Key}&", "")
+                    .Replace($"key={Key}", "");
             } while (result?.Next != null);
             return output;
         }
@@ -69,27 +76,32 @@ namespace Rawg.Common
 
         public RawgGameDetails GetGame(string slugOrId)
         {
-            return Get<RawgGameDetails>($"games/{slugOrId}?key={Key}");
+            var request = new RestRequest($"games/{slugOrId}").AddKey(Key);
+            return Execute<RawgGameDetails>(request);
         }
 
         public RawgResult<RawgGameBase> SearchGames(string query)
         {
-            return Get<RawgResult<RawgGameBase>>($"games?key={Key}&search={HttpUtility.UrlEncode(query)}");
+            var request = new RestRequest($"games?search={HttpUtility.UrlEncode(query)}").AddKey(Key);
+            return Execute<RawgResult<RawgGameBase>>(request);
         }
 
         public ICollection<RawgCollection> GetCollections(string username)
         {
-            return GetAllPages<RawgCollection>($"users/{username}/collections?key={Key}");
+            var request = new RestRequest($"users/{username}/collections").AddKey(Key);
+            return GetAllPages<RawgCollection>(request);
         }
 
         public ICollection<RawgGameDetails> GetCollectionGames(string collectionSlugOrId)
         {
-            return GetAllPages<RawgGameDetails>($"collections/{collectionSlugOrId}/games?key={Key}");
+            var request = new RestRequest($"collections/{collectionSlugOrId}/games").AddKey(Key);
+            return GetAllPages<RawgGameDetails>(request);
         }
 
         public ICollection<RawgGameDetails> GetUserLibrary(string username)
         {
-            return GetAllPages<RawgGameDetails>($"users/{username}/games?key={Key}");
+            var request = new RestRequest($"users/{username}/games").AddKey(Key);
+            return GetAllPages<RawgGameDetails>(request);
         }
 
         public string Login(string username, string password)
@@ -98,14 +110,14 @@ namespace Rawg.Common
             request.AlwaysMultipartFormData = true;
             request.AddParameter("email", username);
             request.AddParameter("password", password);
-            var response = Get<LoginResponse>(request);
+            var response = Execute<LoginResponse>(request);
             return response?.Key;
         }
 
         public RawgUser GetCurrentUser(string token)
         {
             var request = new RestRequest("users/current").AddToken(token);
-            return Get<RawgUser>(request);
+            return Execute<RawgUser>(request);
         }
 
         public ICollection<RawgCollection> GetCurrentUserCollections(string token)
@@ -129,7 +141,7 @@ namespace Rawg.Common
             };
 
             var request = new RestRequest("collections", Method.Post).AddToken(token).AddJsonBody(body);
-            return Get<RawgCollection>(request);
+            return Execute<RawgCollection>(request);
         }
 
         public bool AddGamesToCollection(string token, string collectionSlugOrId, IEnumerable<int> gameIds)
@@ -138,7 +150,7 @@ namespace Rawg.Common
 
             var request = new RestRequest($"collections/{collectionSlugOrId}/games", Method.Post)
                               .AddToken(token).AddJsonBody(body);
-            var result = Get<Dictionary<string, object>>(request);
+            var result = Execute<Dictionary<string, object>>(request);
             return result.ContainsKey("games");
         }
 
@@ -173,7 +185,7 @@ namespace Rawg.Common
                             });
             try
             {
-                var result = Get<Dictionary<string, object>>(request);
+                var result = Execute<Dictionary<string, object>>(request);
 
                 if (result.TryGetValue("game", out object game))
                 {
@@ -205,7 +217,7 @@ namespace Rawg.Common
             var request = new RestRequest($"users/current/games/{gameId}", Method.Delete).AddToken(token);
             try
             {
-                var result = Get<Dictionary<string, object>>(request);
+                var result = Execute<Dictionary<string, object>>(request);
                 if (result != null && result.ContainsKey("detail"))
                 {
                     logger.Info($"Could not delete RAWG game {gameId} from user library: {result["detail"]}");
@@ -233,7 +245,7 @@ namespace Rawg.Common
                             });
             try
             {
-                var result = Get<Dictionary<string, object>>(request);
+                var result = Execute<Dictionary<string, object>>(request);
 
                 if (result.TryGetValue("game", out object game))
                 {
@@ -259,22 +271,23 @@ namespace Rawg.Common
                                 { "rating", rating },
                                 { "add_to_library", addToLibrary },
                             });
-            var result = Get<Dictionary<string, object>>(request);
+            var result = Execute<Dictionary<string, object>>(request);
             return result;
         }
 
         public RawgReview GetCurrentUserReview(string token, int gameId)
         {
-            var request = new RestRequest($"games/{gameId}/reviews", Method.Get).AddToken(token);
-            var result = Get<RawgGameReviews>(request);
+            var request = new RestRequest($"games/{gameId}/reviews", Method.Get).AddToken(token).AddKey(Key);
+            var result = Execute<RawgGameReviews>(request);
             return result?.Your;
         }
 
-        public RawgReview DeleteReview(string token, long reviewId)
+        public bool DeleteReview(string token, long reviewId)
         {
             var request = new RestRequest($"reviews/{reviewId}", Method.Delete).AddToken(token);
-            var result = Get<RawgReview>(request);
-            return result;
+            var result = Execute<Dictionary<string, object>>(request, out var statusCode);
+
+            return statusCode == System.Net.HttpStatusCode.Accepted;
         }
 
         private class LoginResponse
@@ -288,6 +301,11 @@ namespace Rawg.Common
         internal static RestRequest AddToken(this RestRequest request, string token)
         {
             request.AddHeader("token", $"Token {token}");
+            return request;
+        }
+        internal static RestRequest AddKey(this RestRequest request, string key)
+        {
+            request.AddQueryParameter("key", key);
             return request;
         }
     }

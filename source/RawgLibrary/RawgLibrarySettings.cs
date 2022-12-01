@@ -108,6 +108,8 @@ namespace RawgLibrary
         {
             get => new RelayCommand<object>(a =>
             {
+                Settings.User = null;
+                Settings.UserToken = null;
                 var window = Plugin.PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
                 var loginPrompt = new LoginPrompt(window);
                 window.Content = loginPrompt;
@@ -115,8 +117,6 @@ namespace RawgLibrary
                 var dialogResult = window.ShowDialog();
                 if (dialogResult == true)
                 {
-                    Settings.User = null;
-                    Settings.UserToken = null;
                     string email = loginPrompt.EmailAddress;
                     string password = loginPrompt.Password;
                     if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
@@ -185,10 +185,10 @@ namespace RawgLibrary
                     var user = client.GetCurrentUser(Settings.UserToken);
                     Settings.User = user;
                     string output = $"✔ Authenticated as {user.Username}\n";
-                    if (user.ApiKey != null)
-                        output += "✔ API key present";
-                    else
+                    if (string.IsNullOrEmpty(user.ApiKey))
                         output += "❌ API key not present";
+                    else
+                        output += "✔ API key present";
                     return output;
                 }
                 catch (Exception ex)
@@ -268,21 +268,6 @@ namespace RawgLibrary
             public string MaxPlayniteRating { get; }
             public string PlayniteRating { get; }
         }
-
-        /*
-    owned
-    UncategorizedactiveI'll pick the category later
-    playing
-    Currently playingI play the game regularly
-    beaten
-    CompletedI reached my goal in the game
-    dropped
-    PlayedI gave up and won't play it anymore
-    yet
-    Not playedI'll play it later
-
-        "Not Played", "Played", "Beaten", "Completed", "Playing", "Abandoned", "On Hold", "Plan to Play"
-         */
     }
 
 
