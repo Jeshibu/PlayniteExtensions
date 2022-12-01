@@ -263,12 +263,14 @@ namespace Rawg.Common
             if (game.Links?.Any(l => l.Url == rawgLink.Url) == true)
                 return;
 
+            System.Collections.ObjectModel.ObservableCollection<Link> links;
             if (game.Links == null)
-                game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>();
+                links = new System.Collections.ObjectModel.ObservableCollection<Link>();
             else
-                game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>(game.Links);
+                links = new System.Collections.ObjectModel.ObservableCollection<Link>(game.Links);
 
-            game.Links.Add(rawgLink);
+            links.Add(rawgLink);
+            game.Links = links;
             playniteApi.Database.Games.Update(game);
         }
     }

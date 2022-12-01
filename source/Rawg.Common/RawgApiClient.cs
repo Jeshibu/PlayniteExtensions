@@ -35,6 +35,7 @@ namespace Rawg.Common
 
         private T Get<T>(RestRequest request)
         {
+            logger.Trace($"{request.Method} {request.Resource}");
             var response = restClient.Execute(request);
             logger.Trace(response.ResponseUri.ToString());
             logger.Trace(response.Content);
@@ -119,11 +120,33 @@ namespace Rawg.Common
             return GetAllPages<RawgGameDetails>(request);
         }
 
+        public RawgCollection CreateCollection(string token, string name, string description, bool isPrivate)
+        {
+            var body = new Dictionary<string, object> {
+                { "name", name },
+                { "description", description },
+                { "is_private", isPrivate },
+            };
+
+            var request = new RestRequest("collections", Method.Post).AddToken(token).AddJsonBody(body);
+            return Get<RawgCollection>(request);
+        }
+
+        public bool AddGamesToCollection(string token, string collectionSlugOrId, IEnumerable<int> gameIds)
+        {
+            var body = new { games = gameIds.Select(i => i.ToString()).ToArray() };
+
+            var request = new RestRequest($"collections/{collectionSlugOrId}/games", Method.Post)
+                              .AddToken(token).AddJsonBody(body);
+            var result = Get<Dictionary<string, object>>(request);
+            return result.ContainsKey("games");
+        }
+
         public ICollection<RawgGameDetails> GetCurrentUserLibrary(string token, string[] statuses = null)
         {
             var request = new RestRequest("users/current/games").AddToken(token);
 
-            if(statuses != null && statuses.Any())
+            if (statuses != null && statuses.Any())
             {
                 request.AddQueryParameter("statuses", string.Join(",", statuses));
             }
@@ -182,7 +205,7 @@ namespace Rawg.Common
             var request = new RestRequest($"users/current/games/{gameId}", Method.Delete).AddToken(token);
             try
             {
-                var result = Get<Dictionary<string,object>>(request);
+                var result = Get<Dictionary<string, object>>(request);
                 if (result != null && result.ContainsKey("detail"))
                 {
                     logger.Info($"Could not delete RAWG game {gameId} from user library: {result["detail"]}");
@@ -269,7 +292,7 @@ namespace Rawg.Common
         }
     }
 
-    public class RawgGameReviews:RawgResult<RawgReview>
+    public class RawgGameReviews : RawgResult<RawgReview>
     {
         public RawgReview Your { get; set; }
     }

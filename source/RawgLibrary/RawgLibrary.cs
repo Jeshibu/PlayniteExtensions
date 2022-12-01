@@ -60,34 +60,10 @@ namespace RawgLibrary
 
             PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
             {
-                //var addedItems = e.AddedItems ?? new List<Game>();
                 var removedItems = e.RemovedItems ?? new List<Game>();
-                a.ProgressMaxValue = /*addedItems.Count +*/ removedItems.Count;
+                a.ProgressMaxValue = removedItems.Count;
                 try
                 {
-                    //if (settings.Settings.AutoSyncNewGames)
-                    //{
-                    //    foreach (var game in addedItems)
-                    //    {
-                    //        if (a.CancelToken.IsCancellationRequested)
-                    //            break;
-
-                    //        a.CurrentProgressValue++;
-                    //        if (game.PluginId == Id) //skip imports from RAWG library
-                    //            continue;
-                    //        if (game.PluginId == Guid.Empty && game.Name == "New Game") //newly added custom games won't have relevant data yet
-                    //            continue;
-
-                    //        var gameId = GetRawgIdFromGame(game, client, setLink: false); //TODO: once collection merging is in, set setLink to true again
-                    //        if (gameId == null)
-                    //            continue;
-
-                    //        if (SyncCompletionStatus(game, gameId.Value, client, token))
-                    //            logger.Info($"Synced {game.Name} (RAWG id {gameId}) to status {game.CompletionStatus?.Name}");
-                    //        else
-                    //            logger.Info($"Could not sync {game.Name} (RAWG id {gameId}) to status {game.CompletionStatus?.Name}");
-                    //    }
-                    //}
 
                     if (settings.Settings.AutoSyncDeletedGames)
                     {
@@ -176,7 +152,7 @@ namespace RawgLibrary
                         {
                             if (gameId == -1 && !TryGetRawgIdFromGame(item.NewData, client, true, out gameId))
                                 continue;
-                            
+
                             if (SyncCompletionStatus(item.NewData, gameId, client, token))
                                 logger.Info($"Synced {item.NewData.Name} (RAWG id {gameId}) to status {item.NewData.CompletionStatus?.Name}");
                             else
@@ -276,6 +252,18 @@ namespace RawgLibrary
         {
             yield return new GameMenuItem { MenuSection = "RAWG", Description = "Sync to RAWG library", Action = SyncGamesToRawg };
             yield return new GameMenuItem { MenuSection = "RAWG", Description = "Delete from RAWG library", Action = a => DeleteGamesFromRawgLibrary(a.Games) };
+            yield return new GameMenuItem { MenuSection = "RAWG", Description = "Add to new private collection", Action = a => AddToNewCollection(a.Games, isPrivate: true) };
+            yield return new GameMenuItem { MenuSection = "RAWG", Description = "Add to new public collection", Action = a => AddToNewCollection(a.Games, isPrivate: false) };
+
+            var collections = settings?.Settings?.Collections;
+            if (collections == null)
+                yield break;
+
+            foreach (var collectionConfig in collections)
+            {
+                var collection = collectionConfig.Collection;
+                yield return new GameMenuItem { MenuSection = "RAWG", Description = $"Add to collection: {collection.Name}", Action = a => AddToExistingCollection(a.Games, collection) };
+            }
         }
 
         private void SyncGamesToRawg(GameMenuItemActionArgs args)
@@ -452,5 +440,80 @@ namespace RawgLibrary
             }, new GlobalProgressOptions("Deleting games from RAWG Library", true) { IsIndeterminate = false });
 
         }
+
+        public void AddToNewCollection(List<Game> games, bool isPrivate)
+        {
+            var collectionNameResult = PlayniteApi.Dialogs.SelectString("Collection name:", "Create new collection", string.Empty);
+            if (!collectionNameResult.Result || string.IsNullOrWhiteSpace(collectionNameResult.SelectedString))
+                return;
+
+            PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
+            {
+                try
+                {
+                    a.ProgressMaxValue = games.Count + 2;
+                    var client = GetApiClient();
+                    var token = settings.Settings.UserToken;
+
+                    if (a.CancelToken.IsCancellationRequested) return;
+                    a.CurrentProgressValue++;
+
+                    var collection = client.CreateCollection(settings.Settings.UserToken, collectionNameResult.SelectedString, string.Empty, isPrivate);
+                    settings.Settings.Collections.Add(new RawgCollectionSetting { Import = false, Collection = collection });
+                    SavePluginSettings(settings.Settings);
+
+                    var rawgIds = new List<int>();
+                    foreach (var game in games)
+                    {
+                        if (a.CancelToken.IsCancellationRequested) return;
+                        a.CurrentProgressValue++;
+
+                        if (TryGetRawgIdFromGame(game, client, true, out int rawgId))
+                            rawgIds.Add(rawgId);
+                    }
+                    if (a.CancelToken.IsCancellationRequested) return;
+                    a.CurrentProgressValue++;
+
+                    client.AddGamesToCollection(token, collection.Slug, rawgIds);
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, "Error creating new collection");
+                    PlayniteApi.Notifications.Add("rawg-error-new-collection", $"Error creating new collection: {ex.Message}", NotificationType.Error);
+                }
+            }, new GlobalProgressOptions("Adding games to new collection " + collectionNameResult.SelectedString, cancelable: true) { IsIndeterminate = false });
+        }
+
+        public void AddToExistingCollection(List<Game> games, RawgCollection collection)
+        {
+            PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
+            {
+                try
+                {
+                    a.ProgressMaxValue = games.Count + 1;
+                    var client = GetApiClient();
+                    var token = settings.Settings.UserToken;
+                    var rawgIds = new List<int>();
+                    foreach (var game in games)
+                    {
+                        if (a.CancelToken.IsCancellationRequested) return;
+                        a.CurrentProgressValue++;
+
+                        if (TryGetRawgIdFromGame(game, client, true, out int rawgId))
+                            rawgIds.Add(rawgId);
+                    }
+
+                    if (a.CancelToken.IsCancellationRequested) return;
+                    a.CurrentProgressValue++;
+                    
+                    client.AddGamesToCollection(token, collection.Slug, rawgIds);
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, "Error adding games to collection");
+                    PlayniteApi.Notifications.Add("rawg-error-add-to-collection", $"Error adding games to collection: {ex.Message}", NotificationType.Error);
+                }
+            }, new GlobalProgressOptions("Adding games to collection " + collection.Name, cancelable: true) { IsIndeterminate = false });
+       }
     }
 }
