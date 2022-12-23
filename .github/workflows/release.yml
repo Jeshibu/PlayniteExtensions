@@ -53,7 +53,7 @@ jobs:
       - name: Build (DotNET4.6.2)
         run: |
            cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
-           .\MSBuild.exe $Env:GITHUB_WORKSPACE\source\PlayniteExtensions.sln -p:Configuration=Release -restore
+           .\MSBuild.exe $Env:GITHUB_WORKSPACE\source\PlayniteExtensions.sln -p:Configuration=Release -restore -clp:ErrorsOnly
 
       - name: Run unit tests
         run: |
