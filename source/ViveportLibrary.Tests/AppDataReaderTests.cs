@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using PlayniteExtensions.Common;
+using System.Linq;
 using Xunit;
 
 namespace ViveportLibrary.Tests
@@ -44,6 +45,16 @@ namespace ViveportLibrary.Tests
             var installedApps = appDataReader.GetInstalledApps();
 
             Assert.Null(installedApps);
+        }
+
+        [Fact]
+        public void GetInstalledApps_Handles_Duplicate_Ids()
+        {
+            var appDataReader = new AppDataReader("installed_apps_duplicate.json");
+
+            var installedApps = appDataReader.GetInstalledApps();
+
+            var dict = installedApps.ToDictionarySafe(a => a.AppId);
         }
     }
 }

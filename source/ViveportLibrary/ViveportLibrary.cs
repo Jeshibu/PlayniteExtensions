@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -57,8 +58,8 @@ namespace ViveportLibrary
             var allLicenseData = AppDataReader.GetLicenseData();
 
             var installedDict = installedApps.ToDictionary(x => x.AppId);
-            var metadataDict = allAppMetadata.ToDictionary(x => x.Id);
-            var licenseDict = allLicenseData?.ToDictionary(x => x.AppId) ?? new Dictionary<string, LicenseData>();
+            var metadataDict = allAppMetadata.ToDictionarySafe(x => x.Id, favorBiggerObject: true);
+            var licenseDict = allLicenseData?.ToDictionarySafe(x => x.AppId) ?? new Dictionary<string, LicenseData>();
 
             var keys = metadataDict.Keys.ToHashSet();
             foreach (var key in installedDict.Keys)

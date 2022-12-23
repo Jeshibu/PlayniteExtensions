@@ -1,0 +1,23 @@
+[
+  {
+    "appId": "ec53df3b-a2d6-41c6-a0a7-28e80934deee",
+    "title": "Sansar",
+    "imageUri": "https://assets-global.viveport.com/vr_developer_published_assets/app/ec53df3b-a2d6-41c6-a0a7-28e80934deee/image/thumbnail_small_v1593751558.png",
+    "path": "H:\\Viveport\\ViveApps\\ec53df",
+    "uri": "vive://runapp/ec53df3b-a2d6-41c6-a0a7-28e80934deee"
+  },
+  {
+    "appId": "4f5f140a-0928-4fcb-8023-93dc212eac17",
+    "title": "VIVEPORT Video",
+    "imageUri": "https://assets-global.viveport.com/vr_developer_published_assets/app/4f5f140a-0928-4fcb-8023-93dc212eac17/image/thumbnail_small_v1564383440.jpg",
+    "path": "H:\\Viveport\\ViveApps\\4f5f14",
+    "uri": "vive://runapp/4f5f140a-0928-4fcb-8023-93dc212eac17"
+  },
+  {
+    "appId": "4f5f140a-0928-4fcb-8023-93dc212eac17",
+    "title": "VIVEPORT Video",
+    "imageUri": "https://assets-global.viveport.com/vr_developer_published_assets/app/4f5f140a-0928-4fcb-8023-93dc212eac17/image/thumbnail_small_v1564383440.jpg",
+    "path": "H:\\Viveport\\ViveApps\\4f5f14",
+    "uri": "vive://runapp/4f5f140a-0928-4fcb-8023-93dc212eac17"
+  }
+]
