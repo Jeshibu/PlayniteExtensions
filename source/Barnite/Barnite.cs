@@ -21,7 +21,7 @@ namespace Barnite
 
         public Barnite(IPlayniteAPI api) : base(api)
         {
-            settings = new BarniteSettingsViewModel(this, api);            
+            settings = new BarniteSettingsViewModel(this, api);
             Properties = new GenericPluginProperties
             {
                 HasSettings = true
@@ -51,12 +51,6 @@ namespace Barnite
         {
             return new BarniteSettingsView();
         }
-        /*
-        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
-        {
-            return base.GetMainMenuItems(args);
-        }
-        */
 
         public override IEnumerable<TopPanelItem> GetTopPanelItems()
         {
