@@ -77,7 +77,7 @@ jobs:
 
           foreach ($p in $projects) {
             "Packing project: $p"
-            & "$Env:GITHUB_WORKSPACE\Playnite\Toolbox.exe" pack "$Env:GITHUB_WORKSPACE\$p\bin\Release\" "$Env:GITHUB_WORKSPACE\PackingOutput"            
+            & "$Env:GITHUB_WORKSPACE\Playnite\Toolbox.exe" pack "$Env:GITHUB_WORKSPACE\source\$p\bin\Release\" "$Env:GITHUB_WORKSPACE\PackingOutput"            
             Get-ChildItem "$Env:GITHUB_WORKSPACE\PackingOutput" -Filter *.pext | Rename-Item -NewName "$p_$ver.pext"
             Move-Item -Path "$Env:GITHUB_WORKSPACE\PackingOutput\*.pext" -Destination "$Env:GITHUB_WORKSPACE\"
           }
