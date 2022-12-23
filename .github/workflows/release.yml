@@ -26,8 +26,38 @@ jobs:
             $testprojects = @()
             switch ($Matches.Name)
             {
+              "barnite" {
+                $projects = @("Barnite")
+              }
+              "gamersgate" {
+                $projects = @("GamersGateLibrary")
+              }
+              "gamessizecalculator" {
+                $projects = @("GamesSizeCalculator")
+              }
+              "groupees" {
+                $projects = @("GroupeesLibrary")
+              }
+              "ign" {
+                $projects = @("IgnMetadata")
+              }
+              "itchiobundletagger" {
+                $projects = @("itchIoBundleTagger")
+              }
+              "legacygames" {
+                $projects = @("LegacyGamesLibrary")
+              }
+              "pathreplacer" {
+                $projects = @("PathReplacer")
+              }
               "rawg" {
                 $projects = @("RawgLibrary", "RawgMetadata")
+              }
+              "steamactions" {
+                $projects = @("SteamActions")
+              }
+              "steamtagsimporter" {
+                $projects = @("SteamTagsImporter")
               }
               "viveport" {
                 $projects = @("ViveportLibrary")
@@ -78,7 +108,7 @@ jobs:
           foreach ($p in $projects) {
             "Packing project: $p"
             & "$Env:GITHUB_WORKSPACE\Playnite\Toolbox.exe" pack "$Env:GITHUB_WORKSPACE\source\$p\bin\Release\" "$Env:GITHUB_WORKSPACE\PackingOutput"            
-            Get-ChildItem "$Env:GITHUB_WORKSPACE\PackingOutput" -Filter *.pext | Rename-Item -NewName "$p_$ver.pext"
+            Get-ChildItem "$Env:GITHUB_WORKSPACE\PackingOutput" -Filter *.pext | Rename-Item -NewName "${p}_$ver.pext"
             Move-Item -Path "$Env:GITHUB_WORKSPACE\PackingOutput\*.pext" -Destination "$Env:GITHUB_WORKSPACE\"
           }
 
@@ -86,5 +116,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
+          draft: true
+          name: "${{ steps.projectselection.outputs.tagname }} ${{ steps.projectselection.outputs.tagver }}"
           files: |
             *.pext
