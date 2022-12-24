@@ -1,0 +1,4 @@
+[submodule "submodules/ValveKeyValue"]
+	path = submodules/ValveKeyValue
+	url = https://github.com/Jeshibu/ValveKeyValue.git
+	branch = net-standard2.0
