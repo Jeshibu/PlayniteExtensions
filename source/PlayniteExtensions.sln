@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViveportLibrary.Tests", "Vi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IgnMetadata", "IgnMetadata\IgnMetadata.csproj", "{AC1B23EE-BDC9-4273-9F4B-4F414482541B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiantBombMetadata", "GiantBombMetadata\GiantBombMetadata.csproj", "{D6730A45-D8D5-48FB-818E-5C277E230DF4}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{0fc7f312-402b-4466-9e05-721ce2638268}*SharedItemsImports = 4
@@ -65,6 +67,7 @@ Global
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{ac1b23ee-bdc9-4273-9f4b-4f414482541b}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{afa8de86-101b-4449-a237-2030d7f74ce2}*SharedItemsImports = 4
 		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{d539c1ad-040e-4da2-b2be-c2ccc4f147f8}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{d6730a45-d8d5-48fb-818e-5c277e230df4}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{f2627b24-e712-4108-be62-646374c1bc42}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -148,6 +151,10 @@ Global
 		{AC1B23EE-BDC9-4273-9F4B-4F414482541B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC1B23EE-BDC9-4273-9F4B-4F414482541B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC1B23EE-BDC9-4273-9F4B-4F414482541B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6730A45-D8D5-48FB-818E-5C277E230DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6730A45-D8D5-48FB-818E-5C277E230DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6730A45-D8D5-48FB-818E-5C277E230DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6730A45-D8D5-48FB-818E-5C277E230DF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
