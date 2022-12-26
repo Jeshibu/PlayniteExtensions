@@ -118,33 +118,7 @@ namespace Rawg.Common
 
         public static ReleaseDate? ParseReleaseDate(RawgGameBase data, ILogger logger)
         {
-            if (string.IsNullOrWhiteSpace(data.Released))
-                return null;
-
-            var segments = data.Released.Split('-');
-            List<int> numberSegments;
-            try
-            {
-                numberSegments = segments.Select(int.Parse).ToList();
-            }
-            catch (Exception ex)
-            {
-                logger?.Warn(ex, $"Could not parse release date <{data.Released}> for {data.Name}");
-                return null;
-            }
-
-            switch (numberSegments.Count)
-            {
-                case 1:
-                    return new ReleaseDate(numberSegments[0]);
-                case 2:
-                    return new ReleaseDate(numberSegments[0], numberSegments[1]);
-                case 3:
-                    return new ReleaseDate(numberSegments[0], numberSegments[1], numberSegments[2]);
-                default:
-                    logger?.Warn($"Could not parse release date <{data.Released}> for {data.Name}");
-                    return null;
-            }
+            return data.Released.ParseReleaseDate(logger);
         }
 
         public static int? ParseUserScore(float? userScore)

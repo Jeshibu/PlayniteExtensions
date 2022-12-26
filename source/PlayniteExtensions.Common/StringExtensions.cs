@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Playnite.SDK;
+using Playnite.SDK.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -100,6 +102,43 @@ namespace PlayniteExtensions.Common
                 return null;
 
             return deflateRegex.Replace(gameName, string.Empty);
+        }
+
+        /// <summary>
+        /// Parse a release date in the yyyy-MM-dd or yyyy-MM or yyyy formats
+        /// </summary>
+        /// <param name="dateString"></param>
+        /// <param name="logger"></param>
+        /// <returns></returns>
+        public static ReleaseDate? ParseReleaseDate(this string dateString, ILogger logger = null)
+        {
+            if (string.IsNullOrWhiteSpace(dateString))
+                return null;
+
+            var segments = dateString.Split('-');
+            List<int> numberSegments;
+            try
+            {
+                numberSegments = segments.Select(int.Parse).ToList();
+            }
+            catch (Exception ex)
+            {
+                logger?.Warn(ex, $"Could not parse release date {dateString}");
+                return null;
+            }
+
+            switch (numberSegments.Count)
+            {
+                case 1:
+                    return new ReleaseDate(numberSegments[0]);
+                case 2:
+                    return new ReleaseDate(numberSegments[0], numberSegments[1]);
+                case 3:
+                    return new ReleaseDate(numberSegments[0], numberSegments[1], numberSegments[2]);
+                default:
+                    logger?.Warn($"Could not parse release date {dateString}");
+                    return null;
+            }
         }
     }
 }
