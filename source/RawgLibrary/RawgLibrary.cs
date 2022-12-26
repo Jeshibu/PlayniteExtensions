@@ -266,37 +266,6 @@ namespace RawgLibrary
             }
         }
 
-        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
-        {
-            yield return new MainMenuItem { Description = "Test results view", Action = TestResultsView };
-        }
-
-        private void TestResultsView(MainMenuItemActionArgs args)
-        {
-            GameResults grs = new GameResults { Text = "AAAAAAAAAAAAAAAAAAAAAA" };
-            var c1 = new RelayCommand<Game>(g => PlayniteApi.Dialogs.ShowMessage(g.Name));
-            var c2 = new RelayCommand<Game>(g => PlayniteApi.Dialogs.ShowMessage(g.Description));
-
-            foreach (var game in PlayniteApi.Database.Games.Take(4))
-            {
-                var a1 = new GameResultAction("Show name", c1);
-                var a2 = new GameResultAction("Show description", c2);
-                grs.Results.Add(new GameResult(game, "Failed", a1, a2));
-            }
-
-
-            var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
-            var control = new MassGameResultView(window);
-            control.DataContext = grs;
-            window.Content = control;
-            window.SizeToContent = System.Windows.SizeToContent.WidthAndHeight;
-            var dialogResult = window.ShowDialog();
-            if (dialogResult == true)
-            {
-
-            }
-        }
-
         private void SyncGamesToRawg(GameMenuItemActionArgs args)
         {
             PlayniteApi.Dialogs.ActivateGlobalProgress(progressArgs =>
