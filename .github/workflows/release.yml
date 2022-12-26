@@ -35,6 +35,9 @@ jobs:
               "gamessizecalculator" {
                 $projects = @("GamesSizeCalculator")
               }
+              "giantbomb" {
+                $projects = @("GiantBombMetadata")
+              }
               "groupees" {
                 $projects = @("GroupeesLibrary")
               }
