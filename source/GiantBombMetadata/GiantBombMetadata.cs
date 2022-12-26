@@ -241,6 +241,8 @@ namespace GiantBombMetadata
             public GiantBombSearchResultItemOption(GiantBombSearchResultItem item) : base(item.Name, item.ResourceType)
             {
                 SearchResultItem = item;
+                if (!string.IsNullOrEmpty(item.Deck))
+                    Description = $"{item.ResourceType.ToUpper()}\n{item.Deck}";
             }
 
             public GiantBombSearchResultItem SearchResultItem { get; }
