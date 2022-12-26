@@ -35,7 +35,7 @@
       <HintPath>..\packages\IndexRange.1.0.2\lib\net45\IndexRange.dll</HintPath>
     </Reference>
     <Reference Include="Linguini.Bundle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Linguini.Bundle.0.3.1\lib\net461\Linguini.Bundle.dll</HintPath>
+      <HintPath>..\packages\Linguini.Bundle.0.3.2\lib\net461\Linguini.Bundle.dll</HintPath>
     </Reference>
     <Reference Include="Linguini.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Linguini.Shared.0.3.0\lib\net461\Linguini.Shared.dll</HintPath>
