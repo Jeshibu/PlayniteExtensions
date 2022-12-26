@@ -89,7 +89,7 @@ namespace GiantBombMetadata
                     }
                     catch (Exception e)
                     {
-                        logger.Error(e, $"Failed to get RAWG search data for <{a}>");
+                        logger.Error(e, $"Failed to get Giant Bomb search data for <{a}>");
                         return new List<GenericItemOption>();
                     }
                 }, options.GameData.Name, string.Empty);
@@ -184,6 +184,7 @@ namespace GiantBombMetadata
             output.AddRange(GetValues(plugin.Settings.Settings.Objects, target, data.Objects));
             output.AddRange(GetValues(plugin.Settings.Settings.People, target, data.People));
             output.AddRange(GetValues(plugin.Settings.Settings.Themes, target, data.Themes));
+            output = output.OrderBy(x => x.Name).ToList();
             return output;
         }
 
@@ -243,6 +244,33 @@ namespace GiantBombMetadata
         public override IEnumerable<MetadataProperty> GetAgeRatings(GetMetadataFieldArgs args)
         {
             return GetGameDetails().Ratings?.Select(r => new MetadataNameProperty(r.Name));
+        }
+
+        public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
+        {
+            string url = GetSearchResultGame().SiteDetailUrl;
+            if (string.IsNullOrWhiteSpace(url))
+                yield break;
+
+            yield return new Link("Giant Bomb", url);
+        }
+
+        public override MetadataFile GetCoverImage(GetMetadataFieldArgs args)
+        {
+            var coverUrl = GetSearchResultGame().Image?.Original;
+            if (coverUrl == null)
+                return null;
+
+            return new MetadataFile(coverUrl);
+        }
+
+        public override MetadataFile GetBackgroundImage(GetMetadataFieldArgs args)
+        {
+            var images = GetGameDetails().Images?.Where(i => i.Tags.Contains("Screenshot")).ToList();
+            if (images == null || images.Count == 0)
+                return null;
+
+            return new MetadataFile(images.First().Original);
         }
     }
 }

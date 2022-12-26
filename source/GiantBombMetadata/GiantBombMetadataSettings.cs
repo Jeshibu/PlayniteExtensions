@@ -12,12 +12,12 @@ namespace GiantBombMetadata
     public class GiantBombMetadataSettings : ObservableObject
     {
         public string ApiKey { get; set; }
-        public GiantBombPropertyImportSetting Characters = new GiantBombPropertyImportSetting { Prefix = "Character: ", ImportTarget = PropertyImportTarget.Ignore };
-        public GiantBombPropertyImportSetting Concepts = new GiantBombPropertyImportSetting { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
-        public GiantBombPropertyImportSetting Locations = new GiantBombPropertyImportSetting { Prefix = "Location: ", ImportTarget = PropertyImportTarget.Tags };
-        public GiantBombPropertyImportSetting Objects = new GiantBombPropertyImportSetting { Prefix = "Object: ", ImportTarget = PropertyImportTarget.Ignore };
-        public GiantBombPropertyImportSetting Themes = new GiantBombPropertyImportSetting { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
-        public GiantBombPropertyImportSetting People = new GiantBombPropertyImportSetting { Prefix = "Person: ", ImportTarget = PropertyImportTarget.Ignore };
+        public GiantBombPropertyImportSetting Characters { get; set; } = new GiantBombPropertyImportSetting { Prefix = "Character: ", ImportTarget = PropertyImportTarget.Ignore };
+        public GiantBombPropertyImportSetting Concepts { get; set; } = new GiantBombPropertyImportSetting { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
+        public GiantBombPropertyImportSetting Locations { get; set; } = new GiantBombPropertyImportSetting { Prefix = "Location: ", ImportTarget = PropertyImportTarget.Tags };
+        public GiantBombPropertyImportSetting Objects { get; set; } = new GiantBombPropertyImportSetting { Prefix = "Object: ", ImportTarget = PropertyImportTarget.Ignore };
+        public GiantBombPropertyImportSetting Themes { get; set; } = new GiantBombPropertyImportSetting { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
+        public GiantBombPropertyImportSetting People { get; set; } = new GiantBombPropertyImportSetting { Prefix = "Person: ", ImportTarget = PropertyImportTarget.Ignore };
     }
 
     public class GiantBombPropertyImportSetting

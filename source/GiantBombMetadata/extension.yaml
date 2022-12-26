@@ -1,7 +1,7 @@
 ﻿Id: GiantBombMetadata_975c7dc6-efd5-41d4-b9c1-9394b3bfe9c6
-Name: Custom Metadata Provider
-Author: John Doe
-Version: 1.0
+Name: Giant Bomb Metadata Provider
+Author: Jeshibu
+Version: 0.1
 Module: GiantBombMetadata.dll
 Type: MetadataProvider
 Icon: icon.png

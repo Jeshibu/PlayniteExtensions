@@ -134,9 +134,9 @@ namespace GiantBombMetadata.Api
 
     public class GiantBombGamePropertyDetails : GiantBombObjectDetails
     {
-        [JsonProperty("first_appeared_in_game")]
-        public GiantBombObject FirstAppearedInGame { get; set; }
+        //[JsonProperty("first_appeared_in_game")]
+        //public GiantBombObject[] FirstAppearedInGame { get; set; } = new GiantBombObject[0];
 
-        public GiantBombObject Games { get; set; }
+        public GiantBombObject[] Games { get; set; } = new GiantBombObject[0];
     }
 }

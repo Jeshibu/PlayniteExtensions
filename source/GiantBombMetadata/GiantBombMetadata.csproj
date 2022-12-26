@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Api\Models.cs" />
     <Compile Include="Api\GiantBombApiClient.cs" />
+    <Compile Include="GamePropertyImportViewModel.cs" />
     <Compile Include="GiantBombMetadata.cs" />
     <Compile Include="GiantBombMetadataProvider.cs" />
     <Compile Include="GiantBombMetadataSettings.cs" />
@@ -92,6 +93,9 @@
       <DependentUpon>GiantBombMetadataSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GamePropertyImportView.xaml.cs">
+      <DependentUpon>GamePropertyImportView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -118,6 +122,10 @@
     <Page Include="GiantBombMetadataSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GamePropertyImportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <Import Project="..\PlayniteExtensions.Common\PlayniteExtensions.Common.projitems" Label="Shared" />
