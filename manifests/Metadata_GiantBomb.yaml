@@ -6,3 +6,12 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/giantbomb0.1/GiantBombMetadata_0_1.pext
     Changelog:
      - Initial release
+  - Version: 0.2
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2022-12-27
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/giantbomb0.2/GiantBombMetadata_0_2.pext
+    Changelog:
+     - Added game matching based on game links
+     - Improved title matching (strips editions and converts roman numerals)
+     - Fixed hyperlinks in descriptions not working
+     - Removed locations from game property search because locations can't provide a list of associated games
