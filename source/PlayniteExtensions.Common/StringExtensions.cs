@@ -140,5 +140,9 @@ namespace PlayniteExtensions.Common
                     return null;
             }
         }
+        public static bool Contains(this string str, string value, StringComparison comparisonType)
+        {
+            return str?.IndexOf(value, 0, comparisonType) != -1;
+        }
     }
 }

@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)PlatformUtility.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlayniteConvert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PluginSettingsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SortableNameConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebDownloader.cs" />
   </ItemGroup>

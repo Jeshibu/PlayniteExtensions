@@ -89,6 +89,7 @@
     <Compile Include="Api\Models.cs" />
     <Compile Include="Api\GiantBombApiClient.cs" />
     <Compile Include="GamePropertyImportViewModel.cs" />
+    <Compile Include="GiantBombExtraMetadataProvider.cs" />
     <Compile Include="GiantBombHelper.cs" />
     <Compile Include="GiantBombMetadata.cs" />
     <Compile Include="GiantBombMetadataProvider.cs" />
