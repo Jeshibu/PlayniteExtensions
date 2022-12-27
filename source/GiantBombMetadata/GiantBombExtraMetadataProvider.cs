@@ -75,6 +75,9 @@ namespace GiantBombMetadata
                 a.ProgressMaxValue = itemDetails.Games.Length;
                 for (int i = 0; i < itemDetails.Games.Length; i++)
                 {
+                    if (a.CancelToken.IsCancellationRequested)
+                        return;
+
                     //if (i % 4 == 0)
                     a.CurrentProgressValue = i + 1;
 
@@ -84,7 +87,7 @@ namespace GiantBombMetadata
                     {
                         nameToMatch = snc.Convert(gbGame.Name).Deflate();
                         deflatedNames.Add(gbGame.Name, nameToMatch);
-                    }   
+                    }
 
                     var gbGuid = GiantBombHelper.GetGiantBomgGuidFromUrl(gbGame.SiteDetailUrl);
                     foreach (var g in PlayniteApi.Database.Games)
@@ -112,6 +115,12 @@ namespace GiantBombMetadata
                 }
                 matchingGames = matchingGames.OrderBy(g => g.Game.Name).ThenBy(g => g.Game.ReleaseDate).ToList();
             }, new GlobalProgressOptions("Matching game titles...", true) { IsIndeterminate = false });
+
+            if (matchingGames.Count == 0)
+            {
+                PlayniteApi.Dialogs.ShowMessage("No matching games found in your library.", "Giant Bomb", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
+                return null;
+            }
 
             GiantBombPropertyImportSetting importSetting;
             switch (selectedItem.ResourceType)

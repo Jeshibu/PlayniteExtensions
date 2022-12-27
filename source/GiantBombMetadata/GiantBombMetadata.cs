@@ -5,6 +5,7 @@ using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -69,7 +70,23 @@ namespace GiantBombMetadata
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
-            yield return new MainMenuItem { Description = "Import Giant Bomb game property", Action = a => ImportGameProperty() };
+            yield return new MainMenuItem { Description = "Import Giant Bomb game property", MenuSection = "@Giant Bomb", Action = a => ImportGameProperty() };
+        }
+
+        public override IEnumerable<TopPanelItem> GetTopPanelItems()
+        {
+            if (!Settings.Settings.ShowTopPanelButton)
+                yield break;
+
+            var assemblyLocation = Assembly.GetExecutingAssembly().Location;
+            var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation), "icon.png");
+            yield return new TopPanelItem()
+            {
+                Icon = iconPath,
+                Visible = true,
+                Title = "Import Giant Bomb game property",
+                Activated = ImportGameProperty
+            };
         }
 
         public void ImportGameProperty()
