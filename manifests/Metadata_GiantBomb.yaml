@@ -14,4 +14,5 @@ Packages:
      - Added game matching based on game links
      - Improved title matching (strips editions and converts roman numerals)
      - Fixed hyperlinks in descriptions not working
+     - Added top panel button
      - Removed locations from game property search because locations can't provide a list of associated games
