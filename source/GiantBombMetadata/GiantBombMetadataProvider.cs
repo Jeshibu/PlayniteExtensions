@@ -54,6 +54,10 @@ namespace GiantBombMetadata
 
             if (options.IsBackgroundDownload)
             {
+                string guid = GiantBombHelper.GetGiantBombGuidFromGameLinks(options.GameData);
+                if (guid != null)
+                    return (GiantBombGameDetails)(foundGame = apiClient.GetGameDetails(guid));
+
                 if (string.IsNullOrWhiteSpace(options.GameData.Name))
                     return foundGame = new GiantBombGameDetails();
 
@@ -62,9 +66,11 @@ namespace GiantBombMetadata
                 if (searchResult == null)
                     return foundGame = new GiantBombGameDetails();
 
-                var nameToMatch = options.GameData.Name.Deflate();
+                var snc = new SortableNameConverter(new string[0], batchOperation: false, numberLength: 1, removeEditions: true);
 
-                var matchedGames = searchResult.Where(g => HasMatchingName(g, nameToMatch) && HasPlatformOverlap(g)).ToList();
+                var nameToMatch = snc.Convert(options.GameData.Name).Deflate();
+
+                var matchedGames = searchResult.Where(g => HasMatchingName(g, nameToMatch, snc) && HasPlatformOverlap(g)).ToList();
 
                 switch (matchedGames.Count)
                 {
@@ -135,7 +141,7 @@ namespace GiantBombMetadata
             return Math.Abs((int)daysApart);
         }
 
-        private static bool HasMatchingName(GiantBombObjectDetails g, string deflatedSearchName)
+        private static bool HasMatchingName(GiantBombObjectDetails g, string deflatedSearchName, SortableNameConverter snc)
         {
             var gameNames = new List<string> { g.Name.Deflate() };
             if (g.AliasesSplit?.Any() == true)
@@ -143,7 +149,8 @@ namespace GiantBombMetadata
 
             foreach (var gameName in gameNames)
             {
-                if (deflatedSearchName.Equals(gameName, StringComparison.InvariantCultureIgnoreCase))
+                var deflatedGameName = snc.Convert(gameName).Deflate();
+                if (deflatedSearchName.Equals(deflatedGameName, StringComparison.InvariantCultureIgnoreCase))
                 {
                     return true;
                 }
@@ -154,7 +161,7 @@ namespace GiantBombMetadata
         private bool HasPlatformOverlap(GiantBombObjectDetails g)
         {
             var searchGamePlatforms = options.GameData.Platforms;
-            if (searchGamePlatforms == null || searchGamePlatforms.Count == 0)
+            if (searchGamePlatforms == null || searchGamePlatforms.Count == 0 || g.Platforms == null || g.Platforms.Length == 0)
                 return true; //no search platforms acts as a wildcard - everything could be a match
 
             var gbPlatforms = g.Platforms.SelectMany(p => platformUtility.GetPlatforms(p.Name)).ToList();
@@ -190,7 +197,7 @@ namespace GiantBombMetadata
 
         private IEnumerable<MetadataNameProperty> GetValues(GiantBombPropertyImportSetting importSetting, PropertyImportTarget target, GiantBombObject[] data)
         {
-            if (importSetting.ImportTarget != target || data == null || data.Length ==0)
+            if (importSetting.ImportTarget != target || data == null || data.Length == 0)
                 return new MetadataNameProperty[0];
 
             return data.Select(d => new MetadataNameProperty($"{importSetting.Prefix}{d.Name}"));
@@ -218,7 +225,7 @@ namespace GiantBombMetadata
 
         public override IEnumerable<MetadataProperty> GetPlatforms(GetMetadataFieldArgs args)
         {
-            return GetSearchResultGame().Platforms.SelectMany(p => platformUtility.GetPlatforms(p.Name));
+            return GetSearchResultGame().Platforms?.SelectMany(p => platformUtility.GetPlatforms(p.Name));
         }
 
         public override ReleaseDate? GetReleaseDate(GetMetadataFieldArgs args)
