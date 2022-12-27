@@ -219,13 +219,17 @@ namespace GiantBombMetadata
                             g.Game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>();
 
                         if (!g.Game.Links.Any(l => l.Url == g.GiantBombData.SiteDetailUrl))
+                        {
                             g.Game.Links.Add(new Link("Giant Bomb", g.GiantBombData.SiteDetailUrl));
-
-                        update = true;
+                            update = true;
+                        }
                     }
 
                     if (update)
+                    {
+                        g.Game.Modified = DateTime.Now;
                         PlayniteApi.Database.Games.Update(g.Game);
+                    }
                 }
             }
         }

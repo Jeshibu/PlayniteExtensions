@@ -63,7 +63,7 @@ namespace GiantBombMetadata.Api
         /// </summary>
         public string Deck { get; set; }
         public string Description { get; set; }
-        public GiantBombImage Image { get; set; }
+        public GiantBombCoverImage Image { get; set; }
 
         public string[] AliasesSplit
         {
@@ -113,20 +113,26 @@ namespace GiantBombMetadata.Api
 
     public class GiantBombImage
     {
-        /*
-                "icon_url": "https://www.giantbomb.com/a/uploads/square_avatar/0/1992/3170532-81gr49uzidl.ac_sl1500_.jpg",
-                "medium_url": "https://www.giantbomb.com/a/uploads/screen_medium/0/1992/3170532-81gr49uzidl.ac_sl1500_.jpg",
-                "screen_url": "https://www.giantbomb.com/a/uploads/screen_medium/0/1992/3170532-81gr49uzidl.ac_sl1500_.jpg",
-                "small_url": "https://www.giantbomb.com/a/uploads/square_avatar/0/1992/3170532-81gr49uzidl.ac_sl1500_.jpg",
-                "super_url": "https://www.giantbomb.com/a/uploads/scale_large/0/1992/3170532-81gr49uzidl.ac_sl1500_.jpg",
-                "thumb_url": "https://www.giantbomb.com/a/uploads/scale_small/0/1992/3170532-81gr49uzidl.ac_sl1500_.jpg",
-                "tiny_url": "https://www.giantbomb.com/a/uploads/square_mini/0/1992/3170532-81gr49uzidl.ac_sl1500_.jpg",
-                "original": "https://www.giantbomb.com/a/uploads/original/0/1992/3170532-81gr49uzidl.ac_sl1500_.jpg",
-                "tags": "All Images"
-         */
         [JsonProperty("icon_url")]
         public string IconUrl { get; set; }
 
+        [JsonProperty("thumb_url")]
+        public string ThumbUrl { get; set; }
+
+        public string Original { get; set; }
+
+        public string Tags { get; set; }
+    }
+
+    public class GiantBombCoverImage
+    {
+        [JsonProperty("icon_url")]
+        public string IconUrl { get; set; }
+
+        [JsonProperty("thumb_url")]
+        public string ThumbUrl { get; set; }
+
+        [JsonProperty("original_url")] //this is why there's two image classes
         public string Original { get; set; }
 
         public string Tags { get; set; }
@@ -134,9 +140,6 @@ namespace GiantBombMetadata.Api
 
     public class GiantBombGamePropertyDetails : GiantBombObjectDetails
     {
-        //[JsonProperty("first_appeared_in_game")]
-        //public GiantBombObject[] FirstAppearedInGame { get; set; } = new GiantBombObject[0];
-
         public GiantBombObject[] Games { get; set; } = new GiantBombObject[0];
     }
 }

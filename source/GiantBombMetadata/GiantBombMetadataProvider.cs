@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace GiantBombMetadata
@@ -276,13 +277,35 @@ namespace GiantBombMetadata
             return new MetadataFile(coverUrl);
         }
 
+        private static Regex pressEventOrCoverRegex = new Regex(@"\b(e3|pax|box art)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
         public override MetadataFile GetBackgroundImage(GetMetadataFieldArgs args)
         {
-            var images = GetGameDetails().Images?.Where(i => i.Tags.Contains("Screenshot")).ToList();
+            var images = GetGameDetails().Images
+                ?.Where(i => !pressEventOrCoverRegex.IsMatch(i.Tags))
+                .Select(i => new GiantBombImageFileOption(i)).ToList<ImageFileOption>();
             if (images == null || images.Count == 0)
                 return null;
 
-            return new MetadataFile(images.First().Original);
+            var selected = plugin.PlayniteApi.Dialogs.ChooseImageFile(images, "Select Giant Bomb background");
+
+            var originalUrl = (selected as GiantBombImageFileOption)?.Image.Original;
+
+            if (originalUrl == null)
+                return null;
+
+            return new MetadataFile(originalUrl);
+        }
+
+        private class GiantBombImageFileOption : ImageFileOption
+        {
+            public GiantBombImageFileOption(GiantBombImage image)
+            {
+                Image = image;
+                Path = image.ThumbUrl;
+            }
+
+            public GiantBombImage Image { get; }
         }
     }
 }

@@ -47,6 +47,10 @@ namespace GiantBombMetadata
             doc.LoadHtml(htmlContent);
             string xpath = string.Join("|", urlAttributeNames.Select(a => $"//*[@{a}]"));
             var elements = doc.DocumentNode.SelectNodes(xpath);
+
+            if (elements == null)
+                return htmlContent;
+
             foreach (var el in elements)
             {
                 foreach (var attrName in urlAttributeNames)

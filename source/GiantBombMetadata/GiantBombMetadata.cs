@@ -38,7 +38,9 @@ namespace GiantBombMetadata
             MetadataField.Series,
             MetadataField.AgeRating,
             MetadataField.Links,
+            MetadataField.Icon,
             MetadataField.CoverImage,
+            MetadataField.BackgroundImage,
         };
 
         public override string Name { get; } = "Giant Bomb";
