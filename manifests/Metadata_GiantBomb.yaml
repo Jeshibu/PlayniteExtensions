@@ -1,0 +1,8 @@
+AddonId: GiantBombMetadata
+Packages:
+  - Version: 0.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2022-12-26
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/giantbomb0.1/GiantBombMetadata_0_1.pext
+    Changelog:
+     - Initial release

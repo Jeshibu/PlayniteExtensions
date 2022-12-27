@@ -5,3 +5,6 @@ Version: 0.1
 Module: GiantBombMetadata.dll
 Type: MetadataProvider
 Icon: icon.png
+Links:
+  - Name: Giant Bomb
+    Url: https://www.giantbomb.com/
