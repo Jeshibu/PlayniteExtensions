@@ -44,6 +44,9 @@ namespace GiantBombMetadata.Api
 
         private T Execute<T>(RestRequest request, out System.Net.HttpStatusCode statusCode, CancellationToken cancellationToken = default)
         {
+            if (string.IsNullOrWhiteSpace(ApiKey))
+                throw new Exception("No Giant Bomb API key. Please enter one in the add-on settings.");
+
             statusCode = System.Net.HttpStatusCode.NotImplemented;
 
             logger.Debug($"{request.Method} {request.Resource}");
