@@ -99,6 +99,9 @@ namespace GiantBombMetadata.Api
         }
 
         public GiantBombSearchResultItem[] SearchGames(string query) => Search(query, "game");
-        public GiantBombSearchResultItem[] SearchGameProperties(string query) => Search(query, "character,concept,object,location,person");
+        public GiantBombSearchResultItem[] SearchGameProperties(string query) => Search(query, "character,concept,object,person");
+
+        //TODO: figure out how to get games for locations (and maybe for themes too)
+        //public GiantBombSearchResultItem[] SearchGameProperties(string query) => Search(query, "character,concept,object,location,person");
     }
 }
