@@ -198,7 +198,12 @@ namespace GiantBombMetadata
 
         public override string GetDescription(GetMetadataFieldArgs args)
         {
-            return GetSearchResultGame().Description;
+            string description = GetSearchResultGame().Description;
+            if (string.IsNullOrWhiteSpace(description))
+                return null;
+
+            description = GiantBombHelper.MakeHtmlUrlsAbsolute(description, "https://www.giantbomb.com/");
+            return description;
         }
 
         public override IEnumerable<MetadataProperty> GetTags(GetMetadataFieldArgs args)
