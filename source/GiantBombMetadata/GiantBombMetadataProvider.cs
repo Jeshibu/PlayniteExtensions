@@ -281,20 +281,25 @@ namespace GiantBombMetadata
 
         public override MetadataFile GetBackgroundImage(GetMetadataFieldArgs args)
         {
-            var images = GetGameDetails().Images
-                ?.Where(i => !pressEventOrCoverRegex.IsMatch(i.Tags))
-                .Select(i => new GiantBombImageFileOption(i)).ToList<ImageFileOption>();
+            var images = GetGameDetails().Images?.Where(i => !pressEventOrCoverRegex.IsMatch(i.Tags)).ToList();
             if (images == null || images.Count == 0)
                 return null;
 
-            var selected = plugin.PlayniteApi.Dialogs.ChooseImageFile(images, "Select Giant Bomb background");
+            if (options.IsBackgroundDownload)
+            {
+                return new MetadataFile(images.First().Original);
+            }
+            else
+            {
+                var imageOptions = images?.Select(i => new GiantBombImageFileOption(i)).ToList<ImageFileOption>();
+                var selected = plugin.PlayniteApi.Dialogs.ChooseImageFile(imageOptions, "Select Giant Bomb background");
+                var originalUrl = (selected as GiantBombImageFileOption)?.Image.Original;
 
-            var originalUrl = (selected as GiantBombImageFileOption)?.Image.Original;
+                if (originalUrl == null)
+                    return null;
 
-            if (originalUrl == null)
-                return null;
-
-            return new MetadataFile(originalUrl);
+                return new MetadataFile(originalUrl);
+            }
         }
 
         private class GiantBombImageFileOption : ImageFileOption
