@@ -16,3 +16,12 @@ Packages:
      - Fixed hyperlinks in descriptions not working
      - Added top panel button
      - Removed locations from game property search because locations can't provide a list of associated games
+  - Version: 0.3
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2022-12-28
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/giantbomb0.3/GiantBombMetadata_0_3.pext
+    Changelog:
+     - Added user selection window for backgrounds
+     - Fixed character/concept/object/person import window falling off screen
+     - Fixed error when imported description contains no hyperlinks
+     - Fixed "date modified" field not updating during character/concept/object/person import
