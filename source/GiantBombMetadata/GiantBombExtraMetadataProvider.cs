@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace GiantBombMetadata
 {
@@ -161,7 +162,8 @@ namespace GiantBombMetadata
             var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
             var view = new GamePropertyImportView(window) { DataContext = viewModel };
             window.Content = view;
-            window.SizeToContent = System.Windows.SizeToContent.WidthAndHeight;
+            window.SizeToContent = SizeToContent.WidthAndHeight;
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             window.Title = "Select games";
             var dialogResult = window.ShowDialog();
             if (dialogResult == true)
