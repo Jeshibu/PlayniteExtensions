@@ -80,6 +80,12 @@ namespace Rawg.Common
             return Execute<RawgGameDetails>(request);
         }
 
+        public ICollection<RawgScreenshot> GetScreenshots(string gameSlugOrId)
+        {
+            var request = new RestRequest($"games/{gameSlugOrId}/screenshots").AddKey(Key);
+            return GetAllPages<RawgScreenshot>(request);
+        }
+
         public RawgResult<RawgGameBase> SearchGames(string query)
         {
             var request = new RestRequest($"games?search={HttpUtility.UrlEncode(query)}").AddKey(Key);

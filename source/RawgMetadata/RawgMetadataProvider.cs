@@ -111,11 +111,36 @@ namespace RawgMetadata
 
         public override MetadataFile GetBackgroundImage(GetMetadataFieldArgs args)
         {
-            var data = GetSearchResult();
-            if (IsEmpty(data))
-                return base.GetBackgroundImage(args);
+            if (options.IsBackgroundDownload)
+            {
+                var data = GetSearchResult();
+                if (IsEmpty(data))
+                    return base.GetBackgroundImage(args);
 
-            return new MetadataFile(data.BackgroundImage);
+                return new MetadataFile(data.BackgroundImage);
+            }
+            else
+            {
+                var data = GetFullGameDetails();
+                if (IsEmpty(data))
+                    return base.GetBackgroundImage(args);
+
+                var imageOptions = new List<ImageFileOption>();
+                if (!string.IsNullOrWhiteSpace(data.BackgroundImage))
+                    imageOptions.Add(new ImageFileOption(data.BackgroundImage));
+
+                if (!string.IsNullOrWhiteSpace(data.BackgroundImageAdditional))
+                    imageOptions.Add(new ImageFileOption(data.BackgroundImageAdditional));
+
+                var screenshots = client.GetScreenshots(data.Slug);
+                imageOptions.AddRange(screenshots.Select(s => new ImageFileOption(s.Image)));
+
+                var chosen = plugin.PlayniteApi.Dialogs.ChooseImageFile(imageOptions, "Choose a background");
+                if (chosen == null)
+                    return null;
+                else
+                    return new MetadataFile(chosen.Path);
+            }
         }
 
         public override IEnumerable<MetadataProperty> GetTags(GetMetadataFieldArgs args)

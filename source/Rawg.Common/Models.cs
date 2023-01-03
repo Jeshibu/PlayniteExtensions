@@ -44,6 +44,7 @@ namespace Rawg.Common
         //below properties are only in calls with a user token, not those with an api key
         [JsonProperty("user_game")]
         public RawgUserGame UserGame { get; set; }
+
         [JsonProperty("user_rating")]
         public int UserRating { get; set; }
     }
@@ -75,6 +76,9 @@ namespace Rawg.Common
 
         [JsonProperty("reddit_url")]
         public string RedditUrl { get; set; }
+
+        [JsonProperty("background_image_additional")]
+        public string BackgroundImageAdditional { get; set; }
     }
 
     public class RawgUserGame
@@ -82,6 +86,17 @@ namespace Rawg.Common
         public string Status { get; set; }
         public DateTime Added { get; set; }
         public RawgObject[] Platforms { get; set; }
+    }
+
+    public class RawgScreenshot
+    {
+        public int Id { get; set; }
+        public string Image { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+
+        [JsonProperty("is_deleted")]
+        public bool IsDeleted { get; set; }
     }
 
     public class RawgCollection : RawgObject
