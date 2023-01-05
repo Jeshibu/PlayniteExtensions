@@ -94,6 +94,19 @@ namespace GiantBombMetadata
                     if (string.IsNullOrWhiteSpace(a))
                         return searchOutput;
 
+                    if (Regex.IsMatch(a, @"^3030-[0-9]+$"))
+                    {
+                        try
+                        {
+                            var gameById = apiClient.GetGameDetails(a);
+                            searchOutput.Add(new GenericSearchResultGame(gameById));
+                        }
+                        catch (Exception e)
+                        {
+                            logger.Error(e, $"Failed to get Giant Bomb data by ID for <{a}>");
+                        }
+                    }
+
                     try
                     {
                         var searchResult = apiClient.SearchGames(a);
@@ -108,13 +121,13 @@ namespace GiantBombMetadata
                     return searchOutput;
                 }, options.GameData.Name, string.Empty);
 
-                return foundGame = (GiantBombObjectDetails)((GenericSearchResultGame)selectedGame)?.Game ?? new GiantBombGameDetails();
+                return foundGame = ((GenericSearchResultGame)selectedGame)?.Game ?? new GiantBombGameDetails();
             }
         }
 
         private class GenericSearchResultGame : GenericItemOption
         {
-            public GenericSearchResultGame(GiantBombSearchResultItem g) : base(g.Name, g.ReleaseDate)
+            public GenericSearchResultGame(GiantBombObjectDetails g) : base(g.Name, g.ReleaseDate)
             {
                 Game = g;
                 if (g.AliasesSplit.Any())
@@ -131,7 +144,7 @@ namespace GiantBombMetadata
                 }
             }
 
-            public GiantBombSearchResultItem Game { get; set; }
+            public GiantBombObjectDetails Game { get; set; }
         }
 
         private int GetDaysApart(DateTime? searchDate, string resultDate)
