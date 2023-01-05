@@ -1,0 +1,813 @@
+{
+    "data": {
+        "customAttributeMetadata": {
+            "items": [
+                {
+                    "attribute_code": "app_type",
+                    "attribute_options": [
+                        {
+                            "admin_label": "vr",
+                            "value": "4",
+                            "label": "VR",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr",
+                            "value": "5",
+                            "label": "Mobile VR",
+                            "__typename": "AttributeOption"
+                        }
+                    ],
+                    "__typename": "Attribute"
+                },
+                {
+                    "attribute_code": "content_type",
+                    "attribute_options": [
+                        {
+                            "admin_label": "coming_soon",
+                            "value": "10",
+                            "label": "Coming Soon",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "dlc",
+                            "value": "11",
+                            "label": "DLC",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr",
+                            "value": "12",
+                            "label": "Mobile VR",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "vr",
+                            "value": "13",
+                            "label": "PC VR",
+                            "__typename": "AttributeOption"
+                        }
+                    ],
+                    "__typename": "Attribute"
+                },
+                {
+                    "attribute_code": "genre",
+                    "attribute_options": [
+                        {
+                            "admin_label": "0",
+                            "value": "93",
+                            "label": "Adventure",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "1",
+                            "value": "94",
+                            "label": "Casual",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "2",
+                            "value": "95",
+                            "label": "Action",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "3",
+                            "value": "96",
+                            "label": "Racing",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "4",
+                            "value": "97",
+                            "label": "Shooter",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "5",
+                            "value": "98",
+                            "label": "Sports",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "6",
+                            "value": "99",
+                            "label": "Strategy",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "7",
+                            "value": "100",
+                            "label": "RPG",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "9",
+                            "value": "101",
+                            "label": "Video",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "10",
+                            "value": "102",
+                            "label": "Simulation",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "13",
+                            "value": "103",
+                            "label": "Horror",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "14",
+                            "value": "104",
+                            "label": "Music",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "15",
+                            "value": "105",
+                            "label": "Sci-Fi",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "17",
+                            "value": "106",
+                            "label": "Real-estate",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "25",
+                            "value": "107",
+                            "label": "Documentary",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "28",
+                            "value": "108",
+                            "label": "Health & Fitness",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "29",
+                            "value": "109",
+                            "label": "Narrative",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "30",
+                            "value": "110",
+                            "label": "Travel",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "31",
+                            "value": "111",
+                            "label": "Escape Room",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "1000",
+                            "value": "112",
+                            "label": "Business",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "1200",
+                            "value": "113",
+                            "label": "Education",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "1600",
+                            "value": "114",
+                            "label": "Productivity",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "1700",
+                            "value": "115",
+                            "label": "Social",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "1900",
+                            "value": "116",
+                            "label": "Art & Design",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "2000",
+                            "value": "403",
+                            "label": "Car VR",
+                            "__typename": "AttributeOption"
+                        }
+                    ],
+                    "__typename": "Attribute"
+                },
+                {
+                    "attribute_code": "headsets",
+                    "attribute_options": [
+                        {
+                            "admin_label": "vive",
+                            "value": "122",
+                            "label": "VIVE",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "HtcViveCosmosElite",
+                            "value": "387",
+                            "label": "VIVE Cosmos Elite",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "vive_cosmos",
+                            "value": "123",
+                            "label": "VIVE Cosmos",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "vivepro",
+                            "value": "124",
+                            "label": "VIVE Pro",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "oculus_rift",
+                            "value": "125",
+                            "label": "Oculus Rift",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "OculusRiftS",
+                            "value": "126",
+                            "label": "Oculus Rift S / Quest + Link",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "valve_index",
+                            "value": "127",
+                            "label": "Valve Index",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "windows_mixed_reality",
+                            "value": "128",
+                            "label": "Windows Mixed Reality",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr_aio",
+                            "value": "129",
+                            "label": "VIVE Focus",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr_oxm_htc_mi6",
+                            "value": "130",
+                            "label": "VIVE Focus Plus",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr_iqiyiaio",
+                            "value": "388",
+                            "label": "IQIYI QIYU 2",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr_oxm_dpvr_p1pro",
+                            "value": "389",
+                            "label": "DPVR P1-Pro",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr_oxm_pico_g2_4k",
+                            "value": "390",
+                            "label": "Pico G2 4K",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr_oxm_pico_goblin2pro",
+                            "value": "391",
+                            "label": "Pico G2",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr_oxm_shadowcreator_shadowvr",
+                            "value": "392",
+                            "label": "Shadow VR",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr_oxm_skyworth_s8000",
+                            "value": "393",
+                            "label": "Skyworth S8000",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr_picoaio",
+                            "value": "394",
+                            "label": "Pico Neo",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr_oxm_idealens_k4",
+                            "value": "396",
+                            "label": "IDEALENS K4",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr_oxm_iqiyi_alien2p",
+                            "value": "397",
+                            "label": "IQIYI QIYU 2Pro",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr_oxm_iqiyi_alienpro",
+                            "value": "398",
+                            "label": "IQIYI QIYU 2S",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr_oxm_skyworth_v901",
+                            "value": "399",
+                            "label": "Skyworth V901",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mvr_oxm_dpvr_p1pro_4k",
+                            "value": "400",
+                            "label": "DPVR P1 PRO 4K",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "vive_flow",
+                            "value": "401",
+                            "label": "VIVE Flow",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "vive_flow_ct",
+                            "value": "402",
+                            "label": "VIVE Flow CT",
+                            "__typename": "AttributeOption"
+                        }
+                    ],
+                    "__typename": "Attribute"
+                },
+                {
+                    "attribute_code": "media_type",
+                    "attribute_options": [
+                        {
+                            "admin_label": "0",
+                            "value": "330",
+                            "label": "Game",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "1",
+                            "value": "331",
+                            "label": "App",
+                            "__typename": "AttributeOption"
+                        }
+                    ],
+                    "__typename": "Attribute"
+                },
+                {
+                    "attribute_code": "play_area",
+                    "attribute_options": [
+                        {
+                            "admin_label": "seated",
+                            "value": "363",
+                            "label": "Seated",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "standing",
+                            "value": "364",
+                            "label": "Standing",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "room_scale",
+                            "value": "365",
+                            "label": "Room-scale",
+                            "__typename": "AttributeOption"
+                        }
+                    ],
+                    "__typename": "Attribute"
+                },
+                {
+                    "attribute_code": "input_methods",
+                    "attribute_options": [
+                        {
+                            "admin_label": "keyboard",
+                            "value": "134",
+                            "label": "Keyboard",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "mouse",
+                            "value": "135",
+                            "label": "Mouse",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "vive_controllers",
+                            "value": "136",
+                            "label": "VIVE Controllers",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "gamepad",
+                            "value": "137",
+                            "label": "Gamepad",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "vive_tracker",
+                            "value": "138",
+                            "label": "VIVE Tracker",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "gaze",
+                            "value": "139",
+                            "label": "Gaze",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "oculus_touch",
+                            "value": "140",
+                            "label": "Oculus Touch",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "motion_controllers",
+                            "value": "141",
+                            "label": "Windows MR Controllers",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "cosmos_controllers",
+                            "value": "142",
+                            "label": "VIVE Cosmos Controllers",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "valve_index_controllers",
+                            "value": "143",
+                            "label": "Valve Index Controllers",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "others",
+                            "value": "144",
+                            "label": "Others",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "eyetracking_sdk",
+                            "value": "145",
+                            "label": "Eye tracking",
+                            "__typename": "AttributeOption"
+                        }
+                    ],
+                    "__typename": "Attribute"
+                },
+                {
+                    "attribute_code": "player_num",
+                    "attribute_options": [
+                        {
+                            "admin_label": "single",
+                            "value": "366",
+                            "label": "Singleplayer",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "multi",
+                            "value": "367",
+                            "label": "Multiplayer",
+                            "__typename": "AttributeOption"
+                        }
+                    ],
+                    "__typename": "Attribute"
+                },
+                {
+                    "attribute_code": "lang_supported",
+                    "attribute_options": [
+                        {
+                            "admin_label": "en-us",
+                            "value": "146",
+                            "label": "English (United States)",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "ar",
+                            "value": "147",
+                            "label": "Arabic",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "bg",
+                            "value": "148",
+                            "label": "Bulgarian",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "my-mm",
+                            "value": "149",
+                            "label": "Burmese",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "ca",
+                            "value": "150",
+                            "label": "Catalan",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "zh-cn",
+                            "value": "151",
+                            "label": "Chinese (Simplified)",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "zh-tw",
+                            "value": "152",
+                            "label": "Chinese (Traditional)",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "hr",
+                            "value": "153",
+                            "label": "Croatian",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "cs-cz",
+                            "value": "154",
+                            "label": "Czech",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "da-dk",
+                            "value": "155",
+                            "label": "Danish",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "nl-nl",
+                            "value": "156",
+                            "label": "Dutch",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "en-gb",
+                            "value": "157",
+                            "label": "English (United Kingdom)",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "et",
+                            "value": "158",
+                            "label": "Estonian",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "fi-fi",
+                            "value": "159",
+                            "label": "Finnish",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "fr-fr",
+                            "value": "160",
+                            "label": "French (France)",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "fr-ca",
+                            "value": "161",
+                            "label": "French (Canada)",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "de-de",
+                            "value": "162",
+                            "label": "German",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "el-gr",
+                            "value": "163",
+                            "label": "Greek",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "iw-il",
+                            "value": "164",
+                            "label": "Hebrew",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "hi-in",
+                            "value": "165",
+                            "label": "Hindi",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "hu-hu",
+                            "value": "166",
+                            "label": "Hungarian",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "id",
+                            "value": "167",
+                            "label": "Indonesian",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "it-it",
+                            "value": "168",
+                            "label": "Italian",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "ja-jp",
+                            "value": "169",
+                            "label": "Japanese",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "ko-kr",
+                            "value": "170",
+                            "label": "Korean (South Korea)",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "lv",
+                            "value": "171",
+                            "label": "Latvian",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "lt",
+                            "value": "172",
+                            "label": "Lithuanian",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "ms",
+                            "value": "173",
+                            "label": "Malay",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "no-no",
+                            "value": "174",
+                            "label": "Norwegian",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "fa",
+                            "value": "175",
+                            "label": "Persian",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "pl-pl",
+                            "value": "176",
+                            "label": "Polish",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "pt-br",
+                            "value": "177",
+                            "label": "Portuguese (Brazil)",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "pt-pt",
+                            "value": "178",
+                            "label": "Portuguese (Portugal)",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "ro",
+                            "value": "179",
+                            "label": "Romanian",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "ru-ru",
+                            "value": "180",
+                            "label": "Russian",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "sr",
+                            "value": "181",
+                            "label": "Serbian",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "sk",
+                            "value": "182",
+                            "label": "Slovak",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "sl",
+                            "value": "183",
+                            "label": "Slovenian",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "es-419",
+                            "value": "184",
+                            "label": "Spanish (Latin America)",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "es-es",
+                            "value": "185",
+                            "label": "Spanish (Spain)",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "es-us",
+                            "value": "186",
+                            "label": "Spanish (United States)",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "se-sv",
+                            "value": "187",
+                            "label": "Swedish",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "th",
+                            "value": "188",
+                            "label": "Thai",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "tr-tr",
+                            "value": "189",
+                            "label": "Turkish",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "uk",
+                            "value": "190",
+                            "label": "Ukrainian",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "vi",
+                            "value": "191",
+                            "label": "Vietnamese",
+                            "__typename": "AttributeOption"
+                        }
+                    ],
+                    "__typename": "Attribute"
+                },
+                {
+                    "attribute_code": "content_rating",
+                    "attribute_options": [
+                        {
+                            "admin_label": "0",
+                            "value": "6",
+                            "label": "Everyone",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "1",
+                            "value": "7",
+                            "label": "10+",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "2",
+                            "value": "8",
+                            "label": "13+",
+                            "__typename": "AttributeOption"
+                        },
+                        {
+                            "admin_label": "3",
+                            "value": "9",
+                            "label": "17+",
+                            "__typename": "AttributeOption"
+                        }
+                    ],
+                    "__typename": "Attribute"
+                }
+            ],
+            "__typename": "CustomAttributeMetadata"
+        }
+    }
+}

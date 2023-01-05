@@ -10,14 +10,15 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using ViveportLibrary.Api;
 
 namespace ViveportLibrary
 {
     public class ViveportLibrary : LibraryPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private static readonly string iconPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "icon.png");
-        public override string LibraryIcon { get; } = iconPath;
+        public static readonly string IconPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "icon.png");
+        public override string LibraryIcon { get; } = IconPath;
 
         private ViveportLibrarySettingsViewModel settings { get; set; }
 
@@ -76,23 +77,10 @@ namespace ViveportLibrary
                 {
                     GameId = key,
                     Name = appMetadata.Title ?? installedAppData.Title,
-                    Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
                     InstallDirectory = installedAppData?.Path,
                     IsInstalled = installedAppData != null,
                     Source = new MetadataNameProperty("Viveport"),
                 };
-
-                if (settings.Settings.UseCovers)
-                {
-                    string coverUrl = installedAppData?.ImageUri;
-                    if (coverUrl == null && appMetadata != null && appMetadata.Thumbnails.TryGetValue("medium", out var thumbnail))
-                    {
-                        coverUrl = thumbnail.Url;
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(coverUrl))
-                        game.CoverImage = new MetadataFile(coverUrl);
-                }
 
                 if (settings.Settings.TagSubscriptionGames
                     && !string.IsNullOrWhiteSpace(settings.Settings.SubscriptionTagName)
@@ -100,17 +88,6 @@ namespace ViveportLibrary
                     && licenseData.Licensing == "rsu")
                 {
                     game.Tags = new HashSet<MetadataProperty> { new MetadataNameProperty(settings.Settings.SubscriptionTagName) };
-                }
-
-                if (appMetadata != null && settings.Settings.ImportHeadsetsAsPlatforms)
-                {
-                    foreach (var platform in appMetadata.SupportedDeviceList)
-                    {
-                        if (platform == "VStreaming")
-                            continue; //what the hell is VStreaming anyway
-
-                        game.Platforms.Add(new MetadataNameProperty(SplitPascalCase(platform)));
-                    }
                 }
 
                 yield return game;
@@ -171,6 +148,7 @@ namespace ViveportLibrary
             {
                 Name = "Start via Viveport",
                 Path = $"vive://runapp/{args.Game.GameId}",
+                Type = AutomaticPlayActionType.Url,
                 WorkingDir = args.Game.InstallDirectory,
                 TrackingMode = TrackingMode.Directory,
                 TrackingPath = args.Game.InstallDirectory,
@@ -179,6 +157,11 @@ namespace ViveportLibrary
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
             yield return new MainMenuItem { MenuSection = "@Viveport", Description = $"Tag all Viveport Infinity games as {settings?.Settings?.SubscriptionTagName}", Action = a => SetSubscriptionTags() };
+        }
+
+        public override LibraryMetadataProvider GetMetadataDownloader()
+        {
+            return new ViveportMetadataProvider(new ViveportApiClient(), settings.Settings);
         }
 
         public void SetSubscriptionTags()

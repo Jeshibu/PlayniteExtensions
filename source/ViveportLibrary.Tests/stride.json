@@ -1,0 +1,420 @@
+{
+    "products": {
+        "ids": [
+            "VR-4b2fc373-9aa1-49ba-9ad1-7f119fb95c0c"
+        ],
+        "total": 1,
+        "size": 1,
+        "from": 0
+    },
+    "contents": [
+        {
+            "id": "VR-4b2fc373-9aa1-49ba-9ad1-7f119fb95c0c",
+            "title": "STRIDE",
+            "desc": "STRIDE is a high-octane parkour adventure in virtual reality. Fight for your life as you hurtle through the canopy of a futuristic metropolis. Step into the shoes of a master freerunner as you vault, swing, roll, and shoot your way through this intense, action-packed adventure. Will you survive the ultimate freerun?\n\nSingle-Player Modes\n\n- Endless Mode\n\nInfinite level generation provides unlimited challenging terrain. Build your score by landing jumps over impossibly wide gaps, nailing insane wall-runs, sliding under barriers, and swinging between buildings. There’s no turning back or time to stop - as the world quickly falls apart behind you. Oh, and did we mention the rooftops are crawling with snipers? Pull out your 9mm mid-air and pick them off as you glide across the gap between buildings.\n\n- Time Run Mode\n\nCompete for the top spot on the leaderboard. In Time Run mode, it’s all about speed. As the terrain unveils itself ahead of you, you’ll need to visualize your route on the fly, and execute each move with precision.\n\n- Arena Mode \n\nIn Arena mode, you’re presented with a spacious section of the city’s rooftops, without the pressure of a creeping barrier coming up behind you. You have complete freedom of movement within this complex high-rise “arena” but you’ll be challenged with a variety of tasks. Examples include finding and collecting certain items , completing a specified route within a time limit, stealing an item without getting spotted by the snipers, or - simply - killing all the enemies! Arena mode feels even more like a real city, so enjoy the views… but try not to die.",
+            "offer_id": "a75b2f34-099a-4167-aac0-5214596c5b83",
+            "policy_id": "ada89b8a-f13e-40d6-b54c-e1617fd75ce2",
+            "status": 1,
+            "release_time": 1596118956576,
+            "countries": [
+                "ae",
+                "ar",
+                "au",
+                "bg",
+                "bn",
+                "br",
+                "ca",
+                "ch",
+                "cn",
+                "cz",
+                "dk",
+                "at",
+                "be",
+                "cy",
+                "de",
+                "ee",
+                "es",
+                "fi",
+                "fr",
+                "gr",
+                "ie",
+                "it",
+                "lt",
+                "lu",
+                "lv",
+                "mt",
+                "nl",
+                "pt",
+                "si",
+                "sk",
+                "gb",
+                "hk",
+                "mo",
+                "hr",
+                "hu",
+                "id",
+                "in",
+                "is",
+                "jp",
+                "kh",
+                "kr",
+                "la",
+                "mm",
+                "mx",
+                "my",
+                "no",
+                "nz",
+                "pe",
+                "ph",
+                "pl",
+                "ro",
+                "ru",
+                "sa",
+                "se",
+                "sg",
+                "th",
+                "tw",
+                "bh",
+                "eg",
+                "gu",
+                "jo",
+                "kw",
+                "lb",
+                "om",
+                "qa",
+                "tl",
+                "us",
+                "za",
+                "uy",
+                "vn"
+            ],
+            "app_ids": [
+                "d4c9907a-8e53-4605-830d-003916f6bd54"
+            ],
+            "plan_plan_id": "",
+            "plan_title": "",
+            "plan_photo_url": "",
+            "plan_type": "",
+            "title_language": "en_us",
+            "apps": [
+                {
+                    "id": "d4c9907a-8e53-4605-830d-003916f6bd54",
+                    "app_key": "vive.htc.d4c9907a-8e53-4605-830d-003916f6bd54",
+                    "ver_code": 1658749920,
+                    "ver_name": "1.5",
+                    "title": "STRIDE",
+                    "desc": "STRIDE is a high-octane parkour adventure in virtual reality. Fight for your life as you hurtle through the canopy of a futuristic metropolis. Step into the shoes of a master freerunner as you vault, swing, roll, and shoot your way through this intense, action-packed adventure. Will you survive the ultimate freerun?\n\nSingle-Player Modes\n\n- Endless Mode\n\nInfinite level generation provides unlimited challenging terrain. Build your score by landing jumps over impossibly wide gaps, nailing insane wall-runs, sliding under barriers, and swinging between buildings. There’s no turning back or time to stop - as the world quickly falls apart behind you. Oh, and did we mention the rooftops are crawling with snipers? Pull out your 9mm mid-air and pick them off as you glide across the gap between buildings.\n\n- Time Run Mode\n\nCompete for the top spot on the leaderboard. In Time Run mode, it’s all about speed. As the terrain unveils itself ahead of you, you’ll need to visualize your route on the fly, and execute each move with precision.\n\n- Arena Mode \n\nIn Arena mode, you’re presented with a spacious section of the city’s rooftops, without the pressure of a creeping barrier coming up behind you. You have complete freedom of movement within this complex high-rise “arena” but you’ll be challenged with a variety of tasks. Examples include finding and collecting certain items , completing a specified route within a time limit, stealing an item without getting spotted by the snipers, or - simply - killing all the enemies! Arena mode feels even more like a real city, so enjoy the views… but try not to die.",
+                    "author": {
+                        "id": "b67f8146-43d0-457f-9a51-ef78712d966d",
+                        "name": "JOY WAY",
+                        "icon": "https://avatar.viveport.com/img/org-logo/ac3d9b11-0784-4c00-86a3-2a60340f6064/logo.png?v=1597225293811",
+                        "desc": "http://joyway.games/",
+                        "contact": ""
+                    },
+                    "categories": "0",
+                    "thumbnails": {
+                        "small": {
+                            "url": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/image/thumbnail_small_v1637073876.png",
+                            "width": 316.0,
+                            "height": 178.0
+                        },
+                        "medium": {
+                            "url": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/image/thumbnail_medium_v1637073876.png",
+                            "width": 655.0,
+                            "height": 369.0
+                        },
+                        "large": {
+                            "url": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/image/thumbnail_large_v1637073876.png",
+                            "width": 1432.0,
+                            "height": 550.0
+                        },
+                        "square": {
+                            "url": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/image/thumbnail_square_v1637073876.png",
+                            "width": 256.0,
+                            "height": 256.0
+                        }
+                    },
+                    "gallery": [
+                        {
+                            "media_type": 1,
+                            "url": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/video/video_1_v1658750976.mp4",
+                            "width": 1366.0,
+                            "height": 768.0,
+                            "cover": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/image/video_cover_1_v1658746634.png"
+                        },
+                        {
+                            "media_type": 2,
+                            "url": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/video/video_1_v1658752116.webm",
+                            "width": 1366.0,
+                            "height": 768.0,
+                            "cover": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/image/video_cover_1_v1658746634.png"
+                        },
+                        {
+                            "media_type": 0,
+                            "url": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/image/image_1_v1637073876.jpg",
+                            "width": 1366.0,
+                            "height": 768.0,
+                            "title": "",
+                            "desc": ""
+                        },
+                        {
+                            "media_type": 0,
+                            "url": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/image/image_2_v1637073876.jpg",
+                            "width": 1366.0,
+                            "height": 768.0,
+                            "title": "",
+                            "desc": ""
+                        },
+                        {
+                            "media_type": 0,
+                            "url": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/image/image_3_v1637073876.jpg",
+                            "width": 1366.0,
+                            "height": 768.0,
+                            "title": "",
+                            "desc": ""
+                        },
+                        {
+                            "media_type": 0,
+                            "url": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/image/image_4_v1637073876.jpg",
+                            "width": 1366.0,
+                            "height": 768.0,
+                            "title": "",
+                            "desc": ""
+                        },
+                        {
+                            "media_type": 0,
+                            "url": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/image/image_5_v1637073876.png",
+                            "width": 1366.0,
+                            "height": 768.0,
+                            "title": "",
+                            "desc": ""
+                        },
+                        {
+                            "media_type": 0,
+                            "url": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/image/image_6_v1637073876.png",
+                            "width": 1366.0,
+                            "height": 768.0,
+                            "title": "",
+                            "desc": ""
+                        },
+                        {
+                            "media_type": 0,
+                            "url": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/image/image_7_v1637073876.png",
+                            "width": 1366.0,
+                            "height": 768.0,
+                            "title": "",
+                            "desc": ""
+                        },
+                        {
+                            "media_type": 0,
+                            "url": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/image/image_8_v1637073876.png",
+                            "width": 1366.0,
+                            "height": 768.0,
+                            "title": "",
+                            "desc": ""
+                        }
+                    ],
+                    "genres": [
+                        "2",
+                        "29",
+                        "4",
+                        "0"
+                    ],
+                    "sys_reqs": {
+                        "os": [
+                            "Win10"
+                        ],
+                        "osbits": [
+                            "64"
+                        ],
+                        "others": {
+                            "processor": "Intel i5-4590 equivalent or greater",
+                            "memory_size": "8",
+                            "memory_unit": "GB",
+                            "directx_version": "",
+                            "disk_space": "2",
+                            "disk_space_unit": "GB",
+                            "graphics": "NVIDIA GTX 970 / AMD Radeon R9 290 or greater"
+                        }
+                    },
+                    "release_time": 1596118956576,
+                    "create_time": 1596118956576,
+                    "view_count": 0,
+                    "download_count": 0,
+                    "content_rating": 3,
+                    "single_player": true,
+                    "publish_date": 1658752929,
+                    "price": 0.0,
+                    "currency": "0",
+                    "release_note": "We added:\n• 3 new quests: overtake drones and destroy them, download their data or lasso them with a hook shot;\n• 2 new weapon pickups: an UZI for rapid fire and a shotgun for close-ranged encounters;\n• 2 new pickups for Endless mode: a speed boost and a death zone slower;\n• New type of doors in the Endless mode — shoot locks to open;\n• System that slows down the wall of death at sharp turns in the Endless mode;\n• New sections for the generation pool that were impassable before.\n\nWe fixed:\n• Drone teleportation;\n• Drones no longer spawn a second time if a quest is restarted;\n• The shotgun damage against snipers is increased, also their bodies now are discarding from shot's impact;\n• New sounds and effects.\n\nWe changed:\n• The \"chain\" quest was removed because of its unpopularity among players;\n• The healthpacks no longer spawn if your HP is full;\n• Optimized some of the new sections from the generation pool;\n• Small change for Jump Off tutorial (an extra step was added).",
+                    "is_free": false,
+                    "contact": "community@joyway.games",
+                    "play_area": [
+                        "standing"
+                    ],
+                    "extra_docs": [
+                        {
+                            "key": "privacy",
+                            "url": ""
+                        },
+                        {
+                            "key": "terms",
+                            "url": "",
+                            "attributes": [
+                                {
+                                    "key": "eula_type",
+                                    "value": ""
+                                }
+                            ]
+                        },
+                        {
+                            "key": "stores",
+                            "url": "",
+                            "attributes": [
+                                {
+                                    "key": "viveport",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "arcade",
+                                    "value": "0"
+                                },
+                                {
+                                    "key": "subscription",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "amazon",
+                                    "value": "0"
+                                },
+                                {
+                                    "key": "enterprise_market",
+                                    "value": "0"
+                                }
+                            ]
+                        },
+                        {
+                            "key": "advertisement",
+                            "url": "",
+                            "attributes": [
+                                {
+                                    "key": "sdk",
+                                    "value": "0"
+                                }
+                            ]
+                        },
+                        {
+                            "key": "viveport_awards",
+                            "url": "",
+                            "attributes": [
+                                {
+                                    "key": "vda2_join",
+                                    "value": "0"
+                                },
+                                {
+                                    "key": "vda2_opt",
+                                    "value": ""
+                                }
+                            ]
+                        },
+                        {
+                            "key": "sales_force",
+                            "url": "",
+                            "attributes": [
+                                {
+                                    "key": "submitted",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "prepublish",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "rejected",
+                                    "value": "0"
+                                }
+                            ]
+                        }
+                    ],
+                    "product_ids": [
+                        "VR-4b2fc373-9aa1-49ba-9ad1-7f119fb95c0c"
+                    ],
+                    "app_type": 0,
+                    "concurrent_session": 1,
+                    "new_category": [],
+                    "cloud": {
+                        "objs": [
+                            {
+                                "obj_type": 61,
+                                "type": "portrait_image",
+                                "class": "1",
+                                "mime": "image/png",
+                                "prefix_path": "app/d4c9907a-8e53-4605-830d-003916f6bd54/image/",
+                                "name": "portrait_image_1_v1637071640.png",
+                                "update_ts": 1658749820,
+                                "height": 554.0,
+                                "width": 316.0,
+                                "url": "https://assets-global.viveport.com/vr_developer_published_assets/app/d4c9907a-8e53-4605-830d-003916f6bd54/image/portrait_image_1_v1637071640.png"
+                            }
+                        ]
+                    },
+                    "prod_meta_id": "131e0108-fab6-420b-b5e4-bae58080f738",
+                    "use_drm_wrapper": true,
+                    "input_methods": [
+                        "oculus_touch",
+                        "valve_index_controllers",
+                        "motion_controllers",
+                        "vive_controllers",
+                        "cosmos_controllers"
+                    ],
+                    "publisher": "Joy Way ",
+                    "publisher_email": "community@joyway.games",
+                    "features": [],
+                    "lang_supported": {
+                        "interface": [
+                            "en-us"
+                        ],
+                        "audio": [
+                            "en-us"
+                        ],
+                        "subtitle": []
+                    },
+                    "player_num": [
+                        "single"
+                    ],
+                    "hw_matrix": {
+                        "headset_features": [],
+                        "headsets": [
+                            "vive",
+                            "OculusRiftS",
+                            "vive_cosmos",
+                            "valve_index",
+                            "HtcViveCosmosElite",
+                            "windows_mixed_reality",
+                            "vivepro",
+                            "oculus_rift"
+                        ]
+                    },
+                    "binary_update_time": 1658341630,
+                    "first_release_time": 1596165074,
+                    "expected_release_date": 1658338796,
+                    "coming_soon_date_type": "",
+                    "datetime": {
+                        "arcade_opt_out": 0
+                    },
+                    "hw_compatible_priority": {
+                        "cosmos": 30
+                    },
+                    "app_settings": {
+                        "store_list": []
+                    },
+                    "developer_display_name": "Joy Way ",
+                    "document": [],
+                    "runtime": []
+                }
+            ],
+            "type": 0,
+            "p_publish_date": 1658752929
+        }
+    ]
+}

@@ -10,15 +10,14 @@ namespace ViveportLibrary
 {
     public class ViveportLibrarySettings : ObservableObject
     {
-        private bool useCovers = false;
         private bool importHeadsetsAsPlatforms = true;
         private bool tagSubscriptionGames = false;
         private string subscriptionTagName = "Subscription";
 
-        public bool UseCovers { get => useCovers; set => SetValue(ref useCovers, value); }
         public bool ImportHeadsetsAsPlatforms { get => importHeadsetsAsPlatforms; set => SetValue(ref importHeadsetsAsPlatforms, value); }
         public bool TagSubscriptionGames { get => tagSubscriptionGames; set => SetValue(ref tagSubscriptionGames, value); }
         public string SubscriptionTagName { get => subscriptionTagName; set => SetValue(ref subscriptionTagName, value); }
+        public bool ImportInputMethodsAsFeatures { get; set; } = false;
     }
 
     public class ViveportLibrarySettingsViewModel : PluginSettingsViewModel<ViveportLibrarySettings, ViveportLibrary>
