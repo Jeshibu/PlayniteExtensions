@@ -25,3 +25,12 @@ Packages:
      - Fixed character/concept/object/person import window falling off screen
      - Fixed error when imported description contains no hyperlinks
      - Fixed "date modified" field not updating during character/concept/object/person import
+  - Version: 0.4
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-01-05
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/giantbomb0.4/GiantBombMetadata_0_4.pext
+    Changelog:
+     - Fixed top panel button option not being applied
+     - Fixed search running when the search string is empty
+     - Added search by ID for games (such as 3030-18911)
+     - Trimmed company forms (such as LTD, LLC, etc) from company names
