@@ -51,16 +51,23 @@ namespace GiantBombMetadata
         {
             var selectedItem = PlayniteApi.Dialogs.ChooseItemWithSearch(null, (a) =>
             {
+                var output = new List<GenericItemOption>();
+
+                if (string.IsNullOrWhiteSpace(a))
+                    return output;
+
                 try
                 {
                     var searchResult = apiClient.SearchGameProperties(a);
-                    return searchResult.Select(x => new GiantBombSearchResultItemOption(x)).ToList<GenericItemOption>();
+                    output.AddRange(searchResult.Select(x => new GiantBombSearchResultItemOption(x)));
                 }
                 catch (Exception e)
                 {
                     logger.Error(e, $"Failed to get Giant Bomb search data for <{a}>");
                     return new List<GenericItemOption>();
                 }
+
+                return output;
             }, string.Empty, "Search for a piece of Giant Bomb metadata to assign to all your matching games") as GiantBombSearchResultItemOption;
 
             return selectedItem?.SearchResultItem;
