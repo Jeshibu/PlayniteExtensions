@@ -22,7 +22,7 @@
             <Button Content="Get API Key" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"
                         Command="{Binding GetApiKeyCommand}" Margin="10,0,0,0"/>
 
-            <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,0" Content="Show top panel button to add metadata to multiple games" IsChecked="{Binding ShowTopPanelButton}"/>
+            <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,0" Content="Show top panel button to add metadata to multiple games" IsChecked="{Binding Settings.ShowTopPanelButton}"/>
         </Grid>
         <Grid Margin="0,20">
             <Grid.Resources>
