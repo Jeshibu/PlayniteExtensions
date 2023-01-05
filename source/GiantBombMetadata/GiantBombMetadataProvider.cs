@@ -279,9 +279,16 @@ namespace GiantBombMetadata
 
         private static Regex pressEventOrCoverRegex = new Regex(@"\b(e3|pax|box art)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
+        private static bool ImageCanBeUsedAsBackground(GiantBombImage img)
+        {
+            return img.Tags.Contains("screenshot", StringComparison.InvariantCultureIgnoreCase)
+                || img.Tags.Contains("concept", StringComparison.InvariantCultureIgnoreCase)
+                || !pressEventOrCoverRegex.IsMatch(img.Tags);
+        }
+
         public override MetadataFile GetBackgroundImage(GetMetadataFieldArgs args)
         {
-            var images = GetGameDetails().Images?.Where(i => !pressEventOrCoverRegex.IsMatch(i.Tags)).ToList();
+            var images = GetGameDetails().Images?.Where(ImageCanBeUsedAsBackground).ToList();
             if (images == null || images.Count == 0)
                 return null;
 
