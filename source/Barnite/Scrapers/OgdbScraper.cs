@@ -95,7 +95,7 @@ namespace Barnite.Scrapers
                         case "publisher":
                             var publishers = valueNode.SelectNodes(".//a")?.Select(a => a.InnerText.HtmlDecode());
                             if (publishers != null)
-                                game.Publishers = publishers.Select(d => new MetadataNameProperty(d)).ToHashSet<MetadataProperty>();
+                                game.Publishers = publishers.Select(d => new MetadataNameProperty(d.TrimCompanyForms())).ToHashSet<MetadataProperty>();
                             break;
                     }
                 }

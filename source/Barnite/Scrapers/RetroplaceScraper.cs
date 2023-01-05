@@ -45,11 +45,11 @@ namespace Barnite.Scrapers
 
             var author = doc.DocumentNode.SelectSingleNode("//span[@itemprop='author']")?.InnerText.HtmlDecode();
             if (author != null)
-                data.Developers = new HashSet<MetadataProperty> { new MetadataNameProperty(author) };
+                data.Developers = new HashSet<MetadataProperty> { new MetadataNameProperty(author.TrimCompanyForms()) };
 
             var publisher = doc.DocumentNode.SelectSingleNode("//span[@itemprop='publisher']")?.InnerText.HtmlDecode();
             if (publisher != null)
-                data.Publishers = new HashSet<MetadataProperty> { new MetadataNameProperty(publisher) };
+                data.Publishers = new HashSet<MetadataProperty> { new MetadataNameProperty(publisher.TrimCompanyForms()) };
 
             var releaseDateString = doc.DocumentNode.SelectSingleNode("//time[@datetime]")?.Attributes["datetime"].Value;
             if (DateTime.TryParseExact(releaseDateString, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out DateTime releaseDate))

@@ -57,7 +57,7 @@ namespace Barnite.Scrapers
                     switch (specName)
                     {
                         case "Merk":
-                            data.Publishers = values.Select(v => new MetadataNameProperty(v)).ToHashSet<MetadataProperty>();
+                            data.Publishers = values.Select(v => new MetadataNameProperty(v.TrimCompanyForms())).ToHashSet<MetadataProperty>();
                             break;
                         case "Platform":
                             data.Platforms = values.SelectMany(PlatformUtility.GetPlatforms).ToHashSet();

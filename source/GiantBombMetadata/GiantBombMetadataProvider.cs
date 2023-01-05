@@ -241,12 +241,12 @@ namespace GiantBombMetadata
 
         public override IEnumerable<MetadataProperty> GetDevelopers(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Developers?.Select(d => new MetadataNameProperty(d.Name));
+            return GetGameDetails().Developers?.Select(d => new MetadataNameProperty(d.Name.TrimCompanyForms()));
         }
 
         public override IEnumerable<MetadataProperty> GetPublishers(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Publishers?.Select(d => new MetadataNameProperty(d.Name));
+            return GetGameDetails().Publishers?.Select(d => new MetadataNameProperty(d.Name.TrimCompanyForms()));
         }
 
         public override IEnumerable<MetadataProperty> GetSeries(GetMetadataFieldArgs args)

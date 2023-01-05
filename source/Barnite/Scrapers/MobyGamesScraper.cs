@@ -70,10 +70,10 @@ namespace Barnite.Scrapers
                 switch (x.Item1)
                 {
                     case "Published by":
-                        data.Publishers = x.Item2.Select(n => new MetadataNameProperty(n)).ToHashSet<MetadataProperty>();
+                        data.Publishers = x.Item2.Select(n => new MetadataNameProperty(n.TrimCompanyForms())).ToHashSet<MetadataProperty>();
                         break;
                     case "Developed by":
-                        data.Developers = x.Item2.Select(n => new MetadataNameProperty(n)).ToHashSet<MetadataProperty>();
+                        data.Developers = x.Item2.Select(n => new MetadataNameProperty(n.TrimCompanyForms())).ToHashSet<MetadataProperty>();
                         break;
                     case "Released":
                         if (DateTime.TryParseExact(x.Item2.First(), "MMM dd, yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var releaseDate))

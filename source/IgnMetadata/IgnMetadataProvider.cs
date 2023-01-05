@@ -68,7 +68,7 @@ namespace IgnMetadata
             if (IsEmpty(data))
                 return null;
 
-            return data.Producers?.Select(x => new MetadataNameProperty(x.Name));
+            return data.Producers?.Select(x => new MetadataNameProperty(x.Name.TrimCompanyForms()));
         }
 
         public override IEnumerable<MetadataProperty> GetPublishers(GetMetadataFieldArgs args)
@@ -77,7 +77,7 @@ namespace IgnMetadata
             if (IsEmpty(data))
                 return null;
 
-            return data.Publishers?.Select(x => new MetadataNameProperty(x.Name));
+            return data.Publishers?.Select(x => new MetadataNameProperty(x.Name.TrimCompanyForms()));
         }
 
         public override IEnumerable<MetadataProperty> GetGenres(GetMetadataFieldArgs args)
