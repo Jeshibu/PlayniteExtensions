@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using Rawg.Common;
 using System;
 using System.Collections.Generic;
@@ -45,8 +46,8 @@ namespace RawgLibrary
                 BackgroundImage = new MetadataFile(data.BackgroundImage),
                 Tags = data.Tags?.Where(t => t.Language == languageCode).Select(t => new MetadataNameProperty(t.Name)).ToHashSet<MetadataProperty>(),
                 Genres = data.Genres?.Select(g => new MetadataNameProperty(g.Name)).ToHashSet<MetadataProperty>(),
-                Developers = data.Developers?.Select(d => new MetadataNameProperty(d.Name)).ToHashSet<MetadataProperty>(),
-                Publishers = data.Publishers?.Select(p => new MetadataNameProperty(p.Name)).ToHashSet<MetadataProperty>(),
+                Developers = data.Developers?.Select(d => new MetadataNameProperty(d.Name.TrimCompanyForms())).ToHashSet<MetadataProperty>(),
+                Publishers = data.Publishers?.Select(p => new MetadataNameProperty(p.Name.TrimCompanyForms())).ToHashSet<MetadataProperty>(),
                 Links = RawgMetadataHelper.GetLinks(data),
             };
 
