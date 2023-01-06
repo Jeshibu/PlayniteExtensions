@@ -121,8 +121,8 @@ namespace GiantBombMetadata
                         }
                     }
                 }
-                matchingGames = matchingGames.OrderBy(g => g.Game.Name).ThenBy(g => g.Game.ReleaseDate).ToList();
-            }, new GlobalProgressOptions("Matching game titles...", true) { IsIndeterminate = false });
+                matchingGames = matchingGames.OrderBy(g => string.IsNullOrWhiteSpace(g.Game.SortingName) ? g.Game.Name : g.Game.SortingName).ThenBy(g => g.Game.ReleaseDate).ToList();
+            }, new GlobalProgressOptions($"Matching {itemDetails.Games.Length} games…", true) { IsIndeterminate = false });
 
             if (matchingGames.Count == 0)
             {
@@ -198,6 +198,10 @@ namespace GiantBombMetadata
                         dbItem = PlayniteApi.Database.Tags.FirstOrDefault(c => c.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
                                  ?? PlayniteApi.Database.Tags.Add(viewModel.Name);
                         break;
+                    case GamePropertyImportTargetField.Feature:
+                        dbItem = PlayniteApi.Database.Features.FirstOrDefault(f => f.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
+                                 ?? PlayniteApi.Database.Features.Add(viewModel.Name);
+                        break;
                     default:
                         throw new ArgumentException();
                 }
@@ -219,6 +223,9 @@ namespace GiantBombMetadata
                             break;
                         case GamePropertyImportTargetField.Tag:
                             update |= AddItem(g.Game, x => x.TagIds, dbItem.Id);
+                            break;
+                        case GamePropertyImportTargetField.Feature:
+                            update |= AddItem(g.Game, x => x.FeatureIds, dbItem.Id);
                             break;
                     }
 

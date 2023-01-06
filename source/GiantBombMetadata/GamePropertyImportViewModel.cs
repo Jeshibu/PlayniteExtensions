@@ -16,6 +16,7 @@ namespace GiantBombMetadata
             GamePropertyImportTargetField.Category,
             GamePropertyImportTargetField.Genre,
             GamePropertyImportTargetField.Tag,
+            GamePropertyImportTargetField.Feature,
         };
 
         public GamePropertyImportTargetField TargetField { get; set; }
@@ -79,6 +80,7 @@ namespace GiantBombMetadata
     {
         Category,
         Genre,
-        Tag
+        Tag,
+        Feature
     }
 }
