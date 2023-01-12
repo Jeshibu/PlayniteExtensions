@@ -72,7 +72,7 @@ namespace GiantBombMetadata.Api
                 if (string.IsNullOrWhiteSpace(Aliases))
                     return new string[0];
 
-                return Aliases.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                return Aliases.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             }
         }
 
