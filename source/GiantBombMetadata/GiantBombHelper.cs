@@ -10,7 +10,7 @@ namespace GiantBombMetadata
 {
     public static class GiantBombHelper
     {
-        private static Regex gameIdRegex = new Regex(@"[/.]giantbomb\.com\b.+(?<guid>\b3030-[0-9]+\b)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        private static Regex gameIdRegex = new Regex(@"\bgiantbomb\.com/.+(?<guid>\b3030-[0-9]+\b)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         public static string GetGiantBombGuidFromGameLinks(this Game game)
         {
