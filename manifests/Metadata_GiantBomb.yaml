@@ -34,3 +34,12 @@ Packages:
      - Fixed search running when the search string is empty
      - Added search by ID for games (such as 3030-18911)
      - Trimmed company forms (such as LTD, LLC, etc) from company names
+  - Version: 0.5
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-01-12
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/giantbomb0.5/GiantBombMetadata_0_5.pext
+    Changelog:
+     - Added Features as a target field for mass metadata assignment
+     - Added option to only set the first Franchise/Series (collaboration with Jhanlon95)
+     - Improved speed of matching games
+     - Removed line breaks in search result aliases
