@@ -271,7 +271,19 @@ namespace GiantBombMetadata
 
         public override IEnumerable<MetadataProperty> GetSeries(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Franchises?.Select(f => new MetadataNameProperty(f.Name));
+            if (!plugin.Settings.Settings.GetSingleSeries || GetGameDetails() == null || GetGameDetails().Franchises.Length < 1)
+            {
+                return GetGameDetails().Franchises?.Select(f => new MetadataNameProperty(f.Name));
+            }
+
+            List<MetadataNameProperty> list = new List<MetadataNameProperty>();
+
+            MetadataNameProperty first = new MetadataNameProperty(GetGameDetails().Franchises.FirstOrDefault().Name);
+            list.Add(first);
+
+            IEnumerable<MetadataProperty> iList = list;
+
+            return iList;
         }
 
         public override IEnumerable<MetadataProperty> GetAgeRatings(GetMetadataFieldArgs args)

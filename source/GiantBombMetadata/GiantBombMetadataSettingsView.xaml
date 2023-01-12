@@ -16,6 +16,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="15"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <TextBlock Text="API Key:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
             <TextBox Name="ApiKeyTextbox" Text="{Binding Settings.ApiKey}" Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
@@ -23,6 +24,7 @@
                         Command="{Binding GetApiKeyCommand}" Margin="10,0,0,0"/>
 
             <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,0" Content="Show top panel button to add metadata to multiple games" IsChecked="{Binding Settings.ShowTopPanelButton}"/>
+            <CheckBox Grid.Row="3" Grid.Column="1" Margin="10,10,10,0" Content="Get only the first series from Metadata search" IsChecked="{Binding Settings.GetSingleSeries}"/>
         </Grid>
         <Grid Margin="0,20">
             <Grid.Resources>
