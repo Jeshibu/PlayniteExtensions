@@ -18,7 +18,7 @@ namespace GiantBombMetadata
         public GiantBombPropertyImportSetting Objects { get; set; } = new GiantBombPropertyImportSetting { Prefix = "Object: ", ImportTarget = PropertyImportTarget.Ignore };
         public GiantBombPropertyImportSetting Themes { get; set; } = new GiantBombPropertyImportSetting { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
         public GiantBombPropertyImportSetting People { get; set; } = new GiantBombPropertyImportSetting { Prefix = "Person: ", ImportTarget = PropertyImportTarget.Ignore };
-        public bool GetSingleSeries { get; set; } = false;
+        public MultiValuedPropertySelectionMode FranchiseSelectionMode { get; set; } = MultiValuedPropertySelectionMode.All;
         public bool ShowTopPanelButton { get; set; } = true;
     }
 
@@ -33,6 +33,13 @@ namespace GiantBombMetadata
         Ignore,
         Genres,
         Tags,
+    }
+
+    public enum MultiValuedPropertySelectionMode
+    {
+        All,
+        OnlyShortest,
+        OnlyLongest,
     }
 
     public class GiantBombMetadataSettingsViewModel : PluginSettingsViewModel<GiantBombMetadataSettings, GiantBombMetadata>
@@ -66,6 +73,13 @@ namespace GiantBombMetadata
             PropertyImportTarget.Ignore,
             PropertyImportTarget.Genres,
             PropertyImportTarget.Tags,
+        };
+
+        public Dictionary<MultiValuedPropertySelectionMode, string> PropertySelectionModes { get; } = new Dictionary<MultiValuedPropertySelectionMode, string>
+        {
+            { MultiValuedPropertySelectionMode.All, "All" },
+            { MultiValuedPropertySelectionMode.OnlyShortest, "Only the shortest one" },
+            { MultiValuedPropertySelectionMode.OnlyLongest, "Only the longest one" },
         };
     }
 }

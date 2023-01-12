@@ -24,7 +24,13 @@
                         Command="{Binding GetApiKeyCommand}" Margin="10,0,0,0"/>
 
             <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,0" Content="Show top panel button to add metadata to multiple games" IsChecked="{Binding Settings.ShowTopPanelButton}"/>
-            <CheckBox Grid.Row="3" Grid.Column="1" Margin="10,10,10,0" Content="Get only the first series from Metadata search" IsChecked="{Binding Settings.GetSingleSeries}"/>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Margin="10">
+                <TextBlock Text="Import Franchises/Series: " VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding PropertySelectionModes}" SelectedValue="{Binding Settings.FranchiseSelectionMode}"
+                          DisplayMemberPath="Value" SelectedValuePath="Key" Width="200" Margin="5,0"
+                          IsEditable="False" IsReadOnly="True" IsTextSearchEnabled="False"/>
+            </StackPanel>            
         </Grid>
         <Grid Margin="0,20">
             <Grid.Resources>
