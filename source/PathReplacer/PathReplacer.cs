@@ -193,6 +193,28 @@ namespace PathReplacer
                 }
             }
 
+            if (game.GameActions != null)
+            {
+                foreach (var action in game.GameActions)
+                {
+                    if (ShouldReplace(action.Path, normalizedFind, replace, out string newPath))
+                    {
+                        action.Path = newPath;
+                        updated = true;
+                    }
+                    if (ShouldReplace(action.WorkingDir, normalizedFind, replace, out string newWorkingDir))
+                    {
+                        action.WorkingDir = newWorkingDir;
+                        updated = true;
+                    }
+                    if (ShouldReplace(action.TrackingPath, normalizedFind, replace, out string newTrackingPath))
+                    {
+                        action.TrackingPath = newTrackingPath;
+                        updated = true;
+                    }
+                }
+            }
+
             if (updated)
                 game.Modified = DateTime.Now;
 
