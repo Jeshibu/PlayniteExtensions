@@ -226,11 +226,11 @@ namespace GiantBombMetadata
 
         public override string GetDescription(GetMetadataFieldArgs args)
         {
-            string description = GetSearchResultGame().Description;
-            if (string.IsNullOrWhiteSpace(description))
+            var game = GetSearchResultGame();
+            if (string.IsNullOrWhiteSpace(game.Description))
                 return null;
 
-            description = GiantBombHelper.MakeHtmlUrlsAbsolute(description, "https://www.giantbomb.com/");
+            string description = GiantBombHelper.MakeHtmlUrlsAbsolute(game.Description, game.SiteDetailUrl);
             return description;
         }
 
