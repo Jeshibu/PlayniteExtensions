@@ -43,3 +43,9 @@ Packages:
      - Added option to only set the first Franchise/Series (collaboration with Jhanlon95)
      - Improved speed of matching games
      - Removed line breaks in search result aliases
+  - Version: 0.5.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-01-19
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/giantbomb0.5.1/GiantBombMetadata_0_5_1.pext
+    Changelog:
+     - Fixed exception parsing broken description URLs
