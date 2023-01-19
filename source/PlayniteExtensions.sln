@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IgnMetadata", "IgnMetadata\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiantBombMetadata", "GiantBombMetadata\GiantBombMetadata.csproj", "{D6730A45-D8D5-48FB-818E-5C277E230DF4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiantBombMetadata.Tests", "GiantBombMetadata.Tests\GiantBombMetadata.Tests.csproj", "{3BB55E9F-8962-4DE2-AE1D-AEE6530034C8}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{0fc7f312-402b-4466-9e05-721ce2638268}*SharedItemsImports = 4
@@ -155,6 +157,10 @@ Global
 		{D6730A45-D8D5-48FB-818E-5C277E230DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6730A45-D8D5-48FB-818E-5C277E230DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6730A45-D8D5-48FB-818E-5C277E230DF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BB55E9F-8962-4DE2-AE1D-AEE6530034C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BB55E9F-8962-4DE2-AE1D-AEE6530034C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BB55E9F-8962-4DE2-AE1D-AEE6530034C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BB55E9F-8962-4DE2-AE1D-AEE6530034C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
