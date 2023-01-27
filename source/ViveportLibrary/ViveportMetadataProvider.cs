@@ -23,7 +23,6 @@ namespace ViveportLibrary
             this.settings = settings;
         }
 
-
         public override GameMetadata GetMetadata(Game game)
         {
             var detailsTask = viveportApiClient.GetGameDetailsAsync(game.GameId);
@@ -52,16 +51,19 @@ namespace ViveportLibrary
                 InstallSize = GetInstallSize(appDetails),
                 AgeRatings = GetCustomAttributeMetadataProperties(new[] { appDetails.ContentRating.ToString() }, customAttributes, "content_rating", opt => opt.AdminLabel),
                 ReleaseDate = new ReleaseDate(GetDateFromMilliseconds(appDetails.ReleaseTimeMilliseconds)),
-                CoverImage = new MetadataFile(appDetails.Thumbnails.Square.Url),
                 Version = appDetails.VersionName,
                 Links = new List<Link> { new Link("Viveport Store Page", $"https://www.viveport.com/apps/{game.GameId}") },
             };
 
+            var coverUrl = GetCoverUrl(appDetails);
+            if (coverUrl != null)
+                metadata.CoverImage = new MetadataFile(coverUrl);
+
             var developer = appDetails.DeveloperDisplayName?.TrimCompanyForms();
-            var publisher = appDetails.Publisher?.TrimCompanyForms();
             if (!string.IsNullOrWhiteSpace(developer))
                 metadata.Developers = new HashSet<MetadataProperty> { new MetadataNameProperty(developer.TrimCompanyForms()) };
 
+            var publisher = appDetails.Publisher?.TrimCompanyForms();
             if (!string.IsNullOrWhiteSpace(publisher))
                 metadata.Publishers = new HashSet<MetadataProperty> { new MetadataNameProperty(publisher.TrimCompanyForms()) };
 
@@ -98,6 +100,26 @@ namespace ViveportLibrary
             metadata.Features = new HashSet<MetadataProperty>(features.Select(f => new MetadataNameProperty(f)));
 
             return metadata;
+        }
+
+        private string GetCoverUrl(ViveportApp appDetails)
+        {
+            var verticalCover = appDetails.Cloud?.Objs.FirstOrDefault(o => o.Type == "portrait_image");
+            switch (settings.CoverPreference)
+            {
+                case CoverPreference.None:
+                    return null;
+                case CoverPreference.VerticalOrSquare:
+                    return verticalCover?.Url ?? appDetails.Thumbnails?.Square?.Url;
+                case CoverPreference.VerticalOrBust:
+                    return verticalCover?.Url;
+                case CoverPreference.Square:
+                    return appDetails.Thumbnails?.Square?.Url;
+                case CoverPreference.Horizontal:
+                    return appDetails.Thumbnails?.Medium?.Url;
+                default:
+                    return null;
+            }
         }
 
         private IEnumerable<string> GetCustomAttributeLabels<T>(IEnumerable<T> values, CustomAttributeMetadataItem[] items, string attributeCodeName, Func<AttributeOption, T> matchSelector)

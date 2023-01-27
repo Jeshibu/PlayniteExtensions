@@ -6,12 +6,19 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
-        <CheckBox IsChecked="{Binding Settings.ImportHeadsetsAsPlatforms}" Content="Set compatible headsets in the Platform field" Margin="0,0,0,20"/>
+        <WrapPanel Orientation="Horizontal">
+            <TextBlock Margin="0,0,5,0" VerticalAlignment="Center">Cover style:</TextBlock>
+            <ComboBox IsEditable="False" IsTextSearchEnabled="False" IsReadOnly="true" Width="250"
+                      ItemsSource="{Binding CoverPreferenceOptions}"
+                      SelectedValue="{Binding Settings.CoverPreference}"
+                      SelectedValuePath="Key" DisplayMemberPath="Value" />
+        </WrapPanel>
+        <CheckBox IsChecked="{Binding Settings.ImportHeadsetsAsPlatforms}" Content="Set compatible headsets in the Platform field" Margin="0,20"/>
         <CheckBox IsChecked="{Binding Settings.ImportInputMethodsAsFeatures}" Content="Set input methods in Features field" Margin="0,0,0,20"/>
-        <StackPanel Orientation="Horizontal">
+        <WrapPanel Orientation="Horizontal">
             <CheckBox IsChecked="{Binding Settings.TagSubscriptionGames}" Content="Tag games that are part of Viveport Infinity as" VerticalAlignment="Center"/>
             <TextBox Text="{Binding Settings.SubscriptionTagName}" Margin="5,0" Width="150"/>
-        </StackPanel>
-        <Button Command="{Binding SetSubscriptionTagsCommand}" Content="Set tag for all Viveport games where applicable" Margin="20" Height="30" Width="300"/>
+        </WrapPanel>
+        <Button Command="{Binding SetSubscriptionTagsCommand}" Content="Set tag for all Viveport Infinity games" Margin="20" Height="30" Width="300"/>
     </StackPanel>
 </UserControl>

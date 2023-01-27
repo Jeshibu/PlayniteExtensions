@@ -25,3 +25,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/viveport0.2.1/ViveportLibrary_0_2_1.pext
     Changelog:
      - Fixed error when metadata existed twice in Viveport files
+  - Version: 0.3
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-01-27
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/viveport0.3/ViveportLibrary_0_3.pext
+    Changelog:
+     - Added metadata provider

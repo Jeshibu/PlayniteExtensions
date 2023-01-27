@@ -129,6 +129,21 @@ namespace ViveportLibrary.Api
 
         [JsonProperty("developer_display_name")]
         public string DeveloperDisplayName { get; set; }
+
+        public ViveportCloudData Cloud { get; set; }
+    }
+
+    public class ViveportCloudData
+    {
+        public ViveportCloudObject[] Objs { get; set; } = new ViveportCloudObject[0];
+    }
+
+    public class ViveportCloudObject
+    {
+        public string Type { get; set; }
+        public double Height { get; set; }
+        public double Width { get; set; }
+        public string Url { get; set; }
     }
 
     public class ViveportAuthor

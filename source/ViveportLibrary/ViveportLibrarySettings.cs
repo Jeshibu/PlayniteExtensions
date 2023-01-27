@@ -18,6 +18,16 @@ namespace ViveportLibrary
         public bool TagSubscriptionGames { get => tagSubscriptionGames; set => SetValue(ref tagSubscriptionGames, value); }
         public string SubscriptionTagName { get => subscriptionTagName; set => SetValue(ref subscriptionTagName, value); }
         public bool ImportInputMethodsAsFeatures { get; set; } = false;
+        public CoverPreference CoverPreference { get; set; } = CoverPreference.VerticalOrSquare;
+    }
+
+    public enum CoverPreference
+    {
+        None,
+        VerticalOrSquare,
+        VerticalOrBust,
+        Square,
+        Horizontal,
     }
 
     public class ViveportLibrarySettingsViewModel : PluginSettingsViewModel<ViveportLibrarySettings, ViveportLibrary>
@@ -35,5 +45,15 @@ namespace ViveportLibrary
                 Plugin.SetSubscriptionTags();
             });
         }
+
+        public Dictionary<CoverPreference, string> CoverPreferenceOptions
+        => new Dictionary<CoverPreference, string>
+        {
+            { CoverPreference.None, "None" },
+            { CoverPreference.VerticalOrSquare, "Vertical (fallback to square)" },
+            { CoverPreference.VerticalOrBust, "Vertical (no fallback)" },
+            { CoverPreference.Square, "Square" },
+            { CoverPreference.Horizontal, "Horizontal" },
+        };
     }
 }
