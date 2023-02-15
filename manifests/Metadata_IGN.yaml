@@ -12,3 +12,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ign0.2/IgnMetadata_0_2.pext
     Changelog:
     - Fixed possible exception in platform parsing
+  - Version: 0.2.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-02-15
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ign0.2.1/IgnMetadata_0_2_1.pext
+    Changelog:
+    - Fixed IGN API requests not returning anything

@@ -40,7 +40,7 @@ namespace PlayniteExtensions.Common
 
         public int MaxRedirectDepth { get; }
         public CookieCollection Cookies { get; private set; } = new CookieCollection();
-        public string UserAgent { get; set; } = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:94.0) Gecko/20100101 Firefox/94.0";
+        public string UserAgent { get; set; } = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0";
         public string Accept { get; set; } = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
 
         public WebDownloader(int maxRedirectDepth = 7)

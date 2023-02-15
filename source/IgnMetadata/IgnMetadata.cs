@@ -45,7 +45,7 @@ namespace IgnMetadata
                 HasSettings = false
             };
             platformUtility = new PlatformUtility(PlayniteApi);
-            client = new IgnClient(new WebDownloader());
+            client = new IgnClient(new WebDownloader() { Accept = "*/*" });
         }
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)

@@ -49,10 +49,10 @@ namespace IgnMetadata
             var headers = new Dictionary<string, string>
             {
                 { "apollographql-client-name", "kraken" },
-                { "apollographql-client-version", "v0.13.13" }
+                { "apollographql-client-version", "v0.15.6" },
             };
 
-            var response = downloader.DownloadString(url, referer: "https://www.ign.com/upcoming/games", customHeaders: headers);
+            var response = downloader.DownloadString(url, referer: "https://www.ign.com/reviews/games", customHeaders: headers);
             if (string.IsNullOrWhiteSpace(response?.ResponseContent))
             {
                 logger.Error($"Failed to get content from {url}");
