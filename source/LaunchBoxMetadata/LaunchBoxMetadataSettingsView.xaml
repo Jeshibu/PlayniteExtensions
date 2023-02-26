@@ -9,7 +9,7 @@
     <StackPanel Margin="20">
         <TextBlock TextWrapping="Wrap">
             To set up this metadata source (and to refresh it), follow these steps:<LineBreak/>
-            1: Download <Hyperlink NavigateUri="http://gamesdb.launchbox-app.com/Metadata.zip" Command="{x:Static pec:GlobalCommands.NavigateUrlCommand}">http://gamesdb.launchbox-app.com/Metadata.zip</Hyperlink><LineBreak/>
+            1: Download <Hyperlink NavigateUri="http://gamesdb.launchbox-app.com/Metadata.zip" Command="{x:Static pec:GlobalCommands.NavigateUrlCommand}" CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">http://gamesdb.launchbox-app.com/Metadata.zip</Hyperlink><LineBreak/>
             2: Extract the contents <LineBreak/>
             3: Use the button below to select Metadata.xml<LineBreak/>
             4: Wait around 30 seconds to a minute while the local database is created
