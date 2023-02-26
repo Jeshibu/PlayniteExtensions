@@ -1,0 +1,72 @@
+﻿using Playnite.SDK;
+using Playnite.SDK.Plugins;
+using PlayniteExtensions.Common;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+
+namespace LaunchBoxMetadata
+{
+    public class LaunchBoxMetadata : MetadataPlugin
+    {
+        private static readonly ILogger logger = LogManager.GetLogger();
+        private readonly IPlatformUtility platformUtility;
+
+        private LaunchBoxMetadataSettingsViewModel settings { get; set; }
+
+        public override Guid Id { get; } = Guid.Parse("3b1908f2-de02-48c9-9633-10d978903652");
+
+        public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
+        {
+            MetadataField.Name,
+            MetadataField.Description,
+            MetadataField.Platform,
+            MetadataField.CommunityScore,
+            MetadataField.ReleaseDate,
+            MetadataField.AgeRating,
+            MetadataField.Genres,
+            MetadataField.Developers,
+            MetadataField.Publishers,
+            MetadataField.CoverImage,
+            MetadataField.BackgroundImage,
+        };
+
+        public override string Name => "LaunchBox";
+
+        public LaunchBoxMetadata(IPlayniteAPI api) : base(api)
+        {
+            settings = new LaunchBoxMetadataSettingsViewModel(this);
+            Properties = new MetadataPluginProperties
+            {
+                HasSettings = true
+            };
+            platformUtility = new PlatformUtility(PlayniteApi);
+        }
+
+        public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
+        {
+            var userDataPath = GetPluginUserDataPath();
+            var dbPath = LaunchBoxDatabase.GetFilePath(userDataPath);
+            if (!File.Exists(dbPath))
+            {
+                PlayniteApi.Notifications.Add(new NotificationMessage("launchbox-database-missing", "LaunchBox database not initialized. Click here to initialize it.", NotificationType.Error, () => OpenSettingsView()));
+                return null;
+            }
+            return new LaunchBoxMetadataProvider(options, this, new LaunchBoxDatabase(userDataPath), platformUtility);
+        }
+
+        public override ISettings GetSettings(bool firstRunSettings)
+        {
+            return settings;
+        }
+
+        public override UserControl GetSettingsView(bool firstRunSettings)
+        {
+            return new LaunchBoxMetadataSettingsView();
+        }
+    }
+}

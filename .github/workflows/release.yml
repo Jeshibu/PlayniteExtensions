@@ -27,43 +27,46 @@ jobs:
             switch ($Matches.Name)
             {
               "barnite" {
-                $projects = @("Barnite")
+                $projects += @("Barnite")
               }
               "gamersgate" {
-                $projects = @("GamersGateLibrary")
+                $projects += @("GamersGateLibrary")
               }
               "gamessizecalculator" {
-                $projects = @("GamesSizeCalculator")
+                $projects += @("GamesSizeCalculator")
               }
               "giantbomb" {
-                $projects = @("GiantBombMetadata")
+                $projects += @("GiantBombMetadata")
               }
               "groupees" {
-                $projects = @("GroupeesLibrary")
+                $projects += @("GroupeesLibrary")
               }
               "ign" {
-                $projects = @("IgnMetadata")
+                $projects += @("IgnMetadata")
               }
               "itchiobundletagger" {
-                $projects = @("itchIoBundleTagger")
+                $projects += @("itchIoBundleTagger")
+              }
+              "launchbox" {
+                $projects += @("LaunchBoxMetadata")
               }
               "legacygames" {
-                $projects = @("LegacyGamesLibrary")
+                $projects += @("LegacyGamesLibrary")
               }
               "pathreplacer" {
-                $projects = @("PathReplacer")
+                $projects += @("PathReplacer")
               }
               "rawg" {
-                $projects = @("RawgLibrary", "RawgMetadata")
+                $projects += @("RawgLibrary", "RawgMetadata")
               }
               "steamactions" {
-                $projects = @("SteamActions")
+                $projects += @("SteamActions")
               }
               "steamtagsimporter" {
-                $projects = @("SteamTagsImporter")
+                $projects += @("SteamTagsImporter")
               }
               "viveport" {
-                $projects = @("ViveportLibrary")
+                $projects += @("ViveportLibrary")
               }
             }
             foreach ($p in $projects){

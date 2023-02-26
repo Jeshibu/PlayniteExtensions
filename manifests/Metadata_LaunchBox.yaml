@@ -1,0 +1,10 @@
+AddonId: LaunchBoxMetadata
+Packages:
+  - Version: 0.1.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-02-26
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/launchbox0.1.1/LaunchBoxMetadata_0_1_1.pext
+    Changelog:
+    - Added line breaks to description
+    - Removed company forms from developers/publishers
+    - Fixed hyperlink in settings

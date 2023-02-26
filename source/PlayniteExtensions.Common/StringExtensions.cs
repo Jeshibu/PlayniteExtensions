@@ -82,7 +82,7 @@ namespace PlayniteExtensions.Common
             return s;
         }
 
-        private static Regex CompanyFormRegex = new Regex(@",?\s+((co[,.\s]+)ltd|(l\.)inc|s\.?l|a[./]?s|limited|l\.?l\.?c|s\.?a\.?r\.?l|s\.?r\.?o|gmbh)\.?\s*$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        private static Regex CompanyFormRegex = new Regex(@",?\s+((co[,.\s]+)ltd|(l\.)?inc|s\.?l|a[./]?s|limited|l\.?l\.?c|s\.?a\.?r\.?l|s\.?r\.?o|gmbh)\.?\s*$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         public static string TrimCompanyForms(this string s)
         {

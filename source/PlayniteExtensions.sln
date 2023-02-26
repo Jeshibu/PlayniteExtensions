@@ -51,6 +51,33 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiantBombMetadata", "GiantB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GiantBombMetadata.Tests", "GiantBombMetadata.Tests\GiantBombMetadata.Tests.csproj", "{3BB55E9F-8962-4DE2-AE1D-AEE6530034C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaunchBoxMetadata", "LaunchBoxMetadata\LaunchBoxMetadata.csproj", "{B59FB65D-3C86-41D5-B3E6-EA4EAC476FEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaunchBoxMetadata.Tests", "LaunchBoxMetadata.Tests\LaunchBoxMetadata.Tests.csproj", "{B2BE4CBD-25A7-41F3-BB78-6BD3BC510323}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manifests", "Manifests", "{62B49CE1-49F2-4800-AA32-1FA35CB7B961}"
+	ProjectSection(SolutionItems) = preProject
+		..\manifests\Generic_Barnite.yaml = ..\manifests\Generic_Barnite.yaml
+		..\manifests\Generic_GamesSizeCalculator.yaml = ..\manifests\Generic_GamesSizeCalculator.yaml
+		..\manifests\Generic_itchIoBundleTagger.yaml = ..\manifests\Generic_itchIoBundleTagger.yaml
+		..\manifests\Generic_PathReplacer.yaml = ..\manifests\Generic_PathReplacer.yaml
+		..\manifests\Generic_SteamTagsImporter.yaml = ..\manifests\Generic_SteamTagsImporter.yaml
+		..\manifests\Library_GamersGate.yml = ..\manifests\Library_GamersGate.yml
+		..\manifests\Library_Groupees.yml = ..\manifests\Library_Groupees.yml
+		..\manifests\Library_LegacyGames.yml = ..\manifests\Library_LegacyGames.yml
+		..\manifests\Library_Rawg.yaml = ..\manifests\Library_Rawg.yaml
+		..\manifests\Library_Viveport.yaml = ..\manifests\Library_Viveport.yaml
+		..\manifests\Metadata_GiantBomb.yaml = ..\manifests\Metadata_GiantBomb.yaml
+		..\manifests\Metadata_IGN.yaml = ..\manifests\Metadata_IGN.yaml
+		..\manifests\Metadata_LaunchBox.yaml = ..\manifests\Metadata_LaunchBox.yaml
+		..\manifests\Metadata_Rawg.yaml = ..\manifests\Metadata_Rawg.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{33A063DF-59C8-4640-A785-630C71906CAC}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\release.yml = ..\.github\workflows\release.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{0fc7f312-402b-4466-9e05-721ce2638268}*SharedItemsImports = 4
@@ -68,6 +95,7 @@ Global
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{a971e332-d479-48a2-9238-0659c64f30f5}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{ac1b23ee-bdc9-4273-9f4b-4f414482541b}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{afa8de86-101b-4449-a237-2030d7f74ce2}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{b59fb65d-3c86-41d5-b3e6-ea4eac476fec}*SharedItemsImports = 4
 		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{d539c1ad-040e-4da2-b2be-c2ccc4f147f8}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{d6730a45-d8d5-48fb-818e-5c277e230df4}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{f2627b24-e712-4108-be62-646374c1bc42}*SharedItemsImports = 4
@@ -161,6 +189,14 @@ Global
 		{3BB55E9F-8962-4DE2-AE1D-AEE6530034C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BB55E9F-8962-4DE2-AE1D-AEE6530034C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BB55E9F-8962-4DE2-AE1D-AEE6530034C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B59FB65D-3C86-41D5-B3E6-EA4EAC476FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B59FB65D-3C86-41D5-B3E6-EA4EAC476FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B59FB65D-3C86-41D5-B3E6-EA4EAC476FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B59FB65D-3C86-41D5-B3E6-EA4EAC476FEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2BE4CBD-25A7-41F3-BB78-6BD3BC510323}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2BE4CBD-25A7-41F3-BB78-6BD3BC510323}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2BE4CBD-25A7-41F3-BB78-6BD3BC510323}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2BE4CBD-25A7-41F3-BB78-6BD3BC510323}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

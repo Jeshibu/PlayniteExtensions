@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="LaunchBoxMetadata.LaunchBoxMetadataSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:launchboxmetadata="clr-namespace:LaunchBoxMetadata" d:DataContext="{d:DesignInstance Type=launchboxmetadata:LaunchBoxMetadataSettingsViewModel}"
+             xmlns:pec="clr-namespace:PlayniteExtensions.Common"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <StackPanel Margin="20">
+        <TextBlock TextWrapping="Wrap">
+            To set up this metadata source (and to refresh it), follow these steps:<LineBreak/>
+            1: Download <Hyperlink NavigateUri="http://gamesdb.launchbox-app.com/Metadata.zip" Command="{x:Static pec:GlobalCommands.NavigateUrlCommand}">http://gamesdb.launchbox-app.com/Metadata.zip</Hyperlink><LineBreak/>
+            2: Extract the contents <LineBreak/>
+            3: Use the button below to select Metadata.xml<LineBreak/>
+            4: Wait around 30 seconds to a minute while the local database is created
+        </TextBlock>
+        <Button Padding="0,5" Margin="20" Command="{Binding InitializeDatabaseCommand}">(Re-)initialize local database</Button>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock VerticalAlignment="Center">Current status:</TextBlock>
+            <TextBlock TextWrapping="Wrap" Text="{Binding StatusText}" Margin="5,0,0,0"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

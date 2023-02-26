@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CachedFileDownloader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IEnumerableExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IPlatformUtility.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlatformUtility.cs" />

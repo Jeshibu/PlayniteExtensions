@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LaunchBox>
+  <Game>
+    <Name>Aliens Versus Predator</Name>
+    <ReleaseDate>1999-05-25T00:00:00-07:00</ReleaseDate>
+    <Overview>
+      The storylines of the three player characters are independent of one another. As an Alien the player must defend the Alien hive from human marines, then stow away on an evacuating spacecraft and reach the marines' ship, the Ferarco. When the Ferarco's self-destruct system is activated, the player must reach the escape shuttle, which takes them to Gateway Station. Here the player explores the station and battles more marines, reaching a ship departing for Earth. Before boarding the ship the player battles two Predators, after which the Alien enters the Earth-bound shuttle.
+      When playing as the Colonial Marine, the player begins at a research station on LV-426 built to study the derelict spacecraft where the Nostromo crew first encountered the Alien eggs in the film Alien (1979). Aliens attack and the player must fight their way through the research facility, the derelict ship, and an adjoining colony. Next the player explores the atmosphere processing station and shuts down its cooling valves in order to cause an explosion which will wipe out the Aliens. The player character escapes in a dropship and travels to Odobenus Station in orbit above the planetoid, where they battle more Aliens, Predators, facehuggers, and cybernetically-enhanced Aliens until reaching the spaceship Tyrargo. Aboard the ship the player battles more enemies including an Alien/Predator hybrid and "praetorian" Aliens. The player then battles an Alien queen, defeating it by expelling it through the airlock.
+      The Predator character's storyline visits three different planets, beginning with the player hunting marines in order to recover a captured Predator ship and its occupant from a human military base. Aliens are accidentally released in the base and the player discovers that the humans have created an Alien/Predator hybrid by implanting the captured Predator with an Alien embryo. The player defeats the hybrid, triggers the facility's self-destruct mechanism, and escapes in the Predator ship. The player next visits Fiorina "Fury" 161, the prison planet that is the setting of Alien 3 (1992), where more Aliens and marines are battled. Finally the player visits a marine-controlled Alien habitat, battling cybernetically-enhanced Aliens, "praetorian" Aliens, and finally the Alien queen.
+    </Overview>
+    <MaxPlayers>16</MaxPlayers>
+    <ReleaseType>Released</ReleaseType>
+    <Cooperative>false</Cooperative>
+    <VideoURL>https://www.youtube.com/watch?v=ygMWMIv0qPs</VideoURL>
+    <DatabaseID>19466</DatabaseID>
+    <CommunityRating>4.166666666666667</CommunityRating>
+    <WikipediaURL>https://en.wikipedia.org/wiki/Aliens_versus_Predator_(1999_video_game)</WikipediaURL>
+    <Platform>Windows</Platform>
+    <ESRB>M - Mature</ESRB>
+    <CommunityRatingCount>12</CommunityRatingCount>
+    <Genres> Shooter</Genres>
+    <Developer>Rebellion Developments</Developer>
+    <Publisher>Fox Interactive</Publisher>
+  </Game>
+  <Game>
+    <Name>Aliens versus Predator 2</Name>
+    <ReleaseDate>2001-10-31T00:00:00-08:00</ReleaseDate>
+    <Overview>On planet LV1201, ancient alien ruins have been discovered. The Weyland-Yutani corporation sets up a research facility in the area, to study and unlock the secrets of the excavation. When xenomorphic (alien) eggs are found, Dr. Eisenberg is assigned command of the scientific progress. Weyland-Yutani also hires a band of mercenaries, under the command of discharged General Rykov to act as security of the facility. As time passes, observation pods are set up to observe an artificial xenomorphic hive. The xenomorphs however manage to escape containment and the resulting chaos sends out a distress call, which attracts the attention of the "Predator" alien species, as well as dispatching a colonial marine vessel, the USS Verloc, to render aid. Three intertwined campaigns tell the story: that of human marine Lt. Harrison, a newly hatched xenomorph and a Predator clan leader.</Overview>
+    <MaxPlayers>1</MaxPlayers>
+    <ReleaseType>Released</ReleaseType>
+    <Cooperative>false</Cooperative>
+    <DatabaseID>10710</DatabaseID>
+    <CommunityRating>4.1923076923076925</CommunityRating>
+    <WikipediaURL>https://en.wikipedia.org/wiki/Aliens_versus_Predator_2</WikipediaURL>
+    <Platform>Windows</Platform>
+    <ESRB>M - Mature</ESRB>
+    <CommunityRatingCount>13</CommunityRatingCount>
+    <Genres> Shooter</Genres>
+    <Developer>Monolith Productions</Developer>
+    <Publisher>Fox Interactive</Publisher>
+  </Game>
+  <Game>
+    <Name>Aliens Versus Predator 2: Primal Hunt</Name>
+    <ReleaseDate>2002-08-13T00:00:00-07:00</ReleaseDate>
+    <Overview>
+      Aliens Versus Predator 2: Primal Hunt chronicles the initial breach leading up to the events in Aliens Versus Predator 2, specifically, the destruction of Research Pod 5. The story takes place across nine total mission, with three per species (Predator, Predalien, and Corporate). Each of the three playable characters is out to retrieve a mysterious artifact with the power to confuse and repel the Aliens.
+
+      New features in the game include the ability to play as a tougher Predator-Alien hybrid in single and multiplayer, a new "energy flechette" weapon for the Predator, and a new 360-degree motion tracker and deployable sentry guns for the humans. Multiplayer includes four new Deathmatch maps and the ability for the Predator to activate a short range self-destruct bomb when nearly defeated.
+
+      A copy of the original Aliens Versus Predator 2 is required to play Aliens Versus Predator 2: Primal Hunt.
+    </Overview>
+    <MaxPlayers>1</MaxPlayers>
+    <ReleaseType>DLC</ReleaseType>
+    <Cooperative>false</Cooperative>
+    <DatabaseID>5473</DatabaseID>
+    <CommunityRating>4.2142857142857144</CommunityRating>
+    <WikipediaURL>https://en.wikipedia.org/wiki/Aliens_versus_Predator_2#Aliens_versus_Predator_2:_Primal_Hunt</WikipediaURL>
+    <Platform>Windows</Platform>
+    <ESRB>M - Mature</ESRB>
+    <CommunityRatingCount>7</CommunityRatingCount>
+    <Genres> Shooter</Genres>
+    <Developer>Third Law Interactive</Developer>
+    <Publisher>Sierra On-Line</Publisher>
+  </Game>
+  <Game>
+    <Name>Aliens versus Predator: Gold Edition</Name>
+    <ReleaseDate>2000-03-28T00:00:00-08:00</ReleaseDate>
+    <Overview>
+      Aliens Versus Predator is a sci-fi first-person shooter based on the associated two film franchises. The game has three playable species, and each has its own single-player campaign with different missions and plotlines.
+
+      - Aliens... Their only weapons are their own body parts: claws for close combat, their deadly tail, and their inner mouth that can crack through an enemy's skull (for an instant kill) if close enough. They are deadly at close range, and can heal by eating corpses or the heads of unsuspecting enemies. They can't be hurt through falls, and an alternate vision mode allows them to see clearly ahead through darkness. Their strength lies in flexibility and speed, and an ability to cling to walls and run along any surface - allowing a skilled player to escape or ambush from literally any 3D direction.
+
+      - Humans... U.S. Marines, as portrayed by Michael Biehn in the film 'Aliens'. Marines have strong firepower that ranges from the self-tracking SmartGun, all the way to rocket launchers and devistating six-barrel miniguns (as seen in 'Predator'). The Marines are the most familiar species to play as, with the gameplay style of typical FPS hero. However, their frailty at close range, and missions that leave them stranded, alone, surrounded by bloodthirsty extraterrestrials, make their experience closer to survival horror.
+
+      - Predators... Their power is their strength, and their sight. They have at least four ways of seeing the environment - standard vision, heat vision (highlighting Marines), electromagnetic vision (highlighting Aliens), and "Pred-Tech" (for highlighting fellow Predators and their technology). Their weapons are the most precise, deadly, and ranged of those in the game, being ideally suited to stealth-based gameplay. Predators also have the ability to zoom their view in and out when seeking someone, thus allowing them to snipe from afar. Their cloaking ability also renders them nearly invisible to enemy Marines.
+
+      There are several multiplayer modes. For a difficult game, you can pit all the players against the horde of computer creatures (which includes experimental robotic Aliens and tough Predalien hybrids). Alternatively, players can choose their favorite species and face each other in an arena-style deathmatch.
+
+      Aliens Versus Predator: Gold Edition is a compilation with the following content:
+
+      - Aliens Versus Predator
+      - Aliens Versus Predator: Millennium Expansion Pack
+      - A strategy guide
+
+      Parts of the game were also reworked for this edition.
+    </Overview>
+    <MaxPlayers>8</MaxPlayers>
+    <ReleaseType>Released</ReleaseType>
+    <Cooperative>true</Cooperative>
+    <DatabaseID>151925</DatabaseID>
+    <CommunityRating>4.05</CommunityRating>
+    <WikipediaURL>https://en.wikipedia.org/wiki/Aliens_versus_Predator_(1999_video_game)</WikipediaURL>
+    <Platform>Windows</Platform>
+    <ESRB>M - Mature</ESRB>
+    <CommunityRatingCount>10</CommunityRatingCount>
+    <Genres> Horror; Shooter</Genres>
+    <Developer>Rebellion</Developer>
+    <Publisher>Fox Interactive</Publisher>
+  </Game>
+  <Game>
+    <Name>Aliens vs. Predator</Name>
+    <ReleaseDate>2010-02-16T00:00:00-08:00</ReleaseDate>
+    <Overview>
+      In the all-new Aliens vs. Predator for PC players will have the chance to take the role of the three infamous species; the Colonial Marine, the Predator and the Alien. Each of the three species has its very own distinct story-driven single-player campaign mode that interweaves with the campaigns of the other two species. Aliens vs. Predator on PC will also feature unique 3-way online multiplayer, allowing gamers to pit the three species against each other in the ultimate battle for survival and for the right to be crowned the deadliest species.
+
+      Aliens vs Predator for PC features:
+
+      * On planet BG-386 a colonist mining group discovers an ancient pyramid containing a dark and horrible secret. Across the stars a race of warriors is alerted to the discovery of their pyramid and a hunting party is dispatched to ensure that it remains sealed at all costs, whilst deep inside the ruined pyramid a malevolent intelligence awakes from centuries of dormancy.
+
+      * The Marine's story is an incredible fight against the odds, and the horrors lurking in the dark. Beset on all sides yet armed to the teeth, the Colonial Marine represents humanity's last stand with the firepower to fight back.
+
+      * As the Alien, players will discover what it's like to be the most murderous and lethal creature in the universe, with the ability to traverse any surface with awesome agility in order to get close enough to unleash its deadly teeth and claws.
+
+      * A master of the hunt, the Predator grants the player a suite of exotic weaponry and equipment with which to stalk its unknowing prey. Earn the greatest honour by ambushing prey up-close and butchering them for a gory trophy kill.
+    </Overview>
+    <MaxPlayers>18</MaxPlayers>
+    <ReleaseType>Released</ReleaseType>
+    <Cooperative>false</Cooperative>
+    <VideoURL>https://www.youtube.com/watch?v=HbbElLTSoVA</VideoURL>
+    <DatabaseID>310</DatabaseID>
+    <CommunityRating>3.8152173913043477</CommunityRating>
+    <WikipediaURL>https://en.wikipedia.org/wiki/Aliens_vs._Predator_(2010_video_game)</WikipediaURL>
+    <Platform>Windows</Platform>
+    <ESRB>M - Mature</ESRB>
+    <CommunityRatingCount>46</CommunityRatingCount>
+    <Genres> Horror; Shooter</Genres>
+    <Developer>Rebellion Developments</Developer>
+    <Publisher>Sega</Publisher>
+  </Game>
+  <Game>
+    <Name>Aliens: Colonial Marines</Name>
+    <ReleaseDate>2013-02-12T00:00:00-08:00</ReleaseDate>
+    <Overview>
+      Aliens: Colonial Marines is a squad-based first-person shooter in which the player controls four Colonial Marines, each with a different personality and primary weapon. Each player character can carry additional weapons including a flamethrower, pulse rifle, smartgun, pistol, RPG, and many types of grenades.
+
+      The player controls one marine at a time, issues orders to the others using context-sensitive commands, and may switch between characters at any time.
+
+      The player will also occasionally be required to control a particular location, using tactical positioning and turrets to fend off attacks. Aliens: Colonial Marines will have no HUD to provide the player with onscreen information.
+
+      The primary enemies of the game are Aliens which will generally attempt to sneak up on or outflank the player, forcing the player to use tactical combat to confront them. Several different types of Aliens will appear and will attack differently. Facehuggers will attempt to attach themselves to the player character's face, implanting an embryo inside them which will then kill them. "Warrior" Aliens are the primary enemies and are based primarily on the appearance of the Alien in Aliens. "Scouts" are faster and will spy on the player characters' activities. They will work in small groups or alone. These Aliens will be based on the appearance seen in Alien. "Drones" primarily carry and position eggs and work in the heart of the Hive serving the Queen; they were originally going to be in Aliens along with the "Warriors". An Alien queen will also appear as a "boss" enemy.
+    </Overview>
+    <MaxPlayers>1</MaxPlayers>
+    <ReleaseType>Released</ReleaseType>
+    <Cooperative>false</Cooperative>
+    <VideoURL>https://www.youtube.com/watch?v=jBiwSzbPOzc</VideoURL>
+    <DatabaseID>74</DatabaseID>
+    <CommunityRating>3.1666666666666665</CommunityRating>
+    <WikipediaURL>https://en.wikipedia.org/wiki/Aliens:_Colonial_Marines</WikipediaURL>
+    <Platform>Windows</Platform>
+    <ESRB>M - Mature</ESRB>
+    <CommunityRatingCount>30</CommunityRatingCount>
+    <Genres> Shooter</Genres>
+    <Developer>Gearbox Software</Developer>
+    <Publisher>Sega</Publisher>
+  </Game>
+  <Game>
+    <Name>Assassin's Creed</Name>
+    <ReleaseDate>2008-04-08T00:00:00-07:00</ReleaseDate>
+    <Overview>
+      In the year 2012, a seemingly ordinary bartender named Desmond Miles is abducted by a mysterious organization. The captors attach Desmond to a strange device called "Animus", which allows him to access the memory of his ancestor, an assassin named Altaïr. For some reason, the reconstruction of Altaïr's memories is vital to the captors.
+
+      After accessing Altaïr's memory, Desmond is able to experience the events that took place in the Holy Land in the year 1191, the time of the Third Crusade. Al Mualim, the leader of the assassins, orders Altaïr to kill nine prominent historical figures, who supposedly let war and corruption take over the Holy Land.
+
+      During most of the game, the player controls Altaïr; however, it is clearly indicated that controlling him is a part of Desmond's experience. The player is also able to control Desmond between his sessions in the "Animus".
+
+      The game's most innovative feature is the freedom of choice and movement. Every architectural detail like window ledges, carvings in the stone or wooden bars can be used to move on the walls. This allows the player to have intense chase scenes if by any chance you're hunted by the guard.
+
+      There are several ways you can reach your goal in the game. Using eavesdropping, interrogation and pickpocketing, you can find out information about your next target. You can then use this information to choose whether you take on the targets by full frontal assault or with a properly placed throwing knife from the cover of the rooftops.
+
+      Depending on your choice, you'll have to deal with the citizens and knights of the cities who will become suspicious of a cloaked person wondering on the rooftops or near the mission targets. There are several situations where you can blend in the crowd, with luck, you can take out your target without anyone looking your way. Altaïr has a small but effective arsenal of weapons, such as swords and throwing knives and he can learn new combat skills to help him on his mission.
+    </Overview>
+    <MaxPlayers>1</MaxPlayers>
+    <ReleaseType>Released</ReleaseType>
+    <Cooperative>false</Cooperative>
+    <VideoURL>http://www.youtube.com/watch?v=cc-ClutaN_I</VideoURL>
+    <DatabaseID>12</DatabaseID>
+    <CommunityRating>3.8080357142857144</CommunityRating>
+    <WikipediaURL>https://en.wikipedia.org/wiki/Assassin%27s_Creed_(video_game)</WikipediaURL>
+    <Platform>Windows</Platform>
+    <ESRB>M - Mature</ESRB>
+    <CommunityRatingCount>112</CommunityRatingCount>
+    <Genres> Action; Adventure; Sandbox; Stealth</Genres>
+    <Developer>Ubisoft Montreal</Developer>
+    <Publisher>Ubisoft</Publisher>
+  </Game>
+  <Game>
+    <Name>Star Fox 64</Name>
+    <ReleaseDate>1997-04-27T00:00:00-07:00</ReleaseDate>
+    <Overview>
+      The Lylat system has been invaded!  Join Fox McCloud and his Star Fox team as they fight to save the galaxy from the clutches of the evil Andross.  Travel to many different 3-D worlds.  Battle the enemy in the air and on the ground and listen in as Fox McCloud interacts with a cast of characters.
+
+      See how it feels to feel what you see!  The N64 Rumble Pak controller accessory instantly transmits all the bumps and blasts during the action.  It’s a new jolt to your game play experience!
+
+      * Four Players compete simultaneously in Vs. mode!
+      * Game Pak memory saves the top 10 scores!
+      * Outstanding cinema scenes tell the Star Fox saga!
+    </Overview>
+    <MaxPlayers>4</MaxPlayers>
+    <ReleaseType>Released</ReleaseType>
+    <Cooperative>false</Cooperative>
+    <VideoURL>http://www.youtube.com/watch?v=8vgfgEk-uRI</VideoURL>
+    <DatabaseID>4</DatabaseID>
+    <CommunityRating>4.4421768707482991</CommunityRating>
+    <WikipediaURL>https://en.wikipedia.org/wiki/Star_Fox_64</WikipediaURL>
+    <Platform>Nintendo 64</Platform>
+    <ESRB>E - Everyone</ESRB>
+    <CommunityRatingCount>294</CommunityRatingCount>
+    <Genres> Shooter</Genres>
+    <Developer>Nintendo EAD</Developer>
+    <Publisher>Nintendo</Publisher>
+  </Game>
+  <GameAlternateName>
+    <AlternateName>Lylat Wars</AlternateName>
+    <DatabaseID>4</DatabaseID>
+    <Region>Europe</Region>
+  </GameAlternateName>
+  <GameAlternateName>
+    <AlternateName>Lylat Wars</AlternateName>
+    <DatabaseID>4</DatabaseID>
+    <Region>Australia</Region>
+  </GameAlternateName>
+  <GameAlternateName>
+    <AlternateName>Xingji Huohu</AlternateName>
+    <DatabaseID>4</DatabaseID>
+    <Region>China</Region>
+  </GameAlternateName>
+  <GameAlternateName>
+    <AlternateName>Star Fox 64 v1.0</AlternateName>
+    <DatabaseID>4</DatabaseID>
+  </GameAlternateName>
+  <GameAlternateName>
+    <AlternateName>Assassin's Creed: Director's Cut</AlternateName>
+    <DatabaseID>12</DatabaseID>
+  </GameAlternateName>
+  <GameAlternateName>
+    <AlternateName>Assassin's Creed: Director's Cut Edition</AlternateName>
+    <DatabaseID>12</DatabaseID>
+  </GameAlternateName>
+  <GameImage>
+    <DatabaseID>19466</DatabaseID>
+    <FileName>df4627c7-187f-4396-bb2c-1f691b9d4eba.png</FileName>
+    <Type>Box - 3D</Type>
+    <CRC32>984063914</CRC32>
+  </GameImage>
+  <GameImage>
+    <DatabaseID>19466</DatabaseID>
+    <FileName>483c64a9-d5d1-4828-97d0-3053a3c61ec3.jpg</FileName>
+    <Type>Box - Back</Type>
+    <Region>North America</Region>
+    <CRC32>641944352</CRC32>
+  </GameImage>
+  <GameImage>
+    <DatabaseID>19466</DatabaseID>
+    <FileName>0642fcf2-cb23-45ad-bfc7-a97878812b33.jpg</FileName>
+    <Type>Box - Front</Type>
+    <Region>North America</Region>
+    <CRC32>917708111</CRC32>
+  </GameImage>
+  <GameImage>
+    <DatabaseID>19466</DatabaseID>
+    <FileName>68e0b40f-a938-4ad3-9a35-b881ae8a3e56.png</FileName>
+    <Type>Clear Logo</Type>
+    <Region>North America</Region>
+    <CRC32>135173140</CRC32>
+  </GameImage>
+  <GameImage>
+    <DatabaseID>19466</DatabaseID>
+    <FileName>d2649063-a5cf-424c-b6c3-e90ff39f356e.jpg</FileName>
+    <Type>Disc</Type>
+    <Region>North America</Region>
+    <CRC32>1879034472</CRC32>
+  </GameImage>
+  <GameImage>
+    <DatabaseID>19466</DatabaseID>
+    <FileName>41c2370f-4c85-446b-8383-8959b4044a1e.jpg</FileName>
+    <Type>Screenshot - Gameplay</Type>
+    <CRC32>1953927933</CRC32>
+  </GameImage>
+  <GameImage>
+    <DatabaseID>19466</DatabaseID>
+    <FileName>9b3a5eec-b035-4883-b971-fa09b683b994.jpg</FileName>
+    <Type>Screenshot - Gameplay</Type>
+    <CRC32>2119316167</CRC32>
+  </GameImage>
+  <GameImage>
+    <DatabaseID>10710</DatabaseID>
+    <FileName>17191c91-6ff8-4add-9629-f035071462e1.png</FileName>
+    <Type>Box - 3D</Type>
+    <CRC32>946546534</CRC32>
+  </GameImage>
+  <GameImage>
+    <DatabaseID>10710</DatabaseID>
+    <FileName>39c7d352-931b-4fe0-83f9-06159ce87f40.jpg</FileName>
+    <Type>Box - Back</Type>
+    <Region>North America</Region>
+    <CRC32>3974968988</CRC32>
+  </GameImage>
+  <GameImage>
+    <DatabaseID>10710</DatabaseID>
+    <FileName>fe06f492-9471-44bd-894c-66048fc7b401.jpg</FileName>
+    <Type>Box - Front</Type>
+    <Region>North America</Region>
+    <CRC32>2773182487</CRC32>
+  </GameImage>
+  <GameImage>
+    <DatabaseID>10710</DatabaseID>
+    <FileName>e5a361bb-24f3-4a16-a409-644c8e53de10.jpg</FileName>
+    <Type>Fanart - Background</Type>
+    <CRC32>3288805248</CRC32>
+  </GameImage>
+  <GameImage>
+    <DatabaseID>10710</DatabaseID>
+    <FileName>21b65342-5c91-48f8-a2ed-fdf911b62de2.jpg</FileName>
+    <Type>Fanart - Background</Type>
+    <CRC32>159502654</CRC32>
+  </GameImage>
+  <GameImage>
+    <DatabaseID>10710</DatabaseID>
+    <FileName>c02c09cc-a849-4e23-b5a9-a9475253734f.jpg</FileName>
+    <Type>Fanart - Background</Type>
+    <CRC32>3858008124</CRC32>
+  </GameImage>
+  <GameImage>
+    <DatabaseID>10710</DatabaseID>
+    <FileName>84f1bcbd-e80c-4574-8c7c-de971b8fb2ff.jpg</FileName>
+    <Type>Screenshot - Gameplay</Type>
+    <CRC32>609907073</CRC32>
+  </GameImage>
+</LaunchBox>
