@@ -12,9 +12,11 @@ namespace LaunchBoxMetadata
 {
     public class LaunchBoxMetadataSettings : ObservableObject
     {
-        public bool UseLaunchBoxLink { get; set; }
-        public bool UseWikipediaLink { get; set; }
-        public bool UseVideoLink { get; set; }
+        public bool UseLaunchBoxLink { get; set; } = true;
+        public bool UseWikipediaLink { get; set; } = true;
+        public bool UseVideoLink { get; set; } = true;
+        public string MetadataZipEtag { get; set; }
+        public DateTimeOffset? MetadataZipLastModified { get; set; }
     }
 
     public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<LaunchBoxMetadataSettings, LaunchBoxMetadata>
@@ -25,17 +27,51 @@ namespace LaunchBoxMetadata
         }
 
         private RelayCommand initializeDatabaseCommand;
+        private RelayCommand downloadMetadataCommand;
 
         public ICommand InitializeDatabaseCommand
         {
             get
             {
-                if (initializeDatabaseCommand == null)
-                {
-                    initializeDatabaseCommand = new RelayCommand(InitializeDatabase);
-                }
+                return initializeDatabaseCommand ?? (initializeDatabaseCommand = new RelayCommand(InitializeDatabase));
+            }
+        }
 
-                return initializeDatabaseCommand;
+        public ICommand DownloadMetadataCommand
+        {
+            get
+            {
+                return downloadMetadataCommand ?? (downloadMetadataCommand = new RelayCommand(DownloadMetadata));
+            }
+        }
+
+        private void DownloadMetadata()
+        {
+            try
+            {
+                var zipfileHandler = new MetadataZipFileHandler(PlayniteApi, Settings);
+
+                var zipFilePath = zipfileHandler.DownloadMetadataZipFile();
+                if (zipFilePath == null || !File.Exists(zipFilePath))
+                    return;
+
+                var xmlPath = zipfileHandler.ExtractMetadataXmlFromZipFile(zipFilePath);
+                if (xmlPath == null || !File.Exists(xmlPath))
+                    return;
+
+                var xmlParser = new LaunchBoxXmlParser(xmlPath);
+                var database = new LaunchBoxDatabase(Plugin.GetPluginUserDataPath());
+                PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
+                {
+                    database.CreateDatabase(xmlParser);
+                }, new GlobalProgressOptions("Initializing database...", false));
+
+                OnPropertyChanged(nameof(StatusText));
+                PlayniteApi.Dialogs.ShowMessage("Local LaunchBox metadata database successfully initialized!", "LaunchBox database", System.Windows.MessageBoxButton.OK);
+            }
+            catch (Exception ex)
+            {
+                PlayniteApi.Dialogs.ShowErrorMessage(ex.Message);
             }
         }
 

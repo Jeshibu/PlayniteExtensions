@@ -15,6 +15,7 @@
             4: Wait around 30 seconds to a minute while the local database is created
         </TextBlock>
         <Button Padding="0,5" Margin="20" Command="{Binding InitializeDatabaseCommand}">(Re-)initialize local database</Button>
+        <Button Padding="0,5" Margin="20" Command="{Binding DownloadMetadataCommand}">Download metadata</Button>
         <StackPanel Orientation="Horizontal">
             <TextBlock VerticalAlignment="Center">Current status:</TextBlock>
             <TextBlock TextWrapping="Wrap" Text="{Binding StatusText}" Margin="5,0,0,0"/>
