@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK.Plugins;
+using PlayniteExtensions.Common;
 using SqlNado;
 using System;
 using System.Collections.Generic;
@@ -44,9 +45,11 @@ namespace LaunchBoxMetadata
                 db.BeginTransaction();
                 db.Save(data.Games);
 
-                //the following 2 lines of code seed the GameNames table, which is used to fuzzy search by name
-                db.Save(data.Games.Select(g => new LaunchBoxGameName { DatabaseID = g.DatabaseID, Name = g.Name }));
-                db.Save(data.GameAlternateNames);
+                var gameNames = data.Games.Select(g => new LaunchBoxGameName { DatabaseID = g.DatabaseID, Name = g.Name }).ToList();
+                gameNames.AddRange(data.GameAlternateNames);
+                var gameNameDeduplicatedDictionary = gameNames.ToDictionarySafe(n => $"{n.DatabaseID}|{n.Name}", StringComparer.InvariantCultureIgnoreCase);
+
+                db.Save(gameNameDeduplicatedDictionary.Values);
 
                 db.Save(data.GameImages);
                 db.Commit();

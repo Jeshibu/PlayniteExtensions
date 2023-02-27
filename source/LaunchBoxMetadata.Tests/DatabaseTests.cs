@@ -26,5 +26,13 @@ namespace LaunchBoxMetadata.Tests
             var searchResult = db.SearchGames("alien", 50).ToList();
             Assert.Equal(6, searchResult.Count);
         }
+
+        [Fact]
+        public void DeduplicatesNames()
+        {
+            var db = Setup();
+            var searchResult = db.SearchGames("lylat wars", 50).ToList();
+            Assert.Single(searchResult);
+        }
     }
 }
