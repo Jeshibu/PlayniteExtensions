@@ -15,16 +15,18 @@ namespace LaunchBoxMetadata
     {
         private readonly MetadataRequestOptions options;
         private readonly LaunchBoxMetadata plugin;
+        private readonly LaunchBoxMetadataSettings settings;
         private readonly LaunchBoxDatabase database;
         private readonly IPlatformUtility platformUtility;
         private LaunchBoxGame foundGame;
 
         public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 
-        public LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBoxMetadata plugin, LaunchBoxDatabase database, IPlatformUtility platformUtility)
+        public LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBoxMetadata plugin, LaunchBoxMetadataSettings settings, LaunchBoxDatabase database, IPlatformUtility platformUtility)
         {
             this.options = options;
             this.plugin = plugin;
+            this.settings = settings;
             this.database = database;
             this.platformUtility = platformUtility;
         }
@@ -206,7 +208,7 @@ namespace LaunchBoxMetadata
         private MetadataFile PickImage(string caption, params string[] filters)
         {
             var images = GetImages().Where(i => filters.Any(f => i.Type.Contains(f)))
-                                    .Select(i => new ImageFileOption("https://images.launchbox-app.com/" + i.FileName))
+                                    .Select(i => new ImageFileOption("https://images.launchbox-app.com/" + i.FileName) { Description = i.Type })
                                     .ToList();
             if (images.Count == 0)
                 return null;
@@ -239,6 +241,24 @@ namespace LaunchBoxMetadata
         public override MetadataFile GetBackgroundImage(GetMetadataFieldArgs args)
         {
             return PickImage("Select background", "Background", "Screenshot - Gameplay");
+        }
+        public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
+        {
+            var game = FindGame();
+            if (game.DatabaseID == null)
+                return base.GetLinks(args);
+
+            var links = new List<Link>();
+            if (settings.UseLaunchBoxLink)
+                links.Add(new Link("LaunchBox Games Database", "https://gamesdb.launchbox-app.com/games/details/" + game.DatabaseID));
+
+            if (settings.UseWikipediaLink && !string.IsNullOrWhiteSpace(game.WikipediaURL))
+                links.Add(new Link("Wikipedia", game.WikipediaURL));
+
+            if (settings.UseVideoLink && !string.IsNullOrWhiteSpace(game.VideoURL))
+                links.Add(new Link("Video", game.VideoURL));
+
+            return links;
         }
     }
 }

@@ -12,6 +12,9 @@ namespace LaunchBoxMetadata
 {
     public class LaunchBoxMetadataSettings : ObservableObject
     {
+        public bool UseLaunchBoxLink { get; set; }
+        public bool UseWikipediaLink { get; set; }
+        public bool UseVideoLink { get; set; }
     }
 
     public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<LaunchBoxMetadataSettings, LaunchBoxMetadata>

@@ -19,5 +19,9 @@
             <TextBlock VerticalAlignment="Center">Current status:</TextBlock>
             <TextBlock TextWrapping="Wrap" Text="{Binding StatusText}" Margin="5,0,0,0"/>
         </StackPanel>
+        <TextBlock Margin="0,15,0,5">Add the following links to games:</TextBlock>
+        <CheckBox IsChecked="{Binding Settings.UseLaunchBoxLink}">LaunchBox Games Database</CheckBox>
+        <CheckBox IsChecked="{Binding Settings.UseWikipediaLink}">Wikipedia</CheckBox>
+        <CheckBox IsChecked="{Binding Settings.UseVideoLink}">Video</CheckBox>
     </StackPanel>
 </UserControl>

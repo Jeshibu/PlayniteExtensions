@@ -33,6 +33,7 @@ namespace LaunchBoxMetadata
             MetadataField.Publishers,
             MetadataField.CoverImage,
             MetadataField.BackgroundImage,
+            MetadataField.Links,
         };
 
         public override string Name => "LaunchBox";
@@ -56,7 +57,7 @@ namespace LaunchBoxMetadata
                 PlayniteApi.Notifications.Add(new NotificationMessage("launchbox-database-missing", "LaunchBox database not initialized. Click here to initialize it.", NotificationType.Error, () => OpenSettingsView()));
                 return null;
             }
-            return new LaunchBoxMetadataProvider(options, this, new LaunchBoxDatabase(userDataPath), platformUtility);
+            return new LaunchBoxMetadataProvider(options, this, settings.Settings, new LaunchBoxDatabase(userDataPath), platformUtility);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
