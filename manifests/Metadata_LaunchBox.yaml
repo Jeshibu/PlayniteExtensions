@@ -8,3 +8,13 @@ Packages:
     - Added line breaks to description
     - Removed company forms from developers/publishers
     - Fixed hyperlink in settings
+  - Version: 0.2
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-03-04
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/launchbox0.2/LaunchBoxMetadata_0_2.pext
+    Changelog:
+    - Automated download and database initialization process (manual process is still available)
+    - Added settings for what image types (and minimum sizes) to use for covers and backgrounds
+    - Wikipedia and video links can now optionally be added to games
+    - Images will now be scaled down if they exceed user-specified width and height
+    - Fixed games sometimes appearing twice in the search results with the same name

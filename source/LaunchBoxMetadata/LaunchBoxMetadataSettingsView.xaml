@@ -36,7 +36,7 @@
             <StackPanel Margin="20">
                 <TextBlock TextWrapping="Wrap">
                     To set up this metadata source (and to refresh it), click the button below.<LineBreak/>
-                    This process might take several minutes, depending on your download speed.<LineBreak/>
+                    This process will likely take several minutes, depending on your download speed.<LineBreak/>
                     Use the "Manual initialization" tab if you encounter issues with the download or already have LaunchBox metadata downloaded.
                 </TextBlock>
                 <Button Padding="0,5" Margin="20" Command="{Binding DownloadMetadataCommand}">Download metadata</Button>
