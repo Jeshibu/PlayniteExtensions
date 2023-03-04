@@ -110,9 +110,9 @@ namespace LaunchBoxMetadata
                 var database = GetDatabase();
                 var types = database.GetGameImageTypes().ToList();
                 InitializeImageTypeList(types, Settings.Cover, "Box - Front", "Box - Front - Reconstructed", "Fanart - Box - Front");
-                InitializeImageTypeList(types, Settings.Background, "Fanart - Background", "Banner", "Screenshot - Gameplay", "Screenshot - Game Title");
+                InitializeImageTypeList(types, Settings.Background, "Fanart - Background", "Screenshot - Gameplay", "Screenshot - Game Title", "Banner");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.Error(ex, "Error initializing image types");
             }
@@ -120,6 +120,14 @@ namespace LaunchBoxMetadata
 
         private void InitializeImageTypeList(List<string> types, LaunchBoxImageSourceSettings imgSettings, params string[] defaultChecked)
         {
+            if (imgSettings.ImageTypes.Count == 0) //put default selected items at the top
+            {
+                foreach (var def in defaultChecked)
+                {
+                    imgSettings.ImageTypes.Add(new CheckboxSetting { Name = def, Checked = true });
+                }
+            }
+
             foreach (var t in types)
             {
                 if (!imgSettings.ImageTypes.Any(x => x.Name == t))
