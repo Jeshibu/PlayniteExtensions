@@ -17,13 +17,19 @@
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
-            <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
-                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Style TargetType="ScrollViewer" BasedOn="{StaticResource {x:Type ScrollViewer}}">
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
             </Style>
             <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
-                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="SelectionMode" Value="Extended"/>
+                <Setter Property="MinHeight" Value="150"/>
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="dd:DragDrop.IsDragSource" Value="True"/>
+                <Setter Property="dd:DragDrop.IsDropTarget" Value="True"/>
+                <Setter Property="Width" Value="350"/>
+                <Setter Property="HorizontalAlignment" Value="Left" />
             </Style>
         </TabControl.Resources>
         <TabItem Header="Settings">
@@ -56,54 +62,98 @@
             </StackPanel>
         </TabItem>
         <TabItem Header="Covers">
-            <StackPanel Margin="20" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <TextBlock TextWrapping="Wrap">Images smaller than either of the minimum dimensions will be ignored.<LineBreak/> Images larger than either of the maximum dimensions will be scaled down.</TextBlock>
-                <Grid Width="Auto" Margin="0,0,0,10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0">Minimum dimensions:</TextBlock>
-                    <WrapPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-                        <TextBox Width="70" Text="{Binding Settings.Cover.MinWidth, Converter={StaticResource intConverter}}"/>
-                        <TextBlock Margin="0,0,5,0">w x</TextBlock>
-                        <TextBox Width="70" Text="{Binding Settings.Cover.MinHeight, Converter={StaticResource intConverter}}"/>
-                        <TextBlock>h</TextBlock>
-                    </WrapPanel>
-                    
-                    <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="Wrap">Maximum dimensions:</TextBlock>
-                    <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-                        <TextBox Width="70" Text="{Binding Settings.Cover.MaxWidth, Converter={StaticResource intConverter}}"/>
-                        <TextBlock Margin="0,0,5,0">w x</TextBlock>
-                        <TextBox Width="70" Text="{Binding Settings.Cover.MaxHeight, Converter={StaticResource intConverter}}"/>
-                        <TextBlock>h</TextBlock>
-                    </WrapPanel>
+            <ScrollViewer>
+                <StackPanel Margin="20">
+                    <TextBlock TextWrapping="Wrap">Images smaller than either of the minimum dimensions will be ignored.<LineBreak/> Images larger than either of the maximum dimensions will be scaled down.</TextBlock>
+                    <Grid Width="Auto" Margin="0,0,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0">Minimum dimensions:</TextBlock>
+                        <WrapPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox Width="70" Text="{Binding Settings.Cover.MinWidth, Converter={StaticResource intConverter}}"/>
+                            <TextBlock Margin="0,0,5,0">w x</TextBlock>
+                            <TextBox Width="70" Text="{Binding Settings.Cover.MinHeight, Converter={StaticResource intConverter}}"/>
+                            <TextBlock>h</TextBlock>
+                        </WrapPanel>
 
-                    <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
-                    <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Cover.AspectRatio}"/>
-                </Grid>
-                <TextBlock TextWrapping="Wrap">Use the following image types for covers, in the specified order (drag and drop to reorder):</TextBlock>
-                <ListBox Name="CoverImageTypes"
-                         SelectionMode="Extended" MinHeight="220"
-                         VerticalAlignment="Stretch"
-                         dd:DragDrop.IsDragSource="True"
-                         dd:DragDrop.IsDropTarget="True"
-                         ItemsSource="{Binding Settings.Cover.ImageTypes}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
-                                <TextBlock Text="░" Padding="10,0,10,0"/>
-                                <CheckBox IsChecked="{Binding Checked}" Content="{Binding Name}" Width="Auto"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </StackPanel>
+                        <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="Wrap">Maximum dimensions:</TextBlock>
+                        <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox Width="70" Text="{Binding Settings.Cover.MaxWidth, Converter={StaticResource intConverter}}"/>
+                            <TextBlock Margin="0,0,5,0">w x</TextBlock>
+                            <TextBox Width="70" Text="{Binding Settings.Cover.MaxHeight, Converter={StaticResource intConverter}}"/>
+                            <TextBlock>h</TextBlock>
+                        </WrapPanel>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
+                        <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Cover.AspectRatio}"/>
+                    </Grid>
+                    <TextBlock TextWrapping="Wrap">Use the following image types for covers, in the specified order (drag and drop to reorder):</TextBlock>
+                    <ListBox Name="CoverImageTypes" ItemsSource="{Binding Settings.Cover.ImageTypes}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
+                                    <TextBlock Text="░" Padding="10,0"/>
+                                    <CheckBox IsChecked="{Binding Checked}" Content="{Binding Name}" Width="Auto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </ScrollViewer>
+        </TabItem>
+        <TabItem Header="Backgrounds">
+            <ScrollViewer>
+                <StackPanel Margin="20">
+                    <TextBlock TextWrapping="Wrap">Images smaller than either of the minimum dimensions will be ignored.<LineBreak/> Images larger than either of the maximum dimensions will be scaled down.</TextBlock>
+                    <Grid Width="Auto" Margin="0,0,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0">Minimum dimensions:</TextBlock>
+                        <WrapPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox Width="70" Text="{Binding Settings.Background.MinWidth, Converter={StaticResource intConverter}}"/>
+                            <TextBlock Margin="0,0,5,0">w x</TextBlock>
+                            <TextBox Width="70" Text="{Binding Settings.Background.MinHeight, Converter={StaticResource intConverter}}"/>
+                            <TextBlock>h</TextBlock>
+                        </WrapPanel>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="Wrap">Maximum dimensions:</TextBlock>
+                        <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox Width="70" Text="{Binding Settings.Background.MaxWidth, Converter={StaticResource intConverter}}"/>
+                            <TextBlock Margin="0,0,5,0">w x</TextBlock>
+                            <TextBox Width="70" Text="{Binding Settings.Background.MaxHeight, Converter={StaticResource intConverter}}"/>
+                            <TextBlock>h</TextBlock>
+                        </WrapPanel>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
+                        <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Background.AspectRatio}"/>
+                    </Grid>
+                    <TextBlock TextWrapping="Wrap">Use the following image types for backgrounds, in the specified order (drag and drop to reorder):</TextBlock>
+                    <ListBox Name="BackgroundImageTypes" ItemsSource="{Binding Settings.Background.ImageTypes}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
+                                    <TextBlock Text="░" Padding="10,0"/>
+                                    <CheckBox IsChecked="{Binding Checked}" Content="{Binding Name}" Width="Auto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </ScrollViewer>
         </TabItem>
     </TabControl>
 </UserControl>
