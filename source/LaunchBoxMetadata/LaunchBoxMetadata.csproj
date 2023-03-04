@@ -117,7 +117,6 @@
     <Compile Include="LaunchBoxMetadataSettingsView.xaml.cs">
       <DependentUpon>LaunchBoxMetadataSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LaunchBoxWebscraper.cs" />
     <Compile Include="LaunchBoxXmlParser.cs" />
     <Compile Include="MetadataZipFileHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

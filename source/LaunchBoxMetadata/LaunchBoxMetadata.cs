@@ -17,7 +17,6 @@ namespace LaunchBoxMetadata
         private readonly IPlatformUtility platformUtility;
 
         private LaunchBoxMetadataSettingsViewModel settings { get; set; }
-        private LaunchBoxWebscraper webscraper { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("3b1908f2-de02-48c9-9633-10d978903652");
 
@@ -47,7 +46,6 @@ namespace LaunchBoxMetadata
                 HasSettings = true
             };
             platformUtility = new PlatformUtility(PlayniteApi);
-            webscraper = new LaunchBoxWebscraper(new WebDownloader());
         }
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
@@ -59,7 +57,7 @@ namespace LaunchBoxMetadata
                 PlayniteApi.Notifications.Add(new NotificationMessage("launchbox-database-missing", "LaunchBox database not initialized. Click here to initialize it.", NotificationType.Error, () => OpenSettingsView()));
                 return null;
             }
-            return new LaunchBoxMetadataProvider(options, this, settings.Settings, new LaunchBoxDatabase(userDataPath), platformUtility, webscraper);
+            return new LaunchBoxMetadataProvider(options, this, settings.Settings, new LaunchBoxDatabase(userDataPath), platformUtility);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
