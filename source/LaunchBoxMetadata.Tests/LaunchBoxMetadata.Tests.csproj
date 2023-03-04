@@ -107,7 +107,6 @@
     <Compile Include="DatabaseTests.cs" />
     <Compile Include="MetadataProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebscraperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -125,9 +124,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Metadata.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resident Evil 4 Images.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
