@@ -42,6 +42,7 @@ namespace LaunchBoxMetadata
     {
         public string DatabaseID { get; set; }
         public string FileName { get; set; }
+        [SQLiteIndex("IX_ImageType")]
         public string Type { get; set; }
         public uint CRC32 { get; set; }
     }

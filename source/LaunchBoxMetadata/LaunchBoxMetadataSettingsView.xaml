@@ -4,25 +4,107 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:launchboxmetadata="clr-namespace:LaunchBoxMetadata" d:DataContext="{d:DesignInstance Type=launchboxmetadata:LaunchBoxMetadataSettingsViewModel}"
              xmlns:pec="clr-namespace:PlayniteExtensions.Common"
+             xmlns:dd="urn:gong-wpf-dragdrop"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel Margin="20">
-        <TextBlock TextWrapping="Wrap">
-            To set up this metadata source (and to refresh it), follow these steps:<LineBreak/>
-            1: Download <Hyperlink NavigateUri="http://gamesdb.launchbox-app.com/Metadata.zip" Command="{x:Static pec:GlobalCommands.NavigateUrlCommand}" CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">http://gamesdb.launchbox-app.com/Metadata.zip</Hyperlink><LineBreak/>
-            2: Extract the contents <LineBreak/>
-            3: Use the button below to select Metadata.xml<LineBreak/>
-            4: Wait around 30 seconds to a minute while the local database is created
-        </TextBlock>
-        <Button Padding="0,5" Margin="20" Command="{Binding InitializeDatabaseCommand}">(Re-)initialize local database</Button>
-        <Button Padding="0,5" Margin="20" Command="{Binding DownloadMetadataCommand}">Download metadata</Button>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock VerticalAlignment="Center">Current status:</TextBlock>
-            <TextBlock TextWrapping="Wrap" Text="{Binding StatusText}" Margin="5,0,0,0"/>
-        </StackPanel>
-        <TextBlock Margin="0,15,0,5">Add the following links to games:</TextBlock>
-        <CheckBox IsChecked="{Binding Settings.UseLaunchBoxLink}">LaunchBox Games Database</CheckBox>
-        <CheckBox IsChecked="{Binding Settings.UseWikipediaLink}">Wikipedia</CheckBox>
-        <CheckBox IsChecked="{Binding Settings.UseVideoLink}">Video</CheckBox>
-    </StackPanel>
+    <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        <TabControl.Resources>
+            <launchboxmetadata:IntegerFormatConverter x:Key="intConverter"/>
+            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="0,5"/>
+            </Style>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="TabItem" BasedOn="{StaticResource {x:Type TabItem}}">
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            </Style>
+            <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            </Style>
+        </TabControl.Resources>
+        <TabItem Header="Settings">
+            <StackPanel Margin="20">
+                <TextBlock TextWrapping="Wrap">
+                    To set up this metadata source (and to refresh it), click the button below.<LineBreak/>
+                    This process might take several minutes, depending on your download speed.<LineBreak/>
+                    Use the "Manual initialization" tab if you encounter issues with the download or already have LaunchBox metadata downloaded.
+                </TextBlock>
+                <Button Padding="0,5" Margin="20" Command="{Binding DownloadMetadataCommand}">Download metadata</Button>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center">Current status:</TextBlock>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding StatusText}" Margin="5,0,0,0"/>
+                </StackPanel>
+                <TextBlock Margin="0,15,0,5">Add the following links to games:</TextBlock>
+                <CheckBox IsChecked="{Binding Settings.UseLaunchBoxLink}">LaunchBox Games Database</CheckBox>
+                <CheckBox IsChecked="{Binding Settings.UseWikipediaLink}">Wikipedia</CheckBox>
+                <CheckBox IsChecked="{Binding Settings.UseVideoLink}">Video</CheckBox>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Manual initialization">
+            <StackPanel Margin="20">
+                <TextBlock TextWrapping="Wrap">
+                    To set up this metadata source (and to refresh it), follow these steps:<LineBreak/>
+                    1: Download <Hyperlink NavigateUri="http://gamesdb.launchbox-app.com/Metadata.zip" Command="{x:Static pec:GlobalCommands.NavigateUrlCommand}" CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">http://gamesdb.launchbox-app.com/Metadata.zip</Hyperlink><LineBreak/>
+                    2: Extract the contents <LineBreak/>
+                    3: Use the button below to select Metadata.xml<LineBreak/>
+                    4: Wait around 30 seconds to a minute while the local database is created
+                </TextBlock>
+                <Button Padding="0,5" Margin="20" Command="{Binding InitializeDatabaseCommand}">(Re-)initialize local database</Button>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Covers">
+            <StackPanel Margin="20" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <TextBlock TextWrapping="Wrap">Images smaller than either of the minimum dimensions will be ignored.<LineBreak/> Images larger than either of the maximum dimensions will be scaled down.</TextBlock>
+                <Grid Width="Auto" Margin="0,0,0,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0">Minimum dimensions:</TextBlock>
+                    <WrapPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                        <TextBox Width="70" Text="{Binding Settings.Cover.MinWidth, Converter={StaticResource intConverter}}"/>
+                        <TextBlock Margin="0,0,5,0">w x</TextBlock>
+                        <TextBox Width="70" Text="{Binding Settings.Cover.MinHeight, Converter={StaticResource intConverter}}"/>
+                        <TextBlock>h</TextBlock>
+                    </WrapPanel>
+                    
+                    <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="Wrap">Maximum dimensions:</TextBlock>
+                    <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                        <TextBox Width="70" Text="{Binding Settings.Cover.MaxWidth, Converter={StaticResource intConverter}}"/>
+                        <TextBlock Margin="0,0,5,0">w x</TextBlock>
+                        <TextBox Width="70" Text="{Binding Settings.Cover.MaxHeight, Converter={StaticResource intConverter}}"/>
+                        <TextBlock>h</TextBlock>
+                    </WrapPanel>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
+                    <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Cover.AspectRatio}"/>
+                </Grid>
+                <TextBlock TextWrapping="Wrap">Use the following image types for covers, in the specified order (drag and drop to reorder):</TextBlock>
+                <ListBox Name="CoverImageTypes"
+                         SelectionMode="Extended" MinHeight="220"
+                         VerticalAlignment="Stretch"
+                         dd:DragDrop.IsDragSource="True"
+                         dd:DragDrop.IsDropTarget="True"
+                         ItemsSource="{Binding Settings.Cover.ImageTypes}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
+                                <TextBlock Text="░" Padding="10,0,10,0"/>
+                                <CheckBox IsChecked="{Binding Checked}" Content="{Binding Name}" Width="Auto"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
 </UserControl>

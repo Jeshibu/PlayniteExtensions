@@ -2,6 +2,7 @@
 using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,58 @@ namespace LaunchBoxMetadata
         public bool UseVideoLink { get; set; } = true;
         public string MetadataZipEtag { get; set; }
         public DateTimeOffset? MetadataZipLastModified { get; set; }
+        public LaunchBoxImageSourceSettings Cover { get; set; }
+        public LaunchBoxImageSourceSettings Background { get; set; }
+
+        public LaunchBoxMetadataSettings()
+        {
+            Cover = new LaunchBoxImageSourceSettings
+            {
+                AspectRatio = AspectRatio.Vertical,
+                MaxHeight = 900,
+                MaxWidth = 600,
+                MinHeight = 300,
+                MinWidth = 200,
+            };
+            Background = new LaunchBoxImageSourceSettings
+            {
+                AspectRatio = AspectRatio.Horizontal,
+                MaxHeight = 1440,
+                MaxWidth = 2560,
+                MinHeight = 500,
+                MinWidth = 1000,
+            };
+        }
+    }
+
+    public class LaunchBoxImageSourceSettings
+    {
+        public ObservableCollection<CheckboxSetting> ImageTypes { get; set; } = new ObservableCollection<CheckboxSetting>();
+        public int MaxHeight { get; set; }
+        public int MaxWidth { get; set; }
+        public int MinHeight { get; set; }
+        public int MinWidth { get; set; }
+        public AspectRatio AspectRatio { get; set; }
+    }
+
+    public class CheckboxSetting
+    {
+        public bool Checked { get; set; }
+        public string Name { get; set; }
+
+        public override string ToString()
+        {
+            var symbol = Checked ? "✔" : "❌";
+            return $"{symbol} {Name}";
+        }
+    }
+
+    public enum AspectRatio
+    {
+        Any,
+        Vertical,
+        Horizontal,
+        Square,
     }
 
     public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<LaunchBoxMetadataSettings, LaunchBoxMetadata>
@@ -24,6 +77,7 @@ namespace LaunchBoxMetadata
         public LaunchBoxMetadataSettingsViewModel(LaunchBoxMetadata plugin) : base(plugin, plugin.PlayniteApi)
         {
             Settings = LoadSavedSettings() ?? new LaunchBoxMetadataSettings();
+            InitializeImageTypeLists();
         }
 
         private RelayCommand initializeDatabaseCommand;
@@ -45,11 +99,41 @@ namespace LaunchBoxMetadata
             }
         }
 
-        private void DownloadMetadata()
+        private LaunchBoxDatabase GetDatabase()
+        {
+            return new LaunchBoxDatabase(Plugin.GetPluginUserDataPath());
+        }
+
+        private void InitializeImageTypeLists()
         {
             try
             {
-                var zipfileHandler = new MetadataZipFileHandler(PlayniteApi, Settings);
+                var database = GetDatabase();
+                var types = database.GetGameImageTypes().ToList();
+                InitializeImageTypeList(types, Settings.Cover, "Box - Front", "Box - Front - Reconstructed", "Fanart - Box - Front");
+                InitializeImageTypeList(types, Settings.Background, "Fanart - Background", "Banner", "Screenshot - Gameplay", "Screenshot - Game Title");
+            }
+            catch(Exception ex)
+            {
+                Logger.Error(ex, "Error initializing image types");
+            }
+        }
+
+        private void InitializeImageTypeList(List<string> types, LaunchBoxImageSourceSettings imgSettings, params string[] defaultChecked)
+        {
+            foreach (var t in types)
+            {
+                if (!imgSettings.ImageTypes.Any(x => x.Name == t))
+                    imgSettings.ImageTypes.Add(new CheckboxSetting { Name = t, Checked = defaultChecked.Contains(t) });
+            }
+        }
+
+        private void DownloadMetadata()
+        {
+            MetadataZipFileHandler zipfileHandler = null;
+            try
+            {
+                zipfileHandler = new MetadataZipFileHandler(PlayniteApi, Settings);
 
                 var zipFilePath = zipfileHandler.DownloadMetadataZipFile();
                 if (zipFilePath == null || !File.Exists(zipFilePath))
@@ -60,18 +144,25 @@ namespace LaunchBoxMetadata
                     return;
 
                 var xmlParser = new LaunchBoxXmlParser(xmlPath);
-                var database = new LaunchBoxDatabase(Plugin.GetPluginUserDataPath());
+                var database = GetDatabase();
                 PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
                 {
-                    database.CreateDatabase(xmlParser);
+                    database.CreateDatabase(xmlParser, a);
                 }, new GlobalProgressOptions("Initializing database...", false));
 
+
                 OnPropertyChanged(nameof(StatusText));
+                InitializeImageTypeLists();
                 PlayniteApi.Dialogs.ShowMessage("Local LaunchBox metadata database successfully initialized!", "LaunchBox database", System.Windows.MessageBoxButton.OK);
             }
             catch (Exception ex)
             {
+                Logger.Error(ex, "Error while downloading metadata zip and initializing database");
                 PlayniteApi.Dialogs.ShowErrorMessage(ex.Message);
+            }
+            finally
+            {
+                zipfileHandler?.Dispose();
             }
         }
 
@@ -91,12 +182,14 @@ namespace LaunchBoxMetadata
                 }, new GlobalProgressOptions("Initializing database...", false));
 
                 PlayniteApi.Dialogs.ShowMessage("LaunchBox metadata database successfully initialized!", "LaunchBox database", System.Windows.MessageBoxButton.OK);
+
+                OnPropertyChanged(nameof(StatusText));
+                InitializeImageTypeLists();
             }
             catch (Exception ex)
             {
                 PlayniteApi.Dialogs.ShowErrorMessage(ex.Message);
             }
-            OnPropertyChanged(nameof(StatusText));
         }
 
         public string StatusText
@@ -104,12 +197,31 @@ namespace LaunchBoxMetadata
             get
             {
                 var databaseFilePath = LaunchBoxDatabase.GetFilePath(Plugin.GetPluginUserDataPath());
-                if(!File.Exists(databaseFilePath))
+                if (!File.Exists(databaseFilePath))
                     return "Local database not initialized";
 
                 var lastWrite = File.GetLastWriteTime(databaseFilePath);
                 return $"Database last updated {lastWrite:g}";
             }
+        }
+
+        public List<AspectRatio> AspectRatios { get; } = new List<AspectRatio> { AspectRatio.Any, AspectRatio.Vertical, AspectRatio.Horizontal, AspectRatio.Square };
+    }
+
+    public class IntegerFormatConverter : System.Windows.Data.IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            int result;
+            int.TryParse(value.ToString(), out result);
+            return result;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            int result;
+            int.TryParse(value.ToString(), out result);
+            return result;
         }
     }
 }

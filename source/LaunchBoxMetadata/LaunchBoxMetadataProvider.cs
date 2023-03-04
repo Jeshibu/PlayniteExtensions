@@ -8,27 +8,34 @@ using System.Threading.Tasks;
 using PlayniteExtensions.Common;
 using Playnite.SDK.Models;
 using System.Text.RegularExpressions;
+using ImageMagick;
+using System.Net.Http;
+using System.IO;
 
 namespace LaunchBoxMetadata
 {
     public class LaunchBoxMetadataProvider : OnDemandMetadataProvider
     {
+        private readonly ILogger logger = LogManager.GetLogger();
         private readonly MetadataRequestOptions options;
         private readonly LaunchBoxMetadata plugin;
         private readonly LaunchBoxMetadataSettings settings;
         private readonly LaunchBoxDatabase database;
         private readonly IPlatformUtility platformUtility;
+        private readonly LaunchBoxWebscraper scraper;
         private LaunchBoxGame foundGame;
+        private List<LaunchBoxImageDetails> foundImages;
 
         public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 
-        public LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBoxMetadata plugin, LaunchBoxMetadataSettings settings, LaunchBoxDatabase database, IPlatformUtility platformUtility)
+        public LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBoxMetadata plugin, LaunchBoxMetadataSettings settings, LaunchBoxDatabase database, IPlatformUtility platformUtility, LaunchBoxWebscraper scraper)
         {
             this.options = options;
             this.plugin = plugin;
             this.settings = settings;
             this.database = database;
             this.platformUtility = platformUtility;
+            this.scraper = scraper;
         }
 
         private LaunchBoxGame FindGame()
@@ -94,6 +101,18 @@ namespace LaunchBoxMetadata
             return database.GetGameImages(id);
         }
 
+        private List<LaunchBoxImageDetails> GetImageDetails()
+        {
+            if (foundImages != null)
+                return foundImages;
+
+            var id = FindGame().DatabaseID;
+            if (id == null)
+                return foundImages = new List<LaunchBoxImageDetails>();
+
+            return foundImages = scraper.GetGameImageDetails(id).ToList();
+        }
+
         private class LaunchBoxGameItemOption : GenericItemOption
         {
             public LaunchboxGameSearchResult Game { get; set; }
@@ -122,7 +141,7 @@ namespace LaunchBoxMetadata
             }
         }
 
-        private IEnumerable<MetadataProperty> Split(string str, Func<string,string> stringSelector = null)
+        private IEnumerable<MetadataProperty> Split(string str, Func<string, string> stringSelector = null)
         {
             if (string.IsNullOrWhiteSpace(str))
                 return null;
@@ -186,6 +205,12 @@ namespace LaunchBoxMetadata
             if (string.IsNullOrEmpty(esrbRating))
                 return base.GetAgeRatings(args);
 
+            if (esrbRating != "Not Rated")
+            {
+                var split = esrbRating.Split(' ');
+                esrbRating = split[0];
+            }
+
             return new[] { new MetadataNameProperty("ESRB " + esrbRating) };
         }
 
@@ -205,11 +230,36 @@ namespace LaunchBoxMetadata
             return Split(FindGame().Publisher, StringExtensions.TrimCompanyForms) ?? base.GetPublishers(args);
         }
 
-        private MetadataFile PickImage(string caption, params string[] filters)
+        private bool FilterImage(LaunchBoxImageDetails imgDetails, ICollection<string> whitelistedTypes, LaunchBoxImageSourceSettings imgSetting)
         {
-            var images = GetImages().Where(i => filters.Any(f => i.Type.Contains(f)))
-                                    .Select(i => new ImageFileOption("https://images.launchbox-app.com/" + i.FileName) { Description = i.Type })
-                                    .ToList();
+            if (!whitelistedTypes.Contains(imgDetails.Type))
+                return false;
+
+            if (imgDetails.Width < imgSetting.MinWidth || imgDetails.Height < imgSetting.MinHeight)
+                return false;
+
+            switch (imgSetting.AspectRatio)
+            {
+                case AspectRatio.Vertical:
+                    return imgDetails.Width < imgDetails.Height;
+                case AspectRatio.Horizontal:
+                    return imgDetails.Width > imgDetails.Height;
+                case AspectRatio.Square:
+                    return imgDetails.Width == imgDetails.Height;
+                case AspectRatio.Any:
+                default:
+                    return true;
+            }
+        }
+
+        private MetadataFile PickImage(string caption, LaunchBoxImageSourceSettings imgSettings)
+        {
+            var whitelistedImgTypes = imgSettings.ImageTypes.Where(t => t.Checked).Select(t => t.Name).ToList();
+
+            var images = GetImageDetails().Where(i => FilterImage(i, whitelistedImgTypes, imgSettings))
+                                          .OrderBy(i => whitelistedImgTypes.IndexOf(i.Type))
+                                          .Select(LaunchBoxImageFileOption.FromImageDetails)
+                                          .ToList<ImageFileOption>();
             if (images.Count == 0)
                 return null;
 
@@ -229,18 +279,55 @@ namespace LaunchBoxMetadata
             }
             else
             {
-                return new MetadataFile(selected.Path);
+                var selectedImageDetails = ((LaunchBoxImageFileOption)selected).ImageDetails;
+                var task = ScaleImageAsync(selectedImageDetails, imgSettings);
+                task.Wait();
+                return task.Result;
+            }
+        }
+
+        private async Task<MetadataFile> ScaleImageAsync(LaunchBoxImageDetails imgDetails, LaunchBoxImageSourceSettings imgSettings)
+        {
+            double scaleX = imgDetails.Width > imgSettings.MaxWidth ? (double)imgDetails.Width / imgSettings.MaxWidth : 1;
+            double scaleY = imgDetails.Height > imgSettings.MaxHeight ? (double)imgDetails.Height / imgSettings.MaxHeight : 1;
+            double scale = Math.Min(scaleX, scaleY);
+            if (scale == 1)
+                return new MetadataFile(imgDetails.Url);
+
+            logger.Info($"Scaling {imgDetails.Width}x{imgDetails.Height} image by {scale} to make it fit {imgSettings.MaxWidth}x{imgSettings.MaxHeight}");
+
+            using (HttpClient client = new HttpClient())
+            using (var stream = await client.GetStreamAsync(imgDetails.Url))
+            {
+                MagickImage img = new MagickImage(stream);
+                img.Scale(new Percentage(scale * 100));
+                var filename = Path.GetFileName(imgDetails.Url);
+                return new MetadataFile(filename, img.ToByteArray());
+            }
+        }
+
+        private class LaunchBoxImageFileOption : ImageFileOption
+        {
+            public LaunchBoxImageFileOption() : base() { }
+            public LaunchBoxImageFileOption(string path) : base(path) { }
+
+            public LaunchBoxImageDetails ImageDetails { get; set; }
+
+            public static LaunchBoxImageFileOption FromImageDetails(LaunchBoxImageDetails imageDetails)
+            {
+                var o = new LaunchBoxImageFileOption(imageDetails.ThumbnailUrl) { Description = imageDetails.Type, ImageDetails = imageDetails };
+                return o;
             }
         }
 
         public override MetadataFile GetCoverImage(GetMetadataFieldArgs args)
         {
-            return PickImage("Select cover", "Box - Front");
+            return PickImage("Select cover", settings.Cover);
         }
 
         public override MetadataFile GetBackgroundImage(GetMetadataFieldArgs args)
         {
-            return PickImage("Select background", "Background", "Screenshot - Gameplay");
+            return PickImage("Select background", settings.Background);
         }
         public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
         {

@@ -1,4 +1,5 @@
-﻿using Playnite.SDK.Plugins;
+﻿using Playnite.SDK;
+using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using SqlNado;
 using System;
@@ -33,25 +34,36 @@ namespace LaunchBoxMetadata
 
         public string UserDataDirectory { get; }
 
-        public void CreateDatabase(LaunchBoxXmlParser xmlSource)
+        public void CreateDatabase(LaunchBoxXmlParser xmlSource, GlobalProgressActionArgs args = null)
         {
+            if (args != null)
+            {
+                args.IsIndeterminate = false;
+                args.ProgressMaxValue = 4;
+            }
+
             if (File.Exists(DatabasePath))
                 File.Delete(DatabasePath);
 
             var data = xmlSource.GetData();
+            if (args != null) args.CurrentProgressValue++;
 
             using (var db = new SQLiteDatabase(DatabasePath))
             {
                 db.BeginTransaction();
                 db.Save(data.Games);
+                if (args != null) args.CurrentProgressValue++;
 
                 var gameNames = data.Games.Select(g => new LaunchBoxGameName { DatabaseID = g.DatabaseID, Name = g.Name }).ToList();
                 gameNames.AddRange(data.GameAlternateNames);
                 var gameNameDeduplicatedDictionary = gameNames.ToDictionarySafe(n => $"{n.DatabaseID}|{n.Name}", StringComparer.InvariantCultureIgnoreCase);
 
                 db.Save(gameNameDeduplicatedDictionary.Values);
+                if (args != null) args.CurrentProgressValue++;
 
                 db.Save(data.GameImages);
+                if (args != null) args.CurrentProgressValue++;
+
                 db.Commit();
             }
         }
@@ -90,6 +102,18 @@ where DatabaseID = ?";
             using (var db = new SQLiteDatabase(DatabasePath, SQLiteOpenOptions.SQLITE_OPEN_READONLY))
             {
                 return db.Load<LaunchBoxGameImage>(query, id).ToList();
+            }
+        }
+
+        public IEnumerable<string> GetGameImageTypes()
+        {
+            var query = @"
+select distinct Type
+from GameImages
+order by Type asc";
+            using (var db = new SQLiteDatabase(DatabasePath, SQLiteOpenOptions.SQLITE_OPEN_READONLY))
+            {
+                return db.Load<LaunchBoxGameImage>(query).Select(i => i.Type).ToList();
             }
         }
 
