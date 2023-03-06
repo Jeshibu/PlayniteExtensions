@@ -18,3 +18,9 @@ Packages:
     - Wikipedia and video links can now optionally be added to games
     - Images will now be scaled down if they exceed user-specified width and height
     - Fixed games sometimes appearing twice in the search results with the same name
+  - Version: 0.2.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-03-06
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/launchbox0.2.1/LaunchBoxMetadata_0_2_1.pext
+    Changelog:
+    - Fixed settings being broken for users who did not have DuplicateHider extension installed
