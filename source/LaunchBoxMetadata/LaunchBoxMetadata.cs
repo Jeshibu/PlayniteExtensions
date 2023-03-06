@@ -13,6 +13,8 @@ namespace LaunchBoxMetadata
 {
     public class LaunchBoxMetadata : MetadataPlugin
     {
+        //So for anyone using GongSolutions.Wpf.DragDrop - be aware you have to instantiate something from it before referencing the package in your XAML
+        private GongSolutions.Wpf.DragDrop.DefaultDragHandler dropInfo = new GongSolutions.Wpf.DragDrop.DefaultDragHandler();
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly IPlatformUtility platformUtility;
 
