@@ -24,3 +24,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/launchbox0.2.1/LaunchBoxMetadata_0_2_1.pext
     Changelog:
     - Fixed settings being broken for users who did not have DuplicateHider extension installed
+  - Version: 0.3
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-03-07
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/launchbox0.3/LaunchBoxMetadata_0_3.pext
+    Changelog:
+    - Now using thumbnails for image selection and filtering. This greatly improves metadata collection speed when images are involved.
+    - Fixed links not allowing fallback on other metadata providers
