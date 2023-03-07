@@ -14,7 +14,7 @@ using System.IO;
 
 namespace LaunchBoxMetadata
 {
-    public class LaunchBoxMetadataProvider : OnDemandMetadataProvider, IDisposable
+    public class LaunchBoxMetadataProvider : OnDemandMetadataProvider
     {
         private readonly ILogger logger = LogManager.GetLogger();
         private readonly MetadataRequestOptions options;
@@ -22,51 +22,21 @@ namespace LaunchBoxMetadata
         private readonly LaunchBoxMetadataSettings settings;
         private readonly LaunchBoxDatabase database;
         private readonly IPlatformUtility platformUtility;
+        private readonly LaunchBoxWebscraper scraper;
         private LaunchBoxGame foundGame;
-        private Dictionary<string, DownloadedImage> downloadedImages = new Dictionary<string, DownloadedImage>();
-        private HttpClient httpClient = new HttpClient();
-
-        private class DownloadedImage
-        {
-            public LaunchBoxGameImage Metadata { get; set; }
-            public MagickImage Image { get; set; }
-            public string Path { get; set; }
-            public string Url { get => "https://images.launchbox-app.com/" + Metadata.FileName; }
-
-            public DownloadedImage(LaunchBoxGameImage gi, MagickImage mi, string path)
-            {
-                Metadata = gi;
-                Image = mi;
-                Path = path;
-            }
-        }
-
-        public override void Dispose()
-        {
-            httpClient.Dispose();
-            foreach (var di in downloadedImages.Values)
-            {
-                try
-                {
-                    File.Delete(di.Path);
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex, $"Error deleting {di.Path}");
-                }
-            }
-            base.Dispose();
-        }
+        private string foundGameUrl;
+        private List<LaunchBoxImageDetails> foundImages;
 
         public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 
-        public LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBoxMetadata plugin, LaunchBoxMetadataSettings settings, LaunchBoxDatabase database, IPlatformUtility platformUtility)
+        public LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBoxMetadata plugin, LaunchBoxMetadataSettings settings, LaunchBoxDatabase database, IPlatformUtility platformUtility, LaunchBoxWebscraper scraper)
         {
             this.options = options;
             this.plugin = plugin;
             this.settings = settings;
             this.database = database;
             this.platformUtility = platformUtility;
+            this.scraper = scraper;
         }
 
         private LaunchBoxGame FindGame()
@@ -123,6 +93,16 @@ namespace LaunchBoxMetadata
             }
         }
 
+        private string GetLaunchBoxGamesDatabaseUrl(LaunchBoxGame game = null)
+        {
+            game = game ?? FindGame();
+            if (game.DatabaseID == null)
+                return null;
+
+            string gameUrl = foundGameUrl ?? (foundGameUrl = scraper.GetLaunchBoxGamesDatabaseUrl(game.DatabaseID)) ?? (foundGameUrl = string.Empty);
+            return gameUrl;
+        }
+
         private IEnumerable<LaunchBoxGameImage> GetImages()
         {
             var id = FindGame().DatabaseID;
@@ -130,6 +110,26 @@ namespace LaunchBoxMetadata
                 return new LaunchBoxGameImage[0];
 
             return database.GetGameImages(id);
+        }
+
+        private List<LaunchBoxImageDetails> GetImageDetails()
+        {
+            if (foundImages != null)
+                return foundImages;
+
+            var game = FindGame();
+            var id = game.DatabaseID;
+            if (id == null)
+                return foundImages = new List<LaunchBoxImageDetails>();
+
+            var detailsUrl = GetLaunchBoxGamesDatabaseUrl(game);
+            if (string.IsNullOrWhiteSpace(detailsUrl))
+            {
+                logger.Error($"Could not retrieve website ID for database ID {id}");
+                return foundImages = new List<LaunchBoxImageDetails>();
+            }
+
+            return foundImages = scraper.GetGameImageDetails(detailsUrl).ToList();
         }
 
         private class LaunchBoxGameItemOption : GenericItemOption
@@ -193,7 +193,7 @@ namespace LaunchBoxMetadata
             if (platform == null)
                 return base.GetPlatforms(args);
 
-            return platformUtility.GetPlatforms(platform);
+            return platformUtility.GetPlatforms(platform).ToList().NullIfEmpty();
         }
 
         public override int? GetCommunityScore(GetMetadataFieldArgs args)
@@ -249,70 +249,36 @@ namespace LaunchBoxMetadata
             return Split(FindGame().Publisher, StringExtensions.TrimCompanyForms) ?? base.GetPublishers(args);
         }
 
-        private bool FilterImageSize(DownloadedImage di, LaunchBoxImageSourceSettings imgSetting)
+        private bool FilterImage(LaunchBoxImageDetails imgDetails, ICollection<string> whitelistedTypes, LaunchBoxImageSourceSettings imgSetting)
         {
-            if (di.Image.Width < imgSetting.MinWidth || di.Image.Height < imgSetting.MinHeight)
+            if (!whitelistedTypes.Contains(imgDetails.Type))
+                return false;
+
+            if (imgDetails.Width < imgSetting.MinWidth || imgDetails.Height < imgSetting.MinHeight)
                 return false;
 
             switch (imgSetting.AspectRatio)
             {
                 case AspectRatio.Vertical:
-                    return di.Image.Width < di.Image.Height;
+                    return imgDetails.Width < imgDetails.Height;
                 case AspectRatio.Horizontal:
-                    return di.Image.Width > di.Image.Height;
+                    return imgDetails.Width > imgDetails.Height;
                 case AspectRatio.Square:
-                    return di.Image.Width == di.Image.Height;
+                    return imgDetails.Width == imgDetails.Height;
                 case AspectRatio.Any:
                 default:
                     return true;
             }
         }
 
-        private List<string> GetImageTypeWhitelist(LaunchBoxImageSourceSettings imgSettings)
-        {
-            var whitelistedImgTypes = imgSettings.ImageTypes.Where(t => t.Checked).Select(t => t.Name).ToList();
-            return whitelistedImgTypes;
-        }
-
-        private IEnumerable<DownloadedImage> DownloadImages(LaunchBoxImageSourceSettings imgSettings)
-        {
-            var whitelistedImgTypes = GetImageTypeWhitelist(imgSettings);
-
-            var images = GetImages().Where(i => whitelistedImgTypes.Contains(i.Type)).ToList();
-
-            var output = new List<DownloadedImage>();
-
-            plugin.PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
-            {
-                var downloadTasks = images.Select(DownloadImage).ToArray();
-                Task.WaitAll(downloadTasks, a.CancelToken);
-                output.AddRange(downloadTasks.Where(t => t.Status == TaskStatus.RanToCompletion).Select(t => t.Result));
-            }, new GlobalProgressOptions("Downloading images...", cancelable: true));
-            return output;
-        }
-
-        private async Task<DownloadedImage> DownloadImage(LaunchBoxGameImage img)
-        {
-            if (downloadedImages.TryGetValue(img.FileName, out var downloaded))
-                return downloaded;
-
-            using (var stream = await httpClient.GetStreamAsync("https://images.launchbox-app.com/" + img.FileName))
-            {
-                var magickImage = new MagickImage(stream);
-                var path = Path.GetTempFileName();
-                await magickImage.WriteAsync(path);
-                downloaded = new DownloadedImage(img, magickImage, path);
-                downloadedImages.Add(img.FileName, downloaded);
-                return downloaded;
-            }
-        }
-
         private MetadataFile PickImage(string caption, LaunchBoxImageSourceSettings imgSettings)
         {
-            var whitelistedImgTypes = GetImageTypeWhitelist(imgSettings);
-            var images = DownloadImages(imgSettings).Where(i => FilterImageSize(i, imgSettings))
-                                          .OrderBy(i => whitelistedImgTypes.IndexOf(i.Metadata.Type))
-                                          .Select(LaunchBoxImageFileOption.FromDownloadedImage)
+            var whitelistedImgTypes = imgSettings.ImageTypes.Where(t => t.Checked).Select(t => t.Name).ToList();
+
+            var images = GetImageDetails().Where(i => FilterImage(i, whitelistedImgTypes, imgSettings))
+                                          .OrderBy(i => whitelistedImgTypes.IndexOf(i.Type))
+                                          .ThenByDescending(i => i.Width * i.Height)
+                                          .Select(LaunchBoxImageFileOption.FromImageDetails)
                                           .ToList<ImageFileOption>();
             if (images.Count == 0)
                 return null;
@@ -320,7 +286,7 @@ namespace LaunchBoxMetadata
             ImageFileOption selected;
             if (options.IsBackgroundDownload || images.Count == 1)
             {
-                selected = images.FirstOrDefault();
+                selected = images.First();
             }
             else
             {
@@ -333,24 +299,28 @@ namespace LaunchBoxMetadata
             }
             else
             {
-                var downloadedImage = ((LaunchBoxImageFileOption)selected).DownloadedImage;
-                return ScaleImage(downloadedImage, imgSettings);
+                var selectedImageDetails = ((LaunchBoxImageFileOption)selected).ImageDetails;
+                var task = ScaleImageAsync(selectedImageDetails, imgSettings);
+                task.Wait();
+                return task.Result;
             }
         }
 
-        private MetadataFile ScaleImage(DownloadedImage img, LaunchBoxImageSourceSettings imgSettings)
+        private async Task<MetadataFile> ScaleImageAsync(LaunchBoxImageDetails imgDetails, LaunchBoxImageSourceSettings imgSettings)
         {
-            double scaleX = img.Image.Width > imgSettings.MaxWidth ? (double)img.Image.Width / imgSettings.MaxWidth : 1;
-            double scaleY = img.Image.Height > imgSettings.MaxHeight ? (double)img.Image.Height / imgSettings.MaxHeight : 1;
-            double scale = Math.Min(scaleX, scaleY);
-            if (scale == 1)
-                return new MetadataFile(img.Url);
+            if (imgDetails.Width <= imgSettings.MaxWidth && imgDetails.Height <= imgSettings.MaxHeight)
+                return new MetadataFile(imgDetails.Url);
 
-            logger.Info($"Scaling {img.Image.Width}x{img.Image.Height} image by {scale} to make it fit {imgSettings.MaxWidth}x{imgSettings.MaxHeight}");
+            logger.Info($"Scaling {imgDetails.Url} ({imgDetails.Width}x{imgDetails.Height}) to make it fit {imgSettings.MaxWidth}x{imgSettings.MaxHeight}");
 
-            img.Image.Scale(new Percentage(scale * 100));
-            var filename = Path.GetFileName(img.Url);
-            return new MetadataFile(filename, img.Image.ToByteArray());
+            using (HttpClient client = new HttpClient())
+            using (var stream = await client.GetStreamAsync(imgDetails.Url))
+            {
+                MagickImage img = new MagickImage(stream);
+                img.Scale(imgSettings.MaxWidth, imgSettings.MaxHeight);
+                var filename = Path.GetFileName(imgDetails.Url);
+                return new MetadataFile(filename, img.ToByteArray());
+            }
         }
 
         private class LaunchBoxImageFileOption : ImageFileOption
@@ -358,11 +328,11 @@ namespace LaunchBoxMetadata
             public LaunchBoxImageFileOption() : base() { }
             public LaunchBoxImageFileOption(string path) : base(path) { }
 
-            public DownloadedImage DownloadedImage { get; set; }
+            public LaunchBoxImageDetails ImageDetails { get; set; }
 
-            public static LaunchBoxImageFileOption FromDownloadedImage(DownloadedImage di)
+            public static LaunchBoxImageFileOption FromImageDetails(LaunchBoxImageDetails imageDetails)
             {
-                var o = new LaunchBoxImageFileOption(di.Path) { Description = di.Metadata.Type, DownloadedImage = di };
+                var o = new LaunchBoxImageFileOption(imageDetails.ThumbnailUrl) { Description = imageDetails.Type, ImageDetails = imageDetails };
                 return o;
             }
         }
@@ -376,6 +346,7 @@ namespace LaunchBoxMetadata
         {
             return PickImage("Select background", settings.Background);
         }
+
         public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
         {
             var game = FindGame();
@@ -383,13 +354,20 @@ namespace LaunchBoxMetadata
                 return base.GetLinks(args);
 
             var links = new List<Link>();
+            if (settings.UseLaunchBoxLink)
+            {
+                string gameUrl = GetLaunchBoxGamesDatabaseUrl(game);
+                if (!string.IsNullOrEmpty(gameUrl))
+                    links.Add(new Link("LaunchBox Games Database", gameUrl));
+            }
+
             if (settings.UseWikipediaLink && !string.IsNullOrWhiteSpace(game.WikipediaURL))
                 links.Add(new Link("Wikipedia", game.WikipediaURL));
 
             if (settings.UseVideoLink && !string.IsNullOrWhiteSpace(game.VideoURL))
                 links.Add(new Link("Video", game.VideoURL));
 
-            return links;
+            return links.NullIfEmpty();
         }
     }
 }

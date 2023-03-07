@@ -13,6 +13,7 @@ namespace LaunchBoxMetadata
 {
     public class LaunchBoxMetadataSettings : ObservableObject
     {
+        public bool UseLaunchBoxLink { get; set; } = true;
         public bool UseWikipediaLink { get; set; } = true;
         public bool UseVideoLink { get; set; } = true;
         public string MetadataZipEtag { get; set; }

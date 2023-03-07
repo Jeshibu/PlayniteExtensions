@@ -50,5 +50,13 @@ stacktrace: {stacktraceString}";
 
             return output;
         }
+
+        public static ICollection<T> NullIfEmpty<T>(this ICollection<T> items)
+        {
+            if (items != null && items.Count > 0)
+                return items;
+            else
+                return null;
+        }
     }
 }
