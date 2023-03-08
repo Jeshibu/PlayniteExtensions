@@ -3,8 +3,11 @@ param (
     [Parameter()]
     [string]$tag
 )
-Install-Module powershell-yaml -Confirm
+Write-Host "Installing powershell-yaml"
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted
+Install-Module powershell-yaml -Confirm -Verbose
 Import-Module powershell-yaml
+Write-Host "Installed powershell-yaml"
 
 function Get-ReleaseData {
     param (
