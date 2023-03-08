@@ -202,7 +202,7 @@ namespace GiantBombMetadata
             return false;
         }
 
-        private List<MetadataNameProperty> GetValues(PropertyImportTarget target)
+        private ICollection<MetadataNameProperty> GetValues(PropertyImportTarget target)
         {
             var data = GetGameDetails();
             var output = new List<MetadataNameProperty>();
@@ -212,8 +212,7 @@ namespace GiantBombMetadata
             output.AddRange(GetValues(plugin.Settings.Settings.Objects, target, data.Objects));
             output.AddRange(GetValues(plugin.Settings.Settings.People, target, data.People));
             output.AddRange(GetValues(plugin.Settings.Settings.Themes, target, data.Themes));
-            output = output.OrderBy(x => x.Name).ToList();
-            return output;
+            return output.OrderBy(x => x.Name).ToList().NullIfEmpty();
         }
 
         private IEnumerable<MetadataNameProperty> GetValues(GiantBombPropertyImportSetting importSetting, PropertyImportTarget target, GiantBombObject[] data)
@@ -246,7 +245,7 @@ namespace GiantBombMetadata
 
         public override IEnumerable<MetadataProperty> GetPlatforms(GetMetadataFieldArgs args)
         {
-            return GetSearchResultGame().Platforms?.SelectMany(p => platformUtility.GetPlatforms(p.Name));
+            return GetSearchResultGame().Platforms.NullIfEmpty()?.SelectMany(p => platformUtility.GetPlatforms(p.Name));
         }
 
         public override ReleaseDate? GetReleaseDate(GetMetadataFieldArgs args)
@@ -261,17 +260,17 @@ namespace GiantBombMetadata
 
         public override IEnumerable<MetadataProperty> GetDevelopers(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Developers?.Select(d => new MetadataNameProperty(d.Name.TrimCompanyForms()));
+            return GetGameDetails().Developers.NullIfEmpty()?.Select(d => new MetadataNameProperty(d.Name.TrimCompanyForms()));
         }
 
         public override IEnumerable<MetadataProperty> GetPublishers(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Publishers?.Select(d => new MetadataNameProperty(d.Name.TrimCompanyForms()));
+            return GetGameDetails().Publishers.NullIfEmpty()?.Select(d => new MetadataNameProperty(d.Name.TrimCompanyForms()));
         }
 
         public override IEnumerable<MetadataProperty> GetSeries(GetMetadataFieldArgs args)
         {
-            IEnumerable<GiantBombObject> franchises = GetGameDetails()?.Franchises;
+            IEnumerable<GiantBombObject> franchises = GetGameDetails().Franchises.NullIfEmpty();
             if (franchises == null)
                 return null;
 
@@ -292,16 +291,16 @@ namespace GiantBombMetadata
 
         public override IEnumerable<MetadataProperty> GetAgeRatings(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Ratings?.Select(r => new MetadataNameProperty(r.Name));
+            return GetGameDetails().Ratings.NullIfEmpty()?.Select(r => new MetadataNameProperty(r.Name));
         }
 
         public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
         {
             string url = GetSearchResultGame().SiteDetailUrl;
             if (string.IsNullOrWhiteSpace(url))
-                yield break;
+                return null;
 
-            yield return new Link("Giant Bomb", url);
+            return new[] { new Link("Giant Bomb", url) };
         }
 
         public override MetadataFile GetCoverImage(GetMetadataFieldArgs args)

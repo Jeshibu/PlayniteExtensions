@@ -49,3 +49,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/giantbomb0.5.1/GiantBombMetadata_0_5_1.pext
     Changelog:
      - Fixed exception parsing broken description URLs
+  - Version: 0.5.2
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-01-19
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/giantbomb0.5.2/GiantBombMetadata_0_5_2.pext
+    Changelog:
+     - Fixed list fields not allowing fallback to other metadata providers when empty

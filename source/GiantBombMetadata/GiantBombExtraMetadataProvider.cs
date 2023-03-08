@@ -21,7 +21,7 @@ namespace GiantBombMetadata
             Settings = settings;
         }
 
-        private ILogger logger = LogManager.GetLogger();
+        private readonly ILogger logger = LogManager.GetLogger();
         public IPlayniteAPI PlayniteApi { get; }
         public GiantBombMetadataSettings Settings { get; }
 
