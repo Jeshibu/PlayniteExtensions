@@ -3,11 +3,9 @@ param (
     [Parameter()]
     [string]$tag
 )
-Write-Host "Installing powershell-yaml"
-Set-ExecutionPolicy -ExecutionPolicy Unrestricted
-Install-Module powershell-yaml -Confirm -Verbose
-Import-Module powershell-yaml
-Write-Host "Installed powershell-yaml"
+Write-Host "Importing powershell-yaml"
+Import-Module .\powershell-yaml\powershell-yaml.psd1
+Write-Host "Imported powershell-yaml"
 
 function Get-ReleaseData {
     param (

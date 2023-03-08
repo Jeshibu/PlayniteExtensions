@@ -12,6 +12,12 @@ jobs:
       - name: checkout
         uses: actions/checkout@v3
 
+      - name: checkout powershell-yaml
+        uses: actions/checkout@v3
+        with:
+          repository: cloudbase/powershell-yaml
+          path: powershell-yaml
+
       - id: tagName
         name: Get tag name
         uses: olegtarasov/get-tag@v2.1.2 #puts the tag name in $env:GIT_TAG_NAME
