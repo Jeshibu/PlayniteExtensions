@@ -71,6 +71,6 @@ jobs:
         with:
           draft: true
           name: "${{ steps.projectselection.outputs.releasetitle }}"
-          bode: "${{ steps.projectselection.outputs.releasedescription }}"
+          body: "${{ steps.projectselection.outputs.releasedescription }}"
           files: |
             *.pext
