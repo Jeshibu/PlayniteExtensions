@@ -215,21 +215,4 @@ namespace LaunchBoxMetadata
 
         public List<AspectRatio> AspectRatios { get; } = new List<AspectRatio> { AspectRatio.Any, AspectRatio.Vertical, AspectRatio.Horizontal, AspectRatio.Square };
     }
-
-    public class IntegerFormatConverter : System.Windows.Data.IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            int result;
-            int.TryParse(value.ToString(), out result);
-            return result;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            int result;
-            int.TryParse(value.ToString(), out result);
-            return result;
-        }
-    }
 }

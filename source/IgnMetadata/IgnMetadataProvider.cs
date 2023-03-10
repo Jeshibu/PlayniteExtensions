@@ -47,7 +47,7 @@ namespace IgnMetadata
         public override MetadataFile GetCoverImage(GetMetadataFieldArgs args)
         {
             var data = GetSearchResultData();
-            if (IsEmpty(data))
+            if (IsEmpty(data) || data.PrimaryImage?.Url == null)
                 return null;
 
             return new MetadataFile(data.PrimaryImage?.Url);
