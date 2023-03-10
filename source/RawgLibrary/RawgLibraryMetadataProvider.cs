@@ -42,13 +42,13 @@ namespace RawgLibrary
                 ReleaseDate = RawgMetadataHelper.ParseReleaseDate(data, logger),
                 CriticScore = data.Metacritic,
                 CommunityScore = RawgMetadataHelper.ParseUserScore(data.Rating),
-                Platforms = data.Platforms.Select(RawgMetadataHelper.GetPlatform).ToHashSet(),
-                BackgroundImage = new MetadataFile(data.BackgroundImage),
-                Tags = data.Tags?.Where(t => t.Language == languageCode).Select(t => new MetadataNameProperty(t.Name)).ToHashSet<MetadataProperty>(),
-                Genres = data.Genres?.Select(g => new MetadataNameProperty(g.Name)).ToHashSet<MetadataProperty>(),
-                Developers = data.Developers?.Select(d => new MetadataNameProperty(d.Name.TrimCompanyForms())).ToHashSet<MetadataProperty>(),
-                Publishers = data.Publishers?.Select(p => new MetadataNameProperty(p.Name.TrimCompanyForms())).ToHashSet<MetadataProperty>(),
-                Links = RawgMetadataHelper.GetLinks(data),
+                Platforms = data.Platforms.NullIfEmpty()?.Select(RawgMetadataHelper.GetPlatform).ToHashSet(),
+                BackgroundImage = data.BackgroundImage != null ? new MetadataFile(data.BackgroundImage) : null,
+                Tags = data.Tags.NullIfEmpty()?.Where(t => t.Language == languageCode).Select(t => new MetadataNameProperty(t.Name)).ToHashSet<MetadataProperty>(),
+                Genres = data.Genres.NullIfEmpty()?.Select(g => new MetadataNameProperty(g.Name)).ToHashSet<MetadataProperty>(),
+                Developers = data.Developers.NullIfEmpty()?.Select(d => new MetadataNameProperty(d.Name.TrimCompanyForms())).ToHashSet<MetadataProperty>(),
+                Publishers = data.Publishers.NullIfEmpty()?.Select(p => new MetadataNameProperty(p.Name.TrimCompanyForms())).ToHashSet<MetadataProperty>(),
+                Links = RawgMetadataHelper.GetLinks(data).NullIfEmpty()?.ToList(),
             };
 
             if (data.UserGame != null)

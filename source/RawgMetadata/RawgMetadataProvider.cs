@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayniteExtensions.Common;
 using Rawg.Common;
 using System;
 using System.Collections.Generic;
@@ -105,7 +106,7 @@ namespace RawgMetadata
             if (IsEmpty(data))
                 return base.GetPlatforms(args);
 
-            var platforms = data.Platforms.Select(RawgMetadataHelper.GetPlatform);
+            var platforms = data.Platforms.NullIfEmpty()?.Select(RawgMetadataHelper.GetPlatform);
             return platforms;
         }
 
@@ -149,8 +150,8 @@ namespace RawgMetadata
             if (IsEmpty(data))
                 return base.GetTags(args);
 
-            var tags = data.Tags.Where(t => t.Language == languageCode).Select(t => t.Name);
-            return tags.Select(t => new MetadataNameProperty(t));
+            var tags = data.Tags.Where(t => t.Language == languageCode).Select(t => new MetadataNameProperty(t.Name)).ToList();
+            return tags.NullIfEmpty();
         }
 
         public override IEnumerable<MetadataProperty> GetGenres(GetMetadataFieldArgs args)
@@ -159,8 +160,8 @@ namespace RawgMetadata
             if (IsEmpty(data))
                 return base.GetGenres(args);
 
-            var genres = data.Genres.Select(g => g.Name);
-            return genres.Select(g => new MetadataNameProperty(g));
+            var genres = data.Genres.NullIfEmpty()?.Select(g => new MetadataNameProperty(g.Name));
+            return genres;
         }
 
         public override IEnumerable<MetadataProperty> GetDevelopers(GetMetadataFieldArgs args)
@@ -169,8 +170,8 @@ namespace RawgMetadata
             if (IsEmpty(data))
                 return base.GetDevelopers(args);
 
-            var developers = data.Developers.Select(d => d.Name);
-            return developers.Select(d => new MetadataNameProperty(d));
+            var developers = data.Developers.NullIfEmpty()?.Select(d => new MetadataNameProperty(d.Name));
+            return developers;
         }
 
         public override IEnumerable<MetadataProperty> GetPublishers(GetMetadataFieldArgs args)
@@ -179,8 +180,8 @@ namespace RawgMetadata
             if (IsEmpty(data))
                 return base.GetPublishers(args);
 
-            var publishers = data.Publishers.Select(p => p.Name);
-            return publishers.Select(p => new MetadataNameProperty(p));
+            var publishers = data.Publishers.NullIfEmpty()?.Select(p => new MetadataNameProperty(p.Name));
+            return publishers;
         }
 
         public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
@@ -198,7 +199,7 @@ namespace RawgMetadata
             if (!string.IsNullOrWhiteSpace(data.RedditUrl))
                 links.Add(new Link("Reddit", data.RedditUrl));
 
-            return links;
+            return links.NullIfEmpty();
         }
 
         private RawgGameBase GetSearchResult()

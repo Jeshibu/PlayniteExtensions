@@ -30,8 +30,8 @@ namespace ViveportLibrary
 
             Task.WaitAll(detailsTask, customAttributesTask);
 
-            var appDetails = detailsTask.Result?.Contents.SingleOrDefault()?.Apps?.FirstOrDefault(a => a.Id == game.GameId);
             var cmsDetails = detailsTask.Result?.Contents.SingleOrDefault();
+            var appDetails = cmsDetails?.Apps?.FirstOrDefault(a => a.Id == game.GameId);
             var customAttributes = customAttributesTask.Result?.Data?.CustomAttributeMetadata?.Items;
 
             if (appDetails == null || customAttributes == null)
@@ -147,7 +147,7 @@ namespace ViveportLibrary
 
         private HashSet<MetadataProperty> GetCustomAttributeMetadataProperties<T>(IEnumerable<T> values, CustomAttributeMetadataItem[] items, string attributeCodeName, Func<AttributeOption, T> matchSelector)
         {
-            return GetCustomAttributeLabels(values, items, attributeCodeName, matchSelector).Select(s => new MetadataNameProperty(s)).ToHashSet<MetadataProperty>();
+            return GetCustomAttributeLabels(values, items, attributeCodeName, matchSelector).Select(s => new MetadataNameProperty(s)).ToList().NullIfEmpty()?.ToHashSet<MetadataProperty>();
         }
 
         private ulong GetInstallSize(ViveportApp appDetails)

@@ -68,7 +68,7 @@ namespace IgnMetadata
             if (IsEmpty(data))
                 return null;
 
-            return data.Producers?.Select(x => new MetadataNameProperty(x.Name.TrimCompanyForms()));
+            return data.Producers.NullIfEmpty()?.Select(x => new MetadataNameProperty(x.Name.TrimCompanyForms()));
         }
 
         public override IEnumerable<MetadataProperty> GetPublishers(GetMetadataFieldArgs args)
@@ -77,7 +77,7 @@ namespace IgnMetadata
             if (IsEmpty(data))
                 return null;
 
-            return data.Publishers?.Select(x => new MetadataNameProperty(x.Name.TrimCompanyForms()));
+            return data.Publishers.NullIfEmpty()?.Select(x => new MetadataNameProperty(x.Name.TrimCompanyForms()));
         }
 
         public override IEnumerable<MetadataProperty> GetGenres(GetMetadataFieldArgs args)
@@ -86,7 +86,7 @@ namespace IgnMetadata
             if (IsEmpty(data))
                 return null;
 
-            return data.Genres?.Select(x => new MetadataNameProperty(x.Name));
+            return data.Genres.NullIfEmpty()?.Select(x => new MetadataNameProperty(x.Name));
         }
 
         public override IEnumerable<MetadataProperty> GetFeatures(GetMetadataFieldArgs args)
@@ -95,7 +95,7 @@ namespace IgnMetadata
             if (IsEmpty(data))
                 return null;
 
-            return data.Features?.Select(x => new MetadataNameProperty(x.Name));
+            return data.Features.NullIfEmpty()?.Select(x => new MetadataNameProperty(x.Name));
         }
 
         public override IEnumerable<MetadataProperty> GetSeries(GetMetadataFieldArgs args)
@@ -104,7 +104,7 @@ namespace IgnMetadata
             if (IsEmpty(data))
                 return null;
 
-            return data.Franchises?.Select(x => new MetadataNameProperty(x.Name));
+            return data.Franchises.NullIfEmpty()?.Select(x => new MetadataNameProperty(x.Name));
         }
 
         public override string GetDescription(GetMetadataFieldArgs args)
@@ -158,7 +158,7 @@ namespace IgnMetadata
 
             var platforms = data.ObjectRegions.SelectMany(r => r.Releases).SelectMany(r => r.PlatformAttributes).Select(x => x.Name).ToHashSet();
 
-            return platforms.SelectMany(platformUtility.GetPlatforms).ToHashSet();
+            return platforms.SelectMany(platformUtility.GetPlatforms).ToHashSet().NullIfEmpty();
         }
 
         private IgnGame GetSearchResultData()

@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayniteExtensions.Common;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,8 +27,8 @@ namespace SteamTagsImporter
             if (newTagsAddedToSettings)
                 plugin.SavePluginSettings(tagsGetter.Settings);
 
-            var tagNames = steamTags.Select(t => tagsGetter.GetFinalTagName(t.Name));
-            return tagNames.Select(tn => new MetadataNameProperty(tn));
+            var tagNames = steamTags.Select(t => tagsGetter.GetFinalTagName(t.Name)).ToList();
+            return tagNames.NullIfEmpty()?.Select(tn => new MetadataNameProperty(tn));
         }
     }
 }
