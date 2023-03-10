@@ -20,8 +20,8 @@ namespace Barnite.Tests.MobyGames
 
             Assert.Equal("Call of Cthulhu: Dark Corners of the Earth", data.Name);
             Assert.Single(data.Platforms, new MetadataSpecProperty("xbox"));
-            Assert.Contains(new MetadataNameProperty("2K Games, Inc."), data.Publishers);
-            Assert.Contains(new MetadataNameProperty("Bethesda Softworks LLC"), data.Publishers);
+            Assert.Contains(new MetadataNameProperty("2K Games"), data.Publishers);
+            Assert.Contains(new MetadataNameProperty("Bethesda Softworks"), data.Publishers);
             Assert.Single(data.Developers, new MetadataNameProperty("Headfirst Productions"));
             Assert.Equal(new ReleaseDate(2005, 10, 24), data.ReleaseDate);
             Assert.Single(data.AgeRatings, new MetadataNameProperty("ESRB Mature"));

@@ -28,8 +28,8 @@ namespace Barnite.Tests.OGDB
             Assert.Equal(new MetadataSpecProperty("sony_playstation3"), data.Platforms.Single());
             Assert.Equal("https://ogdb.eu/imageview.php?image_id=268978&limit=400", data.CoverImage.Path);
             Assert.Equal(new ReleaseDate(2013, 03, 12), data.ReleaseDate);
-            Assert.Equal(new MetadataNameProperty("Santa Monica Studio, L.L.C."), data.Developers.Single());
-            Assert.Equal(new MetadataNameProperty("SONY Computer Entertainment Europe, Ltd."), data.Publishers.Single());
+            Assert.Equal(new MetadataNameProperty("Santa Monica Studio"), data.Developers.Single());
+            Assert.Equal(new MetadataNameProperty("SONY Computer Entertainment Europe"), data.Publishers.Single());
             Assert.Contains(data.Links, l => l.Name == scraper.Name);
             Assert.Equal(2, stringDownloader.CalledUrls.Count);
         }
@@ -50,10 +50,10 @@ namespace Barnite.Tests.OGDB
             Assert.Equal(new MetadataSpecProperty("pc_windows"), data.Platforms.Single());
             Assert.Equal("https://ogdb.eu/imageview.php?image_id=72411&limit=400", data.CoverImage.Path);
             Assert.Equal(new ReleaseDate(2000), data.ReleaseDate);
-            Assert.Contains(new MetadataNameProperty("ION Storm Austin, L.L.P."), data.Developers);
-            Assert.Contains(new MetadataNameProperty("Epic Games, Inc."), data.Developers);
+            Assert.Contains(new MetadataNameProperty("ION Storm Austin"), data.Developers);
+            Assert.Contains(new MetadataNameProperty("Epic Games"), data.Developers);
             Assert.Equal(2, data.Developers.Count);
-            Assert.Equal(new MetadataNameProperty("Eidos Interactive, Inc."), data.Publishers.Single());
+            Assert.Equal(new MetadataNameProperty("Eidos Interactive"), data.Publishers.Single());
             Assert.Contains(data.Links, l => l.Name == scraper.Name);
             Assert.Equal(2, stringDownloader.CalledUrls.Count);
         }
