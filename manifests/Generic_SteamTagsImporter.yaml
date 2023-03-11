@@ -104,6 +104,6 @@ Packages:
   - Version: 3.2.1
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2023-03-11
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-03-11/Steam_Tags_Importer_3_2_1.pext
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-03-11/SteamTagsImporter_3_2_1.pext
     Changelog:
     - Fixed empty collection values not allowing fallback to other metadata providers
