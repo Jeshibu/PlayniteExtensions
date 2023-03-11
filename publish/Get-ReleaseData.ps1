@@ -142,10 +142,7 @@ function Get-ReleaseDescription {
         }
         $description += "`r`n`r`n"
     }
-    $description | Set-Content -Path ".\publish\release_notes.txt"
-    if ($Env:GITHUB_WORKSPACE) {
-        $description | Set-Content -Path "$Env:GITHUB_WORKSPACE/publish/release_notes.txt"
-    }
+    $description | Set-Content -Path "./publish/release_notes.txt"
     return $description
 }
 

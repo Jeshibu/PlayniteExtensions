@@ -73,5 +73,5 @@ jobs:
         with:
           draft: true
           name: "${{ steps.projectselection.outputs.releasetitle }}"
-          body_path: "$Env:GITHUB_WORKSPACE/publish/release_notes.txt"
+          body_path: 'publish/release_notes.txt'
           files: '*.pext'
