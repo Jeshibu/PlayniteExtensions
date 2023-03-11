@@ -20,12 +20,14 @@ jobs:
 
       - id: tagName
         name: Get tag name
-        uses: olegtarasov/get-tag@v2.1.2 #puts the tag name in $env:GIT_TAG_NAME
+        uses: olegtarasov/get-tag@v2.1.2
+        #puts the tag name in $env:GIT_TAG_NAME
 
       - id: projectselection
         name: Set build and test projects by tag
-        run: |
-          ./publish/Get-ReleaseData.ps1 $env:GIT_TAG_NAME
+        run: ./publish/Get-ReleaseData.ps1 $env:GIT_TAG_NAME
+        #outputs projects, testprojects, releasetitle
+        #also writes release notes to ./publish/release_notes.txt
 
       - name: Setup Nuget.exe
         uses: NuGet/setup-nuget@v1
@@ -71,6 +73,5 @@ jobs:
         with:
           draft: true
           name: "${{ steps.projectselection.outputs.releasetitle }}"
-          body: "${{ steps.projectselection.outputs.releasedescription }}"
-          files: |
-            *.pext
+          body_path: "$Env:GITHUB_WORKSPACE/publish/release_notes.txt"
+          files: '*.pext'

@@ -8,95 +8,84 @@ Import-Module .\powershell-yaml\powershell-yaml.psd1
 Write-Host "Imported powershell-yaml"
 
 function Get-ReleaseData {
-    param (
+    param(
         [Parameter(Mandatory = $true, HelpMessage = "The tag name of this release")]
         [string]$tagName
     )
-    $projects = Get-Projects $tagName
-    $projectNames = @($projects | Select-Object -ExpandProperty Name)
-    $testProjectNames = @(Get-TestProjectNames $projectNames)
-    #Write-Host "projects=$($projects | ConvertTo-Json -Compress)"
-    $manifestData = @($projectNames | % {$_ | Get-ManifestData})
-    $releaseTitle = Get-ReleaseTitle $manifestData
-    $releaseDescription = Get-ReleaseDescription $manifestData
+    #$releaseTitle = ""
+    if ($tagName -match '[0-9]{4}(-[0-9]{2}){2}') {
+        $all = $true
+        $projectNames = Get-ProjectNames "all"
+    }
+    elseif ($tagName -match '(?<Name>[a-z]+)(?<Version>([0-9]+\.){1,3}[0-9]+)') {
+        $all = $false
+        $projectNames = Get-ProjectNames $Matches.Name
+    }
+    else {
+        throw "No name + version match found for $t"
+    }
+
+    $manifests = @($projectNames | % { $_ | Get-ManifestData })
+
+    if ($all) {
+        $manifests = $manifests | Where-Object { $_.ReleaseDate -eq $tagName }
+        $releaseTitle = $tagName
+    }
+    else {
+        foreach ($m in $manifests) {
+            if ($m.Version -ne $Matches.Version) {
+                throw "Version mismatch: tag=$($Matches.Version) yaml=$($m.Version)"
+            }
+        }
+        $releaseTitle = ($manifests | % { "$($_.DisplayName) $($_.Version)" }) -join " + "
+    }
+
+    $releaseDescription = Get-ReleaseDescription $manifests #side effect: writes to ./publish/release_notes.txt
+    $testProjectNames = @($manifests | % { $_.Name } | Get-TestProjectNames $filteredProjectNames)
+
     $output = @(
         "releasetitle=$releaseTitle"
-        "releasedescription=$releaseDescription"
-        "projects=$($projects | ConvertTo-Json -Compress)"
+        #"releasedescription=$releaseDescription"
+        "projects=$($manifests | ConvertTo-Json -Compress)"
         "testprojects=$($testProjectNames | ConvertTo-Json -Compress)"
     )
-    foreach ($o in $output){
+    foreach ($o in $output) {
         Write-Host $o
-        echo $o >> $env:GITHUB_OUTPUT
+        Write-Output $o >> $env:GITHUB_OUTPUT
     }
-}
-
-function Get-Projects {
-    param (
-        [Parameter(Mandatory = $true)]
-        [string]$tag
-    )
-    $tagSplits = $tag -split '`+'
-    $projects = @()
-    foreach ($t in $tagSplits) {
-        if (!($t -match '(?<Name>[a-z]+)(?<Version>([0-9]+\.){1,3}[0-9]+)')) {
-            throw "No name + version match found for $t"
-        }
-        Write-Host "Name: $($Matches.Name), version: $($Matches.Version)"
-        foreach ($n in Get-ProjectNames $t) {
-            $projects += @{ Name = $n; Version = $Matches.Version }
-        }
-    }
-    return $projects
 }
 
 function Get-ProjectNames {
     param (
         [string]$tagProjectName
     )
-    switch ($Matches.Name) {
-        "barnite" {
-            return @("Barnite")
+    $projectNames = @{
+        "barnite"             = @("Barnite")
+        "gamersgate"          = @("GamersGateLibrary")
+        "gamessizecalculator" = @("GamesSizeCalculator")
+        "giantbomb"           = @("GiantBombMetadata")
+        "groupees"            = @("GroupeesLibrary")
+        "ign"                 = @("IgnMetadata")
+        "itchiobundletagger"  = @("itchIoBundleTagger")
+        "launchbox"           = @("LaunchBoxMetadata")
+        "legacygames"         = @("LegacyGamesLibrary")
+        "pathreplacer"        = @("PathReplacer")
+        "rawg"                = @("RawgLibrary", "RawgMetadata")
+        "steamtagsimporter"   = @("SteamTagsImporter")
+        "viveport"            = @("ViveportLibrary")
+        "xbox"                = @("XboxMetadata")
+        #"steamactions"        = @("SteamActions")
+    }
+
+    if ($tagProjectName -eq "all") {
+        $o = @()
+        foreach ($key in $projectNames.Keys) {
+            $o += $projectNames[$key]
         }
-        "gamersgate" {
-            return @("GamersGateLibrary")
-        }
-        "gamessizecalculator" {
-            return @("GamesSizeCalculator")
-        }
-        "giantbomb" {
-            return @("GiantBombMetadata")
-        }
-        "groupees" {
-            return @("GroupeesLibrary")
-        }
-        "ign" {
-            return @("IgnMetadata")
-        }
-        "itchiobundletagger" {
-            return @("itchIoBundleTagger")
-        }
-        "launchbox" {
-            return @("LaunchBoxMetadata")
-        }
-        "legacygames" {
-            return @("LegacyGamesLibrary")
-        }
-        "pathreplacer" {
-            return @("PathReplacer")
-        }
-        "rawg" {
-            return @("RawgLibrary", "RawgMetadata")
-        }
-        "steamactions" {
-            return @("SteamActions")
-        }
-        "steamtagsimporter" {
-            return @("SteamTagsImporter")
-        }
-        "viveport" {
-            return @("ViveportLibrary")
-        }
+        return $o
+    }
+    else {
+        return $projectNames[$tagProjectName]
     }
 }
 
@@ -110,6 +99,8 @@ function Get-TestProjectNames {
     foreach ($p in $projects) {
         if (Test-Path ".\source\$p.Tests" -PathType Container) {
             $testprojects += "$p.Tests"
+        }else{
+            Write-Host "No test project found at .\source\$p.Tests"
         }
     }
     return $testprojects
@@ -130,43 +121,26 @@ function Get-ManifestData {
         if ($latestRelease.Version -ne $extensionYamlData.Version) {
             throw "Version mismatch: $projectName\extension.yaml: $($extensionYamlData.Version), $($manifestFile.Name): $($latestRelease.Version)"
         }
-        return @{ Name = $extensionYamlData.Name; Version = $latestRelease.Version; Changelog = $latestRelease.Changelog }
+        return @{ Name = $projectName; DisplayName = $extensionYamlData.Name; Version = $latestRelease.Version; ReleaseDate = $latestRelease.ReleaseDate; Changelog = $latestRelease.Changelog }
     }
-    Write-Host $manifestContent
     throw "Could not find manifest for addon ID $($manifestContent.Id)"
-}
-
-function Get-ReleaseTitle {
-    param (
-        [Array]$manifests
-    )
-    $title = ""
-    for ($i = 0; $i -lt $manifests.Length; $i++) {
-        $m = $manifests[$i]
-        if ($title.Length -ne 0) {
-            $title += " + "
-        }
-        $title += "$($m.Name) $($m.Version)"
-    }
-    return $title
 }
 
 function Get-ReleaseDescription {
     param (
         [Array]$manifests
     )
-    Write-Host "Get-ReleaseDescription manifests: $($manifests | ConvertTo-Json -Compress)"
     $description = ""
     foreach ($m in @($manifests)) {
         if ($manifests.Length -gt 1) {
-            $description += "$($m.Name) $($m.Version)`r`n`r`n"
+            $description += "$($m.DisplayName) $($m.Version)`r`n`r`n"
         }
         foreach ($c in $m.Changelog) {
             $description += "- $c`r`n"
         }
         $description += "`r`n`r`n"
     }
-    $description = $description -replace '%', '%25' -replace '\n', '%0A' -replace '\r', '%0D'
+    $description | Set-Content -Path "./publish/release_notes.txt"
     return $description
 }
 
