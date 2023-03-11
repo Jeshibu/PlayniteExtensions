@@ -41,11 +41,11 @@ function Get-ReleaseData {
     }
 
     $releaseDescription = Get-ReleaseDescription $manifests #side effect: writes to ./publish/release_notes.txt
-    $testProjectNames = @($manifests | % { $_.Name } | Get-TestProjectNames $filteredProjectNames)
+    $filteredProjectNames = @($manifests | % { $_.Name })
+    $testProjectNames = Get-TestProjectNames $filteredProjectNames
 
     $output = @(
         "releasetitle=$releaseTitle"
-        #"releasedescription=$releaseDescription"
         "projects=$($manifests | ConvertTo-Json -Compress)"
         "testprojects=$($testProjectNames | ConvertTo-Json -Compress)"
     )
@@ -98,8 +98,10 @@ function Get-TestProjectNames {
         
     foreach ($p in $projects) {
         if (Test-Path ".\source\$p.Tests" -PathType Container) {
+            Write-Host "Found testproject for $p in .\source\$p.Tests"
             $testprojects += "$p.Tests"
-        }else{
+        }
+        else {
             Write-Host "No test project found at .\source\$p.Tests"
         }
     }
@@ -140,7 +142,10 @@ function Get-ReleaseDescription {
         }
         $description += "`r`n`r`n"
     }
-    $description | Set-Content -Path "./publish/release_notes.txt"
+    $description | Set-Content -Path ".\publish\release_notes.txt"
+    if ($Env:GITHUB_WORKSPACE) {
+        $description | Set-Content -Path "$Env:GITHUB_WORKSPACE/publish/release_notes.txt"
+    }
     return $description
 }
 
