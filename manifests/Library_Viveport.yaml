@@ -31,3 +31,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/viveport0.3/ViveportLibrary_0_3.pext
     Changelog:
      - Added metadata provider
+  - Version: 0.3.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-03-11
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-03-11/ViveportLibrary_0_3_1.pext
+    Changelog:
+     - Fixed empty collection values not allowing fallback to other metadata providers

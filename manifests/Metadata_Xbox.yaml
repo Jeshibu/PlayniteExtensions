@@ -1,0 +1,9 @@
+AddonId: XboxMetadata
+Packages:
+  - Version: 0.1.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-03-11
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-03-11/XboxMetadata_0_1_1.pext
+    Changelog:
+    - Initial public release
+    - Fixed settings initialization

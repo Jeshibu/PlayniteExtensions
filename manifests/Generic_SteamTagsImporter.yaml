@@ -101,3 +101,9 @@ Packages:
     - Turned plugin into a metadata source. This lets the tag fetching be integrated into the post-import metadata fetching. But, since there is no metadata merging in Playnite, this is exclusive with other tag sources (for example itch.io). The existing post-import tag fetching (which does merge with any existing tags) is still available, unchanged.
     - Added option to pick tag language
     - Added option to tag delisted games
+  - Version: 3.2.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-03-11
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-03-11/Steam_Tags_Importer_3_2_1.pext
+    Changelog:
+    - Fixed empty collection values not allowing fallback to other metadata providers

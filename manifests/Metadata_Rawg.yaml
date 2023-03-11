@@ -26,3 +26,9 @@ Packages:
     Changelog:
      - No longer add RAWG link to games before they have other links
      - Fixed exception when games have no platform
+  - Version: 0.3.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-03-11
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-03-11/RawgMetadata_0_3_2.pext
+    Changelog:
+     - Fixed empty collection values not allowing fallback to other metadata providers

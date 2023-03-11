@@ -24,7 +24,7 @@ namespace XboxMetadata
 
         public override List<MetadataField> SupportedFields { get; } = XboxMetadataProvider.Fields;
 
-        public override string Name => "Xbox Metadata";
+        public override string Name => "Xbox Store";
 
         public XboxMetadata(IPlayniteAPI api) : base(api)
         {

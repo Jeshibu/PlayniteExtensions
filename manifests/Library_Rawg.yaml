@@ -42,3 +42,9 @@ Packages:
      - Fixed exception when games have no platform
      - Fixed double search call for new games
      - Honored new/deleted game sync settings
+  - Version: 0.3.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-03-11
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-03-11/RawgLibrary_0_3_2.pext
+    Changelog:
+     - Fixed empty collection values not allowing fallback to other metadata providers
