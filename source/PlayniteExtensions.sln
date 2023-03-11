@@ -78,11 +78,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		..\.github\workflows\release.yml = ..\.github\workflows\release.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XboxMetadata", "XboxMetadata\XboxMetadata.csproj", "{092F32E3-7FD4-470A-9658-9E8CDF123C99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XboxMetadata.Tests", "XboxMetadata.Tests\XboxMetadata.Tests.csproj", "{3A701B5F-255C-443E-A462-22CB8D463A9C}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{092f32e3-7fd4-470a-9658-9e8cdf123c99}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{0fc7f312-402b-4466-9e05-721ce2638268}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{2351b5c1-6e28-4b79-a1d9-90fda53b5417}*SharedItemsImports = 4
 		Rawg.Common\Rawg.Common.projitems*{298abb0d-9b79-4bfd-9cdd-ae26e2672a5f}*SharedItemsImports = 13
+		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{3a701b5f-255c-443e-a462-22cb8d463a9c}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{4fdf1e89-5bc3-4c72-8fda-0d580e7a5d5f}*SharedItemsImports = 4
 		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{55b6d58f-97e4-4364-bb36-d1b3f47c41a4}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{646571a9-6445-4f20-9ead-4f6b7e1073c5}*SharedItemsImports = 13
@@ -198,6 +204,14 @@ Global
 		{B2BE4CBD-25A7-41F3-BB78-6BD3BC510323}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2BE4CBD-25A7-41F3-BB78-6BD3BC510323}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2BE4CBD-25A7-41F3-BB78-6BD3BC510323}.Release|Any CPU.Build.0 = Release|Any CPU
+		{092F32E3-7FD4-470A-9658-9E8CDF123C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{092F32E3-7FD4-470A-9658-9E8CDF123C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{092F32E3-7FD4-470A-9658-9E8CDF123C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{092F32E3-7FD4-470A-9658-9E8CDF123C99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A701B5F-255C-443E-A462-22CB8D463A9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A701B5F-255C-443E-A462-22CB8D463A9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A701B5F-255C-443E-A462-22CB8D463A9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A701B5F-255C-443E-A462-22CB8D463A9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

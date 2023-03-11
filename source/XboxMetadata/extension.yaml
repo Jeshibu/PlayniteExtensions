@@ -1,0 +1,7 @@
+﻿Id: XboxMetadata
+Name: Xbox Metadata
+Author: Jeshibu
+Version: 0.1.1
+Module: XboxMetadata.dll
+Type: MetadataProvider
+Icon: icon.png

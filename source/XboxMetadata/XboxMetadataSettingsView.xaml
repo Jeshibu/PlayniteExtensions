@@ -1,0 +1,151 @@
+﻿<UserControl x:Class="XboxMetadata.XboxMetadataSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:pec="clr-namespace:PlayniteExtensions.Common"
+             xmlns:xbox="clr-namespace:XboxMetadata"
+             d:DataContext="{d:DesignInstance Type=xbox:XboxMetadataSettingsViewModel}"
+             xmlns:dd="urn:gong-wpf-dragdrop"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        <TabControl.Resources>
+            <pec:IntegerFormatConverter x:Key="intConverter"/>
+            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="0,5"/>
+            </Style>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>
+            <Style TargetType="ScrollViewer" BasedOn="{StaticResource {x:Type ScrollViewer}}">
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            </Style>
+            <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+                <Setter Property="SelectionMode" Value="Extended"/>
+                <Setter Property="MinHeight" Value="150"/>
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="dd:DragDrop.IsDragSource" Value="True"/>
+                <Setter Property="dd:DragDrop.IsDropTarget" Value="True"/>
+                <Setter Property="Width" Value="350"/>
+                <Setter Property="HorizontalAlignment" Value="Left" />
+            </Style>
+        </TabControl.Resources>
+        <TabItem Header="Settings">
+            <StackPanel Margin="20">
+                <TextBlock TextWrapping="Wrap">
+                    Fill the below field with the xx-xx format part of the Xbox store page URL for your locale.<LineBreak/>
+                    For example: https://www.xbox.com/<Bold>en-us</Bold>/games/store/asdf/9pp8q82h79lc<LineBreak/>
+                    This will dictate the language of the metadata this plugin fetches, but also what games are available.
+                </TextBlock>
+                <StackPanel Orientation="Horizontal" Margin="0,10" VerticalAlignment="Center">
+                    <TextBlock Margin="0,0,10,0">Market:</TextBlock>
+                    <TextBox Width="70" Text="{Binding Settings.Market}"/>
+                </StackPanel>
+                <CheckBox IsChecked="{Binding Settings.ImportAccessibilityFeatures}" Content="Import accessibility features as features"/>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Covers">
+            <ScrollViewer>
+                <StackPanel Margin="20">
+                    <TextBlock TextWrapping="Wrap">
+                        Images smaller than either of the minimum dimensions will be ignored.<LineBreak/>
+                        Images larger than either of the maximum dimensions will be scaled down.
+                    </TextBlock>
+                    <Grid Width="Auto" Margin="0,0,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0">Minimum dimensions:</TextBlock>
+                        <WrapPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox Width="70" Text="{Binding Settings.Cover.MinWidth, Converter={StaticResource intConverter}}"/>
+                            <TextBlock Margin="0,0,5,0">w x</TextBlock>
+                            <TextBox Width="70" Text="{Binding Settings.Cover.MinHeight, Converter={StaticResource intConverter}}"/>
+                            <TextBlock>h</TextBlock>
+                        </WrapPanel>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="Wrap">Maximum dimensions:</TextBlock>
+                        <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox Width="70" Text="{Binding Settings.Cover.MaxWidth, Converter={StaticResource intConverter}}"/>
+                            <TextBlock Margin="0,0,5,0">w x</TextBlock>
+                            <TextBox Width="70" Text="{Binding Settings.Cover.MaxHeight, Converter={StaticResource intConverter}}"/>
+                            <TextBlock>h</TextBlock>
+                        </WrapPanel>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
+                        <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Cover.AspectRatio}"/>
+                    </Grid>
+                    <TextBlock TextWrapping="Wrap">Use the following image types for covers, in the specified order (drag and drop to reorder):</TextBlock>
+                    <ListBox Name="CoverImageTypes" ItemsSource="{Binding Settings.Cover.Fields}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
+                                    <TextBlock Text="░" Padding="10,0"/>
+                                    <CheckBox IsChecked="{Binding Checked}" Content="{Binding Field}" Width="Auto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </ScrollViewer>
+        </TabItem>
+        <TabItem Header="Backgrounds">
+            <ScrollViewer>
+                <StackPanel Margin="20">
+                    <TextBlock TextWrapping="Wrap">
+                        Images smaller than either of the minimum dimensions will be ignored.<LineBreak/>
+                        Images larger than either of the maximum dimensions will be scaled down.
+                    </TextBlock>
+                    <Grid Width="Auto" Margin="0,0,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0">Minimum dimensions:</TextBlock>
+                        <WrapPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox Width="70" Text="{Binding Settings.Background.MinWidth, Converter={StaticResource intConverter}}"/>
+                            <TextBlock Margin="0,0,5,0">w x</TextBlock>
+                            <TextBox Width="70" Text="{Binding Settings.Background.MinHeight, Converter={StaticResource intConverter}}"/>
+                            <TextBlock>h</TextBlock>
+                        </WrapPanel>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="Wrap">Maximum dimensions:</TextBlock>
+                        <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox Width="70" Text="{Binding Settings.Background.MaxWidth, Converter={StaticResource intConverter}}"/>
+                            <TextBlock Margin="0,0,5,0">w x</TextBlock>
+                            <TextBox Width="70" Text="{Binding Settings.Background.MaxHeight, Converter={StaticResource intConverter}}"/>
+                            <TextBlock>h</TextBlock>
+                        </WrapPanel>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
+                        <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Background.AspectRatio}"/>
+                    </Grid>
+                    <TextBlock TextWrapping="Wrap">Use the following image types for backgrounds, in the specified order (drag and drop to reorder):</TextBlock>
+                    <ListBox Name="BackgroundImageTypes" ItemsSource="{Binding Settings.Background.Fields}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
+                                    <TextBlock Text="░" Padding="10,0"/>
+                                    <CheckBox IsChecked="{Binding Checked}" Content="{Binding Field}" Width="Auto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </ScrollViewer>
+        </TabItem>
+    </TabControl>
+</UserControl>

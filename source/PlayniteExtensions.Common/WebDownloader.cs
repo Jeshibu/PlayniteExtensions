@@ -36,6 +36,7 @@ namespace PlayniteExtensions.Common
 
     public class WebDownloader : IWebDownloader
     {
+        private ILogger logger = LogManager.GetLogger();
         public static HttpStatusCode[] HttpRedirectStatusCodes = new[] { HttpStatusCode.Redirect, HttpStatusCode.Moved, HttpStatusCode.TemporaryRedirect };
 
         public CookieCollection Cookies { get; private set; } = new CookieCollection();
@@ -48,7 +49,11 @@ namespace PlayniteExtensions.Common
 
         public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7)
         {
-            return DownloadString(url, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, throwExceptionOnErrorResponse, maxRedirectDepth, depth: 0);
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            var output = DownloadString(url, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, throwExceptionOnErrorResponse, maxRedirectDepth, depth: 0);
+            sw.Stop();
+            logger.Info($"Call to {url} completed in {sw.Elapsed}");
+            return output;
         }
 
         private DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, int depth = 0)
