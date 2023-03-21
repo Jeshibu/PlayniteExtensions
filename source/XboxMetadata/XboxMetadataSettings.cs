@@ -17,6 +17,31 @@ namespace XboxMetadata
         public XboxImageSourceSettings Cover { get; set; }
 
         public XboxImageSourceSettings Background { get; set; }
+
+        public static XboxMetadataSettings GetInitialSettings()
+        {
+            return new XboxMetadataSettings()
+            {
+                Cover = new XboxImageSourceSettings
+                {
+                    MinWidth = 200,
+                    MinHeight = 300,
+                    MaxWidth = 600,
+                    MaxHeight = 900,
+                    AspectRatio = AspectRatio.Vertical,
+                    Fields = new List<CheckboxSetting> { new CheckboxSetting(ImageSourceField.Poster, true), new CheckboxSetting(ImageSourceField.BoxArt, true), new CheckboxSetting(ImageSourceField.SuperHeroArt, false), new CheckboxSetting(ImageSourceField.Screenshots, false) },
+                },
+                Background = new XboxImageSourceSettings
+                {
+                    MinWidth = 1000,
+                    MinHeight = 500,
+                    MaxWidth = 2560,
+                    MaxHeight = 1440,
+                    AspectRatio = AspectRatio.Horizontal,
+                    Fields = new List<CheckboxSetting> { new CheckboxSetting(ImageSourceField.SuperHeroArt, true), new CheckboxSetting(ImageSourceField.Screenshots, true), new CheckboxSetting(ImageSourceField.BoxArt, false), new CheckboxSetting(ImageSourceField.Poster, false) },
+                },
+            };
+        }
     }
 
     public class XboxImageSourceSettings
@@ -75,27 +100,7 @@ namespace XboxMetadata
 
             if (savedSettings == null)
             {
-                Settings = new XboxMetadataSettings()
-                {
-                    Cover = new XboxImageSourceSettings
-                    {
-                        MinWidth = 600,
-                        MinHeight = 900,
-                        MaxWidth = 600,
-                        MaxHeight = 900,
-                        AspectRatio = AspectRatio.Vertical,
-                        Fields = new List<CheckboxSetting> { new CheckboxSetting(ImageSourceField.Poster, true), new CheckboxSetting(ImageSourceField.BoxArt, true), new CheckboxSetting(ImageSourceField.SuperHeroArt, false), new CheckboxSetting(ImageSourceField.Screenshots, false) },
-                    },
-                    Background = new XboxImageSourceSettings
-                    {
-                        MinWidth = 1000,
-                        MinHeight = 500,
-                        MaxWidth = 2560,
-                        MaxHeight = 1440,
-                        AspectRatio = AspectRatio.Horizontal,
-                        Fields = new List<CheckboxSetting> { new CheckboxSetting(ImageSourceField.SuperHeroArt, true), new CheckboxSetting(ImageSourceField.Screenshots, true), new CheckboxSetting(ImageSourceField.BoxArt, false), new CheckboxSetting(ImageSourceField.Poster, false) },
-                    },
-                };
+                Settings = XboxMetadataSettings.GetInitialSettings();
             }
             else
             {

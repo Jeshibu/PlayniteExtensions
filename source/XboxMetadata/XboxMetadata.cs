@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using XboxMetadata.Scrapers;
 
 namespace XboxMetadata
 {
@@ -17,6 +18,7 @@ namespace XboxMetadata
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly IWebDownloader downloader = new WebDownloader();
         private readonly IPlatformUtility platformUtility;
+        private readonly ScraperManager scraperManager;
 
         private XboxMetadataSettingsViewModel settings { get; set; }
 
@@ -30,12 +32,13 @@ namespace XboxMetadata
         {
             settings = new XboxMetadataSettingsViewModel(this);
             platformUtility = new PlatformUtility(PlayniteApi);
+            scraperManager = new ScraperManager(downloader, platformUtility);
             Properties = new MetadataPluginProperties { HasSettings = true };
         }
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new XboxMetadataProvider(options, this.settings.Settings, PlayniteApi, new XboxScraper(downloader, settings.Settings.Market), platformUtility);
+            return new XboxMetadataProvider(options, settings.Settings, PlayniteApi, scraperManager);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
+      <HintPath>..\packages\AngleSharp.0.9.9\lib\net45\AngleSharp.dll</HintPath>
+    </Reference>
     <Reference Include="GongSolutions.WPF.DragDrop, Version=2.0.0.0, Culture=neutral, PublicKeyToken=91f1945125b7a587, processorArchitecture=MSIL">
       <HintPath>..\packages\gong-wpf-dragdrop.2.4.1\lib\net462\GongSolutions.WPF.DragDrop.dll</HintPath>
     </Reference>
@@ -55,7 +58,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="XboxScraper.cs" />
+    <Compile Include="Scrapers\BaseXboxScraper.cs" />
+    <Compile Include="Scrapers\ScraperManager.cs" />
+    <Compile Include="Scrapers\Xbox360Scraper.cs" />
+    <Compile Include="Scrapers\XboxOneAutocompleteSearchModels.cs" />
+    <Compile Include="Scrapers\XboxOneDetailsModels.cs" />
+    <Compile Include="Scrapers\XboxOneScraper.cs" />
     <Compile Include="XboxMetadata.cs" />
     <Compile Include="XboxMetadataProvider.cs" />
     <Compile Include="XboxMetadataSettings.cs" />
