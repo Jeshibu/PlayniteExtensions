@@ -27,7 +27,8 @@ namespace Barnite.Tests.PlayAsia
 
             Assert.Equal("Astral Chain", data.Name);
             Assert.Equal(new MetadataSpecProperty("nintendo_switch"), data.Platforms.Single());
-            Assert.Equal("https://s.pacn.ws/1500/wk/astral-chain-586101.11.jpg", data.CoverImage.Path);
+            Assert.Equal("https://s.pacn.ws/1/p/wk/astral-chain-586101.11.jpg?v=qma1qc&quality=100&width=1024&crop=369,598", data.CoverImage.Path);
+            Assert.Equal(new ReleaseDate(2019, 8, 30), data.ReleaseDate);
         }
 
         [Fact]
@@ -49,7 +50,8 @@ namespace Barnite.Tests.PlayAsia
             Assert.Equal("Cyberpunk 2077", data.Name);
             Assert.Contains(new MetadataSpecProperty("xbox_one"), data.Platforms);
             Assert.Contains(new MetadataSpecProperty("xbox_series"), data.Platforms);
-            Assert.Equal("https://s.pacn.ws/1500/x4/cyberpunk-2077-multilanguage-596379.10.jpg", data.CoverImage.Path);
+            Assert.Equal("https://s.pacn.ws/1/p/x4/cyberpunk-2077-multilanguage-chinese-cover-596379.11.jpg?v=rhit5s&quality=100&width=1024&crop=616,798", data.CoverImage.Path);
+            Assert.Equal(new ReleaseDate(2020, 12, 10), data.ReleaseDate);
         }
     }
 }

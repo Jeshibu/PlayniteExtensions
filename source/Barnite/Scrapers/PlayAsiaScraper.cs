@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using System.Globalization;
 
 namespace Barnite.Scrapers
 {
@@ -72,20 +73,18 @@ namespace Barnite.Scrapers
                 }
             }
 
-            Uri baseUri = new Uri("https://www.play-asia.com");
-
-            var imgSrc = doc.DocumentNode.SelectSingleNode("//img[@class='unvl mainimg_r' and @data-src]")?.Attributes["data-src"].Value;
+            var imgSrc = doc.DocumentNode.SelectSingleNode("//div[@id='main-img']/img[@src]")?.Attributes["src"].Value;
             if (imgSrc != null)
             {
                 imgSrc = GetAbsoluteUrl(imgSrc);
-
-                //remove querystring parameters that shrink the image
-                int questionMarkIndex = imgSrc.IndexOf('?');
-                if (questionMarkIndex != -1)
-                    imgSrc = imgSrc.Remove(questionMarkIndex);
+                imgSrc = Regex.Replace(imgSrc, @"\bquality=[0-9]+\b", "quality=100");
 
                 game.CoverImage = new MetadataFile(imgSrc);
             }
+
+            var releaseDateString = doc.DocumentNode.SelectSingleNode("//td[contains(., 'Official Release Date')]/following-sibling::td")?.InnerText.HtmlDecode();
+            if (releaseDateString != null && DateTime.TryParseExact(releaseDateString, "MMM dd, yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AllowWhiteSpaces | DateTimeStyles.AssumeLocal, out var releaseDate))
+                game.ReleaseDate = new ReleaseDate(releaseDate);
 
             return game;
         }

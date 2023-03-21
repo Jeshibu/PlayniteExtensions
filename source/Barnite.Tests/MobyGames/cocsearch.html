@@ -1,489 +1,439 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Quick Search</title>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta property="og:site_name" content="MobyGames" />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://www.mobygames.com/images/mobygames-logo-bg.png" />
-  <meta property="og:title" content="Quick Search" />
-  <meta name="google-site-verification" content="tJt3KCZCKYjBQCF3Fi55jOw6LD2AiPzSrlP6E-mZvSs" />
-  <meta name="p:domain_verify" content="aeca3386c9fda93d0a64006ba1249e4c"/>
-  <link rel="shortcut icon" href="https://www.mobygames.com/favicon.ico" />
-  <link rel="apple-touch-icon image_src" href="https://www.mobygames.com/images/moby300x300.png">
-  <link href="https://www.mobygames.com/rss/news.rss" rel="alternate" type="application/rss+xml" title="MobyGames RSS" >
-  <link href="https://www.mobygames.com/search/quick?q=call+of+cthulhu+dark+corners+of+the+earth+xbox" rel="canonical">
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://www.mobygames.com/css/21020100/1s/moby_search_mozilla.css" type="text/css">
-  <script type="text/javascript" src="/js/21020100/global_prototype_scriptaculous_search.js"></script>
-<script type="text/javascript">
-document.observe("dom:loaded", function () {
-quickSearch.initialize()
-quickSearch.pagerSetOffset(0)
-quickSearch.pagerRegisterLink('d9763a3b9c01f8daa86db31644350d8fe',1)
-quickSearch.addFilter('daa9ca2a63ab9c68679d3cc8f4a1201da','d90b5a09a3d745cdd81e22d52188f8000',0)
-quickSearch.addFilter('daddab017912646d6e9492bb0393ca113','dd69c6f81aee279c7c11b18e2cae08d90',0)
-quickSearch.addFilter('d42a31b40267c0da8720458e3a62deec3','d9fcc89aad7e09b2a460599625083ffc2',0)
-quickSearch.addFilter('d5a15337db70742b40b02e389a6cdca43','db33301f03e104d7b3d3e64dc0680473e',0)
-quickSearch.addFilter('dc85188230cad1d166271a5a903a28312','d57a442621afbb741523044511735f153',0)
+<!doctype html>
+<html lang="en" onclick>
+  <head>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-})
-</script><script async src='/cdn-cgi/bm/cv/669835187/api.js'></script></head>
-<body>
-    <div class="container">
-      <div class="grid grid-navbar">
-        <div class="grid-navbar-logo">
-          <a href="https://www.mobygames.com/"><img src="/images/mobygames-logo.png" width="163" height="75" alt="MobyGames"></a>
-        </div>
-        <div class="grid-navbar-menu">
-          <form action="/search/quick" accept-charset="UTF-8" id="formaafr" method="GET">
-            <div class="input-group input-group-sm">
-              <input type="text" id="qsearch" name="q" class="form-control headerSearchForm searchBarHeight" placeholder="Search games, credits, companies...">
-              <div class="input-group-btn">
-                <button type="submit" class="btn btn-primary searchBarHeight"><span class="glyphicon glyphicon-search"></span></button>
-              </div>
+      ga('create', 'UA-258321-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link loading="lazy" rel="shortcut icon" href="/static/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/static/img/moby-avatar.png">
+    <link rel="search" type="application/opensearchdescription+xml" href="https://www.mobygames.com/search.xml" title="MobyGames">
+    <link rel="modulepreload" href="https://www.mobygames.com/static/js/shared.52fe9187.js">
+<link rel="modulepreload" href="https://www.mobygames.com/static/js/main.a32da2e1.js">
+    <link rel="stylesheet" href="https://www.mobygames.com/static/css/style.a897d96e.css">
+    <meta property="og:site_name" content="MobyGames">
+    <meta property="og:type" content="website">
+<meta name="robots" content="noindex">
+    <title>
+      Search - MobyGames
+    </title>
+  </head>
+  <body class="theme-night">
+  <div id="root">
+    <header>
+      <nav>
+        <ul class="navbar-menu">
+          <li class="navbar-logo">
+            <a href="/"><img src="https://www.mobygames.com/static/img/logo.37887f87.png" width="108" height="50" alt="mobygames logo" class="logo"></a>
+          </li>
+          <li class="navbar-status show-sm">
+          </li>
+          <li class="navbar-search">
+            <div class="flex-center h100">
+              <noscript class="w100">
+              <form class="navbar-form position-relative" action="/search/" accept-charset="UTF-8" method="GET">
+                <input id="search" type="search" class="form-input navbar-search-input" name="q" value="093155118706" placeholder="Search games, people, companies..." aria-label="Search">
+              </form>
+              </noscript>
+              <search s-url="/search/" a-url="/search/auto/" q="093155118706" :trending='[{"a": false, "i": "https://cdn.mobygames.com/3b3cf2e8-af63-11ed-a6d3-02420a0001ba.webp", "n": "System Shock", "t": 1, "u": "https://www.mobygames.com/game/681/system-shock/"}, {"a": false, "i": "https://cdn.mobygames.com/845970dc-af36-11ed-8847-02420a0001be.webp", "n": "The Company of Myself", "t": 1, "u": "https://www.mobygames.com/game/43859/the-company-of-myself/"}, {"a": false, "i": "https://cdn.mobygames.com/b5011940-af3d-11ed-a6d3-02420a0001ba.webp", "n": "Indiana Jones and the Last Crusade: The Graphic Adventure", "t": 1, "u": "https://www.mobygames.com/game/534/indiana-jones-and-the-last-crusade-the-graphic-adventure/"}, {"a": false, "i": "https://cdn.mobygames.com/d9b1c622-af47-11ed-86b5-02420a0001ba.webp", "n": "Burger Time Deluxe", "t": 1, "u": "https://www.mobygames.com/game/14705/burger-time-deluxe/"}, {"a": false, "i": "https://cdn.mobygames.com/b0e45184-af3c-11ed-86b5-02420a0001ba.webp", "n": "Giants: Citizen Kabuto", "t": 1, "u": "https://www.mobygames.com/game/2800/giants-citizen-kabuto/"}, {"a": false, "i": "https://cdn.mobygames.com/42134ec6-af3d-11ed-8847-02420a0001be.webp", "n": "Descent", "t": 1, "u": "https://www.mobygames.com/game/692/descent/"}, {"a": false, "i": "https://cdn.mobygames.com/18b5cdfc-bc75-11ed-bde2-02420a000179.webp", "n": "Zippo Games", "t": 2, "u": "https://www.mobygames.com/company/8877/zippo-games/"}, {"a": false, "i": "https://cdn.mobygames.com/8dd32096-c4e8-11ed-855b-02420a00013b.webp", "n": "Nokia", "t": 2, "u": "https://www.mobygames.com/company/4215/nokia/"}, {"a": false, "i": "https://cdn.mobygames.com/b8367cb0-af13-11ed-98f0-02420a00019c.webp", "n": "Lance Reddick", "t": 3, "u": "https://www.mobygames.com/person/400284/lance-reddick/"}, {"a": false, "i": "https://cdn.mobygames.com/e1f8a14e-af0a-11ed-8fcc-02420a00019c.webp", "n": "Filip O\u0161\u010d\u00e1dal", "t": 3, "u": "https://www.mobygames.com/person/64363/filip-oscadal/"}]'></search>
             </div>
-          </form>
-          <ul id="moby-main-menu">
-            
-            <li><a href="https://www.mobygames.com/browse/games" title="Browse games">Games</a></li>
-            <li><a href="https://www.mobygames.com/forums" title="Community discussion">Forums</a></li>
-            <li class="hidden-xs hidden-sm">
-              <a href="https://www.mobygames.com/news" data-toggle="dropdown" title="The latest at MobyGames">Updates <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="https://www.mobygames.com/news">Site News</a></li>
-                <li class="divider"></li>
-                <li><a href="https://www.mobygames.com/stats/recent_entries">New Games</a></li>
-                <li><a href="https://www.mobygames.com/stats/recent_modifications">Game Updates</a></li>
-                <li><a href="https://www.mobygames.com/stats/recent_reviews">New Reviews</a></li>
-                <li><a href="https://www.mobygames.com/stats/new_companies">New Companies</a></li>
-                <li><a href="https://www.mobygames.com/stats/company_modifications">Company Updates</a></li>
-                <li><a href="https://www.mobygames.com/stats/developer_modifications">Developer Updates</a></li>
-              </ul>
-            </li>
-            <li>
-              <a href="https://www.mobygames.com/info/contribute" data-toggle="dropdown" title="Contribute">Contribute <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="https://www.mobygames.com/new_game_wizard/">Add New Game</a></li>
-                <li><a href="https://www.mobygames.com/poll_wizard">Add New Poll</a></li>
-                <li><a href="https://www.mobygames.com/featured_game_wizard/">Add Featured Game</a></li>
+          </li>
+          <li class="navbar-links">
+            <ul class="list-group flex flex-space-between h100">
+              <li class="navbar-link">
+                <div class="flex-center h100">
+                  <b class="no-select">Browse</b>
+                </div>
+                <ul class="navbar-dropdown">
+                  <li><a href="/random/" rel="nofollow">Random</a></li>
+                  <li><a href="/game/" rel="nofollow">Games</a></li>
+                  <li><a href="/group/">Groups</a></li>
+                  <li><a href="/genre/">Genres</a></li>
+                  <li><a href="/attributes/tech-specs/">Attributes</a></li>
+                  <li><a href="/company/" rel="nofollow">Companies</a></li>
+                  <li><a href="/person/" rel="nofollow">People</a></li>
+                  <li><a href="/this-day-in-gaming/">This Day</a></li>
+                  <li><a href="/stats/">Stats</a></li>
+                </ul>
+              </li>
+              <li class="navbar-link">
+                <div class="flex-center h100">
+                  <b class="no-select">Contribute</b>
+                </div>
+                <ul class="navbar-dropdown">
+                  <li><a href="/contribute/game/" rel="nofollow">Add Game</a></li>
+                  <li><a href="/most-wanted/" rel="nofollow">Most Wanted</a></li>
+                  <li><a href="/info/contribute/">Instructions</a></li>
+                  <li><a href="/info/standards/">Standards</a></li>
+                </ul>
+              </li>
+              <li class="navbar-link">
+                <div class="flex-center h100">
+                  <b class="no-select">Community</b>
+                </div>
+                <ul class="navbar-dropdown">
+                  <li><a href="/leaderboard/">Contributors</a></li>
+                  <li><a href="/forum/">Forums</a></li>
+                  <li><a href="https://discord.gg/8zWGTQp" rel="nofollow" class="link-external">Discord</a></li>
+                  <li><a href="https://twitter.com/MobyGames" rel="nofollow" class="link-external">Twitter</a></li>
+                </ul>
+              </li>
+              <li class="navbar-link navbar-lights flex-center" tabindex="-1" aria-hidden="true">
+                <toggle-dark-mode :is-dark="true"></toggle-dark-mode>
+              </li>
+              <li class="navbar-profile navbar-link">
                 
-                <li class="divider"></li>
-                <li><a href="https://www.mobygames.com/info/contribute">Instructions</a></li>
-                <li><a href="https://www.mobygames.com/info/standards">Standards</a></li>
-                <li><a href="https://www.mobygames.com/stats/contributors">Top Contributors</a></li>
-                <li><a href="https://www.mobygames.com/wanted/dead-or-alive">Most Wanted</a></li>
-                <li><a href="https://www.mobygames.com/info/patrons">Patrons</a></li>
-              </ul>
-            </li>
-            <li><a href="https://www.mobygames.com/random/game?1648209748" data-toggle="tooltip" data-placement="bottom" data-container="body" title="Random Game"><span class="glyphicon glyphicon-random"></span></a></li>
-            <li>&nbsp;</li>
-          </ul>
-        </div>
-<div class="grid-navbar-user"><div style="text-align: right"><a href="https://www.mobygames.com/acct/logon/from,:2fsearch:2fquick/g,3/" class="btn btn-teal">Sign in</a> <a href="https://www.mobygames.com/acct/create_account" class="btn btn-teal">Register</a></div></div>      </div><!-- /.grid -->
-    </div><!-- /.container -->
-      <div class="moby-headliner">
-        <div class="container">
-          <p class="moby-headliner-text">
-<b><a href="https://discord.gg/8zWGTQp">Join our Discord</a> to chat with fellow friendly gamers and our knowledgeable contributors!</b>          </p>
-        </div>
-      </div>
-<div id="wrapper">
-<div class="container">
-<div id="main" class="row">
-<div class="col-md-12 col-lg-12">
-<div class="lifesupport-header"><div class="lifesupport-header">
-<a href="https://www.antstream.com"><img src="/images/ads/antstream/970x250.png" width="970" height="250" alt="antstream" class="img-responsive" style="margin: 0 auto;"></a>
-</div></div>
-<div style="overflow: hidden;">
-<div style="display: none" id="searchFeedback"><form ACTION="/search/quick" accept-charset="UTF-8" id="formaaad" method="POST" style="margin: 0px 0px 0px 0px; padding: 0px 0px 0px 0px"><div class="formContents"><p>Please let us know what you like / don't like about the new search.  If you were searching for something and did not get the results you expected, please let us know what you were searching for and what you expected to get.</p><textarea  class="FormLt1" style="height: 6em; width: 100%;" name="comments" cols="60" rows="4"></textarea><input type="hidden" name="q" value="call of cthulhu dark corners of the earth xbox"><div class="buttonPanel floatholder"><input class="btn btn-primary btn-xs" type="submit" name="feedback" value="Submit"></div><br style="clear: both"></div></form></div><form ACTION="/search/quick" accept-charset="UTF-8" id="formaaae" method="GET" style="margin: 0px 0px 0px 0px; padding: 0px 0px 0px 0px"><div class="formContents"><h2>Search</h2><div class="searchSubSection"><input type="text" class="FormLt3" id="searchInput" name="q" value="call of cthulhu dark corners of the earth xbox" size="25"> <select  class="FormLt1" id="platformInput" name="p" SIZE="1">
-<option selected value="-1">All Platforms</option>
-<option value="253">1292 Advanced Programmable Video System</option>
-<option value="35">3DO</option>
-<option value="117">Acorn 32-bit</option>
-<option value="210">Adventure Vision</option>
-<option value="194">Alice 32/90</option>
-<option value="265">Altair 680</option>
-<option value="222">Altair 8800</option>
-<option value="237">Amazon Alexa</option>
-<option value="19">Amiga</option>
-<option value="56">Amiga CD32</option>
-<option value="60">Amstrad CPC</option>
-<option value="136">Amstrad PCW</option>
-<option value="91">Android</option>
-<option value="286">Antstream</option>
-<option value="213">APF MP1000/Imagination Machine</option>
-<option value="245">Apple I</option>
-<option value="31">Apple II</option>
-<option value="51">Apple IIgs</option>
-<option value="143">Arcade</option>
-<option value="162">Arcadia 2001</option>
-<option value="215">Arduboy</option>
-<option value="241">Astral 2000</option>
-<option value="28">Atari 2600</option>
-<option value="33">Atari 5200</option>
-<option value="34">Atari 7800</option>
-<option value="39">Atari 8-bit</option>
-<option value="24">Atari ST</option>
-<option value="129">Atom</option>
-<option value="99">bada</option>
-<option value="160">Bally Astrocade</option>
-<option value="92">BBC Micro</option>
-<option value="165">BeOS</option>
-<option value="90">BlackBerry</option>
-<option value="290">Blacknut</option>
-<option value="168">Blu-ray Disc Player</option>
-<option value="63">BREW</option>
-<option value="84">Browser</option>
-<option value="231">Bubble</option>
-<option value="154">Camputers Lynx</option>
-<option value="124">Casio Loopy</option>
-<option value="125">Casio PV-1000</option>
-<option value="73">CD-i</option>
-<option value="83">CDTV</option>
-<option value="298">Champion 2711</option>
-<option value="76">Channel F</option>
-<option value="188">ClickStart</option>
-<option value="156">Coleco Adam</option>
-<option value="29">ColecoVision</option>
-<option value="197">Colour Genie</option>
-<option value="61">Commodore 128</option>
-<option value="115">Commodore 16, Plus/4</option>
-<option value="27">Commodore 64</option>
-<option value="77">Commodore PET/CBM</option>
-<option value="277">Compal 80</option>
-<option value="243">Compucolor I</option>
-<option value="198">Compucolor II</option>
-<option value="238">Compucorp Programmable Calculator</option>
-<option value="216">COSMAC</option>
-<option value="261">CP/M</option>
-<option value="212">CreatiVision</option>
-<option value="301">Cybervision</option>
-<option value="285">Danger OS</option>
-<option value="204">Dedicated console</option>
-<option value="205">Dedicated handheld</option>
-<option value="184">Didj</option>
-<option value="187">digiBlast</option>
-<option value="72">DoJa</option>
-<option value="2">DOS</option>
-<option value="79">Dragon 32/64</option>
-<option value="8">Dreamcast</option>
-<option value="166">DVD Player</option>
-<option value="269">ECD Micromind</option>
-<option value="93">Electron</option>
-<option value="161">Enterprise</option>
-<option value="137">Epoch Cassette Vision</option>
-<option value="139">Epoch Game Pocket Computer</option>
-<option value="138">Epoch Super Cassette Vision</option>
-<option value="284">Evercade</option>
-<option value="195">Exelvision</option>
-<option value="70">ExEn</option>
-<option value="176">Exidy Sorcerer</option>
-<option value="159">Fire OS</option>
-<option value="126">FM-7</option>
-<option value="102">FM Towns</option>
-<option value="268">Freebox</option>
-<option value="236">Galaksija</option>
-<option value="10">Game Boy</option>
-<option value="12">Game Boy Advance</option>
-<option value="11">Game Boy Color</option>
-<option value="50">Game.Com</option>
-<option value="14">GameCube</option>
-<option value="25">Game Gear</option>
-<option value="155">GameStick</option>
-<option value="104">Game Wave</option>
-<option value="302">G-cluster</option>
-<option value="16">Genesis</option>
-<option value="251">GIMINI</option>
-<option value="55">Gizmondo</option>
-<option value="292">Gloud</option>
-<option value="172">Glulx</option>
-<option value="258">GNEX</option>
-<option value="122">GP2X</option>
-<option value="123">GP2X Wiz</option>
-<option value="108">GP32</option>
-<option value="257">GVM</option>
-<option value="167">HD DVD Player</option>
-<option value="248">Heathkit H11</option>
-<option value="262">Heath/Zenith H8/H89</option>
-<option value="274">Hitachi S1</option>
-<option value="219">HP 9800</option>
-<option value="234">HP Programmable Calculator</option>
-<option value="170">Hugo</option>
-<option value="192">HyperScan</option>
-<option value="250">IBM 5100</option>
-<option value="252">Ideal-Computer</option>
-<option value="224">Intel 8008</option>
-<option value="225">Intel 8080</option>
-<option value="30">Intellivision</option>
-<option value="295">Interact Model One</option>
-<option value="221">Interton Video 2000</option>
-<option value="96">iPad</option>
-<option value="86">iPhone</option>
-<option value="80">iPod Classic</option>
-<option value="64">J2ME</option>
-<option value="17">Jaguar</option>
-<option value="247">Jolt</option>
-<option value="153">Jupiter Ace</option>
-<option value="226">KIM-1</option>
-<option value="145">Kindle Classic</option>
-<option value="264">Laser 200</option>
-<option value="163">LaserActive</option>
-<option value="185">LeapFrog Explorer</option>
-<option value="183">Leapster</option>
-<option value="186">LeapTV</option>
-<option value="1">Linux</option>
-<option value="297">Luna</option>
-<option value="18">Lynx</option>
-<option value="74">Macintosh</option>
-<option value="157">Maemo</option>
-<option value="208">Mainframe</option>
-<option value="135">Mattel Aquarius</option>
-<option value="158">MeeGo</option>
-<option value="148">Memotech MTX</option>
-<option value="200">Microbee</option>
-<option value="232">Microtan 65</option>
-<option value="97">Microvision</option>
-<option value="71">Mophun</option>
-<option value="240">MOS Technology 6502</option>
-<option value="235">Motorola 6800</option>
-<option value="275">Motorola 68k</option>
-<option value="229">MRE</option>
-<option value="57">MSX</option>
-<option value="175">Nascom</option>
-<option value="36">Neo Geo</option>
-<option value="54">Neo Geo CD</option>
-<option value="52">Neo Geo Pocket</option>
-<option value="53">Neo Geo Pocket Color</option>
-<option value="279">Neo Geo X</option>
-<option value="22">NES</option>
-<option value="177">NewBrain</option>
-<option value="174">New Nintendo 3DS</option>
-<option value="207">Newton</option>
-<option value="32">N-Gage</option>
-<option value="89">N-Gage (service)</option>
-<option value="101">Nintendo 3DS</option>
-<option value="9">Nintendo 64</option>
-<option value="44">Nintendo DS</option>
-<option value="87">Nintendo DSi</option>
-<option value="203">Nintendo Switch</option>
-<option value="266">North Star</option>
-<option value="244">Noval 760</option>
-<option value="116">Nuon</option>
-<option value="218">Oculus Go</option>
-<option value="271">Oculus Quest</option>
-<option value="75">Odyssey</option>
-<option value="78">Odyssey 2</option>
-<option value="178">Ohio Scientific</option>
-<option value="282">OnLive</option>
-<option value="300">OOParts</option>
-<option value="270">Orao</option>
-<option value="111">Oric</option>
-<option value="146">OS/2</option>
-<option value="144">Ouya</option>
-<option value="65">Palm OS</option>
-<option value="149">PC-6001</option>
-<option value="201">PC-8000</option>
-<option value="94">PC-88</option>
-<option value="95">PC-98</option>
-<option value="4">PC Booter</option>
-<option value="59">PC-FX</option>
-<option value="133">Philips VG 5000</option>
-<option value="272">Photo CD</option>
-<option value="112">Pippin</option>
-<option value="107">Playdia</option>
-<option value="6">PlayStation</option>
-<option value="7">PlayStation 2</option>
-<option value="81">PlayStation 3</option>
-<option value="141">PlayStation 4</option>
-<option value="288">PlayStation 5</option>
-<option value="294">PlayStation Now</option>
-<option value="291">Plex Arcade</option>
-<option value="152">Pokémon Mini</option>
-<option value="230">Pokitto</option>
-<option value="249">Poly-88</option>
-<option value="46">PSP</option>
-<option value="105">PS Vita</option>
-<option value="113">RCA Studio II</option>
-<option value="196">Roku</option>
-<option value="120">SAM Coupé</option>
-<option value="255">SC/MP</option>
-<option value="267">SD-200/270/290</option>
-<option value="21">SEGA 32X</option>
-<option value="20">SEGA CD</option>
-<option value="26">SEGA Master System</option>
-<option value="103">SEGA Pico</option>
-<option value="23">SEGA Saturn</option>
-<option value="114">SG-1000</option>
-<option value="182">Sharp MZ-80B/2000/2500</option>
-<option value="181">Sharp MZ-80K/700/800/1500</option>
-<option value="121">Sharp X1</option>
-<option value="106">Sharp X68000</option>
-<option value="202">Sharp Zaurus</option>
-<option value="278">Signetics 2650</option>
-<option value="131">Sinclair QL</option>
-<option value="259">SK-VM</option>
-<option value="273">SMC-777</option>
-<option value="15">SNES</option>
-<option value="190">Socrates</option>
-<option value="199">Sol-20</option>
-<option value="134">Sord M5</option>
-<option value="85">Spectravideo</option>
-<option value="242">SRI-500/1000</option>
-<option value="281">Stadia</option>
-<option value="110">Super A'can</option>
-<option value="127">SuperGrafx</option>
-<option value="109">Supervision</option>
-<option value="296">Super Vision 8000</option>
-<option value="287">Sure Shot HD</option>
-<option value="228">SWTPC 6800</option>
-<option value="67">Symbian</option>
-<option value="171">TADS</option>
-<option value="283">Taito X-55</option>
-<option value="150">Tatung Einstein</option>
-<option value="223">Tektronix 4050</option>
-<option value="220">Tele-Spiel ES-2201</option>
-<option value="233">Telstar Arcade</option>
-<option value="209">Terminal</option>
-<option value="147">Thomson MO</option>
-<option value="130">Thomson TO</option>
-<option value="47">TI-99/4A</option>
-<option value="263">Tiki 100</option>
-<option value="246">TIM</option>
-<option value="173">Timex Sinclair 2068</option>
-<option value="239">TI Programmable Calculator</option>
-<option value="206">Tizen</option>
-<option value="256">Tomahawk F1</option>
-<option value="151">Tomy Tutor</option>
-<option value="58">TRS-80</option>
-<option value="62">TRS-80 CoCo</option>
-<option value="193">TRS-80 MC-10</option>
-<option value="40">TurboGrafx-16</option>
-<option value="45">TurboGrafx CD</option>
-<option value="179">tvOS</option>
-<option value="37">Vectrex</option>
-<option value="299">Versatile</option>
-<option value="189">V.Flash</option>
-<option value="43">VIC-20</option>
-<option value="214">VideoBrain</option>
-<option value="128">Videopac+ G7400</option>
-<option value="38">Virtual Boy</option>
-<option value="164">VIS</option>
-<option value="42">V.Smile</option>
-<option value="217">Wang 2200</option>
-<option value="180">watchOS</option>
-<option value="100">webOS</option>
-<option value="82">Wii</option>
-<option value="132">Wii U</option>
-<option value="3">Windows</option>
-<option value="5">Windows 3.x</option>
-<option value="140">Windows Apps</option>
-<option value="66">Windows Mobile</option>
-<option value="98">Windows Phone</option>
-<option value="260">WIPI</option>
-<option value="48">WonderSwan</option>
-<option value="49">WonderSwan Color</option>
-<option value="191">XaviXPORT</option>
-<option value="13">Xbox</option>
-<option value="69">Xbox 360</option>
-<option value="293">Xbox Cloud Gaming</option>
-<option value="142">Xbox One</option>
-<option value="289">Xbox Series</option>
-<option value="254">Xerox Alto</option>
-<option value="88">Zeebo</option>
-<option value="227">Zilog Z80</option>
-<option value="276">Zilog Z8000</option>
-<option value="169">Z-machine</option>
-<option value="68">Zodiac</option>
-<option value="211">Zune</option>
-<option value="118">ZX80</option>
-<option value="119">ZX81</option>
-<option value="41">ZX Spectrum</option>
-<option value="280">ZX Spectrum Next</option>
-</select>
- <input class="btn btn-primary btn-xs" type="submit" name="search" value="Go">&nbsp; [<a href="https://www.mobygames.com/search">more</a>] </div><input type="hidden" name="sFilter" value="1"><h2>What to search</h2><div class="searchSubSection"><span style="white-space: nowrap"><input type="checkbox" checked class="FormLt1" id="daa9ca2a63ab9c68679d3cc8f4a1201da" name="sG"><label id="df008c246d16f41d1c0e9dc768da7a55a" for="daa9ca2a63ab9c68679d3cc8f4a1201da"> Games (8)</label></span>&nbsp; &nbsp;<span style="white-space: nowrap"><input type="checkbox" checked class="FormLt1" id="daddab017912646d6e9492bb0393ca113" name="sGG"><label id="dc0ff53819a94491f036650058e3590df" for="daddab017912646d6e9492bb0393ca113"> Game Groups (0)</label></span>&nbsp; &nbsp;<span style="white-space: nowrap"><input type="checkbox" checked class="FormLt1" id="d42a31b40267c0da8720458e3a62deec3" name="sA"><label id="d59951d6ef70f8fb5cf237c2f57b02242" for="d42a31b40267c0da8720458e3a62deec3"> Game Attributes (0)</label></span>&nbsp; &nbsp;<span style="white-space: nowrap"><input type="checkbox" checked class="FormLt1" id="d5a15337db70742b40b02e389a6cdca43" name="sD"><label id="dd12674079e2edaf2b919a0bae5d9efcb" for="d5a15337db70742b40b02e389a6cdca43"> People (0)</label></span>&nbsp; &nbsp;<span style="white-space: nowrap"><input type="checkbox" checked class="FormLt1" id="dc85188230cad1d166271a5a903a28312" name="sC"><label id="deaea8841292c23d67b014123e6407440" for="dc85188230cad1d166271a5a903a28312"> Companies (0)</label></span>&nbsp; &nbsp;</div></div></form><h2>Results</h2><div id="searchResults"><div class="searchSubSection"><div>Results <b>1</b> - <b>8</b> of <b>8</b> for <b>call of cthulhu dark corners of the earth xbox</b></div><div class="d90b5a09a3d745cdd81e22d52188f8000"><div class="searchResult"><div class="searchNumber">1.</div><div class="searchImage"><a href="https://www.mobygames.com/game/call-of-cthulhu-dark-corners-of-the-earth"><img class="searchResultImage" alt="Call of Cthulhu: Dark Corners of the Earth Windows Front Cover" border="0" src="/images/covers/t/102995-call-of-cthulhu-dark-corners-of-the-earth-windows-front-cover.jpg" height="60" width="41" ></a></div><div class="searchData"><div class="searchTitle">Game: <a href="https://www.mobygames.com/game/call-of-cthulhu-dark-corners-of-the-earth">Call of Cthulhu: Dark Corners of the Earth</a></div><div class="searchDetails"><span style="white-space: nowrap"><a href="https://www.mobygames.com/game/windows/call-of-cthulhu-dark-corners-of-the-earth">Windows</a> (<em>2006</em>)</span> and <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/xbox/call-of-cthulhu-dark-corners-of-the-earth">Xbox</a> (<em>2005</em>)</span></div></div></div><br clear="all"></div><div class="d90b5a09a3d745cdd81e22d52188f8000"><div class="searchResult"><div class="searchNumber">2.</div><div class="searchImage"><a href="https://www.mobygames.com/game/call-of-cthulhu-shadow-of-the-comet"><img class="searchResultImage" alt="Call of Cthulhu: Shadow of the Comet DOS Front Cover" border="0" src="/images/covers/t/195-call-of-cthulhu-shadow-of-the-comet-dos-front-cover.jpg" height="59" width="48" ></a></div><div class="searchData"><div class="searchTitle">Game: <a href="https://www.mobygames.com/game/call-of-cthulhu-shadow-of-the-comet">Call of Cthulhu: Shadow of the Comet</a></div><div class="searchDetails"><span style="white-space: nowrap"><a href="https://www.mobygames.com/game/dos/call-of-cthulhu-shadow-of-the-comet">DOS</a> (<em>1993</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/linux/call-of-cthulhu-shadow-of-the-comet">Linux</a> (<em>2015</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/pc98/call-of-cthulhu-shadow-of-the-comet">PC-98</a> (<em>1995</em>)</span> and <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/windows/call-of-cthulhu-shadow-of-the-comet">Windows</a> (<em>2015</em>)</span></div></div></div><br clear="all"></div><div class="d90b5a09a3d745cdd81e22d52188f8000"><div class="searchResult"><div class="searchNumber">3.</div><div class="searchImage"><a href="https://www.mobygames.com/game/call-of-cthulhu-the-wasted-land"><img class="searchResultImage" alt="Call of Cthulhu: The Wasted Land Android Front Cover" border="0" src="/images/covers/t/249016-call-of-cthulhu-the-wasted-land-android-front-cover.jpg" height="60" width="60" ></a></div><div class="searchData"><div class="searchTitle">Game: <a href="https://www.mobygames.com/game/call-of-cthulhu-the-wasted-land">Call of Cthulhu: The Wasted Land</a></div><div class="searchDetails"><span style="white-space: nowrap"><a href="https://www.mobygames.com/game/android/call-of-cthulhu-the-wasted-land">Android</a> (<em>2012</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/ipad/call-of-cthulhu-the-wasted-land">iPad</a> (<em>2012</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/iphone/call-of-cthulhu-the-wasted-land">iPhone</a> (<em>2012</em>)</span> and <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/windows/call-of-cthulhu-the-wasted-land">Windows</a> (<em>2012</em>)</span></div></div></div><br clear="all"></div><div class="d90b5a09a3d745cdd81e22d52188f8000"><div class="searchResult"><div class="searchNumber">4.</div><div class="searchImage"><a href="https://www.mobygames.com/game/call-of-cthulhu"><img class="searchResultImage" alt="Call of Cthulhu Nintendo Switch Front Cover 1st version" border="0" src="/images/covers/t/594481-call-of-cthulhu-nintendo-switch-front-cover.jpg" height="60" width="36" ></a></div><div class="searchData"><div class="searchTitle">Game: <a href="https://www.mobygames.com/game/call-of-cthulhu">Call of Cthulhu</a></div><div class="searchDetails"><span style="white-space: nowrap"><a href="https://www.mobygames.com/game/switch/call-of-cthulhu">Nintendo Switch</a> (<em>2019</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/playstation-4/call-of-cthulhu">PlayStation 4</a> (<em>2018</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/windows/call-of-cthulhu">Windows</a> (<em>2018</em>)</span> and <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/xbox-one/call-of-cthulhu">Xbox One</a> (<em>2018</em>)</span></div></div></div><br clear="all"></div><div class="d90b5a09a3d745cdd81e22d52188f8000"><div class="searchResult"><div class="searchNumber">5.</div><div class="searchData"><div class="searchTitle">Game: <a href="https://www.mobygames.com/game/j2me/call-of-cthulhu-darkness-within-book-1">Call of Cthulhu: Darkness Within - Book 1</a></div><div class="searchDetails"><span style="white-space: nowrap">J2ME (<em>2007</em>)</span></div></div></div><br clear="all"></div><div class="d90b5a09a3d745cdd81e22d52188f8000"><div class="searchResult"><div class="searchNumber">6.</div><div class="searchImage"><a href="https://www.mobygames.com/game/alone-in-the-dark"><img class="searchResultImage" alt="Alone in the Dark DOS Front Cover" border="0" src="/images/covers/t/440-alone-in-the-dark-dos-front-cover.jpg" height="60" width="47" ></a></div><div class="searchData"><div class="searchTitle">Game: <a href="https://www.mobygames.com/game/alone-in-the-dark">Alone in the Dark</a> (<em>a.k.a.</em> Call of Cthulhu: Doom of Derceto)</div><div class="searchDetails"><span style="white-space: nowrap"><a href="https://www.mobygames.com/game/3do/alone-in-the-dark">3DO</a> (<em>1994</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/acorn-32-bit/alone-in-the-dark">Acorn 32-bit</a> (<em>1995</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/dos/alone-in-the-dark">DOS</a> (<em>1992</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/fmtowns/alone-in-the-dark">FM Towns</a> (<em>1993</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/ipad/alone-in-the-dark">iPad</a> (<em>2014</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/iphone/alone-in-the-dark">iPhone</a> (<em>2014</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/macintosh/alone-in-the-dark">Macintosh</a> (<em>1994</em>)</span> and <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/pc98/alone-in-the-dark">PC-98</a> (<em>1993</em>)</span></div></div></div><br clear="all"></div><div class="d90b5a09a3d745cdd81e22d52188f8000"><div class="searchResult"><div class="searchNumber">7.</div><div class="searchImage"><a href="https://www.mobygames.com/game/defenders-of-the-earth"><img class="searchResultImage" alt="Defenders of the Earth Amiga Front Cover" border="0" src="/images/covers/t/112075-defenders-of-the-earth-amiga-front-cover.jpg" height="60" width="60" ></a></div><div class="searchData"><div class="searchTitle">Game: <a href="https://www.mobygames.com/game/defenders-of-the-earth">Defenders of the Earth</a></div><div class="searchDetails"><span style="white-space: nowrap"><a href="https://www.mobygames.com/game/amiga/defenders-of-the-earth">Amiga</a> (<em>1990</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/cpc/defenders-of-the-earth">Amstrad CPC</a> (<em>1990</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/atari-st/defenders-of-the-earth">Atari ST</a> (<em>1990</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/c64/defenders-of-the-earth">Commodore 64</a> (<em>1990</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/sam-coup/defenders-of-the-earth">SAM Coup&#xE9;</a> (<em>1990</em>)</span> and <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/zx-spectrum/defenders-of-the-earth">ZX Spectrum</a> (<em>1990</em>)</span></div></div></div><br clear="all"></div><div class="d90b5a09a3d745cdd81e22d52188f8000"><div class="searchResult"><div class="searchNumber">8.</div><div class="searchImage"><a href="https://www.mobygames.com/game/odallus-the-dark-call"><img class="searchResultImage" alt="Odallus: The Dark Call Nintendo Switch Front Cover 1st version" border="0" src="/images/covers/t/537677-odallus-the-dark-call-nintendo-switch-front-cover.jpg" height="57" width="60" ></a></div><div class="searchData"><div class="searchTitle">Game: <a href="https://www.mobygames.com/game/odallus-the-dark-call">Odallus: The Dark Call</a></div><div class="searchDetails"><span style="white-space: nowrap"><a href="https://www.mobygames.com/game/switch/odallus-the-dark-call">Nintendo Switch</a> (<em>2019</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/playstation-4/odallus-the-dark-call">PlayStation 4</a> (<em>2020</em>)</span>, <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/windows/odallus-the-dark-call">Windows</a> (<em>2015</em>)</span> and <span style="white-space: nowrap"><a href="https://www.mobygames.com/game/xbox-one/odallus-the-dark-call">Xbox One</a> (<em>2019</em>)</span></div></div></div><br clear="all"></div></div></div></div>
-</div>
-</div>
-</div>
-</div>
-  <div id="footer-menu">
-    <div class="container">
-      <div class="row">
-        <div class="col-xs-6 col-sm-3 col-md-2">
-          <div class="footer-header">MobyGames</div>
-          <ul class="footer-nav">
-            <li><a href="https://www.mobygames.com/">Home</a></li>
-            <li><a href="https://www.mobygames.com/info/faq">FAQ</a></li>
-            <li><a href="https://www.mobygames.com/info/standards">Standards</a></li>
-            <li><a href="https://www.mobygames.com/info/api">API</a></li>
-            <li><a href="https://www.mobygames.com/info/feedback">Contact</a></li>
-          </ul>
-        </div>
-        <div class="col-xs-6 col-sm-3 col-md-2">
-          <div class="footer-header">What's New</div>
-          <ul class="footer-nav">
-            <li><a href="https://www.mobygames.com/stats/recent_entries">New Games</a></li>
-            <li><a href="https://www.mobygames.com/stats/recent_modifications">Game Updates</a></li>
-            <li><a href="https://www.mobygames.com/stats/recent_reviews">New Reviews</a></li>
-            <li><a href="https://www.mobygames.com/stats/new_companies">New Companies</a></li>
-            <li><a href="https://www.mobygames.com/changelog">Changelog</a></li>
-          </ul>
-        </div>
-        <div class="col-xs-6 col-sm-3 col-md-2">
-          <div class="footer-header">Stats</div>
-          <ul class="footer-nav">
-            <li><a href="https://www.mobygames.com/stats/contributors">Top Contributors</a></li>
-            <li><a href="https://www.mobygames.com/wanted/dead-or-alive">Most Wanted</a></li>
-            <li><a href="https://www.mobygames.com/moby_stats">Database Stats</a></li>
-          </ul>
-        </div>
-        <div class="col-xs-6 col-sm-3 col-md-2">
-          <div class="footer-header">
-            Community
-          </div>
-          <ul class="footer-nav">
-            <li><a href="https://www.mobygames.com/forums">Forums</a></li>
-            <li><a href="https://discord.gg/8zWGTQp">Discord</a></li>
-            <li><a href="https://twitter.com/MobyGames">Twitter</a></li>
-          </ul>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-4">
-          <div class="footer-moby-logo">
-            <a href="https://www.mobygames.com/" class="add-margin-right hidden-xs"><img src="/images/mobygames-logo.png" width="109" height="50" alt="mobygames logo"></a>
-          </div>
-          <div class="footer-moby-info">
-            <p>
-              The oldest, largest and most accurate video game database covering over 280 platforms from 1950 to date!
-            </p>
-          </div>
+                <div class="flex-center h100">
+                  <b class="no-select">
+                    <img src="/static/img/moby-avatar.png" width="38" height="38" alt="user avatar" class="avatar avatar-sm hide-sm">
+                    Login
+                  </b>
+                </div>
+                <ul class="navbar-dropdown dropdown-profile">
+                  <li><a href="/user/login/">Login</a></li>
+                  <li><a href="/user/register/">Register</a></li>
+                </ul>
+                
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="bg-notice">
+      <div class="container pt-1 pb-1 statusbar-grid">
+        <div class="statusbar-message">
+          🐳 <b>New!</b> <a href="/#n3750">Moby v2023.03.16</a>
         </div>
       </div>
     </div>
-  </div>
-  <div id="footer-bottom">
-    <div class="container">
-      <p class="copyright">
-        <a href="https://www.mobygames.com/">MobyGames</a>&trade; Copyright &copy; 1999-2022
-        <a href="http://blueflamelabs.com"><span class="glyphicon glyphicon-fire"></span> Blue Flame Labs</a>. All rights reserved.
-        <a href="https://www.mobygames.com/info/terms">Terms of Use</a>.
-        <a href="https://www.mobygames.com/info/privacy">Privacy Policy</a>.
-      </p>
-      <p class="mobyquote">
-        &quot;<a href="https://www.mobygames.com/game/operative-no-one-lives-forever">You look like you need a monkey.</a>&quot; <a href="https://www.mobygames.com/game/operative-no-one-lives-forever"><span class="glyphicon glyphicon-info-sign"></span></a>
-      </p>
-    </div>
-  </div>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <main id="main">
+      
 
-  ga('create', 'UA-258321-1', 'auto');
-  ga('send', 'pageview');
 
-</script><script type="text/javascript">(function(){window['__CF$cv$params']={r:'6f177e328868d911',m:'FLkAjb7KBxl6XNUGc2p9gMX3neeSaeOIXUg0zUSFJk4-1648209699-0-AUytP9sscF2nGD9iGBXlaba0GPeP0P25JoqFBXhaW52kqYLgc6iSRR90zY9qKPemikis04G3b9Wa61OTZ2OGY1zPy9CeUc5S4hTrSuO9T4e1gidp6l2VGQ04lgNB3b4ZzsVeKn+DG2JqbdAH+sg1eeM7xoo1m7J+FA9mAK1xa2k1m+PlCsu05PCi/VjJzI/iig==',s:[0x02befebfc6,0x3e97280af8],}})();</script></body>
+  <ul class="dot-list text-sm mb">
+    
+    <li><a href="/search/?q=093155118706">All</a></li>
+    
+    <li>
+      Game
+    </li>
+    <li>
+      <a href="/search/?q=093155118706&type=person">Person</a>
+    </li>
+    <li>
+      <a href="/search/?q=093155118706&type=company">Company</a>
+    </li>
+    <li>
+      <a href="/search/?q=093155118706&type=group">Group</a>
+    </li>
+  </ul>
+  <table class="table mb">
+    <tr>
+      <td width="60" valign="top">
+        <link rel="prefetch" href="https://www.mobygames.com/game/20705/call-of-cthulhu-dark-corners-of-the-earth/" />
+        
+        <a href="https://www.mobygames.com/game/20705/call-of-cthulhu-dark-corners-of-the-earth/">
+          <img src="https://cdn.mobygames.com/3c7c6974-af3e-11ed-86b5-02420a0001ba.webp" width="96" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+        
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/20705/call-of-cthulhu-dark-corners-of-the-earth/">Call of Cthulhu: Dark Corners of the Earth</a></b> <span class="text-muted">(October 24th, 2005)</span>
+        <br>
+        <small class="text-muted">Product code: <em>093155118706</em></small>
+        <br>
+        <small>
+          
+            Xbox <small class="text-muted">(2005),</small>
+          
+            Windows <small class="text-muted">(2006)</small>
+          
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
+        <link rel="prefetch" href="https://www.mobygames.com/game/37114/nhl-09/" />
+        
+        <a href="https://www.mobygames.com/game/37114/nhl-09/">
+          <img src="https://cdn.mobygames.com/c6034a2c-af49-11ed-8847-02420a0001be.webp" width="115" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+        
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/37114/nhl-09/">NHL 09</a></b> <span class="text-muted">(September 11th, 2008)</span>
+        <br>
+        <small>
+          
+            Xbox 360 <small class="text-muted">(2008),</small>
+          
+            PlayStation 3 <small class="text-muted">(2008),</small>
+          
+            Windows <small class="text-muted">(2008),</small>
+          
+            PlayStation 2 <small class="text-muted">(2008)</small>
+          
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
+        <link rel="prefetch" href="https://www.mobygames.com/game/36182/nascar-09/" />
+        
+        <a href="https://www.mobygames.com/game/36182/nascar-09/">
+          <img src="https://cdn.mobygames.com/d4331b36-af44-11ed-86b5-02420a0001ba.webp" width="117" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+        
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/36182/nascar-09/">NASCAR 09</a></b> <span class="text-muted">(June 11th, 2008)</span>
+        <br>
+        <small>
+          
+            PlayStation 2 <small class="text-muted">(2008),</small>
+          
+            Xbox 360 <small class="text-muted">(2008),</small>
+          
+            PlayStation 3 <small class="text-muted">(2008)</small>
+          
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
+        
+        <a href="https://www.mobygames.com/game/42298/fifa-soccer-09/">
+          <img src="https://cdn.mobygames.com/6411f7b4-af4e-11ed-8847-02420a0001be.webp" width="118" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+        
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/42298/fifa-soccer-09/">FIFA Soccer 09</a></b> <span class="text-muted">(October 2nd, 2008)</span>
+        <br>
+        <small>
+          
+            PlayStation 3 <small class="text-muted">(2008),</small>
+          
+            Xbox 360 <small class="text-muted">(2008)</small>
+          
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
+        
+        <a href="https://www.mobygames.com/game/35614/madden-nfl-09/">
+          <img src="https://cdn.mobygames.com/d83bd25e-af0d-11ed-8fcc-02420a00019c.webp" width="117" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+        
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/35614/madden-nfl-09/">Madden NFL 09</a></b> <span class="text-muted">(August 12th, 2008)</span>
+        <br>
+        <small>
+          
+            Xbox 360 <small class="text-muted">(2008),</small>
+          
+            PlayStation 3 <small class="text-muted">(2008)</small>
+          
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
+        
+        <a href="https://www.mobygames.com/game/46172/fifa-soccer-09/">
+          <img src="https://cdn.mobygames.com/fc464b72-af4c-11ed-a6d3-02420a0001ba.webp" width="80" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+        
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/46172/fifa-soccer-09/">FIFA Soccer 09</a></b> <span class="text-muted">(October 3rd, 2008)</span>
+        <br>
+        <small>
+          
+            PSP <small class="text-muted">(2008)</small>
+          
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
+        
+        <a href="https://www.mobygames.com/game/47592/nba-live-09/">
+          <img src="https://cdn.mobygames.com/0005d2fc-af50-11ed-ba54-02420a0001ba.webp" width="94" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+        
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/47592/nba-live-09/">NBA Live 09</a></b> <span class="text-muted">(October 7th, 2008)</span>
+        <br>
+        <small>
+          
+            PlayStation 2 <small class="text-muted">(2008)</small>
+          
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
+        
+        <a href="https://www.mobygames.com/game/144839/fifa-09/">
+          <img src="https://cdn.mobygames.com/471056fe-c2ab-11ed-bae4-02420a0001a1.webp" width="102" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+        
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/144839/fifa-09/">FIFA 09</a></b> <span class="text-muted">(November 20th, 2008)</span>
+        <br>
+        <small>
+          
+            Symbian <small class="text-muted">(2008),</small>
+          
+            N-Gage (service) <small class="text-muted">(2008)</small>
+          
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
+        
+        <a href="https://www.mobygames.com/game/35499/ncaa-football-09/">
+          <img src="https://cdn.mobygames.com/9ee2584c-af45-11ed-86b5-02420a0001ba.webp" width="117" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+        
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/35499/ncaa-football-09/">NCAA Football 09</a></b> <span class="text-muted">(July 15th, 2008)</span>
+        <br>
+        <small>
+          
+            PlayStation 2 <small class="text-muted">(2008),</small>
+          
+            PSP <small class="text-muted">(2008),</small>
+          
+            Xbox 360 <small class="text-muted">(2008),</small>
+          
+            PlayStation 3 <small class="text-muted">(2008)</small>
+          
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
+        
+        <a href="https://www.mobygames.com/game/44846/fifa-manager-09/">
+          <img src="https://cdn.mobygames.com/eff9838e-af6a-11ed-8485-02420a0001be.webp" width="96" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+        
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/44846/fifa-manager-09/">FIFA Manager 09</a></b> <span class="text-muted">(October 30th, 2008)</span>
+        <br>
+        <small>
+          
+            Windows <small class="text-muted">(2008)</small>
+          
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
+        
+        <a href="https://www.mobygames.com/game/199030/fifa-soccer-09/">
+          <img src="https://cdn.mobygames.com/dbd10764-afa7-11ed-8073-02420a0001be.webp" width="96" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+        
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/199030/fifa-soccer-09/">FIFA Soccer 09</a></b> <span class="text-muted">(October 2nd, 2008)</span>
+        <br>
+        <small>
+          
+            Windows <small class="text-muted">(2008),</small>
+          
+            PlayStation 2 <small class="text-muted">(2008)</small>
+          
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
+        
+        <a href="https://www.mobygames.com/game/73471/madden-nfl-09/">
+          <img src="https://cdn.mobygames.com/9d142b48-af41-11ed-8ca8-02420a0001be.webp" width="95" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+        
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/73471/madden-nfl-09/">Madden NFL 09</a></b> <span class="text-muted">(August 12th, 2008)</span>
+        <br>
+        <small>
+          
+            PlayStation 2 <small class="text-muted">(2008),</small>
+          
+            Xbox <small class="text-muted">(2008)</small>
+          
+        </small>
+      </td>
+    </tr>
+  </table>
+  <div class="mb">
+     [ <b>Page 1</b> ]
+    
+     [ <a href="/search/?q=093155118706&type=game&page=1" rel="nofollow">Next</a> ]
+    
+  </div>
+  
+
+    </main>
+    <hr>
+    <footer>
+      <p>
+        <a href="/info/about/">About</a> &middot;
+        <a href="/info/faq/">FAQ</a> &middot;
+        <a href="/stats/">Stats</a> &middot;
+        <a href="/info/standards/">Standards</a> &middot;
+        <a href="/info/api/">API</a> &middot;
+        <a href="/info/contact/">Contact</a> &middot;
+        <a href="/changelog/">Change Log</a> &middot;
+        <a href="/info/privacy/">Privacy Policy</a> &middot;
+        <a href="/info/terms/">Terms of Use</a>
+      </p>
+      <p>
+        &copy; 1999 - 2023 MobyGames &trade;
+      </p>
+      <p>
+        <small class="text-muted">v2023.03.16e</small>
+      </p>
+      
+    </footer>
+    
+    <tooltip ref="tooltip"></tooltip>
+    <popover ref="popover"></popover>
+  </div>
+  <script type="module" src="https://www.mobygames.com/static/js/shared.52fe9187.js"></script>
+<script type="module" src="https://www.mobygames.com/static/js/main.a32da2e1.js"></script>
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vaafb692b2aea4879b33c060e79fe94621666317369993" integrity="sha512-0ahDYl866UMhKuYcW078ScMalXqtFJggm7TmlUtp0UlD4eQk0Ixfnm5ykXKvGJNFjLMoortdseTfsRT8oCfgGA==" data-cf-beacon='{"rayId":"7ab5b64bd809b8a6","token":"045373f648914c3f8d8f48abf482fec7","version":"2023.2.0","si":100}' crossorigin="anonymous"></script>
+</body>
 </html>
