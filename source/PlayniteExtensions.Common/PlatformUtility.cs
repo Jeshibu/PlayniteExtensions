@@ -40,23 +40,27 @@ namespace PlayniteExtensions.Common
         /// <param name="specId"></param>
         public PlatformUtility(string platformName, params string[] specIds)
         {
-            platformSpecNameByNormalName = new Dictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase) { { platformName, specIds } };
+            platformSpecNameByNormalName = GetPlatformSpecsByNormalName(null);
+            TryAddPlatformByName(platformSpecNameByNormalName, platformName, specIds);
         }
 
         private static Regex TrimCompanyName = new Regex(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
-        private static Regex TrimInput = new Regex(@"^(pal|jpn?|usa?|ntsc)\s+|[™®©]", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
-        private static Regex TrimPlatformName = new Regex(@"\s*(\((?<platform>[^()]+)\)|\[(?<platform>[^\[\]]+)\])$", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        private static Regex TrimInput = new Regex(@"^(pal|jpn?|usa?|ntsc)\s+|[™®©]| version$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+        private static Regex TrimPlatformName = new Regex(@"\s*(\((?<platform>[^()]+)\)|\[(?<platform>[^\[\]]+)\]|-\s+(?<platform>[a-z0-9 ]+))$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
         private static Dictionary<string, string[]> GetPlatformSpecsByNormalName(IPlayniteAPI api)
         {
-            var platforms = api.Database.Platforms.Where(p => p.SpecificationId != null).ToList();
             var output = new Dictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
-            foreach (var platform in platforms)
+            if (api?.Database?.Platforms != null) //for use in unit tests so you don't have to instantiate the entire database or platform list
             {
-                output.Add(platform.Name, new[] { platform.SpecificationId });
-                string nameWithoutCompany = TrimCompanyName.Replace(platform.Name, string.Empty);
-                if (!output.ContainsKey(nameWithoutCompany))
-                    output.Add(nameWithoutCompany, new[] { platform.SpecificationId });
+                var platforms = api.Database.Platforms.Where(p => p.SpecificationId != null).ToList();
+                foreach (var platform in platforms)
+                {
+                    output.Add(platform.Name, new[] { platform.SpecificationId });
+                    string nameWithoutCompany = TrimCompanyName.Replace(platform.Name, string.Empty);
+                    if (!output.ContainsKey(nameWithoutCompany))
+                        output.Add(nameWithoutCompany, new[] { platform.SpecificationId });
+                }
             }
             TryAddPlatformByName(output, "3DO", "3do");
             TryAddPlatformByName(output, new[] { "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM" }, new[] { "pc_windows" });

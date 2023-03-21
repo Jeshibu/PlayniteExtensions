@@ -2,6 +2,7 @@
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -82,7 +83,7 @@ namespace PlayniteExtensions.Common
             return s;
         }
 
-        private static Regex CompanyFormRegex = new Regex(@",?\s+((co[,.\s]+)?ltd|(l\.)?inc|s\.?l|a[./]?s|limited|l\.?l\.?(c|p)|s\.?a(\.?r\.?l)?|s\.?r\.?o|gmbh)\.?\s*$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        private static Regex CompanyFormRegex = new Regex(@",?\s+((co[,.\s]+)?ltd|(l\.)?inc|s\.?l|a[./]?s|limited|l\.?l\.?(c|p)|s\.?a(\.?r\.?l)?|s\.?r\.?o|gmbh|ab)\.?\s*$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         public static string TrimCompanyForms(this string s)
         {
@@ -144,5 +145,44 @@ namespace PlayniteExtensions.Common
         {
             return str?.IndexOf(value, 0, comparisonType) != -1;
         }
+
+        private static Regex installSizeRegex = new Regex(@"^(?<number>[0-9.]+) (?<scale>[KMGT]B)$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        public static ulong? ParseInstallSize(this string str, CultureInfo culture = null)
+        {
+            var match = installSizeRegex.Match(str);
+            if (!match.Success)
+                return null;
+
+            string number = match.Groups["number"].Value;
+            string scale = match.Groups["scale"].Value.ToUpperInvariant();
+
+            culture = culture ?? CultureInfo.InvariantCulture;
+            if (!double.TryParse(number, NumberStyles.Number | NumberStyles.AllowDecimalPoint, culture, out double n))
+                return null;
+
+            int power;
+
+            switch (scale)
+            {
+                case "KB":
+                    power = 1;
+                    break;
+                case "MB":
+                    power = 2;
+                    break;
+                case "GB":
+                    power = 3;
+                    break;
+                case "TB":
+                    power = 4;
+                    break;
+                default:
+                    return null;
+            }
+
+            var output = Convert.ToUInt64(n * Math.Pow(1024, power));
+            return output;
+        }
+
     }
 }

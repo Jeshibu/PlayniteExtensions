@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlayniteExtensions.Tests.Common
 {
@@ -44,15 +45,9 @@ namespace PlayniteExtensions.Tests.Common
             RedirectsByUrl.Add(url, new Redirect(redirectUrl, depth));
         }
 
-        public virtual DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxResponseDepth = 7)
+        public virtual async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxResponseDepth = 7)
         {
-            CalledUrls.Add(url);
-            if (FilesByUrl.TryGetValue(url, out string filePath))
-                return new DownloadStringResponse(url, File.ReadAllText(filePath), HttpStatusCode.OK);
-            else if (RedirectsByUrl.TryGetValue(url, out Redirect redir) && maxResponseDepth <= redir.Depth)
-                return new DownloadStringResponse(redir.RedirectUrl, null, HttpStatusCode.Found);
-            else
-                throw new Exception($"Url not accounted for: {url}");
+            return DownloadString(url, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, throwExceptionOnErrorResponse, maxResponseDepth);
         }
 
         public string DownloadFile(string url, string targetFolder)
@@ -73,6 +68,17 @@ namespace PlayniteExtensions.Tests.Common
         public string DownloadFile(string url, string targetFolder, CancellationToken cancellationToken, DownloadProgressCallback progressCallback = null)
         {
             throw new NotImplementedException();
+        }
+
+        public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7)
+        {
+            CalledUrls.Add(url);
+            if (FilesByUrl.TryGetValue(url, out string filePath))
+                return new DownloadStringResponse(url, File.ReadAllText(filePath), HttpStatusCode.OK);
+            else if (RedirectsByUrl.TryGetValue(url, out Redirect redir) && maxRedirectDepth <= redir.Depth)
+                return new DownloadStringResponse(redir.RedirectUrl, null, HttpStatusCode.Found);
+            else
+                throw new Exception($"Url not accounted for: {url}");
         }
     }
 }

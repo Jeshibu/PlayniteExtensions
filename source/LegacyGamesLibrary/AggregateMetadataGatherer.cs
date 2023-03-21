@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using PlayniteExtensions.Common;
 
 namespace LegacyGamesLibrary
 {
@@ -61,7 +62,7 @@ namespace LegacyGamesLibrary
                         GameId = game.InstallerUUID.ToString(),
                         Name = game.GameName,
                         Description = game.GameDescription,
-                        InstallSize = ParseInstallSizeString(game.GameInstalledSize),
+                        InstallSize = game.GameInstalledSize.ParseInstallSize(CultureInfo.InvariantCulture),
                         IsInstalled = installation != null,
                         Source = new MetadataNameProperty("Legacy Games"),
 
@@ -97,44 +98,6 @@ namespace LegacyGamesLibrary
         public override GameMetadata GetMetadata(Game game)
         {
             return GetGames(new CancellationToken()).FirstOrDefault(g => g.GameId == game.GameId);
-        }
-
-        private static Regex installSizeRegex = new Regex(@"^(?<number>[0-9.]+) (?<scale>[KMGT]B)$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-        public static ulong? ParseInstallSizeString(string str)
-        {
-            var match = installSizeRegex.Match(str);
-            if (!match.Success)
-                return null;
-
-            string number = match.Groups["number"].Value;
-            string scale = match.Groups["scale"].Value.ToUpperInvariant();
-
-            if (!double.TryParse(number, NumberStyles.Number | NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out double n))
-                return null;
-
-            int power;
-
-            switch (scale)
-            {
-                case "KB":
-                    power = 1;
-                    break;
-                case "MB":
-                    power = 2;
-                    break;
-                case "GB":
-                    power = 3;
-                    break;
-                case "TB":
-                    power = 4;
-                    break;
-                default:
-                    return null;
-            }
-
-            var output = Convert.ToUInt64(n * Math.Pow(1024, power));
-            return output;
         }
     }
 }

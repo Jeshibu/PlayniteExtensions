@@ -6,6 +6,7 @@ using System.Text;
 using System.Linq;
 using Playnite.SDK;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace PlayniteExtensions.Common
 {
@@ -17,6 +18,7 @@ namespace PlayniteExtensions.Common
         /// </summary>
         CookieCollection Cookies { get; }
         DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7);
+        Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7);
         string DownloadFile(string url, string targetFolder, CancellationToken cancellationToken, DownloadProgressCallback progressCallback = null);
     }
 
@@ -50,13 +52,24 @@ namespace PlayniteExtensions.Common
         public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7)
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
-            var output = DownloadString(url, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, throwExceptionOnErrorResponse, maxRedirectDepth, depth: 0);
+            var task = DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, throwExceptionOnErrorResponse, maxRedirectDepth, depth: 0);
+            task.Wait();
+            var output = task.Result;
             sw.Stop();
             logger.Info($"Call to {url} completed in {sw.Elapsed}");
             return output;
         }
 
-        private DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, int depth = 0)
+        public async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7)
+        {
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            var output = await DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, throwExceptionOnErrorResponse, maxRedirectDepth, depth: 0);
+            sw.Stop();
+            logger.Info($"Call to {url} completed in {sw.Elapsed}");
+            return output;
+        }
+
+        private async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, int depth = 0)
         {
             var uri = new Uri(url);
             var request = WebRequest.CreateHttp(uri);
@@ -93,10 +106,12 @@ namespace PlayniteExtensions.Common
             HttpWebResponse response;
             try
             {
-                response = (HttpWebResponse)request.GetResponse();
+                response = (HttpWebResponse)await request.GetResponseAsync();
             }
             catch (WebException webex)
             {
+                logger.Info(webex, "Error getting response from " + url);
+
                 if (throwExceptionOnErrorResponse)
                     throw;
 
@@ -113,7 +128,7 @@ namespace PlayniteExtensions.Common
                 Cookies = Combine(Cookies, response.Cookies);
                 statusCode = response.StatusCode;
                 responseUrl = response.ResponseUri.AbsoluteUri;
-                responseContent = reader.ReadToEnd();
+                responseContent = await reader.ReadToEndAsync();
                 if (HttpRedirectStatusCodes.Contains(response.StatusCode))
                 {
                     redirectUrl = response.Headers[HttpResponseHeader.Location];
@@ -131,7 +146,7 @@ namespace PlayniteExtensions.Common
                 if (depth > maxRedirectDepth)
                     return new DownloadStringResponse(redirectUrl, null, statusCode);
 
-                var redirectOutput = DownloadString(redirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer: url, customHeaders, throwExceptionOnErrorResponse, depth + 1);
+                var redirectOutput = await DownloadStringAsync(redirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer: url, customHeaders, throwExceptionOnErrorResponse, depth + 1);
                 return redirectOutput;
             }
             else
@@ -203,17 +218,22 @@ namespace PlayniteExtensions.Common
             return response.ContentType.StartsWith("application");
         }
 
-        private static CookieCollection Combine(CookieCollection a, CookieCollection b)
+        private CookieCollection Combine(CookieCollection a, CookieCollection b)
         {
-            if (a == null || a.Count == 0) return b;
-            if (b == null || b.Count == 0) return a;
+            lock (cookieLock)
+            {
+                if (a == null || a.Count == 0) return b;
+                if (b == null || b.Count == 0) return a;
 
-            var c = new CookieCollection();
-            c.Add(a);
-            c.Add(b);
+                var c = new CookieCollection();
+                c.Add(a);
+                c.Add(b);
 
-            return c;
+                return c;
+            }
         }
+
+        private object cookieLock = new object();
     }
 
 }

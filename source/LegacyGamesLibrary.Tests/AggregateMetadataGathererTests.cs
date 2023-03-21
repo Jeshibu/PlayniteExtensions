@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlayniteExtensions.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace LegacyGamesLibrary.Tests
         [InlineData("1.4 GB", 1.4D * 1024 * 1024 * 1024)]
         public void TestInstallSizeParsing(string str, double expected)
         {
-            var result = AggregateMetadataGatherer.ParseInstallSizeString(str);
+            var result = StringExtensions.ParseInstallSize(str);
             var e = Convert.ToUInt64(expected);
             Assert.Equal(e, result);
         }
