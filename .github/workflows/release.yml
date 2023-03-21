@@ -51,7 +51,7 @@ jobs:
 
       - name: Setup Playnite
         run: |
-           Invoke-WebRequest -Uri "https://github.com/JosefNemec/Playnite/releases/download/10.9/Playnite109.zip" -OutFile "$Env:GITHUB_WORKSPACE\Playnite.zip"
+           Invoke-WebRequest -Uri "https://github.com/JosefNemec/Playnite/releases/download/10.12/Playnite1012.zip" -OutFile "$Env:GITHUB_WORKSPACE\Playnite.zip"
            Expand-Archive "$Env:GITHUB_WORKSPACE\Playnite.zip" -DestinationPath "$Env:GITHUB_WORKSPACE\Playnite"
 
       - name: Pack with Playnite
@@ -60,7 +60,7 @@ jobs:
           $projects = ConvertFrom-Json '${{ steps.projectselection.outputs.projects }}'
 
           foreach ($p in $projects) {
-            "Packing project: $p"
+            Write-Host "Packing project $p"
             $ver = $p.Version -replace '\.', '_'
             & "$Env:GITHUB_WORKSPACE\Playnite\Toolbox.exe" pack "$Env:GITHUB_WORKSPACE\source\$($p.Name)\bin\Release\" "$Env:GITHUB_WORKSPACE\PackingOutput"
             Get-ChildItem "$Env:GITHUB_WORKSPACE\PackingOutput" -Filter *.pext | Rename-Item -NewName "$($p.Name)_${ver}.pext"
@@ -71,7 +71,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          draft: true
+          draft: false
           name: "${{ steps.projectselection.outputs.releasetitle }}"
           body_path: 'publish/release_notes.txt'
           files: '*.pext'
