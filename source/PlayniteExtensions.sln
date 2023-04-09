@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32126.315
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamTagsImporter", "SteamTagsImporter\SteamTagsImporter.csproj", "{4FDF1E89-5BC3-4C72-8FDA-0D580E7A5D5F}"
 EndProject
@@ -76,6 +76,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manifests", "Manifests", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{33A063DF-59C8-4640-A785-630C71906CAC}"
 	ProjectSection(SolutionItems) = preProject
+		..\publish\Get-ReleaseData.ps1 = ..\publish\Get-ReleaseData.ps1
 		..\.github\workflows\release.yml = ..\.github\workflows\release.yml
 	EndProjectSection
 EndProject
@@ -83,31 +84,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XboxMetadata", "XboxMetadat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XboxMetadata.Tests", "XboxMetadata.Tests\XboxMetadata.Tests.csproj", "{3A701B5F-255C-443E-A462-22CB8D463A9C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobyGamesMetadata", "MobyGamesMetadata\MobyGamesMetadata.csproj", "{22577C83-FCF9-49F2-9957-6C67D59FCBD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobyGamesMetadata.Tests", "MobyGamesMetadata.Tests\MobyGamesMetadata.Tests.csproj", "{2BD92D9B-4B71-46F8-8540-7F97AFD3FA1A}"
+EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{092f32e3-7fd4-470a-9658-9e8cdf123c99}*SharedItemsImports = 4
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{0fc7f312-402b-4466-9e05-721ce2638268}*SharedItemsImports = 4
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{2351b5c1-6e28-4b79-a1d9-90fda53b5417}*SharedItemsImports = 4
-		Rawg.Common\Rawg.Common.projitems*{298abb0d-9b79-4bfd-9cdd-ae26e2672a5f}*SharedItemsImports = 13
-		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{3a701b5f-255c-443e-a462-22cb8d463a9c}*SharedItemsImports = 4
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{4fdf1e89-5bc3-4c72-8fda-0d580e7a5d5f}*SharedItemsImports = 4
-		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{55b6d58f-97e4-4364-bb36-d1b3f47c41a4}*SharedItemsImports = 4
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{646571a9-6445-4f20-9ead-4f6b7e1073c5}*SharedItemsImports = 13
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{6cb8c312-70cc-4a45-acbd-9974ea8611f8}*SharedItemsImports = 4
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{861bdd63-6f90-4ea0-a14f-e21248729b46}*SharedItemsImports = 4
-		Rawg.Common\Rawg.Common.projitems*{861bdd63-6f90-4ea0-a14f-e21248729b46}*SharedItemsImports = 4
-		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{956848b6-6b29-4810-8802-3a8bc01c855f}*SharedItemsImports = 13
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{a54423d1-8e7a-4339-b0d5-24e7cefe469b}*SharedItemsImports = 4
-		Rawg.Common\Rawg.Common.projitems*{a54423d1-8e7a-4339-b0d5-24e7cefe469b}*SharedItemsImports = 4
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{a971e332-d479-48a2-9238-0659c64f30f5}*SharedItemsImports = 4
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{ac1b23ee-bdc9-4273-9f4b-4f414482541b}*SharedItemsImports = 4
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{afa8de86-101b-4449-a237-2030d7f74ce2}*SharedItemsImports = 4
-		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{b2be4cbd-25a7-41f3-bb78-6bd3bc510323}*SharedItemsImports = 4
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{b59fb65d-3c86-41d5-b3e6-ea4eac476fec}*SharedItemsImports = 4
-		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{d539c1ad-040e-4da2-b2be-c2ccc4f147f8}*SharedItemsImports = 4
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{d6730a45-d8d5-48fb-818e-5c277e230df4}*SharedItemsImports = 4
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{f2627b24-e712-4108-be62-646374c1bc42}*SharedItemsImports = 4
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -213,11 +194,44 @@ Global
 		{3A701B5F-255C-443E-A462-22CB8D463A9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A701B5F-255C-443E-A462-22CB8D463A9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A701B5F-255C-443E-A462-22CB8D463A9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22577C83-FCF9-49F2-9957-6C67D59FCBD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22577C83-FCF9-49F2-9957-6C67D59FCBD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22577C83-FCF9-49F2-9957-6C67D59FCBD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22577C83-FCF9-49F2-9957-6C67D59FCBD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BD92D9B-4B71-46F8-8540-7F97AFD3FA1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BD92D9B-4B71-46F8-8540-7F97AFD3FA1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BD92D9B-4B71-46F8-8540-7F97AFD3FA1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BD92D9B-4B71-46F8-8540-7F97AFD3FA1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DB10ECF2-6EF3-489B-ACA8-08FBC31314C1}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{092f32e3-7fd4-470a-9658-9e8cdf123c99}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{0fc7f312-402b-4466-9e05-721ce2638268}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{22577c83-fcf9-49f2-9957-6c67d59fcbd6}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{2351b5c1-6e28-4b79-a1d9-90fda53b5417}*SharedItemsImports = 4
+		Rawg.Common\Rawg.Common.projitems*{298abb0d-9b79-4bfd-9cdd-ae26e2672a5f}*SharedItemsImports = 13
+		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{3a701b5f-255c-443e-a462-22cb8d463a9c}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{4fdf1e89-5bc3-4c72-8fda-0d580e7a5d5f}*SharedItemsImports = 4
+		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{55b6d58f-97e4-4364-bb36-d1b3f47c41a4}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{646571a9-6445-4f20-9ead-4f6b7e1073c5}*SharedItemsImports = 13
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{6cb8c312-70cc-4a45-acbd-9974ea8611f8}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{861bdd63-6f90-4ea0-a14f-e21248729b46}*SharedItemsImports = 4
+		Rawg.Common\Rawg.Common.projitems*{861bdd63-6f90-4ea0-a14f-e21248729b46}*SharedItemsImports = 4
+		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{956848b6-6b29-4810-8802-3a8bc01c855f}*SharedItemsImports = 13
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{a54423d1-8e7a-4339-b0d5-24e7cefe469b}*SharedItemsImports = 4
+		Rawg.Common\Rawg.Common.projitems*{a54423d1-8e7a-4339-b0d5-24e7cefe469b}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{a971e332-d479-48a2-9238-0659c64f30f5}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{ac1b23ee-bdc9-4273-9f4b-4f414482541b}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{afa8de86-101b-4449-a237-2030d7f74ce2}*SharedItemsImports = 4
+		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{b2be4cbd-25a7-41f3-bb78-6bd3bc510323}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{b59fb65d-3c86-41d5-b3e6-ea4eac476fec}*SharedItemsImports = 4
+		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{d539c1ad-040e-4da2-b2be-c2ccc4f147f8}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{d6730a45-d8d5-48fb-818e-5c277e230df4}*SharedItemsImports = 4
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{f2627b24-e712-4108-be62-646374c1bc42}*SharedItemsImports = 4
 	EndGlobalSection
 EndGlobal

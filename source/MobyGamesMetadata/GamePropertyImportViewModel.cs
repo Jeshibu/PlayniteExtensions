@@ -1,5 +1,4 @@
-﻿using GiantBombMetadata.Api;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using System;
@@ -8,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GiantBombMetadata
+namespace MobyGamesMetadata
 {
     public class GamePropertyImportViewModel
     {
@@ -55,15 +54,15 @@ namespace GiantBombMetadata
     {
         private bool isChecked;
 
-        public GameCheckboxViewModel(Game game, GameDetails gameDetails, bool isChecked = true)
+        public GameCheckboxViewModel(Game game, GameDetails apiGame, bool isChecked = true)
         {
             Game = game;
-            GameDetails = gameDetails;
+            ApiGame = apiGame;
             IsChecked = isChecked;
         }
 
         public Game Game { get; set; }
-        public GameDetails GameDetails { get; set; }
+        public GameDetails ApiGame { get; set; }
         public bool IsChecked { get => isChecked; set => SetValue(ref isChecked, value); }
         public string DisplayName
         {

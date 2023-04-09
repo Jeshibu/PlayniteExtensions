@@ -24,14 +24,14 @@ namespace GiantBombMetadata
 
             foreach (var link in game.Links)
             {
-                var guid = GetGiantBomgGuidFromUrl(link.Url);
+                var guid = GetGiantBombGuidFromUrl(link.Url);
                 if (guid != null)
                     return guid;
             }
             return null;
         }
 
-        public static string GetGiantBomgGuidFromUrl(string url)
+        public static string GetGiantBombGuidFromUrl(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
                 return null;

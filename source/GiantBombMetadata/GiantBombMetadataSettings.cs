@@ -12,27 +12,14 @@ namespace GiantBombMetadata
     public class GiantBombMetadataSettings : ObservableObject
     {
         public string ApiKey { get; set; }
-        public GiantBombPropertyImportSetting Characters { get; set; } = new GiantBombPropertyImportSetting { Prefix = "Character: ", ImportTarget = PropertyImportTarget.Ignore };
-        public GiantBombPropertyImportSetting Concepts { get; set; } = new GiantBombPropertyImportSetting { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
-        public GiantBombPropertyImportSetting Locations { get; set; } = new GiantBombPropertyImportSetting { Prefix = "Location: ", ImportTarget = PropertyImportTarget.Tags };
-        public GiantBombPropertyImportSetting Objects { get; set; } = new GiantBombPropertyImportSetting { Prefix = "Object: ", ImportTarget = PropertyImportTarget.Ignore };
-        public GiantBombPropertyImportSetting Themes { get; set; } = new GiantBombPropertyImportSetting { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
-        public GiantBombPropertyImportSetting People { get; set; } = new GiantBombPropertyImportSetting { Prefix = "Person: ", ImportTarget = PropertyImportTarget.Ignore };
+        public PropertyImportSetting Characters { get; set; } = new PropertyImportSetting { Prefix = "Character: ", ImportTarget = PropertyImportTarget.Ignore };
+        public PropertyImportSetting Concepts { get; set; } = new PropertyImportSetting { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
+        public PropertyImportSetting Locations { get; set; } = new PropertyImportSetting { Prefix = "Location: ", ImportTarget = PropertyImportTarget.Tags };
+        public PropertyImportSetting Objects { get; set; } = new PropertyImportSetting { Prefix = "Object: ", ImportTarget = PropertyImportTarget.Ignore };
+        public PropertyImportSetting Themes { get; set; } = new PropertyImportSetting { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
+        public PropertyImportSetting People { get; set; } = new PropertyImportSetting { Prefix = "Person: ", ImportTarget = PropertyImportTarget.Ignore };
         public MultiValuedPropertySelectionMode FranchiseSelectionMode { get; set; } = MultiValuedPropertySelectionMode.All;
         public bool ShowTopPanelButton { get; set; } = true;
-    }
-
-    public class GiantBombPropertyImportSetting
-    {
-        public string Prefix { get; set; }
-        public PropertyImportTarget ImportTarget { get; set; }
-    }
-
-    public enum PropertyImportTarget
-    {
-        Ignore,
-        Genres,
-        Tags,
     }
 
     public enum MultiValuedPropertySelectionMode

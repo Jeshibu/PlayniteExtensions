@@ -103,15 +103,6 @@ namespace LaunchBoxMetadata
             return gameUrl;
         }
 
-        private IEnumerable<LaunchBoxGameImage> GetImages()
-        {
-            var id = FindGame().DatabaseID;
-            if (id == null)
-                return new LaunchBoxGameImage[0];
-
-            return database.GetGameImages(id);
-        }
-
         private List<LaunchBoxImageDetails> GetImageDetails()
         {
             if (foundImages != null)

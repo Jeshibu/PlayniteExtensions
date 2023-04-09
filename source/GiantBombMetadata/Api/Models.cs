@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +37,7 @@ namespace GiantBombMetadata.Api
         public string Version { get; set; }
     }
 
-    public class GiantBombObject
+    public class GiantBombObject: IHasName
     {
         public int Id { get; set; }
 
@@ -85,10 +87,16 @@ namespace GiantBombMetadata.Api
         #endregion game search results and details only
     }
 
-    public class GiantBombSearchResultItem : GiantBombObjectDetails
+    public class GiantBombSearchResultItem : GiantBombObjectDetails, IGameSearchResult
     {
         [JsonProperty("resource_type")]
         public string ResourceType { get; set; }
+
+        public IEnumerable<string> AlternateNames => AliasesSplit;
+
+        IEnumerable<string> IGameSearchResult.Platforms => Platforms?.Select(p => p.Name) ?? new string[0];
+
+        ReleaseDate? IGameSearchResult.ReleaseDate => ReleaseDate.ParseReleaseDate();
     }
 
     public class GiantBombGameDetails : GiantBombObjectDetails
@@ -111,7 +119,7 @@ namespace GiantBombMetadata.Api
         public GiantBombObject[] Themes { get; set; } = new GiantBombObject[0];
     }
 
-    public class GiantBombImage
+    public class GiantBombImage : IImageData
     {
         [JsonProperty("icon_url")]
         public string IconUrl { get; set; }
@@ -122,9 +130,19 @@ namespace GiantBombMetadata.Api
         public string Original { get; set; }
 
         public string Tags { get; set; }
+
+        string IImageData.Url => Original;
+
+        string IImageData.ThumbnailUrl => ThumbUrl;
+
+        int IImageData.Width => 0;
+
+        int IImageData.Height => 0;
+
+        IEnumerable<string> IImageData.Platforms => new string[0];
     }
 
-    public class GiantBombCoverImage
+    public class GiantBombCoverImage : IImageData
     {
         [JsonProperty("icon_url")]
         public string IconUrl { get; set; }
@@ -136,6 +154,16 @@ namespace GiantBombMetadata.Api
         public string Original { get; set; }
 
         public string Tags { get; set; }
+
+        string IImageData.Url => Original;
+
+        string IImageData.ThumbnailUrl => ThumbUrl;
+
+        int IImageData.Width => 0;
+
+        int IImageData.Height => 0;
+
+        IEnumerable<string> IImageData.Platforms => new string[0];
     }
 
     public class GiantBombGamePropertyDetails : GiantBombObjectDetails

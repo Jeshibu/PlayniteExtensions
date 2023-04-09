@@ -64,6 +64,7 @@
     <Compile Include="Scrapers\BolScraper.cs" />
     <Compile Include="Scrapers\DuckDuckGoScraper.cs" />
     <Compile Include="Scrapers\MetadataScraper.cs" />
+    <Compile Include="Scrapers\MobyGamesHelper.cs" />
     <Compile Include="Scrapers\MobyGamesScraper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scrapers\OgdbScraper.cs" />

@@ -1,4 +1,5 @@
-﻿using Playnite.SDK.Models;
+﻿using Newtonsoft.Json;
+using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace Barnite.Scrapers
 
         protected override GameMetadata ScrapeGameDetailsHtml(string html)
         {
-            var response = Newtonsoft.Json.JsonConvert.DeserializeObject<ApiResponse>(html);
+            var response = JsonConvert.DeserializeObject<ApiResponse>(html);
             if (response.Items.Count != 1)
                 return null;
 

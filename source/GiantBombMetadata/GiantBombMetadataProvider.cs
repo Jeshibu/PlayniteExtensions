@@ -215,7 +215,7 @@ namespace GiantBombMetadata
             return output.OrderBy(x => x.Name).ToList().NullIfEmpty();
         }
 
-        private IEnumerable<MetadataNameProperty> GetValues(GiantBombPropertyImportSetting importSetting, PropertyImportTarget target, GiantBombObject[] data)
+        private IEnumerable<MetadataNameProperty> GetValues(PropertyImportSetting importSetting, PropertyImportTarget target, GiantBombObject[] data)
         {
             if (importSetting.ImportTarget != target || data == null || data.Length == 0)
                 return new MetadataNameProperty[0];
