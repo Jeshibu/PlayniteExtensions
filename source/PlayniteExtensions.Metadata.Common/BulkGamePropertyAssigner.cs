@@ -1,88 +1,32 @@
-﻿using GiantBombMetadata.Api;
+﻿using Playnite.SDK.Models;
 using Playnite.SDK;
-using Playnite.SDK.Models;
-using Playnite.SDK.Plugins;
-using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
+using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using PlayniteExtensions.Common;
+using System.Windows.Controls;
 
-namespace GiantBombMetadata
+namespace PlayniteExtensions.Metadata.Common
 {
-
-    public class GiantBombGamePropertyAssigner : BulkGamePropertyAssigner<GiantBombSearchResultItem>
-    {
-        public GiantBombMetadataSettings Settings { get; }
-
-        public override string MetadataProviderName => "Giant Bomb";
-
-        public GiantBombGamePropertyAssigner(IPlayniteAPI playniteAPI, GiantBombMetadataSettings settings, GiantBombGamePropertySearchProvider dataSource) : base(playniteAPI, dataSource)
-        {
-            Settings = settings;
-        }
-
-        protected override PropertyImportSetting GetPropertyImportSetting(GiantBombSearchResultItem selectedItem)
-        {
-            switch (selectedItem.ResourceType)
-            {
-                case "character":
-                    return Settings.Characters;
-                case "concept":
-                    return Settings.Concepts;
-                case "object":
-                    return Settings.Objects;
-                case "location":
-                    return Settings.Locations;
-                case "person":
-                    return Settings.People;
-                default:
-                    logger.Error($"Unknown resource type: {selectedItem.ResourceType}");
-                    return null;
-            }
-        }
-
-        protected override string GetGameIdFromUrl(string url)
-        {
-            return GiantBombHelper.GetGiantBombGuidFromUrl(url);
-        }
-    }
-
-    public class PropertyImportSetting
-    {
-        public string Prefix { get; set; }
-        public PropertyImportTarget ImportTarget { get; set; }
-    }
-
-    public enum PropertyImportTarget
-    {
-        Ignore,
-        Genres,
-        Tags,
-    }
-
-    public interface IHasName
-    {
-        string Name { get; }
-    }
-
     public abstract class BulkGamePropertyAssigner<TSearchItem> where TSearchItem : IHasName
     {
-        public BulkGamePropertyAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource)
+        public BulkGamePropertyAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility)
         {
-            PlayniteApi = playniteAPI;
+            playniteApi = playniteAPI;
             this.dataSource = dataSource;
+            this.platformUtility = platformUtility;
         }
 
         protected readonly ILogger logger = LogManager.GetLogger();
         protected readonly ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource;
+        private readonly IPlatformUtility platformUtility;
+        protected readonly IPlayniteAPI playniteApi;
         public abstract string MetadataProviderName { get; }
 
-        public IPlayniteAPI PlayniteApi { get; }
 
         public void ImportGameProperty()
         {
@@ -106,7 +50,7 @@ namespace GiantBombMetadata
 
         private TSearchItem SelectGiantBombGameProperty()
         {
-            var selectedItem = PlayniteApi.Dialogs.ChooseItemWithSearch(null, (a) =>
+            var selectedItem = playniteApi.Dialogs.ChooseItemWithSearch(null, (a) =>
             {
                 var output = new List<GenericItemOption>();
 
@@ -130,24 +74,25 @@ namespace GiantBombMetadata
             return selectedItem == null ? default : selectedItem.Item;
         }
 
-        protected abstract PropertyImportSetting GetPropertyImportSetting(TSearchItem searchItem);
+        protected abstract PropertyImportSetting GetPropertyImportSetting(TSearchItem searchItem, out string name);
 
         protected abstract string GetGameIdFromUrl(string url);
 
         private GamePropertyImportViewModel PromptGamePropertyImportUserApproval(TSearchItem selectedItem, List<GameDetails> gamesToMatch)
         {
-            var importSetting = GetPropertyImportSetting(selectedItem);
+            var importSetting = GetPropertyImportSetting(selectedItem, out string propName);
             if (importSetting == null)
             {
                 logger.Error($"Could not find import settings for game property <{selectedItem.Name}>");
-                PlayniteApi.Notifications.Add(this.GetType().Name, "Could not find import settings for property", NotificationType.Error);
+                playniteApi.Notifications.Add(this.GetType().Name, "Could not find import settings for property", NotificationType.Error);
                 return null;
             }
 
+            var addedGameIds = new HashSet<Guid>();
             var matchingGames = new List<GameCheckboxViewModel>();
-            var snc = new SortableNameConverter(new string[0], batchOperation: gamesToMatch.Count + PlayniteApi.Database.Games.Count > 100, numberLength: 1, removeEditions: true);
+            var snc = new SortableNameConverter(new string[0], numberLength: 1, removeEditions: true);
             var deflatedNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
+            playniteApi.Dialogs.ActivateGlobalProgress(a =>
             {
                 a.ProgressMaxValue = gamesToMatch.Count;
                 for (int i = 0; i < gamesToMatch.Count; i++)
@@ -172,14 +117,14 @@ namespace GiantBombMetadata
                     }
 
                     var gameToMatchId = GetGameIdFromUrl(gbGame.Url);
-                    foreach (var g in PlayniteApi.Database.Games)
+                    foreach (var g in playniteApi.Database.Games)
                     {
                         if (g.Links != null && gameToMatchId != null)
                         {
                             var ids = g.Links.Select(l => GetGameIdFromUrl(l.Url)).Where(x => x != null).ToList();
                             if (ids.Count > 0)
                             {
-                                if (ids.Contains(gameToMatchId))
+                                if (ids.Contains(gameToMatchId) && addedGameIds.Add(g.Id))
                                     matchingGames.Add(new GameCheckboxViewModel(g, gbGame));
 
                                 continue;
@@ -192,7 +137,9 @@ namespace GiantBombMetadata
                             deflatedNames.Add(g.Name, gName);
                         }
 
-                        if (namesToMatch.Any(n => string.Equals(n, gName, StringComparison.InvariantCultureIgnoreCase)))
+                        if (namesToMatch.Any(n => string.Equals(n, gName, StringComparison.InvariantCultureIgnoreCase))
+                            && platformUtility.PlatformsOverlap(g.Platforms, gbGame.Platforms)
+                            && addedGameIds.Add(g.Id))
                         {
                             matchingGames.Add(new GameCheckboxViewModel(g, gbGame));
                         }
@@ -203,15 +150,21 @@ namespace GiantBombMetadata
 
             if (matchingGames.Count == 0)
             {
-                PlayniteApi.Dialogs.ShowMessage("No matching games found in your library.", $"{MetadataProviderName} game property assigner", MessageBoxButton.OK, MessageBoxImage.Information);
+                playniteApi.Dialogs.ShowMessage("No matching games found in your library.", $"{MetadataProviderName} game property assigner", MessageBoxButton.OK, MessageBoxImage.Information);
                 return null;
             }
 
-            var viewModel = new GamePropertyImportViewModel() { Name = $"{importSetting.Prefix}{selectedItem.Name}", Games = matchingGames };
+            var viewModel = new GamePropertyImportViewModel() { Name = $"{importSetting.Prefix}{propName}", Games = matchingGames };
             switch (importSetting.ImportTarget)
             {
                 case PropertyImportTarget.Genres:
                     viewModel.TargetField = GamePropertyImportTargetField.Genre;
+                    break;
+                case PropertyImportTarget.Series:
+                    viewModel.TargetField = GamePropertyImportTargetField.Series;
+                    break;
+                case PropertyImportTarget.Features:
+                    viewModel.TargetField = GamePropertyImportTargetField.Feature;
                     break;
                 case PropertyImportTarget.Ignore:
                 case PropertyImportTarget.Tags:
@@ -220,8 +173,8 @@ namespace GiantBombMetadata
                     break;
             }
 
-            var window = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
-            var view = new GamePropertyImportView(window) { DataContext = viewModel };
+            var window = playniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
+            var view = GetBulkPropertyImportView(window, viewModel);
             window.Content = view;
             window.SizeToContent = SizeToContent.WidthAndHeight;
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -233,28 +186,34 @@ namespace GiantBombMetadata
                 return null;
         }
 
+        protected abstract UserControl GetBulkPropertyImportView(Window window, GamePropertyImportViewModel viewModel);
+
         private void UpdateGames(GamePropertyImportViewModel viewModel)
         {
-            using (PlayniteApi.Database.BufferedUpdate())
+            using (playniteApi.Database.BufferedUpdate())
             {
                 DatabaseObject dbItem;
                 switch (viewModel.TargetField)
                 {
                     case GamePropertyImportTargetField.Category:
-                        dbItem = PlayniteApi.Database.Categories.FirstOrDefault(c => c.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
-                                 ?? PlayniteApi.Database.Categories.Add(viewModel.Name);
+                        dbItem = playniteApi.Database.Categories.FirstOrDefault(c => c.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
+                                 ?? playniteApi.Database.Categories.Add(viewModel.Name);
                         break;
                     case GamePropertyImportTargetField.Genre:
-                        dbItem = PlayniteApi.Database.Genres.FirstOrDefault(c => c.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
-                                 ?? PlayniteApi.Database.Genres.Add(viewModel.Name);
+                        dbItem = playniteApi.Database.Genres.FirstOrDefault(c => c.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
+                                 ?? playniteApi.Database.Genres.Add(viewModel.Name);
                         break;
                     case GamePropertyImportTargetField.Tag:
-                        dbItem = PlayniteApi.Database.Tags.FirstOrDefault(c => c.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
-                                 ?? PlayniteApi.Database.Tags.Add(viewModel.Name);
+                        dbItem = playniteApi.Database.Tags.FirstOrDefault(c => c.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
+                                 ?? playniteApi.Database.Tags.Add(viewModel.Name);
                         break;
                     case GamePropertyImportTargetField.Feature:
-                        dbItem = PlayniteApi.Database.Features.FirstOrDefault(f => f.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
-                                 ?? PlayniteApi.Database.Features.Add(viewModel.Name);
+                        dbItem = playniteApi.Database.Features.FirstOrDefault(f => f.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
+                                 ?? playniteApi.Database.Features.Add(viewModel.Name);
+                        break;
+                    case GamePropertyImportTargetField.Series:
+                        dbItem = playniteApi.Database.Series.FirstOrDefault(f => f.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
+                                 ?? playniteApi.Database.Series.Add(viewModel.Name);
                         break;
                     default:
                         throw new ArgumentException();
@@ -281,6 +240,9 @@ namespace GiantBombMetadata
                         case GamePropertyImportTargetField.Feature:
                             update |= AddItem(g.Game, x => x.FeatureIds, dbItem.Id);
                             break;
+                        case GamePropertyImportTargetField.Series:
+                            update |= AddItem(g.Game, x => x.SeriesIds, dbItem.Id);
+                            break;
                     }
 
                     if (viewModel.AddLink)
@@ -298,7 +260,7 @@ namespace GiantBombMetadata
                     if (update)
                     {
                         g.Game.Modified = DateTime.Now;
-                        PlayniteApi.Database.Games.Update(g.Game);
+                        playniteApi.Database.Games.Update(g.Game);
                     }
                 }
             }
@@ -319,18 +281,6 @@ namespace GiantBombMetadata
             }
             collection.Add(idToAdd);
             return true;
-        }
-
-        private class GiantBombSearchResultItemOption : GenericItemOption
-        {
-            public GiantBombSearchResultItemOption(GiantBombSearchResultItem item) : base(item.Name, item.ResourceType)
-            {
-                SearchResultItem = item;
-                if (!string.IsNullOrEmpty(item.Deck))
-                    Description = $"{item.ResourceType.ToUpper()}\n{item.Deck}";
-            }
-
-            public GiantBombSearchResultItem SearchResultItem { get; }
         }
     }
 }

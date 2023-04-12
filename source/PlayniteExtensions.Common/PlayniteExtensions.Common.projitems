@@ -10,7 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CachedFileDownloader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)GameDetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IEnumerableExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IntegerFormatConverter.cs" />
@@ -21,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Programs.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SortableNameConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StringExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TitleComparer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebDownloader.cs" />
   </ItemGroup>
 </Project>

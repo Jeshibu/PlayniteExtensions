@@ -1,17 +1,23 @@
 ﻿using Playnite.SDK;
-using Playnite.SDK.Data;
-using System;
+using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GiantBombMetadata
 {
     public class GiantBombMetadataSettings : ObservableObject
     {
-        public string ApiKey { get; set; }
+        private string apiKey;
+
+        public string ApiKey
+        {
+            get { return apiKey; }
+            set
+            {
+                apiKey = value?.Trim();
+                OnPropertyChanged(nameof(ApiKey));
+            }
+        }
         public PropertyImportSetting Characters { get; set; } = new PropertyImportSetting { Prefix = "Character: ", ImportTarget = PropertyImportTarget.Ignore };
         public PropertyImportSetting Concepts { get; set; } = new PropertyImportSetting { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
         public PropertyImportSetting Locations { get; set; } = new PropertyImportSetting { Prefix = "Location: ", ImportTarget = PropertyImportTarget.Tags };

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>0ff03408-7c1a-4c04-819a-ecdb3ed82a25</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>PlayniteExtensions.Metadata.Common</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BulkGamePropertyAssigner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GamePropertyImportViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GenericItemOption.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GenericMetadataProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameDetails.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IImageData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IGameSearchResult.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ISearchableDataSource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Settings.cs" />
+  </ItemGroup>
+</Project>

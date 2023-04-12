@@ -86,11 +86,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SearchProviders\GiantBombGamePropertySearchProvider.cs" />
+    <Compile Include="SearchProviders\GiantBombGameSearchProvider.cs" />
     <Compile Include="Api\Models.cs" />
     <Compile Include="Api\GiantBombApiClient.cs" />
-    <Compile Include="GamePropertyImportViewModel.cs" />
-    <Compile Include="BulkGamePropertyAssigner.cs" />
-    <Compile Include="GiantBombExtraMetadataProvider.cs" />
+    <Compile Include="GiantBombBulkPropertyAssigner.cs" />
     <Compile Include="GiantBombHelper.cs" />
     <Compile Include="GiantBombMetadata.cs" />
     <Compile Include="GiantBombMetadataProvider.cs" />
@@ -135,5 +135,6 @@
     </Page>
   </ItemGroup>
   <Import Project="..\PlayniteExtensions.Common\PlayniteExtensions.Common.projitems" Label="Shared" />
+  <Import Project="..\PlayniteExtensions.Metadata.Common\PlayniteExtensions.Metadata.Common.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

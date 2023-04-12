@@ -2,6 +2,7 @@
 using HtmlAgilityPack;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
+using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace MobyGamesMetadata.Api
 {
-    public class MobyGamesScraper : ISearchableDataSourceWithDetails<GameSearchResult, GameDetails>, ISearchableDataSource<GroupSearchResult>
+    public class MobyGamesScraper
     {
         public MobyGamesScraper(IPlatformUtility platformUtility, IWebDownloader downloader)
         {
@@ -73,7 +74,11 @@ namespace MobyGamesMetadata.Api
                     continue;
 
                 var releaseDateString = td.SelectSingleNode(".//span[starts-with(text(), '(')]")?.InnerText.HtmlDecode().Trim('(', ')');
-                var platforms = td.SelectSingleNode(".//small[last()]")?.ChildNodes.Where(n => n.NodeType == HtmlNodeType.Text).Select(n => n.InnerText.HtmlDecode()).ToList();
+                var platforms = td.SelectSingleNode(".//small[last()]")?.ChildNodes
+                                .Where(n => n.NodeType == HtmlNodeType.Text)
+                                .Select(n => n.InnerText.HtmlDecode())
+                                .Where(n => !string.IsNullOrWhiteSpace(n))
+                                .ToList();
                 var descriptionElements = new List<string>();
                 if (releaseDateString != null)
                     descriptionElements.Add(releaseDateString);
@@ -88,6 +93,7 @@ namespace MobyGamesMetadata.Api
                 var sr = new GameSearchResult
                 {
                     Description = string.Join(" | ", descriptionElements),
+                    PlatformNames = platforms,
                     Platforms = platforms.SelectMany(PlatformUtility.GetPlatforms).ToList(),
                     ReleaseDate = MobyGamesHelper.ParseReleaseDate(releaseDateString),
                 };
@@ -124,24 +130,9 @@ namespace MobyGamesMetadata.Api
         {
             return new MobyGamesHelper(PlatformUtility).ParseGameDetailsHtml(html);
         }
-
-        IEnumerable<GameSearchResult> ISearchableDataSource<GameSearchResult>.Search(string query)
-        {
-            return GetGameSearchResults(query);
-        }
-
-        GameDetails ISearchableDataSourceWithDetails<GameSearchResult, GameDetails>.GetDetails(GameSearchResult searchResult)
-        {
-            return GetGameDetails(searchResult.Url);
-        }
-
-        IEnumerable<GroupSearchResult> ISearchableDataSource<GroupSearchResult>.Search(string query)
-        {
-            return GetGroupSearchResults(query);
-        }
     }
 
-    public class SearchResult : Playnite.SDK.GenericItemOption
+    public class SearchResult : Playnite.SDK.GenericItemOption, IHasName
     {
         public string Url { get; set; }
         public int Id { get; set; }
@@ -158,12 +149,17 @@ namespace MobyGamesMetadata.Api
 
     public class GroupSearchResult : SearchResult { }
 
-    public class GameSearchResult : SearchResult
+    public class GameSearchResult : SearchResult, IGameSearchResult
     {
         public List<MetadataProperty> Platforms { get; set; } = new List<MetadataProperty>();
+        public List<string> PlatformNames { get; set; } = new List<string>();
         public List<string> AlternateTitles { get; set; } = new List<string>();
         public string Title { get; set; }
         public ReleaseDate? ReleaseDate { get; set; }
+
+        public IEnumerable<string> AlternateNames => AlternateTitles;
+
+        IEnumerable<string> IGameSearchResult.Platforms => PlatformNames;
 
         public void SetName(string title, IEnumerable<string> alternateTitles)
         {

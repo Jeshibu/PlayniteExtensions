@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Input;
 
 namespace PlayniteExtensions.Common
 {
@@ -142,5 +143,30 @@ namespace PlayniteExtensions.Common
             });
             return platforms;
         }
+
+        public bool PlatformsOverlap(List<Platform> platforms, List<MetadataProperty> metadataPlatforms, bool returnValueWhenEmpty = true)
+        {
+            if (platforms?.Any() != true || metadataPlatforms?.Any() != true)
+                return returnValueWhenEmpty;
+
+            var comparer = new TitleComparer();
+
+            foreach (var mp in metadataPlatforms)
+            {
+                if (mp is MetadataSpecProperty specPlatform && platforms.Any(p => specPlatform.Id == p.SpecificationId))
+                    return true;
+
+                if (mp is MetadataNameProperty namePlatform && platforms.Select(p => p.Name).Contains(namePlatform.Name, comparer))
+                    return true;
+            }
+            return false;
+        }
+
+        public bool PlatformsOverlap(List<Platform> platforms, IEnumerable<string> metadataPlatforms, bool returnValueWhenEmpty = true)
+        {
+            var parsedMetadataPlatforms = metadataPlatforms.SelectMany(p => GetPlatforms(p)).ToList();
+            return PlatformsOverlap(platforms, parsedMetadataPlatforms, returnValueWhenEmpty);
+        }
     }
+
 }

@@ -14,7 +14,7 @@ namespace MobyGamesMetadata.Tests
         [Fact]
         public void GetAllGroups()
         {
-            var client = new MobyGamesApiClient() { ApiKey = "moby_GzOVPRacItjN9bYIN69NW79Wbjw" };
+            var client = new MobyGamesApiClient() { ApiKey = null };
             var result = client.GetAllGroups();
             var stringResult = JsonConvert.SerializeObject(result, Formatting.Indented);
         }

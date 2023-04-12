@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
+using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -20,6 +21,25 @@ namespace Barnite.Scrapers
         }
 
         public IPlatformUtility PlatformUtility { get; }
+        private static Regex UrlIdRegex = new Regex(@"\bmobygames\.com/game/(?<id>[0-9]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+
+        public static string GetMobyGameIdStringFromUrl(string url)
+        {
+            if (url == null) return null;
+
+            var match = UrlIdRegex.Match(url);
+            if (!match.Success) return null;
+            var idString = match.Groups["id"].Value;
+            return idString;
+        }
+        public static int? GetMobyGameIdFromUrl(string url)
+        {
+            var idString = GetMobyGameIdStringFromUrl(url);
+            if (idString == null)
+                return null;
+
+            return int.Parse(idString);
+        }
 
         public GameDetails ParseGameDetailsHtml(string html)
         {
@@ -66,7 +86,7 @@ namespace Barnite.Scrapers
 
             data.Description = page.DocumentNode.SelectSingleNode("//div[@id='description-text']")?.InnerHtml.Trim();
 
-            var groups = page.DocumentNode.SelectNodes("//section[@id='gameGroups']/ul/li/a")?.Select(e => e.InnerText.HtmlDecode()).ToList();
+            var groups = page.DocumentNode.SelectNodes("//section[@id='gameGroups']/ul/li/a")?.Select(e => e.InnerText.HtmlDecode()).ToList() ?? new List<string>();
             foreach (string group in groups)
             {
                 var seriesIndex = group.LastIndexOf(" series");

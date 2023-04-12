@@ -22,7 +22,7 @@ namespace Barnite.Scrapers
 
         protected override GameMetadata ScrapeGameDetailsHtml(string html)
         {
-            return new MobyGamesHelper(PlatformUtility).ParseGameDetailsHtml(html);
+            return new MobyGamesHelper(PlatformUtility).ParseGameDetailsHtml(html)?.ToMetadata();
         }
 
         protected override IEnumerable<GameLink> ScrapeSearchResultHtml(string html)

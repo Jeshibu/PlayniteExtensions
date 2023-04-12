@@ -116,6 +116,17 @@ order by Type asc";
                 return db.Load<LaunchBoxGameImage>(query).Select(i => i.Type).ToList();
             }
         }
+        public IEnumerable<string> GetRegions()
+        {
+            var query = @"
+select distinct Region
+from GameImages
+order by Region asc";
+            using (var db = new SQLiteDatabase(DatabasePath, SQLiteOpenOptions.SQLITE_OPEN_READONLY))
+            {
+                return db.Load<LaunchBoxGameImage>(query).Select(i => i.Region).ToList();
+            }
+        }
 
         public static string GetMatchStringFromSearchString(string searchString)
         {

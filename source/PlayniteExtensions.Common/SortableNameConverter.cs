@@ -8,17 +8,20 @@ namespace PlayniteExtensions.Common
 {
     public class SortableNameConverter
     {
-        private readonly Regex regex;
-        private readonly Regex ignoredEndWordsRegex;
+        private readonly List<string> articles;
 
         /// <summary>
         /// The minimum string length of numbers. If 4, XXIII or 23 will turn into 0023.
         /// </summary>
         private readonly int numberLength;
         private readonly bool removeEditions;
+
+        /// <summary>
+        /// These are valid roman numerals that are regularly used in game titles as not-numerals.
+        /// </summary>
         private static string[] excludedRomanNumerals = new[] { "XL", "XD", "DX", "XXX", "L", "C", "D", "M", "MII", "MIX", "MX", "MC", "DC" };
 
-        //Haven't observed game titles with zero, or four and above that would benefit from making those words sortable numbers
+        //Haven't observed game titles with zero, or four and above that would benefit from making those words sortable numbers. If you change this, be sure to change the regex too.
         private static Dictionary<string, int> numberWordValues = new Dictionary<string, int>(StringComparer.InvariantCultureIgnoreCase) { { "one", 1 }, { "two", 2 }, { "three", 3 } };
 
         private static Dictionary<char, int> romanNumeralValues = new Dictionary<char, int>
@@ -32,36 +35,28 @@ namespace PlayniteExtensions.Common
             {'ↀ', 1000}, {'ↁ', 5000}, {'ↂ', 10000}, {'Ↄ', 100}, {'ↄ', 100}, {'ↅ', 6}, {'ↆ', 50 }, {'ↇ', 50000}, {'ↈ', 100000 }
         };
 
+        //(?<![\w.]|^) prevents the numerical matches from happening at the start of the string (for example for X-COM or XIII) or attached to a word or . (to avoid S.T.A.L.K.E.R. -> S.T.A.50.K.E.R.)
+        //(?!\.) prevents matching roman numerals with a period right after (again for cases like abbreviations with periods, but that start with a roman numeral character)
+        //\u2160-\u2188 is the unicode range of roman numerals listed in RomanNumeralValues
+        //using [0-9] here instead of \d because \d also matches ٠١٢٣٤٥٦٧٨٩ and I don't know what to do with those
+        //the (?i) is a modifier that makes the rest of the regex (to the right of it) case insensitive
+        //see https://www.regular-expressions.info/modifiers.html
+        private static Regex numberRegex = new Regex(@"(?<![\w.]|^)((?<roman>[IVXLCDM\u2160-\u2188]+(?!\.))|(?<arabic>[0-9]+))(?=\W|$)|(?i)\b(?<numberword>one|two|three)\b", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+
+        private static Regex ignoredEndWordsRegex = new Regex(@"(\s*[:-])?(\s+([a-z']+\s+(edition|cut)|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the))+$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="articles">Words to remove from the start of the title. Suggested: the contents of PlayniteSettings.GameSortingNameRemovedArticles, or "The", "A", "An".</param>
-        /// <param name="batchOperation">Optimize for larger amounts of throughput. Slower for small amounts.</param>
-        public SortableNameConverter(IEnumerable<string> articles, bool batchOperation = false, int numberLength = 2, bool removeEditions = false)
+        public SortableNameConverter(IEnumerable<string> articles, int numberLength = 2, bool removeEditions = false)
         {
             if (articles == null)
             {
                 throw new ArgumentNullException(nameof(articles));
             }
 
-            //(?<![\w.]|^) prevents the numerical matches from happening at the start of the string (for example for X-COM or XIII) or attached to a word or . (to avoid S.T.A.L.K.E.R. -> S.T.A.50.K.E.R.)
-            //(?!\.) prevents matching roman numerals with a period right after (again for cases like abbreviations with periods, but that start with a roman numeral character)
-            //\u2160-\u2188 is the unicode range of roman numerals listed in RomanNumeralValues
-            //using [0-9] here instead of \d because \d also matches ٠١٢٣٤٥٦٧٨٩ and I don't know what to do with those           
-            //the (?i) is a modifier that makes the rest of the regex (to the right of it) case insensitive
-            //see https://www.regular-expressions.info/modifiers.html
-
-            var articlesPattern = string.Join("|", articles.Select(Regex.Escape));
-            var articlesGroup = string.IsNullOrEmpty(articlesPattern) ? string.Empty : $@"^(?<article>{articlesPattern})\s+|";
-            var regexStr = $@"(?<![\w.]|^)((?<roman>[IVXLCDM\u2160-\u2188]+(?!\.))|(?<arabic>[0-9]+))(?=\W|$)|(?i){articlesGroup}\b(?<numberword>{string.Join("|", numberWordValues.Keys)})\b";
-            var options = RegexOptions.ExplicitCapture;
-            if (batchOperation)
-            {
-                options |= RegexOptions.Compiled;
-            }
-
-            regex = new Regex(regexStr, options);
-            ignoredEndWordsRegex = new Regex(@"(\s*[:-])?(\s+([a-z']+\s+(edition|cut)|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the))+$", options | RegexOptions.IgnoreCase);
+            this.articles = articles.ToList();
             this.numberLength = numberLength;
             this.removeEditions = removeEditions;
         }
@@ -73,9 +68,10 @@ namespace PlayniteExtensions.Common
                 return input;
             }
 
+            input = StripArticles(input);
             input = StripEdition(input, out string edition);
 
-            string output = regex.Replace(input, match =>
+            string output = numberRegex.Replace(input, match =>
             {
                 if (match.Groups["roman"].Success)
                 {
@@ -133,6 +129,18 @@ namespace PlayniteExtensions.Common
                 return output;
             else
                 return output + edition;
+        }
+
+        private string StripArticles(string input)
+        {
+            foreach (var article in articles)
+            {
+                if (input.StartsWith(article + " ", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return input.Substring(article.Length).TrimStart();
+                }
+            }
+            return input;
         }
 
         /// <summary>

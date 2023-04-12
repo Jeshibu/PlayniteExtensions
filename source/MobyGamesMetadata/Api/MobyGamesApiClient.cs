@@ -16,13 +16,13 @@ using System.Net.Http;
 using RateLimiter;
 using ComposableAsync;
 using PlayniteExtensions.Common;
+using PlayniteExtensions.Metadata.Common;
 
 namespace MobyGamesMetadata.Api
 {
-    public class MobyGamesApiClient:ISearchableDataSourceWithDetails<GameDetails, GameDetails>
+    public class MobyGamesApiClient
     {
         public const string BaseUrl = "https://api.mobygames.com/v1/";
-        private readonly IPlatformUtility platformUtility;
         private string apiKey;
         private RestClient restClient;
         private ILogger logger = LogManager.GetLogger();
@@ -45,11 +45,6 @@ namespace MobyGamesMetadata.Api
 
                 apiKey = value;
             }
-        }
-
-        public MobyGamesApiClient(IPlatformUtility platformUtility)
-        {
-            this.platformUtility = platformUtility;
         }
 
         private T Execute<T>(RestRequest request, CancellationToken cancellationToken = default)
@@ -115,106 +110,25 @@ namespace MobyGamesMetadata.Api
             return response;
         }
 
-        public GameDetails GetGameDetails(int id)
+        public ICollection<MobyGame> GetGamesForGroup(int groupId, int limit, int offset)
         {
-            var mobyGame = GetMobyGame(id);
-            return ToGameDetails(mobyGame);
+            var request = new RestRequest("games")
+                .AddQueryParameter("group", groupId)
+                .AddQueryParameter("limit", limit)
+                .AddQueryParameter("offset", offset);
+
+            var result = Execute<GamesRoot>(request);
+            return result.Games;
         }
 
-        private GameDetails ToGameDetails(MobyGame mobyGame)
+        public ICollection<MobyGroup> GetGroups(int offset = 0, int limit = 100)
         {
-            if (mobyGame == null) return null;
-            var gameDetails = new GameDetails
-            {
-                Description = mobyGame.Description,
-            };
-            gameDetails.Names.Add(mobyGame.Title);
-            if (mobyGame.AlternateTitles != null)
-                gameDetails.Names.AddRange(mobyGame.AlternateTitles.Select(t => t.Title));
+            var request = new RestRequest("groups")
+                .AddQueryParameter("limit", limit)
+                .AddQueryParameter("offset", offset);
 
-            if (mobyGame.SampleCover?.Image != null)
-                gameDetails.CoverOptions.Add(ToIImageData(mobyGame.SampleCover));
-
-            if (mobyGame.Genres != null)
-                foreach (var genre in mobyGame.Genres)
-                    AssignGenre(gameDetails, genre);
-
-            gameDetails.Links.Add(new Link("MobyGames", mobyGame.MobyUrl));
-            if (mobyGame.OfficialUrl != null)
-                gameDetails.Links.Add(new Link("Official website", mobyGame.OfficialUrl));
-
-            if (mobyGame.Platforms != null)
-            {
-                foreach (var platform in mobyGame.Platforms)
-                {
-                    gameDetails.Platforms.AddRange(platformUtility.GetPlatforms(platform.Name));
-                    var releaseDate = platform.FirstReleaseDate.ParseReleaseDate(logger);
-                    gameDetails.ReleaseDate = GetEarliestReleaseDate(releaseDate, gameDetails.ReleaseDate);
-                }
-            }
-
-            if (mobyGame.SampleScreenshots != null)
-                gameDetails.BackgroundOptions.AddRange(mobyGame.SampleScreenshots.Select(ToIImageData));
-
-            return gameDetails;
-        }
-
-        private ReleaseDate? GetEarliestReleaseDate(ReleaseDate? r1, ReleaseDate? r2)
-        {
-            if (r1 == null) return r2;
-            if (r2 == null) return r1;
-            var dates = new List<ReleaseDate> { r1.Value, r2.Value };
-            return dates.OrderBy(d => d.Date).First();
-        }
-
-        private void AssignGenre(GameDetails gameDetails, Genre g)
-        {
-            var list = GetRelevantList(gameDetails, g);
-            if (list == null) return;
-            list.Add(g.Name);
-        }
-
-        private List<string> GetRelevantList(GameDetails gameDetails, Genre g)
-        {
-            switch (g.Category)
-            {
-                case "Basic Genres":
-                case "Perspective":
-                case "Gameplay":
-                case "Narrative Theme/Topic":
-                    return gameDetails.Genres;
-                case "Visual Presentation":
-                case "Art Style":
-                case "Pacing":
-                case "Interface/Control":
-                case "Sports Themes":
-                case "Educational Categories":
-                case "Vehicular Themes":
-                case "Setting":
-                case "Special Edition":
-                case "Other Attributes":
-                    return gameDetails.Tags;
-                case "DLC/Add-on":
-                default:
-                    return null;
-            }
-        }
-
-        private static BasicImage ToIImageData(MobyImage image)
-        {
-            return new BasicImage(image.Image)
-            {
-                Height = image.Height,
-                Width = image.Width,
-                ThumbnailUrl = image.ThumbnailImage,
-            };
-        }
-
-        private static BasicImage ToIImageData(CoverImage image)
-        {
-            var img = ToIImageData((MobyImage)image);
-            img.Platforms = image.Platforms;
-            return img;
+            var response = Execute<GroupsRoot>(request);
+            return response.Groups;
         }
 
         public IEnumerable<MobyGroup> GetAllGroups()
@@ -222,19 +136,15 @@ namespace MobyGamesMetadata.Api
             var output = new List<MobyGroup>();
             int limit = 100, offset = 0;
             //int limit = 100, offset = 9900;
-            GroupsRoot response;
+            ICollection<MobyGroup> response;
             do
             {
-                var request = new RestRequest("groups")
-                    .AddQueryParameter("limit", limit)
-                    .AddQueryParameter("offset", offset);
+                 response = GetGroups(offset, limit);
+                if (response == null) break;
 
-                response = Execute<GroupsRoot>(request);
-                if (response?.Groups == null) break;
-
-                output.AddRange(response.Groups);
+                output.AddRange(response);
                 offset += limit;
-            } while (response.Groups.Count == limit);
+            } while (response.Count == limit);
             return output;
         }
 
@@ -251,32 +161,5 @@ namespace MobyGamesMetadata.Api
                 offset += limit;
             } while (response?.Count == limit);
         }
-
-        public IEnumerable<GameDetails> GetAllGameDetailsForGroup(int groupId)
-        {
-            return GetAllGamesForGroup(groupId).Select(ToGameDetails);
-        }
-
-        private List<MobyGame> GetGamesForGroup(int groupId, int limit, int offset)
-        {
-            var request = new RestRequest("games")
-                .AddQueryParameter("group", groupId)
-                .AddQueryParameter("limit", limit)
-                .AddQueryParameter("offset", offset);
-
-            var result = Execute<GamesRoot>(request);
-            return result.Games;
-        }
-
-        GameDetails ISearchableDataSourceWithDetails<GameDetails, GameDetails>.GetDetails(GameDetails searchResult)
-        {
-            return searchResult;
-        }
-
-        IEnumerable<GameDetails> ISearchableDataSource<GameDetails>.Search(string query)
-        {
-            return SearchGames(query).Select(ToGameDetails);
-        }
     }
-
 }

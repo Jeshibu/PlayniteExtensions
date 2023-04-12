@@ -1,4 +1,5 @@
 ﻿using GiantBombMetadata.Api;
+using GiantBombMetadata.SearchProviders;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
@@ -22,10 +23,11 @@ namespace GiantBombMetadata
         public GiantBombMetadataSettingsViewModel Settings { get; set; }
 
         public IPlatformUtility PlatformUtility { get; set; }
+        public IGiantBombApiClient ApiClient => new GiantBombApiClient() { ApiKey = Settings.Settings.ApiKey };
 
         public override Guid Id { get; } = Guid.Parse("975c7dc6-efd5-41d4-b9c1-9394b3bfe9c6");
 
-        public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
+        public static List<MetadataField> Fields { get; } = new List<MetadataField>
         {
             MetadataField.Description,
             MetadataField.Tags,
@@ -43,6 +45,8 @@ namespace GiantBombMetadata
             MetadataField.BackgroundImage,
         };
 
+        public override List<MetadataField> SupportedFields => Fields;
+
         public override string Name { get; } = "Giant Bomb";
 
         public GiantBombMetadata(IPlayniteAPI api) : base(api)
@@ -57,7 +61,9 @@ namespace GiantBombMetadata
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new GiantBombMetadataProvider(options, this, new GiantBombApiClient { ApiKey = Settings.Settings.ApiKey }, PlatformUtility);
+            var searchProvider = new GiantBombGameSearchProvider(ApiClient, Settings.Settings, PlatformUtility);
+            var metadataProvider = new GiantBombMetadataProvider(searchProvider, options, PlayniteApi, PlatformUtility);
+            return metadataProvider;
         }
 
         public override ISettings GetSettings(bool firstRunSettings)
@@ -93,7 +99,8 @@ namespace GiantBombMetadata
 
         public void ImportGameProperty()
         {
-            var extra = new GiantBombExtraMetadataProvider(PlayniteApi, Settings.Settings);
+            var searchProvider = new GiantBombGamePropertySearchProvider(ApiClient);
+            var extra = new GiantBombBulkPropertyAssigner(PlayniteApi, Settings.Settings, searchProvider, new PlatformUtility(PlayniteApi));
             extra.ImportGameProperty();
         }
     }

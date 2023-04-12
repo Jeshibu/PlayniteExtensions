@@ -41,9 +41,15 @@ namespace LaunchBoxMetadata
     public class LaunchBoxGameImage
     {
         public string DatabaseID { get; set; }
+
         public string FileName { get; set; }
+
         [SQLiteIndex("IX_ImageType")]
         public string Type { get; set; }
+
+        [SQLiteIndex("IX_ImageRegion")]
+        public string Region { get; set; }
+
         public uint CRC32 { get; set; }
     }
 

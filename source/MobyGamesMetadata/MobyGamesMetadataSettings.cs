@@ -1,17 +1,26 @@
 ﻿using Playnite.SDK;
-using Playnite.SDK.Data;
+using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace MobyGamesMetadata
 {
     public class MobyGamesMetadataSettings : ObservableObject
     {
+        private string apiKey;
+
         public DataSource DataSource { get; set; } = DataSource.Api;
-        public string ApiKey { get; set; } = "moby_GzOVPRacItjN9bYIN69NW79Wbjw";
+        public string ApiKey
+        {
+            get { return apiKey; }
+            set
+            {
+                apiKey = value?.Trim();
+                OnPropertyChanged(nameof(ApiKey));
+            }
+        }
+        public bool ShowTopPanelButton { get; set; } = true;
     }
 
     [Flags]
@@ -40,5 +49,22 @@ namespace MobyGamesMetadata
                 Settings = new MobyGamesMetadataSettings();
             }
         }
+
+        public RelayCommand<object> GetApiKeyCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                Process.Start(@"https://www.mobygames.com/info/api/");
+            });
+        }
+
+        public PropertyImportTarget[] ImportTargets { get; } = new[]
+        {
+            PropertyImportTarget.Ignore,
+            PropertyImportTarget.Genres,
+            PropertyImportTarget.Tags,
+            PropertyImportTarget.Series,
+            PropertyImportTarget.Features,
+        };
     }
 }

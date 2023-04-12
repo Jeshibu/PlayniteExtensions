@@ -12,11 +12,6 @@ namespace GiantBombMetadata
     {
         private static Regex gameIdRegex = new Regex(@"\bgiantbomb\.com/.+(?<guid>\b3030-[0-9]+\b)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        public static void MakeHtmlUrlsAbsolute(object description, string v)
-        {
-            throw new NotImplementedException();
-        }
-
         public static string GetGiantBombGuidFromGameLinks(this Game game)
         {
             if (game?.Links == null)
@@ -45,6 +40,9 @@ namespace GiantBombMetadata
 
         public static string MakeHtmlUrlsAbsolute(string htmlContent, string baseUrl)
         {
+            if (string.IsNullOrWhiteSpace(htmlContent))
+                return htmlContent;
+
             string[] urlAttributeNames = new[] { "href", "src" };
             var baseUri = new Uri(baseUrl);
 

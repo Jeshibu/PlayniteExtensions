@@ -1,14 +1,10 @@
-﻿using GiantBombMetadata.Api;
+﻿using Playnite.SDK.Models;
 using Playnite.SDK;
-using Playnite.SDK.Models;
-using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace GiantBombMetadata
+namespace PlayniteExtensions.Metadata.Common
 {
     public class GamePropertyImportViewModel
     {
@@ -18,6 +14,7 @@ namespace GiantBombMetadata
             GamePropertyImportTargetField.Genre,
             GamePropertyImportTargetField.Tag,
             GamePropertyImportTargetField.Feature,
+            GamePropertyImportTargetField.Series,
         };
 
         public GamePropertyImportTargetField TargetField { get; set; }
@@ -47,8 +44,6 @@ namespace GiantBombMetadata
                 }
             });
         }
-
-
     }
 
     public class GameCheckboxViewModel : ObservableObject
@@ -82,6 +77,7 @@ namespace GiantBombMetadata
         Category,
         Genre,
         Tag,
-        Feature
+        Feature,
+        Series,
     }
 }

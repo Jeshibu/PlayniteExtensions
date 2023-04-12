@@ -23,7 +23,7 @@
             <TextBlock Text=" named " VerticalAlignment="Center"/>
             <TextBox Text="{Binding Name}" Width="250"/>
         </StackPanel>
-        <CheckBox Grid.Row="1" Margin="20,0,20,10" Content="Add giantbomb.com link to checked games" IsChecked="{Binding AddLink}"/>
+        <CheckBox Grid.Row="1" Margin="20,0,20,10" Content="Add mobygames.com link to checked games" IsChecked="{Binding AddLink}"/>
         <StackPanel Grid.Row="2" Margin="10" Orientation="Horizontal">
             <StackPanel.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">

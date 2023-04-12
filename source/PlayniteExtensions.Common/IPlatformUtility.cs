@@ -22,5 +22,8 @@ namespace PlayniteExtensions.Common
         /// <param name="trimmedName">The game name with the platform name removed</param>
         /// <returns></returns>
         IEnumerable<MetadataProperty> GetPlatformsFromName(string name, out string trimmedName);
+
+        bool PlatformsOverlap(List<Platform> platforms, List<MetadataProperty> metadataPlatforms, bool returnValueWhenEmpty = true);
+        bool PlatformsOverlap(List<Platform> platforms, IEnumerable<string> metadataPlatforms, bool returnValueWhenEmpty = true);
     }
 }
