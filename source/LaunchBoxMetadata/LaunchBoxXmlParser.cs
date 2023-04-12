@@ -94,6 +94,7 @@ namespace LaunchBoxMetadata
                 img.DatabaseID = i.Element("DatabaseID").Value;
                 img.FileName = i.Element("FileName").Value;
                 img.Type = i.Element("Type")?.Value;
+                img.Region = i.Element("Region")?.Value;
                 if (uint.TryParse(i.Element("CRC32").Value, out uint crc32))
                     img.CRC32 = crc32;
                 return img;
@@ -111,13 +112,4 @@ namespace LaunchBoxMetadata
         public IEnumerable<LaunchBoxGameName> GameAlternateNames { get; set; }
         public IEnumerable<LaunchBoxGameImage> GameImages { get; set; }
     }
-
-    /*
-  <GameImage>
-    <DatabaseID>218762</DatabaseID>
-    <FileName>58bb66c0-733a-428e-92c1-c101140a0505.png</FileName>
-    <Type>Screenshot - Gameplay</Type>
-    <CRC32>4250318803</CRC32>
-  </GameImage>
-     */
 }

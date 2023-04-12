@@ -4,9 +4,6 @@ using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace LaunchBoxMetadata
@@ -34,6 +31,7 @@ namespace LaunchBoxMetadata
             MetadataField.Genres,
             MetadataField.Developers,
             MetadataField.Publishers,
+            MetadataField.Icon,
             MetadataField.CoverImage,
             MetadataField.BackgroundImage,
             MetadataField.Links,

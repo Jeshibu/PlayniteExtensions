@@ -328,6 +328,11 @@ namespace LaunchBoxMetadata
             }
         }
 
+        public override MetadataFile GetIcon(GetMetadataFieldArgs args)
+        {
+            return PickImage("Select icon", settings.Icon);
+        }
+
         public override MetadataFile GetCoverImage(GetMetadataFieldArgs args)
         {
             return PickImage("Select cover", settings.Cover);

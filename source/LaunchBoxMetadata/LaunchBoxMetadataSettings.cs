@@ -18,11 +18,20 @@ namespace LaunchBoxMetadata
         public bool UseVideoLink { get; set; } = true;
         public string MetadataZipEtag { get; set; }
         public DateTimeOffset? MetadataZipLastModified { get; set; }
+        public LaunchBoxImageSourceSettings Icon { get; set; }
         public LaunchBoxImageSourceSettings Cover { get; set; }
         public LaunchBoxImageSourceSettings Background { get; set; }
 
         public LaunchBoxMetadataSettings()
         {
+            Icon = new LaunchBoxImageSourceSettings
+            {
+                AspectRatio = AspectRatio.Square,
+                MaxHeight = 256,
+                MaxWidth = 256,
+                MinHeight = 32,
+                MinWidth = 32,
+            };
             Cover = new LaunchBoxImageSourceSettings
             {
                 AspectRatio = AspectRatio.Vertical,
@@ -110,6 +119,7 @@ namespace LaunchBoxMetadata
             {
                 var database = GetDatabase();
                 var types = database.GetGameImageTypes().ToList();
+                InitializeImageTypeList(types, Settings.Icon, "Clear Logo");
                 InitializeImageTypeList(types, Settings.Cover, "Box - Front", "Box - Front - Reconstructed", "Fanart - Box - Front");
                 InitializeImageTypeList(types, Settings.Background, "Fanart - Background", "Screenshot - Gameplay", "Screenshot - Game Title", "Banner");
             }

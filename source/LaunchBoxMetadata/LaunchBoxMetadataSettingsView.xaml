@@ -64,6 +64,53 @@
                 <Button Padding="0,5" Margin="20" Command="{Binding InitializeDatabaseCommand}">(Re-)initialize local database</Button>
             </StackPanel>
         </TabItem>
+        <TabItem Header="Icons">
+            <ScrollViewer>
+                <StackPanel Margin="20">
+                    <TextBlock TextWrapping="Wrap">Images smaller than either of the minimum dimensions will be ignored.<LineBreak/> Images larger than either of the maximum dimensions will be scaled down.</TextBlock>
+                    <Grid Width="Auto" Margin="0,0,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0">Minimum dimensions:</TextBlock>
+                        <WrapPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox Width="70" Text="{Binding Settings.Icon.MinWidth, Converter={StaticResource intConverter}}"/>
+                            <TextBlock Margin="0,0,5,0">w x</TextBlock>
+                            <TextBox Width="70" Text="{Binding Settings.Icon.MinHeight, Converter={StaticResource intConverter}}"/>
+                            <TextBlock>h</TextBlock>
+                        </WrapPanel>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="Wrap">Maximum dimensions:</TextBlock>
+                        <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox Width="70" Text="{Binding Settings.Icon.MaxWidth, Converter={StaticResource intConverter}}"/>
+                            <TextBlock Margin="0,0,5,0">w x</TextBlock>
+                            <TextBox Width="70" Text="{Binding Settings.Icon.MaxHeight, Converter={StaticResource intConverter}}"/>
+                            <TextBlock>h</TextBlock>
+                        </WrapPanel>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
+                        <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Icon.AspectRatio}"/>
+                    </Grid>
+                    <TextBlock TextWrapping="Wrap">Use the following image types for icons, in the specified order (drag and drop to reorder):</TextBlock>
+                    <ListBox Name="IconImageTypes" ItemsSource="{Binding Settings.Icon.ImageTypes}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
+                                    <TextBlock Text="░" Padding="10,0"/>
+                                    <CheckBox IsChecked="{Binding Checked}" Content="{Binding Name}" Width="Auto"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </ScrollViewer>
+        </TabItem>
         <TabItem Header="Covers">
             <ScrollViewer>
                 <StackPanel Margin="20">
