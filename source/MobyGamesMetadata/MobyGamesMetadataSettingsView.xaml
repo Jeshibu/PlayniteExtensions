@@ -16,18 +16,6 @@
             <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" x:Key="TextBlockStyle">
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
-            <Style TargetType="ScrollViewer" BasedOn="{StaticResource {x:Type ScrollViewer}}">
-                <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
-                <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
-            </Style>
-            <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
-                <Setter Property="SelectionMode" Value="Extended"/>
-                <Setter Property="MinHeight" Value="150"/>
-                <Setter Property="Width" Value="Auto"/>
-                <Setter Property="Padding" Value="5"/>
-                <Setter Property="Width" Value="350"/>
-                <Setter Property="HorizontalAlignment" Value="Left" />
-            </Style>
             <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
                 <Setter Property="IsTextSearchEnabled" Value="False"/>
                 <Setter Property="IsEditable" Value="False"/>
@@ -36,7 +24,7 @@
                 <Setter Property="Width" Value="150"/>
             </Style>
         </TabControl.Resources>
-        <TabItem Header="Settings" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+        <TabItem Header="Settings">
             <StackPanel Margin="20">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -67,7 +55,7 @@
                     </CollectionViewSource.GroupDescriptions>
                 </CollectionViewSource>
             </TabItem.Resources>
-            <ListView ItemsSource="{Binding Source={StaticResource GenresCollection}}" Name="GenreSettingsView" Margin="20" Height="Auto"
+            <ListView ItemsSource="{Binding Source={StaticResource GenresCollection}}" Name="GenreSettingsView" Margin="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                       ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False" d:ItemsSource="{d:SampleData ItemCount=50}">
                 <ListView.View>
                     <GridView>
@@ -92,7 +80,7 @@
                     <GroupStyle>
                         <GroupStyle.HeaderTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}" Style="{Binding Source={StaticResource TextBlockStyle}}" FontSize="20" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" FontSize="20" FontWeight="Bold"/>
                             </DataTemplate>
                         </GroupStyle.HeaderTemplate>
                     </GroupStyle>
