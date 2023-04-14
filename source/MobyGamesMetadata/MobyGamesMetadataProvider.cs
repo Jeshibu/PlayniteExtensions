@@ -18,6 +18,8 @@ namespace MobyGamesMetadata
 
         public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 
+        protected override string ProviderName { get; } = "MobyGames";
+
         public MobyGamesMetadataProvider(MetadataRequestOptions options, MobyGamesMetadata plugin, IGameSearchProvider<GameSearchResult> dataSource, IPlatformUtility platformUtility)
             :base(dataSource, options, plugin.PlayniteApi, platformUtility)
         {

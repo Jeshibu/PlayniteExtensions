@@ -17,6 +17,7 @@ namespace PlayniteExtensions.Metadata.Common
         private readonly IPlatformUtility platformUtility;
         private ILogger logger = LogManager.GetLogger();
         private GameDetails foundGame = null;
+        protected abstract string ProviderName { get; }
 
         protected GenericMetadataProvider(IGameSearchProvider<TSearchResult> dataSource, MetadataRequestOptions options, IPlayniteAPI playniteApi, IPlatformUtility platformUtility)
         {
@@ -189,7 +190,12 @@ namespace PlayniteExtensions.Metadata.Common
 
         public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Links?.NullIfEmpty();
+            var gameDetails = GetGameDetails();
+            var links = gameDetails.Links ?? new List<Link>();
+            if (gameDetails.Url != null && !links.Any(l => l.Url == gameDetails.Url))
+                links.Add(new Link(ProviderName, gameDetails.Url));
+
+            return links.NullIfEmpty();
         }
 
         public override string GetName(GetMetadataFieldArgs args)

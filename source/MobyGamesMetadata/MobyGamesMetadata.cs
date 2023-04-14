@@ -102,7 +102,7 @@ namespace MobyGamesMetadata
             var platformUtility = new PlatformUtility(PlayniteApi);
             var downloader = new WebDownloader();
             var scraper = new MobyGamesScraper(platformUtility, downloader);
-            var searchProvider = new AggregateMobyPropertyCollector(ApiClient, scraper, settings.Settings, platformUtility);
+            var searchProvider = new MobyGamesPropertySearchProvider(ApiClient, scraper, settings.Settings, platformUtility);
             var extra = new MobyGamesBulkPropertyAssigner(PlayniteApi, settings.Settings, searchProvider, platformUtility);
             extra.ImportGameProperty();
         }

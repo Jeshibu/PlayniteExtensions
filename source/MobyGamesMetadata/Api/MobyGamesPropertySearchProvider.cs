@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace MobyGamesMetadata.Api
 {
-    public class AggregateMobyPropertyCollector : BaseAggregateMobyGamesDataCollector, ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>>
+    public class MobyGamesPropertySearchProvider : BaseAggregateMobyGamesDataCollector, ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>>
     {
-        public AggregateMobyPropertyCollector(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility)
+        public MobyGamesPropertySearchProvider(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility)
             : base(apiClient, scraper, settings, platformUtility) { }
 
         public IEnumerable<GameDetails> GetDetails(SearchResult searchResult)

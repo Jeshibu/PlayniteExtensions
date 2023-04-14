@@ -7,13 +7,13 @@
              d:DataContext="{d:DesignInstance Type=moby:MobyGamesMetadataSettingsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <TabControl ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+    <TabControl>
         <TabControl.Resources>
             <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="Margin" Value="0,5"/>
             </Style>
-            <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" x:Key="TextBlockStyle">
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
             <Style TargetType="ScrollViewer" BasedOn="{StaticResource {x:Type ScrollViewer}}">
@@ -36,7 +36,7 @@
                 <Setter Property="Width" Value="150"/>
             </Style>
         </TabControl.Resources>
-        <TabItem Header="Settings">
+        <TabItem Header="Settings" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
             <StackPanel Margin="20">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -60,12 +60,15 @@
             </StackPanel>
         </TabItem>
         <TabItem Header="Genres">
-            <ListView ItemsSource="{Binding Settings.Genres}" Name="GenreSettingsView" Margin="20" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-                <CollectionViewSource>
+            <TabItem.Resources>
+                <CollectionViewSource x:Key="GenresCollection" Source="{Binding Settings.Genres}">
                     <CollectionViewSource.GroupDescriptions>
                         <PropertyGroupDescription PropertyName="Category"/>
                     </CollectionViewSource.GroupDescriptions>
                 </CollectionViewSource>
+            </TabItem.Resources>
+            <ListView ItemsSource="{Binding Source={StaticResource GenresCollection}}" Name="GenreSettingsView" Margin="20" Height="Auto"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False" d:ItemsSource="{d:SampleData ItemCount=50}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />
@@ -85,16 +88,28 @@
                         </GridViewColumn>
                     </GridView>
                 </ListView.View>
-
                 <ListView.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.HeaderTemplate>
                             <DataTemplate>
-                                <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
+                                <TextBlock Text="{Binding Name}" Style="{Binding Source={StaticResource TextBlockStyle}}" FontSize="20" FontWeight="Bold"/>
                             </DataTemplate>
                         </GroupStyle.HeaderTemplate>
                     </GroupStyle>
                 </ListView.GroupStyle>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Set import target" ItemsSource="{Binding ImportTargets}">
+                            <MenuItem.ItemTemplate>
+                                <DataTemplate>
+                                    <MenuItem Header="{Binding .}" Click="SetImportTarget_Click"/>
+                                    <!--Command="{Binding DataContext.SetStatus, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                              CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType=ListView}}"/>-->
+                                </DataTemplate>
+                            </MenuItem.ItemTemplate>
+                        </MenuItem>
+                    </ContextMenu>
+                </ListView.ContextMenu>
             </ListView>
         </TabItem>
     </TabControl>

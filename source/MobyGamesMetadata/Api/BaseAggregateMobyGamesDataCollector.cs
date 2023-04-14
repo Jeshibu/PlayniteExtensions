@@ -77,7 +77,6 @@ namespace MobyGamesMetadata.Api
                     AssignGenre(gameDetails, genre);
 
             gameDetails.Url = mobyGame.MobyUrl;
-            gameDetails.Links.Add(new Link("MobyGames", mobyGame.MobyUrl));
             if (mobyGame.OfficialUrl != null)
                 gameDetails.Links.Add(new Link("Official website", mobyGame.OfficialUrl));
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PlayniteExtensions.Metadata.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,18 @@ namespace MobyGamesMetadata
         public MobyGamesMetadataSettingsView()
         {
             InitializeComponent();
+        }
+
+        private void SetImportTarget_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(DataContext is MobyGamesMetadataSettingsViewModel viewModel)
+                || !(e.Source is MenuItem menuItem)
+                || !Enum.TryParse<PropertyImportTarget>(menuItem.Header.ToString(), out var target))
+                return;
+
+            var selectedItems = GenreSettingsView.SelectedItems.Cast<MobyGamesGenreSetting>().ToList();
+
+            viewModel.SetImportTarget(target, selectedItems);
         }
     }
 }

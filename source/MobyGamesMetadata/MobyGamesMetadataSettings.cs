@@ -2,6 +2,7 @@
 using Playnite.SDK;
 using PlayniteExtensions.Metadata.Common;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -174,6 +175,17 @@ namespace MobyGamesMetadata
                 case 13: //Art Style
                 default:
                     return PropertyImportTarget.Tags;
+            }
+        }
+
+        public void SetImportTarget(PropertyImportTarget target, ICollection<MobyGamesGenreSetting> settings)
+        {
+            if (settings == null)
+                return;
+
+            foreach (var s in settings)
+            {
+                s.ImportTarget = target;
             }
         }
     }
