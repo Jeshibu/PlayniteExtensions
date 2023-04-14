@@ -39,7 +39,7 @@ namespace PlayniteExtensions.Common
     public class WebDownloader : IWebDownloader
     {
         private ILogger logger = LogManager.GetLogger();
-        public static HttpStatusCode[] HttpRedirectStatusCodes = new[] { HttpStatusCode.Redirect, HttpStatusCode.Moved, HttpStatusCode.TemporaryRedirect };
+        public static HttpStatusCode[] HttpRedirectStatusCodes = new[] { HttpStatusCode.Redirect, HttpStatusCode.Moved, HttpStatusCode.TemporaryRedirect, (HttpStatusCode)308 };
 
         public CookieCollection Cookies { get; private set; } = new CookieCollection();
         public string UserAgent { get; set; } = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0";

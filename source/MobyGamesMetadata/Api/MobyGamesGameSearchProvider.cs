@@ -18,19 +18,24 @@ namespace MobyGamesMetadata.Api
 
         public GameDetails GetDetails(GameSearchResult searchResult)
         {
+            return GetDetails(searchResult.Id);
+        }
+
+        public GameDetails GetDetails(int id)
+        {
             if (settings.DataSource == DataSource.ApiAndScraping)
             {
-                var scraperDetails = scraper.GetGameDetails(searchResult.Url);
-                var apiDetails = ToGameDetails(apiClient.GetMobyGame(searchResult.Id));
+                var scraperDetails = scraper.GetGameDetails(id);
+                var apiDetails = ToGameDetails(apiClient.GetMobyGame(id));
                 return Merge(scraperDetails, apiDetails);
             }
             else if (settings.DataSource.HasFlag(DataSource.Scraping))
             {
-                return scraper.GetGameDetails(searchResult.Url);
+                return scraper.GetGameDetails(id);
             }
             else if (settings.DataSource.HasFlag(DataSource.Api))
             {
-                return ToGameDetails(apiClient.GetMobyGame(searchResult.Id));
+                return ToGameDetails(apiClient.GetMobyGame(id));
             }
             return null;
         }
@@ -60,10 +65,7 @@ namespace MobyGamesMetadata.Api
                 if (id == null)
                     continue;
 
-                if (settings.DataSource.HasFlag(DataSource.Scraping))
-                    gameDetails = scraper.GetGameDetails(link.Url);
-                else if (settings.DataSource.HasFlag(DataSource.Api))
-                    gameDetails = ToGameDetails(apiClient.GetMobyGame(id.Value));
+                gameDetails = GetDetails(id.Value);
 
                 return gameDetails != null;
             }

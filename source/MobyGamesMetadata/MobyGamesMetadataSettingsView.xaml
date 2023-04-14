@@ -56,9 +56,11 @@
                 </CollectionViewSource>
             </TabItem.Resources>
             <ListView ItemsSource="{Binding Source={StaticResource GenresCollection}}" Name="GenreSettingsView" Margin="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False" d:ItemsSource="{d:SampleData ItemCount=50}">
+                      ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False"
+                      VirtualizingPanel.ScrollUnit="Pixel"
+                      d:ItemsSource="{d:SampleData ItemCount=50}">
                 <ListView.View>
-                    <GridView>
+                    <GridView ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False" VirtualizingPanel.ScrollUnit="Pixel">
                         <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />
                         <GridViewColumn Header="Import to">
                             <GridViewColumn.CellTemplate>

@@ -29,21 +29,13 @@ namespace MobyGamesMetadata.Api
             if (scraperDetails == null) return apiDetails;
             if (apiDetails == null) return scraperDetails;
 
-            scraperDetails.CoverOptions = apiDetails.CoverOptions;
-            scraperDetails.BackgroundOptions = apiDetails.BackgroundOptions;
-            scraperDetails.Links = apiDetails.Links;
+            apiDetails.CommunityScore = scraperDetails.CommunityScore;
+            apiDetails.CriticScore = scraperDetails.CriticScore;
+            apiDetails.Tags.AddMissing(scraperDetails.Tags);
+            apiDetails.Series.AddMissing(scraperDetails.Series);
+            if(apiDetails.Description == null)
+                apiDetails.Description = scraperDetails.Description;
 
-            if (apiDetails.Description != null)
-                scraperDetails.Description = apiDetails.Description;
-
-            if (apiDetails.Genres != null)
-                scraperDetails.Genres = apiDetails.Genres;
-
-            if (apiDetails.Tags != null)
-            {
-                scraperDetails.Tags.AddRange(apiDetails.Tags);
-                scraperDetails.Tags = scraperDetails.Tags.Distinct().ToList();
-            }
             return scraperDetails;
         }
 
