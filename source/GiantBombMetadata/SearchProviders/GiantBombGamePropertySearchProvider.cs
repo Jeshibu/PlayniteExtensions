@@ -1,6 +1,7 @@
 ﻿using GiantBombMetadata.Api;
 using Playnite.SDK;
 using PlayniteExtensions.Metadata.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,7 +33,9 @@ namespace GiantBombMetadata.SearchProviders
         {
             var output = new GenericItemOption<GiantBombSearchResultItem>(item);
             output.Name = item.Name;
-            output.Description = item.Deck;
+            output.Description = item.ResourceType.ToUpper();
+            if (!string.IsNullOrWhiteSpace(item.Deck))
+                output.Description += Environment.NewLine + item.Deck;
             return output;
         }
     }
