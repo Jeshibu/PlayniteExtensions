@@ -72,7 +72,7 @@
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Import as">
+                        <GridViewColumn Header="Import to">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <ComboBox ItemsSource="{Binding DataContext.ImportTargets, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding ImportTarget}"/>
@@ -100,13 +100,11 @@
                 <ListView.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Set import target" ItemsSource="{Binding ImportTargets}">
-                            <MenuItem.ItemTemplate>
-                                <DataTemplate>
-                                    <MenuItem Header="{Binding .}" Click="SetImportTarget_Click"/>
-                                    <!--Command="{Binding DataContext.SetStatus, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                              CommandParameter="{Binding SelectedItems, RelativeSource={RelativeSource AncestorType=ListView}}"/>-->
-                                </DataTemplate>
-                            </MenuItem.ItemTemplate>
+                            <MenuItem.Resources>
+                                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                                    <EventSetter Event="Click" Handler="SetImportTarget_Click"/>
+                                </Style>
+                            </MenuItem.Resources>
                         </MenuItem>
                     </ContextMenu>
                 </ListView.ContextMenu>
