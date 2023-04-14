@@ -5,11 +5,7 @@ using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Runtime;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace MobyGamesMetadata
@@ -17,6 +13,8 @@ namespace MobyGamesMetadata
     public class MobyGamesMetadata : MetadataPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private MobyGamesApiClient apiClient;
+        public MobyGamesApiClient ApiClient { get { return apiClient ?? (apiClient = new MobyGamesApiClient { ApiKey = settings?.Settings?.ApiKey }); } }
 
         private MobyGamesMetadataSettingsViewModel settings { get; set; }
 
@@ -52,12 +50,14 @@ namespace MobyGamesMetadata
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
+            if (BlockMissingApiKey())
+                return null;
+
             settings.Settings.DataSource = DataSource.ApiAndScraping;
             var platformUtility = new PlatformUtility(PlayniteApi);
             var downloader = new WebDownloader();
-            var apiClient = new MobyGamesApiClient() { ApiKey = settings.Settings.ApiKey };
             var scraper = new MobyGamesScraper(platformUtility, downloader);
-            var aggr = new MobyGamesGameSearchProvider(apiClient, scraper, settings.Settings, platformUtility);
+            var aggr = new MobyGamesGameSearchProvider(ApiClient, scraper, settings.Settings, platformUtility);
             return new MobyGamesMetadataProvider(options, this, aggr, platformUtility);
         }
 
@@ -68,6 +68,7 @@ namespace MobyGamesMetadata
 
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
+            apiClient = null;
             return new MobyGamesMetadataSettingsView();
         }
 
@@ -95,13 +96,27 @@ namespace MobyGamesMetadata
 
         public void ImportGameProperty()
         {
+            if (BlockMissingApiKey())
+                return;
+
             var platformUtility = new PlatformUtility(PlayniteApi);
             var downloader = new WebDownloader();
-            var apiClient = new MobyGamesApiClient() { ApiKey = settings.Settings.ApiKey };
             var scraper = new MobyGamesScraper(platformUtility, downloader);
-            var searchProvider = new AggregateMobyPropertyCollector(apiClient, scraper, settings.Settings, platformUtility);
+            var searchProvider = new AggregateMobyPropertyCollector(ApiClient, scraper, settings.Settings, platformUtility);
             var extra = new MobyGamesBulkPropertyAssigner(PlayniteApi, settings.Settings, searchProvider, platformUtility);
             extra.ImportGameProperty();
+        }
+
+        private bool BlockMissingApiKey()
+        {
+            if (string.IsNullOrWhiteSpace(settings.Settings.ApiKey))
+            {
+                var notification = new NotificationMessage("mobygames-missing-api-key", "Missing MobyGames API key. Click here to add it.",
+                                                           NotificationType.Error, () => OpenSettingsView());
+                PlayniteApi.Notifications.Add(notification);
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -35,7 +35,11 @@ namespace PlayniteExtensions.Metadata.Common
             if (selectedItem == null)
                 return;
 
-            var associatedGames = dataSource.GetDetails(selectedItem)?.ToList();
+            List<GameDetails> associatedGames = null;
+            playniteApi.Dialogs.ActivateGlobalProgress(a =>
+            {
+                associatedGames = dataSource.GetDetails(selectedItem)?.ToList();
+            }, new GlobalProgressOptions("Downloading list of associated games"));
 
             if (associatedGames == null)
                 return;

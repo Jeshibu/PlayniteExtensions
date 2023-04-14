@@ -41,7 +41,7 @@ namespace Barnite.Scrapers
             return int.Parse(idString);
         }
 
-        public GameDetails ParseGameDetailsHtml(string html)
+        public GameDetails ParseGameDetailsHtml(string html, bool parseGenres = true)
         {
             var page = new HtmlDocument();
             page.LoadHtml(html);
@@ -70,19 +70,22 @@ namespace Barnite.Scrapers
             if (releaseDateString != null)
                 data.ReleaseDate = ParseReleaseDate(releaseDateString);
 
-            SetMetadataListItems(data.Genres, page, "Genre");
-            SetMetadataListItems(data.Genres, page, "Perspective");
-            SetMetadataListItems(data.Genres, page, "Gameplay");
-            SetMetadataListItems(data.Genres, page, "Narrative");
-            SetMetadataListItems(data.Tags, page, "Visual Presentation");
-            SetMetadataListItems(data.Tags, page, "Art");
-            SetMetadataListItems(data.Tags, page, "Pacing");
-            SetMetadataListItems(data.Tags, page, "Sport");
-            SetMetadataListItems(data.Tags, page, "Vehicular");
-            SetMetadataListItems(data.Tags, page, "Educational");
-            SetMetadataListItems(data.Tags, page, "Interface");
-            SetMetadataListItems(data.Tags, page, "Setting");
-            SetMetadataListItems(data.Tags, page, "Misc");
+            if (parseGenres)
+            {
+                SetMetadataListItems(data.Genres, page, "Genre");
+                SetMetadataListItems(data.Genres, page, "Perspective");
+                SetMetadataListItems(data.Genres, page, "Gameplay");
+                SetMetadataListItems(data.Genres, page, "Narrative");
+                SetMetadataListItems(data.Tags, page, "Visual Presentation");
+                SetMetadataListItems(data.Tags, page, "Art");
+                SetMetadataListItems(data.Tags, page, "Pacing");
+                SetMetadataListItems(data.Tags, page, "Sport");
+                SetMetadataListItems(data.Tags, page, "Vehicular");
+                SetMetadataListItems(data.Tags, page, "Educational");
+                SetMetadataListItems(data.Tags, page, "Interface");
+                SetMetadataListItems(data.Tags, page, "Setting");
+                SetMetadataListItems(data.Tags, page, "Misc");
+            }
 
             data.Description = page.DocumentNode.SelectSingleNode("//div[@id='description-text']")?.InnerHtml.Trim();
 

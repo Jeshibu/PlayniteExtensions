@@ -128,7 +128,7 @@ namespace MobyGamesMetadata.Api
 
         private GameDetails ParseGameDetailsHtml(string html)
         {
-            return new MobyGamesHelper(PlatformUtility).ParseGameDetailsHtml(html);
+            return new MobyGamesHelper(PlatformUtility).ParseGameDetailsHtml(html, parseGenres: false);
         }
     }
 

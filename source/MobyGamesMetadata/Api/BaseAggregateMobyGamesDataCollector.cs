@@ -107,35 +107,35 @@ namespace MobyGamesMetadata.Api
 
         protected void AssignGenre(GameDetails gameDetails, Genre g)
         {
-            var list = GetRelevantList(gameDetails, g);
-            if (list == null) return;
-            list.Add(g.Name);
-        }
-
-        protected List<string> GetRelevantList(GameDetails gameDetails, Genre g)
-        {
-            switch (g.Category)
+            var genreSettings = settings.Genres.FirstOrDefault(x => x.Id == g.Id);
+            if (genreSettings == null)
             {
-                case "Basic Genres":
-                case "Perspective":
-                case "Gameplay":
-                case "Narrative Theme/Topic":
-                    return gameDetails.Genres;
-                case "Visual Presentation":
-                case "Art Style":
-                case "Pacing":
-                case "Interface/Control":
-                case "Sports Themes":
-                case "Educational Categories":
-                case "Vehicular Themes":
-                case "Setting":
-                case "Special Edition":
-                case "Other Attributes":
-                    return gameDetails.Tags;
-                case "DLC/Add-on":
-                default:
-                    return null;
+                gameDetails.Tags.Add(g.Name);
+                return;
             }
+            List<string> list;
+            switch (genreSettings.ImportTarget)
+            {
+                case PropertyImportTarget.Genres:
+                    list = gameDetails.Genres;
+                    break;
+                case PropertyImportTarget.Tags:
+                    list = gameDetails.Tags;
+                    break;
+                case PropertyImportTarget.Series:
+                    list = gameDetails.Series;
+                    break;
+                case PropertyImportTarget.Features:
+                    list = gameDetails.Features;
+                    break;
+                case PropertyImportTarget.Ignore:
+                default:
+                    return;
+            }
+            if (string.IsNullOrWhiteSpace(genreSettings.NameOverride))
+                list.Add(g.Name);
+            else
+                list.Add(genreSettings.NameOverride);
         }
 
         protected static BasicImage ToIImageData(MobyImage image)
