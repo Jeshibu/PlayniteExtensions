@@ -121,6 +121,17 @@ namespace MobyGamesMetadata.Api
             return result.Games;
         }
 
+        public ICollection<MobyGame> GetGamesForGenre(int genreId, int limit, int offset)
+        {
+            var request = new RestRequest("games")
+                .AddQueryParameter("genre", genreId)
+                .AddQueryParameter("limit", limit)
+                .AddQueryParameter("offset", offset);
+
+            var result = Execute<GamesRoot>(request);
+            return result.Games;
+        }
+
         public ICollection<MobyGroup> GetGroups(int offset = 0, int limit = 100)
         {
             var request = new RestRequest("groups")
@@ -139,7 +150,7 @@ namespace MobyGamesMetadata.Api
             ICollection<MobyGroup> response;
             do
             {
-                 response = GetGroups(offset, limit);
+                response = GetGroups(offset, limit);
                 if (response == null) break;
 
                 output.AddRange(response);
@@ -148,13 +159,33 @@ namespace MobyGamesMetadata.Api
             return output;
         }
 
-        public IEnumerable<MobyGame> GetAllGamesForGroup(int groupId)
+        private delegate ICollection<MobyGame> GetGames(int entityId, int offset, int limit);
+
+        public IEnumerable<MobyGame> GetAllGamesForGroup(int groupId, GlobalProgressActionArgs progressArgs = null)
+        {
+            return GetAllGamesForEntity(groupId, GetGamesForGroup, "Downloading games for group...", progressArgs);
+        }
+
+        public IEnumerable<MobyGame> GetAllGamesForGenre(int genreId,  GlobalProgressActionArgs progressArgs = null)
+        {
+            return GetAllGamesForEntity(genreId, GetGamesForGenre, "Downloading games for genre...", progressArgs);
+        }
+
+        private IEnumerable<MobyGame> GetAllGamesForEntity(int entityId, GetGames get, string progressText, GlobalProgressActionArgs progressArgs = null)
         {
             int limit = 100, offset = 0;
             List<MobyGame> response;
             do
             {
-                response = GetGamesForGroup(groupId, limit, offset).ToList();
+                if (progressArgs != null)
+                {
+                    if (progressArgs.CancelToken.IsCancellationRequested)
+                        yield break;
+
+                    progressArgs.Text = $"{progressText} ({offset} downloaded)";
+                }
+
+                response = get(entityId, limit, offset).ToList();
                 foreach (var game in response)
                     yield return game;
 

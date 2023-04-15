@@ -18,4 +18,13 @@ namespace PlayniteExtensions.Metadata.Common
         Series,
         Features,
     }
+
+    [Flags]
+    public enum DataSource
+    {
+        None = 0,
+        Api = 1,
+        Scraping = 2,
+        ApiAndScraping = 3,
+    }
 }

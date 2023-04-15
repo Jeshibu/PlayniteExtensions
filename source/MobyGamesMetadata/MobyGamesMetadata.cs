@@ -2,6 +2,7 @@
 using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
+using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,32 +21,53 @@ namespace MobyGamesMetadata
 
         public override Guid Id { get; } = Guid.Parse("5d65902f-9bd9-44f9-b647-04f349622bb8");
 
-        public override List<MetadataField> SupportedFields { get; } = new List<MetadataField> {
-            MetadataField.Name,
-            MetadataField.Description,
-            MetadataField.ReleaseDate,
-            MetadataField.Genres,
-            MetadataField.Tags,
-            MetadataField.Platform,
-            MetadataField.Developers,
-            MetadataField.Publishers,
-            MetadataField.CoverImage,
-            MetadataField.BackgroundImage,
-            MetadataField.CriticScore,
-            MetadataField.CommunityScore,
-            MetadataField.Series,
-            MetadataField.Links,
-        };
+        public override List<MetadataField> SupportedFields
+        {
+            get
+            {
+                var fields = new List<MetadataField>();
+                if (settings.Settings.DataSource.HasFlag(DataSource.Api))
+                {
+                    fields.AddMissing(new[] {
+                        MetadataField.Name,
+                        MetadataField.Description,
+                        MetadataField.ReleaseDate,
+                        MetadataField.Genres,
+                        MetadataField.Tags,
+                        MetadataField.Platform,
+                        MetadataField.Developers,
+                        MetadataField.Publishers,
+                        MetadataField.CoverImage,
+                        MetadataField.BackgroundImage,
+                        MetadataField.Links
+                    });
+                }
+                if (settings.Settings.DataSource.HasFlag(DataSource.Scraping))
+                {
+                    fields.AddMissing(new[] {
+                        MetadataField.Name,
+                        MetadataField.Description,
+                        MetadataField.ReleaseDate,
+                        MetadataField.Tags,
+                        MetadataField.Platform,
+                        MetadataField.Developers,
+                        MetadataField.Publishers,
+                        MetadataField.CoverImage,
+                        MetadataField.CriticScore,
+                        MetadataField.CommunityScore,
+                        MetadataField.Series,
+                    });
+                }
+                return fields;
+            }
+        }
 
-        public override string Name => "MobyGames";
+        public override string Name { get; } = "MobyGames";
 
         public MobyGamesMetadata(IPlayniteAPI api) : base(api)
         {
             settings = new MobyGamesMetadataSettingsViewModel(this);
-            Properties = new MetadataPluginProperties
-            {
-                HasSettings = true
-            };
+            Properties = new MetadataPluginProperties { HasSettings = true };
         }
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
@@ -68,19 +90,19 @@ namespace MobyGamesMetadata
 
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
-            apiClient = null;
+            apiClient = null; //reset client api key
             return new MobyGamesMetadataSettingsView();
         }
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
-            if (settings.Settings.DataSource == DataSource.ApiAndScraping)
-                yield return new MainMenuItem { Description = "Import MobyGames group", MenuSection = "@MobyGames", Action = a => ImportGameProperty() };
+            if (settings.Settings.DataSource.HasFlag(DataSource.Api))
+                yield return new MainMenuItem { Description = "Import MobyGames genre/group", MenuSection = "@MobyGames", Action = a => ImportGameProperty() };
         }
 
         public override IEnumerable<TopPanelItem> GetTopPanelItems()
         {
-            if (!settings.Settings.ShowTopPanelButton || settings.Settings.DataSource != DataSource.ApiAndScraping)
+            if (!settings.Settings.ShowTopPanelButton || !settings.Settings.DataSource.HasFlag(DataSource.Api))
                 yield break;
 
             var assemblyLocation = Assembly.GetExecutingAssembly().Location;
@@ -89,7 +111,7 @@ namespace MobyGamesMetadata
             {
                 Icon = iconPath,
                 Visible = true,
-                Title = "Import MobyGames group",
+                Title = "Import MobyGames genre/group",
                 Activated = ImportGameProperty
             };
         }
@@ -99,17 +121,46 @@ namespace MobyGamesMetadata
             if (BlockMissingApiKey())
                 return;
 
+            var genreOption = new MessageBoxOption("Genres", isDefault: true);
+            var groupOption = new MessageBoxOption("Groups");
+            var cancelOption = new MessageBoxOption("Cancel", isCancel: true);
+
+            MessageBoxOption chosenOption;
+
+            switch (settings.Settings.DataSource)
+            {
+                case DataSource.Api:
+                    chosenOption = genreOption;
+                    break;
+                case DataSource.ApiAndScraping:
+                    chosenOption = PlayniteApi.Dialogs.ShowMessage("Assign one of the following to all your matching games:", "Bulk property import",
+                        System.Windows.MessageBoxImage.Question, new List<MessageBoxOption> { genreOption, groupOption, cancelOption });
+                    break;
+                default:
+                    return;
+            }
+            if (chosenOption == null || chosenOption == cancelOption) return;
+
             var platformUtility = new PlatformUtility(PlayniteApi);
             var downloader = new WebDownloader();
             var scraper = new MobyGamesScraper(platformUtility, downloader);
-            var searchProvider = new MobyGamesPropertySearchProvider(ApiClient, scraper, settings.Settings, platformUtility);
-            var extra = new MobyGamesBulkPropertyAssigner(PlayniteApi, settings.Settings, searchProvider, platformUtility);
-            extra.ImportGameProperty();
+            if (chosenOption == groupOption)
+            {
+                var searchProvider = new MobyGamesPropertySearchProvider(ApiClient, scraper, settings.Settings, platformUtility);
+                var extra = new MobyGamesBulkGroupAssigner(PlayniteApi, settings.Settings, searchProvider, platformUtility);
+                extra.ImportGameProperty();
+            }
+            else if (chosenOption == genreOption)
+            {
+                var searchProvider = new MobyGamesGenreSearchProvider(ApiClient, scraper, settings.Settings, platformUtility);
+                var extra = new MobyGamesBulkGenreAssigner(PlayniteApi, searchProvider, platformUtility);
+                extra.ImportGameProperty();
+            }
         }
 
         private bool BlockMissingApiKey()
         {
-            if (string.IsNullOrWhiteSpace(settings.Settings.ApiKey))
+            if (settings.Settings.DataSource.HasFlag(DataSource.Api) && string.IsNullOrWhiteSpace(settings.Settings.ApiKey))
             {
                 var notification = new NotificationMessage("mobygames-missing-api-key", "Missing MobyGames API key. Click here to add it.",
                                                            NotificationType.Error, () => OpenSettingsView());

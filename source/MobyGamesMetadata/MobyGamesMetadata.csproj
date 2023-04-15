@@ -96,6 +96,7 @@
       <Link>Api\MobyGamesHelper.cs</Link>
     </Compile>
     <Compile Include="Api\MobyGamesGameSearchProvider.cs" />
+    <Compile Include="Api\MobyGamesGenreSearchProvider.cs" />
     <Compile Include="Api\MobyGamesPropertySearchProvider.cs" />
     <Compile Include="Api\BaseAggregateMobyGamesDataCollector.cs" />
     <Compile Include="Api\MobyGamesApiClient.cs" />
@@ -105,7 +106,8 @@
       <DependentUpon>GamePropertyImportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="GamePropertyImportViewModel.cs" />
-    <Compile Include="MobyGamesBulkPropertyAssigner.cs" />
+    <Compile Include="MobyGamesBulkGenreAssigner.cs" />
+    <Compile Include="MobyGamesBulkGroupAssigner.cs" />
     <Compile Include="MobyGamesMetadata.cs" />
     <Compile Include="MobyGamesMetadataProvider.cs" />
     <Compile Include="MobyGamesMetadataSettings.cs" />

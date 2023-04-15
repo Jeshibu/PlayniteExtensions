@@ -1,4 +1,5 @@
 ﻿using Barnite.Scrapers;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
@@ -16,7 +17,7 @@ namespace MobyGamesMetadata.Api
         public MobyGamesGameSearchProvider(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility)
             : base(apiClient, scraper, settings, platformUtility) { }
 
-        public GameDetails GetDetails(GameSearchResult searchResult)
+        public GameDetails GetDetails(GameSearchResult searchResult, GlobalProgressActionArgs progressArgs = null)
         {
             return GetDetails(searchResult.Id);
         }

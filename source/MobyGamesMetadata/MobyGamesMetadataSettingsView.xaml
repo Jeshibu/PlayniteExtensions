@@ -43,7 +43,7 @@
                     <Button Content="Get API Key" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"
                         Command="{Binding GetApiKeyCommand}" Margin="10,0,0,0"/>
 
-                    <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,0" Content="Show top panel button to add metadata to multiple games" IsChecked="{Binding Settings.ShowTopPanelButton}" Visibility="Hidden"/>
+                    <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,0" Content="Show top panel button to add metadata to multiple games" IsChecked="{Binding Settings.ShowTopPanelButton}"/>
                 </Grid>
             </StackPanel>
         </TabItem>
@@ -57,10 +57,10 @@
             </TabItem.Resources>
             <ListView ItemsSource="{Binding Source={StaticResource GenresCollection}}" Name="GenreSettingsView" Margin="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                       ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False"
-                      VirtualizingPanel.ScrollUnit="Pixel"
+                      VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling"
                       d:ItemsSource="{d:SampleData ItemCount=50}">
                 <ListView.View>
-                    <GridView ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False" VirtualizingPanel.ScrollUnit="Pixel">
+                    <GridView>
                         <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />
                         <GridViewColumn Header="Import to">
                             <GridViewColumn.CellTemplate>

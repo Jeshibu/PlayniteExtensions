@@ -1,4 +1,5 @@
-﻿using PlayniteExtensions.Common;
+﻿using Playnite.SDK;
+using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,22 +12,10 @@ namespace MobyGamesMetadata.Api
         public MobyGamesPropertySearchProvider(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility)
             : base(apiClient, scraper, settings, platformUtility) { }
 
-        public IEnumerable<GameDetails> GetDetails(SearchResult searchResult)
+        public IEnumerable<GameDetails> GetDetails(SearchResult searchResult, GlobalProgressActionArgs progressArgs = null)
         {
             var details = new List<GameDetails>();
-            if (settings.DataSource.HasFlag(DataSource.Api))
-            {
-                int limit = 100, offset = 0;
-                ICollection<MobyGame> result;
-                do
-                {
-                    result = apiClient.GetGamesForGroup(searchResult.Id, limit, offset);
-                    offset += limit;
-                    if (result != null)
-                        details.AddRange(result.Select(ToGameDetails));
-                } while (result?.Count == limit);
-            }
-            return details;
+            return apiClient.GetAllGamesForGroup(searchResult.Id, progressArgs).Select(ToGameDetails);
         }
 
         IEnumerable<SearchResult> ISearchableDataSource<SearchResult>.Search(string query)

@@ -10,11 +10,11 @@ using System.Windows.Controls;
 
 namespace MobyGamesMetadata
 {
-    public class MobyGamesBulkPropertyAssigner : BulkGamePropertyAssigner<SearchResult>
+    public class MobyGamesBulkGroupAssigner : BulkGamePropertyAssigner<SearchResult>
     {
         private readonly MobyGamesMetadataSettings settings;
 
-        public MobyGamesBulkPropertyAssigner(IPlayniteAPI playniteAPI, MobyGamesMetadataSettings settings, ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility)
+        public MobyGamesBulkGroupAssigner(IPlayniteAPI playniteAPI, MobyGamesMetadataSettings settings, ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility)
             : base(playniteAPI, dataSource, platformUtility)
         {
             this.settings = settings;
@@ -45,7 +45,7 @@ namespace MobyGamesMetadata
                 return new PropertyImportSetting { ImportTarget = PropertyImportTarget.Features };
             };
             propName = searchItem.Name;
-            return new PropertyImportSetting { ImportTarget=PropertyImportTarget.Tags };
+            return new PropertyImportSetting { ImportTarget = PropertyImportTarget.Tags };
         }
     }
 }

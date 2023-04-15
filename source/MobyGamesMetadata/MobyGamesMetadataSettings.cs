@@ -30,16 +30,7 @@ namespace MobyGamesMetadata
         public ObservableCollection<MobyGamesGenreSetting> Genres { get; set; } = new ObservableCollection<MobyGamesGenreSetting>();
     }
 
-    [Flags]
-    public enum DataSource
-    {
-        None = 0,
-        Api = 1,
-        Scraping = 2,
-        ApiAndScraping = 3,
-    }
-
-    public class MobyGamesGenreSetting : ObservableObject
+    public class MobyGamesGenreSetting : ObservableObject, IHasName
     {
         private string nameOverride;
         private PropertyImportTarget importTarget = PropertyImportTarget.Genres;
