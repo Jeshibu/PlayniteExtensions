@@ -1,7 +1,12 @@
 ﻿Id: Barnite_fdcf35cc-edcd-4fc3-8640-bb037d3349fe
 Name: Barnite
 Author: Jeshibu
-Version: 0.6
+Version: 0.6.1
 Module: Barnite.dll
 Type: GenericPlugin
 Icon: icon.png
+Links:
+  - Name: GitHub repository
+    Url: https://github.com/Jeshibu/PlayniteExtensions
+  - Name: Support my work on Ko-fi
+    Url: https://ko-fi.com/Jeshibu

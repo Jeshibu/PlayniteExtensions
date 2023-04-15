@@ -44,3 +44,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-03-11/Barnite_0_6.pext
     Changelog:
     - Added company form trimming (remove LTD, LLC, SA etc from developers and publishers)
+  - Version: 0.6.1
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-04-16
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-04-16/Barnite_0_6_1.pext
+    Changelog:
+    - Fixed MobyGames and Play-Asia sourcing to account for website updates

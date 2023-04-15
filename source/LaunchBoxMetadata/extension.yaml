@@ -1,7 +1,14 @@
 ﻿Id: LaunchBoxMetadata
 Name: LaunchBox Metadata Provider
 Author: Jeshibu
-Version: 0.3
+Version: 0.4
 Module: LaunchBoxMetadata.dll
 Type: MetadataProvider
 Icon: icon.png
+Links:
+  - Name: LaunchBox Games Database
+    Url: https://gamesdb.launchbox-app.com/
+  - Name: GitHub repository
+    Url: https://github.com/Jeshibu/PlayniteExtensions
+  - Name: Support my work on Ko-fi
+    Url: https://ko-fi.com/Jeshibu

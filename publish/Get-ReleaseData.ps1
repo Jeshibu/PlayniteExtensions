@@ -69,6 +69,7 @@ function Get-ProjectNames {
         "itchiobundletagger"  = @("itchIoBundleTagger")
         "launchbox"           = @("LaunchBoxMetadata")
         "legacygames"         = @("LegacyGamesLibrary")
+        "mobygames"           = @("MobyGamesMetadata")
         "pathreplacer"        = @("PathReplacer")
         "rawg"                = @("RawgLibrary", "RawgMetadata")
         "steamtagsimporter"   = @("SteamTagsImporter")

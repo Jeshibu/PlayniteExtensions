@@ -55,3 +55,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/giantbomb0.5.2/GiantBombMetadata_0_5_2.pext
     Changelog:
      - Fixed list fields not allowing fallback to other metadata providers when empty
+  - Version: 0.6
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-04-16
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-04-16/GiantBombMetadata_0_6.pext
+    Changelog:
+     - Added Locations to bulk property import
+     - Added error message when missing API key, and automatic whitespace trimming of API key

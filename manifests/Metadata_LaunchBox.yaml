@@ -31,3 +31,10 @@ Packages:
     Changelog:
     - Now using thumbnails for image selection and filtering. This greatly improves metadata collection speed when images are involved.
     - Fixed links not allowing fallback on other metadata providers
+  - Version: 0.4
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-04-16
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-04-16/LaunchBoxMetadata_0_4.pext
+    Changelog:
+    - Added option to use LaunchBox images as icons (Clear Logos only by default)
+    - Made platform name matching for background downloads more permissive (ignoring non-letter and non-digit characters)

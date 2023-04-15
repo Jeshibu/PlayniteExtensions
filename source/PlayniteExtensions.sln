@@ -70,6 +70,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manifests", "Manifests", "{
 		..\manifests\Metadata_GiantBomb.yaml = ..\manifests\Metadata_GiantBomb.yaml
 		..\manifests\Metadata_IGN.yaml = ..\manifests\Metadata_IGN.yaml
 		..\manifests\Metadata_LaunchBox.yaml = ..\manifests\Metadata_LaunchBox.yaml
+		..\manifests\Metadata_MobyGames.yaml = ..\manifests\Metadata_MobyGames.yaml
 		..\manifests\Metadata_Rawg.yaml = ..\manifests\Metadata_Rawg.yaml
 		..\manifests\Metadata_Xbox.yaml = ..\manifests\Metadata_Xbox.yaml
 	EndProjectSection
@@ -85,8 +86,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XboxMetadata.Tests", "XboxMetadata.Tests\XboxMetadata.Tests.csproj", "{3A701B5F-255C-443E-A462-22CB8D463A9C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobyGamesMetadata", "MobyGamesMetadata\MobyGamesMetadata.csproj", "{22577C83-FCF9-49F2-9957-6C67D59FCBD6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobyGamesMetadata.Tests", "MobyGamesMetadata.Tests\MobyGamesMetadata.Tests.csproj", "{2BD92D9B-4B71-46F8-8540-7F97AFD3FA1A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayniteExtensions.Common.Tests", "PlayniteExtensions.Common.Tests\PlayniteExtensions.Common.Tests.csproj", "{EBA8F49F-AA6F-4329-985B-A6ED6E9F8490}"
 EndProject
@@ -202,10 +201,6 @@ Global
 		{22577C83-FCF9-49F2-9957-6C67D59FCBD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22577C83-FCF9-49F2-9957-6C67D59FCBD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22577C83-FCF9-49F2-9957-6C67D59FCBD6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2BD92D9B-4B71-46F8-8540-7F97AFD3FA1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2BD92D9B-4B71-46F8-8540-7F97AFD3FA1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2BD92D9B-4B71-46F8-8540-7F97AFD3FA1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2BD92D9B-4B71-46F8-8540-7F97AFD3FA1A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EBA8F49F-AA6F-4329-985B-A6ED6E9F8490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EBA8F49F-AA6F-4329-985B-A6ED6E9F8490}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBA8F49F-AA6F-4329-985B-A6ED6E9F8490}.Release|Any CPU.ActiveCfg = Release|Any CPU

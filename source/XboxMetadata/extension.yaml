@@ -1,7 +1,14 @@
 ﻿Id: XboxMetadata
 Name: Xbox Metadata Provider
 Author: Jeshibu
-Version: 0.1.1
+Version: 0.2
 Module: XboxMetadata.dll
 Type: MetadataProvider
 Icon: icon.png
+Links:
+  - Name: Xbox
+    Url: https://www.xbox.com/
+  - Name: GitHub repository
+    Url: https://github.com/Jeshibu/PlayniteExtensions
+  - Name: Support my work on Ko-fi
+    Url: https://ko-fi.com/Jeshibu
