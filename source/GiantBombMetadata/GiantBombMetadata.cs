@@ -99,7 +99,7 @@ namespace GiantBombMetadata
 
         public void ImportGameProperty()
         {
-            var searchProvider = new GiantBombGamePropertySearchProvider(ApiClient);
+            var searchProvider = new GiantBombGamePropertySearchProvider(ApiClient, new GiantBombScraper(new WebDownloader(), PlatformUtility));
             var extra = new GiantBombBulkPropertyAssigner(PlayniteApi, Settings.Settings, searchProvider, new PlatformUtility(PlayniteApi));
             extra.ImportGameProperty();
         }

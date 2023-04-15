@@ -10,17 +10,27 @@ namespace GiantBombMetadata.SearchProviders
     public class GiantBombGamePropertySearchProvider : ISearchableDataSourceWithDetails<GiantBombSearchResultItem, IEnumerable<GameDetails>>
     {
         private readonly IGiantBombApiClient apiClient;
+        private readonly GiantBombScraper scraper;
         private readonly ILogger logger = LogManager.GetLogger();
 
-        public GiantBombGamePropertySearchProvider(IGiantBombApiClient apiClient)
+        public GiantBombGamePropertySearchProvider(IGiantBombApiClient apiClient, GiantBombScraper scraper)
         {
             this.apiClient = apiClient;
+            this.scraper = scraper;
         }
 
-        public IEnumerable<GameDetails> GetDetails(GiantBombSearchResultItem searchResult)
+        public IEnumerable<GameDetails> GetDetails(GiantBombSearchResultItem searchResult, GlobalProgressActionArgs progressArgs = null)
         {
-            var result = apiClient.GetGameProperty($"{searchResult.ResourceType}/{searchResult.Guid}");
-            return result?.Games.Select(g => new GameDetails { Names = new List<string> { g.Name }, Url = g.SiteDetailUrl }) ?? new GameDetails[0];
+            if (searchResult.ResourceType == "location")
+            {
+                var result = scraper.GetGamesForEntity(searchResult.SiteDetailUrl, progressArgs);
+                return result;
+            }
+            else
+            {
+                var result = apiClient.GetGameProperty($"{searchResult.ResourceType}/{searchResult.Guid}");
+                return result?.Games.Select(g => new GameDetails { Names = new List<string> { g.Name }, Url = g.SiteDetailUrl }) ?? new GameDetails[0];
+            }
         }
 
         public IEnumerable<GiantBombSearchResultItem> Search(string query)

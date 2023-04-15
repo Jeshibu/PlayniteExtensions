@@ -25,7 +25,7 @@ namespace GiantBombMetadata.SearchProviders
             this.platformUtility = platformUtility;
         }
 
-        public GameDetails GetDetails(GiantBombSearchResultItem searchResult)
+        public GameDetails GetDetails(GiantBombSearchResultItem searchResult, GlobalProgressActionArgs progressArgs = null)
         {
             var result = apiClient.GetGameDetails(searchResult.Guid);
             if (result == null) return null;

@@ -26,11 +26,12 @@ namespace PlayniteExtensions.Metadata.Common
         private readonly IPlatformUtility platformUtility;
         protected readonly IPlayniteAPI playniteApi;
         public abstract string MetadataProviderName { get; }
+        protected bool AllowEmptySearchQuery { get; set; } = false;
 
 
         public void ImportGameProperty()
         {
-            var selectedItem = SelectGiantBombGameProperty();
+            var selectedItem = SelectGameProperty();
 
             if (selectedItem == null)
                 return;
@@ -38,7 +39,7 @@ namespace PlayniteExtensions.Metadata.Common
             List<GameDetails> associatedGames = null;
             playniteApi.Dialogs.ActivateGlobalProgress(a =>
             {
-                associatedGames = dataSource.GetDetails(selectedItem)?.ToList();
+                associatedGames = dataSource.GetDetails(selectedItem, a)?.ToList();
             }, new GlobalProgressOptions("Downloading list of associated games"));
 
             if (associatedGames == null)
@@ -52,13 +53,13 @@ namespace PlayniteExtensions.Metadata.Common
             UpdateGames(viewModel);
         }
 
-        private TSearchItem SelectGiantBombGameProperty()
+        private TSearchItem SelectGameProperty()
         {
             var selectedItem = playniteApi.Dialogs.ChooseItemWithSearch(null, (a) =>
             {
                 var output = new List<GenericItemOption>();
 
-                if (string.IsNullOrWhiteSpace(a))
+                if (!AllowEmptySearchQuery && string.IsNullOrWhiteSpace(a))
                     return output;
 
                 try

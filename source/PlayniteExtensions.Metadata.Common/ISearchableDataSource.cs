@@ -1,3 +1,4 @@
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
 
@@ -11,7 +12,7 @@ namespace PlayniteExtensions.Metadata.Common
 
     public interface ISearchableDataSourceWithDetails<TSearchResult, TDetails> : ISearchableDataSource<TSearchResult>
     {
-        TDetails GetDetails(TSearchResult searchResult);
+        TDetails GetDetails(TSearchResult searchResult, GlobalProgressActionArgs progressArgs = null);
     }
 
     public interface IGameSearchProvider<TSearchResult> : ISearchableDataSourceWithDetails<TSearchResult, GameDetails>
