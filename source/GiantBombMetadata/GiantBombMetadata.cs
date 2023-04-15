@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -61,6 +62,9 @@ namespace GiantBombMetadata
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
+            if (BlockMissingApiKey())
+                return null;
+
             var searchProvider = new GiantBombGameSearchProvider(ApiClient, Settings.Settings, PlatformUtility);
             var metadataProvider = new GiantBombMetadataProvider(searchProvider, options, PlayniteApi, PlatformUtility);
             return metadataProvider;
@@ -99,9 +103,24 @@ namespace GiantBombMetadata
 
         public void ImportGameProperty()
         {
+            if (BlockMissingApiKey())
+                return;
+
             var searchProvider = new GiantBombGamePropertySearchProvider(ApiClient, new GiantBombScraper(new WebDownloader(), PlatformUtility));
             var extra = new GiantBombBulkPropertyAssigner(PlayniteApi, Settings.Settings, searchProvider, new PlatformUtility(PlayniteApi));
             extra.ImportGameProperty();
+        }
+
+        private bool BlockMissingApiKey()
+        {
+            if (string.IsNullOrWhiteSpace(Settings.Settings.ApiKey))
+            {
+                var notification = new NotificationMessage("giantbomb-missing-api-key", "Missing Giant Bomb API key. Click here to add it.",
+                                                           NotificationType.Error, () => OpenSettingsView());
+                PlayniteApi.Notifications.Add(notification);
+                return true;
+            }
+            return false;
         }
     }
 }
