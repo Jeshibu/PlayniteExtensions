@@ -26,6 +26,7 @@ namespace LaunchBoxMetadata
         private LaunchBoxGame foundGame;
         private string foundGameUrl;
         private List<LaunchBoxImageDetails> foundImages;
+        private TitleComparer titleComparer = new TitleComparer();
 
         public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 
@@ -65,7 +66,7 @@ namespace LaunchBoxMetadata
                             {
                                 return foundGame = game;
                             }
-                            else if (platform is MetadataNameProperty namePlatform && platformNames.Contains(namePlatform.Name))
+                            else if (platform is MetadataNameProperty namePlatform && platformNames.Contains(namePlatform.Name, titleComparer))
                             {
                                 return foundGame = game;
                             }

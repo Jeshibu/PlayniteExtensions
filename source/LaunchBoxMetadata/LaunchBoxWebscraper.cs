@@ -52,13 +52,30 @@ namespace LaunchBoxMetadata
 
                 var imgElement = l.QuerySelector("img");
                 var alt = imgElement.GetAttribute("alt");
-                imgDetails.Type = alt.Remove(0, (gameTitle + " - ").Length).TrimEnd(" Image");
+                imgDetails.Type = GetImageType(alt, gameTitle, out string region);
+                imgDetails.Region = region;
                 imgDetails.ThumbnailUrl = imgElement.GetAttribute("src");
                 yield return imgDetails;
             }
         }
 
-        private static Regex ImageSizeRegex = new Regex(@"(?<width>\d+) x (?<height>\d+) (?<filetype>[A-Z0-9]+)", RegexOptions.Compiled);
+        private string GetImageType(string altText, string gameTitle, out string region)
+        {
+            var titleRemoved = altText.Remove(0, (gameTitle + " - ").Length);
+            string reg = null;
+            var type = RegionRegex.Replace(titleRemoved, match =>
+            {
+                if (match.Groups["region"].Success)
+                    reg = match.Groups["region"].Value;
+
+                return string.Empty;
+            });
+            region = reg;
+            return type;
+        }
+
+        private static Regex ImageSizeRegex = new Regex(@"(?<width>\d+) x (?<height>\d+) (?<filetype>[A-Z0-9]+)", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
+        private static Regex RegionRegex = new Regex(@"(\s+(Image|\((?<region>[\w\s]+)\))){1,2}$", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
     }
     public class LaunchBoxImageDetails
     {
@@ -67,6 +84,7 @@ namespace LaunchBoxMetadata
         public int Width { get; set; }
         public int Height { get; set; }
         public string Type { get; set; }
+        public string Region { get; set; }
     }
 
 }
