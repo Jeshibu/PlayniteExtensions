@@ -170,6 +170,8 @@ namespace GiantBombMetadata.SearchProviders
                 output.CoverOptions.Add(details.Image);
             if (details.Images != null)
                 output.BackgroundOptions.AddRange(details.Images.Where(ImageCanBeUsedAsBackground));
+            if (details.Genres != null)
+                output.Genres.AddRange(details.Genres.Select(g => g.Name));
 
             output.Url = details.SiteDetailUrl;
 
