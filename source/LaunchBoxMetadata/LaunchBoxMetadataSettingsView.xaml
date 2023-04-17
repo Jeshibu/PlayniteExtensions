@@ -95,7 +95,7 @@
                         </WrapPanel>
 
                         <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
-                        <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Icon.AspectRatio}"/>
+                        <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedValue="{Binding Settings.Icon.AspectRatio}" SelectedValuePath="Key" DisplayMemberPath="Value"/>
                     </Grid>
                     <TextBlock TextWrapping="Wrap">Use the following image types for icons, in the specified order (drag and drop to reorder):</TextBlock>
                     <ListBox Name="IconImageTypes" ItemsSource="{Binding Settings.Icon.ImageTypes}">
@@ -142,7 +142,7 @@
                         </WrapPanel>
 
                         <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
-                        <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Cover.AspectRatio}"/>
+                        <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedValue="{Binding Settings.Cover.AspectRatio}" SelectedValuePath="Key" DisplayMemberPath="Value"/>
                     </Grid>
                     <TextBlock TextWrapping="Wrap">Use the following image types for covers, in the specified order (drag and drop to reorder):</TextBlock>
                     <ListBox Name="CoverImageTypes" ItemsSource="{Binding Settings.Cover.ImageTypes}">
@@ -189,7 +189,7 @@
                         </WrapPanel>
 
                         <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
-                        <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Background.AspectRatio}"/>
+                        <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedValue="{Binding Settings.Background.AspectRatio}" SelectedValuePath="Key" DisplayMemberPath="Value"/>
                     </Grid>
                     <TextBlock TextWrapping="Wrap">Use the following image types for backgrounds, in the specified order (drag and drop to reorder):</TextBlock>
                     <ListBox Name="BackgroundImageTypes" ItemsSource="{Binding Settings.Background.ImageTypes}">

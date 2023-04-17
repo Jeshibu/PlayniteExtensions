@@ -26,7 +26,7 @@ namespace LaunchBoxMetadata
         {
             Icon = new LaunchBoxImageSourceSettings
             {
-                AspectRatio = AspectRatio.Square,
+                AspectRatio = AspectRatio.AnyExtendToSquare,
                 MaxHeight = 256,
                 MaxWidth = 256,
                 MinHeight = 32,
@@ -79,6 +79,7 @@ namespace LaunchBoxMetadata
         Vertical,
         Horizontal,
         Square,
+        AnyExtendToSquare,
     }
 
     public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<LaunchBoxMetadataSettings, LaunchBoxMetadata>
@@ -223,6 +224,12 @@ namespace LaunchBoxMetadata
             }
         }
 
-        public List<AspectRatio> AspectRatios { get; } = new List<AspectRatio> { AspectRatio.Any, AspectRatio.Vertical, AspectRatio.Horizontal, AspectRatio.Square };
+        public Dictionary<AspectRatio,string> AspectRatios { get; } = new Dictionary<AspectRatio, string> {
+            { AspectRatio.Any, "Any" },
+            { AspectRatio.Vertical, "Vertical" },
+            { AspectRatio.Horizontal, "Horizontal" },
+            { AspectRatio.Square, "Square" },
+            { AspectRatio.AnyExtendToSquare, "Any (extend to square)" },
+        };
     }
 }
