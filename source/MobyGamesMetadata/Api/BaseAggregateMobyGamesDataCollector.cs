@@ -35,7 +35,7 @@ namespace MobyGamesMetadata.Api
             if(apiDetails.Description == null)
                 apiDetails.Description = scraperDetails.Description;
 
-            return scraperDetails;
+            return apiDetails;
         }
 
         protected GameSearchResult ToSearchResult(MobyGame mobyGame)

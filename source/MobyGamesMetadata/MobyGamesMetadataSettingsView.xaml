@@ -55,50 +55,58 @@
                     </CollectionViewSource.GroupDescriptions>
                 </CollectionViewSource>
             </TabItem.Resources>
-            <ListView ItemsSource="{Binding Source={StaticResource GenresCollection}}" Name="GenreSettingsView" Margin="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+            <StackPanel Margin="20">
+                <TextBlock TextWrapping="Wrap">You can select multiple items with ctrl- or shift-clicking. Set import targets or name overrides for all selected genres with the right-click menu.</TextBlock>
+                <ListView ItemsSource="{Binding Source={StaticResource GenresCollection}}" Name="GenreSettingsView" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                       ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False"
                       VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling"
                       d:ItemsSource="{d:SampleData ItemCount=50}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="Import to">
-                            <GridViewColumn.CellTemplate>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Header="Import to">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox ItemsSource="{Binding DataContext.ImportTargets, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding ImportTarget}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Name override">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Width="150" Text="{Binding NameOverride}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                    <ListView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
                                 <DataTemplate>
-                                    <ComboBox ItemsSource="{Binding DataContext.ImportTargets, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding ImportTarget}"/>
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" FontSize="20" FontWeight="Bold"/>
                                 </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Header="Name override">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox Width="150" Text="{Binding NameOverride}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-                <ListView.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" FontSize="20" FontWeight="Bold"/>
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </ListView.GroupStyle>
-                <ListView.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Set import target" ItemsSource="{Binding ImportTargets}">
-                            <MenuItem.Resources>
-                                <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
-                                    <EventSetter Event="Click" Handler="SetImportTarget_Click"/>
-                                </Style>
-                            </MenuItem.Resources>
-                        </MenuItem>
-                    </ContextMenu>
-                </ListView.ContextMenu>
-            </ListView>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Set import target" ItemsSource="{Binding ImportTargets}">
+                                <MenuItem.Resources>
+                                    <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                                        <EventSetter Event="Click" Handler="SetImportTarget_Click"/>
+                                    </Style>
+                                </MenuItem.Resources>
+                            </MenuItem>
+                            <MenuItem Header="Set name override">
+                                <MenuItem Header="[Name]" Click="SetNameOverride_Name"/>
+                                <MenuItem Header="[Category]: [Name]" Click="SetNameOverride_Category"/>
+                                <MenuItem Header="[Custom prefix]: [Name]" Click="SetNameOverride_CustomPrefix"/>
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                </ListView>
+            </StackPanel>
         </TabItem>
     </TabControl>
 </UserControl>
