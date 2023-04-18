@@ -70,5 +70,10 @@ namespace MobyGamesMetadata
 
             SetNameOverride(item => $"{prefix}: {item.Name}");
         }
+
+        private void SetNameOverride_Remove(object sender, RoutedEventArgs e)
+        {
+            SetNameOverride(item => null);
+        }
     }
 }

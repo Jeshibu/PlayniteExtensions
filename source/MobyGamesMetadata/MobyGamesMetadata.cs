@@ -80,7 +80,7 @@ namespace MobyGamesMetadata
             var downloader = new WebDownloader();
             var scraper = new MobyGamesScraper(platformUtility, downloader);
             var aggr = new MobyGamesGameSearchProvider(ApiClient, scraper, settings.Settings, platformUtility);
-            return new MobyGamesMetadataProvider(options, this, aggr, platformUtility);
+            return new MobyGamesMetadataProvider(options, this, aggr, platformUtility, settings.Settings);
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

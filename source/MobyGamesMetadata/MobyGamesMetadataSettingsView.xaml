@@ -4,24 +4,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:moby="clr-namespace:MobyGamesMetadata"
+             xmlns:pec="clr-namespace:PlayniteExtensions.Common"
              d:DataContext="{d:DesignInstance Type=moby:MobyGamesMetadataSettingsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <TabControl>
         <TabControl.Resources>
+            <pec:IntegerFormatConverter x:Key="intConverter"/>
             <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="Margin" Value="0,5"/>
             </Style>
-            <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" x:Key="TextBlockStyle">
+            <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
                 <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
             <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
                 <Setter Property="IsTextSearchEnabled" Value="False"/>
                 <Setter Property="IsEditable" Value="False"/>
                 <Setter Property="IsReadOnly" Value="True"/>
-                <Setter Property="Margin" Value="10,0"/>
-                <Setter Property="Width" Value="150"/>
+                <Setter Property="Width" Value="162"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
             </Style>
         </TabControl.Resources>
         <TabItem Header="Settings">
@@ -55,12 +58,19 @@
                     </CollectionViewSource.GroupDescriptions>
                 </CollectionViewSource>
             </TabItem.Resources>
-            <StackPanel Margin="20">
-                <TextBlock TextWrapping="Wrap">You can select multiple items with ctrl- or shift-clicking. Set import targets or name overrides for all selected genres with the right-click menu.</TextBlock>
+            <Grid Margin="20" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock TextWrapping="Wrap" Grid.Row="0" Margin="0,0,0,5">
+                    You can select multiple items with ctrl- or shift-clicking.
+                    Set import targets or name overrides for all selected genres with the right-click menu.
+                </TextBlock>
                 <ListView ItemsSource="{Binding Source={StaticResource GenresCollection}}" Name="GenreSettingsView" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                       ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False"
                       VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling"
-                      d:ItemsSource="{d:SampleData ItemCount=50}">
+                      d:ItemsSource="{d:SampleData ItemCount=50}" Grid.Row="1">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />
@@ -84,7 +94,7 @@
                         <GroupStyle>
                             <GroupStyle.HeaderTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" FontSize="20" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource BaseTextBlockStyle}" FontSize="20" FontWeight="Bold"/>
                                 </DataTemplate>
                             </GroupStyle.HeaderTemplate>
                         </GroupStyle>
@@ -102,11 +112,72 @@
                                 <MenuItem Header="[Name]" Click="SetNameOverride_Name"/>
                                 <MenuItem Header="[Category]: [Name]" Click="SetNameOverride_Category"/>
                                 <MenuItem Header="[Custom prefix]: [Name]" Click="SetNameOverride_CustomPrefix"/>
+                                <MenuItem Header="Remove" Click="SetNameOverride_Remove"/>
                             </MenuItem>
                         </ContextMenu>
                     </ListView.ContextMenu>
                 </ListView>
-            </StackPanel>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Covers">
+            <ScrollViewer>
+                <StackPanel Margin="20" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <TextBlock TextWrapping="Wrap">
+                        Images smaller than either of the minimum dimensions or not matching the orientation will be ignored.<LineBreak/>
+                        Currently only the main cover for a game will be used, not platform-specific alternatives.
+                    </TextBlock>
+                    <Grid Width="Auto" Margin="0,0,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="0,0,5,0">Minimum dimensions:</TextBlock>
+                        <WrapPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox Width="70" Text="{Binding Settings.Cover.MinWidth, Converter={StaticResource intConverter}}"/>
+                            <TextBlock Margin="0,0,5,0">w x</TextBlock>
+                            <TextBox Width="70" Text="{Binding Settings.Cover.MinHeight, Converter={StaticResource intConverter}}"/>
+                            <TextBlock>h</TextBlock>
+                        </WrapPanel>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
+                        <ComboBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Cover.AspectRatio}"/>
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+        </TabItem>
+        <TabItem Header="Backgrounds">
+            <ScrollViewer>
+                <StackPanel Margin="20">
+                    <TextBlock TextWrapping="Wrap">
+                        Images smaller than either of the minimum dimensions or not matching the orientation will be ignored.<LineBreak/>
+                        Currently only screenshots will be retrieved, no promo images. This is due to API limitations.
+                    </TextBlock>
+                    <Grid Width="Auto" Margin="0,0,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="0,0,5,0">Minimum dimensions:</TextBlock>
+                        <WrapPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox Width="70" Text="{Binding Settings.Background.MinWidth, Converter={StaticResource intConverter}}"/>
+                            <TextBlock Margin="0,0,5,0">w x</TextBlock>
+                            <TextBox Width="70" Text="{Binding Settings.Background.MinHeight, Converter={StaticResource intConverter}}"/>
+                            <TextBlock>h</TextBlock>
+                        </WrapPanel>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
+                        <ComboBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Background.AspectRatio}"/>
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
         </TabItem>
     </TabControl>
 </UserControl>

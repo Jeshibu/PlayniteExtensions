@@ -140,7 +140,7 @@ namespace PlayniteExtensions.Metadata.Common
 
         public override MetadataFile GetBackgroundImage(GetMetadataFieldArgs args)
         {
-            return SelectImage(GetGameDetails().BackgroundOptions, "Select background");
+            return SelectImage(GameField.BackgroundImage, GetGameDetails().BackgroundOptions, "Select background");
         }
 
         public override int? GetCommunityScore(GetMetadataFieldArgs args)
@@ -150,7 +150,7 @@ namespace PlayniteExtensions.Metadata.Common
 
         public override MetadataFile GetCoverImage(GetMetadataFieldArgs args)
         {
-            return SelectImage(GetGameDetails().CoverOptions, "Select cover");
+            return SelectImage(GameField.CoverImage, GetGameDetails().CoverOptions, "Select cover");
         }
 
         public override int? GetCriticScore(GetMetadataFieldArgs args)
@@ -180,7 +180,7 @@ namespace PlayniteExtensions.Metadata.Common
 
         public override MetadataFile GetIcon(GetMetadataFieldArgs args)
         {
-            return SelectImage(GetGameDetails().IconOptions, "Select icon");
+            return SelectImage(GameField.Icon, GetGameDetails().IconOptions, "Select icon");
         }
 
         public override ulong? GetInstallSize(GetMetadataFieldArgs args)
@@ -233,8 +233,15 @@ namespace PlayniteExtensions.Metadata.Common
             return GetGameDetails().Tags.NullIfEmpty()?.Select(ToNameProperty);
         }
 
-        protected MetadataFile SelectImage(List<IImageData> images, string caption)
+        protected virtual bool FilterImage(GameField field, IImageData imageData)
         {
+            return true;
+        }
+
+        protected MetadataFile SelectImage(GameField field, List<IImageData> images, string caption)
+        {
+            images = images?.FindAll(img => FilterImage(field, img));
+
             if (images == null || images.Count == 0)
                 return null;
 

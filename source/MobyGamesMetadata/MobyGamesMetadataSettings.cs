@@ -28,6 +28,20 @@ namespace MobyGamesMetadata
         public bool ShowTopPanelButton { get; set; } = true;
 
         public ObservableCollection<MobyGamesGenreSetting> Genres { get; set; } = new ObservableCollection<MobyGamesGenreSetting>();
+
+        public MobyGamesImageSourceSettings Cover { get; set; } = new MobyGamesImageSourceSettings
+        {
+            MinWidth = 200,
+            MinHeight = 300,
+            AspectRatio = AspectRatio.Vertical,
+        };
+
+        public MobyGamesImageSourceSettings Background { get; set; } = new MobyGamesImageSourceSettings
+        {
+            MinWidth = 900,
+            MinHeight = 600,
+            AspectRatio = AspectRatio.Any,
+        };
     }
 
     public class MobyGamesGenreSetting : ObservableObject, IHasName
@@ -73,6 +87,21 @@ namespace MobyGamesMetadata
         public List<MobyGamesGenreSetting> Genres { get; set; }
     }
 
+    public enum AspectRatio
+    {
+        Any,
+        Vertical,
+        Horizontal,
+        Square,
+    }
+
+    public class MobyGamesImageSourceSettings
+    {
+        public int MinHeight { get; set; }
+        public int MinWidth { get; set; }
+        public AspectRatio AspectRatio { get; set; }
+    }
+
     public class MobyGamesMetadataSettingsViewModel : PluginSettingsViewModel<MobyGamesMetadataSettings, MobyGamesMetadata>
     {
         public MobyGamesMetadataSettingsViewModel(MobyGamesMetadata plugin) : base(plugin, plugin.PlayniteApi)
@@ -106,6 +135,14 @@ namespace MobyGamesMetadata
             PropertyImportTarget.Genres,
             PropertyImportTarget.Tags,
             PropertyImportTarget.Features,
+        };
+
+        public AspectRatio[] AspectRatios { get; } = new[]
+        {
+            AspectRatio.Any,
+            AspectRatio.Vertical,
+            AspectRatio.Horizontal,
+            AspectRatio.Square,
         };
 
         private void InitializeGenres()
