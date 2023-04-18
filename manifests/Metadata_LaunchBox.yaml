@@ -38,3 +38,9 @@ Packages:
     Changelog:
     - Added option to use LaunchBox images as icons (Clear Logos only by default)
     - Made platform name matching for background downloads more permissive (ignoring non-letter and non-digit characters)
+  - Version: 0.5
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-04-18
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-04-18/LaunchBoxMetadata_0_5.pext
+    Changelog:
+    - Added option to extend any image to square (useful for icons)

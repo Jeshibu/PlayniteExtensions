@@ -62,3 +62,9 @@ Packages:
     Changelog:
      - Added Locations to bulk property import
      - Added error message when missing API key, and automatic whitespace trimming of API key
+  - Version: 0.6.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-04-18
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-04-18/GiantBombMetadata_0_6_1.pext
+    Changelog:
+     - Fixed Giant Bomb genres not being imported

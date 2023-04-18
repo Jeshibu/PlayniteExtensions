@@ -8,3 +8,10 @@ Packages:
      - Initial public release
      - Added genre settings
      - Added bulk genre assignment
+  - Version: 0.3
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-04-18
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-04-18/MobyGamesMetadata_0_3.pext
+    Changelog:
+     - "Added image filtering options: minimum size and orientation"
+     - "Added right-click options to genre settings to (mass-)set name overrides"

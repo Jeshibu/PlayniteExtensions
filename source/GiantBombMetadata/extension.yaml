@@ -1,7 +1,7 @@
 ﻿Id: GiantBombMetadata
 Name: Giant Bomb Metadata Provider
 Author: Jeshibu
-Version: 0.6
+Version: 0.6.1
 Module: GiantBombMetadata.dll
 Type: MetadataProvider
 Icon: icon.png
