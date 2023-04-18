@@ -114,7 +114,10 @@
         <TabItem Header="Covers">
             <ScrollViewer>
                 <StackPanel Margin="20">
-                    <TextBlock TextWrapping="Wrap">Images smaller than either of the minimum dimensions will be ignored.<LineBreak/> Images larger than either of the maximum dimensions will be scaled down.</TextBlock>
+                    <TextBlock TextWrapping="Wrap">
+                        Images smaller than either of the minimum dimensions will be ignored.<LineBreak/>
+                        Images larger than either of the maximum dimensions will be scaled down.
+                    </TextBlock>
                     <Grid Width="Auto" Margin="0,0,0,10">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -125,7 +128,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="0" Grid.Column="0">Minimum dimensions:</TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="0,0,5,0">Minimum dimensions:</TextBlock>
                         <WrapPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                             <TextBox Width="70" Text="{Binding Settings.Cover.MinWidth, Converter={StaticResource intConverter}}"/>
                             <TextBlock Margin="0,0,5,0">w x</TextBlock>
@@ -133,7 +136,7 @@
                             <TextBlock>h</TextBlock>
                         </WrapPanel>
 
-                        <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="Wrap">Maximum dimensions:</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" Margin="0,0,5,0">Maximum dimensions:</TextBlock>
                         <WrapPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                             <TextBox Width="70" Text="{Binding Settings.Cover.MaxWidth, Converter={StaticResource intConverter}}"/>
                             <TextBlock Margin="0,0,5,0">w x</TextBlock>
