@@ -97,7 +97,7 @@
     </Compile>
     <Compile Include="Api\MobyGamesGameSearchProvider.cs" />
     <Compile Include="Api\MobyGamesGenreSearchProvider.cs" />
-    <Compile Include="Api\MobyGamesPropertySearchProvider.cs" />
+    <Compile Include="Api\MobyGamesGroupSearchProvider.cs" />
     <Compile Include="Api\BaseAggregateMobyGamesDataCollector.cs" />
     <Compile Include="Api\MobyGamesApiClient.cs" />
     <Compile Include="Api\MobyGamesApiModels.cs" />

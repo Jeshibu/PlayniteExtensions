@@ -146,7 +146,7 @@ namespace MobyGamesMetadata
             var scraper = new MobyGamesScraper(platformUtility, downloader);
             if (chosenOption == groupOption)
             {
-                var searchProvider = new MobyGamesPropertySearchProvider(ApiClient, scraper, settings.Settings, platformUtility);
+                var searchProvider = new MobyGamesGroupSearchProvider(ApiClient, scraper, settings.Settings, platformUtility);
                 var extra = new MobyGamesBulkGroupAssigner(PlayniteApi, settings.Settings, searchProvider, platformUtility);
                 extra.ImportGameProperty();
             }
