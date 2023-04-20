@@ -124,6 +124,9 @@
     <Analyzer Include="..\packages\xunit.analyzers.1.1.0\analyzers\dotnet\cs\xunit.analyzers.fixes.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Mario &amp; Luigi Superstar Saga Images.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Metadata.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
