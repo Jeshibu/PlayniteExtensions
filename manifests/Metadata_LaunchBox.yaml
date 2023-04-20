@@ -44,3 +44,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-04-18/LaunchBoxMetadata_0_5.pext
     Changelog:
     - Added option to extend any image to square (useful for icons)
+  - Version: 0.5.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-04-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/launchbox0.5.1/LaunchBoxMetadata_0_5_1.pext
+    Changelog:
+    - Fixed database import failing silently (due to recent data with missing field)
+    - Fixed manual data import not reporting progress

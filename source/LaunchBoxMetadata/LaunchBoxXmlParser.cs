@@ -95,7 +95,7 @@ namespace LaunchBoxMetadata
                 img.FileName = i.Element("FileName").Value;
                 img.Type = i.Element("Type")?.Value;
                 img.Region = i.Element("Region")?.Value;
-                if (uint.TryParse(i.Element("CRC32").Value, out uint crc32))
+                if (uint.TryParse(i.Element("CRC32")?.Value, out uint crc32))
                     img.CRC32 = crc32;
                 return img;
             }

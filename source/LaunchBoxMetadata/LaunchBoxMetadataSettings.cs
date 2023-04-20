@@ -197,7 +197,7 @@ namespace LaunchBoxMetadata
                 var database = new LaunchBoxDatabase(Plugin.GetPluginUserDataPath());
                 PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
                 {
-                    database.CreateDatabase(xmlParser);
+                    database.CreateDatabase(xmlParser, a);
                 }, new GlobalProgressOptions("Initializing database...", false));
 
                 PlayniteApi.Dialogs.ShowMessage("LaunchBox metadata database successfully initialized!", "LaunchBox database", System.Windows.MessageBoxButton.OK);
