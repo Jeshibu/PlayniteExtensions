@@ -35,7 +35,7 @@ namespace LaunchBoxMetadata
 
             var parser = new HtmlParser();
             var doc = parser.Parse(response.ResponseContent);
-            var gameTitle = doc.QuerySelector("h3.profile-header-user").InnerHtml;
+            var gameTitle = doc.QuerySelector("h3.profile-header-user").TextContent;
             var imageLinks = doc.QuerySelectorAll("a[data-gameimagekey]");
             foreach (var l in imageLinks)
             {
