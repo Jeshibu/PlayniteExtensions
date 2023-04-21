@@ -22,7 +22,6 @@
                 <Setter Property="IsTextSearchEnabled" Value="False"/>
                 <Setter Property="IsEditable" Value="False"/>
                 <Setter Property="IsReadOnly" Value="True"/>
-                <Setter Property="Width" Value="162"/>
                 <Setter Property="Margin" Value="0"/>
                 <Setter Property="HorizontalAlignment" Value="Left"/>
             </Style>
@@ -73,18 +72,18 @@
                       d:ItemsSource="{d:SampleData ItemCount=50}" Grid.Row="1">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Name" Width="150" DisplayMemberBinding="{Binding Name}" />
-                            <GridViewColumn Header="Import to">
+                            <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}" />
+                            <GridViewColumn Header="Import to" Width="100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <ComboBox ItemsSource="{Binding DataContext.ImportTargets, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding ImportTarget}"/>
+                                        <ComboBox ItemsSource="{Binding DataContext.ImportTargets, RelativeSource={RelativeSource AncestorType=UserControl}}" SelectedItem="{Binding ImportTarget}" HorizontalAlignment="Stretch"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Name override">
+                            <GridViewColumn Header="Name override" Width="200">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBox Width="150" Text="{Binding NameOverride}"/>
+                                        <TextBox HorizontalAlignment="Stretch" Text="{Binding NameOverride}"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -111,7 +110,7 @@
                             <MenuItem Header="Set name override">
                                 <MenuItem Header="[Name]" Click="SetNameOverride_Name"/>
                                 <MenuItem Header="[Category]: [Name]" Click="SetNameOverride_Category"/>
-                                <MenuItem Header="[Custom prefix]: [Name]" Click="SetNameOverride_CustomPrefix"/>
+                                <MenuItem Header="[Custom prefix] [Name]" Click="SetNameOverride_CustomPrefix"/>
                                 <MenuItem Header="Remove" Click="SetNameOverride_Remove"/>
                             </MenuItem>
                         </ContextMenu>

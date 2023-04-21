@@ -66,9 +66,9 @@ namespace MobyGamesMetadata
             if(!prefixInput.Result)
                 return;
 
-            var prefix = prefixInput.SelectedString.TrimEnd(' ', ':');
+            var prefix = prefixInput.SelectedString.Trim();
 
-            SetNameOverride(item => $"{prefix}: {item.Name}");
+            SetNameOverride(item => $"{prefix} {item.Name}");
         }
 
         private void SetNameOverride_Remove(object sender, RoutedEventArgs e)
