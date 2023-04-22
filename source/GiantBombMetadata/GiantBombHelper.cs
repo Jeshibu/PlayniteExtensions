@@ -40,7 +40,7 @@ namespace GiantBombMetadata
 
         public static string MakeHtmlUrlsAbsolute(string htmlContent, string baseUrl)
         {
-            if (string.IsNullOrWhiteSpace(htmlContent))
+            if (string.IsNullOrWhiteSpace(htmlContent) || string.IsNullOrWhiteSpace(baseUrl))
                 return htmlContent;
 
             string[] urlAttributeNames = new[] { "href", "src" };

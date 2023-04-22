@@ -34,6 +34,20 @@ namespace LaunchBoxMetadata
 
         public string UserDataDirectory { get; }
 
+        private SQLiteDatabase GetConnection(SQLiteOpenOptions? openOptions = null)
+        {
+            SQLiteDatabase db;
+            if (openOptions.HasValue)
+                db = new SQLiteDatabase(DatabasePath, openOptions.Value);
+            else
+                db = new SQLiteDatabase(DatabasePath);
+
+            //db.EnableLoadExtension(true);
+            //db.LoadExtension("System.Data.SQLite.dll", "sqlite3_fts5_init");
+
+            return db;
+        }
+
         public void CreateDatabase(LaunchBoxXmlParser xmlSource, GlobalProgressActionArgs args = null)
         {
             if (args != null)
@@ -48,7 +62,7 @@ namespace LaunchBoxMetadata
             var data = xmlSource.GetData();
             if (args != null) args.CurrentProgressValue++;
 
-            using (var db = new SQLiteDatabase(DatabasePath))
+            using (var db = GetConnection())
             {
                 db.BeginTransaction();
                 db.Save(data.Games);
@@ -86,7 +100,7 @@ order by rank";
 limit {limit.Value}";
 
 
-            using (var db = new SQLiteDatabase(DatabasePath, SQLiteOpenOptions.SQLITE_OPEN_READONLY))
+            using (var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY))
             {
                 return db.Load<LaunchboxGameSearchResult>(query, matchStr).ToList();
             }
@@ -99,7 +113,7 @@ select *
 from GameImages
 where DatabaseID = ?";
 
-            using (var db = new SQLiteDatabase(DatabasePath, SQLiteOpenOptions.SQLITE_OPEN_READONLY))
+            using (var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY))
             {
                 return db.Load<LaunchBoxGameImage>(query, id).ToList();
             }
@@ -111,7 +125,7 @@ where DatabaseID = ?";
 select distinct Type
 from GameImages
 order by Type asc";
-            using (var db = new SQLiteDatabase(DatabasePath, SQLiteOpenOptions.SQLITE_OPEN_READONLY))
+            using (var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY))
             {
                 return db.Load<LaunchBoxGameImage>(query).Select(i => i.Type).ToList();
             }
@@ -122,7 +136,7 @@ order by Type asc";
 select distinct Region
 from GameImages
 order by Region asc";
-            using (var db = new SQLiteDatabase(DatabasePath, SQLiteOpenOptions.SQLITE_OPEN_READONLY))
+            using (var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY))
             {
                 return db.Load<LaunchBoxGameImage>(query).Select(i => i.Region).ToList();
             }
