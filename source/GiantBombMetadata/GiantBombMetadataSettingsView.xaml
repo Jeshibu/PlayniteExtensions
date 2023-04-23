@@ -26,7 +26,11 @@
             <Button Content="Get API Key" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"
                         Command="{Binding GetApiKeyCommand}" Margin="10,0,0,0"/>
 
-            <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,0" Content="Show top panel button to add metadata to multiple games" IsChecked="{Binding Settings.ShowTopPanelButton}" Grid.ColumnSpan="2"/>
+            <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,0" IsChecked="{Binding Settings.ShowTopPanelButton}" Grid.ColumnSpan="2">
+                <AccessText TextWrapping="Wrap">
+                    Show top panel button to add metadata to multiple games (requires restart)
+                </AccessText>
+            </CheckBox>
 
             <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Margin="10" Grid.ColumnSpan="2">
                 <TextBlock Text="Import Franchises/Series: " VerticalAlignment="Center"/>

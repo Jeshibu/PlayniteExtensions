@@ -45,7 +45,11 @@
                     <Button Content="Get API Key" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"
                         Command="{Binding GetApiKeyCommand}" Margin="10,0,0,0"/>
 
-                    <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,0" Content="Show top panel button to add metadata to multiple games" IsChecked="{Binding Settings.ShowTopPanelButton}"/>
+                    <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,0" IsChecked="{Binding Settings.ShowTopPanelButton}">
+                        <AccessText TextWrapping="Wrap">
+                            Show top panel button to add metadata to multiple games (requires restart)
+                        </AccessText>
+                    </CheckBox>
                 </Grid>
             </StackPanel>
         </TabItem>
@@ -143,7 +147,7 @@
                         </WrapPanel>
 
                         <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
-                        <ComboBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Cover.AspectRatio}"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Cover.AspectRatio}" Width="162"/>
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
@@ -173,7 +177,7 @@
                         </WrapPanel>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
-                        <ComboBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Background.AspectRatio}"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Background.AspectRatio}" Width="162"/>
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
