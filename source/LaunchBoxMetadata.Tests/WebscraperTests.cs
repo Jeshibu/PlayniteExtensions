@@ -26,6 +26,7 @@ namespace LaunchBoxMetadata.Tests
             Assert.Equal(1920, first.Width);
             Assert.Equal(1080, first.Height);
             Assert.Equal("Fanart - Background", first.Type);
+            Assert.Null(first.Region);
         }
 
         [Fact]
@@ -44,6 +45,7 @@ namespace LaunchBoxMetadata.Tests
             Assert.Equal(1535, first.Width);
             Assert.Equal(1535, first.Height);
             Assert.Equal("Box - Front", first.Type);
+            Assert.Equal("North America", first.Region);
         }
     }
 }

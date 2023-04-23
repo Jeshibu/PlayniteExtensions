@@ -136,7 +136,7 @@ function Get-ReleaseDescription {
     $description = ""
     foreach ($m in @($manifests)) {
         if ($manifests.Length -gt 1) {
-            $description += "$($m.DisplayName) $($m.Version)`r`n`r`n"
+            $description += "## $($m.DisplayName) $($m.Version)`r`n"
         }
         foreach ($c in $m.Changelog) {
             $description += "- $c`r`n"
