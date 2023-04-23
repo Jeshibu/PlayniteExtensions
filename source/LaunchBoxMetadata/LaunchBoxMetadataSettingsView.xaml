@@ -98,7 +98,7 @@
                         <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedValue="{Binding Settings.Icon.AspectRatio}" SelectedValuePath="Key" DisplayMemberPath="Value"/>
                     </Grid>
                     <TextBlock TextWrapping="Wrap">Use the following image types for icons, in the specified order (drag and drop to reorder):</TextBlock>
-                    <ListBox Name="IconImageTypes" ItemsSource="{Binding Settings.Icon.ImageTypes}">
+                    <ListBox Name="IconImageTypes" ItemsSource="{Binding Settings.Icon.ImageTypes}" d:ItemsSource="{d:SampleData ItemCount=25}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
@@ -148,7 +148,7 @@
                         <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedValue="{Binding Settings.Cover.AspectRatio}" SelectedValuePath="Key" DisplayMemberPath="Value"/>
                     </Grid>
                     <TextBlock TextWrapping="Wrap">Use the following image types for covers, in the specified order (drag and drop to reorder):</TextBlock>
-                    <ListBox Name="CoverImageTypes" ItemsSource="{Binding Settings.Cover.ImageTypes}">
+                    <ListBox Name="CoverImageTypes" ItemsSource="{Binding Settings.Cover.ImageTypes}" d:ItemsSource="{d:SampleData ItemCount=25}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
@@ -195,7 +195,7 @@
                         <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedValue="{Binding Settings.Background.AspectRatio}" SelectedValuePath="Key" DisplayMemberPath="Value"/>
                     </Grid>
                     <TextBlock TextWrapping="Wrap">Use the following image types for backgrounds, in the specified order (drag and drop to reorder):</TextBlock>
-                    <ListBox Name="BackgroundImageTypes" ItemsSource="{Binding Settings.Background.ImageTypes}">
+                    <ListBox Name="BackgroundImageTypes" ItemsSource="{Binding Settings.Background.ImageTypes}" d:ItemsSource="{d:SampleData ItemCount=25}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
@@ -223,13 +223,14 @@
                 <TextBlock TextWrapping="Wrap" Grid.Row="1">
                     Unchecked regions below will not be used to source images from.<LineBreak/>
                     Reorder items by dragging to set the priority of image regions.<LineBreak/>
-                    There is an blank item for images missing a region (which is the most common type).<LineBreak/>
+                    There is an blank item for images missing a region (which is the most common type of image).<LineBreak/>
+                    Aliases are used to match Playnite game regions if the checkbox above is checked.<LineBreak/>
                     <Bold>If you don't see regions here, you need to re-import the database in the Settings tab.</Bold>
                 </TextBlock>
                 <ListView ItemsSource="{Binding Settings.Regions}" Name="GenreSettingsView" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                           ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False"
                           VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling"
-                          dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" d:ItemsSource="{d:SampleData ItemCount=25}" Grid.Row="2">
+                          dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" d:ItemsSource="{d:SampleData ItemCount=25}" Grid.Row="2" MinHeight="200">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Region">
