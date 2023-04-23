@@ -135,7 +135,7 @@ namespace GiantBombMetadata.SearchProviders
                 return null;
 
             var output = new GameDetails();
-            output.Names.Add(details.Name);
+            output.Names.Add(details.Name.Trim());
             output.Names.AddRange(details.AliasesSplit);
             output.Url = details.SiteDetailUrl;
             output.Description = GiantBombHelper.MakeHtmlUrlsAbsolute(details.Description, details.SiteDetailUrl);
@@ -144,7 +144,7 @@ namespace GiantBombMetadata.SearchProviders
             output.Tags.AddRange(GetValues(PropertyImportTarget.Tags, details));
             if (details.Franchises != null)
             {
-                output.Series.AddRange(details.Franchises.Select(f => f.Name));
+                output.Series.AddRange(details.Franchises.Select(f => f.Name.Trim()));
 
                 switch (settings.FranchiseSelectionMode)
                 {
@@ -159,19 +159,19 @@ namespace GiantBombMetadata.SearchProviders
                 }
             }
             if (details.Developers != null)
-                output.Developers.AddRange(details.Developers.Select(d => d.Name));
+                output.Developers.AddRange(details.Developers.Select(d => d.Name.Trim()));
             if (details.Publishers != null)
-                output.Publishers.AddRange(details.Publishers.Select(p => p.Name));
+                output.Publishers.AddRange(details.Publishers.Select(p => p.Name.Trim()));
             if (details.Platforms != null)
-                output.Platforms.AddRange(details.Platforms.SelectMany(p => platformUtility.GetPlatforms(p.Name)));
+                output.Platforms.AddRange(details.Platforms.SelectMany(p => platformUtility.GetPlatforms(p.Name.Trim())));
             if (details.Ratings != null)
-                output.AgeRatings.AddRange(details.Ratings.Select(r => r.Name));
+                output.AgeRatings.AddRange(details.Ratings.Select(r => r.Name.Trim()));
             if (details.Image != null)
                 output.CoverOptions.Add(details.Image);
             if (details.Images != null)
-                output.BackgroundOptions.AddRange(details.Images.Where(ImageCanBeUsedAsBackground));
+                output.BackgroundOptions.AddRange(details.Images.Where(ImageCanBeUsedAsBackground).Where(i => i.Original != details.Image?.Original));
             if (details.Genres != null)
-                output.Genres.AddRange(details.Genres.Select(g => g.Name));
+                output.Genres.AddRange(details.Genres.Select(g => g.Name.Trim()));
 
             output.Url = details.SiteDetailUrl;
 
