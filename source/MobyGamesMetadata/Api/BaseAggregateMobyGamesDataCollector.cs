@@ -54,7 +54,7 @@ namespace MobyGamesMetadata.Api
             if (mobyGame == null) return null;
             var gameDetails = new GameDetails
             {
-                Description = mobyGame.Description,
+                Description = GiantBombMetadata.GiantBombHelper.MakeHtmlUrlsAbsolute(mobyGame.Description, mobyGame.MobyUrl),
             };
             gameDetails.Names.Add(mobyGame.Title);
             if (mobyGame.AlternateTitles != null)

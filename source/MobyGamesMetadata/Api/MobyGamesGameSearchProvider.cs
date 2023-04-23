@@ -32,7 +32,9 @@ namespace MobyGamesMetadata.Api
             }
             else if (settings.DataSource.HasFlag(DataSource.Scraping))
             {
-                return scraper.GetGameDetails(id);
+                var gameDetails = scraper.GetGameDetails(id);
+                gameDetails.Description = GiantBombMetadata.GiantBombHelper.MakeHtmlUrlsAbsolute(gameDetails.Description, gameDetails.Url);
+                return gameDetails;
             }
             else if (settings.DataSource.HasFlag(DataSource.Api))
             {

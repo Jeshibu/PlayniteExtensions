@@ -95,6 +95,9 @@
     <Compile Include="..\Barnite\Scrapers\MobyGamesHelper.cs">
       <Link>Api\MobyGamesHelper.cs</Link>
     </Compile>
+    <Compile Include="..\GiantBombMetadata\GiantBombHelper.cs">
+      <Link>Shared\GiantBombHelper.cs</Link>
+    </Compile>
     <Compile Include="Api\MobyGamesGameSearchProvider.cs" />
     <Compile Include="Api\MobyGamesGenreSearchProvider.cs" />
     <Compile Include="Api\MobyGamesGroupSearchProvider.cs" />
