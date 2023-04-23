@@ -133,9 +133,10 @@ order by Type asc";
         public IEnumerable<string> GetRegions()
         {
             var query = @"
-select distinct Region
+select Region
 from GameImages
-order by Region asc";
+group by Region
+order by count(1) desc";
             using (var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY))
             {
                 return db.Load<LaunchBoxGameImage>(query).Select(i => i.Region).ToList();
