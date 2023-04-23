@@ -51,3 +51,10 @@ Packages:
     Changelog:
     - Fixed database import failing silently (due to recent data with missing field)
     - Fixed manual data import not reporting progress
+  - Version: 0.6
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-04-23
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-04-23/LaunchBoxMetadata_0_6.pext
+    Changelog:
+    - Fixed image fetching for games with special characters in their name (like &)
+    - Added settings to disable and prioritize image regions
