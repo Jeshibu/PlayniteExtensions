@@ -51,19 +51,19 @@ namespace LaunchBoxMetadata
                 }
 
                 var imgElement = l.QuerySelector("img");
-                var alt = imgElement.GetAttribute("alt");
-                imgDetails.Type = GetImageType(alt, gameTitle, out string region);
+                var dataTitle = l.GetAttribute("data-title");
+                imgDetails.Type = GetImageType(dataTitle, gameTitle, out string region);
                 imgDetails.Region = region;
                 imgDetails.ThumbnailUrl = imgElement.GetAttribute("src");
                 yield return imgDetails;
             }
         }
 
-        private string GetImageType(string altText, string gameTitle, out string region)
+        private string GetImageType(string title, string gameTitle, out string region)
         {
-            var titleRemoved = altText.Remove(0, (gameTitle + " - ").Length);
+            var gameTitleRemoved = title.Remove(0, (gameTitle + " - ").Length);
             string reg = null;
-            var type = RegionRegex.Replace(titleRemoved, match =>
+            var type = RegionRegex.Replace(gameTitleRemoved, match =>
             {
                 if (match.Groups["region"].Success)
                     reg = match.Groups["region"].Value;

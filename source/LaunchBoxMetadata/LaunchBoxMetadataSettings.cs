@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows.Input;
 
 namespace LaunchBoxMetadata
@@ -21,6 +22,9 @@ namespace LaunchBoxMetadata
         public LaunchBoxImageSourceSettings Icon { get; set; }
         public LaunchBoxImageSourceSettings Cover { get; set; }
         public LaunchBoxImageSourceSettings Background { get; set; }
+        //public string[][] RegionGroupings { get; set; }
+        public ObservableCollection<RegionSetting> Regions { get; set; } = new ObservableCollection<RegionSetting>();
+        public bool PreferGameRegion { get; set; } = true;
 
         public LaunchBoxMetadataSettings()
         {
@@ -73,6 +77,11 @@ namespace LaunchBoxMetadata
         }
     }
 
+    public class RegionSetting : CheckboxSetting
+    {
+        public string Aliases { get; set; }
+    }
+
     public enum AspectRatio
     {
         Any,
@@ -87,7 +96,7 @@ namespace LaunchBoxMetadata
         public LaunchBoxMetadataSettingsViewModel(LaunchBoxMetadata plugin) : base(plugin, plugin.PlayniteApi)
         {
             Settings = LoadSavedSettings() ?? new LaunchBoxMetadataSettings();
-            InitializeImageTypeLists();
+            InitializeDatabaseLists();
         }
 
         private RelayCommand initializeDatabaseCommand;
@@ -114,7 +123,7 @@ namespace LaunchBoxMetadata
             return new LaunchBoxDatabase(Plugin.GetPluginUserDataPath());
         }
 
-        private void InitializeImageTypeLists()
+        private void InitializeDatabaseLists()
         {
             try
             {
@@ -126,7 +135,19 @@ namespace LaunchBoxMetadata
             }
             catch (Exception ex)
             {
-                Logger.Error(ex, "Error initializing image types");
+                Logger.Error(ex, "Error initializing database lists");
+            }
+
+            try
+            {
+                var database = GetDatabase();
+                InitializeRegionList(database.GetRegions().ToList());
+
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, "Error initializing database lists");
+                InitializeRegionList(new List<string> { null });
             }
         }
 
@@ -144,6 +165,28 @@ namespace LaunchBoxMetadata
             {
                 if (!imgSettings.ImageTypes.Any(x => x.Name == t))
                     imgSettings.ImageTypes.Add(new CheckboxSetting { Name = t, Checked = defaultChecked.Contains(t) });
+            }
+        }
+
+        private void InitializeRegionList(List<string> regions)
+        {
+            foreach (var regionName in regions)
+            {
+                if (!Settings.Regions.Any(r => r.Name == regionName))
+                {
+                    Settings.Regions.Add(new RegionSetting { Checked = true, Name = regionName, Aliases = GetDefaultRegionAliases(regionName) });
+                }
+            }
+        }
+
+        private string GetDefaultRegionAliases(string region)
+        {
+            switch (region)
+            {
+                case "United States": return "US, USA";
+                case "United Kingdom": return "UK, GB, Great Britain";
+                case "Japan": return "JP, JA";
+                default: return null;
             }
         }
 
@@ -171,7 +214,7 @@ namespace LaunchBoxMetadata
 
 
                 OnPropertyChanged(nameof(StatusText));
-                InitializeImageTypeLists();
+                InitializeDatabaseLists();
                 PlayniteApi.Dialogs.ShowMessage("Local LaunchBox metadata database successfully initialized!", "LaunchBox database", System.Windows.MessageBoxButton.OK);
             }
             catch (Exception ex)
@@ -203,7 +246,7 @@ namespace LaunchBoxMetadata
                 PlayniteApi.Dialogs.ShowMessage("LaunchBox metadata database successfully initialized!", "LaunchBox database", System.Windows.MessageBoxButton.OK);
 
                 OnPropertyChanged(nameof(StatusText));
-                InitializeImageTypeLists();
+                InitializeDatabaseLists();
             }
             catch (Exception ex)
             {
@@ -224,7 +267,7 @@ namespace LaunchBoxMetadata
             }
         }
 
-        public Dictionary<AspectRatio,string> AspectRatios { get; } = new Dictionary<AspectRatio, string> {
+        public Dictionary<AspectRatio, string> AspectRatios { get; } = new Dictionary<AspectRatio, string> {
             { AspectRatio.Any, "Any" },
             { AspectRatio.Vertical, "Vertical" },
             { AspectRatio.Horizontal, "Horizontal" },

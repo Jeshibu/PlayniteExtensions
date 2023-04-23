@@ -65,7 +65,7 @@
             </StackPanel>
         </TabItem>
         <TabItem Header="Icons">
-            <ScrollViewer>
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Margin="20">
                     <TextBlock TextWrapping="Wrap">Images smaller than either of the minimum dimensions will be ignored.<LineBreak/> Images larger than either of the maximum dimensions will be scaled down.</TextBlock>
                     <Grid Width="Auto" Margin="0,0,0,10">
@@ -112,7 +112,7 @@
             </ScrollViewer>
         </TabItem>
         <TabItem Header="Covers">
-            <ScrollViewer>
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled">
                 <StackPanel Margin="20">
                     <TextBlock TextWrapping="Wrap">
                         Images smaller than either of the minimum dimensions will be ignored.<LineBreak/>
@@ -162,8 +162,8 @@
             </ScrollViewer>
         </TabItem>
         <TabItem Header="Backgrounds">
-            <ScrollViewer>
-                <StackPanel Margin="20">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" Margin="20">
+                <StackPanel>
                     <TextBlock TextWrapping="Wrap">Images smaller than either of the minimum dimensions will be ignored.<LineBreak/> Images larger than either of the maximum dimensions will be scaled down.</TextBlock>
                     <Grid Width="Auto" Margin="0,0,0,10">
                         <Grid.RowDefinitions>
@@ -207,6 +207,52 @@
                     </ListBox>
                 </StackPanel>
             </ScrollViewer>
+        </TabItem>
+        <TabItem Header="Regions">
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <CheckBox IsChecked="{Binding Settings.PreferGameRegion}" Margin="0,0,0,20" Grid.Row="0">
+                    <AccessText TextWrapping="Wrap">
+                        Prefer Playnite game region for image selection (including disabled regions)
+                    </AccessText>
+                </CheckBox>
+                <TextBlock TextWrapping="Wrap" Grid.Row="1">
+                    Unchecked regions below will not be used to source images from.<LineBreak/>
+                    Reorder items by dragging to set the priority of image regions.<LineBreak/>
+                    There is an blank item for images missing a region (which is the most common type).<LineBreak/>
+                    <Bold>If you don't see regions here, you need to re-import the database in the Settings tab.</Bold>
+                </TextBlock>
+                <ListView ItemsSource="{Binding Settings.Regions}" Name="GenreSettingsView" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                          ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False"
+                          VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling"
+                          dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" d:ItemsSource="{d:SampleData ItemCount=25}" Grid.Row="2">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Region">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" ToolTip="Drag me!">
+                                            <TextBlock Text="░" Padding="10,0" VerticalAlignment="Center"/>
+                                            <CheckBox IsChecked="{Binding Checked}" Content="{Binding Name}" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Aliases (comma separated)" Width="200">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox HorizontalAlignment="Stretch" Text="{Binding Aliases}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
         </TabItem>
     </TabControl>
 </UserControl>

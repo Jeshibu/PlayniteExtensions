@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using ImageMagick;
 using System.Net.Http;
 using System.IO;
+using System.CodeDom;
 
 namespace LaunchBoxMetadata
 {
@@ -241,9 +242,12 @@ namespace LaunchBoxMetadata
             return Split(FindGame().Publisher, StringExtensions.TrimCompanyForms) ?? base.GetPublishers(args);
         }
 
-        private bool FilterImage(LaunchBoxImageDetails imgDetails, ICollection<string> whitelistedTypes, LaunchBoxImageSourceSettings imgSetting)
+        private bool FilterImage(LaunchBoxImageDetails imgDetails, ICollection<string> whitelistedTypes, ICollection<string> whitelistedRegions, LaunchBoxImageSourceSettings imgSetting)
         {
             if (!whitelistedTypes.Contains(imgDetails.Type))
+                return false;
+
+            if (!whitelistedRegions.Contains(imgDetails.Region))
                 return false;
 
             if (imgDetails.Width < imgSetting.MinWidth || imgDetails.Height < imgSetting.MinHeight)
@@ -258,6 +262,7 @@ namespace LaunchBoxMetadata
                 case AspectRatio.Square:
                     return imgDetails.Width == imgDetails.Height;
                 case AspectRatio.Any:
+                case AspectRatio.AnyExtendToSquare:
                 default:
                     return true;
             }
@@ -265,25 +270,16 @@ namespace LaunchBoxMetadata
 
         private MetadataFile PickImage(string caption, LaunchBoxImageSourceSettings imgSettings)
         {
-            var whitelistedImgTypes = imgSettings.ImageTypes.Where(t => t.Checked).Select(t => t.Name).ToList();
+            var images = GetImageOptions(imgSettings);
 
-            var images = GetImageDetails().Where(i => FilterImage(i, whitelistedImgTypes, imgSettings))
-                                          .OrderBy(i => whitelistedImgTypes.IndexOf(i.Type))
-                                          .ThenByDescending(i => i.Width * i.Height)
-                                          .Select(LaunchBoxImageFileOption.FromImageDetails)
-                                          .ToList<ImageFileOption>();
             if (images.Count == 0)
                 return null;
 
             ImageFileOption selected;
             if (options.IsBackgroundDownload || images.Count == 1)
-            {
                 selected = images.First();
-            }
             else
-            {
                 selected = plugin.PlayniteApi.Dialogs.ChooseImageFile(images, caption);
-            }
 
             if (selected == null)
             {
@@ -295,6 +291,46 @@ namespace LaunchBoxMetadata
                 var task = ScaleImageAsync(selectedImageDetails, imgSettings);
                 task.Wait();
                 return task.Result;
+            }
+        }
+
+        private List<ImageFileOption> GetImageOptions(LaunchBoxImageSourceSettings imgSettings)
+        {
+            var whitelistedImgTypes = imgSettings.ImageTypes.Where(t => t.Checked).Select(t => t.Name).ToList();
+            var whitelistedRegions = GetWhitelistedRegions();
+
+            var images = GetImageDetails().Where(i => FilterImage(i, whitelistedImgTypes, whitelistedRegions, imgSettings)).ToList();
+
+            return images.OrderBy(i => whitelistedImgTypes.IndexOf(i.Type))
+                         .ThenBy(i => whitelistedRegions.IndexOf(i.Region))
+                         .ThenByDescending(i => i.Width * i.Height)
+                         .Select(LaunchBoxImageFileOption.FromImageDetails)
+                         .ToList<ImageFileOption>();
+        }
+
+        private List<string> GetWhitelistedRegions()
+        {
+            var comparer = StringComparer.InvariantCultureIgnoreCase;
+            var gameRegions = options.GameData?.Regions?.Select(r => r.Name).ToList();
+            if (settings.PreferGameRegion && gameRegions != null && gameRegions.Any())
+            {
+                var output = new List<string>();
+                foreach (var regionSetting in settings.Regions)
+                {
+                    var aliases = regionSetting.Aliases?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
+                    if (gameRegions.Any(gr => comparer.Equals(gr, regionSetting.Name) || (aliases != null && aliases.ContainsString(gr))))
+                        output.Add(regionSetting.Name); //put any matched region at the top
+                }
+                foreach (var regionSetting in settings.Regions)
+                {
+                    if(regionSetting.Checked && !output.Contains(regionSetting.Name))
+                        output.Add(regionSetting.Name); //add the rest of the enabled regions
+                }
+                return output;
+            }
+            else
+            {
+                return settings.Regions.Where(r => r.Checked).Select(r => r.Name).ToList();
             }
         }
 
@@ -329,7 +365,7 @@ namespace LaunchBoxMetadata
                 if (imgSettings.AspectRatio == AspectRatio.AnyExtendToSquare && img.Width != img.Height)
                 {
                     logger.Info($"Extending {imgDetails.Url} ({img.Width}x{img.Height}) to make it {maxWidth}x{maxHeight}");
-                    
+
                     img.BackgroundColor = MagickColor.FromRgba(0, 0, 0, 0);
                     img.Extent(minSize, minSize, Gravity.Center);
                 }
