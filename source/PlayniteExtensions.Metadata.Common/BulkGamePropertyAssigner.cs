@@ -28,6 +28,10 @@ namespace PlayniteExtensions.Metadata.Common
         public abstract string MetadataProviderName { get; }
         protected bool AllowEmptySearchQuery { get; set; } = false;
 
+        protected virtual GlobalProgressOptions GetGameDownloadProgressOptions(TSearchItem selectedItem)
+        {
+            return new GlobalProgressOptions("Downloading list of associated games", cancelable: true) { IsIndeterminate = true };
+        }
 
         public void ImportGameProperty()
         {
@@ -40,7 +44,7 @@ namespace PlayniteExtensions.Metadata.Common
             playniteApi.Dialogs.ActivateGlobalProgress(a =>
             {
                 associatedGames = dataSource.GetDetails(selectedItem, a)?.ToList();
-            }, new GlobalProgressOptions("Downloading list of associated games"));
+            }, GetGameDownloadProgressOptions(selectedItem));
 
             if (associatedGames == null)
                 return;

@@ -32,7 +32,7 @@ namespace GiantBombMetadata
 
         protected override PropertyImportSetting GetPropertyImportSetting(GiantBombSearchResultItem selectedItem, out string propName)
         {
-            propName = selectedItem.Name;
+            propName = selectedItem.Name.Trim();
             switch (selectedItem.ResourceType)
             {
                 case "character":

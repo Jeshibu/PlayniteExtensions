@@ -204,7 +204,7 @@ namespace GiantBombMetadata.SearchProviders
             if (importSetting.ImportTarget != target || data == null || data.Length == 0)
                 return new string[0];
 
-            return data.Select(d => $"{importSetting.Prefix}{d.Name}");
+            return data.Select(d => $"{importSetting.Prefix}{d.Name.Trim()}");
         }
     }
 }
