@@ -19,4 +19,5 @@ Packages:
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2023-04-23
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-04-23/MobyGamesMetadata_0_3_1.pext
-     - Fixed description links
+    Changelog:
+     - Fixed links in game descriptions
