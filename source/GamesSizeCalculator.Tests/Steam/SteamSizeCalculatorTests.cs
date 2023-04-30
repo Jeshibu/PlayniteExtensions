@@ -119,6 +119,23 @@ namespace GamesSizeCalculator.Tests.Steam
             Assert.Equal(expectedSize, minimalSize);
         }
 
+        [Fact]
+        public async Task MeganTheeStallion()
+        {
+            //This depot has no maxsize properties
+            ulong expectedSize = 6301203201UL;
+
+            var calc = Setup(2269330, out var settings);
+
+            var completeSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
+            Assert.Equal(expectedSize, completeSize.Value);
+
+            settings.IncludeDlcInSteamCalculation = false;
+            settings.IncludeOptionalInSteamCalculation = false;
+            var minimalSize = await calc.GetInstallSizeAsync(new Playnite.SDK.Models.Game());
+            Assert.Equal(expectedSize, minimalSize.Value);
+        }
+
         //[Theory]
         //[InlineData(243470u)]
         //[InlineData(48190u)]

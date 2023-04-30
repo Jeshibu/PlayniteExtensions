@@ -156,6 +156,9 @@
     </Content>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Steam\2269330.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\xunit.analyzers.1.1.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
