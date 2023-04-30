@@ -54,10 +54,14 @@ namespace PlayniteExtensions.Common
             var output = new Dictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
             if (api?.Database?.Platforms != null) //for use in unit tests so you don't have to instantiate the entire database or platform list
             {
-                var platforms = api.Database.Platforms.Where(p => p.SpecificationId != null).ToList();
-                foreach (var platform in platforms)
+                foreach (var platform in api.Database.Platforms)
                 {
-                    output.Add(platform.Name, new[] { platform.SpecificationId });
+                    if (platform.SpecificationId == null)
+                        continue;
+
+                    if (!output.ContainsKey(platform.Name))
+                        output.Add(platform.Name, new[] { platform.SpecificationId });
+
                     string nameWithoutCompany = TrimCompanyName.Replace(platform.Name, string.Empty);
                     if (!output.ContainsKey(nameWithoutCompany))
                         output.Add(nameWithoutCompany, new[] { platform.SpecificationId });
