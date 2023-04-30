@@ -210,7 +210,8 @@ namespace GamesSizeCalculator.SteamSizeCalculation
                 var name = GetKeyValueNode(depot, "name")?.Value;
 
                 var maxsizeStr = GetValue(depot, "maxsize");
-                if (maxsizeStr == null || !ulong.TryParse(maxsizeStr, out ulong maxsize))
+                var sizeStr = GetValue(depot, "manifests", "public", "size");
+                if (!ulong.TryParse(maxsizeStr, out ulong maxsize) && !ulong.TryParse(sizeStr, out maxsize))
                 {
                     continue;
                 }
