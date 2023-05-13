@@ -21,7 +21,7 @@ namespace Barnite.Scrapers
         }
 
         public IPlatformUtility PlatformUtility { get; }
-        private static Regex UrlIdRegex = new Regex(@"\bmobygames\.com/game/(?<id>[0-9]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+        private static Regex UrlIdRegex = new Regex(@"\bmobygames\.com/game/(?<id>[0-9]+)(/|$)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
         public static string GetMobyGameIdStringFromUrl(string url)
         {
