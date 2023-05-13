@@ -69,7 +69,7 @@ namespace PlayniteExtensions.Common
             }
             TryAddPlatformByName(output, "3DO", "3do");
             TryAddPlatformByName(output, new[] { "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM" }, new[] { "pc_windows" });
-            TryAddPlatformByName(output, "DOS", "pc_dos");
+            TryAddPlatformByName(output, new[] { "DOS", "MS-DOS" }, "pc_dos");
             TryAddPlatformByName(output, new[] { "Linux", "LIN" }, "pc_linux");
             TryAddPlatformByName(output, "Mac", "macintosh");
             TryAddPlatformByName(output, new[] { "Xbox360", "X360" }, new[] { "xbox360" });
@@ -91,13 +91,12 @@ namespace PlayniteExtensions.Common
             TryAddPlatformByName(output, "GEN", "sega_genesis");
             TryAddPlatformByName(output, "LYNX", "atari_lynx");
             TryAddPlatformByName(output, "SMS", "sega_mastersystem");
-            TryAddPlatformByName(output, "SNES", "nintendo_super_nes");
+            TryAddPlatformByName(output, new[] { "SNES", "Super Nintendo Entertainment System" }, "nintendo_super_nes");
             TryAddPlatformByName(output, "APL2", "apple_2");
             TryAddPlatformByName(output, "AST", "atari_st");
             TryAddPlatformByName(output, "C64", "commodore_64");
             TryAddPlatformByName(output, "MSX", "microsoft_msx", "microsoft_msx2");
             TryAddPlatformByName(output, "SPEC", "sinclair_zxspectrum");
-            TryAddPlatformByName(output, "MAC", "macintosh");
             TryAddPlatformByName(output, "NES", "nintendo_nes");
             TryAddPlatformByName(output, "GCN", "nintendo_gamecube");
             TryAddPlatformByName(output, "A800", "atari_8bit");
