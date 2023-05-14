@@ -1,15 +1,26 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="LOCGame_Sizes_Calculator_Settings_Tab_Settings">Настройки</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_Settings_Tab_Steam_Region_Words">Фильтрация по словам региона в Steam</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsHelpLabel">Справка</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedLabel">Автоматически рассчитывать размер игры после того, как она была изменена при обновлении библиотеки</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameModifiedTooltip">Обновляет размер файла игры, если обнаружено, что каталог игры или Rom файл был обновлен с момента предыдущего автоматического обнаружения</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsCalculateOnGameImportLabel">Автоматически рассчитывать размер игры после добавления при обновлении библиотеки</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsUseSteamLabel">For uninstalled PC games, obtain an estimated install size from Steam</sys:String>
+
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsUseSteamLabel">Для удаленных игр получить примерный размер установки из Steam</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsGetUninstalledGameSizeFromSteamLabel">Apply this data also for games that are not from the Steam library</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeDlcInSteamCalculationLabel">Include all DLC in size calculation</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationLabel">Include optional content in size calculation</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip">Optional content encompasses things like deluxe edition content that's not available as DLC</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_MenuSectionDescriptionGameSizesCalculator"></sys:String>
+
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsUseGOGLabel">Для удаленных ПК игр получить предполагаемый размер установки с GOG.com</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesLabel">Применить эти данные также для игр, которые не из GOG библиотеки</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesTooltip">Игры должны иметь ссылку на страницу GOG магазина</sys:String>
+
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsRegionWordsExplanationText">Region-words - это слова, обозначающие регионы для одинаково названных отделений Steam. Например, у &quot;Content EU&quot; и &quot;Content Asia&quot; будет исключено последнее слово и останется только одно, если EU и Asia будут указаны в текстовом поле Region-words здесь. Если вы уверены, что вам никогда не понадобится регион, введите его в поле Исключенные слова-регионы, и отделения Стим, заканчивающиеся на это слово, всегда будут исключены из расчета размера. Поместите каждое слово на отдельной строке.</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsRegionWordsHeaderLabel">Регион-слова</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsExcludedRegionWordsHeaderLabel">Исключенные регион-слова</sys:String>
+
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptionCalculateSizesSelGames">Вычислить размеры для выбранных игр</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_MenuItemDescriptinoCalculateSizesSelGamesForce">Вычислить размеры для выбранных игр (Принудительная перезапись)</sys:String>
 
@@ -18,4 +29,5 @@
 
     <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetDirSize">Games Size Calculator: ошибка при определении размера каталога в {0} для игры {1}. {2}</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetRomFileSize">Games Size Calculator: Ошибка при получении размера Rom файла в {0} для игры {1}. {2}</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetOnlineSize">Games Size Calculator: ошибка при определении размера каталога в {0} для игры {1}. {2}</sys:String>
 </ResourceDictionary>
