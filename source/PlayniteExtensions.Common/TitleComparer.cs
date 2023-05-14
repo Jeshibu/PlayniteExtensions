@@ -19,6 +19,7 @@ namespace PlayniteExtensions.Common
             }
 
             int ix = 0, iy = 0;
+            bool xend, yend;
             while (ix < x.Length && iy < y.Length)
             {
                 char cx = x[ix], cy = y[iy];
@@ -38,21 +39,28 @@ namespace PlayniteExtensions.Common
 
                     cy = y[iy];
                 }
-                bool xend = ix >= x.Length, yend = iy >= y.Length;
+                xend = ix >= x.Length;
+                yend = iy >= y.Length;
 
-                if (xend || yend)
-                {
-                    if (xend && !yend)
-                        return -1;
-                    if (!xend && yend)
-                        return 1;
-                }
+                if (xend && !yend)
+                    return -1;
+                if (!xend && yend)
+                    return 1;
+
                 var charComparison = char.ToUpperInvariant(cx).CompareTo(char.ToUpperInvariant(cy));
                 if (charComparison != 0)
                     return charComparison;
                 ix++;
                 iy++;
             }
+            xend = ix >= x.Length;
+            yend = iy >= y.Length;
+
+            if (xend && !yend)
+                return -1;
+            if (!xend && yend)
+                return 1;
+
             return 0;
         }
 
