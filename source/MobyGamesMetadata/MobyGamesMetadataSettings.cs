@@ -42,6 +42,8 @@ namespace MobyGamesMetadata
             MinHeight = 600,
             AspectRatio = AspectRatio.Any,
         };
+
+        public int MaxDegreeOfParallelism { get; set; } = Environment.ProcessorCount;
     }
 
     public class MobyGamesGenreSetting : ObservableObject, IHasName

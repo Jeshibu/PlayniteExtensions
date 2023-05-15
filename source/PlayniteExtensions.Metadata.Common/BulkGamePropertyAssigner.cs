@@ -5,21 +5,22 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Windows;
 using PlayniteExtensions.Common;
 using System.Windows.Controls;
+using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace PlayniteExtensions.Metadata.Common
 {
     public abstract class BulkGamePropertyAssigner<TSearchItem> where TSearchItem : IHasName
     {
-        public BulkGamePropertyAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility)
+        public BulkGamePropertyAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
         {
             playniteApi = playniteAPI;
             this.dataSource = dataSource;
             this.platformUtility = platformUtility;
+            MaxDegreeOfParallelism = maxDegreeOfParallelism;
         }
 
         protected readonly ILogger logger = LogManager.GetLogger();
@@ -28,6 +29,7 @@ namespace PlayniteExtensions.Metadata.Common
         protected readonly IPlayniteAPI playniteApi;
         public abstract string MetadataProviderName { get; }
         protected bool AllowEmptySearchQuery { get; set; } = false;
+        public int MaxDegreeOfParallelism { get; }
 
         protected virtual GlobalProgressOptions GetGameDownloadProgressOptions(TSearchItem selectedItem)
         {
@@ -99,20 +101,16 @@ namespace PlayniteExtensions.Metadata.Common
             }
 
             var addedGameIds = new HashSet<Guid>();
-            var matchingGames = new List<GameCheckboxViewModel>();
+            ICollection<GameCheckboxViewModel> matchingGames = new SynchronizedCollection<GameCheckboxViewModel>();
             var snc = new SortableNameConverter(new string[0], numberLength: 1, removeEditions: true);
             var deflatedNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+            bool loopCompleted = false;
             playniteApi.Dialogs.ActivateGlobalProgress(a =>
             {
                 a.ProgressMaxValue = gamesToMatch.Count;
-                for (int i = 0; i < gamesToMatch.Count; i++)
+                ParallelOptions parallelOptions = new ParallelOptions() { CancellationToken = a.CancelToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
+                var loopResult = Parallel.For(0, gamesToMatch.Count, parallelOptions, i =>
                 {
-                    if (a.CancelToken.IsCancellationRequested)
-                        return;
-
-                    //if (i % 4 == 0)
-                    a.CurrentProgressValue = i + 1;
-
                     var gbGame = gamesToMatch[i];
 
                     var namesToMatch = new List<string>();
@@ -121,7 +119,7 @@ namespace PlayniteExtensions.Metadata.Common
                         if (!deflatedNames.TryGetValue(name, out string nameToMatch))
                         {
                             nameToMatch = snc.Convert(name).Deflate();
-                            deflatedNames.Add(name, nameToMatch);
+                            deflatedNames[name] = nameToMatch;
                         }
                         namesToMatch.Add(nameToMatch);
                     }
@@ -144,7 +142,7 @@ namespace PlayniteExtensions.Metadata.Common
                         if (!deflatedNames.TryGetValue(g.Name, out string gName))
                         {
                             gName = snc.Convert(g.Name).Deflate();
-                            deflatedNames.Add(g.Name, gName);
+                            deflatedNames[g.Name] = gName;
                         }
 
                         if (namesToMatch.Any(n => string.Equals(n, gName, StringComparison.InvariantCultureIgnoreCase))
@@ -154,9 +152,16 @@ namespace PlayniteExtensions.Metadata.Common
                             matchingGames.Add(new GameCheckboxViewModel(g, gbGame));
                         }
                     }
-                }
+
+                    a.CurrentProgressValue++;
+                });
+                loopCompleted = loopResult.IsCompleted;
+
                 matchingGames = matchingGames.OrderBy(g => string.IsNullOrWhiteSpace(g.Game.SortingName) ? g.Game.Name : g.Game.SortingName).ThenBy(g => g.Game.ReleaseDate).ToList();
             }, new GlobalProgressOptions($"Matching {gamesToMatch.Count} games…", true) { IsIndeterminate = false });
+
+            if (!loopCompleted)
+                return null;
 
             if (matchingGames.Count == 0)
             {

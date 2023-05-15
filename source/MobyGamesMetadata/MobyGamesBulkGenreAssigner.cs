@@ -11,8 +11,8 @@ namespace MobyGamesMetadata
 {
     public class MobyGamesBulkGenreAssigner : BulkGamePropertyAssigner<MobyGamesGenreSetting>
     {
-        public MobyGamesBulkGenreAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<MobyGamesGenreSetting, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility)
-            : base(playniteAPI, dataSource, platformUtility)
+        public MobyGamesBulkGenreAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<MobyGamesGenreSetting, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
+            : base(playniteAPI, dataSource, platformUtility, maxDegreeOfParallelism)
         {
             AllowEmptySearchQuery = true;
         }

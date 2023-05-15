@@ -107,7 +107,7 @@ namespace GiantBombMetadata
                 return;
 
             var searchProvider = new GiantBombGamePropertySearchProvider(ApiClient, new GiantBombScraper(new WebDownloader(), PlatformUtility));
-            var extra = new GiantBombBulkPropertyAssigner(PlayniteApi, Settings.Settings, searchProvider, new PlatformUtility(PlayniteApi));
+            var extra = new GiantBombBulkPropertyAssigner(PlayniteApi, Settings.Settings, searchProvider, new PlatformUtility(PlayniteApi), Settings.Settings.MaxDegreeOfParallelism);
             extra.ImportGameProperty();
         }
 

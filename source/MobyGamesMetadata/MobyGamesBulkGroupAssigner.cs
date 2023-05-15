@@ -14,8 +14,8 @@ namespace MobyGamesMetadata
     {
         private readonly MobyGamesMetadataSettings settings;
 
-        public MobyGamesBulkGroupAssigner(IPlayniteAPI playniteAPI, MobyGamesMetadataSettings settings, ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility)
-            : base(playniteAPI, dataSource, platformUtility)
+        public MobyGamesBulkGroupAssigner(IPlayniteAPI playniteAPI, MobyGamesMetadataSettings settings, ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
+            : base(playniteAPI, dataSource, platformUtility, maxDegreeOfParallelism)
         {
             this.settings = settings;
         }

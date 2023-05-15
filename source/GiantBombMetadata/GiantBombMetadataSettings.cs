@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using PlayniteExtensions.Metadata.Common;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -26,6 +27,7 @@ namespace GiantBombMetadata
         public PropertyImportSetting People { get; set; } = new PropertyImportSetting { Prefix = "Person: ", ImportTarget = PropertyImportTarget.Ignore };
         public MultiValuedPropertySelectionMode FranchiseSelectionMode { get; set; } = MultiValuedPropertySelectionMode.All;
         public bool ShowTopPanelButton { get; set; } = true;
+        public int MaxDegreeOfParallelism { get; set; } = Environment.ProcessorCount;
     }
 
     public enum MultiValuedPropertySelectionMode

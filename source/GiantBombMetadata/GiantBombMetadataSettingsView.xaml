@@ -8,102 +8,116 @@
              d:DataContext="{d:DesignInstance Type=gb:GiantBombMetadataSettingsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel Margin="20">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock Text="API Key:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBox Name="ApiKeyTextbox" Text="{Binding Settings.ApiKey}" Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
-            <Button Content="Get API Key" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"
+    <ScrollViewer Margin="20">
+        <ScrollViewer.Resources>
+            <pec:IntegerFormatConverter x:Key="intConverter"/>
+        </ScrollViewer.Resources>
+        <StackPanel ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0,0,10,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="API Key:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
+                <TextBox Name="ApiKeyTextbox" Text="{Binding Settings.ApiKey}" Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
+                <Button Content="Get API Key" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"
                         Command="{Binding GetApiKeyCommand}" Margin="10,0,0,0"/>
 
-            <CheckBox Grid.Row="2" Grid.Column="1" Margin="10,0" IsChecked="{Binding Settings.ShowTopPanelButton}" Grid.ColumnSpan="2">
-                <AccessText TextWrapping="Wrap">
-                    Show top panel button to add metadata to multiple games (requires restart)
-                </AccessText>
-            </CheckBox>
+                <TextBlock Text="Parallelism:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Width="100" HorizontalAlignment="Left" Margin="10" Text="{Binding Settings.MaxDegreeOfParallelism, Converter={StaticResource intConverter}}"/>
+                <TextBlock Grid.Row="3" Grid.ColumnSpan="3" TextWrapping="Wrap">
+                        Parallelism dictates how many simultaneous threads can be used to process the bulk property import game matching. It is recommended to not exceed the amount of cores in your CPU.
+                </TextBlock>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" Margin="10" Grid.ColumnSpan="2">
-                <TextBlock Text="Import Franchises/Series: " VerticalAlignment="Center"/>
-                <ComboBox ItemsSource="{Binding PropertySelectionModes}" SelectedValue="{Binding Settings.FranchiseSelectionMode}"
+                <CheckBox Grid.Row="5" Grid.Column="1" Margin="10,0" IsChecked="{Binding Settings.ShowTopPanelButton}" Grid.ColumnSpan="2">
+                    <AccessText TextWrapping="Wrap">
+                        Show top panel button to add metadata to multiple games (requires restart)
+                    </AccessText>
+                </CheckBox>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1" Margin="10" Grid.ColumnSpan="2">
+                    <TextBlock Text="Import Franchises/Series: " VerticalAlignment="Center"/>
+                    <ComboBox ItemsSource="{Binding PropertySelectionModes}" SelectedValue="{Binding Settings.FranchiseSelectionMode}"
                           DisplayMemberPath="Value" SelectedValuePath="Key" Width="200" Margin="5,0"
                           IsEditable="False" IsReadOnly="True" IsTextSearchEnabled="False"/>
-            </StackPanel>
-        </Grid>
-        <Grid Margin="0,20">
-            <Grid.Resources>
-                <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                </Style>
-                <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
-                    <Setter Property="IsTextSearchEnabled" Value="False"/>
-                    <Setter Property="IsEditable" Value="False"/>
-                    <Setter Property="IsReadOnly" Value="True"/>
-                    <Setter Property="Margin" Value="10,0"/>
-                    <Setter Property="Width" Value="150"/>
-                    <Setter Property="Grid.Column" Value="1"/>
-                    <Setter Property="ItemsSource" Value="{Binding ImportTargets}"/>
-                </Style>
-                <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-                    <Setter Property="Margin" Value="10,0"/>
-                    <Setter Property="Grid.Column" Value="2"/>
-                </Style>
-            </Grid.Resources>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="Left" Width="auto"/>
-                <ColumnDefinition x:Name="Middle" Width="auto"/>
-                <ColumnDefinition x:Name="Right" Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition x:Name="Header"/>
-                <RowDefinition x:Name="Row1" Height="auto"/>
-                <RowDefinition x:Name="Spacer1" Height="10"/>
-                <RowDefinition x:Name="Row2" Height="auto"/>
-                <RowDefinition x:Name="Spacer2" Height="10"/>
-                <RowDefinition x:Name="Row3" Height="auto"/>
-                <RowDefinition x:Name="Spacer3" Height="10"/>
-                <RowDefinition x:Name="Row4" Height="auto"/>
-                <RowDefinition x:Name="Spacer4" Height="10"/>
-                <RowDefinition x:Name="Row5" Height="auto"/>
-                <RowDefinition x:Name="Spacer5" Height="10"/>
-                <RowDefinition x:Name="Row6" Height="auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock Text="Import as" Grid.Column="1" Margin="12,0"/>
-            <TextBlock Text="Prefix with" Grid.Column="2" Margin="12,0"/>
+                </StackPanel>
+            </Grid>
+            <Grid Margin="0,20">
+                <Grid.Resources>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                    <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Setter Property="IsTextSearchEnabled" Value="False"/>
+                        <Setter Property="IsEditable" Value="False"/>
+                        <Setter Property="IsReadOnly" Value="True"/>
+                        <Setter Property="Margin" Value="10,0"/>
+                        <Setter Property="Width" Value="150"/>
+                        <Setter Property="Grid.Column" Value="1"/>
+                        <Setter Property="ItemsSource" Value="{Binding ImportTargets}"/>
+                    </Style>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                        <Setter Property="Margin" Value="10,0"/>
+                        <Setter Property="Grid.Column" Value="2"/>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="Left" Width="auto"/>
+                    <ColumnDefinition x:Name="Middle" Width="auto"/>
+                    <ColumnDefinition x:Name="Right" Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition x:Name="Header"/>
+                    <RowDefinition x:Name="Row1" Height="auto"/>
+                    <RowDefinition x:Name="Spacer1" Height="10"/>
+                    <RowDefinition x:Name="Row2" Height="auto"/>
+                    <RowDefinition x:Name="Spacer2" Height="10"/>
+                    <RowDefinition x:Name="Row3" Height="auto"/>
+                    <RowDefinition x:Name="Spacer3" Height="10"/>
+                    <RowDefinition x:Name="Row4" Height="auto"/>
+                    <RowDefinition x:Name="Spacer4" Height="10"/>
+                    <RowDefinition x:Name="Row5" Height="auto"/>
+                    <RowDefinition x:Name="Spacer5" Height="10"/>
+                    <RowDefinition x:Name="Row6" Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Import as" Grid.Column="1" Margin="12,0"/>
+                <TextBlock Text="Prefix with" Grid.Column="2" Margin="12,0"/>
 
-            <TextBlock Text="Characters:" Grid.Column="0" Grid.Row="1"/>
-            <TextBlock Text="Concepts:" Grid.Column="0" Grid.Row="3"/>
-            <TextBlock Text="Locations:" Grid.Column="0" Grid.Row="5"/>
-            <TextBlock Text="Objects:" Grid.Column="0" Grid.Row="7"/>
-            <TextBlock Text="People:" Grid.Column="0" Grid.Row="9"/>
-            <TextBlock Text="Themes:" Grid.Column="0" Grid.Row="11"/>
+                <TextBlock Text="Characters:" Grid.Column="0" Grid.Row="1"/>
+                <TextBlock Text="Concepts:" Grid.Column="0" Grid.Row="3"/>
+                <TextBlock Text="Locations:" Grid.Column="0" Grid.Row="5"/>
+                <TextBlock Text="Objects:" Grid.Column="0" Grid.Row="7"/>
+                <TextBlock Text="People:" Grid.Column="0" Grid.Row="9"/>
+                <TextBlock Text="Themes:" Grid.Column="0" Grid.Row="11"/>
 
-            <ComboBox Grid.Row="1" SelectedItem="{Binding Settings.Characters.ImportTarget}"/>
-            <TextBox Grid.Row="1" Text="{Binding Settings.Characters.Prefix}"/>
+                <ComboBox Grid.Row="1" SelectedItem="{Binding Settings.Characters.ImportTarget}"/>
+                <TextBox Grid.Row="1" Text="{Binding Settings.Characters.Prefix}"/>
 
-            <ComboBox Grid.Row="3" SelectedItem="{Binding Settings.Concepts.ImportTarget}"/>
-            <TextBox Grid.Row="3" Text="{Binding Settings.Concepts.Prefix}"/>
+                <ComboBox Grid.Row="3" SelectedItem="{Binding Settings.Concepts.ImportTarget}"/>
+                <TextBox Grid.Row="3" Text="{Binding Settings.Concepts.Prefix}"/>
 
-            <ComboBox Grid.Row="5" SelectedItem="{Binding Settings.Locations.ImportTarget}"/>
-            <TextBox Grid.Row="5" Text="{Binding Settings.Locations.Prefix}"/>
+                <ComboBox Grid.Row="5" SelectedItem="{Binding Settings.Locations.ImportTarget}"/>
+                <TextBox Grid.Row="5" Text="{Binding Settings.Locations.Prefix}"/>
 
-            <ComboBox Grid.Row="7" SelectedItem="{Binding Settings.Objects.ImportTarget}"/>
-            <TextBox Grid.Row="7" Text="{Binding Settings.Objects.Prefix}"/>
+                <ComboBox Grid.Row="7" SelectedItem="{Binding Settings.Objects.ImportTarget}"/>
+                <TextBox Grid.Row="7" Text="{Binding Settings.Objects.Prefix}"/>
 
-            <ComboBox Grid.Row="9" SelectedItem="{Binding Settings.People.ImportTarget}"/>
-            <TextBox Grid.Row="9" Text="{Binding Settings.People.Prefix}"/>
+                <ComboBox Grid.Row="9" SelectedItem="{Binding Settings.People.ImportTarget}"/>
+                <TextBox Grid.Row="9" Text="{Binding Settings.People.Prefix}"/>
 
-            <ComboBox Grid.Row="11" SelectedItem="{Binding Settings.Themes.ImportTarget}"/>
-            <TextBox Grid.Row="11" Text="{Binding Settings.Themes.Prefix}"/>
-        </Grid>
-    </StackPanel>
+                <ComboBox Grid.Row="11" SelectedItem="{Binding Settings.Themes.ImportTarget}"/>
+                <TextBox Grid.Row="11" Text="{Binding Settings.Themes.Prefix}"/>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

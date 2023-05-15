@@ -21,7 +21,7 @@ namespace PlayniteExtensions.Metadata.Common
         public string Name { get; set; }
         public bool AddLink { get; set; } = true;
 
-        public List<GameCheckboxViewModel> Games { get; set; }
+        public ICollection<GameCheckboxViewModel> Games { get; set; }
 
         public RelayCommand<object> CheckAllCommand
         {

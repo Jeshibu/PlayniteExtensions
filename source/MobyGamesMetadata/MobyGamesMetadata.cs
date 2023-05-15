@@ -147,13 +147,13 @@ namespace MobyGamesMetadata
             if (chosenOption == groupOption)
             {
                 var searchProvider = new MobyGamesGroupSearchProvider(ApiClient, scraper, settings.Settings, platformUtility);
-                var extra = new MobyGamesBulkGroupAssigner(PlayniteApi, settings.Settings, searchProvider, platformUtility);
+                var extra = new MobyGamesBulkGroupAssigner(PlayniteApi, settings.Settings, searchProvider, platformUtility, settings.Settings.MaxDegreeOfParallelism);
                 extra.ImportGameProperty();
             }
             else if (chosenOption == genreOption)
             {
                 var searchProvider = new MobyGamesGenreSearchProvider(ApiClient, scraper, settings.Settings, platformUtility);
-                var extra = new MobyGamesBulkGenreAssigner(PlayniteApi, searchProvider, platformUtility);
+                var extra = new MobyGamesBulkGenreAssigner(PlayniteApi, searchProvider, platformUtility, settings.Settings.MaxDegreeOfParallelism);
                 extra.ImportGameProperty();
             }
         }
