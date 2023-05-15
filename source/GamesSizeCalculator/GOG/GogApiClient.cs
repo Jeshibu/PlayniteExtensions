@@ -84,7 +84,7 @@ namespace GamesSizeCalculator.GOG
 
         public List<StoreGamesFilteredListResponse.Product> GetStoreSearch(string searchTerm)
         {
-            const string baseUrl = @"https://www.gog.com/games/ajax/filtered?limit=20&search={0}";
+            const string baseUrl = @"https://catalog.gog.com/v1/catalog?limit=20&order=desc:score&page=1&productType=in:game&query=like:{0}";
             var url = string.Format(baseUrl, searchTerm.UrlEncode());
 
             try

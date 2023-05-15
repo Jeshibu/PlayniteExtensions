@@ -91,15 +91,23 @@ namespace GamesSizeCalculator.GOG
         public class Product
         {
             public string title;
-            public string image;
-            public string url;
-            public string supportUrl;
-            public string forumUrl;
-            public bool isGame;
             public string slug;
-            public uint id;
+            public string releaseDate;
+            public string coverHorizontal;
+            public string coverVertical;
+            public string id;
+
+            public string Url
+            {
+                get
+                {
+                    return $"https://www.gog.com/game/{slug?.Replace('-', '_')}";
+                }
+            }
         }
 
         public List<Product> products;
+        public int pages;
+        public int productCount;
     }
 }

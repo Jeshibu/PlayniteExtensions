@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using System;
 using System.Linq;
 using System.Text;
@@ -57,6 +58,26 @@ namespace GamesSizeCalculator.GOG
                 var details = ApiClient.GetGameDetails(game.GameId);
                 return details?.links?.product_card;
             }
+
+            var searchResult = ApiClient.GetStoreSearch(game.Name);
+            if (searchResult == null || searchResult.Count == 0)
+                return null;
+
+            var titleComparer = new TitleComparer();
+            var exactMatches = searchResult.Where(sr => titleComparer.Equals(sr.title, game.Name)).ToList();
+
+            if (exactMatches.Count == 1)
+                return exactMatches.First().Url;
+            else if (exactMatches.Count > 1)
+                return null; //don't know which one to use, give up
+
+            SortableNameConverter snc = new SortableNameConverter(new[] {"the", "a", "an"}, removeEditions: true);
+
+            var gameName = snc.Convert(game.Name);
+            var matches = searchResult.Where(sr=>titleComparer.Equals(snc.Convert(sr.title), gameName)).ToList();
+            if(matches.Count == 1)
+                return matches.First().Url;
+
             return null;
         }
 
