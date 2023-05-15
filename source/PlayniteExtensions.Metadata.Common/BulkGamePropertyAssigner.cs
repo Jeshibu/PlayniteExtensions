@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows;
 using PlayniteExtensions.Common;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace PlayniteExtensions.Metadata.Common
 {
@@ -188,11 +189,33 @@ namespace PlayniteExtensions.Metadata.Common
             window.SizeToContent = SizeToContent.WidthAndHeight;
             window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             window.Title = "Select games";
+            window.SizeChanged += Window_SizeChanged;
             var dialogResult = window.ShowDialog();
             if (dialogResult == true)
                 return viewModel;
             else
                 return null;
+        }
+
+        private bool windowSizedDown = false;
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (windowSizedDown) return;
+
+            var window = sender as Window;
+
+            if (window == null) return;
+
+            var screen = System.Windows.Forms.Screen.AllScreens.OrderBy(s => s.WorkingArea.Height).First();
+            var dpi = VisualTreeHelper.GetDpi(window);
+
+            if (window.ActualHeight * dpi.DpiScaleY > screen.WorkingArea.Height)
+            {
+                windowSizedDown = true;
+                window.SizeToContent = SizeToContent.Width;
+                window.Height = 0.96D * screen.WorkingArea.Height / dpi.DpiScaleY;
+            }
         }
 
         protected abstract UserControl GetBulkPropertyImportView(Window window, GamePropertyImportViewModel viewModel);
