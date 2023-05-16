@@ -58,3 +58,9 @@ Packages:
     Changelog:
     - Fixed image fetching for games with special characters in their name (like &)
     - Added settings to disable and prioritize image regions
+  - Version: 0.6.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-05-16
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-05-16/LaunchBoxMetadata_0_6_1.pext
+    Changelog:
+    - Small platform matching improvements

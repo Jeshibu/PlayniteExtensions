@@ -75,3 +75,11 @@ Packages:
     Changelog:
      - Fixed some names being imported with too much surrounding whitespace characters around them
      - Minor settings tweaks
+  - Version: 0.7
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-05-16
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-05-16/GiantBombMetadata_0_7.pext
+    Changelog:
+     - Made bulk game property import execution parallel (improves speed significantly)
+     - Fixed bulk property assignment window overflowing screen bounds for some multi-monitor setups
+     - Small platform matching improvements

@@ -82,8 +82,8 @@ namespace PlayniteExtensions.Common
             TryAddPlatformByName(output, "PS5", "sony_playstation5");
             TryAddPlatformByName(output, "PSP", "sony_psp");
             TryAddPlatformByName(output, new[] { "PS Vita", "Vita" }, "sony_vita");
-            TryAddPlatformByName(output, "PS4/5", new[] { "sony_playstation4", "sony_playstation5" });
-            TryAddPlatformByName(output, "Playstation 4/5", new[] { "sony_playstation4", "sony_playstation5" });
+            TryAddPlatformByName(output, new[] { "PS4/5", "Playstation 4/5" }, new[] { "sony_playstation4", "sony_playstation5" });
+            TryAddPlatformByName(output, "Commodore 64/128", "commodore_64");
             TryAddPlatformByName(output, "AMI", "commodore_amiga");
             TryAddPlatformByName(output, "GB", "nintendo_gameboy");
             TryAddPlatformByName(output, "GBA", "nintendo_gameboyadvance");

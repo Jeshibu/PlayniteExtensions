@@ -21,3 +21,12 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-04-23/MobyGamesMetadata_0_3_1.pext
     Changelog:
      - Fixed links in game descriptions
+  - Version: 0.4
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-05-16
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-05-16/MobyGamesMetadata_0_4.pext
+    Changelog:
+     - Made bulk game property import execution parallel (improves speed significantly)
+     - Fixed bulk property assignment window overflowing screen bounds for some multi-monitor setups
+     - Small platform matching improvements
+     - Fixed link URL matching for games with old-style MobyGames links (no ID in the URL) and titles that start with a number
