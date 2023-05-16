@@ -62,6 +62,6 @@ Packages:
   - Version: 0.9
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2023-05-16
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-05-16/itchIoBundleTagger_0_8_2.pext
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-05-16/itchIoBundleTagger_0_9.pext
     Changelog:
-    - Added support for new bundle - Türkiye & Syria Earthquake Relief Mega Bundle
+    - Added support for new bundle - TÃ¼rkiye & Syria Earthquake Relief Mega Bundle
