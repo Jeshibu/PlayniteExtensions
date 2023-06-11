@@ -118,7 +118,7 @@ namespace PlayniteExtensions.Metadata.Common
 
         private static bool HasMatchingName(IGameSearchResult g, string deflatedSearchName, SortableNameConverter snc)
         {
-            var gameNames = new List<string> { g.Name };
+            var gameNames = new List<string> { g.Title };
             if (g.AlternateNames?.Any() == true)
                 gameNames.AddRange(g.AlternateNames);
 
