@@ -7,6 +7,7 @@ tag-bundle-blm = Bundle for Racial Justice and Equality
 tag-bundle-ukraine = Bundle for Ukraine
 tag-bundle-ttrpg = TTRPGs for Trans Rights in Texas!
 tag-bundle-queer2022 = Queer Games Bundle 2022
+tag-bundle-queer2023 = Queer Games Bundle 2023
 tag-bundle-wbstrr = Worthy of Better, Stronger Together for Reproductive Rights
 tag-bundle-abortion = Indie Bundle for Abortion Funds
 tag-bundle-tsermb = Türkiye & Syria Earthquake Relief Mega Bundle
