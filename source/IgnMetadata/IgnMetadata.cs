@@ -14,7 +14,6 @@ namespace IgnMetadata
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
-        private IgnMetadataSettingsViewModel settings { get; set; }
         private IPlatformUtility platformUtility;
         private IgnClient client;
 
@@ -39,7 +38,6 @@ namespace IgnMetadata
 
         public IgnMetadata(IPlayniteAPI api) : base(api)
         {
-            settings = new IgnMetadataSettingsViewModel(this);
             Properties = new MetadataPluginProperties
             {
                 HasSettings = false
@@ -51,16 +49,6 @@ namespace IgnMetadata
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
             return new IgnMetadataProvider(options, this, client, platformUtility);
-        }
-
-        public override ISettings GetSettings(bool firstRunSettings)
-        {
-            return settings;
-        }
-
-        public override UserControl GetSettingsView(bool firstRunSettings)
-        {
-            return new IgnMetadataSettingsView();
         }
     }
 }

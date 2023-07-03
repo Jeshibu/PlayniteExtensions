@@ -55,10 +55,6 @@
     <Compile Include="IgnClient.cs" />
     <Compile Include="IgnMetadata.cs" />
     <Compile Include="IgnMetadataProvider.cs" />
-    <Compile Include="IgnMetadataSettings.cs" />
-    <Compile Include="IgnMetadataSettingsView.xaml.cs">
-      <DependentUpon>IgnMetadataSettingsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -79,10 +75,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Page Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="IgnMetadataSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
