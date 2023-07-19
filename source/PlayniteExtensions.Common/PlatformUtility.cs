@@ -42,7 +42,8 @@ namespace PlayniteExtensions.Common
         public PlatformUtility(string platformName, params string[] specIds)
         {
             platformSpecNameByNormalName = GetPlatformSpecsByNormalName(null);
-            TryAddPlatformByName(platformSpecNameByNormalName, platformName, specIds);
+            if(!string.IsNullOrWhiteSpace(platformName) && specIds != null && specIds.Any())
+                TryAddPlatformByName(platformSpecNameByNormalName, platformName, specIds);
         }
 
         private static Regex TrimCompanyName = new Regex(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
@@ -295,8 +296,10 @@ namespace PlayniteExtensions.Common
                 return new List<MetadataProperty>();
 
             string sanitizedPlatformName = TrimInput.Replace(platformName, string.Empty);
+            string companyTrimmedPlatformName = TrimCompanyName.Replace(sanitizedPlatformName, string.Empty);
 
-            if (PlatformSpecNameByNormalName.TryGetValue(sanitizedPlatformName, out string[] specIds))
+            if (PlatformSpecNameByNormalName.TryGetValue(sanitizedPlatformName, out string[] specIds)
+                || PlatformSpecNameByNormalName.TryGetValue(companyTrimmedPlatformName, out specIds))
                 return specIds.Select(s => new MetadataSpecProperty(s)).ToList<MetadataProperty>();
 
             if (nameAbbreviations.TryGetValue(sanitizedPlatformName, out string foundPlatformName))
