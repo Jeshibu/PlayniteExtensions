@@ -95,7 +95,7 @@ function Get-TestProjectNames {
         [Array]$projects
     )
 
-    $testprojects = @()
+    $testprojects = @("PlayniteExtensions.Common.Tests")
         
     foreach ($p in $projects) {
         if (Test-Path ".\source\$p.Tests" -PathType Container) {
