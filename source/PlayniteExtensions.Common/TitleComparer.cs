@@ -19,49 +19,48 @@ namespace PlayniteExtensions.Common
             }
 
             int ix = 0, iy = 0;
-            bool xend, yend;
-            while (ix < x.Length && iy < y.Length)
+            bool xend = false, yend = false;
+            while (!xend && !yend)
             {
-                char cx = x[ix], cy = y[iy];
-                while (!char.IsDigit(cx) && !char.IsLetter(cx))
-                {
-                    ix++;
-                    if (ix >= x.Length)
-                        break;
+                char? cx = GetNextLetterOrNumber(x, ref ix, out xend);
+                char? cy = GetNextLetterOrNumber(y, ref iy, out yend);
 
-                    cx = x[ix];
-                }
-                while (!char.IsDigit(cy) && !char.IsLetter(cy))
-                {
-                    iy++;
-                    if (iy >= y.Length)
-                        break;
+                if (xend || yend)
+                    break;
 
-                    cy = y[iy];
-                }
-                xend = ix >= x.Length;
-                yend = iy >= y.Length;
-
-                if (xend && !yend)
-                    return -1;
-                if (!xend && yend)
-                    return 1;
-
-                var charComparison = char.ToUpperInvariant(cx).CompareTo(char.ToUpperInvariant(cy));
+                var charComparison = char.ToUpperInvariant(cx.Value).CompareTo(char.ToUpperInvariant(cy.Value));
                 if (charComparison != 0)
                     return charComparison;
-                ix++;
-                iy++;
             }
-            xend = ix >= x.Length;
-            yend = iy >= y.Length;
 
-            if (xend && !yend)
+            if (xend && !yend && HasLettersOrNumbersFromIndex(y, iy))
                 return -1;
-            if (!xend && yend)
+            if (!xend && yend && HasLettersOrNumbersFromIndex(x, ix))
                 return 1;
 
             return 0;
+        }
+
+        private static char? GetNextLetterOrNumber(string str, ref int index, out bool endOfString)
+        {
+            while (index < str.Length)
+            {
+                char c = str[index];
+                index++;
+                if (char.IsLetter(c) || char.IsDigit(c))
+                {
+                    endOfString = false;
+                    return c;
+                }
+            }
+            endOfString = true;
+            return null;
+        }
+
+        private static bool HasLettersOrNumbersFromIndex(string str, int index)
+        {
+            var c = GetNextLetterOrNumber(str, ref index, out bool endOfString);
+            return !endOfString;
         }
 
         public override bool Equals(string x, string y)
