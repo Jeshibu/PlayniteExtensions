@@ -19,7 +19,9 @@ namespace IgnMetadata
 
         public override Guid Id { get; } = Guid.Parse("6024e3a9-de7e-4848-9101-7a2f818e7e47");
 
-        public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
+        public override List<MetadataField> SupportedFields => Fields;
+
+        internal static List<MetadataField> Fields = new List<MetadataField>
         {
             MetadataField.CoverImage,
             MetadataField.Name,
@@ -48,7 +50,8 @@ namespace IgnMetadata
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new IgnMetadataProvider(options, this, client, platformUtility);
+            var searchProvider = new IgnGameSearchProvider(client, platformUtility);
+            return new IgnMetadataProvider(searchProvider, options, this.PlayniteApi, platformUtility);
         }
     }
 }

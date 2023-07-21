@@ -1,12 +1,16 @@
 ﻿using Newtonsoft.Json;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
+using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows.Markup;
 
 namespace IgnMetadata
 {
@@ -112,7 +116,7 @@ namespace IgnMetadata
         public int Total;
     }
 
-    public class IgnGame
+    public class IgnGame : IGameSearchResult
     {
         public string Id;
         public string Slug;
@@ -125,6 +129,76 @@ namespace IgnMetadata
         public IgnAttribute[] Producers = new IgnAttribute[0];
         public IgnAttribute[] Publishers = new IgnAttribute[0];
         public IgnObjectRegion[] ObjectRegions = new IgnObjectRegion[0];
+
+        public List<string> Names
+        {
+            get
+            {
+                var namesObj = Metadata.Names;
+                var names = new List<string> { namesObj.Name };
+
+                if(!string.IsNullOrEmpty(namesObj.Short) && namesObj.Name != namesObj.Short)
+                    names.Add(namesObj.Short);
+
+                if (namesObj.Alt?.Length > 0)
+                    names.AddRange(namesObj.Alt);
+
+                return names;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                var names = Names;
+                var name = names.First();
+                if (names.Count > 1)
+                    name += $" (AKA {string.Join(" / ", names.Skip(1))})";
+                return name;
+            }
+        }
+
+        public string Title => Names.First();
+
+        public IEnumerable<string> AlternateNames => Names.Skip(1);
+
+        public IEnumerable<string> Platforms => ObjectRegions.SelectMany(r => r.Releases).SelectMany(r => r.PlatformAttributes).Select(x => x.Name).ToHashSet();
+
+        public string ReleaseDateString
+        {
+            get
+            {
+                var releaseDates = ObjectRegions.SelectMany(r => r.Releases).Where(r => !string.IsNullOrWhiteSpace(r.Date)).Select(r => r.Date).OrderBy(d => d).ToList();
+                return releaseDates.FirstOrDefault();
+            }
+        }
+
+        public ReleaseDate? ReleaseDate
+        {
+            get
+            {
+                var dateString = ReleaseDateString;
+                if (!string.IsNullOrWhiteSpace(dateString) && DateTime.TryParseExact(dateString, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out DateTime date))
+                    return new ReleaseDate(date);
+                else
+                    return null;
+            }
+        }
+
+        public IEnumerable<string> AgeRatings
+        {
+            get
+            {
+                foreach (var region in ObjectRegions)
+                {
+                    if (region.AgeRating == null)
+                        continue;
+
+                    yield return $"{region.AgeRating.AgeRatingType} {region.AgeRating.Name}";
+                }
+            }
+        }
     }
 
     public class IgnObjectRegion
