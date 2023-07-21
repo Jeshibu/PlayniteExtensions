@@ -233,6 +233,7 @@ Global
 		Rawg.Common\Rawg.Common.projitems*{a54423d1-8e7a-4339-b0d5-24e7cefe469b}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{a971e332-d479-48a2-9238-0659c64f30f5}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{ac1b23ee-bdc9-4273-9f4b-4f414482541b}*SharedItemsImports = 4
+		PlayniteExtensions.Metadata.Common\PlayniteExtensions.Metadata.Common.projitems*{ac1b23ee-bdc9-4273-9f4b-4f414482541b}*SharedItemsImports = 4
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{afa8de86-101b-4449-a237-2030d7f74ce2}*SharedItemsImports = 4
 		PlayniteExtensions.Metadata.Common\PlayniteExtensions.Metadata.Common.projitems*{afa8de86-101b-4449-a237-2030d7f74ce2}*SharedItemsImports = 4
 		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{b2be4cbd-25a7-41f3-bb78-6bd3bc510323}*SharedItemsImports = 4

@@ -19,15 +19,14 @@ namespace XboxMetadata.Tests
         [Fact]
         public async Task SearchOnlyIncludesGames()
         {
-            string market = "en-us";
-            string query = "Sniper Elite 5";
-            string escapedQuery = Uri.EscapeDataString(query);
+            string name = "Sniper Elite 5";
+            string query = Uri.EscapeDataString(name);
             var settings = XboxMetadataSettings.GetInitialSettings();
+            settings.Market = "en-us";
 
-            var downloader = new FakeWebDownloader($"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={market}&clientId={Guid.Empty}&sources=Microsoft-Terms,Iris-Products,DCatAll-Products&filter=+ClientType:StoreWeb&counts=5,1,5&query={escapedQuery}", "xbone sniper elite 5 search.json");
-            //https://www.microsoft.com/msstoreapiprod/api/autosuggest?market=en-us&sources=DCatAll-Products&filter=+ClientType:StoreWeb&counts=5&query=Sniper%2520Elite%25205
+            var downloader = new FakeWebDownloader($"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={settings.Market}&sources=xSearch-Products&filter=+ClientType:StoreWeb&counts=20&query={query}", "xbone sniper elite 5 search.json");
             var scraper = new XboxOneScraper(downloader, new PlatformUtility((IPlayniteAPI)null));
-            var result = (await scraper.SearchAsync(settings, query)).ToList();
+            var result = (await scraper.SearchAsync(settings, name)).ToList();
             Assert.Equal(2, result.Count);
         }
 
@@ -55,7 +54,7 @@ namespace XboxMetadata.Tests
 
             var downloader = new FakeWebDownloader(new Dictionary<string, string>
             {
-                { $"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={settings.Market}&clientId={Guid.Empty}&sources=Microsoft-Terms,Iris-Products,DCatAll-Products&filter=+ClientType:StoreWeb&counts=5,1,5&query={query}", "xbone sniper elite 5 search.json" },
+                { $"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={settings.Market}&sources=xSearch-Products&filter=+ClientType:StoreWeb&counts=20&query={query}", "xbone sniper elite 5 search.json" },
                 { $"https://www.xbox.com/{settings.Market}/games/store/-/9pp8q82h79lc", "xbone sniper elite 5 details.html" }
             });
 

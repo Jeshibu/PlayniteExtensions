@@ -21,7 +21,7 @@ namespace XboxMetadata.Scrapers
             this.platformUtility = platformUtility;
         }
         public abstract Task<List<XboxGameSearchResultItem>> SearchAsync(XboxMetadataSettings settings, string query);
-        public abstract Task<XboxGameDetails> GetDetailsAsync(XboxMetadataSettings settings, string id);
+        public abstract Task<XboxGameDetails> GetDetailsAsync(XboxMetadataSettings settings, string id, string url);
     }
 
     public class XboxGameSearchResultItem
@@ -31,6 +31,7 @@ namespace XboxMetadata.Scrapers
         public string Title { get; set; }
         public DateTime? ReleaseDate { get; set; }
         public List<MetadataProperty> Platforms { get; set; } = new List<MetadataProperty>();
+        public string Url { get; set; }
     }
 
     public class XboxGameDetails : XboxGameSearchResultItem

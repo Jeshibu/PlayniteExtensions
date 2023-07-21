@@ -95,6 +95,8 @@ namespace GiantBombMetadata.Api
 
         public IEnumerable<string> AlternateNames => AliasesSplit;
 
+        public string Title => Name;
+
         IEnumerable<string> IGameSearchResult.Platforms => Platforms?.Select(p => p.Name) ?? new string[0];
 
         ReleaseDate? IGameSearchResult.ReleaseDate => ReleaseDate.ParseReleaseDate();

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace XboxMetadata.Scrapers
@@ -20,16 +19,16 @@ namespace XboxMetadata.Scrapers
 
         public override int ExecutionOrder { get; } = 10;
 
-        public override async Task<XboxGameDetails> GetDetailsAsync(XboxMetadataSettings settings, string id)
+        public override async Task<XboxGameDetails> GetDetailsAsync(XboxMetadataSettings settings, string id, string url)
         {
             var culture = new CultureInfo(settings.Market);
-            var url = $"https://marketplace.xbox.com/{settings.Market}/Product/-/{id}";
+            //var url = $"https://marketplace.xbox.com/{settings.Market}/Product/-/{id}";
             var response = await downloader.DownloadStringAsync(url, throwExceptionOnErrorResponse: true);
 
             HtmlParser parser = new HtmlParser();
             var doc = await parser.ParseAsync(response.ResponseContent);
 
-            var output = new XboxGameDetails();
+            var output = new XboxGameDetails() { Url = url };
             output.Title = doc.QuerySelector("div#gameDetails > h1")?.TextContent;
             var boxartUrl = doc.QuerySelector("img.boxart")?.GetAttribute("src");
             if (boxartUrl != null && settings.Cover.MinWidth <= 219 && settings.Cover.MinHeight <= 300)
@@ -98,7 +97,15 @@ namespace XboxMetadata.Scrapers
             {
                 var id = searchResultElement.Attributes["id"].Value.Substring(1); //remove the p from the start of the ID attribute
                 var titleLink = searchResultElement.QuerySelector("div > div.Game > a");
-                var item = new XboxGameSearchResultItem { ScraperKey = Key, Id = id, Title = titleLink.TextContent, Platforms = new List<MetadataProperty> { new MetadataSpecProperty("xbox360") } };
+                var detailsUrl = titleLink.GetAttribute("href");
+                var item = new XboxGameSearchResultItem
+                {
+                    ScraperKey = Key,
+                    Id = id,
+                    Url = detailsUrl,
+                    Title = titleLink.TextContent,
+                    Platforms = new List<MetadataProperty> { new MetadataSpecProperty("xbox360") }
+                };
 
                 output.Add(item);
                 var productMetas = searchResultElement.QuerySelectorAll("ul.ProductMeta > li");

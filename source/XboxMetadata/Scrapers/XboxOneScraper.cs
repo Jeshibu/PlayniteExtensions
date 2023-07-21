@@ -19,10 +19,15 @@ namespace XboxMetadata.Scrapers
         public override string Key { get; } = "XboxOne";
         public override int ExecutionOrder { get; } = 1;
 
-        public override async Task<XboxGameDetails> GetDetailsAsync(XboxMetadataSettings settings, string id)
+        public override async Task<XboxGameDetails> GetDetailsAsync(XboxMetadataSettings settings, string id, string url)
         {
-            var url = $"https://www.xbox.com/{settings.Market}/games/store/-/{id?.ToLower()}";
+            //var url = $"https://www.xbox.com/{settings.Market}/games/store/-/{id?.ToLower()}";
             var response = await downloader.DownloadStringAsync(url, throwExceptionOnErrorResponse: true);
+            var responseUrl = new Uri(response.ResponseUrl);
+
+            if (responseUrl.Host != "www.xbox.com")
+                return null;
+
             var match = Regex.Match(response.ResponseContent, @"window\.__PRELOADED_STATE__\s*=\s*(?<json>.+);\r?\n", RegexOptions.ExplicitCapture);
 
             if (!match.Success)
@@ -75,6 +80,7 @@ namespace XboxMetadata.Scrapers
                 AgeRating = ageRating,
                 Covers = GetImages(summary, settings.Cover),
                 Backgrounds = GetImages(summary, settings.Background),
+                Url = response.ResponseUrl,
             };
 
             return output;
@@ -83,11 +89,10 @@ namespace XboxMetadata.Scrapers
         public override async Task<List<XboxGameSearchResultItem>> SearchAsync(XboxMetadataSettings settings, string query)
         {
             var escapedQuery = Uri.EscapeDataString(query);
-            //var url = $"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={market}&sources=DCatAll-Products&filter=+ClientType:StoreWeb&counts=5&query={escapedQuery}";
-            var url = $"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={settings.Market}&clientId={Guid.Empty}&sources=Microsoft-Terms,Iris-Products,DCatAll-Products&filter=+ClientType:StoreWeb&counts=5,1,5&query={escapedQuery}";
+            var url = $"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={settings.Market}&sources=xSearch-Products&filter=+ClientType:StoreWeb&counts=20&query={escapedQuery}";
             var response = await downloader.DownloadStringAsync(url, throwExceptionOnErrorResponse: true);
             var parsed = JsonConvert.DeserializeObject<XboxSearchResultsRoot>(response.ResponseContent);
-            var searchResults = parsed.ResultSets.FirstOrDefault(rs => rs.Source == "dcatall-products")?.Suggests.Select(SearchResultFromSuggest).Where(r => r.ProductType == "Game");
+            var searchResults = parsed.ResultSets.FirstOrDefault(rs => rs.Type == "product")?.Suggests.Select(SearchResultFromSuggest).Where(r => r.ProductType == "Game");
             var output = new List<XboxGameSearchResultItem>();
             if (searchResults == null)
                 return output;
@@ -95,7 +100,14 @@ namespace XboxMetadata.Scrapers
             foreach (var sr in searchResults)
             {
                 var platforms = platformUtility.GetPlatformsFromName(sr.Title, out string trimmedTitle);
-                output.Add(new XboxGameSearchResultItem { ScraperKey = Key, Id = sr.Id, Title = trimmedTitle, Platforms = platforms.ToList() });
+                output.Add(new XboxGameSearchResultItem
+                {
+                    ScraperKey = Key,
+                    Id = sr.Id,
+                    Url = sr.Url,
+                    Title = trimmedTitle,
+                    Platforms = platforms.ToList()
+                });
             }
             return output;
         }

@@ -89,7 +89,8 @@ namespace XboxMetadata.Scrapers
         public XboxGameDetails GetDetails(XboxMetadataSettings settings, XboxGameSearchResultItem searchResultItem)
         {
             var scraper = Scrapers[searchResultItem.ScraperKey];
-            var task = scraper.GetDetailsAsync(settings, searchResultItem.Id);
+            var url = new Uri(new Uri("https://www.xbox.com/en-US/"), searchResultItem.Url).ToString();
+            var task = scraper.GetDetailsAsync(settings, searchResultItem.Id, url);
             task.Wait();
             return task.Result;
         }
