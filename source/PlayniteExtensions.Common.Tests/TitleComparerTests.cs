@@ -13,6 +13,13 @@ namespace PlayniteExtensions.Common.Tests
         [Theory]
         [InlineData("FEAR", "F.E.A.R.", 0)]
         [InlineData("S.T.A.L.K.E.R.: Shadow of Chernobyl", "S.T.A.L.K.E.R - SHADOW OF CHERNOBYL", 0)]
+        [InlineData("T.E.S.T", "test-----------------", 0)]
+        [InlineData("T.E.S.T", "test-----------------2", -1)]
+        [InlineData("test-----------------2", "T.E.S.T", 1)]
+        [InlineData("XA", "XB", -1)]
+        [InlineData("A1", "A2", -1)]
+        [InlineData("B2", "B1", 1)]
+        [InlineData("A", "A 2", -1)]
         public void TestTitleComparison(string title1, string title2, int expected)
         {
             var titleComparer = new TitleComparer();

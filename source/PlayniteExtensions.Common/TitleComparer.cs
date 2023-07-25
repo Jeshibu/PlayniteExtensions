@@ -31,6 +31,10 @@ namespace PlayniteExtensions.Common
                 var charComparison = char.ToUpperInvariant(cx.Value).CompareTo(char.ToUpperInvariant(cy.Value));
                 if (charComparison != 0)
                     return charComparison;
+
+                //bump the indexes because GetNextLetterOrNumber won't if the character at the current index is a letter or number
+                ix++;
+                iy++;
             }
 
             if (xend && !yend && HasLettersOrNumbersFromIndex(y, iy))
@@ -46,12 +50,12 @@ namespace PlayniteExtensions.Common
             while (index < str.Length)
             {
                 char c = str[index];
-                index++;
                 if (char.IsLetter(c) || char.IsDigit(c))
                 {
                     endOfString = false;
                     return c;
                 }
+                index++;
             }
             endOfString = true;
             return null;
