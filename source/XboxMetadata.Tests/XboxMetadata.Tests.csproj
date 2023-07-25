@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="FakeItemCollection.cs" />
     <Compile Include="PlatformUtilityTests.cs" />
+    <Compile Include="Xbox360ScraperTests.cs" />
     <Compile Include="XboxOneScraperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -89,6 +90,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="microsoft minesweeper 2019 details.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x360 en-us dead or alive xtreme 2 details.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x360 en-us dead or alive xtreme 2 search.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="x360 en-us gears of war details.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

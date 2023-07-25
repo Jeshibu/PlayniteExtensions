@@ -2,7 +2,7 @@
   "Query": "sniper elite 5",
   "ResultSets": [
     {
-      "Source": "dcatall-products",
+      "Source": "xSearch-Products",
       "FromCache": false,
       "Type": "product",
       "Suggests": [

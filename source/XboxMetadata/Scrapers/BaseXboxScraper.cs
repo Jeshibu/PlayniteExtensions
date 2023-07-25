@@ -22,6 +22,7 @@ namespace XboxMetadata.Scrapers
         }
         public abstract Task<List<XboxGameSearchResultItem>> SearchAsync(XboxMetadataSettings settings, string query);
         public abstract Task<XboxGameDetails> GetDetailsAsync(XboxMetadataSettings settings, string id, string url);
+        public abstract string FixUrl(string url);
     }
 
     public class XboxGameSearchResultItem

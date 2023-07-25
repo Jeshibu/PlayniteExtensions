@@ -69,6 +69,7 @@ namespace XboxMetadata
         Poster,
         SuperHeroArt,
         Screenshots,
+        AppStoreProductImage,
     }
 
     public class CheckboxSetting

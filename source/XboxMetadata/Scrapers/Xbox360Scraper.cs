@@ -127,5 +127,7 @@ namespace XboxMetadata.Scrapers
         {
             return node.ChildNodes.FirstOrDefault(n => n.NodeType == AngleSharp.Dom.NodeType.Text && !string.IsNullOrEmpty(n.TextContent))?.TextContent;
         }
+
+        public override string FixUrl(string url) => new Uri(new Uri("https://marketplace.xbox.com"), url).ToString();
     }
 }
