@@ -59,7 +59,7 @@ namespace XboxMetadata.Tests
                 { $"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={settings.Market}&sources=xSearch-Products&filter=+ClientType:StoreWeb&counts=20&query={query}", "xbone sniper elite 5 search.json" },
                 { detailsUrl, "xbone sniper elite 5 details.html" }
             });
-            downloader.RedirectsByUrl.Add("https://www.microsoft.com/en-us/store/p/sniper-elite-5/9pp8q82h79lc", new FakeWebDownloader.Redirect(detailsUrl));
+            downloader.AddRedirect("https://www.microsoft.com/en-us/store/p/sniper-elite-5/9pp8q82h79lc", detailsUrl);
 
             var scraper = new XboxOneScraper(downloader, new PlatformUtility(playniteApi.Object));
             var scraperManager = new ScraperManager(new[] { scraper });

@@ -75,10 +75,16 @@ namespace PlayniteExtensions.Tests.Common
             CalledUrls.Add(url);
             if (FilesByUrl.TryGetValue(url, out string filePath))
                 return new DownloadStringResponse(url, File.ReadAllText(filePath), HttpStatusCode.OK);
-            else if (RedirectsByUrl.TryGetValue(url, out Redirect redir) && maxRedirectDepth >= redir.Depth)
-                return DownloadString(redir.RedirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, throwExceptionOnErrorResponse, maxRedirectDepth);
-            else
-                throw new Exception($"Url not accounted for: {url}");
+
+            if (RedirectsByUrl.TryGetValue(url, out Redirect redir))
+            {
+                if (maxRedirectDepth < redir.Depth)
+                    return new DownloadStringResponse(redir.RedirectUrl, null, HttpStatusCode.Redirect);
+                else
+                    return DownloadString(redir.RedirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, throwExceptionOnErrorResponse, maxRedirectDepth);
+            }
+
+            throw new Exception($"Url not accounted for: {url}");
         }
     }
 }
