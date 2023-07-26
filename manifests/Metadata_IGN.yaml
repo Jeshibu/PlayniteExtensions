@@ -33,7 +33,7 @@ Packages:
   - Version: 0.3
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2023-07-26
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-07-26/IgnMetadata_0_2_4.pext
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-07-26/IgnMetadata_0_3.pext
     Changelog:
     - Added shortened game names as alternate names for searching/matching
     - Added the use of platforms for searching/matching
