@@ -30,3 +30,9 @@ Packages:
      - Fixed bulk property assignment window overflowing screen bounds for some multi-monitor setups
      - Small platform matching improvements
      - Fixed link URL matching for games with old-style MobyGames links (no ID in the URL) and titles that start with a number
+  - Version: 0.4.1
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-07-26
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-07-26/MobyGamesMetadata_0_4_1.pext
+    Changelog:
+     - Fixed title matching for automated metadata collection for games with alternate titles

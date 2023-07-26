@@ -13,3 +13,11 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-04-16/XboxMetadata_0_2.pext
     Changelog:
     - Added Xbox 360 game metadata searching
+  - Version: 0.3
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-07-26
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-07-26/XboxMetadata_0_3.pext
+    Changelog:
+    - Return 20 search results instead of 5
+    - Added Microsoft Store app details processing (fixes errors for metadata fetch attempts from Microsoft Store pages)
+    - Small 

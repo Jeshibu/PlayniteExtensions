@@ -83,3 +83,9 @@ Packages:
      - Made bulk game property import execution parallel (improves speed significantly)
      - Fixed bulk property assignment window overflowing screen bounds for some multi-monitor setups
      - Small platform matching improvements
+  - Version: 0.7.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-07-26
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-07-26/GiantBombMetadata_0_7_1.pext
+    Changelog:
+     - Fixed title matching for automated metadata collection for games with alternate titles

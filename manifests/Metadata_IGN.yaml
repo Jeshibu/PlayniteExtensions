@@ -30,3 +30,13 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-05-16/IgnMetadata_0_2_3.pext
     Changelog:
     - Small platform matching improvements
+  - Version: 0.3
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2023-07-26
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-07-26/IgnMetadata_0_2_4.pext
+    Changelog:
+    - Added shortened game names as alternate names for searching/matching
+    - Added the use of platforms for searching/matching
+    - Removed settings (was never supposed to appear in the first place)
+    - Fixed title matching for automated metadata collection for games with alternate titles
+    - Small platform matching improvements

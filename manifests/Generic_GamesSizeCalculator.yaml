@@ -205,3 +205,10 @@ Packages:
     - Added GOG install size sourcing for non-GOG games
     - Fixed Steam sourcing for AmazeVR Megan Thee Stallion VR Concert
     - Updated Russian localization
+  - Version: 1.29.1
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2023-07-26
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-07-26/GamesSizeCalculator_1_29_1.pext
+    Changelog:
+    - Small platform matching improvements
+    - Small game name matching improvements
