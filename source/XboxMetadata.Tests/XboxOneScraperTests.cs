@@ -86,7 +86,7 @@ namespace XboxMetadata.Tests
                     MinWidth = 100,
                     MaxHeight = 1000,
                     MaxWidth = 1000,
-                    Fields = new List<CheckboxSetting> { new CheckboxSetting(ImageSourceField.BoxArt, true) }
+                    Fields = new List<CheckboxSetting> { new CheckboxSetting(ImageSourceField.AppStoreProductImage, true) }
                 }
             };
             var response = new DownloadStringResponse("https://www.microsoft.com/somepage", content, System.Net.HttpStatusCode.OK);

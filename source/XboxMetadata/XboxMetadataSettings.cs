@@ -1,10 +1,5 @@
 ﻿using Playnite.SDK;
-using Playnite.SDK.Data;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace XboxMetadata
 {
@@ -29,7 +24,7 @@ namespace XboxMetadata
                     MaxWidth = 600,
                     MaxHeight = 900,
                     AspectRatio = AspectRatio.Vertical,
-                    Fields = new List<CheckboxSetting> { new CheckboxSetting(ImageSourceField.Poster, true), new CheckboxSetting(ImageSourceField.BoxArt, true), new CheckboxSetting(ImageSourceField.SuperHeroArt, false), new CheckboxSetting(ImageSourceField.Screenshots, false) },
+                    Fields = new List<CheckboxSetting> { new CheckboxSetting(ImageSourceField.Poster, true), new CheckboxSetting(ImageSourceField.BoxArt, true), new CheckboxSetting(ImageSourceField.AppStoreProductImage, true), new CheckboxSetting(ImageSourceField.SuperHeroArt, false), new CheckboxSetting(ImageSourceField.Screenshots, false) },
                 },
                 Background = new XboxImageSourceSettings
                 {
@@ -38,7 +33,7 @@ namespace XboxMetadata
                     MaxWidth = 2560,
                     MaxHeight = 1440,
                     AspectRatio = AspectRatio.Horizontal,
-                    Fields = new List<CheckboxSetting> { new CheckboxSetting(ImageSourceField.SuperHeroArt, true), new CheckboxSetting(ImageSourceField.Screenshots, true), new CheckboxSetting(ImageSourceField.BoxArt, false), new CheckboxSetting(ImageSourceField.Poster, false) },
+                    Fields = new List<CheckboxSetting> { new CheckboxSetting(ImageSourceField.SuperHeroArt, true), new CheckboxSetting(ImageSourceField.Screenshots, true), new CheckboxSetting(ImageSourceField.BoxArt, false), new CheckboxSetting(ImageSourceField.Poster, false), new CheckboxSetting(ImageSourceField.AppStoreProductImage, false) },
                 },
             };
         }
