@@ -20,4 +20,3 @@ Packages:
     Changelog:
     - Return 20 search results instead of 5
     - Added Microsoft Store app details processing (fixes errors for metadata fetch attempts from Microsoft Store pages)
-    - Small 
