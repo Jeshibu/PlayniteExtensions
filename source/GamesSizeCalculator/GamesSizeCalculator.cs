@@ -131,7 +131,7 @@ namespace GamesSizeCalculator
             catch (Exception e)
             {
                 logger.Error(e, $"Error while getting file size online from {sizeCalculator?.ServiceName} for {Game?.Name}");
-                PlayniteApi.Notifications.Messages.Add(
+                PlayniteApi.Notifications.Add(
                     new NotificationMessage("GetOnlineSizeError" + Game.Id.ToString(),
                         string.Format(ResourceProvider.GetString("LOCGame_Sizes_Calculator_NotificationMessageErrorGetOnlineSize"), sizeCalculator.ServiceName, Game.Name, e.Message),
                         NotificationType.Error));
