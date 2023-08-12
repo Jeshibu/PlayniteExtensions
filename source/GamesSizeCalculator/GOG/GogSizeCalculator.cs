@@ -71,11 +71,11 @@ namespace GamesSizeCalculator.GOG
             else if (exactMatches.Count > 1)
                 return null; //don't know which one to use, give up
 
-            SortableNameConverter snc = new SortableNameConverter(new[] {"the", "a", "an"}, removeEditions: true);
+            SortableNameConverter snc = new SortableNameConverter(new[] { "the", "a", "an" }, removeEditions: true);
 
             var gameName = snc.Convert(game.Name);
-            var matches = searchResult.Where(sr=>titleComparer.Equals(snc.Convert(sr.title), gameName)).ToList();
-            if(matches.Count == 1)
+            var matches = searchResult.Where(sr => titleComparer.Equals(snc.Convert(sr.title), gameName)).ToList();
+            if (matches.Count == 1)
                 return matches.First().Url;
 
             return null;
