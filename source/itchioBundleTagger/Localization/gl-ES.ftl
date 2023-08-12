@@ -1,0 +1,24 @@
+﻿extension-name = itch.io Bundle Tagger
+
+tag-free = De balde
+tag-steam = Tamén dispoñible en Steam
+tag-bundle-pb = Indie bundle for Palestinian Aid
+tag-bundle-blm = Bundle for Racial Justice and Equality
+tag-bundle-ukraine = Bundle for Ukraine
+tag-bundle-ttrpg = TTRPGs for Trans Rights in Texas!
+tag-bundle-queer2022 = Queer Games Bundle 2022
+tag-bundle-wbstrr = Worthy of Better, Stronger Together for Reproductive Rights
+tag-bundle-abortion = Indie Bundle for Abortion Funds
+setting-tag-prefix = Engadir este prefixo aos nomes das etiquetas:
+setting-add-free-tag = Engadir a etiqueta "{ tag-free }" se corresponde
+setting-add-steam-tag = Engadir a etiqueta "{ tag-steam }" se corresponde
+setting-add-steam-link = Engadir ligazón á páxina da tenda de Steam se corresponde
+setting-run-on-library-update = Executar tras cada importación da biblioteca
+setting-show-in-context-menu = Amosar "{ menu-execute-tagging }" no menú contextual (clic dereito)
+menu-execute-tagging = Etiquetar paquetes de itch.io
+menu-execute-tagging-all = Etiquetar paquetes de itch.io para todos os xogos
+menu-refresh-database = Actualizar a base de datos de paquetes de itch.io
+dialog-database-refreshed = Actualizouse a base de datos de paquetes de itch.io
+progress-start = Obtendo os datos dos paquetes de itch.io…
+progress-tagging = A establecer as etiquetas…
+error-display = Erro ao etiquetar os paquetes de itch.io: { $error }
