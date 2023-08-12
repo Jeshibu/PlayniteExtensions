@@ -232,7 +232,7 @@ namespace XboxMetadata.Scrapers
         {
             // As of 2023-07-22, adding a colon or tilde to any query makes it return no results (unescaped search index query character maybe?)
             var escapedQuery = Uri.EscapeDataString(Regex.Replace(query, @"[^\p{L}\p{M}\p{N}\p{Zs}]", string.Empty));
-            var url = $"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={settings.Market}&sources=xSearch-Products&filter=+ClientType:StoreWeb&counts=20&query={escapedQuery}";
+            var url = $"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={settings.Market}&sources=DCatAll-Products&filter=+ClientType:StoreWeb&counts=20&query={escapedQuery}";
             var response = await downloader.DownloadStringAsync(url, throwExceptionOnErrorResponse: true);
             var parsed = JsonConvert.DeserializeObject<XboxSearchResultsRoot>(response.ResponseContent);
             var searchResults = parsed.ResultSets.FirstOrDefault(rs => rs.Type == "product")?.Suggests.Select(SearchResultFromSuggest).Where(r => r.ProductType == "Game");
