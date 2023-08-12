@@ -25,7 +25,7 @@ namespace XboxMetadata.Tests
             var settings = XboxMetadataSettings.GetInitialSettings();
             settings.Market = "en-us";
 
-            var downloader = new FakeWebDownloader($"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={settings.Market}&sources=xSearch-Products&filter=+ClientType:StoreWeb&counts=20&query={query}", "xbone sniper elite 5 search.json");
+            var downloader = new FakeWebDownloader($"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={settings.Market}&sources=DCatAll-Products&filter=+ClientType:StoreWeb&counts=20&query={query}", "xbone sniper elite 5 search.json");
             var scraper = new XboxOneScraper(downloader, new PlatformUtility((IPlayniteAPI)null));
             var result = (await scraper.SearchAsync(settings, name)).ToList();
             Assert.Equal(2, result.Count);
@@ -56,7 +56,7 @@ namespace XboxMetadata.Tests
             var detailsUrl = $"https://www.xbox.com/{settings.Market}/games/store/sniper-elite-5/9pp8q82h79lc";
             var downloader = new FakeWebDownloader(new Dictionary<string, string>
             {
-                { $"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={settings.Market}&sources=xSearch-Products&filter=+ClientType:StoreWeb&counts=20&query={query}", "xbone sniper elite 5 search.json" },
+                { $"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={settings.Market}&sources=DCatAll-Products&filter=+ClientType:StoreWeb&counts=20&query={query}", "xbone sniper elite 5 search.json" },
                 { detailsUrl, "xbone sniper elite 5 details.html" }
             });
             downloader.AddRedirect("https://www.microsoft.com/en-us/store/p/sniper-elite-5/9pp8q82h79lc", detailsUrl);
