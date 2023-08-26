@@ -212,3 +212,11 @@ Packages:
     Changelog:
     - Small platform matching improvements
     - Small game name matching improvements
+  - Version: 1.29.2
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2023-08-26
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-08-26/GamesSizeCalculator_1_29_2.pext
+    Changelog:
+    - Added Galician localization
+    - Updated German and Chinese localizations
+    - Fixed exception when trying to add error notification

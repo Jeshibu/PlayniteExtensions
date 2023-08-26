@@ -71,3 +71,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-07-26/itchIoBundleTagger_0_10.pext
     Changelog:
     - Added support for new bundle - Queer Games Bundle 2023
+  - Version: 0.10.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-08-26
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-08-26/itchIoBundleTagger_0_10_1.pext
+    Changelog:
+    - Added Galician localization

@@ -20,3 +20,9 @@ Packages:
     Changelog:
     - Return 20 search results instead of 5
     - Added Microsoft Store app details processing (fixes errors for metadata fetch attempts from Microsoft Store pages)
+  - Version: 0.3.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-08-26
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-08-26/XboxMetadata_0_3_1.pext
+    Changelog:
+    - Reverted to older search method to fix no results (besides Xbox 360 games) being shown
