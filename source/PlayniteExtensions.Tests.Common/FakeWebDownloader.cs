@@ -45,9 +45,9 @@ namespace PlayniteExtensions.Tests.Common
             RedirectsByUrl.Add(url, new Redirect(redirectUrl, depth));
         }
 
-        public virtual async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxResponseDepth = 7)
+        public virtual async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxResponseDepth = 7)
         {
-            return DownloadString(url, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, throwExceptionOnErrorResponse, maxResponseDepth);
+            return DownloadString(url, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, contentType: null, throwExceptionOnErrorResponse, maxResponseDepth);
         }
 
         public string DownloadFile(string url, string targetFolder)
@@ -70,7 +70,7 @@ namespace PlayniteExtensions.Tests.Common
             throw new NotImplementedException();
         }
 
-        public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7)
+        public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7)
         {
             CalledUrls.Add(url);
             if (FilesByUrl.TryGetValue(url, out string filePath))
@@ -81,7 +81,7 @@ namespace PlayniteExtensions.Tests.Common
                 if (maxRedirectDepth < redir.Depth)
                     return new DownloadStringResponse(redir.RedirectUrl, null, HttpStatusCode.Redirect);
                 else
-                    return DownloadString(redir.RedirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, throwExceptionOnErrorResponse, maxRedirectDepth);
+                    return DownloadString(redir.RedirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, contentType, throwExceptionOnErrorResponse, maxRedirectDepth);
             }
 
             throw new Exception($"Url not accounted for: {url}");

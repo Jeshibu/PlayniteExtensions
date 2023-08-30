@@ -7,10 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using System.Windows.Markup;
 
 namespace IgnMetadata
 {
@@ -30,7 +26,7 @@ namespace IgnMetadata
                 return new List<IgnGame>();
 
             var variables = new { term = searchString, count = 20, objectType = "Game" };
-            var data = Call<IgnSearchResultData>("SearchObjectsByName", variables, "60d952351fb009854f3049a800a7bb36f244b098effb3aa14f8e0df3819fbfd1");
+            var data = Call<IgnSearchResultData>("SearchObjectsByName", variables, "664276ed5455a5a05182a25250b11cbe0601a6ecf2e91247d90d34617335d5da");
 
             return data?.SearchObjectsByName?.Objects;
         }
@@ -38,7 +34,7 @@ namespace IgnMetadata
         public IgnGame Get(string slug, string region)
         {
             var variables = new { slug = slug, objectType = "Game", region = region, state = "Published" };
-            var data = Call<IgnGetGameResultData>("ObjectSelectByTypeAndSlug", variables, "a3400aea0c03af4f7105ed7d30e931f048563f4031dd41abdf98449d271232d6");
+            var data = Call<IgnGetGameResultData>("ObjectSelectByTypeAndSlug", variables, "c5ceac7141d5e6900705417171625a0d7383ee89056a5b5edaf5f61cb466fb5f");
 
             return data?.ObjectSelectByTypeAndSlug;
         }
@@ -53,10 +49,10 @@ namespace IgnMetadata
             var headers = new Dictionary<string, string>
             {
                 { "apollographql-client-name", "kraken" },
-                { "apollographql-client-version", "v0.15.6" },
+                { "apollographql-client-version", "v0.23.3" },
             };
 
-            var response = downloader.DownloadString(url, referer: "https://www.ign.com/reviews/games", customHeaders: headers);
+            var response = downloader.DownloadString(url, referer: "https://www.ign.com/reviews/games", customHeaders: headers, contentType: "application/json");
             if (string.IsNullOrWhiteSpace(response?.ResponseContent))
             {
                 logger.Error($"Failed to get content from {url}");
@@ -135,13 +131,13 @@ namespace IgnMetadata
             get
             {
                 var namesObj = Metadata.Names;
-                var names = new List<string> { namesObj.Name };
+                var names = new List<string> { namesObj.Name.Trim() };
 
-                if(!string.IsNullOrEmpty(namesObj.Short) && namesObj.Name != namesObj.Short)
-                    names.Add(namesObj.Short);
+                if (!string.IsNullOrEmpty(namesObj.Short) && namesObj.Name != namesObj.Short)
+                    names.Add(namesObj.Short.Trim());
 
                 if (namesObj.Alt?.Length > 0)
-                    names.AddRange(namesObj.Alt);
+                    names.AddRange(namesObj.Alt.Select(s => s.Trim()));
 
                 return names;
             }
@@ -154,7 +150,7 @@ namespace IgnMetadata
                 var names = Names;
                 var name = names.First();
                 if (names.Count > 1)
-                    name += $" (AKA {string.Join(" / ", names.Skip(1))})";
+                    name += $" (AKA {string.Join(" / ", AlternateNames)}";
                 return name;
             }
         }

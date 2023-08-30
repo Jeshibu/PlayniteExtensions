@@ -17,8 +17,8 @@ namespace PlayniteExtensions.Common
         /// The total collection of cookies used both as input for requests and output for responses
         /// </summary>
         CookieCollection Cookies { get; }
-        DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7);
-        Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7);
+        DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7);
+        Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7);
         string DownloadFile(string url, string targetFolder, CancellationToken cancellationToken, DownloadProgressCallback progressCallback = null);
     }
 
@@ -42,17 +42,17 @@ namespace PlayniteExtensions.Common
         public static HttpStatusCode[] HttpRedirectStatusCodes = new[] { HttpStatusCode.Redirect, HttpStatusCode.Moved, HttpStatusCode.TemporaryRedirect, (HttpStatusCode)308 };
 
         public CookieCollection Cookies { get; private set; } = new CookieCollection();
-        public string UserAgent { get; set; } = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0";
+        public string UserAgent { get; set; } = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0";
         public string Accept { get; set; } = "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
 
         public WebDownloader()
         {
         }
 
-        public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7)
+        public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7)
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
-            var task = DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, throwExceptionOnErrorResponse, maxRedirectDepth, depth: 0);
+            var task = DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, contentType, throwExceptionOnErrorResponse, maxRedirectDepth, depth: 0);
             task.Wait();
             var output = task.Result;
             sw.Stop();
@@ -60,16 +60,16 @@ namespace PlayniteExtensions.Common
             return output;
         }
 
-        public async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7)
+        public async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7)
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
-            var output = await DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, throwExceptionOnErrorResponse, maxRedirectDepth, depth: 0);
+            var output = await DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, customHeaders, contentType, throwExceptionOnErrorResponse, maxRedirectDepth, depth: 0);
             sw.Stop();
             logger.Info($"Call to {url} completed in {sw.Elapsed}");
             return output;
         }
 
-        private async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, int depth = 0)
+        private async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Dictionary<string, string> customHeaders = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, int depth = 0)
         {
             var uri = new Uri(url);
             var request = WebRequest.CreateHttp(uri);
@@ -97,6 +97,8 @@ namespace PlayniteExtensions.Common
                     request.Headers[kvp.Key] = kvp.Value;
                 }
             }
+            if (contentType != null)
+                request.ContentType = contentType;
 
             HttpStatusCode statusCode;
             string responseUrl;
@@ -146,7 +148,7 @@ namespace PlayniteExtensions.Common
                 if (depth > maxRedirectDepth)
                     return new DownloadStringResponse(redirectUrl, null, statusCode);
 
-                var redirectOutput = await DownloadStringAsync(redirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer: url, customHeaders, throwExceptionOnErrorResponse, depth + 1);
+                var redirectOutput = await DownloadStringAsync(redirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer: url, customHeaders, contentType: null, throwExceptionOnErrorResponse, depth + 1);
                 return redirectOutput;
             }
             else
