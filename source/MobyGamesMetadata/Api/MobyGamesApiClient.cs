@@ -29,7 +29,11 @@ namespace MobyGamesMetadata.Api
                 if (apiKey != value && !string.IsNullOrEmpty(value))
                 {
                     restClient?.Dispose();
-                    var limiter = TimeLimiter.GetFromMaxCountByInterval(1, TimeSpan.FromSeconds(1)).AsDelegatingHandler();
+                    // MobyGames API limits: 360 per hour and requests should be made no more frequently than one per second.
+                    var constraint1 = new CountByIntervalAwaitableConstraint(360, TimeSpan.FromHours(1));
+                    var constraint2 = new CountByIntervalAwaitableConstraint(1, TimeSpan.FromSeconds(1));
+
+                    var limiter = TimeLimiter.Compose(constraint1, constraint2).AsDelegatingHandler();
                     restClient = new RestClient(new HttpClient(limiter), new RestClientOptions(BaseUrl), disposeHttpClient: true)
                         .AddDefaultQueryParameter("api_key", value);
                 }
