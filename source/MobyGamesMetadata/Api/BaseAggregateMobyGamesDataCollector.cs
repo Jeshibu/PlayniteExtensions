@@ -41,7 +41,7 @@ namespace MobyGamesMetadata.Api
         protected GameSearchResult ToSearchResult(MobyGame mobyGame)
         {
             var result = new GameSearchResult();
-            result.SetName(mobyGame.Title, mobyGame.AlternateTitles.Select(t => t.Title));
+            result.SetName(mobyGame.Title.HtmlDecode(), mobyGame.AlternateTitles.Select(t => t.Title.HtmlDecode()));
             result.PlatformNames = mobyGame.Platforms.Select(p => p.Name).ToList();
             result.Platforms = mobyGame.Platforms.SelectMany(p => platformUtility.GetPlatforms(p.Name)).ToList();
             result.ReleaseDate = mobyGame.Platforms.Select(p => p.FirstReleaseDate).OrderBy(d => d).FirstOrDefault()?.ParseReleaseDate(logger);
