@@ -2,8 +2,8 @@
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 
 namespace MobyGamesMetadata.Api
 {
@@ -18,7 +18,7 @@ namespace MobyGamesMetadata.Api
             return apiClient.GetAllGamesForGroup(searchResult.Id, progressArgs).Select(ToGameDetails);
         }
 
-        IEnumerable<SearchResult> ISearchableDataSource<SearchResult>.Search(string query)
+        IEnumerable<SearchResult> ISearchableDataSource<SearchResult>.Search(string query, CancellationToken cancellationToken = default)
         {
             if (settings.DataSource.HasFlag(DataSource.Scraping))
             {

@@ -1,12 +1,13 @@
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace PlayniteExtensions.Metadata.Common
 {
     public interface ISearchableDataSource<TSearchResult>
     {
-        IEnumerable<TSearchResult> Search(string query);
+        IEnumerable<TSearchResult> Search(string query, CancellationToken cancellationToken = default);
         GenericItemOption<TSearchResult> ToGenericItemOption(TSearchResult item);
     }
 
@@ -23,6 +24,6 @@ namespace PlayniteExtensions.Metadata.Common
         /// <param name="game"></param>
         /// <param name="gameDetails">The found game details, null if nothing was found</param>
         /// <returns></returns>
-        bool TryGetDetails(Game game, out GameDetails gameDetails);
+        bool TryGetDetails(Game game, out GameDetails gameDetails, CancellationToken cancellationToken);
     }
 }

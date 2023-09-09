@@ -28,31 +28,31 @@ namespace PlayniteExtensions.Metadata.Common
             requestPlatforms = options.GameData.Platforms;
         }
 
-        protected virtual GameDetails GetGameDetails()
+        protected virtual GameDetails GetGameDetails(GetMetadataFieldArgs args)
         {
             if (foundGame != null)
                 return foundGame;
 
             if (foundGame == null)
             {
-                if (options.IsBackgroundDownload && dataSource.TryGetDetails(options.GameData, out var details))
+                if (options.IsBackgroundDownload && dataSource.TryGetDetails(options.GameData, out var details, args.CancelToken))
                     return foundGame = details;
 
-                var searchResult = GetSearchResultGame();
+                var searchResult = GetSearchResultGame(args);
                 if (searchResult != null)
                     return foundGame = dataSource.GetDetails(searchResult);
             }
             return foundGame = new GameDetails();
         }
 
-        protected virtual TSearchResult GetSearchResultGame()
+        protected virtual TSearchResult GetSearchResultGame(GetMetadataFieldArgs args)
         {
             if (options.IsBackgroundDownload)
             {
                 if (string.IsNullOrWhiteSpace(options.GameData.Name))
                     return default;
 
-                var searchResult = dataSource.Search(options.GameData.Name);
+                var searchResult = dataSource.Search(options.GameData.Name, args.CancelToken);
 
                 if (searchResult == null)
                     return default;
@@ -86,7 +86,7 @@ namespace PlayniteExtensions.Metadata.Common
 
                     try
                     {
-                        var searchResult = dataSource.Search(a);
+                        var searchResult = dataSource.Search(a, new System.Threading.CancellationToken());
                         searchOutput.AddRange(searchResult.Select(dataSource.ToGenericItemOption));
 
                     }
@@ -135,62 +135,62 @@ namespace PlayniteExtensions.Metadata.Common
 
         public override IEnumerable<MetadataProperty> GetAgeRatings(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().AgeRatings.NullIfEmpty()?.Select(ToNameProperty);
+            return GetGameDetails(args).AgeRatings.NullIfEmpty()?.Select(ToNameProperty);
         }
 
         public override MetadataFile GetBackgroundImage(GetMetadataFieldArgs args)
         {
-            return SelectImage(GameField.BackgroundImage, GetGameDetails().BackgroundOptions, "Select background");
+            return SelectImage(GameField.BackgroundImage, GetGameDetails(args).BackgroundOptions, "Select background");
         }
 
         public override int? GetCommunityScore(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().CommunityScore;
+            return GetGameDetails(args).CommunityScore;
         }
 
         public override MetadataFile GetCoverImage(GetMetadataFieldArgs args)
         {
-            return SelectImage(GameField.CoverImage, GetGameDetails().CoverOptions, "Select cover");
+            return SelectImage(GameField.CoverImage, GetGameDetails(args).CoverOptions, "Select cover");
         }
 
         public override int? GetCriticScore(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().CriticScore;
+            return GetGameDetails(args).CriticScore;
         }
 
         public override string GetDescription(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Description;
+            return GetGameDetails(args).Description;
         }
 
         public override IEnumerable<MetadataProperty> GetDevelopers(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Developers.NullIfEmpty()?.Select(ToNameProperty);
+            return GetGameDetails(args).Developers.NullIfEmpty()?.Select(ToNameProperty);
         }
 
         public override IEnumerable<MetadataProperty> GetFeatures(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Features.NullIfEmpty()?.Select(ToNameProperty);
+            return GetGameDetails(args).Features.NullIfEmpty()?.Select(ToNameProperty);
         }
 
         public override IEnumerable<MetadataProperty> GetGenres(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Genres.NullIfEmpty()?.Select(ToNameProperty);
+            return GetGameDetails(args).Genres.NullIfEmpty()?.Select(ToNameProperty);
         }
 
         public override MetadataFile GetIcon(GetMetadataFieldArgs args)
         {
-            return SelectImage(GameField.Icon, GetGameDetails().IconOptions, "Select icon");
+            return SelectImage(GameField.Icon, GetGameDetails(args).IconOptions, "Select icon");
         }
 
         public override ulong? GetInstallSize(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().InstallSize;
+            return GetGameDetails(args).InstallSize;
         }
 
         public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
         {
-            var gameDetails = GetGameDetails();
+            var gameDetails = GetGameDetails(args);
             var links = gameDetails.Links ?? new List<Link>();
             if (gameDetails.Url != null && !links.Any(l => l.Url == gameDetails.Url))
                 links.Add(new Link(ProviderName, gameDetails.Url));
@@ -200,17 +200,17 @@ namespace PlayniteExtensions.Metadata.Common
 
         public override string GetName(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Names.FirstOrDefault();
+            return GetGameDetails(args).Names.FirstOrDefault();
         }
 
         public override IEnumerable<MetadataProperty> GetPlatforms(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Platforms.NullIfEmpty();
+            return GetGameDetails(args).Platforms.NullIfEmpty();
         }
 
         public override IEnumerable<MetadataProperty> GetPublishers(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Publishers.NullIfEmpty()?.Select(ToNameProperty);
+            return GetGameDetails(args).Publishers.NullIfEmpty()?.Select(ToNameProperty);
         }
 
         public override IEnumerable<MetadataProperty> GetRegions(GetMetadataFieldArgs args)
@@ -220,17 +220,17 @@ namespace PlayniteExtensions.Metadata.Common
 
         public override ReleaseDate? GetReleaseDate(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().ReleaseDate;
+            return GetGameDetails(args).ReleaseDate;
         }
 
         public override IEnumerable<MetadataProperty> GetSeries(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Series.NullIfEmpty()?.Select(ToNameProperty);
+            return GetGameDetails(args).Series.NullIfEmpty()?.Select(ToNameProperty);
         }
 
         public override IEnumerable<MetadataProperty> GetTags(GetMetadataFieldArgs args)
         {
-            return GetGameDetails().Tags.NullIfEmpty()?.Select(ToNameProperty);
+            return GetGameDetails(args).Tags.NullIfEmpty()?.Select(ToNameProperty);
         }
 
         protected virtual bool FilterImage(GameField field, IImageData imageData)

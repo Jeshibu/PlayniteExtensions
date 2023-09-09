@@ -12,10 +12,10 @@ namespace GiantBombMetadata.Api
 {
     public interface IGiantBombApiClient
     {
-        GiantBombGameDetails GetGameDetails(string gbGuid);
-        GiantBombGamePropertyDetails GetGameProperty(string url);
-        GiantBombSearchResultItem[] SearchGameProperties(string query);
-        GiantBombSearchResultItem[] SearchGames(string query);
+        GiantBombGameDetails GetGameDetails(string gbGuid, CancellationToken cancellationToken);
+        GiantBombGamePropertyDetails GetGameProperty(string url, CancellationToken cancellationToken);
+        GiantBombSearchResultItem[] SearchGameProperties(string query, CancellationToken cancellationToken);
+        GiantBombSearchResultItem[] SearchGames(string query, CancellationToken cancellationToken);
     }
 
     public class GiantBombApiClient : IGiantBombApiClient
@@ -85,33 +85,33 @@ namespace GiantBombMetadata.Api
             return output.Results;
         }
 
-        public GiantBombGameDetails GetGameDetails(string gbGuid)
+        public GiantBombGameDetails GetGameDetails(string gbGuid, CancellationToken cancellationToken)
         {
             var request = new RestRequest($"game/{gbGuid}");
-            return Execute<GiantBombGameDetails>(request);
+            return Execute<GiantBombGameDetails>(request, cancellationToken);
         }
 
-        public GiantBombGamePropertyDetails GetGameProperty(string url)
+        public GiantBombGamePropertyDetails GetGameProperty(string url, CancellationToken cancellationToken)
         {
             if (url.StartsWith(BaseUrl))
                 url = url.Remove(0, BaseUrl.Length);
 
             var request = new RestRequest(url);
-            return Execute<GiantBombGamePropertyDetails>(request);
+            return Execute<GiantBombGamePropertyDetails>(request, cancellationToken);
         }
 
-        public GiantBombSearchResultItem[] Search(string query, string resources)
+        public GiantBombSearchResultItem[] Search(string query, string resources, CancellationToken cancellationToken)
         {
             var request = new RestRequest("search")
                 .AddQueryParameter("query", query)
                 .AddQueryParameter("resources", resources);
 
-            return Execute<GiantBombSearchResultItem[]>(request);
+            return Execute<GiantBombSearchResultItem[]>(request, cancellationToken);
         }
 
-        public GiantBombSearchResultItem[] SearchGames(string query) => Search(query, "game");
+        public GiantBombSearchResultItem[] SearchGames(string query, CancellationToken cancellationToken) => Search(query, "game", cancellationToken);
         //public GiantBombSearchResultItem[] SearchGameProperties(string query) => Search(query, "character,concept,object,person");
         //TODO: figure out how to get games for locations (and maybe for themes too)
-        public GiantBombSearchResultItem[] SearchGameProperties(string query) => Search(query, "character,concept,object,location,person");
+        public GiantBombSearchResultItem[] SearchGameProperties(string query, CancellationToken cancellationToken) => Search(query, "character,concept,object,location,person", cancellationToken);
     }
 }

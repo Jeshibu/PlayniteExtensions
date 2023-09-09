@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace GiantBombMetadata.SearchProviders
 {
@@ -27,25 +28,25 @@ namespace GiantBombMetadata.SearchProviders
 
         public GameDetails GetDetails(GiantBombSearchResultItem searchResult, GlobalProgressActionArgs progressArgs = null)
         {
-            var result = apiClient.GetGameDetails(searchResult.Guid);
+            var result = apiClient.GetGameDetails(searchResult.Guid, progressArgs.CancelToken);
             if (result == null) return null;
             return ToGameDetails(result);
         }
 
-        public bool TryGetDetails(Game game, out GameDetails gameDetails)
+        public bool TryGetDetails(Game game, out GameDetails gameDetails, CancellationToken cancellationToken)
         {
             gameDetails = null;
             string guid = game.GetGiantBombGuidFromGameLinks();
             if (guid == null)
                 return false;
 
-            var gbDetails = apiClient.GetGameDetails(guid);
+            var gbDetails = apiClient.GetGameDetails(guid, cancellationToken);
             gameDetails = ToGameDetails(gbDetails);
 
             return gameDetails != null;
         }
 
-        public IEnumerable<GiantBombSearchResultItem> Search(string query)
+        public IEnumerable<GiantBombSearchResultItem> Search(string query, CancellationToken cancellationToken = default)
         {
             var searchOutput = new List<GiantBombSearchResultItem>();
 
@@ -56,7 +57,7 @@ namespace GiantBombMetadata.SearchProviders
             {
                 try
                 {
-                    var gameById = apiClient.GetGameDetails(query);
+                    var gameById = apiClient.GetGameDetails(query, cancellationToken);
                     var fakeSearchResult = new GiantBombSearchResultItem()
                     {
                         Aliases = gameById.Aliases,
@@ -82,7 +83,7 @@ namespace GiantBombMetadata.SearchProviders
 
             try
             {
-                var searchResult = apiClient.SearchGames(query);
+                var searchResult = apiClient.SearchGames(query, cancellationToken);
                 searchOutput.AddRange(searchResult);
 
             }
@@ -93,7 +94,7 @@ namespace GiantBombMetadata.SearchProviders
             }
 
 
-            var result = apiClient.SearchGames(query);
+            var result = apiClient.SearchGames(query, cancellationToken);
             return result;
         }
 

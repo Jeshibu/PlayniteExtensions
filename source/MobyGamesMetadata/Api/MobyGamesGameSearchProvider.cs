@@ -3,11 +3,9 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace MobyGamesMetadata.Api
 {
@@ -43,7 +41,7 @@ namespace MobyGamesMetadata.Api
             return null;
         }
 
-        public IEnumerable<GameSearchResult> Search(string query)
+        public IEnumerable<GameSearchResult> Search(string query, CancellationToken cancellationToken = default)
         {
             if (settings.DataSource.HasFlag(DataSource.Scraping))
             {
@@ -51,12 +49,12 @@ namespace MobyGamesMetadata.Api
             }
             else if (settings.DataSource.HasFlag(DataSource.Api))
             {
-                return apiClient.SearchGames(query).Select(x => ToSearchResult(x));
+                return apiClient.SearchGames(query, cancellationToken).Select(x => ToSearchResult(x));
             }
             return new List<GameSearchResult>();
         }
 
-        public bool TryGetDetails(Game game, out GameDetails gameDetails)
+        public bool TryGetDetails(Game game, out GameDetails gameDetails, CancellationToken cancellationToken)
         {
             gameDetails = null;
             if (game.Links == null || game.Links.Count == 0)

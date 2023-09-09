@@ -4,6 +4,7 @@ using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace GiantBombMetadata.SearchProviders
 {
@@ -28,14 +29,17 @@ namespace GiantBombMetadata.SearchProviders
             }
             else
             {
-                var result = apiClient.GetGameProperty($"{searchResult.ResourceType}/{searchResult.Guid}");
+                var result = apiClient.GetGameProperty(
+                    $"{searchResult.ResourceType}/{searchResult.Guid}",
+                    progressArgs?.CancelToken ?? new System.Threading.CancellationToken());
+
                 return result?.Games.Select(g => new GameDetails { Names = new List<string> { g.Name }, Url = g.SiteDetailUrl }) ?? new GameDetails[0];
             }
         }
 
-        public IEnumerable<GiantBombSearchResultItem> Search(string query)
+        public IEnumerable<GiantBombSearchResultItem> Search(string query, CancellationToken cancellationToken = default)
         {
-            var result = apiClient.SearchGameProperties(query);
+            var result = apiClient.SearchGameProperties(query, cancellationToken);
             return result;
         }
 

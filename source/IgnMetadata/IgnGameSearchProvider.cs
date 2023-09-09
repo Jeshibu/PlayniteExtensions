@@ -4,6 +4,7 @@ using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace IgnMetadata
 {
@@ -56,7 +57,7 @@ namespace IgnMetadata
             return ignAttributes?.Select(x => x.Name).ToList();
         }
 
-        public IEnumerable<IgnGame> Search(string query) => client.Search(query);
+        public IEnumerable<IgnGame> Search(string query, CancellationToken cancellationToken = default) => client.Search(query);
 
         public GenericItemOption<IgnGame> ToGenericItemOption(IgnGame item)
         {
@@ -72,7 +73,7 @@ namespace IgnMetadata
             return new GenericItemOption<IgnGame>(item) { Name = item.Name, Description = description };
         }
 
-        public bool TryGetDetails(Game game, out GameDetails gameDetails)
+        public bool TryGetDetails(Game game, out GameDetails gameDetails, CancellationToken cancellationToken)
         {
             gameDetails = null;
             return false;
