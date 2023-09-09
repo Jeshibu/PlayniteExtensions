@@ -1,9 +1,9 @@
 ﻿{
-  "Query": "sniper elite 5",
+  "Query": "Sniper Elite 5",
   "ResultSets": [
     {
-      "Source": "dcatall-products",
-      "FromCache": false,
+      "Source": "xsearch-products",
+      "FromCache": true,
       "Type": "product",
       "Suggests": [
         {
@@ -23,7 +23,7 @@
             },
             {
               "Key": "Icon",
-              "Value": "//store-images.s-microsoft.com/image/apps.58335.14329012547000484.7cb39222-264a-4c98-a0f1-007c4e95f1e1.e2e964df-d308-4d33-9ec7-8588bc433477"
+              "Value": "https://store-images.s-microsoft.com/image/apps.58335.14329012547000484.7cb39222-264a-4c98-a0f1-007c4e95f1e1.e2e964df-d308-4d33-9ec7-8588bc433477"
             },
             {
               "Key": "ImageHeight",
@@ -34,8 +34,42 @@
               "Value": "300"
             },
             {
-              "Key": "ImageType",
-              "Value": "Logo"
+              "Key": "PublisherName",
+              "Value": "Rebellion"
+            }
+          ],
+          "Curated": false
+        },
+        {
+          "Source": "Durable",
+          "Title": "Sniper Elite 5: Airborne Elite Weapon And Skin Pack",
+          "Description": null,
+          "Url": "//www.microsoft.com/en-us/store/p/sniper-elite-5-airborne-elite-weapon-and-skin-pack/9pg9xtb4qcjf",
+          "ImageUrl": "//store-images.s-microsoft.com/image/apps.31069.14184483242332238.6d919c75-2c52-4dcf-bb11-3e54c01b4098.79cd892d-94c7-4771-a0c6-d84f9d4887db?w=150&h=150",
+          "Metas": [
+            {
+              "Key": "BigCatalogId",
+              "Value": "9PG9XTB4QCJF"
+            },
+            {
+              "Key": "ProductType",
+              "Value": "Durable"
+            },
+            {
+              "Key": "Icon",
+              "Value": "https://store-images.s-microsoft.com/image/apps.31069.14184483242332238.6d919c75-2c52-4dcf-bb11-3e54c01b4098.79cd892d-94c7-4771-a0c6-d84f9d4887db"
+            },
+            {
+              "Key": "ImageHeight",
+              "Value": "300"
+            },
+            {
+              "Key": "ImageWidth",
+              "Value": "300"
+            },
+            {
+              "Key": "PublisherName",
+              "Value": "Rebellion"
             }
           ],
           "Curated": false
@@ -57,7 +91,7 @@
             },
             {
               "Key": "Icon",
-              "Value": "//store-images.s-microsoft.com/image/apps.2318.14175604318556728.9caa83da-cc3d-494b-ade7-178aa6c3c303.eab4ee7a-8f76-4a8a-b8ab-df4c89c11e7f"
+              "Value": "https://store-images.s-microsoft.com/image/apps.2318.14175604318556728.9caa83da-cc3d-494b-ade7-178aa6c3c303.eab4ee7a-8f76-4a8a-b8ab-df4c89c11e7f"
             },
             {
               "Key": "ImageHeight",
@@ -68,192 +102,14 @@
               "Value": "300"
             },
             {
-              "Key": "ImageType",
-              "Value": "Logo"
-            },
-            {
-              "Key": "AppBgColor",
-              "Value": "#FFFFFF"
+              "Key": "PublisherName",
+              "Value": "Rebellion"
             }
           ],
           "Curated": false
         },
         {
-          "Source": "Game",
-          "Title": "Sniper Elite 5: Airborne Elite Weapon And Skin Pack",
-          "Description": null,
-          "Url": "//www.microsoft.com/en-us/store/p/sniper-elite-5-airborne-elite-weapon-and-skin-pack/9pg9xtb4qcjf",
-          "ImageUrl": "//store-images.s-microsoft.com/image/apps.31069.14184483242332238.6d919c75-2c52-4dcf-bb11-3e54c01b4098.79cd892d-94c7-4771-a0c6-d84f9d4887db?w=150&h=150",
-          "Metas": [
-            {
-              "Key": "BigCatalogId",
-              "Value": "9PG9XTB4QCJF"
-            },
-            {
-              "Key": "ProductType",
-              "Value": "Durable"
-            },
-            {
-              "Key": "Icon",
-              "Value": "//store-images.s-microsoft.com/image/apps.31069.14184483242332238.6d919c75-2c52-4dcf-bb11-3e54c01b4098.79cd892d-94c7-4771-a0c6-d84f9d4887db"
-            },
-            {
-              "Key": "ImageHeight",
-              "Value": "300"
-            },
-            {
-              "Key": "ImageWidth",
-              "Value": "300"
-            },
-            {
-              "Key": "ImageType",
-              "Value": "Logo"
-            }
-          ],
-          "Curated": false
-        },
-        {
-          "Source": "Game",
-          "Title": "Sniper Elite 5: Target Führer - Wolf Mountain",
-          "Description": null,
-          "Url": "//www.microsoft.com/en-us/store/p/sniper-elite-5-target-f%c3%bchrer-wolf-mountain/9pff4pvf34p2",
-          "ImageUrl": "//store-images.s-microsoft.com/image/apps.27612.14202070337474983.89a2d6a1-a466-444f-a61f-e63f5c2ef4ff.f1e7ed99-ed87-40f9-ba6a-ca097603c61a?w=150&h=150",
-          "Metas": [
-            {
-              "Key": "BigCatalogId",
-              "Value": "9PFF4PVF34P2"
-            },
-            {
-              "Key": "ProductType",
-              "Value": "Durable"
-            },
-            {
-              "Key": "Icon",
-              "Value": "//store-images.s-microsoft.com/image/apps.27612.14202070337474983.89a2d6a1-a466-444f-a61f-e63f5c2ef4ff.f1e7ed99-ed87-40f9-ba6a-ca097603c61a"
-            },
-            {
-              "Key": "ImageHeight",
-              "Value": "300"
-            },
-            {
-              "Key": "ImageWidth",
-              "Value": "300"
-            },
-            {
-              "Key": "ImageType",
-              "Value": "Logo"
-            }
-          ],
-          "Curated": false
-        },
-        {
-          "Source": "Game",
-          "Title": "Sniper Elite 5: Valentine's Weapon Skin Pack",
-          "Description": null,
-          "Url": "//www.microsoft.com/en-us/store/p/sniper-elite-5-valentines-weapon-skin-pack/9nnx276tl2hw",
-          "ImageUrl": "//store-images.s-microsoft.com/image/apps.2086.13734287268062594.e3310770-0521-48c2-a790-709ae92c1253.d97bcfab-cc57-4c4c-a60b-3d0fe6639222?w=150&h=150",
-          "Metas": [
-            {
-              "Key": "BigCatalogId",
-              "Value": "9NNX276TL2HW"
-            },
-            {
-              "Key": "ProductType",
-              "Value": "Durable"
-            },
-            {
-              "Key": "Icon",
-              "Value": "//store-images.s-microsoft.com/image/apps.2086.13734287268062594.e3310770-0521-48c2-a790-709ae92c1253.d97bcfab-cc57-4c4c-a60b-3d0fe6639222"
-            },
-            {
-              "Key": "ImageHeight",
-              "Value": "300"
-            },
-            {
-              "Key": "ImageWidth",
-              "Value": "300"
-            },
-            {
-              "Key": "ImageType",
-              "Value": "Logo"
-            }
-          ],
-          "Curated": false
-        },
-        {
-          "Source": "Game",
-          "Title": "Sniper Elite 5: Winter Weapon Skin Pack",
-          "Description": null,
-          "Url": "//www.microsoft.com/en-us/store/p/sniper-elite-5-winter-weapon-skin-pack/9nnlw5bg16kj",
-          "ImageUrl": "//store-images.s-microsoft.com/image/apps.9935.13735972588098713.790dcbd6-9119-4058-911b-fa121e94a973.496a3531-62d7-42bd-a145-e36cb0fa1386?w=150&h=150",
-          "Metas": [
-            {
-              "Key": "BigCatalogId",
-              "Value": "9NNLW5BG16KJ"
-            },
-            {
-              "Key": "ProductType",
-              "Value": "Durable"
-            },
-            {
-              "Key": "Icon",
-              "Value": "//store-images.s-microsoft.com/image/apps.9935.13735972588098713.790dcbd6-9119-4058-911b-fa121e94a973.496a3531-62d7-42bd-a145-e36cb0fa1386"
-            },
-            {
-              "Key": "ImageHeight",
-              "Value": "300"
-            },
-            {
-              "Key": "ImageWidth",
-              "Value": "300"
-            },
-            {
-              "Key": "ImageType",
-              "Value": "Logo"
-            }
-          ],
-          "Curated": false
-        },
-        {
-          "Source": "Game",
-          "Title": "Sniper Elite 5 Season Pass One",
-          "Description": null,
-          "Url": "//www.microsoft.com/en-us/store/p/sniper-elite-5-season-pass-one/9p4cg1h1tjkg",
-          "ImageUrl": "//store-images.s-microsoft.com/image/apps.22189.14595554922816019.13efe6e8-ecc1-4d7d-95f8-56ec07d2ff6a.35bc0519-421d-43a3-ae8e-b624e589ef3f?w=150&h=150",
-          "Metas": [
-            {
-              "Key": "BigCatalogId",
-              "Value": "9P4CG1H1TJKG"
-            },
-            {
-              "Key": "ProductType",
-              "Value": "Durable"
-            },
-            {
-              "Key": "Icon",
-              "Value": "//store-images.s-microsoft.com/image/apps.22189.14595554922816019.13efe6e8-ecc1-4d7d-95f8-56ec07d2ff6a.35bc0519-421d-43a3-ae8e-b624e589ef3f"
-            },
-            {
-              "Key": "ImageHeight",
-              "Value": "300"
-            },
-            {
-              "Key": "ImageWidth",
-              "Value": "300"
-            },
-            {
-              "Key": "ImageType",
-              "Value": "Logo"
-            },
-            {
-              "Key": "AppBgColor",
-              "Value": "#FFFFFF"
-            }
-          ],
-          "Curated": false
-        },
-        {
-          "Source": "Game",
+          "Source": "Durable",
           "Title": "Sniper Elite 5: Trench Warfare Weapon Pack",
           "Description": null,
           "Url": "//www.microsoft.com/en-us/store/p/sniper-elite-5-trench-warfare-weapon-pack/9nrkv0lp2b8p",
@@ -269,7 +125,83 @@
             },
             {
               "Key": "Icon",
-              "Value": "//store-images.s-microsoft.com/image/apps.29208.14385999569301834.f043c912-d4a0-4e32-92a3-315ed446e763.e4e556cf-51bb-4cd9-93f5-d5ad02cafe22"
+              "Value": "https://store-images.s-microsoft.com/image/apps.29208.14385999569301834.f043c912-d4a0-4e32-92a3-315ed446e763.e4e556cf-51bb-4cd9-93f5-d5ad02cafe22"
+            },
+            {
+              "Key": "ImageHeight",
+              "Value": "300"
+            },
+            {
+              "Key": "ImageWidth",
+              "Value": "300"
+            },
+            {
+              "Key": "PublisherName",
+              "Value": "Rebellion"
+            }
+          ],
+          "Curated": false
+        },
+        {
+          "Source": "Game",
+          "Title": "Sniper Elite 5 Complete Edition",
+          "Description": null,
+          "Url": "//www.microsoft.com/en-us/store/p/sniper-elite-5-complete-edition/9nx6fb6v0l2n",
+          "ImageUrl": "//store-images.s-microsoft.com/image/apps.13033.14431144669616927.62da44b4-1b32-4566-bbe7-227289a3ba00.d2a8f3fb-d99a-4626-ae2e-4c31bd622533?w=150&h=150",
+          "Metas": [
+            {
+              "Key": "BigCatalogId",
+              "Value": "9NX6FB6V0L2N"
+            },
+            {
+              "Key": "ProductType",
+              "Value": "Game"
+            },
+            {
+              "Key": "Icon",
+              "Value": "https://store-images.s-microsoft.com/image/apps.13033.14431144669616927.62da44b4-1b32-4566-bbe7-227289a3ba00.d2a8f3fb-d99a-4626-ae2e-4c31bd622533"
+            },
+            {
+              "Key": "ImageHeight",
+              "Value": "300"
+            },
+            {
+              "Key": "ImageWidth",
+              "Value": "300"
+            },
+            {
+              "Key": "PublisherName",
+              "Value": "Rebellion"
+            }
+          ],
+          "Curated": false
+        }
+      ],
+      "Metas": null
+    },
+    {
+      "Source": "searchacs-products",
+      "FromCache": false,
+      "Type": "product",
+      "Suggests": [
+        {
+          "Source": "Game",
+          "Title": "Sniper Elite 5",
+          "Description": null,
+          "Url": "//www.microsoft.com/en-us/store/p/sniper-elite-5/9pp8q82h79lc",
+          "ImageUrl": "//store-images.s-microsoft.com/image/apps.58335.14329012547000484.7cb39222-264a-4c98-a0f1-007c4e95f1e1.e2e964df-d308-4d33-9ec7-8588bc433477?w=150&h=150",
+          "Metas": [
+            {
+              "Key": "BigCatalogId",
+              "Value": "9PP8Q82H79LC"
+            },
+            {
+              "Key": "ProductType",
+              "Value": "Games"
+            },
+            {
+              "Key": "Icon",
+              "Value": "//store-images.s-microsoft.com/image/apps.58335.14329012547000484.7cb39222-264a-4c98-a0f1-007c4e95f1e1.e2e964df-d308-4d33-9ec7-8588bc433477"
             },
             {
               "Key": "ImageHeight",

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
@@ -228,14 +229,23 @@ namespace XboxMetadata.Scrapers
             return output;
         }
 
-        public override async Task<List<XboxGameSearchResultItem>> SearchAsync(XboxMetadataSettings settings, string query)
+        public static string GetSearchUrl(string market, string query)
         {
             // As of 2023-07-22, adding a colon or tilde to any query makes it return no results (unescaped search index query character maybe?)
             var escapedQuery = Uri.EscapeDataString(Regex.Replace(query, @"[^\p{L}\p{M}\p{N}\p{Zs}]", string.Empty));
-            var url = $"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={settings.Market}&sources=DCatAll-Products&filter=+ClientType:StoreWeb&counts=20&query={escapedQuery}";
+            return $"https://www.microsoft.com/msstoreapiprod/api/autosuggest?market={market}&sources=DCatAll-Products,xSearch-Products&filter=+ClientType:StoreWeb&counts=20,20&query={escapedQuery}";
+        }
+
+        public override async Task<List<XboxGameSearchResultItem>> SearchAsync(XboxMetadataSettings settings, string query)
+        {
+            var url = GetSearchUrl(settings.Market, query);
             var response = await downloader.DownloadStringAsync(url, throwExceptionOnErrorResponse: true);
             var parsed = JsonConvert.DeserializeObject<XboxSearchResultsRoot>(response.ResponseContent);
-            var searchResults = parsed.ResultSets.FirstOrDefault(rs => rs.Type == "product")?.Suggests.Select(SearchResultFromSuggest).Where(r => r.ProductType == "Game");
+            var searchResults = parsed.ResultSets.Where(rs => rs.Type == "product")
+                ?.SelectMany(rs => rs.Suggests)
+                .Where(sug => sug.Source == "Game")
+                .Select(SearchResultFromSuggest)
+                .ToDictionarySafe(sr => sr.Id).Values; //deduplicate by ID - DCatAll-Products and xSearch-Products can overlap
             var output = new List<XboxGameSearchResultItem>();
             if (searchResults == null)
                 return output;
