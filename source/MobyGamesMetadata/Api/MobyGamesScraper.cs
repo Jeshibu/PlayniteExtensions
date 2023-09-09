@@ -141,7 +141,7 @@ namespace MobyGamesMetadata.Api
         {
             Url = url;
             if (url == null) return;
-            var urlSegment = url.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Where(x => x.All(char.IsNumber)).LastOrDefault();
+            var urlSegment = url.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Where(x => x.All(char.IsNumber)).FirstOrDefault();
             if (urlSegment != null)
                 Id = int.Parse(urlSegment);
         }
