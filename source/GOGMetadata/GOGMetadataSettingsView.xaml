@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="GOGMetadata.GOGMetadataSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:gog="clr-namespace:GOGMetadata"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=gog:GOGMetadataSettingsViewModel}"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <StackPanel Margin="20">
+        <CheckBox IsChecked="{Binding Settings.UseVerticalCovers}" Content="Use vertical covers"/>
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+            <TextBlock VerticalAlignment="Center" Text="Language" Margin="0,0,10,0"/>
+            <ComboBox x:Name="LanguageSelection" DisplayMemberPath="Value" SelectedValuePath="Key"
+                                  SelectedValue="{Binding Settings.Locale}" ItemsSource="{Binding Path=Languages}"
+                                  IsEditable="false" MinWidth="150"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

@@ -72,7 +72,7 @@ namespace PlayniteExtensions.Common
             TryAddPlatformByName(output, new[] { "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM", "Windows Apps" }, new[] { "pc_windows" });
             TryAddPlatformByName(output, new[] { "DOS", "MS-DOS" }, "pc_dos");
             TryAddPlatformByName(output, new[] { "Linux", "LIN" }, "pc_linux");
-            TryAddPlatformByName(output, "Mac", "macintosh");
+            TryAddPlatformByName(output, new[] { "Mac", "OSX" }, "macintosh");
             TryAddPlatformByName(output, new[] { "Xbox360", "X360" }, new[] { "xbox360" });
             TryAddPlatformByName(output, new[] { "XboxOne", "XONE" }, new[] { "xbox_one" });
             TryAddPlatformByName(output, new[] { "Microsoft Xbox Series X", "Microsoft Xbox Series S", "Xbox Series X", "Xbox Series S", "Microsoft Xbox Series X/S", "Microsoft Xbox Series S/X", "Xbox Series X/S", "Xbox Series S/X", "Xbox Series X|S", "XboxSeriesX", "XSX" }, new[] { "xbox_series" });
