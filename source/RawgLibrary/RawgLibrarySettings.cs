@@ -1,10 +1,7 @@
 ﻿using Playnite.SDK;
-using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Rawg.Common;
 using System.Diagnostics;
 using Newtonsoft.Json;
@@ -37,6 +34,7 @@ namespace RawgLibrary
         public bool AutoSyncUserScore { get; set; }
         public bool AutoSyncNewGames { get; set; }
         public bool AutoSyncDeletedGames { get; set; }
+        public bool AutoSyncHiddenGames { get; set; } = false;
     }
 
     public class RawgCollectionSetting : ObservableObject

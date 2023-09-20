@@ -164,8 +164,9 @@ namespace Rawg.Common
 
             var foundGame =
                 MatchGame(game, result.Results, playniteApi, matchPlatform: true, matchReleaseYear: true, matchNameExact: true, setLink)
-                ?? MatchGame(game, result.Results, playniteApi, matchPlatform: true, matchReleaseYear: true, matchNameExact: false, setLink)
                 ?? MatchGame(game, result.Results, playniteApi, matchPlatform: true, matchReleaseYear: false, matchNameExact: true, setLink)
+                ?? MatchGame(game, result.Results, playniteApi, matchPlatform: true, matchReleaseYear: true, matchNameExact: false, setLink)
+                ?? MatchGame(game, result.Results, playniteApi, matchPlatform: false, matchReleaseYear: false, matchNameExact: true, setLink)
                 ?? MatchGame(game, result.Results, playniteApi, matchPlatform: false, matchReleaseYear: true, matchNameExact: false, setLink)
                 ?? MatchGame(game, result.Results, playniteApi, setLink: setLink);
             return foundGame;

@@ -31,6 +31,8 @@ namespace RawgLibrary
 
         public IWebDownloader Downloader { get; } = new WebDownloader();
 
+        private TitleComparer TitleComparer = new TitleComparer();
+
 
         public RawgLibrary(IPlayniteAPI api) : base(api)
         {
@@ -45,7 +47,7 @@ namespace RawgLibrary
 
         private void Games_ItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<Game> e)
         {
-            if (/*!settings.Settings.AutoSyncNewGames &&*/ !settings.Settings.AutoSyncDeletedGames)
+            if (!settings.Settings.AutoSyncDeletedGames)
                 return;
 
             var client = GetApiClient();
@@ -74,14 +76,7 @@ namespace RawgLibrary
 
                             a.CurrentProgressValue++;
 
-                            var gameId = GetRawgIdFromGame(game, client, setLink: false);
-                            if (gameId == null)
-                                continue;
-
-                            if (client.DeleteGameFromLibrary(token, gameId.Value))
-                                logger.Info($"Deleted {game.Name} from RAWG library (RAWG id {gameId})");
-                            else
-                                logger.Info($"Could not delete {game.Name} from RAWG library (RAWG id {gameId})");
+                            DeleteGameFromRawgLibrary(game, client, token);
                         }
                     }
                 }
@@ -92,6 +87,33 @@ namespace RawgLibrary
                 }
             }
             , new GlobalProgressOptions("Syncing new/deleted games to RAWG library", cancelable: true) { IsIndeterminate = false });
+        }
+
+        private void DeleteGameFromRawgLibrary(Game game, RawgApiClient client, string token)
+        {
+            if (DuplicateExists(game))
+                return; //skip delete if there's any duplicates left in the Playnite library
+
+            if (!TryGetRawgIdFromGame(game, client, setLink: false, out var gameId))
+                return;
+
+            if (client.DeleteGameFromLibrary(token, gameId))
+                logger.Info($"Deleted {game.Name} from RAWG library (RAWG id {gameId})");
+            else
+                logger.Info($"Could not delete {game.Name} from RAWG library (RAWG id {gameId})");
+        }
+
+        private bool DuplicateExists(Game game)
+        {
+            foreach (var g in PlayniteApi.Database.Games)
+            {
+                if (game.Id == g.Id) continue;
+
+                if (g.Hidden && !settings.Settings.AutoSyncHiddenGames) continue;
+
+                if (TitleComparer.Compare(g.Name, game.Name) == 0) return true;
+            }
+            return false;
         }
 
         private void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> e)
@@ -123,9 +145,29 @@ namespace RawgLibrary
 
                         int gameId = -1;
 
-                        if (settings.Settings.AutoSyncCompletionStatus && item.OldData.CompletionStatusId != item.NewData.CompletionStatusId)
+                        //skip hidden games if applicable
+                        if (!settings.Settings.AutoSyncHiddenGames && item.OldData.Hidden && item.NewData.Hidden)
+                            continue;
+
+                        //sync-delete newly hidden games
+                        if (!settings.Settings.AutoSyncHiddenGames && !item.OldData.Hidden && item.NewData.Hidden)
                         {
-                            if (gameId == -1 && !TryGetRawgIdFromGame(item.NewData, client, true, out gameId))
+                            DeleteGameFromRawgLibrary(item.NewData, client, token);
+
+                            continue;
+                        }
+
+                        var syncCompletionStatusUpdate = settings.Settings.AutoSyncCompletionStatus
+                            && (item.OldData.CompletionStatusId != item.NewData.CompletionStatusId || item.OldData.Hidden && !item.NewData.Hidden);
+
+                        var syncNewGame = settings.Settings.AutoSyncNewGames
+                            && item.OldData.PluginId == Guid.Empty
+                            && item.OldData.Name == "New Game"
+                            && item.OldData.Name != item.NewData.Name;
+
+                        if (syncCompletionStatusUpdate || syncNewGame)
+                        {
+                            if (!TryGetRawgIdFromGame(item.NewData, client, true, out gameId))
                                 continue;
 
                             if (SyncCompletionStatus(item.NewData, gameId, client, token))
@@ -143,20 +185,6 @@ namespace RawgLibrary
                                 continue;
 
                             SyncUserScore(item.NewData, gameId, client, token);
-                        }
-
-                        if (settings.Settings.AutoSyncNewGames
-                            && item.OldData.PluginId == Guid.Empty
-                            && item.OldData.Name == "New Game"
-                            && item.OldData.Name != item.NewData.Name)
-                        {
-                            if (gameId == -1 && !TryGetRawgIdFromGame(item.NewData, client, true, out gameId))
-                                continue;
-
-                            if (SyncCompletionStatus(item.NewData, gameId, client, token))
-                                logger.Info($"Synced {item.NewData.Name} (RAWG id {gameId}) to status {item.NewData.CompletionStatus?.Name}");
-                            else
-                                logger.Info($"Could not sync {item.NewData.Name} (RAWG id {gameId}) to status {item.NewData.CompletionStatus?.Name}");
                         }
                     }
                 }
@@ -505,7 +533,7 @@ namespace RawgLibrary
 
                     if (a.CancelToken.IsCancellationRequested) return;
                     a.CurrentProgressValue++;
-                    
+
                     client.AddGamesToCollection(token, collection.Slug, rawgIds);
                 }
                 catch (Exception ex)
@@ -514,6 +542,6 @@ namespace RawgLibrary
                     PlayniteApi.Notifications.Add("rawg-error-add-to-collection", $"Error adding games to collection: {ex.Message}", NotificationType.Error);
                 }
             }, new GlobalProgressOptions("Adding games to collection " + collection.Name, cancelable: true) { IsIndeterminate = false });
-       }
+        }
     }
 }

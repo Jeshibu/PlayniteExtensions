@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:rl="clr-namespace:RawgLibrary"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=rl:RawgLibrarySettingsViewModel}"
              d:DesignHeight="400" d:DesignWidth="600">
     <TabControl Margin="20">
         <TabItem Header="Account">
@@ -67,6 +69,7 @@
                 <CheckBox Margin="0,5" IsChecked="{Binding Settings.AutoSyncUserScore}" Content="User score"/>
                 <CheckBox Margin="0,5" IsChecked="{Binding Settings.AutoSyncNewGames}" Content="Add newly added games in Playnite to your RAWG library"/>
                 <CheckBox Margin="0,5" IsChecked="{Binding Settings.AutoSyncDeletedGames}" Content="Delete games you delete in Playnite from your RAWG library"/>
+                <CheckBox Margin="0,5" IsChecked="{Binding Settings.AutoSyncHiddenGames}" Content="Sync hidden games to RAWG"/>
             </StackPanel>
         </TabItem>
         <TabItem Header="Mapping from RAWG">
