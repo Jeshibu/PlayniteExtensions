@@ -26,3 +26,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-08-26/XboxMetadata_0_3_1.pext
     Changelog:
     - Reverted to older search method to fix no results (besides Xbox 360 games) being shown
+  - Version: 0.3.2
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2023-09-22
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-09-22/XboxMetadata_0_3_2.pext
+    Changelog:
+    - Use both old and new search methods for Xbox One and newer games
