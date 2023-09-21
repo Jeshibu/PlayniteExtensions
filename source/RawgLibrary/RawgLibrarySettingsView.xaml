@@ -64,7 +64,8 @@
         </TabItem>
         <TabItem Header="Syncing">
             <StackPanel Margin="20">
-                <TextBlock Margin="0,0,0,5">When you make changes in Playnite, automatically sync those to RAWG for the following:</TextBlock>
+                <CheckBox Margin="0,0,0,5" IsChecked="{Binding Settings.AutoSyncHiddenGames}" Content="Sync hidden games"/>
+                <TextBlock Margin="0,5">When you make changes in Playnite, automatically sync those to RAWG for the following:</TextBlock>
                 <CheckBox Margin="0,5" IsChecked="{Binding Settings.AutoSyncCompletionStatus}" Content="Completion status (will add games to your RAWG library)"/>
                 <CheckBox Margin="0,5" IsChecked="{Binding Settings.AutoSyncUserScore}" Content="User score"/>
                 <CheckBox Margin="0,5" IsChecked="{Binding Settings.AutoSyncNewGames}" Content="Add newly added games in Playnite to your RAWG library"/>

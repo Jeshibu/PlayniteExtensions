@@ -1,7 +1,14 @@
 ﻿Id: RawgLibrary
 Name: RAWG Library Importer
 Author: Jeshibu
-Version: 0.3.2
+Version: 0.4
 Module: RawgLibrary.dll
 Type: GameLibrary
 Icon: icon.jpg
+Links:
+  - Name: RAWG
+    Url: https://rawg.io/
+  - Name: GitHub repository
+    Url: https://github.com/Jeshibu/PlayniteExtensions
+  - Name: Support my work on Ko-fi
+    Url: https://ko-fi.com/Jeshibu

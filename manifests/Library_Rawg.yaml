@@ -48,3 +48,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-03-11/RawgLibrary_0_3_2.pext
     Changelog:
      - Fixed empty collection values not allowing fallback to other metadata providers
+  - Version: 0.4
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-09-22
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-09-22/RawgLibrary_0_4.pext
+    Changelog:
+     - "Feature: don't sync hidden games (on by default)"
+     - Tweaked automatic game matching

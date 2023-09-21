@@ -36,3 +36,11 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-07-26/MobyGamesMetadata_0_4_1.pext
     Changelog:
      - Fixed title matching for automated metadata collection for games with alternate titles
+  - Version: 0.4.2
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-09-22
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-09-22/MobyGamesMetadata_0_4_2.pext
+    Changelog:
+     - Fixed HTML entities in game names
+     - Changed 'Windows Apps' platform to PC (Windows)
+     - Fixed games with numeric-only names fetching data from the wrong game
