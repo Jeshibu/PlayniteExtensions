@@ -65,7 +65,11 @@
     <Compile Include="GOGMetadataSettingsView.xaml.cs">
       <DependentUpon>GOGMetadataSettingsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\GogSearchResponse.cs" />
+    <Compile Include="Models\ProductApiDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\SluggedName.cs" />
+    <Compile Include="Models\StorePageResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">
