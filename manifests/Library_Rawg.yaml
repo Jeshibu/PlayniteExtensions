@@ -53,5 +53,5 @@ Packages:
     ReleaseDate: 2023-09-22
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-09-22/RawgLibrary_0_4.pext
     Changelog:
-     - "Feature: don't sync hidden games (on by default)"
+     - "Feature: don not sync hidden games (on by default)"
      - Tweaked automatic game matching
