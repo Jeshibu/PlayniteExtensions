@@ -42,5 +42,5 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-09-22/MobyGamesMetadata_0_4_2.pext
     Changelog:
      - Fixed HTML entities in game names
-     - "Changed 'Windows Apps' platform to PC (Windows)"
+     - Changed Windows Apps platform to Windows
      - Fixed games with numeric-only names fetching data from the wrong game
