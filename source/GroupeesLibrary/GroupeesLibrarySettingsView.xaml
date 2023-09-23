@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:groupees="clr-namespace:GroupeesLibrary"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignData Type=groupees:GroupeesLibrarySettingsViewModel}"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
-        <TextBlock TextWrapping="Wrap">Games will only be imported if they've been revealed. The login persistence is pretty flakey right now, and you might need to re-authenticate fairly often.</TextBlock>
-        <StackPanel Orientation="Horizontal"
-                        DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
-            <Button Content="Authenticate"
-                        Command="{Binding LoginCommand}"/>
+        <TextBlock TextWrapping="Wrap">Games will only be imported if they've been revealed. The login persistence is pretty flakey right now, and you might need to re-authenticate fairly often. It is recommended to turn off game import after running it once, until you have new DRM free games (which probably isn't frequent).</TextBlock>
+        <CheckBox IsChecked="{Binding Settings.ImportGames}" Content="Import games (disable to skip authentication error notification)" Margin="0,10"/>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
+            <Button Content="Authenticate" IsEnabled="{Binding Settings.ImportGames}" Command="{Binding LoginCommand}"/>
             <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">
                 <TextBlock.Tag>
                     <PriorityBinding>

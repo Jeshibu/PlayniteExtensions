@@ -20,3 +20,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2022-11-23/GroupeesLibrary_0_2_1.pext
     Changelog:
      - Fixed missing icon in "Update Game Library" menu
+  - Version: 0.3
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-09-24
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2022-09-24/GroupeesLibrary_0_3.pext
+    Changelog:
+     - Added option to disable game import to skip authentication error notification

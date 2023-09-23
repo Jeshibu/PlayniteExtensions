@@ -8,8 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace GroupeesLibrary
@@ -63,6 +61,9 @@ namespace GroupeesLibrary
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
+            if(!settings.Settings.ImportGames)
+                return new GameMetadata[0];
+
             settings.Settings.Cookies.ForEach(Downloader.Cookies.Add);
             try
             {

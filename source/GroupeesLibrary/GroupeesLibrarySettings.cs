@@ -12,15 +12,18 @@ namespace GroupeesLibrary
 {
     public class GroupeesLibrarySettings : ObservableObject
     {
+        private bool importGames = true;
         private int userId;
         private List<Cookie> cookies = new List<Cookie>();
         private Dictionary<string, GameInstallInfo> installData = new Dictionary<string, GameInstallInfo>();
+
+        public bool ImportGames { get => importGames; set => SetValue(ref importGames, value); }
 
         public int UserId { get => userId; set => SetValue(ref userId, value); }
 
         public List<Cookie> Cookies { get => cookies; set => SetValue(ref cookies, value); }
 
-        public Dictionary<string,GameInstallInfo> InstallData { get => installData; set => SetValue(ref installData, value); }
+        public Dictionary<string, GameInstallInfo> InstallData { get => installData; set => SetValue(ref installData, value); }
     }
 
     public enum AuthStatus
