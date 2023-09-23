@@ -55,3 +55,9 @@ Packages:
     Changelog:
      - "Feature: don not sync hidden games (on by default)"
      - Tweaked automatic game matching
+  - Version: 0.4.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-09-24
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-09-24/RawgLibrary_0_4_1.pext
+    Changelog:
+     - Removed duplicate setting
