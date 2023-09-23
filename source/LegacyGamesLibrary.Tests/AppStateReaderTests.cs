@@ -108,5 +108,13 @@ namespace LegacyGamesLibrary.Tests
             var games = reader.GetUserOwnedGames().ToList();
             Assert.Single(games);
         }
+
+        [Fact]
+        public void GetUserOwnedGamesDoesNotThrowOnBrokenGuid()
+        {
+            AppStateReader reader = new AppStateReader("./app-state-trimmed-brokenguid.json");
+            var games = reader.GetUserOwnedGames().ToList();
+            Assert.Equal(2, games.Count);
+        }
     }
 }

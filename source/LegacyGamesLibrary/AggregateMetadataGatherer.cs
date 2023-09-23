@@ -5,10 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using PlayniteExtensions.Common;
 
 namespace LegacyGamesLibrary
@@ -56,7 +53,7 @@ namespace LegacyGamesLibrary
                     if (cancellationToken.IsCancellationRequested)
                         return output;
 
-                    var installation = installedGames?.FirstOrDefault(g => g.InstallerUUID == game.InstallerUUID);
+                    var installation = installedGames?.FirstOrDefault(g => Guid.TryParse(game.InstallerUUID, out Guid installerId) && g.InstallerUUID == installerId);
                     var metadata = new GameMetadata
                     {
                         GameId = game.InstallerUUID.ToString(),

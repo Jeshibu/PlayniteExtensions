@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LegacyGamesLibrary
 {
@@ -125,10 +123,13 @@ namespace LegacyGamesLibrary
 
                 foreach (var game in bundle.Games)
                 {
-                    if (gamesByInstallerId.ContainsKey(game.InstallerUUID))
+                    if (!Guid.TryParse(game.InstallerUUID, out Guid installerId))
                         continue;
 
-                    gamesByInstallerId.Add(game.InstallerUUID, game);
+                    if (gamesByInstallerId.ContainsKey(installerId))
+                        continue;
+
+                    gamesByInstallerId.Add(installerId, game);
                 }
             }
             return gamesByInstallerId.Values;
@@ -146,6 +147,6 @@ namespace LegacyGamesLibrary
         [JsonProperty("game_installed_size")]
         public string GameInstalledSize;
         [JsonProperty("installer_uuid")]
-        public Guid InstallerUUID;
+        public string InstallerUUID;
     }
 }
