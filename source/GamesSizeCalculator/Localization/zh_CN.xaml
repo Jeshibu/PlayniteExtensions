@@ -13,10 +13,6 @@
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationLabel">Include optional content in size calculation</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip">Optional content encompasses things like deluxe edition content that's not available as DLC</sys:String>
 
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsUseGOGLabel">对于未安装的PC游戏，从GOG.com获取预计安装大小</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesLabel">对非GOG库中的游戏也应用此数据</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesTooltip">游戏必须在GOG商店中存在</sys:String>
-
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsRegionWordsExplanationText">区域词是表示同名Steam库区域的词。例如&quot;Content EU&quot;和 &quot;Content Asia&quot;中，如果EU和Asia都在这里的“区域词”文本框中，那么就只会留下一个词，最后一个词将被删除。如果你确定你永远不需要一个地区，把它输入到“排除的区域词”文本框中，以该词结尾的仓库将永远从计算中排除。每个词单独一行。</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsRegionWordsHeaderLabel">区域词</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsExcludedRegionWordsHeaderLabel">排除的区域词</sys:String>

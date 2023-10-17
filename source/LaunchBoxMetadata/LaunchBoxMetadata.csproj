@@ -110,6 +110,60 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\PlayniteExtensions.Common\GlobalCommands.cs">
+      <Link>Common\GlobalCommands.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs">
+      <Link>Common\IEnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs">
+      <Link>Common\IntegerFormatConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs">
+      <Link>Common\IPlatformUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs">
+      <Link>Common\PlatformUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\PlayniteConvert.cs">
+      <Link>Common\PlayniteConvert.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
+      <Link>Common\PluginSettingsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\SortableNameConverter.cs">
+      <Link>Common\SortableNameConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs">
+      <Link>Common\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\TitleComparer.cs">
+      <Link>Common\TitleComparer.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs">
+      <Link>Common\WebDownloader.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GameDetails.cs">
+      <Link>Common\Metadata\GameDetails.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GamePropertyImportViewModel.cs">
+      <Link>Common\Metadata\GamePropertyImportViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericItemOption.cs">
+      <Link>Common\Metadata\GenericItemOption.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericMetadataProvider.cs">
+      <Link>Common\Metadata\GenericMetadataProvider.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\IGameSearchResult.cs">
+      <Link>Common\Metadata\IGameSearchResult.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\IImageData.cs">
+      <Link>Common\Metadata\IImageData.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\ISearchableDataSource.cs">
+      <Link>Common\Metadata\ISearchableDataSource.cs</Link>
+    </Compile>
     <Compile Include="LaunchBoxDatabase.cs" />
     <Compile Include="LaunchBoxMetadata.cs" />
     <Compile Include="LaunchBoxMetadataProvider.cs" />
@@ -155,7 +209,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <Import Project="..\PlayniteExtensions.Common\PlayniteExtensions.Common.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Magick.NET-Q16-AnyCPU.12.3.0\build\netstandard20\Magick.NET-Q16-AnyCPU.targets" Condition="Exists('..\packages\Magick.NET-Q16-AnyCPU.12.3.0\build\netstandard20\Magick.NET-Q16-AnyCPU.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

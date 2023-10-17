@@ -13,10 +13,6 @@
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationLabel">Include optional content in size calculation</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip">Optional content encompasses things like deluxe edition content that's not available as DLC</sys:String>
 
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsUseGOGLabel">Для удаленных ПК игр получить предполагаемый размер установки с GOG.com</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesLabel">Применить эти данные также для игр, которые не из GOG библиотеки</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesTooltip">Игры должны иметь ссылку на страницу GOG магазина</sys:String>
-
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsRegionWordsExplanationText">Region-words - это слова, обозначающие регионы для одинаково названных отделений Steam. Например, у &quot;Content EU&quot; и &quot;Content Asia&quot; будет исключено последнее слово и останется только одно, если EU и Asia будут указаны в текстовом поле Region-words здесь. Если вы уверены, что вам никогда не понадобится регион, введите его в поле Исключенные слова-регионы, и отделения Стим, заканчивающиеся на это слово, всегда будут исключены из расчета размера. Поместите каждое слово на отдельной строке.</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsRegionWordsHeaderLabel">Регион-слова</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsExcludedRegionWordsHeaderLabel">Исключенные регион-слова</sys:String>

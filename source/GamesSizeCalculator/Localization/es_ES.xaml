@@ -13,10 +13,6 @@
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationLabel">Incluir contenido opcional en el cálculo del tamaño</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip">Contenido opcional engloba cosas como contenido de edición de lujo que no está disponible como DLC</sys:String>
 
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsUseGOGLabel">Para juegos de PC desinstalados, obtener un tamaño estimado de instalación de GOG</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesLabel">Aplicar estos datos también para juegos que no son de la biblioteca de GOG</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesTooltip">Los juegos deben tener un enlace a la página de la tienda GOG</sys:String>
-
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsRegionWordsExplanationText">Las palabras de la región son cosas que denotan regiones para los depósitos de Steam que de otro modo se llaman idénticamente. Por ejemplo, &quot;Content EU&quot; y &quot;Content Asia&quot; tendrían la última palabra despojada y sólo una quedaría si la EU y Asia estuvieran ambos en el cuadro de texto Region-words aquí. Si estás seguro de que nunca necesitarás una región, introducelo en el cuadro de texto de palabras de regiones excluidas y los depósitos que terminen en esa palabra siempre serán excluidos del cálculo de tamaño. Coloca cada palabra en su propia línea.</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsRegionWordsHeaderLabel">Palabras de región</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsExcludedRegionWordsHeaderLabel">Palabras de región excluidas</sys:String>

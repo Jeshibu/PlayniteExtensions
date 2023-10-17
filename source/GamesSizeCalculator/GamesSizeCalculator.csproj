@@ -93,7 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Downloader.cs" />
-    <Compile Include="Common\Extensions\EnumExtensions.cs" />
     <Compile Include="Common\Extensions\StringExtensions.cs" />
     <Compile Include="Common\FileSystem.cs" />
     <Compile Include="Common\GlobalCommands.cs" />
@@ -111,11 +110,6 @@
     <Compile Include="GamesSizeCalculatorSettingsView.xaml.cs">
       <DependentUpon>GamesSizeCalculatorSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GOG\GogApiClient.cs" />
-    <Compile Include="GOG\GogSizeCalculator.cs" />
-    <Compile Include="GOG\HttpDownloaderWrapper.cs" />
-    <Compile Include="GOG\IHttpDownloader.cs" />
-    <Compile Include="GOG\Models.cs" />
     <Compile Include="Common\HttpDownloader.cs" />
     <Compile Include="Models\DepotInfo.cs" />
     <Compile Include="Models\SteamAppList.cs" />
@@ -156,7 +150,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <Import Project="..\PlayniteExtensions.Common\PlayniteExtensions.Common.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>xcopy "$(ProjectDir)Localization\*.xaml" "$(TargetDir)\Localization" /Y /I /E</PreBuildEvent>

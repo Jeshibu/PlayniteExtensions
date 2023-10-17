@@ -3,12 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:b="clr-namespace:Barnite"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=b:BarniteSettingsViewModel}"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
         <TextBlock Margin="0,0,0,20">Tip: use an app like <Hyperlink NavigateUri="https://barcodetopc.com/" RequestNavigate="Hyperlink_RequestNavigate">Barcode to PC</Hyperlink> to scan barcodes with your phone.</TextBlock>
         <TextBlock>The below sources will be searched in the order shown here. Uncheck to skip them.</TextBlock>
-        <DataGrid ItemsSource="{Binding ScrapersView}" AutoGenerateColumns="False" CanUserAddRows="False" HeadersVisibility="None" Margin="0,10,0,0">
+        <DataGrid ItemsSource="{Binding ScrapersView}" AutoGenerateColumns="False" CanUserAddRows="False" HeadersVisibility="None" Margin="0,10,0,0" d:ItemsSource="{d:SampleData ItemCount=12}">
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>

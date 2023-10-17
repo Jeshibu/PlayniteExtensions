@@ -72,6 +72,30 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs">
+      <Link>Common\IPlatformUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs">
+      <Link>Common\PlatformUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\PlayniteConvert.cs">
+      <Link>Common\PlayniteConvert.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
+      <Link>Common\PluginSettingsViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\SortableNameConverter.cs">
+      <Link>Common\SortableNameConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs">
+      <Link>Common\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\TitleComparer.cs">
+      <Link>Common\TitleComparer.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs">
+      <Link>Common\WebDownloader.cs</Link>
+    </Compile>
     <Compile Include="GroupeesLibrary.cs" />
     <Compile Include="GroupeesLibrarySettings.cs" />
     <Compile Include="GroupeesLibrarySettingsView.xaml.cs">
@@ -100,6 +124,5 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <Import Project="..\PlayniteExtensions.Common\PlayniteExtensions.Common.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

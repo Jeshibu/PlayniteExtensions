@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:pcmd="clr-namespace:PluginsCommon.Commands"
+             xmlns:g="clr-namespace:GamesSizeCalculator"
+             d:DataContext="{d:DesignInstance Type=g:GamesSizeCalculatorSettingsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
     <TabControl Margin="20">
@@ -31,15 +33,6 @@
                                 Margin="0,10,0,0"
                                 ToolTip="{DynamicResource LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip}"
                                 IsChecked="{Binding Settings.IncludeOptionalInSteamCalculation}"/>
-                </StackPanel>
-                <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsUseGOGLabel}"
-                            Margin="0,10,0,0"
-                            IsChecked="{Binding Settings.GetUninstalledGameSizeFromGog}"/>
-                <StackPanel Margin="40,0,0,0"
-                            IsEnabled="{Binding Settings.GetUninstalledGameSizeFromGog}">
-                    <CheckBox Content="{DynamicResource LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesLabel}"
-                              Margin="0,10,0,0"
-                              IsChecked="{Binding Settings.GetSizeFromGogNonGogGames}"/>
                 </StackPanel>
             </StackPanel>
         </TabItem>

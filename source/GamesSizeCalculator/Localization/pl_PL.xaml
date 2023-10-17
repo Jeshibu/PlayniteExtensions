@@ -13,10 +13,6 @@
   <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationLabel">Uwzględnij opcjonalną zawartość przy obliczaniu rozmiaru</sys:String>
   <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip">Opcjonalna zawartość obejmuje rzeczy takie jak zawartość edycji deluxe, która nie jest dostępna jako DLC</sys:String>
 
-  <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsUseGOGLabel">Dla odinstalowanych gier PC uzyskaj szacowany rozmiar instalacji z GOG.com</sys:String>
-  <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesLabel">Zastosuj te dane również dla gier, które nie pochodzą z biblioteki GOG</sys:String>
-  <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesTooltip">Gry muszą mieć link do strony sklepu GOG</sys:String>
-
   <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsRegionWordsExplanationText">Słowa regionalne to wyrażenia, które określają symbole regionów w nazwach gier Steam. Na przykład ostatnie słowo „Zawartość UE” i „Zawartość Azja” będą miały usunięte ostatnie słowo, jeżeli w ramce „Słowa regionalne” będą umieszczone słowa „UE” oraz „Azja”. Jeżeli jesteś pewien, że nigdy nie będziesz potrzebował danego regionu, wpisz go do pola „Wykluczone słowa regionalne”, a nazwy kończące się tym słowem zawsze będą wyłączone z kalkulacji rozmiaru. Umieść każde słowo w nowym wierszu.</sys:String>
   <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsRegionWordsHeaderLabel">Słowa regionalne</sys:String>
   <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsExcludedRegionWordsHeaderLabel">Wykluczone słowa regionalne</sys:String>

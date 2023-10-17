@@ -31,7 +31,7 @@ namespace GiantBombMetadata.SearchProviders
             {
                 var result = apiClient.GetGameProperty(
                     $"{searchResult.ResourceType}/{searchResult.Guid}",
-                    progressArgs?.CancelToken ?? new System.Threading.CancellationToken());
+                    progressArgs?.CancelToken ?? new CancellationToken());
 
                 return result?.Games.Select(g => new GameDetails { Names = new List<string> { g.Name }, Url = g.SiteDetailUrl }) ?? new GameDetails[0];
             }

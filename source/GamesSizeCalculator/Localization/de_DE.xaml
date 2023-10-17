@@ -13,10 +13,6 @@
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationLabel">Include optional content in size calculation</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsIncludeOptionalInSteamCalculationTooltip">Optional content encompasses things like deluxe edition content that's not available as DLC</sys:String>
 
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsUseGOGLabel">Für deinstallierte PC Spiele erhältst du eine geschätzte Installationsgröße von GOG.com</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesLabel">Benutze diese Daten auch für Spiele, die nicht aus der GOG-Bibliothek stammen</sys:String>
-    <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsApplyGOGSizesToOtherLibrariesTooltip">Spiele müssen einen Link zur GOG-Shop-Seite haben</sys:String>
-
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsRegionWordsExplanationText">Regionalwörter sind Dinge, die Regionen für ansonsten identisch benannte Steam-Depots bezeichnen. Zum Beispiel &quot;Content EU&quot; und &quot;Content Asia&quot; hätten das letzte Wort gestrichen und nur einer bliebe übrig, wenn die EU und Asien hier beide in der &quot;Region-Word&quot;-Textbox wären. Wenn du sicher bist, dass du eine Region nie benötigst, gib sie in das Textfeld &quot;Ausgeschlossene Regionalwörter&quot; ein und Depots, die mit diesem Wort enden, werden immer von der Größenberechnung ausgenommen. Setze jedes Wort in seine eigene Zeile.</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsRegionWordsHeaderLabel">Regionalwörter</sys:String>
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsExcludedRegionWordsHeaderLabel">Ausgeschlossene Regionalwörter</sys:String>

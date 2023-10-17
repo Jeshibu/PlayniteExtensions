@@ -77,6 +77,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\PlayniteExtensions.Tests.Common\FakeWebDownloader.cs">
+      <Link>Common.Tests\FakeWebDownloader.cs</Link>
+    </Compile>
     <Compile Include="FakeItemCollection.cs" />
     <Compile Include="PlatformUtilityTests.cs" />
     <Compile Include="Xbox360ScraperTests.cs" />
@@ -125,7 +128,6 @@
     <Analyzer Include="..\packages\xunit.analyzers.1.1.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
     <Analyzer Include="..\packages\xunit.analyzers.1.1.0\analyzers\dotnet\cs\xunit.analyzers.fixes.dll" />
   </ItemGroup>
-  <Import Project="..\PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

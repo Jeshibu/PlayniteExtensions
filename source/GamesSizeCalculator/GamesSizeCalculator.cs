@@ -73,10 +73,6 @@ namespace GamesSizeCalculator
             {
                 onlineSizeCalculators.Add(new SteamSizeCalculator(GetSteamApiClient(), GetDefaultSteamAppUtility(), settings.Settings));
             }
-            if (settings.Settings.GetUninstalledGameSizeFromGog)
-            {
-                onlineSizeCalculators.Add(new GOG.GogSizeCalculator(new GOG.HttpDownloaderWrapper(), settings.Settings.GetSizeFromGogNonGogGames));
-            }
             return onlineSizeCalculators;
         }
 

@@ -67,6 +67,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\PlayniteExtensions.Common\CachedFileDownloader.cs">
+      <Link>Common\CachedFileDownloader.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs">
+      <Link>Common\IEnumerableExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs">
+      <Link>Common\StringExtensions.cs</Link>
+    </Compile>
     <Compile Include="ISteamAppIdUtility.cs" />
     <Compile Include="ISteamTagScraper.cs" />
     <Compile Include="SteamAppIdUtility.cs" />
@@ -97,6 +106,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <Import Project="..\PlayniteExtensions.Common\PlayniteExtensions.Common.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
