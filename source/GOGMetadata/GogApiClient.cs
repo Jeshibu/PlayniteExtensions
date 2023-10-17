@@ -1,16 +1,16 @@
-﻿using Playnite.SDK.Data;
+﻿using AngleSharp.Dom;
+using AngleSharp.Dom.Html;
+using AngleSharp.Parser.Html;
 using Playnite.SDK;
+using Playnite.SDK.Data;
+using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
+using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using PlayniteExtensions.Common;
-using PlayniteExtensions.Metadata.Common;
-using Playnite.SDK.Models;
-using System.Threading;
-using AngleSharp.Parser.Html;
-using AngleSharp.Dom;
-using AngleSharp.Dom.Html;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace GOGMetadata
 {

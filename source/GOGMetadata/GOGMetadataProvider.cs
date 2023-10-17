@@ -3,7 +3,6 @@ using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace GOGMetadata
 {

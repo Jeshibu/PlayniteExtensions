@@ -1,8 +1,4 @@
-﻿using Playnite.SDK.Models;
-using Playnite.SDK;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace PlayniteExtensions.Metadata.Common
 {

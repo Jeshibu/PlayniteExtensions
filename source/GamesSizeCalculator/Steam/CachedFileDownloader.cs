@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using System.Net;
+﻿using PluginsCommon;
 using PluginsCommon.Web;
-using PluginsCommon;
+using System;
+using System.IO;
+using System.Text;
 
 namespace GamesSizeCalculator.SteamSizeCalculation
 {

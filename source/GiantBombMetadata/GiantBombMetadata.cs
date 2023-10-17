@@ -1,18 +1,12 @@
 ﻿using GiantBombMetadata.Api;
 using GiantBombMetadata.SearchProviders;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace GiantBombMetadata

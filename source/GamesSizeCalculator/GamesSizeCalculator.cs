@@ -1,10 +1,8 @@
 ﻿using GamesSizeCalculator.SteamSizeCalculation;
 using Playnite.SDK;
-using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteUtilitiesCommon;
-using PluginsCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;

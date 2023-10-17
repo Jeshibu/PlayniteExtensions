@@ -4,11 +4,7 @@ using PlayniteExtensions.Common;
 using PlayniteExtensions.Tests.Common;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Barnite.Tests.PlayAsia

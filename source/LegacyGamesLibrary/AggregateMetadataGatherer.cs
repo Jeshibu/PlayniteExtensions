@@ -1,12 +1,12 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
-using PlayniteExtensions.Common;
 
 namespace LegacyGamesLibrary
 {

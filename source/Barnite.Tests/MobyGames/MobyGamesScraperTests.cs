@@ -3,7 +3,6 @@ using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Tests.Common;
 using System.Collections.Generic;
-using System.IO;
 using Xunit;
 
 namespace Barnite.Tests.MobyGames

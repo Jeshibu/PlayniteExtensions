@@ -1,16 +1,11 @@
 ﻿using Linguini.Bundle;
 using Linguini.Bundle.Builder;
 using Linguini.Shared.Types.Bundle;
-using Linguini.Syntax.Ast;
 using Playnite.SDK;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using FluentArgs = System.Collections.Generic.Dictionary<string, Linguini.Shared.Types.Bundle.IFluentType>;
 
 namespace itchioBundleTagger

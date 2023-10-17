@@ -1,15 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace Rawg.Common

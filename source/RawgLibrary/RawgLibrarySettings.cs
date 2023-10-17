@@ -1,12 +1,12 @@
-﻿using Playnite.SDK;
+﻿using Newtonsoft.Json;
+using Playnite.SDK;
+using Playnite.SDK.Models;
+using Rawg.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Rawg.Common;
-using System.Diagnostics;
-using Newtonsoft.Json;
-using Playnite.SDK.Models;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 
 namespace RawgLibrary
 {

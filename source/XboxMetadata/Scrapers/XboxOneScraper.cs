@@ -8,10 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace XboxMetadata.Scrapers
 {

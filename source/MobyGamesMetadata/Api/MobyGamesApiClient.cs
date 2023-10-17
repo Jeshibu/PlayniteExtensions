@@ -1,13 +1,13 @@
-﻿using RestSharp;
+﻿using ComposableAsync;
+using Newtonsoft.Json;
+using Playnite.SDK;
+using RateLimiter;
+using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Playnite.SDK;
-using System.Threading;
-using Newtonsoft.Json;
 using System.Net.Http;
-using RateLimiter;
-using ComposableAsync;
+using System.Threading;
 
 namespace MobyGamesMetadata.Api
 {

@@ -1,12 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Playnite.SDK;
-using Playnite.SDK.Plugins;
 using RestSharp;
 using System;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 
 namespace GiantBombMetadata.Api
 {

@@ -1,17 +1,15 @@
-﻿using Playnite.SDK;
+﻿using ImageMagick;
+using Playnite.SDK;
+using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PlayniteExtensions.Common;
-using Playnite.SDK.Models;
-using System.Text.RegularExpressions;
-using ImageMagick;
-using System.Net.Http;
 using System.IO;
-using System.CodeDom;
+using System.Linq;
+using System.Net.Http;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace LaunchBoxMetadata
 {

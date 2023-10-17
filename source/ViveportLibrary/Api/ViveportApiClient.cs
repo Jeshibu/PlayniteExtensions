@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Playnite.SDK;
 using RestSharp;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,19 +27,19 @@ namespace ViveportLibrary.Api
             if (cancellationToken.IsCancellationRequested)
             {
                 logger.Debug("Request cancelled");
-                return default(T);
+                return default;
             }
 
             if (response == null)
             {
                 logger.Debug("No response");
-                return default(T);
+                return default;
             }
             logger.Debug($"{request.Resource} Response code {response.StatusCode}");
             logger.Trace($"{request.Resource} Content: {response.Content}");
 
             if (string.IsNullOrWhiteSpace(response.Content))
-                return default(T);
+                return default;
             var output = JsonConvert.DeserializeObject<T>(response.Content);
             return output;
         }

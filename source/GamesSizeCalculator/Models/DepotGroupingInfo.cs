@@ -1,6 +1,4 @@
-﻿using GamesSizeCalculator.Models;
-
-namespace GamesSizeCalculator.Models
+﻿namespace GamesSizeCalculator.Models
 {
     public class DepotGroupingInfo
     {

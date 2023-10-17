@@ -3,13 +3,11 @@ using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Web;
-using System.Globalization;
 
 namespace Barnite.Scrapers
 {
