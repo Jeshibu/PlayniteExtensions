@@ -1,0 +1,3020 @@
+﻿{
+  "games": [
+    {
+      "alternate_titles": [
+        {
+          "description": "Common abbreviation",
+          "title": "AC2"
+        },
+        {
+          "description": "Chinese title (romanized)",
+          "title": "Cike Xintiao"
+        }
+      ],
+      "description": "<p>Desmond Miles, the last in the line of the ancient order of Assassins, has been captured by the modern-day descendants of the Templars, forced to experience <a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed\">past events</a> through a device called Animus in order to obtain crucial information. However, one of the scientists unexpectedly switches sides, asking Desmond to put his trust in her hands and follow her out of the complex. Soon afterwards they escape the holding place and team up with some new allies that intend to use Desmond's knowledge against the Templars. Their new device is called Animus 2.0, an upgraded version of the original. This time, Desmond relives the life of Ezio Auditore di Firenze, a man who lived in Italy in the 15th century.</p>\n<p>Ezio is a boisterous, seemingly carefree young man who likes to pick fights and chase skirts. But all that changes when his father and little brother are publicly executed by a man he trusted. Driven by vengeance, Ezio begins to discover more about his father's life, and realizes that he, too, belonged to the organization of the Assassins. Ezio becomes a skillful assassin himself, and is ready to go all the way to avenge the death of the people he loved.</p>\n<p><em>Assassin's Creed II</em> is a free-roaming action game very similar in concept and gameplay mechanics to its predecessor. The events of the game take place in Florence, Venice, Rome, and other locations in Italy. Besides fictional characters, the game has famous historical figures from the time period, such as Leonardo da Vinci, Niccolò Machiavelli, Cesare Borgia and others, who play an active role in the game's story. Authentic cultural and political environment of the Italian Renaissance is represented in the game along with fictitious accounts of the events, alternate history, and metaphysical theories.</p>\n<p>The core gameplay resembles that of the previous game. The protagonist can freely explore several large cities and rural locations on foot or on horseback. It is also possible to swim and navigate boats in the game. Nearly every building can be climbed on, and the protagonist can access the tallest rooftops, observing the panorama with his Eagle Vision. Free-form jumping and running occupies a considerable portion of the gameplay. </p>\n<p>One of the sequel's most notable additions is the financial system, which was not present in the first game. Items, weapons and armor can be bought in shops and repaired for money. There are many more weapon types and individual weapons and armor in the game. Ezio can carry swords, daggers, throwing knives, smoke bombs, a pistol, and a variety of upgradeable armor types. Weapons can also be picked up from fallen enemies and used in the same battle. Abundant treasure can be collected from various spots in the game world.</p>\n<p>There are new ways of being stealthy in this sequel. Ezio can pay courtesans to distract guards, hire mercenaries to fight them, or commission thieves to create a distraction. Mission objectives and particularly the steps needed to accomplish them are noticeably more varied than in the previous game. The protagonist often receives new equipment and new challenges to experiment with. A few of these are built like mini-games: for example, at one point Ezio will pilot a flying device. The main character has his own headquarters in the game, a mansion and a small town adjacent to it. It is possible to invest money into the town's reconstruction, as well as customize the mansion.</p>\n<p>The game features a significantly larger amount of side quests than its predecessor. A series of sub-quests involves locating, collecting and deciphering ancient words of wisdom that supposedly hold the secret of the universe. These quests often involve traversing complex indoor platform environments in order to reach the goal. These sequences require precise jumping and contain light puzzle-solving elements, similarly to contemporary <a href=\"https://www.mobygames.com/search/?q=Prince+of+Persia\">Prince of Persia</a> games.</p>",
+      "game_id": 43958,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 1,
+          "genre_name": "Action"
+        },
+        {
+          "genre_category": "Perspective",
+          "genre_category_id": 2,
+          "genre_id": 7,
+          "genre_name": "1st-person"
+        },
+        {
+          "genre_category": "Perspective",
+          "genre_category_id": 2,
+          "genre_id": 128,
+          "genre_name": "Behind view"
+        },
+        {
+          "genre_category": "Gameplay",
+          "genre_category_id": 4,
+          "genre_id": 219,
+          "genre_name": "Quick Time Events (QTEs)"
+        },
+        {
+          "genre_category": "Gameplay",
+          "genre_category_id": 4,
+          "genre_id": 99,
+          "genre_name": "Stealth"
+        },
+        {
+          "genre_category": "Interface/Control",
+          "genre_category_id": 7,
+          "genre_id": 168,
+          "genre_name": "Direct control"
+        },
+        {
+          "genre_category": "Setting",
+          "genre_category_id": 10,
+          "genre_id": 202,
+          "genre_name": "Europe"
+        }
+      ],
+      "moby_score": 8.6,
+      "moby_url": "https://www.mobygames.com/game/43958/assassins-creed-ii/",
+      "num_votes": 69,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2009-11-17",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2009-11-17",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        },
+        {
+          "first_release_date": "2015-11-12",
+          "platform_id": 142,
+          "platform_name": "Xbox One"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/5790434-assassins-creed-ii-playstation-3-front-cover.jpg",
+        "platforms": [
+          "PlayStation 3"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/2f8d8624-abe9-11ed-a484-02420a000130.webp",
+        "width": 686
+      },
+      "sample_screenshots": [
+        {
+          "caption": "Nothing strange at the docks.",
+          "height": 405,
+          "image": "https://cdn.mobygames.com/screenshots/5265825-assassins-creed-ii-playstation-3-nothing-strange-at-the-docks.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/6202a5a6-abd7-11ed-9505-02420a00019c.webp",
+          "width": 720
+        },
+        {
+          "caption": "Loading sequence.",
+          "height": 405,
+          "image": "https://cdn.mobygames.com/screenshots/5265695-assassins-creed-ii-playstation-3-loading-sequence.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/60277c16-abd7-11ed-9505-02420a00019c.webp",
+          "width": 720
+        },
+        {
+          "caption": "Map of the area.",
+          "height": 405,
+          "image": "https://cdn.mobygames.com/screenshots/5266203-assassins-creed-ii-playstation-3-map-of-the-area.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/6716874c-abd7-11ed-b951-02420a000197.webp",
+          "width": 720
+        },
+        {
+          "caption": "Use smoke bomb to confuse the enemies for a brief period of time, and lower their ranks.",
+          "height": 405,
+          "image": "https://cdn.mobygames.com/screenshots/5266372-assassins-creed-ii-playstation-3-use-smoke-bomb-to-confuse-the-e.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/6a132072-abd7-11ed-b325-02420a00019e.webp",
+          "width": 720
+        },
+        {
+          "caption": "You can pay courtesans to help you blend in the crowd or have them seduce the guards.",
+          "height": 405,
+          "image": "https://cdn.mobygames.com/screenshots/5266333-assassins-creed-ii-playstation-3-you-can-pay-courtesans-to-help-.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/6961432a-abd7-11ed-b951-02420a000197.webp",
+          "width": 720
+        }
+      ],
+      "title": "Assassin&#39;s Creed II"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>The <em>White Edition</em> includes:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+II\">Assassin's Creed II</a></li>\n<li>Collector's Figurine of Ezio</li>\n<li>The exclusive bonus map \"Santa Maria del Frari\"</li>\n</ul>",
+      "game_id": 45525,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 187,
+          "genre_name": "Special edition"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 185,
+          "genre_name": "Extra content / game"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 186,
+          "genre_name": "Physical extras"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/45525/assassins-creed-ii-white-edition/",
+      "num_votes": 4,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2010-03-04",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2009-11-19",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2009-11-19",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/6007092-assassins-creed-ii-white-edition-xbox-360-front-cover.jpg",
+        "platforms": [
+          "Xbox 360"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/1619d5d8-abeb-11ed-887e-02420a00012e.webp",
+        "width": 557
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed II (White Edition)"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>This <em>Black Edition</em> features:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/search/?q=3307211666474\">Assassin's Creed II</a></li>\n<li>an Ezio Auditore di Firenze figurine dressed in black \"Master Assassin\" gear</li>\n<li>3 extra quests (Palazzo Medicis in Florence, Santa Maria Dei Frari In Venice, Arsenal Shipyard Warehouse In Venice)</li>\n<li>a leather bound 'Conspiracy' art book</li>\n<li>an official soundtrack and behind the scenes DVD</li>\n</ul>",
+      "game_id": 49886,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 187,
+          "genre_name": "Special edition"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 184,
+          "genre_name": "Digital extras"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 185,
+          "genre_name": "Extra content / game"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 186,
+          "genre_name": "Physical extras"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/49886/assassins-creed-ii-black-edition/",
+      "num_votes": 7,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2010-03-05",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2009-11-19",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2009-11-19",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": null,
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed II (Black Edition)"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>This <em>Special Film Edition</em> comes in a box and includes:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+II\">Assassin's Creed II</a></li>\n<li><em>Assassin's Creed: Lineage</em> movie on DVD</li>\n<li>the exclusive bonus maps \"Santa Maria del Frari\" and \"Palazzo Medici\"</li>\n</ul>",
+      "game_id": 50285,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 187,
+          "genre_name": "Special edition"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 184,
+          "genre_name": "Digital extras"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 185,
+          "genre_name": "Extra content / game"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/50285/assassins-creed-ii-special-film-edition/",
+      "num_votes": 2,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2010-03",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/6145495-assassins-creed-ii-special-film-edition-playstation-3-front-cove.jpg",
+        "platforms": [
+          "PlayStation 3"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/338ca748-abec-11ed-893a-02420a00012f.webp",
+        "width": 561
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed II (Special Film Edition)"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Assassin's Creed II (Podarochnoe izdanie)</em> is a gift edition of <a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+II\">Assassin's Creed II</a>, published by Akella in Russia. Keep case includes:</p>\n<ul>\n<li>The game</li>\n<li>User manual</li>\n<li>Behind the scenes DVD</li>\n<li>Key for one bonus map</li>\n</ul>",
+      "game_id": 51110,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 187,
+          "genre_name": "Special edition"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 184,
+          "genre_name": "Digital extras"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 185,
+          "genre_name": "Extra content / game"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/51110/assassins-creed-ii-podarochnoe-izdanie/",
+      "num_votes": 2,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2010-03-05",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        }
+      ],
+      "sample_cover": null,
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed II (Podarochnoe izdanie)"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>This release of <a href=\"https://www.mobygames.com/game/33566/assassins-creed-directors-cut-edition/\">Assassin's Creed (Director's Cut Edition)</a> also includes additional disc with <em>Assassin's Creed: Lineage</em> movie.</p>",
+      "game_id": 51356,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 187,
+          "genre_name": "Special edition"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 186,
+          "genre_name": "Physical extras"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/51356/assassins-creed-directors-cut-edition-predystoriya-assassins-cre/",
+      "num_votes": 1,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2010-01-13",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/6372847-assassins-creed-directors-cut-edition-predystoriya-assassins-cre.jpg",
+        "platforms": [
+          "Windows"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/f9f11e68-abed-11ed-a599-02420a000132.webp",
+        "width": 795
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed (Director&#39;s Cut Edition) + predystoriya Assassin&#39;s Creed II"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>This edition includes:</p>\n<ul>\n<li><a href=\"/search/?q=Assassin's+Creed+II\">Assassin's Creed II</a></li>\n<li><a href=\"https://www.mobygames.com/game/59314/assassins-creed-ii-sequence-12-battle-of-forli/\">Battle of Forli</a> (DLC)</li>\n<li><a href=\"/search/?q=Bonfire+of+the+Vanities\">Bonfire of the Vanities</a> (DLC)</li>\n<li>the 3 Templar Secret Locations (Palazzo Medici + Santa Maria dei Frari + Arsenal Shipyard). These were previously offered as a commercial bonus DLC in addition to the <em>Bonfire of the Vanities</em> DLC.</li>\n</ul>",
+      "game_id": 55337,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 1,
+          "genre_name": "Action"
+        },
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 76,
+          "genre_name": "Compilation"
+        },
+        {
+          "genre_category": "Perspective",
+          "genre_category_id": 2,
+          "genre_id": 7,
+          "genre_name": "1st-person"
+        },
+        {
+          "genre_category": "Perspective",
+          "genre_category_id": 2,
+          "genre_id": 128,
+          "genre_name": "Behind view"
+        },
+        {
+          "genre_category": "Gameplay",
+          "genre_category_id": 4,
+          "genre_id": 99,
+          "genre_name": "Stealth"
+        },
+        {
+          "genre_category": "Interface/Control",
+          "genre_category_id": 7,
+          "genre_id": 168,
+          "genre_name": "Direct control"
+        },
+        {
+          "genre_category": "Setting",
+          "genre_category_id": 10,
+          "genre_id": 202,
+          "genre_name": "Europe"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/55337/assassins-creed-ii-game-of-the-year-edition/",
+      "num_votes": 1,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2010",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2010",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        },
+        {
+          "first_release_date": "2010-06-17",
+          "platform_id": 282,
+          "platform_name": "OnLive"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/10188016-assassins-creed-ii-game-of-the-year-edition-playstation-3-front-.jpg",
+        "platforms": [
+          "PlayStation 3"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/e6a137ba-ac0d-11ed-8a97-02420a00012d.webp",
+        "width": 696
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed II: Game of the Year Edition"
+    },
+    {
+      "alternate_titles": [
+        {
+          "description": "Common abbreviation",
+          "title": "AC3"
+        }
+      ],
+      "description": "<p><em>Assassin's Creed III</em> is a historical open world action-adventure game with a focus on stealth. Despite the numbering it is the fifth main game in the series and a direct sequel to the previous game <a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed:+Revelations\">Assassin's Creed: Revelations</a>. After the events of the previous game the series' protagonist Desmond Miles travels with father William and the two companions Rebecca and Shaun to a cave in New York where they have located a temple made by the members of the First Civilization. Using the Apple of Eden, Desmond is able to activate a large part of the equipment. It was built to help protect Earth against a solar flare that threatens to wipe out the planet. Desmond falls into a fugue state however and is brought into Animus, the virtual reality machine that allows him to experience his ancestral memories. He will use Animus to find the answers for the First Civilization's warning, and the threat posed by the Knight Templars and their modern day organization Abstergo Industries.</p>\n<p>From that initial modern day environment the rest of the game is largely set in Colonial America, before, during and after the American Revolution from 1753 to 1783. The main protagonist for this game is Ratonhnhaké:ton (Connor), a member of the Mohawk tribe. He is only introduced after a substantial portion of the game as it first follows his father, the Londoner Haytham Kenway, who travels to America after killing an Assassin in the London Opera. The player experiences the gameplay of the opera killing, the journey on the boat, and the arrival in Boston. Haytham is a Templar. He stole a key in the Opera and works together with five men loyal to his cause to locate a storehouse the medallion key is for. As he also gets involved in the local events, he meets the Mohawk woman Kaniehti:io (Ziio) and she gives birth to Connor. The game then offers 30 years of Connor's life to play, from his childhood with the Mohawk tribe through the training to become an Assassin after his village is attacked by the Templars under the command of his father. The Assassin-Templar war then becomes part of the American Revolution.</p>\n<p>The open world environment is introduced as soon as Haytham arrives in Boston. Eventually the player also gets to explore New York, the Mohawk village, a large part of the American Colonial Frontier, various settlements such as Lexington, Concord and Charlestown, a brief visit in Philadelphia and the entire Eastern seaboard during the naval missions where Connor commands the warship Aquila. Various historical figures are met along the way and all information about characters and locations are described with a humorous tone in the Animus database. As almost all of the game is played out in a virtual reality environment, sections can be reloaded quickly and often small wireframe-like glitches are shown to remind the player it is just a simulation. There are however also missions with Desmond in the present day world where he needs to retrieve power sources in countries such as Italy and Brazil to open the temple gate.</p>\n<p>Next to the main storyline there are various optional missions and tasks that are found by exploring the environment. The fighting system uses melee and ranged weapons with various actions to disarm, attack, parry, fire and assassinate based on the equipped weapon. Counter attacks are new and shown in slow motion to make room to strike. Ranged weapons such as muskets and rifles are new to the series and they have a considerable reload time. The free running movement to climb almost any building or obstacle has been modified to tie the different actions into a fluid motion by keeping a single button or key pressed. It is however still possible to deviate with different actions at any moment to choose a new path. Hiding places now include mobile vehicles such as haystacks in wagons that can be used to sneak up on enemies. Disguises can be worn to fool soldiers, but not the officers. There is a three-tier notoriety system where becoming incognito involves running away and hiding, but also tearing down wanted posters and bribing town criers. All computer-controlled characters have their own routines and this is now influenced by the weather as well, with a day-and-night and seasons cycle.</p>\n<p>Next to the gameplay that returns from the earlier games this title introduces hunting and trapping animals in the wilderness to sell the skin. A large part of the game can also be spent building the settlement Davenport Homestead. Starting out with a single building, NPCs called artisans can be convinced to settle near the Homestead. This brings raw materials and facilities that can be used to craft. Raw goods and crafted items then form a local economy where the player can decide to sell them through land caravans or via sea convoys. Progress in the homestead is also shown visually with new people working and buildings that appear. Artisans receive upgrades after completing missions for them and this provides better equipment and weapons. Money is earned through the Homestead economy, but also by discovering hidden chests, selling spoils of hunting, looting opponents and pickpocketing. There are also tools to pick locks through a short, interactive sequence. Another, very different part is played on the The Eastern seaboard with naval campaigns. Connor has to command the ship through sails, cover and cannons in full naval combat and with a large amount of upgrades available for the ship over time. The game also contains three historical board games that can be played on the ship, in the cities or the Homestead: Bowls, Morris and Fanorona.</p>\n<p>Additional challenges are unlocked by joining the three clubs: hunting, brawling and thieving. These each offer optional goals in different tiers. Other quests involve hunting down optional trinkets, collecting almanac pages and feathers, delivering letters, performing assassination contracts, synchronizing view points and more. Each of the three large environments (Boston, Frontier, New York) needs to be freed from Templar influence by liberating districts. Liberation reduces the taxes for Homestead convoys. To maintain a presence up to six people can be recruited and their skills (assassination, bodyguard etc.) can be called upon in times of need. Companions can also often be instructed with basic commands. When not needed, they can be sent out to other states to complete missions on their own and they bring back a lot of money and rewards. Through these missions their skills are upgraded, lowering the risk towards success. The three areas contain forts that can be captured to drive out other nations.</p>\n<p>Multiplayer includes 12 different game modes and is presented as an entertainment product of Abstergo Industries. Next to the standard offerings there is the cooperative Wolfpack mode where up to four players work together through 25 stages to kill NPCs with a time limit. Another is the Domination team mode where the Animus game console is used to capture areas of a virtual map and protect them from the opposite team.</p>\n<p>In the Wii U version the gamepad is used to display the in-game map and players can also use it to equip different weapons quickly.</p>",
+      "game_id": 58716,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 1,
+          "genre_name": "Action"
+        },
+        {
+          "genre_category": "Perspective",
+          "genre_category_id": 2,
+          "genre_id": 128,
+          "genre_name": "Behind view"
+        },
+        {
+          "genre_category": "Gameplay",
+          "genre_category_id": 4,
+          "genre_id": 219,
+          "genre_name": "Quick Time Events (QTEs)"
+        },
+        {
+          "genre_category": "Gameplay",
+          "genre_category_id": 4,
+          "genre_id": 99,
+          "genre_name": "Stealth"
+        }
+      ],
+      "moby_score": 7.8,
+      "moby_url": "https://www.mobygames.com/game/58716/assassins-creed-iii/",
+      "num_votes": 44,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2012-11-20",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        },
+        {
+          "first_release_date": "2012-11-13",
+          "platform_id": 132,
+          "platform_name": "Wii U"
+        },
+        {
+          "first_release_date": "2017-05-23",
+          "platform_id": 142,
+          "platform_name": "Xbox One"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/6798038-assassins-creed-iii-xbox-360-front-cover.jpg",
+        "platforms": [
+          "Xbox 360"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/514ded3c-abf1-11ed-902e-02420a00012d.webp",
+        "width": 574
+      },
+      "sample_screenshots": [
+        {
+          "caption": "Ship upgrades menu",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16823469-assassins-creed-iii-windows-ship-upgrades-menu.png",
+          "thumbnail_image": "https://cdn.mobygames.com/7f7f0058-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "The menu, accessible in Connor's manor, is for managing supplies, crafting, sending trade caravans etc.",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16822950-assassins-creed-iii-windows-the-menu-accessible-in-connors-manor.png",
+          "thumbnail_image": "https://cdn.mobygames.com/152b2fec-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "After blowing up few ships, Connor is back at the dock",
+          "height": 676,
+          "image": "https://cdn.mobygames.com/screenshots/1116878-assassins-creed-iii-windows-after-blowing-up-few-ships-connor-is.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/808b641e-ab72-11ed-8b70-02420a00019a.webp",
+          "width": 1200
+        },
+        {
+          "caption": "At New York outskirt",
+          "height": 676,
+          "image": "https://cdn.mobygames.com/screenshots/11927422-assassins-creed-iii-windows-at-new-york-outskirt.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/c214628c-ac1c-11ed-803a-02420a000131.webp",
+          "width": 1200
+        },
+        {
+          "caption": "When you counter enemy attack, you can kill, disarm or throw the enemy.",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/11943935-assassins-creed-iii-playstation-3-when-you-counter-enemy-attack-.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/df9a5c4e-ac1c-11ed-b950-02420a00012d.webp",
+          "width": 1200
+        }
+      ],
+      "title": "Assassin&#39;s Creed III"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Discovery</em> takes place after <a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+II\">Assassin's Creed II</a> and before <a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed:+Brotherhood\">Assassin's Creed: Brotherhood</a>. The player assumes the role of Ezio Auditore da Firenze and mostly takes place in Spain where Ezio is fighting inquisition while trying to free his fellow assassins and foil the evil schemes the Templars are plotting.</p>\n<p>The game uses full 3D graphic but with a fixed camera so it runs and feel like a side-scrolling platformer. Ezio is as deadly as ever, but his arsenal is limited to his blade and throwing knives. Each mission has a certain mode that somewhat decides how the level should be played. Stealth mode lets you get spotted by the enemy only a certain number of times before you have to restart from the last checkpoint. Chase mode requires you to run away or reach some place or someone within the time limit. And normal mode lets you choose the mission approach you wish to use. You can run and slash at the enemies or sneak and use stealth kills.</p>\n<p>Unlike console versions of the games, leap of faith is fairly limited and you will never see the hay you are leaping into, and most will happen as a cut-scene anyhow. But there are hiding places such as shadows, hay carts, bushes or empty barrels that will help you in your sneaking missions. If you approach the enemy from behind you can perform a stealth kill with a single strike, but if you prefer the frontal assault the type of fight will vary based on your opponent. Stronger opponents can block your attacks and you have to either break their defense or rely on counter-attacks to harm them. All moves will not be available right from the start and will gradually open as the story progresses.</p>",
+      "game_id": 58917,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 1,
+          "genre_name": "Action"
+        },
+        {
+          "genre_category": "Perspective",
+          "genre_category_id": 2,
+          "genre_id": 17,
+          "genre_name": "Side view"
+        },
+        {
+          "genre_category": "Visual Presentation",
+          "genre_category_id": 12,
+          "genre_id": 131,
+          "genre_name": "2D scrolling"
+        },
+        {
+          "genre_category": "Gameplay",
+          "genre_category_id": 4,
+          "genre_id": 21,
+          "genre_name": "Platform"
+        },
+        {
+          "genre_category": "Gameplay",
+          "genre_category_id": 4,
+          "genre_id": 99,
+          "genre_name": "Stealth"
+        }
+      ],
+      "moby_score": 7.0,
+      "moby_url": "https://www.mobygames.com/game/58917/assassins-creed-ii-discovery/",
+      "num_votes": 4,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2009-11-17",
+          "platform_id": 44,
+          "platform_name": "Nintendo DS"
+        },
+        {
+          "first_release_date": "2010-01-07",
+          "platform_id": 86,
+          "platform_name": "iPhone"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/6652856-assassins-creed-ii-discovery-nintendo-ds-front-cover.jpg",
+        "platforms": [
+          "Nintendo DS"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/28c0bf76-abf0-11ed-9b47-02420a000133.webp",
+        "width": 908
+      },
+      "sample_screenshots": [
+        {
+          "caption": "Sneaking up the the unaware guard.",
+          "height": 384,
+          "image": "https://cdn.mobygames.com/screenshots/16405625-assassins-creed-ii-discovery-nintendo-ds-sneaking-up-the-the-una.png",
+          "thumbnail_image": "https://cdn.mobygames.com/7762185a-c211-11ed-ab6b-02420a000194.webp",
+          "width": 256
+        },
+        {
+          "caption": "Animus - combat tutorial.",
+          "height": 384,
+          "image": "https://cdn.mobygames.com/screenshots/16405604-assassins-creed-ii-discovery-nintendo-ds-animus-combat-tutorial.png",
+          "thumbnail_image": "https://cdn.mobygames.com/75894f08-c211-11ed-ab6b-02420a000194.webp",
+          "width": 256
+        },
+        {
+          "caption": "Follow the glowing orbs towards the goal.",
+          "height": 384,
+          "image": "https://cdn.mobygames.com/screenshots/16405613-assassins-creed-ii-discovery-nintendo-ds-follow-the-glowing-orbs.png",
+          "thumbnail_image": "https://cdn.mobygames.com/75ecd9e2-c211-11ed-ab6b-02420a000194.webp",
+          "width": 256
+        },
+        {
+          "caption": "Talking the key characters will forward the story and give it some background so you know what you're fighting for.",
+          "height": 384,
+          "image": "https://cdn.mobygames.com/screenshots/16405679-assassins-creed-ii-discovery-nintendo-ds-talking-the-key-charact.png",
+          "thumbnail_image": "https://cdn.mobygames.com/7976dcf2-c211-11ed-ab6b-02420a000194.webp",
+          "width": 256
+        },
+        {
+          "caption": "Hiding in haystack until the guard passes.",
+          "height": 384,
+          "image": "https://cdn.mobygames.com/screenshots/16405619-assassins-creed-ii-discovery-nintendo-ds-hiding-in-haystack-unti.png",
+          "thumbnail_image": "https://cdn.mobygames.com/7641a7f6-c211-11ed-ab6b-02420a000194.webp",
+          "width": 256
+        }
+      ],
+      "title": "Assassin&#39;s Creed II: Discovery"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>This Japanese Famitsu release package contains:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+III\">Assassin's Creed III</a> game</li>\n<li>Reference guide</li>\n<li>PVC figure of Connor the Hunter (approx. 25 cm)</li>\n</ul>",
+      "game_id": 59154,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 187,
+          "genre_name": "Special edition"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 186,
+          "genre_name": "Physical extras"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/59154/assassins-creed-iii-famitsu-dx-pack/",
+      "num_votes": 1,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2012-11-15",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": null,
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III (Famitsu DX Pack)"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Sequence 12: Battle of Forli</em> is the first DLC pack for <a href=\"/search/?q=Assassin's+Creed+II\">Assassin's Creed II</a>. It features the first corrupted memory sequence from the Animus and is set towards the end of its base game. The city of Forli is under attack and Ezio must help Caterina Sforza, whom he briefly met in <em>Assassin's Creed II</em>, and Niccolo Machiavelli to defend it.</p>\n<p>Gameplay is similar to the base game; there are no new locations, enemies, or weapons. A special mission is opened, however, that grants the player access to Da Vinci's flying machine whenever they like.</p>",
+      "game_id": 59314,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 183,
+          "genre_name": "Story / mission"
+        }
+      ],
+      "moby_score": 6.4,
+      "moby_url": "https://www.mobygames.com/game/59314/assassins-creed-ii-sequence-12-battle-of-forli/",
+      "num_votes": 3,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2010-01-28",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2010-01-28",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 178,
+        "image": "https://cdn.mobygames.com/covers/3834190-assassins-creed-ii-sequence-12-battle-of-forli-playstation-3-fro.jpg",
+        "platforms": [
+          "PlayStation 3"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/98557f42-ab9c-11ed-837d-02420a00019b.webp",
+        "width": 178
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed II: Sequence 12 - Battle of Forli"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>This game entry covers the initial release of <em>Assassin's Creed III</em> for the PS3, which was different from the Wii U, Windows and Xbox 360 as it was bundled with additional content. It includes:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+III\">Assassin's Creed III</a> (base game)</li>\n<li><a href=\"https://www.mobygames.com/game/59502/assassins-creed-iii-benedict-arnold/\">Assassin's Creed III: Benedict Arnold</a> (DLC)</li>\n</ul>\n<p>Retail versions came with a code to download the DLC. For the digital download versions it was bundled with the main game right away. At launch, there was no default version of the game for the PS3 without the DLC. For retail releases, the download was free only until 31st March 2013. Eventually the game was re-released as a download release only containing the base game with the DLC as an additional purchase.</p>",
+      "game_id": 59414,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 76,
+          "genre_name": "Compilation"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/59414/assassins-creed-iii/",
+      "num_votes": 9,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/6710489-assassins-creed-iii-playstation-3-front-cover.jpg",
+        "platforms": [
+          "PlayStation 3"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/9ab42bf4-abf0-11ed-962d-02420a000135.webp",
+        "width": 694
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Benedict Arnold</em> is DLC for <a href=\"/search/?q=Assassin's+Creed+III\">Assassin's Creed III</a>. It consists of four missions roughly spanning one hour of gameplay which take place at West Point academy. The first mission starts in New York, not far from West Point, as George Washington asks Connor to go to West Point and take care of the spies. Connor reluctantly agrees and the missions start. They require Connor to use special vision to locate the spies and silently take them out, listening in on conversations, following spies and taking care of the treacherous Major General Benedict Arnold. And finally, Connor will have to fend off British assault on West Point.</p>",
+      "game_id": 59502,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 183,
+          "genre_name": "Story / mission"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/59502/assassins-creed-iii-benedict-arnold/",
+      "num_votes": 2,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 115,
+        "image": "https://cdn.mobygames.com/covers/3288338-assassins-creed-iii-benedict-arnold-playstation-3-front-cover.jpg",
+        "platforms": [
+          "PlayStation 3"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/7b5ec8ea-ab8c-11ed-99ae-02420a00019e.webp",
+        "width": 115
+      },
+      "sample_screenshots": [
+        {
+          "caption": "Helping with the crates.",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/11942394-assassins-creed-iii-benedict-arnold-playstation-3-helping-with-t.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/e0c31976-ac1c-11ed-83c1-02420a000131.webp",
+          "width": 1200
+        },
+        {
+          "caption": "A task for an errand boy.",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/11942358-assassins-creed-iii-benedict-arnold-playstation-3-a-task-for-an-.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/dd8672bc-ac1c-11ed-83c1-02420a000131.webp",
+          "width": 1200
+        },
+        {
+          "caption": "These two do look very suspicious.",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/11944486-assassins-creed-iii-benedict-arnold-playstation-3-these-two-do-l.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/e546c93e-ac1c-11ed-8d66-02420a000132.webp",
+          "width": 1200
+        },
+        {
+          "caption": "British troops have entered the fort.",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/11942361-assassins-creed-iii-benedict-arnold-playstation-3-british-troops.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/ddc6caba-ac1c-11ed-83c1-02420a000131.webp",
+          "width": 1200
+        },
+        {
+          "caption": "Hiding in the bushes while listening in on the conversation.",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/7765029-assassins-creed-iii-benedict-arnold-playstation-3-hiding-in-the-.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/e456acb6-abf8-11ed-aeca-02420a000130.webp",
+          "width": 1200
+        }
+      ],
+      "title": "Assassin&#39;s Creed III: Benedict Arnold"
+    },
+    {
+      "alternate_titles": [
+        {
+          "description": "PC Steam release title",
+          "title": "Assassin's Creed III: The Tyranny of King Washington - Part 3: The Redemption"
+        }
+      ],
+      "description": "<p><em>The Tyranny of King Washington - Part 3: The Redemption</em> is a downloadable content (DLC) for <a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+III\">Assassin's Creed III</a>. Ratonhnhaké:ton’s journey concludes in the third and final episode. Arriving in New York, Ratonhnhaké:ton will call upon all of the abilities tied to his native heritage in order to break into the monarch fortress and put an end to the tyranny of King Washington.</p>",
+      "game_id": 60426,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 183,
+          "genre_name": "Story / mission"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/60426/assassins-creed-iii-the-tyranny-of-king-washington-the-redemptio/",
+      "num_votes": 6,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2013-04-23",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2013-04-23",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2013-04-23",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 300,
+        "image": "https://cdn.mobygames.com/covers/3342999-assassins-creed-iii-the-tyranny-of-king-washington-the-redemptio.jpg",
+        "platforms": [
+          "Xbox 360"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/77d7fa2e-ab8d-11ed-b042-02420a00019f.webp",
+        "width": 219
+      },
+      "sample_screenshots": [
+        {
+          "caption": "Newly acquired skill is the power of the bear. It's hard to capture the power in a screenshot, just look at poor people thrown into the air by a mighty explosive wave",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/15697624-assassins-creed-iii-the-tyranny-of-king-washington-the-redemptio.png",
+          "thumbnail_image": "https://cdn.mobygames.com/850c735c-bec8-11ed-9c42-02420a000140.webp",
+          "width": 1200
+        },
+        {
+          "caption": "What the...? In the center of city?",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16823319-assassins-creed-iii-the-tyranny-of-king-washington-the-redemptio.png",
+          "thumbnail_image": "https://cdn.mobygames.com/5dcaec9c-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "There's a short naval segment in episode 3",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16823313-assassins-creed-iii-the-tyranny-of-king-washington-the-redemptio.png",
+          "thumbnail_image": "https://cdn.mobygames.com/5bf0a182-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "We're in New York, but again, only a portion of the city is available",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16823316-assassins-creed-iii-the-tyranny-of-king-washington-the-redemptio.png",
+          "thumbnail_image": "https://cdn.mobygames.com/5caeb550-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "Showdown",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16823334-assassins-creed-iii-the-tyranny-of-king-washington-the-redemptio.png",
+          "thumbnail_image": "https://cdn.mobygames.com/6259aee2-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        }
+      ],
+      "title": "Assassin&#39;s Creed III: The Tyranny of King Washington - The Redemption"
+    },
+    {
+      "alternate_titles": [
+        {
+          "description": "Japanese title",
+          "title": "Assassin's Creed III: Lady Liberty"
+        },
+        {
+          "description": "Japanese (PS3) title",
+          "title": "Assassin's Creed III: Lady Liberty HD"
+        },
+        {
+          "description": "PS3 / Xbox 360 / Windows title",
+          "title": "Assassin's Creed: Liberation HD"
+        }
+      ],
+      "description": "<p><em>Assassin's Creed III: Liberation</em> takes place in Louisiana between 1765 and 1777, and features Aveline de Grandpré as the first female protagonist in the franchise. Furthermore, it doesn't follow the story of Desmond Miles, but an unknown individual by Abstergo Industries.</p>\n<p>Game uses the same engine as <em>Assassin's Creed III</em> so Aveline can perform many similar actions to Connor, but with some differences in gameplay and strategies. Aveline can use dressing rooms to change disguise between a lady, a slave, and an assassin. Each with their own advantages and disadvantages (i.e. dressed as a lady she cannot climb but she can seduce men or bribe guards).</p>",
+      "game_id": 60743,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 1,
+          "genre_name": "Action"
+        },
+        {
+          "genre_category": "Perspective",
+          "genre_category_id": 2,
+          "genre_id": 126,
+          "genre_name": "3rd-person (Other)"
+        },
+        {
+          "genre_category": "Gameplay",
+          "genre_category_id": 4,
+          "genre_id": 99,
+          "genre_name": "Stealth"
+        }
+      ],
+      "moby_score": 6.9,
+      "moby_url": "https://www.mobygames.com/game/60743/assassins-creed-iii-liberation/",
+      "num_votes": 17,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2014-01-15",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2014-01-15",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2014-01-14",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        },
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 105,
+          "platform_name": "PS Vita"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/6806779-assassins-creed-iii-liberation-ps-vita-front-cover.jpg",
+        "platforms": [
+          "PS Vita"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/68a737f4-abf1-11ed-833b-02420a000131.webp",
+        "width": 625
+      },
+      "sample_screenshots": [
+        {
+          "caption": "Blending with the working crowd as a slave",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16809763-assassins-creed-iii-liberation-windows-blending-with-the-working.png",
+          "thumbnail_image": "https://cdn.mobygames.com/6150b152-c38d-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "Reading a letter in the bayou",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16809790-assassins-creed-iii-liberation-windows-reading-a-letter-in-the-b.png",
+          "thumbnail_image": "https://cdn.mobygames.com/6804d56e-c38d-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "You can switch between three different outfits and disguises.",
+          "height": 544,
+          "image": "https://cdn.mobygames.com/screenshots/12024934-assassins-creed-iii-liberation-ps-vita-you-can-switch-between-th.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/842e87b2-ac1d-11ed-893a-02420a00012f.webp",
+          "width": 960
+        },
+        {
+          "caption": "Looting a treasure chest",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16809766-assassins-creed-iii-liberation-windows-looting-a-treasure-chest.png",
+          "thumbnail_image": "https://cdn.mobygames.com/61cbb280-c38d-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "Map synchronization of the town",
+          "height": 544,
+          "image": "https://cdn.mobygames.com/screenshots/12308203-assassins-creed-iii-liberation-ps-vita-map-synchronization-of-th.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/1d598d68-ac20-11ed-897b-02420a00012d.webp",
+          "width": 960
+        }
+      ],
+      "title": "Assassin&#39;s Creed III: Liberation"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Assassin's Creed III: The Tyranny of King Washington - The Infamy</em> is a DLC (download content) for <a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+III\">Assassin's Creed III</a> and the first episode of the <em>King Washington</em> storyline. The story is set in an alternate timeline in which Ratonhnhaké:ton - the one known as Connor in the main game - never joined the Assassins and George Washington crowned himself as King of America after the Revolutionary War.</p>\n<p>In this episode, which is spent in the Wilderness, Ratonhnhaké:ton is confronted with the problems this King brings to himself and his people. He learns two new powerful abilities which enable him to call upon the powers of the wild: he can turn himself invisible and summon wolves for assistance (the mechanics are similar to the Assassin recruits of the main game).</p>",
+      "game_id": 62582,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 183,
+          "genre_name": "Story / mission"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/62582/assassins-creed-iii-the-tyranny-of-king-washington-the-infamy/",
+      "num_votes": 7,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2013-02-19",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2013-02-19",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2013-02-19",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 215,
+        "image": "https://cdn.mobygames.com/covers/3549689-assassins-creed-iii-the-tyranny-of-king-washington-the-infamy-wi.jpg",
+        "platforms": [
+          "Windows"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/24b614c4-ab93-11ed-a44e-02420a000199.webp",
+        "width": 460
+      },
+      "sample_screenshots": [
+        {
+          "caption": "Ratonhnhaké:ton's having a dream about himself and Washington ",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16823588-assassins-creed-iii-the-tyranny-of-king-washington-the-infamy-wi.png",
+          "thumbnail_image": "https://cdn.mobygames.com/a4347afe-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "He's awoken by his mother. She's alive? How is this possible?",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16823591-assassins-creed-iii-the-tyranny-of-king-washington-the-infamy-wi.png",
+          "thumbnail_image": "https://cdn.mobygames.com/a4db9fdc-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "Loading screens now provide a bit of entertainment - you may chase the glowing yellow orbs",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16823597-assassins-creed-iii-the-tyranny-of-king-washington-the-infamy-wi.png",
+          "thumbnail_image": "https://cdn.mobygames.com/a6bbaf68-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "Ratonhnhaké:ton's spiritual journey, in pursuit of the power of the wolf",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16823603-assassins-creed-iii-the-tyranny-of-king-washington-the-infamy-wi.png",
+          "thumbnail_image": "https://cdn.mobygames.com/a88582ec-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "A walk through a burning town",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16823600-assassins-creed-iii-the-tyranny-of-king-washington-the-infamy-wi.png",
+          "thumbnail_image": "https://cdn.mobygames.com/a73f7b22-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        }
+      ],
+      "title": "Assassin&#39;s Creed III: The Tyranny of King Washington - The Infamy"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Assassin's Creed III: The Tyranny of King Washington - The Betrayal</em> is a DLC (download content) for <a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+III\">Assassin's Creed III</a> and the second episode of the <em>King Washington</em> storyline. The story is set in an alternate timeline in which Ratonhnhaké:ton - the one known as Connor in the main game - never joined the Assassins and George Washington crowned himself as King of America after the Revolutionary War.</p>\n<p>After the end of the <a href=\"https://www.mobygames.com/game/62582/assassins-creed-iii-the-tyranny-of-king-washington-the-infamy/\">\nfirst episode</a>, Ratonhnhaké:ton finds himself as prisoner in Boston. He needs to escape and work together with the local rebels. During the course of this episode, he also receives the ability to fly.</p>",
+      "game_id": 62583,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 183,
+          "genre_name": "Story / mission"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/62583/assassins-creed-iii-the-tyranny-of-king-washington-the-betrayal/",
+      "num_votes": 5,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2013-03-19",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2013-03-19",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2013-03-19",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 215,
+        "image": "https://cdn.mobygames.com/covers/3550290-assassins-creed-iii-the-tyranny-of-king-washington-the-betrayal-.jpg",
+        "platforms": [
+          "Windows"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/2a352da4-ab93-11ed-9505-02420a00019c.webp",
+        "width": 460
+      },
+      "sample_screenshots": [
+        {
+          "caption": "King Washington, Franklin and General Putnam",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16823561-assassins-creed-iii-the-tyranny-of-king-washington-the-betrayal-.png",
+          "thumbnail_image": "https://cdn.mobygames.com/9b0abe02-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "A fight in the harbor to regain control of the ship",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16823585-assassins-creed-iii-the-tyranny-of-king-washington-the-betrayal-.png",
+          "thumbnail_image": "https://cdn.mobygames.com/a259ae20-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "The episode starts with a recap of what's happened earlier",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16823337-assassins-creed-iii-the-tyranny-of-king-washington-the-betrayal-.png",
+          "thumbnail_image": "https://cdn.mobygames.com/62da6d8e-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "Newly acquired spiritual skill is the power of the eagle. You can soar from roof to roof etc.",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16823582-assassins-creed-iii-the-tyranny-of-king-washington-the-betrayal-.png",
+          "thumbnail_image": "https://cdn.mobygames.com/a17a3c90-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        },
+        {
+          "caption": "King Washington is determined to kill the Indian",
+          "height": 675,
+          "image": "https://cdn.mobygames.com/screenshots/16823579-assassins-creed-iii-the-tyranny-of-king-washington-the-betrayal-.png",
+          "thumbnail_image": "https://cdn.mobygames.com/a09a06ca-c396-11ed-9226-02420a000121.webp",
+          "width": 1200
+        }
+      ],
+      "title": "Assassin&#39;s Creed III: The Tyranny of King Washington - The Betrayal"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>The Freedom Edition includes the following:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/search/?q=assassins-creed-iii_\">Assassin's Creed III</a></li>\n<li>24cm figurine of Connor</li>\n<li>George Washington's diary</li>\n<li>Steelbox</li>\n<li>2 lithographs</li>\n<li>Bookmark</li>\n<li>Single player mission: Lost Mayan Ruins</li>\n<li>Single player mission: Ghost of War</li>\n<li>Single player mission: Benedict Arnold (only for PS3)</li>\n<li>The Sharpshooter multiplayer package</li>\n</ul>",
+      "game_id": 66398,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 187,
+          "genre_name": "Special edition"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 185,
+          "genre_name": "Extra content / game"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 186,
+          "genre_name": "Physical extras"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/66398/assassins-creed-iii-freedom-edition/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2012-10-31",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2012-10-31",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2012-10-31",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/7032989-assassins-creed-iii-freedom-edition-playstation-3-front-cover.jpg",
+        "platforms": [
+          "PlayStation 3"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/2c696ba2-abf3-11ed-a484-02420a000130.webp",
+        "width": 550
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III (Freedom Edition)"
+    },
+    {
+      "alternate_titles": [
+        {
+          "description": "PlayStation 4 title",
+          "title": "LittleBigPlanet 3: Assassin's Creed II Costume"
+        }
+      ],
+      "description": "<p><em>Assassin's Creed II Costume</em> is a DLC that adds Ezio Auditore's costume from <a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+II\">Assassin's Creed II</a> to use by the Sackboy character in <a href=\"https://www.mobygames.com/search/?q=LittleBigPlanet\">LittleBigPlanet</a>. Cross-compatibility enables this costume to be used in games that were released afterwards as well, such as <a href=\"https://www.mobygames.com/game/52419/littlebigplanet-2/\">LittleBigPlanet 2</a>, <a href=\"https://www.mobygames.com/search/?q=LittleBigPlanet+PS+Vita\">LittleBigPlanet PS Vita</a> or <a href=\"https://www.mobygames.com/game/71683/littlebigplanet-3/\">LittleBigPlanet 3</a>.</p>",
+      "game_id": 70926,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 181,
+          "genre_name": "Customization / outfit / skin"
+        },
+        {
+          "genre_category": "Other Attributes",
+          "genre_category_id": 6,
+          "genre_id": 82,
+          "genre_name": "Licensed"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/70926/littlebigplanet-assassins-creed-ii-costume/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2009-12-03",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        },
+        {
+          "first_release_date": "2012",
+          "platform_id": 105,
+          "platform_name": "PS Vita"
+        },
+        {
+          "first_release_date": "2014-11-18",
+          "platform_id": 141,
+          "platform_name": "PlayStation 4"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/7197159-littlebigplanet-assassins-creed-ii-costume-playstation-3-front-c.jpg",
+        "platforms": [
+          "PlayStation 3",
+          "PlayStation 4"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/738f009a-abf4-11ed-b85a-02420a000135.webp",
+        "width": 800
+      },
+      "sample_screenshots": [],
+      "title": "LittleBigPlanet: Assassin&#39;s Creed II Costume"
+    },
+    {
+      "alternate_titles": [
+        {
+          "description": "Dutch title",
+          "title": "Assassin's Creed II: Sequence 13 - Vreugdevuur der IJdelheden"
+        }
+      ],
+      "description": "<p><em>Sequence 13 - Bonfire of the Vanities</em> is a downloadable content pack (DLC) for the 2009 game <a href=\"https://www.mobygames.com/game/43958/assassins-creed-ii/\">Assassin's Creed II</a>. </p>\n<p>It features the second corrupted memory sequence, after the <a href=\"https://www.mobygames.com/game/59314/assassins-creed-ii-sequence-12-battle-of-forli/\">Battle of Forli</a>, from the Animus and is set towards the end of the main missions. The DLC includes access to the Oltrarno District of Firenze and Templar Lairs originally only available through the special editions of Assassin's Creed II.</p>\n<p>After Girolamo Savonarola stole the Apple of Eden during the Battle of Forlì, he took control over the city and stationed nine lieutenants.</p>\n<p>Ezio soon travelled to the city and met with Niccolò Machiavelli, who ordered him to take down every lieutenant station in Firenze. After killing the painter, guard captain, nobleman, priest, merchant, doctor, farmer, condottiero, and preacher, the people of Firenze stood up to Girolamo and stormed his house. He tried to use the Apple but Ezio knocked it out of his hand.</p>\n<p>Girolamo was to be burned alive, until Ezio decided that no one should die that way, and he killed Girolamo with his Hidden Blade before he could suffer. The DLC soon ends with Ezio giving a speech to the citizens of Firenze and how they should follow their own path.</p>",
+      "game_id": 72750,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 183,
+          "genre_name": "Story / mission"
+        }
+      ],
+      "moby_score": 6.8,
+      "moby_url": "https://www.mobygames.com/game/72750/assassins-creed-ii-sequence-13-bonfire-of-the-vanities/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2010-02-18",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2010-02-18",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 240,
+        "image": "https://cdn.mobygames.com/covers/416522-assassins-creed-ii-sequence-13-bonfire-of-the-vanities-playstati.jpg",
+        "platforms": [
+          "PlayStation 3"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/ec5d52fc-ab6c-11ed-934f-02420a0001a0.webp",
+        "width": 240
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed II: Sequence 13 - Bonfire of the Vanities"
+    },
+    {
+      "alternate_titles": [
+        {
+          "description": "German title",
+          "title": "Assassin's Creed III: Die Kampferprobten"
+        },
+        {
+          "description": "Dutch title",
+          "title": "Assassin's Creed III: Het Veteranenpack"
+        },
+        {
+          "description": "French title",
+          "title": "Assassin's Creed III: Le Pack Une Bataille Impitoyable"
+        },
+        {
+          "description": "Italian title",
+          "title": "Assassin's Creed III: Pacchetto Temprato dalla Guerra"
+        },
+        {
+          "description": "Spanish title",
+          "title": "Assassin's Creed III: Pack La Dura Batalla"
+        },
+        {
+          "description": "Polish title",
+          "title": "Assassin's Creed III: Pakiet \"Zahartowany w Boju\""
+        },
+        {
+          "description": "Turkish title",
+          "title": "Assassin's Creed III: The Battle Hardened Paketi"
+        },
+        {
+          "description": "Norse title",
+          "title": "Assassin's Creed III: The Battle Hardened-pakken"
+        }
+      ],
+      "description": "<p><em>The Battle Hardened Pack</em> is a downloadable content pack (DLC) for the 2012 game <a href=\"https://www.mobygames.com/game/58716/assassins-creed-iii/\">Assassin's Creed III</a>. It includes three new persona's:</p>\n<ul>\n<li>Coyote Man</li>\n<li>Governor</li>\n<li>Highlander</li>\n</ul>\n<p>and three new multiplayer maps:</p>\n<ul>\n<li>Charlestown</li>\n<li>Fort St-Mathieu</li>\n<li>Saint Pierre</li>\n</ul>\n<p>The Pack also includes new customization items for the new and existing characters.</p>",
+      "game_id": 72893,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 181,
+          "genre_name": "Customization / outfit / skin"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 179,
+          "genre_name": "Map / level"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 182,
+          "genre_name": "Player unit"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/72893/assassins-creed-iii-the-battle-hardened-pack/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2013-01-15",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2013-01-08",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2013-01-09",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        },
+        {
+          "first_release_date": "2013-01-17",
+          "platform_id": 132,
+          "platform_name": "Wii U"
+        }
+      ],
+      "sample_cover": {
+        "height": 300,
+        "image": "https://cdn.mobygames.com/covers/1131180-assassins-creed-iii-the-battle-hardened-pack-xbox-360-front-cove.jpg",
+        "platforms": [
+          "Xbox 360"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/9d6fda9c-ab72-11ed-99ae-02420a00019e.webp",
+        "width": 219
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III: The Battle Hardened Pack"
+    },
+    {
+      "alternate_titles": [
+        {
+          "description": "Common abbreviation",
+          "title": "AC2"
+        },
+        {
+          "description": "German Windows title",
+          "title": "Assassin's Creed II: Special Edition"
+        }
+      ],
+      "description": "<p>This is the first release of the game for the PC platform. It includes:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/game/43958/assassins-creed-ii/\">Assassin's Creed II</a></li>\n<li><a href=\"https://www.mobygames.com/game/59314/assassins-creed-ii-sequence-12-battle-of-forli/\">Battle of Forli</a> (DLC)</li>\n<li><a href=\"https://www.mobygames.com/game/72750/assassins-creed-ii-sequence-13-bonfire-of-the-vanities/\">Bonfire of the Vanities</a> (DLC)</li>\n<li>Bonus map: Arsenal Shipyard</li>\n</ul>",
+      "game_id": 73582,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 76,
+          "genre_name": "Compilation"
+        }
+      ],
+      "moby_score": 8.3,
+      "moby_url": "https://www.mobygames.com/game/73582/assassins-creed-ii/",
+      "num_votes": 63,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2009-04-18",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2010-10-04",
+          "platform_id": 74,
+          "platform_name": "Macintosh"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/891778-assassins-creed-ii-windows-front-cover.jpg",
+        "platforms": [
+          "Windows"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/b745aa7a-ab70-11ed-a061-02420a00019d.webp",
+        "width": 568
+      },
+      "sample_screenshots": [
+        {
+          "caption": "Traveling is never safe in the Renaissance Italy",
+          "height": 800,
+          "image": "https://cdn.mobygames.com/screenshots/16752179-assassins-creed-ii-windows-traveling-is-never-safe-in-the-renais.png",
+          "thumbnail_image": "https://cdn.mobygames.com/cc2e6a6e-c33d-11ed-9a87-02420a0001b4.webp",
+          "width": 1000
+        },
+        {
+          "caption": "I was climbing on that tower, and suddenly saw such a face...",
+          "height": 800,
+          "image": "https://cdn.mobygames.com/screenshots/1837666-assassins-creed-ii-windows-i-was-climbing-on-that-tower-and-sudd.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/b4074c44-ab78-11ed-934f-02420a0001a0.webp",
+          "width": 1000
+        },
+        {
+          "caption": "Eagle visions makes it easy to know enemies and friends",
+          "height": 750,
+          "image": "https://cdn.mobygames.com/screenshots/1835674-assassins-creed-ii-windows-eagle-visions-makes-it-easy-to-know-e.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/afa48860-ab78-11ed-a13c-02420a00019f.webp",
+          "width": 1200
+        },
+        {
+          "caption": "The game has a lot of such beautiful buildings. It's a pleasure to just walk around this world",
+          "height": 800,
+          "image": "https://cdn.mobygames.com/screenshots/1837461-assassins-creed-ii-windows-the-game-has-a-lot-of-such-beautiful-.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/b38a8d30-ab78-11ed-934f-02420a0001a0.webp",
+          "width": 1000
+        },
+        {
+          "caption": "Ahhh, that's what I call nice weather... just a regular day in Venice, swimming at the port, enjoying life... with a wet head...",
+          "height": 800,
+          "image": "https://cdn.mobygames.com/screenshots/1837579-assassins-creed-ii-windows-ahhh-thats-what-i-call-nice-weather-j.jpg",
+          "thumbnail_image": "https://cdn.mobygames.com/b3cd610a-ab78-11ed-a13c-02420a00019f.webp",
+          "width": 1000
+        }
+      ],
+      "title": "Assassin&#39;s Creed II"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>This compilation of the <em>Assassin's Creed</em> games contains:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/game/33566/assassins-creed-directors-cut-edition/\">Assassin's Creed (Director's Cut Edition)</a></li>\n<li><a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+II\">Assassin's Creed II</a></li>\n</ul>",
+      "game_id": 77364,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 76,
+          "genre_name": "Compilation"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/77364/assassins-creed-directors-cut-edition-assassins-creed-ii/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2016-03-15",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/1048049-assassins-creed-directors-cut-edition-assassins-creed-ii-windows.jpg",
+        "platforms": [
+          "Windows"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/f4de2eec-ab71-11ed-a188-02420a00019a.webp",
+        "width": 563
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed (Director&#39;s Cut Edition) / Assassin&#39;s Creed II"
+    },
+    {
+      "alternate_titles": [],
+      "description": null,
+      "game_id": 85677,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 183,
+          "genre_name": "Story / mission"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/85677/assassins-creed-iii-the-hidden-secrets-pack/",
+      "num_votes": 1,
+      "official_url": "http://assassinscreed.ubi.com/ac3/",
+      "platforms": [
+        {
+          "first_release_date": "2012-12-11",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2012-12-11",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2012-12-04",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/2933205-assassins-creed-iii-the-hidden-secrets-pack-playstation-3-front-.jpg",
+        "platforms": [
+          "PlayStation 3"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/78531ce2-ab86-11ed-b9d3-02420a00019b.webp",
+        "width": 800
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III: The Hidden Secrets Pack"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Sequence 13 - Bonfire of the Vanities &amp; Secret Locations</em> is a downloadable content pack (DLC) for the 2009 game <a href=\"https://www.mobygames.com/game/43958/assassins-creed-ii/\">Assassin's Creed II</a>. It contains <a href=\"https://www.mobygames.com/game/72750/assassins-creed-ii-sequence-13-bonfire-of-the-vanities/\">Sequence 13 - Bonfire of the Vanities</a> and three secret templar locations previously only available as part of the the <a href=\"https://www.mobygames.com/game/49886/assassins-creed-ii-black-edition/\">Assassin's Creed II (Black Edition)</a>: Palazzo Medici, Santa Maria Dei Frari, and Arsenal Shipyard.</p>",
+      "game_id": 97810,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 179,
+          "genre_name": "Map / level"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/97810/assassins-creed-ii-sequence-13-bonfire-of-the-vanities-secret-lo/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2010-07-26",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2010-02-18",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 170,
+        "image": "https://cdn.mobygames.com/covers/2905381-assassins-creed-ii-sequence-13-bonfire-of-the-vanities-secret-lo.jpg",
+        "platforms": [
+          "PlayStation 3"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/03d7dd1c-ab86-11ed-a519-02420a00019d.webp",
+        "width": 170
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed II: Sequence 13 - Bonfire of the Vanities &amp; Secret Locations"
+    },
+    {
+      "alternate_titles": [],
+      "description": null,
+      "game_id": 97811,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 76,
+          "genre_name": "Compilation"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/97811/assassins-creed-iii-season-pass/",
+      "num_votes": 1,
+      "official_url": "http://assassinscreed.ubi.com/ac3/",
+      "platforms": [
+        {
+          "first_release_date": "2012-11-20",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/2928032-assassins-creed-iii-season-pass-playstation-3-front-cover.jpg",
+        "platforms": [
+          "PlayStation 3"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/623a2eaa-ab86-11ed-9e47-02420a00019f.webp",
+        "width": 800
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III: Season Pass"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>The <em>Appearance Pack</em> is a downloadable content pack (DLC) for the 2012 game <a href=\"https://www.mobygames.com/game/58716/assassins-creed-iii/\">Assassin's Creed III</a>. It immediately unlocks all multiplayer appearance elements normally gained through levelling to level 50.</p>",
+      "game_id": 97812,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 180,
+          "genre_name": "Other"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/97812/assassins-creed-iii-appearance-pack/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        }
+      ],
+      "sample_cover": {
+        "height": 300,
+        "image": "https://cdn.mobygames.com/covers/2905573-assassins-creed-iii-appearance-pack-xbox-360-front-cover.jpg",
+        "platforms": [
+          "Xbox 360"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/0499ed3a-ab86-11ed-a519-02420a00019d.webp",
+        "width": 219
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III: Appearance Pack"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>The <em>Gameplay Pack</em> is a downloadable content pack (DLC) for the 2012 game <a href=\"https://www.mobygames.com/game/58716/assassins-creed-iii/\">Assassin's Creed III</a>. It unlocks all multiplayer abilities, perks, streaks and bonuses normally gained through levelling.</p>",
+      "game_id": 97815,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 180,
+          "genre_name": "Other"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/97815/assassins-creed-iii-gameplay-pack/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        }
+      ],
+      "sample_cover": {
+        "height": 300,
+        "image": "https://cdn.mobygames.com/covers/2909651-assassins-creed-iii-gameplay-pack-xbox-360-front-cover.jpg",
+        "platforms": [
+          "Xbox 360"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/169bed6c-ab86-11ed-91fb-02420a00019f.webp",
+        "width": 219
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III: Gameplay Pack"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>This physical-only <em>Special Edition</em> contains:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/game/58716/assassins-creed-iii/\">Assassin's Creed III</a> (base game)</li>\n<li>Additional single-player mission: <em>A Dangerous Secret</em></li>\n<li>A new weapon: the Pirate Flintlock Musket</li>\n</ul>\n<p>In most countries it was the default pre-order version of the game.</p>",
+      "game_id": 112787,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 187,
+          "genre_name": "Special edition"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 185,
+          "genre_name": "Extra content / game"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/112787/assassins-creed-iii-special-edition/",
+      "num_votes": 1,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2012-11-20",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/4233565-assassins-creed-iii-special-edition-xbox-360-front-cover.jpg",
+        "platforms": [
+          "Xbox 360"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/bea1fae6-abaa-11ed-a188-02420a00019a.webp",
+        "width": 563
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III (Special Edition)"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>The <em>Join or Die Edition</em> contains:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/game/58716/assassins-creed-iii/\">Assassin's Creed III</a> (base game)</li>\n<li>A special Collector's Box</li>\n<li>Connor's medallion</li>\n<li>George Washington's notebook</li>\n<li>Additional single-player mission: <em>Ghost of War</em></li>\n<li>An additional multiplayer character: Sharpshooter</li>\n</ul>",
+      "game_id": 112790,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 187,
+          "genre_name": "Special edition"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 185,
+          "genre_name": "Extra content / game"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 186,
+          "genre_name": "Physical extras"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/112790/assassins-creed-iii-join-or-die-edition/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2012-11-20",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": null,
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III (Join or Die Edition)"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>The <em>UbiWorkshop Edition</em> was an exclusive pre-order version of Assassin's Creed III, only available at ubiworkshop.com. It contains:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/game/58716/assassins-creed-iii/\">Assassin's Creed III</a> (base game)</li>\n<li>Five exclusive lithographs</li>\n<li>Assassin's Creed: Subject Four, a graphic novel</li>\n<li>The Second Edition of the Assassin's Creed Encyclopedia</li>\n</ul>",
+      "game_id": 112792,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 187,
+          "genre_name": "Special edition"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 186,
+          "genre_name": "Physical extras"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/112792/assassins-creed-iii-ubiworkshop-edition/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": null,
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III (UbiWorkshop Edition)"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>The <em>Digital Deluxe Edition</em> contains:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/game/58716/assassins-creed-iii/\">Assassin's Creed III</a> (base game)</li>\n<li>Three additional singleplayer missions: <em>Lost Mayan Ruins</em>, <em>A Dangerous Secret</em>, and <em>Ghost of War</em></li>\n<li><a href=\"https://www.mobygames.com/game/97811/assassins-creed-iii-season-pass/\">Season Pass</a> (DLC)</li>\n<li>A collection of 25 tracks from the official Assassin’s Creed III soundtrack (mp3 files)</li>\n<li><em>Benedict Arnold</em> mission</li>\n<li>George Washington’s notebook (pdf file)</li>\n</ul>",
+      "game_id": 112794,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 187,
+          "genre_name": "Special edition"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 184,
+          "genre_name": "Digital extras"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 185,
+          "genre_name": "Extra content / game"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/112794/assassins-creed-iii-digital-deluxe-edition/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        }
+      ],
+      "sample_cover": null,
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III (Digital Deluxe Edition)"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>The <em>Limited Edition</em> contains:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/game/58716/assassins-creed-iii/\">Assassin's Creed III</a> (base game)</li>\n<li>George Washington's notebook</li>\n<li>A 9 inch statue of Connor</li>\n<li>Assassin's Creed-inspired colonial flag</li>\n<li>A metal belt buckle</li>\n</ul>",
+      "game_id": 112797,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 187,
+          "genre_name": "Special edition"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 186,
+          "genre_name": "Physical extras"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/112797/assassins-creed-iii-limited-edition/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2012-10-30",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": null,
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III (Limited Edition)"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>The <em>Charity Edition</em> is a very special edition of Assassin's Creed III. Only 10 of these editions were ever made for a charity event of the Sydney Children's Hospital Foundation. Of the ten copies, eight were sold through Ebay auctions (the other two are still in possession of Ubisoft) with the money going to the foundation. It contains:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/game/58716/assassins-creed-iii/\">Assassin's Creed III</a> for either the Xbox 360 or PlayStation 3 (base game)</li>\n<li><a href=\"https://www.mobygames.com/game/66398/assassins-creed-iii-freedom-edition/\">Freedom Edition content</a></li>\n<li>A PS Vita copy of <a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed:+Liberation\">Assassin's Creed III: Liberation</a></li>\n<li>A backpack satchel</li>\n<li>A tomahawk USB key, keychain</li>\n<li>A steel postcard</li>\n<li>An AC3 themed notebook</li>\n<li>A belt buckle</li>\n<li>A wristband</li>\n<li>An iron on patch</li>\n<li>A steelbook</li>\n<li>Several lead figurines</li>\n<li>An Assassin's Creed III: Liberation keychain</li>\n<li>Three DLC's for the PS3 for Assassin's Creed III: <em>Captain of the Aquila</em>, <em>Colonial Assassin</em>, and <em>Red Coat Multiplayer Pack</em></li>\n<li>Mysteries of the Bayou DLC for Assassin's Creed III: Liberation</li>\n</ul>",
+      "game_id": 112798,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 187,
+          "genre_name": "Special edition"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 185,
+          "genre_name": "Extra content / game"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 186,
+          "genre_name": "Physical extras"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/112798/assassins-creed-iii-charity-edition/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2012-11-29",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2012-11-29",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        },
+        {
+          "first_release_date": "2012-11-29",
+          "platform_id": 105,
+          "platform_name": "PS Vita"
+        }
+      ],
+      "sample_cover": null,
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III (Charity Edition)"
+    },
+    {
+      "alternate_titles": [
+        {
+          "description": "Complete Edition disc release",
+          "title": "Assassin's Creed II (Complete Edition)"
+        },
+        {
+          "description": "Game of the Year Edition disc release",
+          "title": "Assassin's Creed II (Game of the Year Edition)"
+        }
+      ],
+      "description": "<p>This <em>Deluxe Edition</em> contains:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+II\">Assassin's Creed II</a> (base game)</li>\n<li><a href=\"https://www.mobygames.com/game/59314/assassins-creed-ii-sequence-12-battle-of-forli/\">Sequence 12 - Battle of Forli</a> (DLC)</li>\n<li><a href=\"https://www.mobygames.com/game/72750/assassins-creed-ii-sequence-13-bonfire-of-the-vanities/\">Sequence 13 - Bonfire of the Vanities</a> (DLC)</li>\n<li>an additional dye for Ezio's robes</li>\n<li>a throwing knife pouch upgrade</li>\n<li>3 additional missions set in the <em>Palazzo Medici</em>, <em>Santa Maria dei Frari</em>, and the <em>Arsenal Shipyard</em></li>\n</ul>\n<p>This edition has been re-released two times later on - first as the <em>Complete Edition</em> and later as the <em>Game of The Year Edition</em>. The differences are that the Deluxe Edition was only released digitally and the Complete Edition and Game of the Year Edition on disc. The Complete Edition has the DLC included as a download code, and the Game of the Year Edition has both DLC's integrated onto the disc.</p>",
+      "game_id": 112811,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 187,
+          "genre_name": "Special edition"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 185,
+          "genre_name": "Extra content / game"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/112811/assassins-creed-ii-deluxe-edition/",
+      "num_votes": 1,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2010-03-05",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2010-06-11",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2010-03-05",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 326,
+        "image": "https://cdn.mobygames.com/covers/17060931-assassins-creed-ii-deluxe-edition-windows-front-cover.jpg",
+        "platforms": [
+          "Windows"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/0d4dd4ac-e68a-11ed-8eb4-02420a00016f.webp",
+        "width": 231
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed II (Deluxe Edition)"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>This <em>Ultimate Edition</em> contains:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+II\">Assassin's Creed II</a> (base game)</li>\n<li><a href=\"https://www.mobygames.com/game/59314/assassins-creed-ii-sequence-12-battle-of-forli/\">Sequence 12 - Battle of Forli</a> (DLC)</li>\n<li><a href=\"https://www.mobygames.com/game/72750/assassins-creed-ii-sequence-13-bonfire-of-the-vanities/\">Sequence 13 - Bonfire of the Vanities</a> (DLC)</li>\n</ul>",
+      "game_id": 112812,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 76,
+          "genre_name": "Compilation"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/112812/assassins-creed-ii-ultimate-edition/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2011-02-01",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/4234975-assassins-creed-ii-ultimate-edition-playstation-3-front-cover.jpg",
+        "platforms": [
+          "PlayStation 3"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/cc1c8556-abaa-11ed-ac16-02420a000199.webp",
+        "width": 800
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed II: Ultimate Edition"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>The Master Assassin's Edition</em> contains:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+II\">Assassin's Creed II</a> (base game)</li>\n<li><em>The Art of Assassin's Creed</em> artbook</li>\n<li>a premium Steelbook</li>\n<li>two additional missions set in the <em>Palazzo Medici</em> and <em>Santa Maria dei Frari</em></li>\n<li>a content DVD with behind the scenes footage of the making of the <a href=\"https://www.mobygames.com/game/31218/assassins-creed/\">Assassin's Creed</a> and Assassin's Creed II soundtracks</li>\n</ul>",
+      "game_id": 112813,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 187,
+          "genre_name": "Special edition"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 185,
+          "genre_name": "Extra content / game"
+        },
+        {
+          "genre_category": "Special Edition",
+          "genre_category_id": 15,
+          "genre_id": 186,
+          "genre_name": "Physical extras"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/112813/assassins-creed-ii-the-master-assassins-edition/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2008-11-17",
+          "platform_id": 69,
+          "platform_name": "Xbox 360"
+        },
+        {
+          "first_release_date": "2009-11-17",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": null,
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed II (The Master Assassin&#39;s Edition)"
+    },
+    {
+      "alternate_titles": [
+        {
+          "description": "Tag-line title",
+          "title": "Uncharted: Drake's Fortune / Assassin's Creed II / Need for Speed: Hot Pursuit - 3 Great Games: One Great Pack"
+        }
+      ],
+      "description": "<p><em>Uncharted: Drake's Fortune / Assassin's Creed II / Need for Speed: Hot Pursuit (3 Great Games One Great Pack)</em> is a compilation of three PlayStation 3 games, these are:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/game/31220/uncharted-drakes-fortune/\">Uncharted: Drake's Fortune</a></li>\n<li><a href=\"https://www.mobygames.com/game/55337/assassins-creed-ii-game-of-the-year-edition/\">Assassin's Creed II: Game of the Year Edition</a></li>\n<li><a href=\"/search/?q=Need+for+Speed:+Hot+Pursuit\">Need for Speed: Hot Pursuit</a></li>\n</ul>",
+      "game_id": 113089,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 76,
+          "genre_name": "Compilation"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/113089/uncharted-drakes-fortune-assassins-creed-ii-need-for-speed-hot-p/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2012-11-02",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": null,
+      "sample_screenshots": [],
+      "title": "Uncharted: Drake&#39;s Fortune / Assassin&#39;s Creed II / Need for Speed: Hot Pursuit"
+    },
+    {
+      "alternate_titles": [],
+      "description": null,
+      "game_id": 116204,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 76,
+          "genre_name": "Compilation"
+        },
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/116204/assassins-creed-ii-sequence-12-13-secret-locations/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2011-04-13",
+          "platform_id": 81,
+          "platform_name": "PlayStation 3"
+        }
+      ],
+      "sample_cover": {
+        "height": 240,
+        "image": "https://cdn.mobygames.com/covers/6818998-assassins-creed-ii-sequence-12-13-secret-locations-playstation-3.jpg",
+        "platforms": [
+          "PlayStation 3"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/7d550dac-abf1-11ed-b6e7-02420a000135.webp",
+        "width": 240
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed II: Sequence 12 + 13 + Secret Locations"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Assassin's Creed III: Remastered</em> is a remastered release of the 2012 game <a href=\"https://www.mobygames.com/game/58716/assassins-creed-iii/\">Assassin's Creed III</a>.</p>\n<p>Released for the first time on the Nintendo Switch, PlayStation 4 and Xbox One platforms, this version includes the main game, all three parts of The Tyranny of King Washington (<a href=\"https://www.mobygames.com/game/62582/assassins-creed-iii-the-tyranny-of-king-washington-the-infamy/\">The Infamy</a>, <a href=\"https://www.mobygames.com/game/62583/assassins-creed-iii-the-tyranny-of-king-washington-the-betrayal/\">The Betrayal</a> and <a href=\"https://www.mobygames.com/game/60426/assassins-creed-iii-the-tyranny-of-king-washington-the-redemptio/\">The Redemption</a>) and the game <a href=\"https://www.mobygames.com/game/60743/assassins-creed-iii-liberation/\">Assassin's Creed: Liberation HD</a>.</p>\n<p>Aside from the removal of all multiplayer content, several improvements added in later installments of the Assassin's Creed series have been implemented. Players can now whistle from inside bushes, instead of only from behind cover. It has become easier to double assassinate people, and Connor is now able to free-aim his long ranged weapons. The UI has been optimized for color blind people, several weapons have been added and and the game features a new in-game economy. </p>\n<p>Several legacy outfits were added to the game. It is now possible to dress up Connor as Edward Kenway, Arno Dorian, Bayek of Siwa, Alexios of Sparta, amongst others.</p>\n<p>The game was available standalone, but was also part of the Assassin's Creed: Odyssey <a href=\"https://www.mobygames.com/search/?q=+Assassin's+Creed:+Odyssey+-+Season+Pass\">Season Pass</a>.</p>",
+      "game_id": 124454,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 1,
+          "genre_name": "Action"
+        },
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 76,
+          "genre_name": "Compilation"
+        },
+        {
+          "genre_category": "Perspective",
+          "genre_category_id": 2,
+          "genre_id": 128,
+          "genre_name": "Behind view"
+        },
+        {
+          "genre_category": "Gameplay",
+          "genre_category_id": 4,
+          "genre_id": 150,
+          "genre_name": "Sandbox / open world"
+        },
+        {
+          "genre_category": "Gameplay",
+          "genre_category_id": 4,
+          "genre_id": 99,
+          "genre_name": "Stealth"
+        },
+        {
+          "genre_category": "Interface/Control",
+          "genre_category_id": 7,
+          "genre_id": 168,
+          "genre_name": "Direct control"
+        },
+        {
+          "genre_category": "Vehicular Themes",
+          "genre_category_id": 11,
+          "genre_id": 41,
+          "genre_name": "Naval / watercraft"
+        },
+        {
+          "genre_category": "Setting",
+          "genre_category_id": 10,
+          "genre_id": 78,
+          "genre_name": "Fantasy"
+        },
+        {
+          "genre_category": "Setting",
+          "genre_category_id": 10,
+          "genre_id": 207,
+          "genre_name": "North America"
+        }
+      ],
+      "moby_score": 6.9,
+      "moby_url": "https://www.mobygames.com/game/124454/assassins-creed-iii-remastered/",
+      "num_votes": 1,
+      "official_url": "https://www.ubisoft.com/en-us/game/assassins-creed-3-remastered/",
+      "platforms": [
+        {
+          "first_release_date": "2019-03-29",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        },
+        {
+          "first_release_date": "2019-03-29",
+          "platform_id": 141,
+          "platform_name": "PlayStation 4"
+        },
+        {
+          "first_release_date": "2019-03-29",
+          "platform_id": 142,
+          "platform_name": "Xbox One"
+        },
+        {
+          "first_release_date": "2019-05-21",
+          "platform_id": 203,
+          "platform_name": "Nintendo Switch"
+        },
+        {
+          "first_release_date": "2021-12-14",
+          "platform_id": 281,
+          "platform_name": "Stadia"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/7533503-assassins-creed-iii-remastered-playstation-4-front-cover.jpg",
+        "platforms": [
+          "PlayStation 4"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/0cd0cafc-abf7-11ed-82af-02420a000136.webp",
+        "width": 800
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III: Remastered"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Assassin's Creed II</em> is an 2D action platform game for mobile phone based on the better known 3D <a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+II\">action game</a>. In the game the player assumes the role of Ezio Auditore di Firenze a man from 15th century Italy whose family has been sentenced to death by the Knight Templars. At one point he learned that he is a descended from the assassins clan and now he wants to take revenge for his family.</p>\n<p>Gameplay includes mostly 2D side scrolling platforming and defeating enemies with a sword. Enemies can be attacked directly or the player can try to take them by surprise and kill them in one move. Some levels are played from a top down perspective similar to a shoot’ em-up game with a Da Vinci’s flying machine.</p>",
+      "game_id": 131583,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 1,
+          "genre_name": "Action"
+        },
+        {
+          "genre_category": "Perspective",
+          "genre_category_id": 2,
+          "genre_id": 17,
+          "genre_name": "Side view"
+        },
+        {
+          "genre_category": "Perspective",
+          "genre_category_id": 2,
+          "genre_id": 13,
+          "genre_name": "Top-down"
+        },
+        {
+          "genre_category": "Visual Presentation",
+          "genre_category_id": 12,
+          "genre_id": 131,
+          "genre_name": "2D scrolling"
+        },
+        {
+          "genre_category": "Gameplay",
+          "genre_category_id": 4,
+          "genre_id": 21,
+          "genre_name": "Platform"
+        },
+        {
+          "genre_category": "Setting",
+          "genre_category_id": 10,
+          "genre_id": 202,
+          "genre_name": "Europe"
+        },
+        {
+          "genre_category": "Setting",
+          "genre_category_id": 10,
+          "genre_id": 205,
+          "genre_name": "Medieval"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/131583/assassins-creed-ii/",
+      "num_votes": 0,
+      "official_url": "https://web.archive.org/web/20121121015554/http://www.gameloft.com/mobile-games/assassins-creed-2/",
+      "platforms": [
+        {
+          "first_release_date": "2009",
+          "platform_id": 64,
+          "platform_name": "J2ME"
+        },
+        {
+          "first_release_date": "2009",
+          "platform_id": 66,
+          "platform_name": "Windows Mobile"
+        }
+      ],
+      "sample_cover": {
+        "height": 320,
+        "image": "https://cdn.mobygames.com/screenshots/6858863-assassins-creed-ii-j2me-title-screen.png",
+        "platforms": [
+          "J2ME"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/ce760768-abf1-11ed-81c5-02420a00012f.webp",
+        "width": 240
+      },
+      "sample_screenshots": [
+        {
+          "caption": "Beating up someone",
+          "height": 320,
+          "image": "https://cdn.mobygames.com/screenshots/7466808-assassins-creed-ii-j2me-beating-up-someone.png",
+          "thumbnail_image": "https://cdn.mobygames.com/89fe4d70-abf6-11ed-98b0-02420a000130.webp",
+          "width": 240
+        },
+        {
+          "caption": "Game start",
+          "height": 320,
+          "image": "https://cdn.mobygames.com/screenshots/6815330-assassins-creed-ii-j2me-game-start.png",
+          "thumbnail_image": "https://cdn.mobygames.com/79221306-abf1-11ed-a599-02420a000132.webp",
+          "width": 240
+        },
+        {
+          "caption": "Stage 3",
+          "height": 320,
+          "image": "https://cdn.mobygames.com/screenshots/6821774-assassins-creed-ii-j2me-stage-3.png",
+          "thumbnail_image": "https://cdn.mobygames.com/7cb3e56c-abf1-11ed-803a-02420a000131.webp",
+          "width": 240
+        },
+        {
+          "caption": "I am falling",
+          "height": 320,
+          "image": "https://cdn.mobygames.com/screenshots/6844213-assassins-creed-ii-j2me-i-am-falling.png",
+          "thumbnail_image": "https://cdn.mobygames.com/b45799b4-abf1-11ed-9584-02420a000136.webp",
+          "width": 240
+        },
+        {
+          "caption": "Kill this one from above",
+          "height": 320,
+          "image": "https://cdn.mobygames.com/screenshots/6802020-assassins-creed-ii-j2me-kill-this-one-from-above.png",
+          "thumbnail_image": "https://cdn.mobygames.com/5b8f4782-abf1-11ed-b83f-02420a000135.webp",
+          "width": 240
+        }
+      ],
+      "title": "Assassin&#39;s Creed II"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Assassin's Creed III</em>  is an 2D action platform game for mobile phone based on the better known 3D <a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+III\">action game</a>. In the game the player assumes the role of the assassin Ratonhnhaké:ton (Connor), a member of the Mohawk tribe whose village was burned down by the British army officer Charles Lee.The player will now embark on a quest for revenge.</p>\n<p>Gameplay incudes mostly 2D side scrolling platforming and defeating enemies with a sword. Enemies can be attacked directly or the player can try to take them by surprise and kill them in one move. One levels is played from a behind view in which the player has to navigate a ship and fight off hostile ships.</p>",
+      "game_id": 131619,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 1,
+          "genre_name": "Action"
+        },
+        {
+          "genre_category": "Perspective",
+          "genre_category_id": 2,
+          "genre_id": 128,
+          "genre_name": "Behind view"
+        },
+        {
+          "genre_category": "Perspective",
+          "genre_category_id": 2,
+          "genre_id": 17,
+          "genre_name": "Side view"
+        },
+        {
+          "genre_category": "Visual Presentation",
+          "genre_category_id": 12,
+          "genre_id": 131,
+          "genre_name": "2D scrolling"
+        },
+        {
+          "genre_category": "Gameplay",
+          "genre_category_id": 4,
+          "genre_id": 21,
+          "genre_name": "Platform"
+        },
+        {
+          "genre_category": "Vehicular Themes",
+          "genre_category_id": 11,
+          "genre_id": 41,
+          "genre_name": "Naval / watercraft"
+        },
+        {
+          "genre_category": "Setting",
+          "genre_category_id": 10,
+          "genre_id": 207,
+          "genre_name": "North America"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/131619/assassins-creed-iii/",
+      "num_votes": 0,
+      "official_url": "https://web.archive.org/web/20121126033402/http://www.gameloft.com:80/mobile-games/assassins-creed-3/",
+      "platforms": [
+        {
+          "first_release_date": "2012",
+          "platform_id": 64,
+          "platform_name": "J2ME"
+        },
+        {
+          "first_release_date": "2012",
+          "platform_id": 91,
+          "platform_name": "Android"
+        },
+        {
+          "first_release_date": "2014",
+          "platform_id": 229,
+          "platform_name": "MRE"
+        }
+      ],
+      "sample_cover": {
+        "height": 480,
+        "image": "https://cdn.mobygames.com/screenshots/16478176-assassins-creed-iii-android-title-screen.png",
+        "platforms": [
+          "Android"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/54bea074-c226-11ed-ab6b-02420a000194.webp",
+        "width": 800
+      },
+      "sample_screenshots": [
+        {
+          "caption": "Pulling an enemy of the cliff",
+          "height": 480,
+          "image": "https://cdn.mobygames.com/screenshots/16478773-assassins-creed-iii-android-pulling-an-enemy-of-the-cliff.png",
+          "thumbnail_image": "https://cdn.mobygames.com/7b4744c6-c226-11ed-ab6b-02420a000194.webp",
+          "width": 800
+        },
+        {
+          "caption": "Have to make myself scarce now",
+          "height": 320,
+          "image": "https://cdn.mobygames.com/screenshots/7192841-assassins-creed-iii-j2me-have-to-make-myself-scarce-now.png",
+          "thumbnail_image": "https://cdn.mobygames.com/6a5a25fe-abf4-11ed-962d-02420a000135.webp",
+          "width": 240
+        },
+        {
+          "caption": "The badguy",
+          "height": 320,
+          "image": "https://cdn.mobygames.com/screenshots/7094194-assassins-creed-iii-j2me-the-badguy.png",
+          "thumbnail_image": "https://cdn.mobygames.com/a6ba7950-abf3-11ed-b013-02420a00012e.webp",
+          "width": 240
+        },
+        {
+          "caption": "Fighting a soldier",
+          "height": 480,
+          "image": "https://cdn.mobygames.com/screenshots/16478770-assassins-creed-iii-android-fighting-a-soldier.png",
+          "thumbnail_image": "https://cdn.mobygames.com/7a04d5ec-c226-11ed-ab6b-02420a000194.webp",
+          "width": 800
+        },
+        {
+          "caption": "Using my bow",
+          "height": 320,
+          "image": "https://cdn.mobygames.com/screenshots/7059040-assassins-creed-iii-j2me-using-my-bow.png",
+          "thumbnail_image": "https://cdn.mobygames.com/5e59c9a4-abf3-11ed-8949-02420a00012e.webp",
+          "width": 240
+        }
+      ],
+      "title": "Assassin&#39;s Creed III"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Assassin's Creed III: Remastered - German Audio Pack</em> is downloadable content (DLC) for the 2019 Nintendo Switch game <a href=\"https://www.mobygames.com/game/124454/assassins-creed-iii-remastered/\">Assassin's Creed III: Remastered</a> and enables additional German language support for the game by means of audio dubbing.</p>",
+      "game_id": 139622,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 181,
+          "genre_name": "Customization / outfit / skin"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 180,
+          "genre_name": "Other"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/139622/assassins-creed-iii-remastered-german-audio-pack/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2019-05-21",
+          "platform_id": 203,
+          "platform_name": "Nintendo Switch"
+        }
+      ],
+      "sample_cover": {
+        "height": 675,
+        "image": "https://cdn.mobygames.com/covers/8186022-assassins-creed-iii-remastered-german-audio-pack-nintendo-switch.jpg",
+        "platforms": [
+          "Nintendo Switch"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/2e18e00a-abfc-11ed-b206-02420a000131.webp",
+        "width": 1200
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III: Remastered - German Audio Pack"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Assassin's Creed III: Remastered - French Audio Pack</em> is downloadable content (DLC) for the 2019 Nintendo Switch game <a href=\"https://www.mobygames.com/game/124454/assassins-creed-iii-remastered/\">Assassin's Creed III: Remastered</a> and enables additional French language support for the game by means of audio dubbing.</p>",
+      "game_id": 139623,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 181,
+          "genre_name": "Customization / outfit / skin"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 180,
+          "genre_name": "Other"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/139623/assassins-creed-iii-remastered-french-audio-pack/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2019-05-21",
+          "platform_id": 203,
+          "platform_name": "Nintendo Switch"
+        }
+      ],
+      "sample_cover": {
+        "height": 169,
+        "image": "https://cdn.mobygames.com/covers/8184638-assassins-creed-iii-remastered-french-audio-pack-nintendo-switch.jpg",
+        "platforms": [
+          "Nintendo Switch"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/2984fdf8-abfc-11ed-81c5-02420a00012f.webp",
+        "width": 300
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III: Remastered - French Audio Pack"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Assassin's Creed III: Remastered - Spanish Audio Pack</em> is downloadable content (DLC) for the 2019 Nintendo Switch game <a href=\"https://www.mobygames.com/game/124454/assassins-creed-iii-remastered/\">Assassin's Creed III: Remastered</a> and enables additional Spanish language support for the game by means of audio dubbing.</p>",
+      "game_id": 139624,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 181,
+          "genre_name": "Customization / outfit / skin"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 180,
+          "genre_name": "Other"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/139624/assassins-creed-iii-remastered-spanish-audio-pack/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2019-05-21",
+          "platform_id": 203,
+          "platform_name": "Nintendo Switch"
+        }
+      ],
+      "sample_cover": {
+        "height": 169,
+        "image": "https://cdn.mobygames.com/covers/8184869-assassins-creed-iii-remastered-spanish-audio-pack-nintendo-switc.jpg",
+        "platforms": [
+          "Nintendo Switch"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/26b65284-abfc-11ed-a631-02420a000135.webp",
+        "width": 300
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III: Remastered - Spanish Audio Pack"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Assassin's Creed III: Remastered - Brazilian Portuguese Audio Pack</em> is downloadable content (DLC) for the 2019 Nintendo Switch game <a href=\"https://www.mobygames.com/game/124454/assassins-creed-iii-remastered/\">Assassin's Creed III: Remastered</a> and enables additional Brazilian Portuguese language support for the game by means of audio dubbing.</p>",
+      "game_id": 139625,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 181,
+          "genre_name": "Customization / outfit / skin"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 180,
+          "genre_name": "Other"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/139625/assassins-creed-iii-remastered-brazilian-portuguese-audio-pack/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2019-05-21",
+          "platform_id": 203,
+          "platform_name": "Nintendo Switch"
+        }
+      ],
+      "sample_cover": {
+        "height": 169,
+        "image": "https://cdn.mobygames.com/covers/8185282-assassins-creed-iii-remastered-brazilian-portuguese-audio-pack-n.jpg",
+        "platforms": [
+          "Nintendo Switch"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/2c9a06a0-abfc-11ed-a12e-02420a000130.webp",
+        "width": 300
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III: Remastered - Brazilian Portuguese Audio Pack"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Assassin's Creed III: Remastered - Italian Audio Pack</em> is downloadable content (DLC) for the 2019 Nintendo Switch game <a href=\"https://www.mobygames.com/game/124454/assassins-creed-iii-remastered/\">Assassin's Creed III: Remastered</a> and enables additional Italian language support for the game by means of audio dubbing.</p>",
+      "game_id": 139626,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 181,
+          "genre_name": "Customization / outfit / skin"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 180,
+          "genre_name": "Other"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/139626/assassins-creed-iii-remastered-italian-audio-pack/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2019-05-21",
+          "platform_id": 203,
+          "platform_name": "Nintendo Switch"
+        }
+      ],
+      "sample_cover": {
+        "height": 675,
+        "image": "https://cdn.mobygames.com/covers/8186072-assassins-creed-iii-remastered-italian-audio-pack-nintendo-switc.jpg",
+        "platforms": [
+          "Nintendo Switch"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/298f7d5a-abfc-11ed-941d-02420a000132.webp",
+        "width": 1200
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III: Remastered - Italian Audio Pack"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Assassin's Creed III: Remastered - Russian Audio Pack</em> is downloadable content (DLC) for the 2019 Nintendo Switch game <a href=\"https://www.mobygames.com/game/124454/assassins-creed-iii-remastered/\">Assassin's Creed III: Remastered</a> and enables additional Russian language support for the game by means of audio dubbing.</p>",
+      "game_id": 139628,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 181,
+          "genre_name": "Customization / outfit / skin"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 180,
+          "genre_name": "Other"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/139628/assassins-creed-iii-remastered-russian-audio-pack/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2019-05-21",
+          "platform_id": 203,
+          "platform_name": "Nintendo Switch"
+        }
+      ],
+      "sample_cover": {
+        "height": 675,
+        "image": "https://cdn.mobygames.com/covers/8186216-assassins-creed-iii-remastered-russian-audio-pack-nintendo-switc.jpg",
+        "platforms": [
+          "Nintendo Switch"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/2e224aa0-abfc-11ed-9c12-02420a00012f.webp",
+        "width": 1200
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III: Remastered - Russian Audio Pack"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p><em>Assassin's Creed III: Remastered - Japanese Audio Pack</em> is downloadable content (DLC) for the 2019 Nintendo Switch game <a href=\"https://www.mobygames.com/game/124454/assassins-creed-iii-remastered/\">Assassin's Creed III: Remastered</a> and enables additional Japanese language support for the game by means of audio dubbing.</p>",
+      "game_id": 139629,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 62,
+          "genre_name": "DLC / Add-on"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 181,
+          "genre_name": "Customization / outfit / skin"
+        },
+        {
+          "genre_category": "DLC/Add-on",
+          "genre_category_id": 14,
+          "genre_id": 180,
+          "genre_name": "Other"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/139629/assassins-creed-iii-remastered-japanese-audio-pack/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2019-05-21",
+          "platform_id": 203,
+          "platform_name": "Nintendo Switch"
+        }
+      ],
+      "sample_cover": {
+        "height": 675,
+        "image": "https://cdn.mobygames.com/covers/8190980-assassins-creed-iii-remastered-japanese-audio-pack-nintendo-swit.jpg",
+        "platforms": [
+          "Nintendo Switch"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/2c8de5f0-abfc-11ed-bbce-02420a000133.webp",
+        "width": 1200
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed III: Remastered - Japanese Audio Pack"
+    },
+    {
+      "alternate_titles": [],
+      "description": "<p>This compilation contains:</p>\n<ul>\n<li><a href=\"https://www.mobygames.com/game/33566/assassins-creed-directors-cut-edition/\">Assassin's Creed (Director's Cut Edition)</a></li>\n<li><a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed+II\">Assassin's Creed II</a></li>\n<li><a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed:+Brotherhood\">Assassin's Creed: Brotherhood</a></li>\n</ul>",
+      "game_id": 178832,
+      "genres": [
+        {
+          "genre_category": "Basic Genres",
+          "genre_category_id": 1,
+          "genre_id": 76,
+          "genre_name": "Compilation"
+        }
+      ],
+      "moby_score": null,
+      "moby_url": "https://www.mobygames.com/game/178832/assassins-creed-assassins-creed-ii-assassins-creed-brotherhood/",
+      "num_votes": 0,
+      "official_url": null,
+      "platforms": [
+        {
+          "first_release_date": "2014-10-15",
+          "platform_id": 3,
+          "platform_name": "Windows"
+        }
+      ],
+      "sample_cover": {
+        "height": 800,
+        "image": "https://cdn.mobygames.com/covers/10588321-assassins-creed-assassins-creed-ii-assassins-creed-brotherhood-w.jpg",
+        "platforms": [
+          "Windows"
+        ],
+        "thumbnail_image": "https://cdn.mobygames.com/6a5e04ea-ac11-11ed-8949-02420a00012e.webp",
+        "width": 564
+      },
+      "sample_screenshots": [],
+      "title": "Assassin&#39;s Creed / Assassin&#39;s Creed II / Assassin&#39;s Creed: Brotherhood"
+    }
+  ]
+}

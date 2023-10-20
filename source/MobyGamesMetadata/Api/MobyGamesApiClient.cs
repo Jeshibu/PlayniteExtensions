@@ -1,6 +1,7 @@
 ﻿using ComposableAsync;
 using Newtonsoft.Json;
 using Playnite.SDK;
+using PlayniteExtensions.Common;
 using RateLimiter;
 using RestSharp;
 using System;
@@ -14,28 +15,24 @@ namespace MobyGamesMetadata.Api
     public class MobyGamesApiClient
     {
         public const string BaseUrl = "https://api.mobygames.com/v1/";
-        private string apiKey;
-        private RestClient restClient;
-        private ILogger logger = LogManager.GetLogger();
+        private readonly ExecuteRestRequest restHandlerOverride;
+        private readonly string apiKey;
+        private readonly RestClient restClient;
+        private readonly ILogger logger = LogManager.GetLogger();
+        public delegate RestResponse ExecuteRestRequest(RestRequest request, CancellationToken cancellationToken = default);
 
-        public string ApiKey
+        public MobyGamesApiClient(string apiKey)
         {
-            get
-            {
-                return apiKey;
-            }
-            set
-            {
-                if (apiKey != value && !string.IsNullOrEmpty(value))
-                {
-                    restClient?.Dispose();
-                    var limiter = TimeLimiter.GetFromMaxCountByInterval(1, TimeSpan.FromSeconds(1)).AsDelegatingHandler();
-                    restClient = new RestClient(new HttpClient(limiter), new RestClientOptions(BaseUrl), disposeHttpClient: true)
-                        .AddDefaultQueryParameter("api_key", value);
-                }
+            this.apiKey = apiKey;
+            var limiter = TimeLimiter.GetFromMaxCountByInterval(1, TimeSpan.FromSeconds(1)).AsDelegatingHandler();
+            restClient = new RestClient(new HttpClient(limiter), new RestClientOptions(BaseUrl), disposeHttpClient: true)
+                .AddDefaultQueryParameter("api_key", apiKey);
+        }
 
-                apiKey = value;
-            }
+        public MobyGamesApiClient(ExecuteRestRequest restHandlerOverride)
+        {
+            this.restHandlerOverride = restHandlerOverride;
+            this.apiKey = "something";
         }
 
         private T Execute<T>(RestRequest request, CancellationToken cancellationToken = default)
@@ -45,7 +42,7 @@ namespace MobyGamesMetadata.Api
 
         public T Execute<T>(RestRequest request, out System.Net.HttpStatusCode statusCode, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrWhiteSpace(ApiKey))
+            if (string.IsNullOrWhiteSpace(apiKey))
                 throw new Exception("No Moby Games API key. Please enter one in the add-on settings.");
 
             statusCode = System.Net.HttpStatusCode.NotImplemented;
@@ -56,7 +53,8 @@ namespace MobyGamesMetadata.Api
                 logger.Debug("Request cancelled");
                 return default;
             }
-            var response = restClient.Execute(request, cancellationToken);
+            var handler = restHandlerOverride ?? restClient.Execute;
+            var response = handler(request, cancellationToken);
             if (cancellationToken.IsCancellationRequested)
             {
                 logger.Debug("Request cancelled");
@@ -87,21 +85,31 @@ namespace MobyGamesMetadata.Api
                 throw new Exception($"Error requesting {request?.Resource}: {statusCode} unable to parse response: {response.Content}");
         }
 
-        public IEnumerable<MobyGame> SearchGames(string searchString, CancellationToken cancellationToken = default)
+        public ICollection<MobyGame> ExecuteGamesRequest(RestRequest request, CancellationToken cancellationToken)
         {
-            var request = new RestRequest("games").AddQueryParameter("title", searchString);
             var result = Execute<GamesRoot>(request, cancellationToken);
 
             if (cancellationToken.IsCancellationRequested)
                 return new List<MobyGame>();
 
+            foreach (var game in result.Games)
+                game.Title = game.Title.HtmlDecode();
+
             return result.Games;
+        }
+
+        public IEnumerable<MobyGame> SearchGames(string searchString, CancellationToken cancellationToken = default)
+        {
+            var request = new RestRequest("games").AddQueryParameter("title", searchString);
+            return ExecuteGamesRequest(request, cancellationToken);
         }
 
         public MobyGame GetMobyGame(int id, CancellationToken cancellationToken = default)
         {
             var request = new RestRequest($"games/{id}");
             var response = Execute<MobyGame>(request, cancellationToken);
+            if (response?.Title != null)
+                response.Title = response.Title.HtmlDecode();
             return response;
         }
 
@@ -112,12 +120,7 @@ namespace MobyGamesMetadata.Api
                 .AddQueryParameter("limit", limit)
                 .AddQueryParameter("offset", offset);
 
-            var result = Execute<GamesRoot>(request, cancellationToken);
-
-            if (cancellationToken.IsCancellationRequested)
-                return new List<MobyGame>();
-
-            return result.Games;
+            return ExecuteGamesRequest(request, cancellationToken);
         }
 
         public ICollection<MobyGame> GetGamesForGenre(int genreId, int limit, int offset, CancellationToken cancellationToken = default)
@@ -127,12 +130,7 @@ namespace MobyGamesMetadata.Api
                 .AddQueryParameter("limit", limit)
                 .AddQueryParameter("offset", offset);
 
-            var result = Execute<GamesRoot>(request, cancellationToken);
-
-            if (cancellationToken.IsCancellationRequested)
-                return new List<MobyGame>();
-
-            return result.Games;
+            return ExecuteGamesRequest(request, cancellationToken);
         }
 
         public ICollection<MobyGroup> GetGroups(int offset = 0, int limit = 100, CancellationToken cancellationToken = default)
@@ -153,7 +151,6 @@ namespace MobyGamesMetadata.Api
         {
             var output = new List<MobyGroup>();
             int limit = 100, offset = 0;
-            //int limit = 100, offset = 9900;
             ICollection<MobyGroup> response;
             do
             {

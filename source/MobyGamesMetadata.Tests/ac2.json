@@ -1,0 +1,126 @@
+﻿{
+  "alternate_titles": [
+    {
+      "description": "Common abbreviation",
+      "title": "AC2"
+    },
+    {
+      "description": "Chinese title (romanized)",
+      "title": "Cike Xintiao"
+    }
+  ],
+  "description": "<p>Desmond Miles, the last in the line of the ancient order of Assassins, has been captured by the modern-day descendants of the Templars, forced to experience <a href=\"https://www.mobygames.com/search/?q=Assassin's+Creed\">past events</a> through a device called Animus in order to obtain crucial information. However, one of the scientists unexpectedly switches sides, asking Desmond to put his trust in her hands and follow her out of the complex. Soon afterwards they escape the holding place and team up with some new allies that intend to use Desmond's knowledge against the Templars. Their new device is called Animus 2.0, an upgraded version of the original. This time, Desmond relives the life of Ezio Auditore di Firenze, a man who lived in Italy in the 15th century.</p>\n<p>Ezio is a boisterous, seemingly carefree young man who likes to pick fights and chase skirts. But all that changes when his father and little brother are publicly executed by a man he trusted. Driven by vengeance, Ezio begins to discover more about his father's life, and realizes that he, too, belonged to the organization of the Assassins. Ezio becomes a skillful assassin himself, and is ready to go all the way to avenge the death of the people he loved.</p>\n<p><em>Assassin's Creed II</em> is a free-roaming action game very similar in concept and gameplay mechanics to its predecessor. The events of the game take place in Florence, Venice, Rome, and other locations in Italy. Besides fictional characters, the game has famous historical figures from the time period, such as Leonardo da Vinci, Niccolò Machiavelli, Cesare Borgia and others, who play an active role in the game's story. Authentic cultural and political environment of the Italian Renaissance is represented in the game along with fictitious accounts of the events, alternate history, and metaphysical theories.</p>\n<p>The core gameplay resembles that of the previous game. The protagonist can freely explore several large cities and rural locations on foot or on horseback. It is also possible to swim and navigate boats in the game. Nearly every building can be climbed on, and the protagonist can access the tallest rooftops, observing the panorama with his Eagle Vision. Free-form jumping and running occupies a considerable portion of the gameplay. </p>\n<p>One of the sequel's most notable additions is the financial system, which was not present in the first game. Items, weapons and armor can be bought in shops and repaired for money. There are many more weapon types and individual weapons and armor in the game. Ezio can carry swords, daggers, throwing knives, smoke bombs, a pistol, and a variety of upgradeable armor types. Weapons can also be picked up from fallen enemies and used in the same battle. Abundant treasure can be collected from various spots in the game world.</p>\n<p>There are new ways of being stealthy in this sequel. Ezio can pay courtesans to distract guards, hire mercenaries to fight them, or commission thieves to create a distraction. Mission objectives and particularly the steps needed to accomplish them are noticeably more varied than in the previous game. The protagonist often receives new equipment and new challenges to experiment with. A few of these are built like mini-games: for example, at one point Ezio will pilot a flying device. The main character has his own headquarters in the game, a mansion and a small town adjacent to it. It is possible to invest money into the town's reconstruction, as well as customize the mansion.</p>\n<p>The game features a significantly larger amount of side quests than its predecessor. A series of sub-quests involves locating, collecting and deciphering ancient words of wisdom that supposedly hold the secret of the universe. These quests often involve traversing complex indoor platform environments in order to reach the goal. These sequences require precise jumping and contain light puzzle-solving elements, similarly to contemporary <a href=\"https://www.mobygames.com/search/?q=Prince+of+Persia\">Prince of Persia</a> games.</p>",
+  "game_id": 43958,
+  "genres": [
+    {
+      "genre_category": "Basic Genres",
+      "genre_category_id": 1,
+      "genre_id": 1,
+      "genre_name": "Action"
+    },
+    {
+      "genre_category": "Perspective",
+      "genre_category_id": 2,
+      "genre_id": 7,
+      "genre_name": "1st-person"
+    },
+    {
+      "genre_category": "Perspective",
+      "genre_category_id": 2,
+      "genre_id": 128,
+      "genre_name": "Behind view"
+    },
+    {
+      "genre_category": "Gameplay",
+      "genre_category_id": 4,
+      "genre_id": 219,
+      "genre_name": "Quick Time Events (QTEs)"
+    },
+    {
+      "genre_category": "Gameplay",
+      "genre_category_id": 4,
+      "genre_id": 99,
+      "genre_name": "Stealth"
+    },
+    {
+      "genre_category": "Interface/Control",
+      "genre_category_id": 7,
+      "genre_id": 168,
+      "genre_name": "Direct control"
+    },
+    {
+      "genre_category": "Setting",
+      "genre_category_id": 10,
+      "genre_id": 202,
+      "genre_name": "Europe"
+    }
+  ],
+  "moby_score": 8.6,
+  "moby_url": "https://www.mobygames.com/game/43958/assassins-creed-ii/",
+  "num_votes": 69,
+  "official_url": null,
+  "platforms": [
+    {
+      "first_release_date": "2009-11-17",
+      "platform_id": 69,
+      "platform_name": "Xbox 360"
+    },
+    {
+      "first_release_date": "2009-11-17",
+      "platform_id": 81,
+      "platform_name": "PlayStation 3"
+    },
+    {
+      "first_release_date": "2015-11-12",
+      "platform_id": 142,
+      "platform_name": "Xbox One"
+    }
+  ],
+  "sample_cover": {
+    "height": 800,
+    "image": "https://cdn.mobygames.com/covers/5790434-assassins-creed-ii-playstation-3-front-cover.jpg",
+    "platforms": [
+      "PlayStation 3"
+    ],
+    "thumbnail_image": "https://cdn.mobygames.com/2f8d8624-abe9-11ed-a484-02420a000130.webp",
+    "width": 686
+  },
+  "sample_screenshots": [
+    {
+      "caption": "Nothing strange at the docks.",
+      "height": 405,
+      "image": "https://cdn.mobygames.com/screenshots/5265825-assassins-creed-ii-playstation-3-nothing-strange-at-the-docks.jpg",
+      "thumbnail_image": "https://cdn.mobygames.com/6202a5a6-abd7-11ed-9505-02420a00019c.webp",
+      "width": 720
+    },
+    {
+      "caption": "Loading sequence.",
+      "height": 405,
+      "image": "https://cdn.mobygames.com/screenshots/5265695-assassins-creed-ii-playstation-3-loading-sequence.jpg",
+      "thumbnail_image": "https://cdn.mobygames.com/60277c16-abd7-11ed-9505-02420a00019c.webp",
+      "width": 720
+    },
+    {
+      "caption": "Map of the area.",
+      "height": 405,
+      "image": "https://cdn.mobygames.com/screenshots/5266203-assassins-creed-ii-playstation-3-map-of-the-area.jpg",
+      "thumbnail_image": "https://cdn.mobygames.com/6716874c-abd7-11ed-b951-02420a000197.webp",
+      "width": 720
+    },
+    {
+      "caption": "Use smoke bomb to confuse the enemies for a brief period of time, and lower their ranks.",
+      "height": 405,
+      "image": "https://cdn.mobygames.com/screenshots/5266372-assassins-creed-ii-playstation-3-use-smoke-bomb-to-confuse-the-e.jpg",
+      "thumbnail_image": "https://cdn.mobygames.com/6a132072-abd7-11ed-b325-02420a00019e.webp",
+      "width": 720
+    },
+    {
+      "caption": "You can pay courtesans to help you blend in the crowd or have them seduce the guards.",
+      "height": 405,
+      "image": "https://cdn.mobygames.com/screenshots/5266333-assassins-creed-ii-playstation-3-you-can-pay-courtesans-to-help-.jpg",
+      "thumbnail_image": "https://cdn.mobygames.com/6961432a-abd7-11ed-b951-02420a000197.webp",
+      "width": 720
+    }
+  ],
+  "title": "Assassin&#39;s Creed II"
+}

@@ -15,7 +15,7 @@ namespace MobyGamesMetadata
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private MobyGamesApiClient apiClient;
-        public MobyGamesApiClient ApiClient { get { return apiClient ?? (apiClient = new MobyGamesApiClient { ApiKey = settings?.Settings?.ApiKey }); } }
+        public MobyGamesApiClient ApiClient { get { return apiClient ?? (apiClient = new MobyGamesApiClient(settings?.Settings?.ApiKey)); } }
 
         private MobyGamesMetadataSettingsViewModel settings { get; set; }
 
