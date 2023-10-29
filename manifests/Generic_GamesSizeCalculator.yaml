@@ -225,4 +225,4 @@ Packages:
     ReleaseDate: 2023-10-29
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-10-29/GamesSizeCalculator_1_30.pext
     Changelog:
-    - Removed GOG install size fetching. This is now exclusively a Steam install size metadata plugin. To fetch GOG install size, use the GOG metadata plugin.
+    - 'Removed GOG install size fetching. This is now exclusively a Steam install size metadata plugin. To fetch GOG install size, use the GOG metadata plugin.'
