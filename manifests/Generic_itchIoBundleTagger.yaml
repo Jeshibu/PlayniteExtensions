@@ -84,4 +84,4 @@ Packages:
     Changelog:
     - Added options to disable bundles for tagging
     - Added support for new bundle - Games for Gaza
-    - Games that get tags/links added now have their 'date modified' updated
+    - Games that get tags/links added now have their Date Modified field updated
