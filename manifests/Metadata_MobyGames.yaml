@@ -44,3 +44,9 @@ Packages:
      - Fixed HTML entities in game names
      - Changed Windows Apps platform to Windows
      - Fixed games with numeric-only names fetching data from the wrong game
+  - Version: 0.4.3
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2023-10-29
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-10-29/MobyGamesMetadata_0_4_3.pext
+    Changelog:
+     - Fixed HTML entities in game names (for real this time)
