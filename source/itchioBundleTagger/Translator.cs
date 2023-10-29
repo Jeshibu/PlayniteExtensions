@@ -3,6 +3,7 @@ using Linguini.Bundle.Builder;
 using Linguini.Shared.Types.Bundle;
 using Playnite.SDK;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
@@ -67,10 +68,9 @@ namespace itchioBundleTagger
             this.bundle.AddResourceOverriding(target);
         }
 
-        public string Translate(string id, FluentArgs args = null)
-        {
-            return this.bundle.GetAttrMessage(id, args);
-        }
+        public string Translate(string id, FluentArgs args = null) => bundle.GetAttrMessage(id, args);
+
+        public IEnumerable<string> GetKeys() => bundle.GetMessageEnumerable();
     }
 
     public class itchIoTranslator : Translator
@@ -87,6 +87,7 @@ namespace itchioBundleTagger
         public string AddSteamLinkSetting => Translate("setting-add-steam-link");
         public string RunOnLibraryUpdate => Translate("setting-run-on-library-update");
         public string ShowInContextMenu => Translate("setting-show-in-context-menu");
+        public string AddBundleTagsHeader => Translate("setting-add-bundle-tags-header");
 
         public string ExecuteTagging => Translate("menu-execute-tagging");
         public string ExecuteTaggingAll => Translate("menu-execute-tagging-all");
@@ -105,6 +106,22 @@ namespace itchioBundleTagger
         public string GetTagName(string tagKey)
         {
             return Translate($"tag-{tagKey}");
+        }
+
+        public Dictionary<string,string> GetBundleTags()
+        {
+            var output = new Dictionary<string, string>();
+            var keys = base.GetKeys();
+            const string bundleTagStart = "tag-bundle-";
+            foreach (var key in keys)
+            {
+                if (!key.StartsWith(bundleTagStart))
+                    continue;
+
+                var bundleKey = key.Substring(bundleTagStart.Length);
+                output.Add(bundleKey, Translate(key));
+            }
+            return output;
         }
     }
 }

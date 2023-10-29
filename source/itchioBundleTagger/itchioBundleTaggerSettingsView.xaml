@@ -4,18 +4,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="clr-namespace:itchioBundleTagger"
-             d:DataContext="{d:DesignInstance Type=i:itchioBundleTaggerSettingsView}"
+             d:DataContext="{d:DesignInstance Type=i:itchioBundleTaggerSettings}"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel Margin="20">
-        <CheckBox IsChecked="{Binding RunOnLibraryUpdate}" Content="{Binding Labels.RunOnLibraryUpdate}"/>
-        <CheckBox IsChecked="{Binding ShowInContextMenu}" Content="{Binding Labels.ShowInContextMenu}" Margin="0,20,0,0"/>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,20,0,0">
-            <CheckBox IsChecked="{Binding UseTagPrefix}" Content="{Binding Labels.UseTagPrefix}" VerticalAlignment="Center"/>
-            <TextBox Text="{Binding TagPrefix}" Width="200" VerticalAlignment="Center" IsEnabled="{Binding UseTagPrefix}" Margin="10,0,0,0"/>
+    <ScrollViewer>
+        <StackPanel Margin="20">
+            <CheckBox IsChecked="{Binding Settings.RunOnLibraryUpdate}" Content="{Binding Labels.RunOnLibraryUpdate}"/>
+            <CheckBox IsChecked="{Binding Settings.ShowInContextMenu}" Content="{Binding Labels.ShowInContextMenu}" Margin="0,20,0,0"/>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,20,0,0">
+                <CheckBox IsChecked="{Binding Settings.UseTagPrefix}" Content="{Binding Labels.UseTagPrefix}" VerticalAlignment="Center"/>
+                <TextBox Text="{Binding Settings.TagPrefix}" Width="200" VerticalAlignment="Center" IsEnabled="{Binding Settings.UseTagPrefix}" Margin="10,0,0,0"/>
+            </StackPanel>
+            <CheckBox IsChecked="{Binding Settings.AddFreeTag}" Content="{Binding Labels.AddFreeTag}" Margin="0,20,0,0"/>
+            <CheckBox IsChecked="{Binding Settings.AddAvailableOnSteamTag}" Content="{Binding Labels.AddAvailableOnSteamTag}" Margin="0,20,0,0"/>
+            <CheckBox IsChecked="{Binding Settings.AddSteamLink}" Content="{Binding Labels.AddSteamLink}" Margin="0,20,0,0"/>
+            <TextBlock Text="{Binding Labels.AddBundleTagsHeader}" Margin="0,20,0,0"/>
+            <ListBox ItemsSource="{Binding Settings.BundleSettings}" d:ItemsSource="{d:SampleData ItemCount=5}" Padding="5">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox IsChecked="{Binding IsChecked}" Content="{Binding Text}" Width="Auto"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
-        <CheckBox IsChecked="{Binding AddFreeTag}" Content="{Binding Labels.AddFreeTag}" Margin="0,20,0,0"/>
-        <CheckBox IsChecked="{Binding AddAvailableOnSteamTag}" Content="{Binding Labels.AddAvailableOnSteamTag}" Margin="0,20,0,0"/>
-        <CheckBox IsChecked="{Binding AddSteamLink}" Content="{Binding Labels.AddSteamLink}" Margin="0,20,0,0"/>        
-    </StackPanel>
+    </ScrollViewer>
 </UserControl>

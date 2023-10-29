@@ -20,7 +20,7 @@ namespace itchioBundleTagger
 
         public override Guid Id { get; } = Guid.Parse("fc4fa75e-6e99-4c02-8547-113747efbb82");
 
-        private itchioBundleTaggerSettings Settings { get; set; }
+        private itchioBundleTaggerSettingsViewModel Settings { get; set; }
         private Guid ItchIoLibraryId { get; }
         private ICachedFile DatabaseFile { get; }
         private itchIoTranslator Translator { get; }
@@ -28,7 +28,7 @@ namespace itchioBundleTagger
         public itchioBundleTagger(IPlayniteAPI api) : base(api)
         {
             Translator = new itchIoTranslator(api.ApplicationSettings.Language);
-            Settings = new itchioBundleTaggerSettings(this, Translator);
+            Settings = new itchioBundleTaggerSettingsViewModel(this, Translator);
             Properties = new GenericPluginProperties()
             {
                 HasSettings = true
@@ -54,13 +54,13 @@ namespace itchioBundleTagger
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {
-            if (Settings.RunOnLibraryUpdate)
+            if (Settings.Settings.RunOnLibraryUpdate)
                 TagItchBundleGames(PlayniteApi.Database.Games);
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            if (Settings.ShowInContextMenu && args.Games.Any(g => g.PluginId == ItchIoLibraryId))
+            if (Settings.Settings.ShowInContextMenu && args.Games.Any(g => g.PluginId == ItchIoLibraryId))
                 return new[] { new GameMenuItem { Description = Translator.ExecuteTagging, Action = TagItchBundleGames } };
             else
                 return new GameMenuItem[0];
@@ -97,9 +97,9 @@ namespace itchioBundleTagger
                 return null;
             }
 
-            string computedTagName = Settings.UseTagPrefix ? $"{Settings.TagPrefix}{name}" : name;
+            string computedTagName = Settings.Settings.UseTagPrefix ? $"{Settings.Settings.TagPrefix}{name}" : name;
 
-            bool tagIdFromSettings = Settings.TagIds.TryGetValue(key, out Guid tagId);
+            bool tagIdFromSettings = Settings.Settings.TagIds.TryGetValue(key, out Guid tagId);
 
             Tag tag = null;
             if (tagIdFromSettings)
@@ -117,7 +117,7 @@ namespace itchioBundleTagger
                 PlayniteApi.Database.Tags.Add(tag);
             }
             TagsCache.Add(key, tag);
-            Settings.TagIds[key] = tag.Id;
+            Settings.Settings.TagIds[key] = tag.Id;
             return tag;
         }
 
@@ -191,10 +191,10 @@ namespace itchioBundleTagger
 
                             if (!string.IsNullOrWhiteSpace(data.Steam))
                             {
-                                if (Settings.AddAvailableOnSteamTag)
+                                if (Settings.Settings.AddAvailableOnSteamTag)
                                     gameUpdated |= AddTagToGame(game, "steam");
 
-                                if (Settings.AddSteamLink)
+                                if (Settings.Settings.AddSteamLink)
                                 {
                                     List<Link> links = new List<Link>();
                                     if (game.Links != null)
@@ -211,21 +211,25 @@ namespace itchioBundleTagger
                                 }
                             }
 
-                            if (Settings.AddFreeTag && string.IsNullOrWhiteSpace(data.CurrentPrice))
+                            if (Settings.Settings.AddFreeTag && string.IsNullOrWhiteSpace(data.CurrentPrice))
                                 gameUpdated |= AddTagToGame(game, "free");
 
                             foreach (var bundleKey in data.Bundles.Keys)
-                                gameUpdated |= AddTagToGame(game, $"bundle-{bundleKey}");
+                                if (Settings.Settings.BundleSettings.FirstOrDefault(b => b.Key == bundleKey)?.IsChecked != false)
+                                    gameUpdated |= AddTagToGame(game, $"bundle-{bundleKey}");
 
                             if (gameUpdated)
+                            {
+                                game.Modified = DateTime.Now;
                                 PlayniteApi.Database.Games.Update(game);
+                            }
 
                             i++;
                             if (i % 10 == 0)
                                 progressActionArgs.CurrentProgressValue = relevantGames.Count + i;
                         }
                     }
-                    SavePluginSettings(Settings); //for updates to Settings.TagIds
+                    SavePluginSettings(Settings.Settings); //for updates to Settings.TagIds
                 }
                 catch (Exception ex)
                 {

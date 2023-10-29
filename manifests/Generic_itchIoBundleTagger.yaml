@@ -77,3 +77,11 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-08-26/itchIoBundleTagger_0_10_1.pext
     Changelog:
     - Added Galician localization
+  - Version: 0.11
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-10-29
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-10-29/itchIoBundleTagger_0_11.pext
+    Changelog:
+    - Added options to disable bundles for tagging
+    - Added support for new bundle - Games for Gaza
+    - Games that get tags/links added now have their 'date modified' updated

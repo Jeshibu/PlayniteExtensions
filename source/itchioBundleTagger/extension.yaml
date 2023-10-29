@@ -1,7 +1,14 @@
 ﻿Id: itchioBundleTagger_fc4fa75e-6e99-4c02-8547-113747efbb82
 Name: itch.io Bundle Tagger
 Author: Jeshibu
-Version: 0.10.1
+Version: 0.11
 Module: itchioBundleTagger.dll
 Type: GenericPlugin
 Icon: icon.png
+Links:
+  - Name: Bundle Browser
+    Url: https://randombundlegame.com/
+  - Name: GitHub repository
+    Url: https://github.com/Jeshibu/PlayniteExtensions
+  - Name: Support my work on Ko-fi
+    Url: https://ko-fi.com/Jeshibu
