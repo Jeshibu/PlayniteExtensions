@@ -26,7 +26,6 @@
             <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
                 <Setter Property="SelectionMode" Value="Extended"/>
                 <Setter Property="MinHeight" Value="150"/>
-                <Setter Property="Width" Value="Auto"/>
                 <Setter Property="Padding" Value="5"/>
                 <Setter Property="dd:DragDrop.IsDragSource" Value="True"/>
                 <Setter Property="dd:DragDrop.IsDropTarget" Value="True"/>
