@@ -57,6 +57,7 @@ jobs:
       - name: Pack with Playnite
         run: |
           mkdir "PackingOutput"
+          Write-Host "${{ steps.projectselection.outputs.projects }}"
           $projects = ConvertFrom-Json '${{ steps.projectselection.outputs.projects }}'
 
           foreach ($p in $projects) {
