@@ -1,9 +1,5 @@
 ﻿using Playnite.SDK;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
@@ -65,7 +61,7 @@ namespace GamersGateLibrary
 
         private static bool IsAuthenticated(string pageSource)
         {
-            bool authenticated = Regex.IsMatch(pageSource, @"/images/avatar/current/(\d+)");
+            bool authenticated = pageSource.Contains(@"navigation-link--icon-user");
             return authenticated;
         }
 

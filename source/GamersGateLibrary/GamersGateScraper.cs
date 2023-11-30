@@ -52,6 +52,9 @@ namespace GamersGateLibrary
 
         private static string GetOrderPageUrl(int page)
         {
+            if (page == 1)
+                return "https://www.gamersgate.com/account/orders/";
+
             return $"https://www.gamersgate.com/account/orders/?page={page}";
         }
 
