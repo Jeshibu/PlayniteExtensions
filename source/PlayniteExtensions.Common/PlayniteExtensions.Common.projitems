@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)PlayniteConvert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PluginSettingsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Programs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RegistryValueProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SortableNameConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TitleComparer.cs" />

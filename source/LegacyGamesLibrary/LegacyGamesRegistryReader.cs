@@ -1,8 +1,8 @@
 ﻿using Microsoft.Win32;
 using Playnite.SDK;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace LegacyGamesLibrary
 {
@@ -76,58 +76,5 @@ namespace LegacyGamesLibrary
         public string InstDir { get; set; }
         public string GameExe { get; set; }
         public string ProductName { get; set; }
-    }
-
-    public interface IRegistryValueProvider
-    {
-        List<string> GetSubKeysForPath(RegistryView platform, RegistryHive hive, string path);
-        string GetValueForPath(RegistryView platform, RegistryHive hive, string path, string keyName);
-        List<string> GetSubKeysForPath(RegistryHive hive, string path);
-        string GetValueForPath(RegistryHive hive, string path, string keyName);
-    }
-
-    public class RegistryValueProvider : IRegistryValueProvider
-    {
-        public RegistryValueProvider() { }
-
-        public List<string> GetSubKeysForPath(
-            RegistryView platform,
-            RegistryHive hive,
-            string path)
-        {
-            RegistryKey rootKey = RegistryKey.OpenBaseKey(hive, platform);
-
-            return rootKey
-                    .OpenSubKey(path)
-                    ?.GetSubKeyNames()
-                    ?.ToList();
-        }
-
-        public string GetValueForPath(
-            RegistryView platform,
-            RegistryHive hive,
-            string path,
-            string keyName)
-        {
-            RegistryKey rootKey = RegistryKey.OpenBaseKey(hive, platform);
-
-            return rootKey
-                        .OpenSubKey(path)
-                        ?.GetValue(keyName)
-                        ?.ToString();
-        }
-
-        public List<string> GetSubKeysForPath(RegistryHive hive, string path)
-        {
-            return GetSubKeysForPath(RegistryView.Registry64, hive, path)
-                ?? GetSubKeysForPath(RegistryView.Registry32, hive, path);
-        }
-
-        public string GetValueForPath(RegistryHive hive, string path, string keyName)
-        {
-            return GetValueForPath(RegistryView.Registry64, hive, path, keyName)
-                ?? GetValueForPath(RegistryView.Registry32, hive, path, keyName);
-        }
-
     }
 }

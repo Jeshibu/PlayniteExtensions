@@ -1,0 +1,11 @@
+﻿<UserControl x:Class="BigFishLibrary.BigFishLibrarySettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="400" Width="526">
+    <StackPanel Margin="20">
+        <TextBlock TextWrapping="Wrap" Text="There are no settings right now, install info is gathered from the registry and requires the Big Fish client."/>
+    </StackPanel>
+</UserControl>
