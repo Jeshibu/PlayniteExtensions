@@ -6,9 +6,7 @@ using SteamCommon.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace SteamCommon
@@ -16,7 +14,7 @@ namespace SteamCommon
     class SteamWeb
     {
         private static ILogger logger = LogManager.GetLogger();
-        private const string steamGameSearchUrl = @"https://store.steampowered.com/search/?term={0}&ignore_preferences=1&category1=998";
+        private const string steamGameSearchUrl = @"https://store.steampowered.com/search/?term={0}&ignore_preferences=1&category1=998%2C997";
 
         public static List<GenericItemOption> GetSteamSearchGenericItemOptions(string searchTerm)
         {
@@ -61,14 +59,6 @@ namespace SteamCommon
                     var releaseDate = gameElem.QuerySelector(".search_released").InnerHtml;
                     var gameId = gameElem.GetAttribute("data-ds-appid");
 
-                    // Prices Data
-                    var priceData = gameElem.QuerySelector(".search_price_discount_combined");
-                    var discountPercentage = GetSteamSearchDiscount(priceData);
-                    var priceFinal = GetSteamSearchFinalPrice(priceData);
-                    var priceOriginal = GetSearchOriginalPrice(priceFinal, discountPercentage);
-                    var isDiscounted = priceFinal != priceOriginal && priceOriginal != 0;
-                    GetCurrencyFromSearchPriceDiv(gameElem.QuerySelector(".search_price"), out var currency, out var isReleased, out var isFree);
-
                     //Urls
                     var storeUrl = gameElem.GetAttribute("href");
                     var capsuleUrl = gameElem.QuerySelector(".search_capsule").Children[0].GetAttribute("src");
@@ -78,14 +68,7 @@ namespace SteamCommon
                         Name = HttpUtility.HtmlDecode(title),
                         Description = HttpUtility.HtmlDecode(releaseDate),
                         GameId = gameId,
-                        PriceOriginal = priceOriginal,
-                        PriceFinal = priceFinal,
-                        IsDiscounted = isDiscounted,
-                        DiscountPercentage = discountPercentage,
                         StoreUrl = storeUrl,
-                        IsFree = isFree,
-                        IsReleased = isReleased,
-                        Currency = currency,
                         BannerImageUrl = capsuleUrl
                     });
                 }
@@ -142,33 +125,6 @@ namespace SteamCommon
             }
 
             return searchUrl;
-        }
-
-        private static double GetSearchOriginalPrice(double priceFinal, int discountPercentage)
-        {
-            if (discountPercentage == 0)
-            {
-                return priceFinal;
-            }
-
-            return (100 * priceFinal) / (100 - discountPercentage);
-        }
-
-        private static int GetSteamSearchDiscount(AngleSharp.Dom.IElement priceData)
-        {
-            var searchDiscountQuery = priceData.QuerySelector(".search_discount");
-            if (searchDiscountQuery.ChildElementCount == 1)
-            {
-                //TODO Improve parsing
-                return int.Parse(searchDiscountQuery.Children[0].TextContent.Replace("-", "").Replace("%", "").Trim());
-            }
-
-            return 0;
-        }
-
-        private static double GetSteamSearchFinalPrice(AngleSharp.Dom.IElement priceData)
-        {
-            return int.Parse(priceData.GetAttribute("data-price-final")) * 0.01;
         }
 
         private const string steamAppDetailsMask = @"https://store.steampowered.com/api/appdetails?appids={0}";
