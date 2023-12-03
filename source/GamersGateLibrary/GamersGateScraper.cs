@@ -1,12 +1,9 @@
 ﻿using HtmlAgilityPack;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace GamersGateLibrary
@@ -179,17 +176,50 @@ namespace GamersGateLibrary
             return game.DownloadUrls.Where(u => !u.Description.Contains("Manual") && !u.Description.EndsWith("Demo") && !u.Description.Contains("Patch")).ToList();
         }
 
-        public IEnumerable<GameDetails> GetAllGames(IWebViewWrapper downloader)
+        private bool TryGetOrderIdFromUrl(string url, out int id)
+        {
+            id = 0;
+            var segments = url.Split('/', '?', '#');
+            var idSegment = segments.FirstOrDefault(s=>s.Length > 0 && s.All(char.IsNumber));
+            if (idSegment == null)
+                return false;
+
+            id = int.Parse(idSegment);
+            return true;
+        }
+
+        public LibraryScrapeResults GetAllGames(IWebViewWrapper downloader, params int[] skipOrderIds)
         {
             var orderUrls = GetAllOrderUrls(downloader);
-            var games = new List<GameDetails>();
+            var output = new LibraryScrapeResults();
             foreach (var orderUrl in orderUrls)
             {
-                games.AddRange(GetGamesFromOrder(downloader, orderUrl));
+                if (TryGetOrderIdFromUrl(orderUrl, out int orderId))
+                {
+                    output.OrderIds.Add(orderId);
+
+                    if (skipOrderIds != null && skipOrderIds.Contains(orderId))
+                    {
+                        logger.Info($"Skipping order {orderId}");
+                        continue;
+                    }
+                }
+
+                output.Games.AddRange(GetGamesFromOrder(downloader, orderUrl));
             }
 
-            #region remove secondary download URLs that are primary in other games (for example a PC game would have a PC and Mac download URL, and the Mac version would have the same Mac download URL)
+            RemoveSecondaryDownloadUrls(output.Games);
 
+            return output;
+        }
+
+        /// <summary>
+        /// Remove secondary download URLs that are primary in other games
+        /// (for example a PC game would have a PC and Mac download URL, and the Mac version would have the same Mac download URL)
+        /// </summary>
+        /// <param name="games"></param>
+        private void RemoveSecondaryDownloadUrls(List<GameDetails> games)
+        {
             var singleDownloadUrls = new List<DownloadUrl>();
             foreach (var g in games)
             {
@@ -207,28 +237,14 @@ namespace GamersGateLibrary
                 if (removed != 0)
                     logger.Info($"Removed {removed} download URLs from {game.Title} because they're the only download URL for another game entry");
             }
-
-            #endregion
-
-            return games;
         }
+    }
 
-        public int? GetLoggedInUserId(IWebDownloader downloader)
-        {
-            var url = "https://www.gamersgate.com/account/settings/";
-            var response = downloader.DownloadString(url, throwExceptionOnErrorResponse: false);
-            if (response.ResponseUrl != url || string.IsNullOrWhiteSpace(response.ResponseContent) || (int)response.StatusCode > 399)
-                return null;
+    public class LibraryScrapeResults
+    {
+        public HashSet<int> OrderIds { get; } = new HashSet<int>();
 
-            HtmlDocument doc = new HtmlDocument();
-            doc.LoadHtml(response.ResponseContent);
-
-            var userIdString = doc.DocumentNode.SelectSingleNode("//div[@class='avatar-block']/img[starts-with(@src, '/images/avatar/current/')]")?.Attributes["src"].Value.TrimStart("/images/avatar/current/");
-            if (int.TryParse(userIdString, out int output))
-                return output;
-
-            return null;
-        }
+        public List<GameDetails> Games { get; } = new List<GameDetails>();
     }
 
     public class GameDetails

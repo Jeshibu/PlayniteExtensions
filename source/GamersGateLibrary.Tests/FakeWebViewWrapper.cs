@@ -21,7 +21,7 @@ namespace GamersGateLibrary.Tests
         {
         }
 
-        public string DownloadPageSource(string targetUrl, int timeoutSeconds = 60)
+        public string DownloadPageSource(string targetUrl)
         {
             return base.DownloadString(targetUrl).ResponseContent;
         }

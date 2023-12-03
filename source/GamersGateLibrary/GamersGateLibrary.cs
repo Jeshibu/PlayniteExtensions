@@ -48,18 +48,21 @@ namespace GamersGateLibrary
                 case OnImportAction.DoNothing:
                     return new GameMetadata[0];
                 case OnImportAction.ImportWithoutPrompt:
-                    break;
+                case OnImportAction.ImportOffscreen:
                 default:
                     break;
             }
 
-            var webView = new WebViewWrapper(PlayniteApi);
+            bool offscreen = settings.Settings.ImportAction == OnImportAction.ImportOffscreen;
+
+            var webView = new WebViewWrapper(PlayniteApi, offscreen: offscreen, timeoutSeconds: offscreen ? 15 : 60);
+
             try
             {
                 Scraper.SetWebRequestDelay(settings.Settings.MinimumWebRequestDelay, settings.Settings.MaximumWebRequestDelay);
-                var data = Scraper.GetAllGames(webView).ToList();
-                var output = new List<GameMetadata>(data.Count);
-                foreach (var g in data)
+                var data = Scraper.GetAllGames(webView, settings.Settings.KnownOrderIds.ToArray());
+                var output = new List<GameMetadata>(data.Games.Count);
+                foreach (var g in data.Games)
                 {
                     if (!settings.Settings.InstallData.TryGetValue(g.Id, out var installInfo))
                     {
@@ -93,6 +96,7 @@ namespace GamersGateLibrary
                     output.Add(metadata);
                 }
 
+                settings.Settings.KnownOrderIds = data.OrderIds;
                 SavePluginSettings(settings.Settings);
 
                 return output;

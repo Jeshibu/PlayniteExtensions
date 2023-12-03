@@ -7,7 +7,7 @@ namespace GamersGateLibrary
 {
     public interface IWebViewWrapper : IDisposable
     {
-        string DownloadPageSource(string targetUrl, int timeoutSeconds = 60);
+        string DownloadPageSource(string targetUrl);
     }
 
     /// <summary>
@@ -15,12 +15,19 @@ namespace GamersGateLibrary
     /// </summary>
     public class WebViewWrapper : IWebViewWrapper
     {
-        public WebViewWrapper(IPlayniteAPI playniteAPI, int width = 675, int height = 600)
+        public WebViewWrapper(IPlayniteAPI playniteAPI, int width = 675, int height = 600, bool offscreen = false, int timeoutSeconds = 60)
         {
+            Offscreen = offscreen;
+            TimeoutSeconds = timeoutSeconds;
             view = System.Windows.Application.Current.Dispatcher.Invoke(() =>
             {
-                var v = playniteAPI.WebViews.CreateView(width, height, Colors.Black);
-                v.Open();
+                IWebView v = offscreen
+                    ? playniteAPI.WebViews.CreateOffscreenView()
+                    : playniteAPI.WebViews.CreateView(width, height, Colors.Black);
+
+                if (!offscreen)
+                    v.Open();
+
                 return v;
             });
             view.LoadingChanged += View_LoadingChanged;
@@ -29,22 +36,23 @@ namespace GamersGateLibrary
         private readonly IWebView view;
         private readonly ILogger logger = LogManager.GetLogger();
         private readonly object requestLifespanLock = new object();
-
+        public bool Offscreen { get; }
+        public int TimeoutSeconds { get; }
         public string TargetUrl { get; private set; }
         private TaskCompletionSource<string> DownloadCompletionSource { get; set; }
 
-        public string DownloadPageSource(string targetUrl, int timeoutSeconds = 60)
+        public string DownloadPageSource(string targetUrl)
         {
             lock (requestLifespanLock)
             {
-                logger.Debug($"Getting {targetUrl}, timeout {timeoutSeconds} seconds");
+                logger.Debug($"Getting {targetUrl}, timeout {TimeoutSeconds} seconds");
                 TargetUrl = targetUrl;
 
                 DownloadCompletionSource = new TaskCompletionSource<string>();
 
                 view.Navigate(targetUrl);
 
-                DownloadCompletionSource.Task.Wait(timeoutSeconds * 1000);
+                DownloadCompletionSource.Task.Wait(TimeoutSeconds * 1000);
                 if (DownloadCompletionSource.Task.IsCompleted)
                 {
                     string source = DownloadCompletionSource.Task.Result;
@@ -59,7 +67,7 @@ namespace GamersGateLibrary
             }
         }
 
-        private static bool IsAuthenticated(string pageSource)
+        public static bool IsAuthenticated(string pageSource)
         {
             bool authenticated = pageSource.Contains(@"navigation-link--icon-user");
             return authenticated;

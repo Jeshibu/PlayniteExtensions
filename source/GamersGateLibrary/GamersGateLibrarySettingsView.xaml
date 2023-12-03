@@ -5,61 +5,73 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:gamersgate="clr-namespace:GamersGateLibrary"
+             d:DataContext="{d:DesignInstance Type=gamersgate:GamersGateLibrarySettingsViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel Margin="20">
-        <TextBlock TextWrapping="Wrap">GamersGate uses CloudFlare to ward off scrapers such as us. It frequently blocks scraping attempts with CAPTCHAs, requiring user intervention. For this reason, the import process opens a web view and requires your presence and attention. You have 60 seconds to move from any CAPTCHA or login page to the intended web page during import. Do not close the web view during import.</TextBlock>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
-            <TextBlock>When importing:</TextBlock>
-            <ComboBox IsEditable="False" Margin="10,0,0,0" MinWidth="150"
+    
+    <ScrollViewer Margin="20">
+        <StackPanel ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <TextBlock TextWrapping="Wrap">GamersGate uses CloudFlare to ward off scrapers such as us. It frequently blocks scraping attempts with CAPTCHAs, requiring user intervention. For this reason, the import process opens a web view and requires your presence and attention. You have 60 seconds to move from any CAPTCHA or login page to the intended web page during import. Do not close the web view during import.</TextBlock>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
+                <TextBlock VerticalAlignment="Center">When importing:</TextBlock>
+                <ComboBox IsEditable="False" Margin="10,0,0,0" MinWidth="150"
                       SelectedValue="{Binding Settings.ImportAction}"
                       gamersgate:SelectorBehaviors.EnumSource="{x:Type gamersgate:OnImportAction}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
+                <Button Content="Authenticate" Command="{Binding LoginCommand}"/>
+                <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">
+                    <TextBlock.Tag>
+                        <PriorityBinding>
+                            <Binding Path="AuthStatus" IsAsync="True" />
+                            <Binding Source="{x:Static gamersgate:AuthStatus.Checking}" />
+                        </PriorityBinding>
+                    </TextBlock.Tag>
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                            <Style.Triggers>
+                                <Trigger Property="Tag" Value="{x:Static gamersgate:AuthStatus.Checking}">
+                                    <Setter Property="Text" Value="Checking..." />
+                                </Trigger>
+                                <Trigger Property="Tag" Value="{x:Static gamersgate:AuthStatus.Ok}">
+                                    <Setter Property="Text" Value="Logged in" />
+                                </Trigger>
+                                <Trigger Property="Tag" Value="{x:Static gamersgate:AuthStatus.AuthRequired}">
+                                    <Setter Property="Text" Value="Requires authentication" />
+                                </Trigger>
+                                <Trigger Property="Tag" Value="{x:Static gamersgate:AuthStatus.Failed}">
+                                    <Setter Property="Text" Value="Failed to check authentication status" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+
+            <CheckBox Content="Apply cover images when available (these are small)" IsChecked="{Binding Settings.UseCoverImages}" Margin="0,20" />
+
+            <TextBlock>Web request delay (in milliseconds)</TextBlock>
+            <Grid Width="Auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="25" />
+                </Grid.RowDefinitions>
+                <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Margin="0,0,10,0">Minimum</TextBlock>
+                <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Margin="0,0,10,0">Maximum</TextBlock>
+                <xctk:IntegerUpDown Value="{Binding Settings.MinimumWebRequestDelay}" Width="100" VerticalAlignment="Center" Minimum="0" x:Name="MinimumDelay" Grid.Column="1" Grid.Row="0" />
+                <xctk:IntegerUpDown Value="{Binding Settings.MaximumWebRequestDelay}" Width="100" VerticalAlignment="Center" Minimum="0" x:Name="MaximumDelay" Grid.Column="1" Grid.Row="1"/>
+            </Grid>
+
+            <TextBlock TextWrapping="Wrap" Margin="0,10,0,5">To save time, orders that have been imported before are skipped during import. To re-import games you've deleted from Playnite, clear the known order cache.</TextBlock>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock VerticalAlignment="Center">Orders in cache:</TextBlock>
+                <TextBlock Text="{Binding Settings.KnownOrderIds.Count}" MinWidth="50" Margin="5,0" d:Text="21" TextAlignment="Center" VerticalAlignment="Center"/>
+                <Button Content="Clear" Command="{Binding ClearKnownOrderIdsCommand}" Padding="5,2" VerticalAlignment="Center"/>
+            </StackPanel>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,15,5,5" HorizontalAlignment="Left">
-            <Button Content="Authenticate" Command="{Binding LoginCommand}"/>
-            <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">
-                <TextBlock.Tag>
-                    <PriorityBinding>
-                        <Binding Path="AuthStatus" IsAsync="True" />
-                        <Binding Source="{x:Static gamersgate:AuthStatus.Checking}" />
-                    </PriorityBinding>
-                </TextBlock.Tag>
-                <TextBlock.Style>
-                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
-                        <Style.Triggers>
-                            <Trigger Property="Tag" Value="{x:Static gamersgate:AuthStatus.Checking}">
-                                <Setter Property="Text" Value="Checking..." />
-                            </Trigger>
-                            <Trigger Property="Tag" Value="{x:Static gamersgate:AuthStatus.Ok}">
-                                <Setter Property="Text" Value="Logged in" />
-                            </Trigger>
-                            <Trigger Property="Tag" Value="{x:Static gamersgate:AuthStatus.AuthRequired}">
-                                <Setter Property="Text" Value="Requires authentication" />
-                            </Trigger>
-                            <Trigger Property="Tag" Value="{x:Static gamersgate:AuthStatus.Failed}">
-                                <Setter Property="Text" Value="Failed to check authentication status" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
-        </StackPanel>
-        <CheckBox Content="Apply cover images when available (these are small)" IsChecked="{Binding Settings.UseCoverImages}" Margin="0,20" />
-        
-        <TextBlock>Web request delay (in milliseconds)</TextBlock>
-        <Grid Width="Auto">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="25" />
-                <RowDefinition Height="25" />
-            </Grid.RowDefinitions>
-            <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Margin="0,0,10,0">Minimum</TextBlock>
-            <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" Margin="0,0,10,0">Maximum</TextBlock>
-            <xctk:IntegerUpDown Value="{Binding Settings.MinimumWebRequestDelay}" Width="100" VerticalAlignment="Center" Minimum="0" x:Name="MinimumDelay" Grid.Column="1" Grid.Row="0" />
-            <xctk:IntegerUpDown Value="{Binding Settings.MaximumWebRequestDelay}" Width="100" VerticalAlignment="Center" Minimum="0" x:Name="MaximumDelay" Grid.Column="1" Grid.Row="1"/>
-        </Grid>
-    </StackPanel>
+    </ScrollViewer>
 </UserControl>

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Windows.Media;
 
 namespace GamersGateLibrary
@@ -16,7 +15,8 @@ namespace GamersGateLibrary
         private bool useCoverImages = true;
         private int minimumDelay = 2000;
         private int maximumDelay = 4000;
-        private OnImportAction importAction = OnImportAction.Prompt;
+        private OnImportAction importAction = OnImportAction.ImportOffscreen;
+        private HashSet<int> knownOrderIds = new HashSet<int>();
 
         public Dictionary<string, GameInstallInfo> InstallData { get => installData; set => SetValue(ref installData, value); }
 
@@ -25,6 +25,16 @@ namespace GamersGateLibrary
         public int MinimumWebRequestDelay { get => minimumDelay; set => SetValue(ref minimumDelay, value); }
         public int MaximumWebRequestDelay { get => maximumDelay; set => SetValue(ref maximumDelay, value); }
         public OnImportAction ImportAction { get => importAction; set => SetValue(ref importAction, value); }
+
+        public HashSet<int> KnownOrderIds { get => knownOrderIds; set => SetValue(ref knownOrderIds, value); }
+
+        public int Version { get; set; } = 1;
+
+        public void ClearKnownOrderIds()
+        {
+            KnownOrderIds.Clear();
+            OnPropertyChanged(nameof(KnownOrderIds));
+        }
     }
 
     public class GameInstallInfo
@@ -65,6 +75,9 @@ namespace GamersGateLibrary
 
         [Description("Import without asking")]
         ImportWithoutPrompt = 2,
+
+        [Description("Import offscreen")]
+        ImportOffscreen = 3,
     }
 
     public class GamersGateLibrarySettingsViewModel : PluginSettingsViewModel<GamersGateLibrarySettings, GamersGateLibrary>
@@ -103,24 +116,21 @@ namespace GamersGateLibrary
             var savedSettings = plugin.LoadPluginSettings<GamersGateLibrarySettings>();
 
             // LoadPluginSettings returns null if not saved data is available.
-            Settings = savedSettings ?? new GamersGateLibrarySettings();
+            Settings = savedSettings ?? new GamersGateLibrarySettings() { Version = CurrentVersion };
+
+            UpgradeSettings();
         }
 
-        public RelayCommand<object> LoginCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                Login();
-            });
-        }
+        public RelayCommand<object> LoginCommand => new RelayCommand<object>(a => Login());
+
+        public RelayCommand<object> ClearKnownOrderIdsCommand => new RelayCommand<object>(a => Settings.ClearKnownOrderIds());
 
         private void Login()
         {
             try
             {
                 string loginUrl = "https://www.gamersgate.com/login/";
-                int userId = 0;
-                List<Cookie> cookies = new List<Cookie>();
+                var cookies = new List<Cookie>();
                 using (var view = PlayniteApi.WebViews.CreateView(675, 540, Colors.Black))
                 {
                     view.LoadingChanged += async (s, e) =>
@@ -131,10 +141,8 @@ namespace GamersGateLibrary
                             if (!address.StartsWith(loginUrl))
                             {
                                 var source = await view.GetPageSourceAsync();
-                                var idMatch = Regex.Match(source, @"/images/avatar/current/(\d+)");
-                                if (idMatch.Success)
+                                if (WebViewWrapper.IsAuthenticated(source))
                                 {
-                                    userId = int.Parse(idMatch.Groups[1].Value);
                                     cookies.AddRange(view.GetCookies().Where(c => c.Domain.EndsWith("gamersgate.com")).Select(PlayniteConvert.ToCookie).ToList());
                                     view.Close();
                                 }
@@ -176,6 +184,22 @@ namespace GamersGateLibrary
                 errors.Add("Minimum web request delay can't be less than the maximum");
 
             return errors.Count == 0;
+        }
+
+        private int CurrentVersion = 2;
+
+        private void UpgradeSettings()
+        {
+            if (Settings.Version == CurrentVersion) return;
+
+            if (Settings.Version < 2 && Settings.InstallData.Count > 0 && Settings.KnownOrderIds.Count == 0)
+            {
+                Settings.KnownOrderIds = Settings.InstallData.Values.Select(x => x.OrderId).ToHashSet();
+                Settings.ImportAction = OnImportAction.ImportOffscreen;
+            }
+
+            Settings.Version = CurrentVersion;
+            Plugin.SavePluginSettings(Settings);
         }
     }
 }
