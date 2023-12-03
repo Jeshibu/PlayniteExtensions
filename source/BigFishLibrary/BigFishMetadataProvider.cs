@@ -27,6 +27,7 @@ namespace BigFishLibrary
                 Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
                 InstallDirectory = new FileInfo(registryDetails.ExecutablePath).DirectoryName,
                 IsInstalled = true,
+                Source = new MetadataNameProperty("Big Fish Games"),
             };
             if (!minimal)
             {

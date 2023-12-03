@@ -6,3 +6,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-12-03/BigFishLibrary_0_1.pext
     Changelog:
      - Initial release
+  - Version: 0.1.1
+    RequiredApiVersion: 6.10
+    ReleaseDate: 2023-12-03
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-12-03/BigFishLibrary_0_1_1.pext
+    Changelog:
+     - Added missing Source field value for newly imported games
