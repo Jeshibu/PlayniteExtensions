@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using PlayniteExtensions.Common;
+using System.IO;
 using Xunit;
 
 namespace LegacyGamesLibrary.Tests
