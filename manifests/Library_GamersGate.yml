@@ -27,6 +27,6 @@ Packages:
     ReleaseDate: 2023-12-03
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-12-03/GamersGateLibrary_0_2.pext
     Changelog:
-     - Fixed authenticated status not being detected correctly
-     - Added setting to import in the background (default for new users)
-     - Skip importing known orders (saves time)
+     - 'Fixed authenticated status not being detected correctly.'
+     - 'Added setting to import in the background. This is the default for new users.'
+     - 'Skip importing previously imported orders to save time.'
