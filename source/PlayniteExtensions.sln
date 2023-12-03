@@ -62,6 +62,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manifests", "Manifests", "{
 		..\manifests\Generic_itchIoBundleTagger.yaml = ..\manifests\Generic_itchIoBundleTagger.yaml
 		..\manifests\Generic_PathReplacer.yaml = ..\manifests\Generic_PathReplacer.yaml
 		..\manifests\Generic_SteamTagsImporter.yaml = ..\manifests\Generic_SteamTagsImporter.yaml
+		..\manifests\Library_BigFish.yaml = ..\manifests\Library_BigFish.yaml
 		..\manifests\Library_GamersGate.yml = ..\manifests\Library_GamersGate.yml
 		..\manifests\Library_Groupees.yml = ..\manifests\Library_Groupees.yml
 		..\manifests\Library_LegacyGames.yml = ..\manifests\Library_LegacyGames.yml

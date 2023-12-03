@@ -1,7 +1,14 @@
 ﻿Id: GamersGateLibrary
 Name: GamersGate library
 Author: Jeshibu
-Version: 0.1.2
+Version: 0.2
 Module: GamersGateLibrary.dll
 Type: GameLibrary
 Icon: icon.png
+Links:
+  - Name: GamersGate
+    Url: https://www.gamersgate.com/
+  - Name: GitHub repository
+    Url: https://github.com/Jeshibu/PlayniteExtensions
+  - Name: Support my work on Ko-fi
+    Url: https://ko-fi.com/Jeshibu

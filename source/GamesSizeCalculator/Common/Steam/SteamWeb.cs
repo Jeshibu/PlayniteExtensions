@@ -78,44 +78,6 @@ namespace SteamCommon
             return results;
         }
 
-        private static void GetCurrencyFromSearchPriceDiv(AngleSharp.Dom.IElement element, out string currency, out bool isReleased, out bool isFree)
-        {
-            if (element.ChildElementCount == 2)
-            {
-                // Discounted Item
-                isReleased = true;
-                currency = GetCurrencyFromPriceString(element.Children[0].Children[0].InnerHtml);
-                isFree = currency == null;
-            }
-            else if (!element.InnerHtml.IsNullOrWhiteSpace())
-            {
-                // Non discounted item
-                isReleased = true;
-                currency = GetCurrencyFromPriceString(element.InnerHtml);
-                isFree = currency == null;
-            }
-            else
-            {
-                // Unreleased
-                isReleased = false;
-                currency = null;
-                isFree = false;
-            }
-
-            return;
-        }
-
-        private static string GetCurrencyFromPriceString(string priceString)
-        {
-            if (!Regex.IsMatch(priceString, @"\d"))
-            {
-                // Game is free
-                return null;
-            }
-
-            return Regex.Match(priceString, @"[^\s]+").Value;
-        }
-
         private static string GetStoreSearchUrl(string searchTerm, string steamApiCountry)
         {
             var searchUrl = string.Format(steamGameSearchUrl, searchTerm);

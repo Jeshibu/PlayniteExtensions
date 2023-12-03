@@ -61,6 +61,7 @@ function Get-ProjectNames {
     )
     $projectNames = @{
         "barnite"             = @("Barnite")
+        "bigfish"             = @("BigFishLibrary")
         "gamersgate"          = @("GamersGateLibrary")
         "gamessizecalculator" = @("GamesSizeCalculator")
         "giantbomb"           = @("GiantBombMetadata")
@@ -76,7 +77,6 @@ function Get-ProjectNames {
         "steamtagsimporter"   = @("SteamTagsImporter")
         "viveport"            = @("ViveportLibrary")
         "xbox"                = @("XboxMetadata")
-        #"steamactions"        = @("SteamActions")
     }
 
     if ($tagProjectName -eq "all") {

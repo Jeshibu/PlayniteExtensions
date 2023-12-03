@@ -5,3 +5,10 @@ Version: 0.1
 Module: BigFishLibrary.dll
 Type: GameLibrary
 Icon: icon.png
+Links:
+  - Name: Big Fish Games
+    Url: https://www.bigfishgames.com/
+  - Name: GitHub repository
+    Url: https://github.com/Jeshibu/PlayniteExtensions
+  - Name: Support my work on Ko-fi
+    Url: https://ko-fi.com/Jeshibu

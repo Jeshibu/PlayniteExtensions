@@ -5,3 +5,10 @@ Version: 0.3.1
 Module: ViveportLibrary.dll
 Type: GameLibrary
 Icon: icon.png
+Links:
+  - Name: Viveport
+    Url: https://www.viveport.com/
+  - Name: GitHub repository
+    Url: https://github.com/Jeshibu/PlayniteExtensions
+  - Name: Support my work on Ko-fi
+    Url: https://ko-fi.com/Jeshibu

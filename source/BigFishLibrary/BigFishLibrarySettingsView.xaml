@@ -6,6 +6,6 @@
              mc:Ignorable="d"
              d:DesignHeight="400" Width="526">
     <StackPanel Margin="20">
-        <TextBlock TextWrapping="Wrap" Text="There are no settings right now, install info is gathered from the registry and requires the Big Fish client."/>
+        <TextBlock TextWrapping="Wrap" Text="There are no settings right now. Install info is gathered from the registry and requires the Big Fish client."/>
     </StackPanel>
 </UserControl>
