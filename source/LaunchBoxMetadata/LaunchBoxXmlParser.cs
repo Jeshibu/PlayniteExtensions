@@ -31,7 +31,7 @@ namespace LaunchBoxMetadata
             data.GameImages = xdoc.Root.Descendants("GameImage")
                 .Select(ParseGameImage).Where(FilterObject).ToList();
 
-            logger.Info($"Parsed {data.Games?.Count()} games, {data.GameAlternateNames?.Count()} alternate game names, {data.GameImages?.Count()} images");
+            logger.Info($"Parsed {data.Games.Count} games, {data.GameAlternateNames.Count} alternate game names, {data.GameImages.Count} images");
 
             return data;
         }

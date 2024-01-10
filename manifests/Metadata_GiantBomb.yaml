@@ -89,3 +89,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-07-26/GiantBombMetadata_0_7_1.pext
     Changelog:
      - Fixed title matching for automated metadata collection for games with alternate titles
+  - Version: 0.8
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2024-01-10
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-01-10/GiantBombMetadata_0_8.pext
+    Changelog:
+     - Added Objects to bulk property import
