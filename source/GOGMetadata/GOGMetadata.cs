@@ -15,6 +15,8 @@ namespace GOGMetadata
 
         public override Guid Id { get; } = Guid.Parse("fec6f5ee-4036-47e6-9ade-8e22dd63f93e");
 
+        public static Guid GogLibraryPluginId { get; } = Guid.Parse("AEBE8B7C-6DC3-4A66-AF31-E7375C6B5E9E");
+
         public override List<MetadataField> SupportedFields => GOGMetadataProvider.Fields;
 
         public override string Name => "GOG";

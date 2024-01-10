@@ -91,6 +91,9 @@ namespace GOGMetadata
 
         public bool TryGetDetails(Game game, out GameDetails gameDetails, CancellationToken cancellationToken)
         {
+            if(game.PluginId == GOGMetadata.GogLibraryPluginId)
+                return GetDetails
+
             gameDetails = null;
             return false;
         }
@@ -170,7 +173,7 @@ namespace GOGMetadata
 
         public IEnumerable<GogSearchResponse.Product> Search(string query, CancellationToken cancellationToken = default)
         {
-            var url = $"https://catalog.gog.com/v1/catalog?limit=20&locale={settings.Locale}&order=desc%3Ascore&page=1&productType=in%3Agame&query=like%3A{WebUtility.UrlEncode(query)}";
+            var url = $"https://catalog.gog.com/v1/catalog?limit=20&locale={settings.Locale}&order=desc:score&page=1&productType=in:game,pack&query=like:{WebUtility.UrlEncode(query)}";
 
             try
             {
