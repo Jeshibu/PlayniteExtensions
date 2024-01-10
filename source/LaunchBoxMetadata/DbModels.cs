@@ -4,7 +4,7 @@ using System;
 namespace LaunchBoxMetadata
 {
     [SQLiteTable(Name = "Games")]
-    public class LaunchBoxGame
+    public class LaunchBoxGame : IDatabaseObject
     {
         [SQLiteColumn(IsPrimaryKey = true)]
         public string DatabaseID { get; set; }
@@ -27,14 +27,14 @@ namespace LaunchBoxMetadata
     }
 
     [SQLiteTable(Name = "GameNames", Module = "fts5", ModuleArguments = nameof(DatabaseID) + "," + nameof(Name))]
-    public class LaunchBoxGameName
+    public class LaunchBoxGameName : IDatabaseObject
     {
         public string DatabaseID { get; set; }
         public string Name { get; set; }
     }
 
     [SQLiteTable(Name = "GameImages")]
-    public class LaunchBoxGameImage
+    public class LaunchBoxGameImage : IDatabaseObject
     {
         public string DatabaseID { get; set; }
 
@@ -47,9 +47,17 @@ namespace LaunchBoxMetadata
         public string Region { get; set; }
 
         public uint CRC32 { get; set; }
+
+        string IDatabaseObject.Name => FileName;
     }
 
-    public class LaunchboxGameSearchResult:LaunchBoxGame
+    public interface IDatabaseObject
+    {
+        string DatabaseID { get; }
+        string Name { get; }
+    }
+
+    public class LaunchboxGameSearchResult : LaunchBoxGame
     {
         public string MatchedName { get; set; }
     }

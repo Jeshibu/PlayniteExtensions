@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Playnite.SDK;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace LaunchBoxMetadata
     public class LaunchBoxXmlParser
     {
         private readonly string xmlPath;
+        private readonly ILogger logger = LogManager.GetLogger();
 
         public LaunchBoxXmlParser(string xmlPath)
         {
@@ -20,11 +22,28 @@ namespace LaunchBoxMetadata
             var data = new XmlData();
             var xdoc = XDocument.Load(xmlPath);
 
-            data.Games = xdoc.Root.Descendants("Game").Select(ParseGame);
-            data.GameAlternateNames = xdoc.Root.Descendants("GameAlternateName").Select(ParseGameAlternateName);
-            data.GameImages = xdoc.Root.Descendants("GameImage").Select(ParseGameImage);
+            data.Games = xdoc.Root.Descendants("Game")
+                .Select(ParseGame).Where(FilterObject).ToList();
+
+            data.GameAlternateNames = xdoc.Root.Descendants("GameAlternateName")
+                .Select(ParseGameAlternateName).Where(FilterObject).ToList();
+
+            data.GameImages = xdoc.Root.Descendants("GameImage")
+                .Select(ParseGameImage).Where(FilterObject).ToList();
+
+            logger.Info($"Parsed {data.Games?.Count()} games, {data.GameAlternateNames?.Count()} alternate game names, {data.GameImages?.Count()} images");
 
             return data;
+        }
+
+        private bool FilterObject(IDatabaseObject obj)
+        {
+            var emptyId = string.IsNullOrEmpty(obj.DatabaseID);
+
+            if (emptyId)
+                logger.Warn($"No ID for {obj.GetType()} {obj.Name}");
+
+            return !emptyId;
         }
 
         private static LaunchBoxGameName ParseGameAlternateName(XElement n)
@@ -32,8 +51,8 @@ namespace LaunchBoxMetadata
             try
             {
                 var altName = new LaunchBoxGameName();
-                altName.DatabaseID = n.Element("DatabaseID").Value;
-                altName.Name = n.Element("AlternateName").Value;
+                altName.DatabaseID = n.Element("DatabaseID")?.Value;
+                altName.Name = n.Element("AlternateName")?.Value;
                 return altName;
             }
             catch (Exception ex)
@@ -47,7 +66,7 @@ namespace LaunchBoxMetadata
             try
             {
                 var game = new LaunchBoxGame();
-                game.Name = g.Element("Name").Value;
+                game.Name = g.Element("Name")?.Value;
                 if (DateTime.TryParse(g.Element("ReleaseDate")?.Value, out DateTime releaseDate))
                     game.ReleaseDate = releaseDate;
 
@@ -64,11 +83,12 @@ namespace LaunchBoxMetadata
 
                 game.WikipediaURL = g.Element("WikipediaURL")?.Value;
                 game.VideoURL = g.Element("VideoURL")?.Value;
-                game.DatabaseID = g.Element("DatabaseID").Value;
+                game.DatabaseID = g.Element("DatabaseID")?.Value;
+
                 if (double.TryParse(g.Element("CommunityRating")?.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out double communityRating))
                     game.CommunityRating = communityRating;
 
-                game.Platform = g.Element("Platform").Value;
+                game.Platform = g.Element("Platform")?.Value;
                 game.ESRB = g.Element("ESRB")?.Value;
                 game.CommunityRatingCount = int.Parse(g.Element("CommunityRatingCount").Value);
                 game.Genres = g.Element("Genres")?.Value;
@@ -87,8 +107,8 @@ namespace LaunchBoxMetadata
             try
             {
                 var img = new LaunchBoxGameImage();
-                img.DatabaseID = i.Element("DatabaseID").Value;
-                img.FileName = i.Element("FileName").Value;
+                img.DatabaseID = i.Element("DatabaseID")?.Value;
+                img.FileName = i.Element("FileName")?.Value;
                 img.Type = i.Element("Type")?.Value;
                 img.Region = i.Element("Region")?.Value;
                 if (uint.TryParse(i.Element("CRC32")?.Value, out uint crc32))
@@ -104,8 +124,8 @@ namespace LaunchBoxMetadata
 
     public class XmlData
     {
-        public IEnumerable<LaunchBoxGame> Games { get; set; }
-        public IEnumerable<LaunchBoxGameName> GameAlternateNames { get; set; }
-        public IEnumerable<LaunchBoxGameImage> GameImages { get; set; }
+        public ICollection<LaunchBoxGame> Games { get; set; }
+        public ICollection<LaunchBoxGameName> GameAlternateNames { get; set; }
+        public ICollection<LaunchBoxGameImage> GameImages { get; set; }
     }
 }
