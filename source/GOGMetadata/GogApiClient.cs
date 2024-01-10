@@ -30,6 +30,9 @@ namespace GOGMetadata
 
         public StorePageResult.ProductDetails GetGameStoreData(GogSearchResponse.Product product)
         {
+            if (product?.slug == null)
+                return null;
+
             string url = $"https://www.gog.com/en/game/{product.slug}";
             string[] data;
 
@@ -47,7 +50,7 @@ namespace GOGMetadata
             foreach (var line in data)
             {
                 var trimmed = line.TrimStart();
-                if (line.TrimStart().StartsWith("window.productcardData"))
+                if (trimmed.StartsWith("window.productcardData"))
                 {
                     dataStarted = true;
                     stringData = trimmed.Substring(25).TrimEnd(';');
@@ -91,9 +94,6 @@ namespace GOGMetadata
 
         public bool TryGetDetails(Game game, out GameDetails gameDetails, CancellationToken cancellationToken)
         {
-            if(game.PluginId == GOGMetadata.GogLibraryPluginId)
-                return GetDetails
-
             gameDetails = null;
             return false;
         }
