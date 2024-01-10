@@ -6,6 +6,8 @@ using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Web;
 
 namespace GiantBombMetadata.Api
 {
@@ -55,6 +57,31 @@ namespace GiantBombMetadata.Api
                 url = pagination?.NextPageUrl;
             } while (pagination?.NextPageUrl != null);
         }
+
+        public IEnumerable<GiantBombSearchResultItem> SearchObjects(string query)
+        {
+            var url = "https://www.giantbomb.com/search/?i=object&q=" + HttpUtility.UrlEncode(query);
+            var response = downloader.DownloadString(url);
+            var htmlDocument = new HtmlParser().Parse(response.ResponseContent);
+            var items = htmlDocument.QuerySelectorAll("ul.search-results a");
+            foreach (var item in items)
+            {
+                var itemUrl = item.Attributes["href"].Value;
+
+                var itemId = giantBombItemIdRegex.Match(itemUrl).Value;
+
+                yield return new GiantBombSearchResultItem
+                {
+                    Name = item.QuerySelector(".title")?.TextContent?.Trim(),
+                    Deck = item.QuerySelector(".deck")?.TextContent?.Trim(),
+                    ResourceType = "object",
+                    SiteDetailUrl = itemUrl,
+                    Guid = itemId,
+                };
+            }
+        }
+
+        private Regex giantBombItemIdRegex = new Regex("3[0-9]{3}-[0-9]+", RegexOptions.Compiled);
 
         private PaginationInfo GetPaginationInfo(string url, IHtmlDocument htmlDocument)
         {
