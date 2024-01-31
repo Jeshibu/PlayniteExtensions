@@ -35,7 +35,7 @@ namespace LaunchBoxMetadata
 
             var parser = new HtmlParser();
             var doc = parser.Parse(response.ResponseContent);
-            var gameTitle = doc.QuerySelector("h3.profile-header-user").TextContent;
+            var gameTitle = doc.QuerySelector("div.heading > h1").TextContent;
             var imageLinks = doc.QuerySelectorAll("a[data-gameimagekey]");
             foreach (var l in imageLinks)
             {
@@ -50,10 +50,11 @@ namespace LaunchBoxMetadata
                     imgDetails.Height = int.Parse(footerMatch.Groups["height"].Value);
                 }
 
-                var imgElement = l.QuerySelector("img");
                 var dataTitle = l.GetAttribute("data-title");
                 imgDetails.Type = GetImageType(dataTitle, gameTitle, out string region);
                 imgDetails.Region = region;
+
+                var imgElement = l.QuerySelector("img");
                 imgDetails.ThumbnailUrl = imgElement.GetAttribute("src");
                 yield return imgDetails;
             }

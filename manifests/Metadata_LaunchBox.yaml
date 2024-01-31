@@ -76,3 +76,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-01-10/LaunchBoxMetadata_0_6_3.pext
     Changelog:
     - Fixed database import process choking on broken data
+  - Version: 0.6.4
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2024-01-31
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-01-31/LaunchBoxMetadata_0_6_4.pext
+    Changelog:
+    - Fixed image fetching

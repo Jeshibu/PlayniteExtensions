@@ -18,7 +18,6 @@ namespace LaunchBoxMetadata
         public LaunchBoxImageSourceSettings Icon { get; set; }
         public LaunchBoxImageSourceSettings Cover { get; set; }
         public LaunchBoxImageSourceSettings Background { get; set; }
-        //public string[][] RegionGroupings { get; set; }
         public ObservableCollection<RegionSetting> Regions { get; set; } = new ObservableCollection<RegionSetting>();
         public bool PreferGameRegion { get; set; } = true;
 
