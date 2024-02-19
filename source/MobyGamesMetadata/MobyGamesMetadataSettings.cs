@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace MobyGamesMetadata
 {
-    public class MobyGamesMetadataSettings : ObservableObject
+    public class MobyGamesMetadataSettings : BulkImportPluginSettings
     {
         private string apiKey;
 
@@ -41,8 +41,6 @@ namespace MobyGamesMetadata
             MinHeight = 600,
             AspectRatio = AspectRatio.Any,
         };
-
-        public int MaxDegreeOfParallelism { get; set; } = Environment.ProcessorCount;
     }
 
     public class MobyGamesGenreSetting : ObservableObject, IHasName
@@ -114,10 +112,11 @@ namespace MobyGamesMetadata
             if (savedSettings != null)
             {
                 Settings = savedSettings;
+                UpgradeSettings();
             }
             else
             {
-                Settings = new MobyGamesMetadataSettings();
+                Settings = new MobyGamesMetadataSettings() { Version = 1 };
             }
             InitializeGenres();
         }
@@ -216,6 +215,14 @@ namespace MobyGamesMetadata
             {
                 s.ImportTarget = target;
             }
+        }
+
+        private void UpgradeSettings()
+        {
+            if (Settings.Version < 1)
+                Settings.MaxDegreeOfParallelism = MobyGamesMetadataSettings.GetDefaultMaxDegreeOfParallelism();
+
+            Settings.Version = 1;
         }
     }
 }

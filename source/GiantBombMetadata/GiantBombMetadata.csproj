@@ -125,6 +125,9 @@
     <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkGamePropertyAssigner.cs">
       <Link>Common\Metadata\BulkGamePropertyAssigner.cs</Link>
     </Compile>
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkImportPluginSettings.cs">
+      <Link>Common\Metadata\BulkImportPluginSettings.cs</Link>
+    </Compile>
     <Compile Include="..\PlayniteExtensions.Metadata.Common\GameDetails.cs">
       <Link>Common\Metadata\GameDetails.cs</Link>
     </Compile>

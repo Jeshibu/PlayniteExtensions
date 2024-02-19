@@ -10,6 +10,8 @@ using PlayniteExtensions.Common;
 using System.Windows.Controls;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Collections.Concurrent;
+using System.Threading;
 
 namespace PlayniteExtensions.Metadata.Common
 {
@@ -90,6 +92,34 @@ namespace PlayniteExtensions.Metadata.Common
 
         protected abstract string GetGameIdFromUrl(string url);
 
+        private IDictionary<string, IList<Game>> GetGamesById(CancellationToken cancellationToken, out IReadOnlyCollection<Game> unmatchedGames)
+        {
+            var gamesById = new ConcurrentDictionary<string, IList<Game>>();
+            var umg = new ConcurrentBag<Game>();
+            unmatchedGames = umg;
+
+            var options = new ParallelOptions { CancellationToken = cancellationToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
+
+            Parallel.ForEach(playniteApi.Database.Games, options, game =>
+            {
+                var ids = game.Links?.Select(l => GetGameIdFromUrl(l.Url)).Where(x => x != null).ToList() ?? new List<string>();
+                if (ids.Any())
+                {
+                    foreach (var id in ids)
+                    {
+                        gamesById.AddOrUpdate(id, new List<Game> { game },
+                            (string i, IList<Game> existing) => { existing.Add(game); return existing; });
+                    }
+                }
+                else
+                {
+                    umg.Add(game);
+                }
+            });
+
+            return gamesById;
+        }
+
         private GamePropertyImportViewModel PromptGamePropertyImportUserApproval(TSearchItem selectedItem, List<GameDetails> gamesToMatch)
         {
             var importSetting = GetPropertyImportSetting(selectedItem, out string propName);
@@ -107,7 +137,11 @@ namespace PlayniteExtensions.Metadata.Common
             bool loopCompleted = false;
             playniteApi.Dialogs.ActivateGlobalProgress(a =>
             {
-                a.ProgressMaxValue = gamesToMatch.Count;
+                a.ProgressMaxValue = gamesToMatch.Count + 1;
+
+                var gamesById = GetGamesById(a.CancelToken, out var gamesWithNoKnownId);
+                a.CurrentProgressValue++;
+
                 ParallelOptions parallelOptions = new ParallelOptions() { CancellationToken = a.CancelToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
                 var loopResult = Parallel.For(0, gamesToMatch.Count, parallelOptions, i =>
                 {
@@ -125,20 +159,14 @@ namespace PlayniteExtensions.Metadata.Common
                     }
 
                     var gameToMatchId = GetGameIdFromUrl(gbGame.Url);
-                    foreach (var g in playniteApi.Database.Games)
+                    if (gamesById.TryGetValue(gameToMatchId, out var gamesWithThisId))
                     {
-                        if (g.Links != null && gameToMatchId != null)
-                        {
-                            var ids = g.Links.Select(l => GetGameIdFromUrl(l.Url)).Where(x => x != null).ToList();
-                            if (ids.Count > 0)
-                            {
-                                if (ids.Contains(gameToMatchId) && addedGameIds.Add(g.Id))
-                                    matchingGames.Add(new GameCheckboxViewModel(g, gbGame));
+                        foreach (var g in gamesWithThisId)
+                            matchingGames.Add(new GameCheckboxViewModel(g, gbGame));
+                    }
 
-                                continue;
-                            }
-                        }
-
+                    foreach (var g in gamesWithNoKnownId)
+                    {
                         if (!deflatedNames.TryGetValue(g.Name, out string gName))
                         {
                             gName = snc.Convert(g.Name).Deflate();

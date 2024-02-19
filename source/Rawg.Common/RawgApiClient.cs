@@ -36,7 +36,7 @@ namespace Rawg.Common
             if(response == null)
             {
                 logger.Debug("No response");
-                return default(T);
+                return default;
             }
             statusCode = response.StatusCode;
 
@@ -44,7 +44,8 @@ namespace Rawg.Common
             logger.Debug($"Response code {response.StatusCode} Content: {logContent}");
 
             if (string.IsNullOrWhiteSpace(response.Content))
-                return default(T);
+                return default;
+
             var output = JsonConvert.DeserializeObject<T>(response.Content);
             return output;
         }

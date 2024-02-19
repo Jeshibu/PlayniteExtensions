@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace GiantBombMetadata
 {
-    public class GiantBombMetadataSettings : ObservableObject
+    public class GiantBombMetadataSettings : BulkImportPluginSettings
     {
         private string apiKey;
 
@@ -27,7 +27,6 @@ namespace GiantBombMetadata
         public PropertyImportSetting People { get; set; } = new PropertyImportSetting { Prefix = "Person: ", ImportTarget = PropertyImportTarget.Ignore };
         public MultiValuedPropertySelectionMode FranchiseSelectionMode { get; set; } = MultiValuedPropertySelectionMode.All;
         public bool ShowTopPanelButton { get; set; } = true;
-        public int MaxDegreeOfParallelism { get; set; } = Environment.ProcessorCount;
     }
 
     public enum MultiValuedPropertySelectionMode
@@ -48,10 +47,11 @@ namespace GiantBombMetadata
             if (savedSettings != null)
             {
                 Settings = savedSettings;
+                UpgradeSettings();
             }
             else
             {
-                Settings = new GiantBombMetadataSettings();
+                Settings = new GiantBombMetadataSettings { Version = 1 };
             }
         }
 
@@ -76,5 +76,13 @@ namespace GiantBombMetadata
             { MultiValuedPropertySelectionMode.OnlyShortest, "Only the shortest one" },
             { MultiValuedPropertySelectionMode.OnlyLongest, "Only the longest one" },
         };
+
+        private void UpgradeSettings()
+        {
+            if (Settings.Version < 1)
+                Settings.MaxDegreeOfParallelism = GiantBombMetadataSettings.GetDefaultMaxDegreeOfParallelism();
+
+            Settings.Version = 1;
+        }
     }
 }

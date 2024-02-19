@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BulkGamePropertyAssigner.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)BulkImportPluginSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GamePropertyImportViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GenericItemOption.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GenericMetadataProvider.cs" />
