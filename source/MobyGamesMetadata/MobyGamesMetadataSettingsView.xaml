@@ -55,7 +55,7 @@
                     <TextBlock Text="Parallelism:" Grid.Row="4" Grid.Column="0"/>
                     <TextBox Grid.Row="4" Grid.Column="1" Width="100" HorizontalAlignment="Left" Margin="10" Text="{Binding Settings.MaxDegreeOfParallelism, Converter={StaticResource intConverter}}"/>
                     <TextBlock Grid.Row="5" Grid.ColumnSpan="3" TextWrapping="Wrap">
-                        Parallelism dictates how many simultaneous threads can be used to process the bulk property import game matching. It is recommended to not exceed the amount of cores in your CPU.
+                        Parallelism dictates how many simultaneous threads can be used to process the bulk property import game matching. It is recommended to set it lower than the amount of cores in your CPU.
                     </TextBlock>
                 </Grid>
             </StackPanel>

@@ -50,3 +50,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-10-29/MobyGamesMetadata_0_4_3.pext
     Changelog:
      - Fixed HTML entities in game names (for real this time)
+  - Version: 0.4.4
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-02-22
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-02-22/MobyGamesMetadata_0_4_4.pext
+    Changelog:
+     - Optimized game matching for bulk property import

@@ -95,3 +95,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-01-10/GiantBombMetadata_0_8.pext
     Changelog:
      - Added Objects to bulk property import
+  - Version: 0.8.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2024-02-22
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-02-22/GiantBombMetadata_0_8_1.pext
+    Changelog:
+     - Optimized game matching for bulk property import
