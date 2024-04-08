@@ -145,7 +145,7 @@ namespace PlayniteExtensions.Common
             return str?.IndexOf(value, 0, comparisonType) != -1;
         }
 
-        private static Regex installSizeRegex = new Regex(@"^(?<number>[0-9.]+) (?<scale>[KMGT]B)$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+        private static Regex installSizeRegex = new Regex(@"\b(?<number>[0-9.]+)\s+(?<scale>[KMGT]B)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
         public static ulong? ParseInstallSize(this string str, CultureInfo culture = null)
         {
             var match = installSizeRegex.Match(str);

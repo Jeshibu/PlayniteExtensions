@@ -1,3 +1,4 @@
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using System.Collections.Generic;
@@ -45,7 +46,9 @@ namespace PlayniteExtensions.Metadata.Common
 
         public string Url { get; set; }
 
-        public GameMetadata ToMetadata()
+        public string Version { get; internal set; }
+
+        public GameMetadata ToMetadata(IPlayniteAPI playniteAPI = null)
         {
             var metadata = new GameMetadata()
             {
@@ -55,9 +58,9 @@ namespace PlayniteExtensions.Metadata.Common
                 Links = Links.NullIfEmpty()?.ToList(),
                 CriticScore = CriticScore,
                 CommunityScore = CommunityScore,
-                Icon = GetFirstImage(IconOptions),
-                CoverImage = GetFirstImage(CoverOptions),
-                BackgroundImage = GetFirstImage(BackgroundOptions),
+                Icon = SelectImage(IconOptions, playniteAPI, "LOCSelectIconTitle"),
+                CoverImage = SelectImage(CoverOptions, playniteAPI, "LOCSelectCoverTitle"),
+                BackgroundImage = SelectImage(BackgroundOptions, playniteAPI, "LOCSelectBackgroundTitle"),
                 Series = ToMetadataProperties(Series),
                 AgeRatings = ToMetadataProperties(AgeRatings),
                 Platforms = Platforms.NullIfEmpty()?.ToHashSet(),
@@ -67,20 +70,29 @@ namespace PlayniteExtensions.Metadata.Common
                 Tags = ToMetadataProperties(Tags),
                 Features = ToMetadataProperties(Features),
                 InstallSize = InstallSize,
+                Version = Version,
             };
             return metadata;
         }
 
-        private MetadataFile GetFirstImage(List<IImageData> images)
+        private MetadataFile SelectImage(List<IImageData> images, IPlayniteAPI playniteAPI = null, string titleResourceKey = null)
         {
             if (images == null || images.Count == 0) return null;
-            return new MetadataFile(images.First().Url);
+
+            if (playniteAPI == null)
+                return new MetadataFile(images.First().Url);
+
+            var chosen = playniteAPI.Dialogs.ChooseImageFile(
+                images.Select(i => new ImageFileOption(i.Url)).ToList(),
+                playniteAPI?.Resources.GetString(titleResourceKey));
+
+            return chosen == null ? null : new MetadataFile(chosen.Path);
         }
 
         private HashSet<MetadataProperty> ToMetadataProperties(List<string> names)
         {
             if (names == null || names.Count == 0) return null;
-            return names.Select(n=>new MetadataNameProperty(n)).ToHashSet<MetadataProperty>();
+            return names.Select(n => new MetadataNameProperty(n)).ToHashSet<MetadataProperty>();
         }
     }
 }

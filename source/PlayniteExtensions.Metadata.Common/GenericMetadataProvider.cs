@@ -88,11 +88,10 @@ namespace PlayniteExtensions.Metadata.Common
                     {
                         var searchResult = dataSource.Search(a, new System.Threading.CancellationToken());
                         searchOutput.AddRange(searchResult.Select(dataSource.ToGenericItemOption));
-
                     }
                     catch (Exception e)
                     {
-                        logger.Error(e, $"Failed to get Giant Bomb search data for <{a}>");
+                        logger.Error(e, $"Failed to get {ProviderName} search data for <{a}>");
                     }
 
                     return searchOutput;

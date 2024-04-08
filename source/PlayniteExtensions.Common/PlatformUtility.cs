@@ -136,7 +136,7 @@ namespace PlayniteExtensions.Common
             TryAddPlatformByName(output, "SG1K", "sega_sg1000");
             TryAddPlatformByName(output, "SVIS", "watara_supervision");
             TryAddPlatformByName(output, "N3DS", "nintendo_3ds"); //New Nintendo 3DS, count it as part of 3DS for emulation purposes
-            TryAddPlatformByName(output, "NSW", "nintendo_switch");
+            TryAddPlatformByName(output, "NSW", "nintendo_switch");            
             return output;
         }
 
@@ -232,7 +232,7 @@ namespace PlayniteExtensions.Common
             { "ML1", "Magic Leap One" },
             { "BNA", "Advanced Pico Beena" },
             { "STAD", "Google Stadia" },
-            { "MQST", "Oculus Quest" },
+            { "MQST", "Meta Quest" },
             { "PLDT", "Playdate" },
             { "EVER", "Evercade" },
             { "AMIC", "Intellivision Amico" },
@@ -264,6 +264,8 @@ namespace PlayniteExtensions.Common
             { "ADAM", "Coleco Adam" },
             { "DVD", "DVD" },
             { "VTCV", "VTech CreatiVision" },
+            { "Quest", "Meta Quest" },
+            { "Oculus Quest", "Meta Quest" },
         };
 
         private static bool TryAddPlatformByName(Dictionary<string, string[]> dict, string platformName, params string[] platformSpecNames)
