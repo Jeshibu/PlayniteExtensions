@@ -86,7 +86,7 @@ function Get-ProjectNames {
         foreach ($key in $projectNames.Keys) {
             $o += $projectNames[$key]
         }
-        return $o
+        return $o | Sort-Object | Get-Unique
     }
     else {
         return $projectNames[$tagProjectName]
