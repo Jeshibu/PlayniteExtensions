@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GamesSizeCalculator.SteamSizeCalculation
 {
-    public class SteamSizeCalculator : IOnlineSizeCalculator
+    public class SteamSizeCalculator : ISizeCalculator
     {
         private ILogger logger = LogManager.GetLogger();
         public ISteamApiClient SteamApiClient { get; }

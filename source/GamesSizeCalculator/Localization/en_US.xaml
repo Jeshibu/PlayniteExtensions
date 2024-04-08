@@ -15,4 +15,7 @@
     <sys:String x:Key="LOCGame_Sizes_Calculator_SettingsExcludedRegionWordsHeaderLabel">Excluded region-words</sys:String>
 
     <sys:String x:Key="LOCGame_Sizes_Calculator_NotificationMessageErrorGetOnlineSize">Games Size Calculator: Error while getting estimated install size online from {0} for the game {1}. {2}</sys:String>
+
+    <sys:String x:Key="LOCGame_Sizes_Calculator_PS3_Option">Fix PS3 ROM install size</sys:String>
+    <sys:String x:Key="LOCGame_Sizes_Calculator_PS3_Progress">Fixing PS3 game install sizes</sys:String>
 </ResourceDictionary>

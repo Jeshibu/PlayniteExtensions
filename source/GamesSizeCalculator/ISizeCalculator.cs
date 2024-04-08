@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace GamesSizeCalculator
 {
-    public interface IOnlineSizeCalculator
+    public interface ISizeCalculator
     {
         string ServiceName { get; }
         Task<ulong?> GetInstallSizeAsync(Game game);

@@ -1,8 +1,7 @@
-﻿using GamesSizeCalculator.SteamSizeCalculation;
+﻿using GamesSizeCalculator.PS3;
+using GamesSizeCalculator.SteamSizeCalculation;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
-using PlayniteUtilitiesCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,7 +39,7 @@ namespace GamesSizeCalculator
 
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
-            onlineSizeCalculators.Clear();
+            sizeCalculators.Clear();
             return new GamesSizeCalculatorSettingsView();
         }
 
@@ -54,7 +53,7 @@ namespace GamesSizeCalculator
             return new SteamAppIdUtility(appListCache);
         }
 
-        private List<IOnlineSizeCalculator> onlineSizeCalculators { get; } = new List<IOnlineSizeCalculator>();
+        private List<ISizeCalculator> sizeCalculators { get; } = new List<ISizeCalculator>();
         private SteamApiClient steamApiClient;
 
         private SteamApiClient GetSteamApiClient()
@@ -62,21 +61,52 @@ namespace GamesSizeCalculator
             return steamApiClient ?? (steamApiClient = new SteamApiClient());
         }
 
-        private ICollection<IOnlineSizeCalculator> GetOnlineSizeCalculators()
+        private ICollection<ISizeCalculator> GetSizeCalculators()
         {
-            if (onlineSizeCalculators.Any())
-                return onlineSizeCalculators;
+            if (sizeCalculators.Any())
+                return sizeCalculators;
 
             if (settings.Settings.GetUninstalledGameSizeFromSteam)
-            {
-                onlineSizeCalculators.Add(new SteamSizeCalculator(GetSteamApiClient(), GetDefaultSteamAppUtility(), settings.Settings));
-            }
-            return onlineSizeCalculators;
+                sizeCalculators.Add(new SteamSizeCalculator(GetSteamApiClient(), GetDefaultSteamAppUtility(), settings.Settings));
+
+            return sizeCalculators;
         }
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new OnlineInstallSizeProvider(options.GameData, PlayniteApi, GetOnlineSizeCalculators());
+            return new InstallSizeProvider(options.GameData, PlayniteApi, GetSizeCalculators());
+        }
+
+        public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+        {
+            var ps3Calc = new PS3InstallSizeCalculator(PlayniteApi);
+            if (args.Games.Any(PS3InstallSizeCalculator.IsPs3Rom))
+                yield return new GameMenuItem { Description = PlayniteApi.Resources.GetString("LOCGame_Sizes_Calculator_PS3_Option"), Action = FixPs3RomInstallSize };
+        }
+
+        private void FixPs3RomInstallSize(GameMenuItemActionArgs args)
+        {
+            using (PlayniteApi.Database.BufferedUpdate())
+            PlayniteApi.Dialogs.ActivateGlobalProgress((GlobalProgressActionArgs a) =>
+            {
+                a.ProgressMaxValue = args.Games.Count;
+                
+                var ps3Calc = new PS3InstallSizeCalculator(PlayniteApi);
+                foreach (var g in args.Games)
+                {
+                    if (ps3Calc.IsPreferredInstallSizeCalculator(g))
+                    {
+                        var installSize = ps3Calc.GetInstallSize(g);
+                        if (installSize > 0 && g.InstallSize != installSize)
+                        {
+                            g.InstallSize = installSize;
+                            g.Modified = DateTime.Now;
+                            PlayniteApi.Database.Games.Update(g);
+                        }
+                    }
+                    a.CurrentProgressValue++;
+                }
+            }, new GlobalProgressOptions(PlayniteApi.Resources.GetString("LOCGame_Sizes_Calculator_PS3_Progress"), cancelable: true) { IsIndeterminate = false });
         }
 
         public override void Dispose()
@@ -84,101 +114,5 @@ namespace GamesSizeCalculator
             steamApiClient?.Dispose();
             base.Dispose();
         }
-    }
-
-    public class OnlineInstallSizeProvider : OnDemandMetadataProvider
-    {
-        public OnlineInstallSizeProvider(Game game, IPlayniteAPI playniteAPI, ICollection<IOnlineSizeCalculator> onlineSizeCalculators)
-        {
-            Game = game;
-            PlayniteApi = playniteAPI;
-            OnlineSizeCalculators = onlineSizeCalculators;
-        }
-
-        public override List<MetadataField> AvailableFields { get; } = new List<MetadataField> { MetadataField.InstallSize };
-        public Game Game { get; }
-        public IPlayniteAPI PlayniteApi { get; }
-        public ICollection<IOnlineSizeCalculator> OnlineSizeCalculators { get; }
-        private readonly ILogger logger = LogManager.GetLogger();
-
-        public override ulong? GetInstallSize(GetMetadataFieldArgs args)
-        {
-            ulong size = GetInstallSizeOnline();
-            return size == 0 ? (ulong?)null : size;
-        }
-
-        private ulong GetInstallSizeOnline(IOnlineSizeCalculator sizeCalculator)
-        {
-            try
-            {
-                var sizeTask = sizeCalculator.GetInstallSizeAsync(Game);
-                if (sizeTask.Wait(7000))
-                {
-                    return sizeTask.Result ?? 0L;
-                }
-                else
-                {
-                    logger.Warn($"Timed out while getting online {sizeCalculator.ServiceName} install size for {Game.Name}");
-                    return 0L;
-                }
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, $"Error while getting file size online from {sizeCalculator?.ServiceName} for {Game?.Name}");
-                PlayniteApi.Notifications.Add(
-                    new NotificationMessage("GetOnlineSizeError" + Game.Id.ToString(),
-                        string.Format(ResourceProvider.GetString("LOCGame_Sizes_Calculator_NotificationMessageErrorGetOnlineSize"), sizeCalculator.ServiceName, Game.Name, e.Message),
-                        NotificationType.Error));
-                return 0;
-            }
-        }
-
-        private ulong GetInstallSizeOnline()
-        {
-            if (!(OnlineSizeCalculators?.Count > 0 && PlayniteUtilities.IsGamePcGame(Game)))
-            {
-                return 0;
-            }
-
-            ulong size = 0;
-
-            var alreadyRan = new List<IOnlineSizeCalculator>();
-            //check the preferred online size calculators first (Steam for Steam games, GOG for GOG games, etc)
-            foreach (var sizeCalculator in OnlineSizeCalculators)
-            {
-                if (!sizeCalculator.IsPreferredInstallSizeCalculator(Game))
-                {
-                    continue;
-                }
-
-                size = GetInstallSizeOnline(sizeCalculator);
-                alreadyRan.Add(sizeCalculator);
-                if (size != 0)
-                {
-                    break;
-                }
-            }
-
-            //go through every online size calculator as a fallback
-            if (size == 0)
-            {
-                foreach (var sizeCalculator in OnlineSizeCalculators)
-                {
-                    if (alreadyRan.Contains(sizeCalculator))
-                    {
-                        continue;
-                    }
-
-                    size = GetInstallSizeOnline(sizeCalculator);
-                    if (size != 0)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            return size;
-        }
-
     }
 }
