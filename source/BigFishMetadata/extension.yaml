@@ -1,0 +1,7 @@
+﻿Id: BigFishMetadata
+Name: Big Fish Metadata
+Author: Jeshibu
+Version: 0.1
+Module: BigFishMetadata.dll
+Type: MetadataProvider
+Icon: icon.png

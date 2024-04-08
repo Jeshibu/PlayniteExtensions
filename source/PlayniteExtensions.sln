@@ -99,6 +99,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GOGMetadata", "GOGMetadata\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigFishLibrary", "BigFishLibrary\BigFishLibrary.csproj", "{DFAF4815-513B-483E-AB4D-C753F5B50C55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigFishMetadata", "BigFishMetadata\BigFishMetadata.csproj", "{C50BE73E-18BE-4A21-BA86-908C6D5B6CA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -225,6 +227,10 @@ Global
 		{DFAF4815-513B-483E-AB4D-C753F5B50C55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFAF4815-513B-483E-AB4D-C753F5B50C55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFAF4815-513B-483E-AB4D-C753F5B50C55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C50BE73E-18BE-4A21-BA86-908C6D5B6CA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C50BE73E-18BE-4A21-BA86-908C6D5B6CA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C50BE73E-18BE-4A21-BA86-908C6D5B6CA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C50BE73E-18BE-4A21-BA86-908C6D5B6CA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

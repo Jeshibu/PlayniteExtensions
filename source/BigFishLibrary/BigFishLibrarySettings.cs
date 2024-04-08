@@ -1,48 +1,32 @@
-﻿using Playnite.SDK;
-using Playnite.SDK.Data;
+﻿using BigFishMetadata;
+using Newtonsoft.Json;
+using Playnite.SDK;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace BigFishLibrary
 {
-    public class BigFishLibrarySettings : ObservableObject
+    public class BigFishLibrarySettings : BigFishMetadataSettings
     {
-        private string option1 = string.Empty;
-        private bool option2 = false;
-        private bool optionThatWontBeSaved = false;
+        private bool importFromOnline = false;
 
-        public string Option1 { get => option1; set => SetValue(ref option1, value); }
-        public bool Option2 { get => option2; set => SetValue(ref option2, value); }
-        // Playnite serializes settings object to a JSON object and saves it as text file.
-        // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
-        [DontSerialize]
-        public bool OptionThatWontBeSaved { get => optionThatWontBeSaved; set => SetValue(ref optionThatWontBeSaved, value); }
+        public bool ImportFromOnline { get => importFromOnline; set => SetValue(ref importFromOnline, value); }
     }
 
-    public class BigFishLibrarySettingsViewModel : ObservableObject, ISettings
+    public enum AuthStatus
     {
-        private readonly BigFishLibrary plugin;
-        private BigFishLibrarySettings editingClone { get; set; }
+        Ok,
+        Checking,
+        AuthRequired,
+        Failed,
+    }
 
-        private BigFishLibrarySettings settings;
-        public BigFishLibrarySettings Settings
+    public class BigFishLibrarySettingsViewModel : PluginSettingsViewModel<BigFishLibrarySettings, BigFishLibrary>
+    {
+        public BigFishLibrarySettingsViewModel(BigFishLibrary plugin) : base(plugin, plugin.PlayniteApi)
         {
-            get => settings;
-            set
-            {
-                settings = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public BigFishLibrarySettingsViewModel(BigFishLibrary plugin)
-        {
-            // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
-            this.plugin = plugin;
-
             // Load saved settings.
             var savedSettings = plugin.LoadPluginSettings<BigFishLibrarySettings>();
 
@@ -57,33 +41,109 @@ namespace BigFishLibrary
             }
         }
 
-        public void BeginEdit()
+        public AuthStatus AuthStatus
         {
-            // Code executed when settings view is opened and user starts editing values.
-            editingClone = Serialization.GetClone(Settings);
+            get
+            {
+                var view = PlayniteApi.WebViews.CreateOffscreenView();
+                try
+                {
+                    view.NavigateAndWait(accountUrl);
+                    string actualUrl = view.GetCurrentAddress(); //this will be a login URL if not authenticated
+
+                    if (actualUrl == accountUrl)
+                        return AuthStatus.Ok;
+                    else
+                        return AuthStatus.AuthRequired;
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(e, "Failed to check Big Fish Games auth status.");
+                    return AuthStatus.Failed;
+                }
+                finally
+                {
+                    view.Dispose();
+                }
+            }
         }
 
-        public void CancelEdit()
+        public RelayCommand<object> LoginCommand => new RelayCommand<object>(a => Login());
+        public RelayCommand<object> TestBrowserCommand => new RelayCommand<object>(a => TestBrowser());
+
+        private const string accountUrl = "https://susi.bigfishgames.com/edit";
+
+        private void Login()
         {
-            // Code executed when user decides to cancel any changes made since BeginEdit was called.
-            // This method should revert any changes made to Option1 and Option2.
-            Settings = editingClone;
+            try
+            {
+                using (var view = PlayniteApi.WebViews.CreateView(675, 540, Colors.Black))
+                {
+                    view.DeleteDomainCookies(".bigfishgames.com");
+                    view.DeleteDomainCookies("bigfishgames.com");
+                    view.DeleteDomainCookies(".www.bigfishgames.com");
+                    view.DeleteDomainCookies("www.bigfishgames.com");
+                    view.Navigate(accountUrl);
+
+                    view.LoadingChanged += (s, e) =>
+                    {
+                        try
+                        {
+                            if (e.IsLoading)
+                                return;
+
+                            var address = view.GetCurrentAddress();
+                            if (address == accountUrl)
+                            {
+                                view.Close();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Error(ex, "Error logging into Big Fish Games");
+                        }
+                    };
+
+                    view.OpenDialog();
+                }
+
+                OnPropertyChanged(nameof(AuthStatus));
+            }
+            catch (Exception e)
+            {
+                PlayniteApi.Dialogs.ShowErrorMessage("Error logging in to Big Fish Games", "");
+                Logger.Error(e, "Failed to authenticate user.");
+            }
         }
 
-        public void EndEdit()
+        private void TestBrowser()
         {
-            // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and Option2.
-            plugin.SavePluginSettings(Settings);
+            try
+            {
+                using (var view = PlayniteApi.WebViews.CreateView(675, 540, Colors.Black))
+                {
+                    view.Navigate("https://www.bigfishgames.com/us/en/store/my-game-library.html");
+                    Logger.Info($"Can execute Javascript: {view.CanExecuteJavascriptInMainFrame}");
+                    view.OpenDialog();
+                    Logger.Info($"Can execute Javascript: {view.CanExecuteJavascriptInMainFrame}");
+                    var localStorageTask = view.EvaluateScriptAsync("window.localStorage['M2_VENIA_BROWSER_PERSISTENCE__signin_token']");
+                    var mathTask = view.EvaluateScriptAsync("2+2");
+                    var tasks = new[] {localStorageTask, mathTask};
+                    Task.WaitAll(tasks, 4000);
+                    var taskResults = tasks.Select(task => task.Result).ToArray();
+                    foreach (var taskResult in taskResults)
+                    {
+                        if(taskResult != null)
+                            Logger.Info(JsonConvert.SerializeObject(taskResults));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                PlayniteApi.Dialogs.ShowErrorMessage("Error fucking with to Big Fish Games", "");
+                Logger.Error(e, "Failed to authenticate user.");
+            }
         }
 
-        public bool VerifySettings(out List<string> errors)
-        {
-            // Code execute when user decides to confirm changes made since BeginEdit was called.
-            // Executed before EndEdit is called and EndEdit is not called if false is returned.
-            // List of errors is presented to user if verification fails.
-            errors = new List<string>();
-            return true;
-        }
     }
 }

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Controls;
 using System.Reflection;
+using BigFishMetadata;
 
 namespace BigFishLibrary
 {
@@ -28,7 +29,18 @@ namespace BigFishLibrary
         public override string LibraryIcon => iconPath;
 
         private BigFishRegistryReader RegistryReader { get; }
-        private BigFishMetadataProvider MetadataProvider { get; }
+
+        private IWebDownloader Downloader { get; }
+
+        private BigFishMetadataProvider MetadataProvider
+        {
+            get
+            {
+                var searchProvider = new BigFishSearchProvider(Downloader, settings.Settings);
+                var scraper = new BigFishOnlineLibraryScraper(PlayniteApi, Downloader);
+                return new BigFishMetadataProvider(RegistryReader, searchProvider, settings.Settings, scraper);
+            }
+        }
 
         public BigFishLibrary(IPlayniteAPI api) : base(api)
         {
@@ -38,10 +50,17 @@ namespace BigFishLibrary
                 HasSettings = false
             };
             RegistryReader = new BigFishRegistryReader(new RegistryValueProvider());
-            MetadataProvider = new BigFishMetadataProvider(RegistryReader);
+            Downloader = new WebDownloader();
         }
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
+        {
+            SetUninstalledStatus();
+
+            return MetadataProvider.GetGames();
+        }
+
+        private void SetUninstalledStatus()
         {
             try
             {
@@ -66,17 +85,6 @@ namespace BigFishLibrary
             catch (Exception ex)
             {
                 logger.Error(ex, "Error setting uninstalled status");
-            }
-
-            var registryReader = new BigFishRegistryReader(new RegistryValueProvider());
-            var gameIds = registryReader.GetInstalledGameIds();
-            foreach (var gameId in gameIds)
-            {
-                if (gameId == "F7315T1L1") //Big Fish Casino, not visible in the client and apparently broken
-                    continue;
-
-                var game = registryReader.GetGameDetails(gameId);
-                yield return MetadataProvider.GetMetadata(game.Sku, minimal: true);
             }
         }
 

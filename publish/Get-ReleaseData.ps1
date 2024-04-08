@@ -61,7 +61,9 @@ function Get-ProjectNames {
     )
     $projectNames = @{
         "barnite"             = @("Barnite")
-        "bigfish"             = @("BigFishLibrary")
+        "bigfish"             = @("BigFishLibrary", "BigFishMetadata")
+        "bigfishlibrary"      = @("BigFishLibrary")
+        "bigfishmetadata"     = @("BigFishMetadata")
         "gamersgate"          = @("GamersGateLibrary")
         "gamessizecalculator" = @("GamesSizeCalculator")
         "giantbomb"           = @("GiantBombMetadata")

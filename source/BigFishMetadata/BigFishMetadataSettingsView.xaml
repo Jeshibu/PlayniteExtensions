@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="BigFishMetadata.BigFishMetadataSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             xmlns:bf="clr-namespace:BigFishMetadata"
+             d:DataContext="{d:DesignInstance Type=bf:BigFishMetadataSettingsViewModel}"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <StackPanel Margin="20">
+        <StackPanel Orientation="Horizontal" Width="Auto">
+            <TextBlock VerticalAlignment="Center" Margin="0,0,5,0">Language:</TextBlock>
+            <ComboBox IsReadOnly="True" IsEditable="False" ItemsSource="{Binding Settings.Languages}" SelectedItem="{Binding Settings.SelectedLanguage}"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Width="Auto" Margin="0,10">
+            <TextBlock VerticalAlignment="Center" Margin="0,0,5,0">Community score source: </TextBlock>
+            <ComboBox IsReadOnly="True" IsEditable="False" ItemsSource="{Binding Settings.CommunityScoreTypes}" SelectedValue="{Binding Settings.CommunityScoreType}" SelectedValuePath="Key" DisplayMemberPath="Value"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

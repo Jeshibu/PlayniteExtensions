@@ -3,9 +3,53 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:b="clr-namespace:BigFishLibrary"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=b:BigFishLibrarySettingsViewModel}"
              d:DesignHeight="400" Width="526">
     <StackPanel Margin="20">
-        <TextBlock TextWrapping="Wrap" Text="There are no settings right now. Install info is gathered from the registry and requires the Big Fish client."/>
+        <StackPanel Orientation="Horizontal" Width="Auto">
+            <TextBlock VerticalAlignment="Center" Margin="0,0,5,0">Language:</TextBlock>
+            <ComboBox IsReadOnly="True" IsEditable="False" ItemsSource="{Binding Settings.Languages}" SelectedItem="{Binding Settings.SelectedLanguage}"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Width="Auto" Margin="0,10">
+            <TextBlock VerticalAlignment="Center" Margin="0,0,5,0">Community score source:</TextBlock>
+            <ComboBox IsReadOnly="True" IsEditable="False" ItemsSource="{Binding Settings.CommunityScoreTypes}" SelectedValue="{Binding Settings.CommunityScoreType}" SelectedValuePath="Key" DisplayMemberPath="Value"/>
+        </StackPanel>
+
+        <CheckBox Content="Import games from your online Big Fish Games account" IsChecked="{Binding Settings.ImportFromOnline}" Margin="0,15,0,0"/>
+
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="30,5,5,5" HorizontalAlignment="Left" IsEnabled="{Binding Settings.ImportFromOnline}">
+            <Button Content="Authenticate" Command="{Binding LoginCommand}"/>
+            <TextBlock VerticalAlignment="Center" Margin="10,0,0,0">
+                <TextBlock.Tag>
+                    <PriorityBinding>
+                        <Binding Path="AuthStatus" IsAsync="True" />
+                        <Binding Source="{x:Static b:AuthStatus.Checking}" />
+                    </PriorityBinding>
+                </TextBlock.Tag>
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                        <Style.Triggers>
+                            <Trigger Property="Tag" Value="{x:Static b:AuthStatus.Checking}">
+                                <Setter Property="Text" Value="Checking..." />
+                            </Trigger>
+                            <Trigger Property="Tag" Value="{x:Static b:AuthStatus.Ok}">
+                                <Setter Property="Text" Value="Logged in" />
+                            </Trigger>
+                            <Trigger Property="Tag" Value="{x:Static b:AuthStatus.AuthRequired}">
+                                <Setter Property="Text" Value="Requires authentication" />
+                            </Trigger>
+                            <Trigger Property="Tag" Value="{x:Static b:AuthStatus.Failed}">
+                                <Setter Property="Text" Value="Failed to check authentication status" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+
+        <Button Command="{Binding TestBrowserCommand}" Padding="5">Test</Button>
     </StackPanel>
 </UserControl>
