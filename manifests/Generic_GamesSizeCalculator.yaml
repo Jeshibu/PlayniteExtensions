@@ -237,4 +237,4 @@ Packages:
     ReleaseDate: 
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-04-08/GamesSizeCalculator_1_31.pext
     Changelog:
-    - Added PS3 ROM size calculation (via right click menu on installed PS3 games)
+    - Added PS3 ROM size calculation, via right click menu on installed PS3 games
