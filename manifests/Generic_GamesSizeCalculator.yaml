@@ -234,7 +234,7 @@ Packages:
     - Fixed exception when getting install size for games that are not from the Steam library, and do not have a Steam game URL in their links
   - Version: 1.31
     RequiredApiVersion: 6.4.0
-    ReleaseDate: 
+    ReleaseDate: 2024-04-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-04-08/GamesSizeCalculator_1_31.pext
     Changelog:
     - Added PS3 ROM size calculation, via right click menu on installed PS3 games
