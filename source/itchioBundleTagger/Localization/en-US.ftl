@@ -12,11 +12,12 @@ tag-bundle-wbstrr = Worthy of Better, Stronger Together for Reproductive Rights
 tag-bundle-abortion = Indie Bundle for Abortion Funds
 tag-bundle-tsermb = Türkiye & Syria Earthquake Relief Mega Bundle
 tag-bundle-games4gaza = Games for Gaza
+tag-bundle-prb24 = Palestinian Relief Bundle 2024
 
 setting-tag-prefix = Prefix tag names with: 
-setting-add-free-tag = Add "{ tag-free }" tag if appliccable
-setting-add-steam-tag = Add "{ tag-steam }" tag if appliccable
-setting-add-steam-link = Add link to Steam store page if appliccable
+setting-add-free-tag = Add "{ tag-free }" tag if applicable
+setting-add-steam-tag = Add "{ tag-steam }" tag if applicable
+setting-add-steam-link = Add link to Steam store page if applicable
 setting-run-on-library-update = Run after every library import
 setting-show-in-context-menu = Show "{ menu-execute-tagging }" in context (right-click) menu
 setting-add-bundle-tags-header = Add the following bundle tags:
