@@ -113,6 +113,13 @@ namespace MobyGamesMetadata.Api
             return response;
         }
 
+        public GamePlatformDetails GetMobyGamePlatform(int id, int platformId, CancellationToken cancellationToken = default)
+        {
+            var request = new RestRequest($"games/{id}/platforms/{platformId}");
+            var response = Execute<GamePlatformDetails>(request, cancellationToken);
+            return response;
+        }
+
         public ICollection<MobyGame> GetGamesForGroup(int groupId, int limit, int offset, CancellationToken cancellationToken = default)
         {
             var request = new RestRequest("games")

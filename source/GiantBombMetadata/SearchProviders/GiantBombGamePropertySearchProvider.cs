@@ -1,5 +1,6 @@
 ﻿using GiantBombMetadata.Api;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System;
@@ -21,7 +22,7 @@ namespace GiantBombMetadata.SearchProviders
             this.scraper = scraper;
         }
 
-        public IEnumerable<GameDetails> GetDetails(GiantBombSearchResultItem searchResult, GlobalProgressActionArgs progressArgs = null)
+        public IEnumerable<GameDetails> GetDetails(GiantBombSearchResultItem searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
         {
             if (searchResult.ResourceType == "location")
             {

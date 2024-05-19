@@ -3,7 +3,6 @@ using MobyGamesMetadata.Api;
 using Playnite.SDK;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
-using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,18 +33,9 @@ namespace MobyGamesMetadata
 
         protected override PropertyImportSetting GetPropertyImportSetting(SearchResult searchItem, out string propName)
         {
-            if (searchItem.Name.EndsWith(" series") && !searchItem.Name.EndsWith("TV series"))
-            {
-                propName = searchItem.Name.TrimEnd(" series");
-                return new PropertyImportSetting { ImportTarget = PropertyImportTarget.Series };
-            }
-            if (searchItem.Name.StartsWith("Gameplay feature: "))
-            {
-                propName = searchItem.Name.TrimStart("Gameplay feature: ");
-                return new PropertyImportSetting { ImportTarget = PropertyImportTarget.Features };
-            };
-            propName = searchItem.Name;
-            return new PropertyImportSetting { ImportTarget = PropertyImportTarget.Tags };
+            var importTarget = MobyGamesHelper.GetGroupImportTarget(searchItem.Name, out propName);
+
+            return new PropertyImportSetting { ImportTarget = importTarget };
         }
     }
 }

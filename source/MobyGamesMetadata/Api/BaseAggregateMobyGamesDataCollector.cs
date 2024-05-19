@@ -4,6 +4,7 @@ using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace MobyGamesMetadata.Api
 {
@@ -32,10 +33,29 @@ namespace MobyGamesMetadata.Api
             apiDetails.CriticScore = scraperDetails.CriticScore;
             apiDetails.Tags.AddMissing(scraperDetails.Tags);
             apiDetails.Series.AddMissing(scraperDetails.Series);
-            if(apiDetails.Description == null)
+            AddCompanies(apiDetails.Developers, scraperDetails.Developers);
+            AddCompanies(apiDetails.Publishers, scraperDetails.Publishers);
+            if (apiDetails.Description == null)
                 apiDetails.Description = scraperDetails.Description;
 
             return apiDetails;
+        }
+
+        protected List<string> AddCompanies(List<string> companies, IEnumerable<string> companiesToAdd)
+        {
+            if (companiesToAdd == null) return companies;
+
+            companies.AddMissing(companiesToAdd.Select(FixCompanyName));
+
+            return companies;
+        }
+
+        protected string FixCompanyName(string companyName)
+        {
+            if (companyName.EndsWith(", the", StringComparison.InvariantCultureIgnoreCase))
+                companyName.Substring(0, companyName.Length - 5);
+
+            return companyName.TrimCompanyForms();
         }
 
         protected GameSearchResult ToSearchResult(MobyGame mobyGame)

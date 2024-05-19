@@ -13,7 +13,7 @@ namespace PlayniteExtensions.Metadata.Common
 
     public interface ISearchableDataSourceWithDetails<TSearchResult, TDetails> : ISearchableDataSource<TSearchResult>
     {
-        TDetails GetDetails(TSearchResult searchResult, GlobalProgressActionArgs progressArgs = null);
+        TDetails GetDetails(TSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null);
     }
 
     public interface IGameSearchProvider<TSearchResult> : ISearchableDataSourceWithDetails<TSearchResult, GameDetails>

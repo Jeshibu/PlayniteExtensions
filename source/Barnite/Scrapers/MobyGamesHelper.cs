@@ -89,11 +89,22 @@ namespace Barnite.Scrapers
             var groups = page.DocumentNode.SelectNodes("//section[@id='gameGroups']/ul/li/a")?.Select(e => e.InnerText.HtmlDecode()).ToList() ?? new List<string>();
             foreach (string group in groups)
             {
-                var seriesIndex = group.LastIndexOf(" series");
-                if (seriesIndex != -1 && !group.Contains(':'))
-                    data.Series.Add(group.Remove(seriesIndex));
-                else
-                    data.Tags.Add(group);
+                var target = GetGroupImportTarget(group, out string processedGroupName);
+                switch (target)
+                {
+                    case PropertyImportTarget.Genres:
+                        data.Genres.Add(processedGroupName);
+                        break;
+                    case PropertyImportTarget.Tags:
+                        data.Tags.Add(processedGroupName);
+                        break;
+                    case PropertyImportTarget.Series:
+                        data.Series.Add(processedGroupName);
+                        break;
+                    case PropertyImportTarget.Features:
+                        data.Features.Add(processedGroupName);
+                        break;
+                }
             }
 
             var criticScoreString = page.DocumentNode.SelectSingleNode("//dt[text()='Critics']/following-sibling::dd")?.ChildNodes.FirstOrDefault(n => n.NodeType == HtmlNodeType.Text).InnerText.HtmlDecode().TrimEnd('%');
@@ -145,6 +156,32 @@ namespace Barnite.Scrapers
             var nodes = doc.DocumentNode.SelectNodes($"//dl[@class='metadata']/dt[text()='{propName}']/following-sibling::dd[1]/a");
             var output = nodes?.Select(n => n.InnerText).ToList();
             return output ?? new List<string>();
+        }
+
+        public static PropertyImportTarget GetGroupImportTarget(string groupName, out string processedGroupName)
+        {
+            if (!groupName.EndsWith("TV series", StringComparison.InvariantCultureIgnoreCase)
+                    && !groupName.StartsWith("Automobile: ", StringComparison.InvariantCultureIgnoreCase)
+                    && TrimEnd(groupName, out processedGroupName, " series", " licensees", " franchise"))
+                return PropertyImportTarget.Series;
+
+            if (TrimStart(groupName, out processedGroupName, "Genre: "))
+                return PropertyImportTarget.Genres;
+
+            processedGroupName = groupName;
+            return PropertyImportTarget.Tags;
+        }
+
+        private static bool TrimEnd(string s, out string trimmed, params string[] remove)
+        {
+            trimmed = s.TrimEnd(remove);
+            return trimmed.Length < s.Length;
+        }
+
+        private static bool TrimStart(string s, out string trimmed, params string[] remove)
+        {
+            trimmed = s.TrimStart(remove);
+            return trimmed.Length < s.Length;
         }
     }
 }

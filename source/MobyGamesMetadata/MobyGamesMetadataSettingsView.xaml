@@ -41,6 +41,7 @@
                         <RowDefinition Height="15"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="API Key:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
                     <TextBox Name="ApiKeyTextbox" Text="{Binding Settings.ApiKey}" Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
@@ -57,6 +58,10 @@
                     <TextBlock Grid.Row="5" Grid.ColumnSpan="3" TextWrapping="Wrap">
                         Parallelism dictates how many simultaneous threads can be used to process the bulk property import game matching. It is recommended to set it lower than the amount of cores in your CPU.
                     </TextBlock>
+                    <TextBlock Grid.Row="6" Grid.Column="0">
+                        Release date:
+                    </TextBlock>
+                    <ComboBox Grid.Row="6" Grid.Column="1" Margin="10" ItemsSource="{Binding ReleaseDateSources}" SelectedValue="{Binding Settings.ReleaseDateSource}" DisplayMemberPath="Value" SelectedValuePath="Key"/>
                 </Grid>
             </StackPanel>
         </TabItem>

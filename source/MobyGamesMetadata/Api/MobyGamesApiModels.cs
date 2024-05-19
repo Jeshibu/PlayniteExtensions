@@ -119,4 +119,84 @@ namespace MobyGamesMetadata.Api
     {
         public string Caption { get; set; }
     }
+
+    public class GamePlatformDetails : GamePlatform
+    {
+        public List<MobyAttribute> Attributes { get; set; } = new List<MobyAttribute>();
+
+        [JsonProperty("game_id")]
+        public int GameId {  get; set; }
+
+        public List<MobyGameRating> Ratings { get; set; } = new List<MobyGameRating>();
+
+        public List<MobyGameRelease> Releases { get; set; } = new List<MobyGameRelease>();
+    }
+
+    public class MobyAttribute
+    {
+        [JsonProperty("attribute_category_id")]
+        public int CategoryId { get; set; }
+
+        [JsonProperty("attribute_category_name")]
+        public string CategoryName { get; set; }
+
+        [JsonProperty("attribute_id")]
+        public int Id { get; set; }
+
+        [JsonProperty("attribute_name")]
+        public string Name { get; set; }
+    }
+
+    public class MobyGameRating
+    {
+        [JsonProperty("rating_id")]
+        public int Id { get; set; }
+
+        [JsonProperty("rating_name")]
+        public string Name { get; set; }
+
+        [JsonProperty("rating_system_id")]
+        public int SystemId { get; set; }
+
+        [JsonProperty("rating_system_name")]
+        public string SystemName { get; set; }
+    }
+
+    public class MobyGameRelease
+    {
+        public List<MobyCompany> Companies { get; set; } = new List<MobyCompany>();
+
+        public List<string> Countries { get; set;} = new List<string>();
+
+        public string Description { get; set; }
+
+        [JsonProperty("product_codes")]
+        public List<ProductCode> ProductCodes { get; set; } = new List<ProductCode>();
+
+        [JsonProperty("release_date")]
+        public string ReleaseDate {  get; set; }
+    }
+
+    public class MobyCompany
+    {
+        [JsonProperty("company_id")]
+        public int Id { get; set; }
+
+        [JsonProperty("company_name")]
+        public string Name { get; set; }
+
+        public string Role {  get; set; }
+    }
+
+    public class ProductCode
+    {
+        [JsonProperty("product_code")]
+        public string Code { get; set; }
+
+        [JsonProperty("product_code_type")]
+        public string Type { get; set; }
+
+        [JsonProperty("product_code_type_id")]
+        public int TypeId {  get; set; }
+    }
 }

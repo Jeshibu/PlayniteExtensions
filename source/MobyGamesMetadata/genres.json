@@ -3,30 +3,30 @@
     {
       "genre_category": "Basic Genres",
       "genre_category_id": 1,
-      "genre_description": "<p>Action games main mechanics revolve around one or more of the following:* Accuracy\n* Movement\n* Quick Decisions\n* Reflexes\n* Timing</p>\n<p>This genre only applies to games that don't fit in the other action-based basic genres such as Racing/Driving, Role-Playing (RPG) and Sports. However, some games use a hybrid of genres and then a combination is allowed. This applies almost unique to the combination with Racing/Driving, e.g. the later <a href=\"/search/?q=Grand+Theft+Auto\">Grand Theft Auto</a> games (Action + Racing/Driving). Driving games that focus on vehicular combat as well, such as <a href=\"https://www.mobygames.com/game/86875/wreckfest/\">Wreckfest</a> or the <a href=\"/search/?q=Mario+Kart\">Mario Kart</a> games do not receive the Action genre, they use the secondary genre Vehicular Combat instead.</p>\n<p>Another rare combination is Action + Adventure where both traditional story and puzzle based adventure mechanics are combined with action sequences. This should not be confused with the Action-Adventure genre which is used as a marketing term. MobyGames does not use the genre Action-Adventure. Those games are always treated as Action games here.</p>",
+      "genre_description": "<p>Action games main mechanics revolve around one or more of the following:</p>\n<ul>\n<li>Accuracy</li>\n<li>Movement</li>\n<li>Quick Decisions</li>\n<li>Reflexes</li>\n<li>Timing</li>\n</ul>\n<p>This genre only applies to games that don't fit in the other action-based basic genres such as Racing/Driving, Role-Playing (RPG) and Sports. However, some games use a hybrid of genres and then a combination is allowed. This applies almost unique to the combination with Racing/Driving, e.g. the later <a href=\"https://www.mobygames.com/group/167/grand-theft-auto-series/\">Grand Theft Auto</a> games (Action + Racing/Driving). Driving games that focus on vehicular combat as well, such as <a href=\"https://www.mobygames.com/game/86875/wreckfest/\">Wreckfest</a> or the <a href=\"https://www.mobygames.com/group/1773/mario-kart-series/\">Mario Kart</a> games do not receive the Action genre, they use the secondary genre Vehicular Combat instead.</p>\n<p>Another rare combination is Action + Adventure where both traditional story and puzzle based adventure mechanics are combined with action sequences. This should not be confused with the Action-Adventure genre which is used as a marketing term. MobyGames does not use the genre Action-Adventure. Those games are always treated as Action games here.</p>",
       "genre_id": 1,
       "genre_name": "Action"
     },
     {
       "genre_category": "Basic Genres",
       "genre_category_id": 1,
-      "genre_description": "<p>Adventure games emphasize experiencing a story through dialogue and puzzle solving. Gameplay mechanics emphasize decision over action. Puzzle solving usually revolves around combining or manipulating items to advance the story. Some sub-genres like visual novels often skip on the puzzle solving and focus fully on interactive narrative. The name Adventure stems from the game <a href=\"/search/?q=Adventure\">Adventure</a> (a.k.a. <em>Colossal Cave</em>), and not to the unrelated film/book genre Adventure.</p>",
+      "genre_description": "<p>Add-ons, expansion packs or downloadable content (DLC) are additional content created for a released video game. They are applied to the main game and require it to run, as the content cannot be played separately. The content can be a full expansion of the existing game, but also small additions such as currencies, enemies, extras (non-game elements such as soundtracks, wallpapers, beta access etc.), game modes, items, maps, outfits/skins, player units and so on.</p>\n<p>Game entries using the genre \"Add-on\" do not receive any other genres inherited from the main game, except when it introduces a new genre to the game, such as a new perspective or a new theme. This also needs to be mentioned in the game's description.</p>",
+      "genre_id": 62,
+      "genre_name": "Add-on"
+    },
+    {
+      "genre_category": "Basic Genres",
+      "genre_category_id": 1,
+      "genre_description": "<p>Adventure games emphasize experiencing a story through dialogue and puzzle solving. Gameplay mechanics emphasize decision over action. Puzzle solving usually revolves around combining or manipulating items to advance the story. Some sub-genres like visual novels often skip on the puzzle solving and focus fully on interactive narrative. The name Adventure stems from the game <a href=\"https://www.mobygames.com/game/30153/adventure/\">Adventure</a> (a.k.a. <em>Colossal Cave</em>), and not to the unrelated film/book genre Adventure.</p>",
       "genre_id": 2,
       "genre_name": "Adventure"
     },
     {
       "genre_category": "Basic Genres",
       "genre_category_id": 1,
-      "genre_description": "<p>Denotes any package that contains a combination of game titles.  \"Compilations\" are two or more games in a series (prequels/sequels) or a similar genre.  \"Shovelware\" is the term given to dissimilar games packaged together, usually at a low price, to try to make up for lost or sagging profits.</p>",
+      "genre_description": "<p>Denotes any package that contains a combination of game titles. </p>\n<p>\"Compilations\" are two or more games in a series (prequels/sequels) or a similar genre and/or their add-ons.</p>",
       "genre_id": 76,
       "genre_name": "Compilation"
-    },
-    {
-      "genre_category": "Basic Genres",
-      "genre_category_id": 1,
-      "genre_description": "<p>Downloadable content (DLC), expansions or add-ons are additional content created for a released video game. They are applied to the main game and require it to run, as the content cannot be played separately. The content can be a full expansion of the existing game, but also small additions such as currencies, enemies, extras (non-game elements such as soundtracks, wallpapers, beta access etc.), game modes, items, maps, outfits/skins, player units and so on.</p>\n<p>Game entries using the genre DLC / Add-ons do not receive any other genres inherited from the main game, except when it introduces a new genre to the game, such as a new perspective or a new theme. This also needs to be mentioned in the game's description.</p>",
-      "genre_id": 62,
-      "genre_name": "DLC / Add-on"
     },
     {
       "genre_category": "Basic Genres",
@@ -38,56 +38,56 @@
     {
       "genre_category": "Basic Genres",
       "genre_category_id": 1,
-      "genre_description": "<p>Gambling games are titles where the majority of the gameplay is based around betting or wagering something on an event with an uncertain outcome with the intent of winning something else of value. Typical examples are slot machines, games of roulette or betting on a horse crossing the finish line.</p>\n<p>For some games Gambling is combined with the basic genre Strategy when tactics can influence the element of risk (chance). Typical examples are Poker or Blackjack.</p>\n<p><strong>Limitation</strong><br>\n* Games where gambling is a mini-game, a side activity or an optional part of the game (lootboxes or gacha games) do no use this genre. They receive the subgenre Gambling elements instead, part of the Gameplay category.</p>\n<ul>\n<li>MobyGames does not document online casino websites or apps.</li>\n</ul>",
+      "genre_description": "<p>Gambling games are titles where the majority of the gameplay is based around betting or wagering something on an event with an uncertain outcome with the intent of winning something else of value. Typical examples are slot machines, games of roulette or betting on a horse crossing the finish line.</p>\n<p>For some games Gambling is combined with the basic genre Strategy when tactics can influence the element of risk (chance). Typical examples are Poker or Blackjack.</p>\n<p><strong>Limitation</strong> </p>\n<ul>\n<li>Games where gambling is a mini-game, a side activity or an optional part of the game (lootboxes or gacha games) do no use this genre. They receive the subgenre Gambling elements instead, part of the Gameplay category.</li>\n<li>MobyGames does not document online casino websites or apps.</li>\n</ul>",
       "genre_id": 28,
       "genre_name": "Gambling"
     },
     {
       "genre_category": "Basic Genres",
       "genre_category_id": 1,
-      "genre_description": "<p>Idle games are mostly persistent titles that continue in the player's absence, without player interaction or when the game is closed entirely. They usually contain optional or minimal interaction. They are often closely related to <a href=\"https://www.mobygames.com/game-group/genre-incremental-games\">Incremental</a> games such as clicker games (PC) or tap games (mobile), but they only receive Idle as a genre when there is progress without user interaction.</p>\n<p>Most of these games are based around grinding: there is incremental gameplay or exponential growth where an in-game currency or meter increases at a steady rate or progress is made steadily without player interaction.</p>\n<p>Goals are provided by reaching certain milestones or achievements. Some games allow the players to play indefinitely, while others feature endings after a certain amount of progress is made.</p>\n<p>Optional player interaction is often based around clicking to gather items or speed up the progress, selecting or activating items or abilities, or spending a currency on upgrades.</p>\n<p>The first idle game is attributed to <a href=\"https://www.mobygames.com/game/20741/progress-quest/\">Progress Quest</a> (2002) by <a href=\"/search/?q=Eric+Fredriksen\">Eric Fredriksen</a>.</p>\n<p><strong>Limitations</strong>:* Games with a strong focus on social elements and time-limited events set in a persistent universe are not considered idle games when there is a lot of interaction (e.g. MMORPGs, live service games or titles with seasonal content).</p>",
+      "genre_description": "<p>Idle games are mostly persistent titles that continue in the player's absence, without player interaction or when the game is closed entirely. They usually contain optional or minimal interaction. They are often closely related to <a href=\"https://www.mobygames.com/game-group/genre-incremental-games\">Incremental</a> games such as clicker games (PC) or tap games (mobile), but they only receive Idle as a genre when there is progress without user interaction.</p>\n<p>Most of these games are based around grinding: there is incremental gameplay or exponential growth where an in-game currency or meter increases at a steady rate or progress is made steadily without player interaction.</p>\n<p>Goals are provided by reaching certain milestones or achievements. Some games allow the players to play indefinitely, while others feature endings after a certain amount of progress is made.</p>\n<p>Optional player interaction is often based around clicking to gather items or speed up the progress, selecting or activating items or abilities, or spending a currency on upgrades.</p>\n<p>The first idle game is attributed to <a href=\"https://www.mobygames.com/game/20741/progress-quest/\">Progress Quest</a> (2002) by <a href=\"https://www.mobygames.com/search/?q=Eric+Fredriksen\">Eric Fredriksen</a>.</p>\n<p><strong>Limitations</strong>:</p>\n<ul>\n<li>Games with a strong focus on social elements and time-limited events set in a persistent universe are not considered idle games when there is a lot of interaction (e.g. MMORPGs, live service games or titles with seasonal content).</li>\n</ul>",
       "genre_id": 235,
       "genre_name": "Idle"
     },
     {
       "genre_category": "Basic Genres",
       "genre_category_id": 1,
-      "genre_description": "<p>Puzzle games focus purely on solving puzzles usually without much narrative. Puzzles exist in many varieties: strategic, tactical, logical, trivia, word puzzles etc.</p>",
+      "genre_description": "<p>Puzzle games focus purely on solving puzzles usually without much narrative. Puzzles exist in many varieties: strategic, tactical, logical, trivia, word puzzles etc. Where puzzles do not make up the entirety of a game but are present in parts of a game, should be marked as the Gameplay genre Puzzle Elements.</p>",
       "genre_id": 118,
       "genre_name": "Puzzle"
     },
     {
       "genre_category": "Basic Genres",
       "genre_category_id": 1,
-      "genre_description": "<p>Racing/Driving games allow the player to race, or drive vehicles in a leisurely manner. Racing can be done in vehicles, on mounts, on foot or in completely abstract graphics. Games with this genre needs to have racing/driving for the majority of the game, not just as a short sequence.</p>",
+      "genre_description": "<p>Racing / Driving games allow the player to race, or drive vehicles in a leisurely manner. Racing can be done in vehicles of any kind,, or in completely abstract graphics. Games with this genre needs to have racing/driving for the majority of the game, not just as a short sequence. Exceptions to the genre include racing on foot or on mounts (including chariot racing), which qualify as Sports.</p>",
       "genre_id": 6,
       "genre_name": "Racing / Driving"
     },
     {
       "genre_category": "Basic Genres",
       "genre_category_id": 1,
-      "genre_description": "<p>Role-Playing games (RPGs) belong to a varied game genre that focuses on character development. Additional aspects that are often found in RPGs are:</p>\n<ul>\n<li>Amassing wealth</li>\n<li>Narrative</li>\n<li>Tactical combat</li>\n</ul>\n<p>Character development in RPGs does not necessarily happen as in traditional stories, but means the main character(s) in the game learns new abilities or improves the capabilities of old ones. Character development also includes collecting armament and/or utilities of gradually increasing power.</p>",
+      "genre_description": "<p>Role-Playing games (RPGs) belong to a varied game genre that focuses on character development. Additional aspects that are often found in RPGs are:</p>\n<ul>\n<li>Amassing wealth</li>\n<li>Narrative</li>\n<li>Tactical combat</li>\n</ul>\n<p>Character development in RPGs does not necessarily happen as in traditional stories, but means the main character(s) in the game learns new abilities or improves the capabilities of old ones. Character development also includes collecting armament and/or utilities of gradually increasing power.</p>\n<p>If a game does not encompass major game mechanics of an RPG, but includes some of them (such as experience and character statistics) then add the Gameplay genre RPG elements.</p>",
       "genre_id": 50,
       "genre_name": "Role-playing (RPG)"
     },
     {
       "genre_category": "Basic Genres",
       "genre_category_id": 1,
-      "genre_description": "<p>Simulation games can be one of many different types of simulations. What all simulations have in common is that they are more realistically modeled to real life situations and/or variables than most games. Simulation games can model a wide variety of different situations and variables, most common are:* Business/Trade Simulations\n* Construction Simulations\n* Life Simulations\n* Management Simulations\n* Sports Simulations\n* Vehicle Simulators\n* War Simulations (Wargames)</p>",
+      "genre_description": "<p>Simulation games can be one of many different types of simulations. What all simulations have in common is that they are more realistically modeled to real life situations and/or variables than most games. Simulation games can model a wide variety of different situations and variables, most common are:</p>\n<ul>\n<li>business/trade simulations</li>\n<li>construction simulations</li>\n<li>life simulations</li>\n<li>management simulations</li>\n<li>sports simulations</li>\n<li>vehicle simulators</li>\n<li>war simulations (Wargames)</li>\n</ul>",
       "genre_id": 3,
       "genre_name": "Simulation"
     },
     {
       "genre_category": "Basic Genres",
       "genre_category_id": 1,
-      "genre_description": "<p>Special Editions that contain a base game with additional content, usually released simultaneously along a standard edition of a game.</p>",
+      "genre_description": "<p>Special Editions that contain a base game with additional physical or digital content otherwise unavailable. It is usually released simultaneously with the standard edition of a game.</p>\n<p>If all the additional content is in-game, it has to be exclusive to the special edition - otherwise, the Compilation genre should be used instead.</p>",
       "genre_id": 187,
       "genre_name": "Special edition"
     },
     {
       "genre_category": "Basic Genres",
       "genre_category_id": 1,
-      "genre_description": "<p>Sports games are games in which players control either players or managers of a real or fictional sports.</p>",
+      "genre_description": "<p>Sports games are games in which players control either players or managers of a real or fictional sports. This includes ball games, gym activities, aquatic events, fighting matches, and acrobatics. Races qualify among sports as long as they are non-vehicular, otherwise if they fit under the Motorsports category they go in the Racing / driving genre. Also excluded are Mind Sports, which qualify as Strategy / tactics.</p>",
       "genre_id": 5,
       "genre_name": "Sports"
     },
@@ -96,12 +96,12 @@
       "genre_category_id": 1,
       "genre_description": "<p>Strategy/Tactics games revolve around strategic and/or tactical usage of resources often in combat or managerial scenarios.</p>",
       "genre_id": 4,
-      "genre_name": "Strategy"
+      "genre_name": "Strategy / tactics"
     },
     {
       "genre_category": "Perspective",
       "genre_category_id": 2,
-      "genre_description": "<p>The player sees the game world as if through their own eyes.</p>",
+      "genre_description": "<p>The player sees the game world as if through their own eyes. This is often emulated through seeing the player character’s hands and whatever they may be holding (a weapon or other object) or the cockpit/controls of any vehicle being controlled.</p>",
       "genre_id": 7,
       "genre_name": "1st-person"
     },
@@ -129,7 +129,7 @@
     {
       "genre_category": "Perspective",
       "genre_category_id": 2,
-      "genre_description": "<p>A diagonal-down view is an elevated view of an object from above. It is any angle above a behind view and below a top-down view. This also includes 2D games with a 3/4 view where elements of a side view and top-down view are mixed.</p>",
+      "genre_description": "<p>A diagonal-down view is an elevated view of an object from above. It is any angle above a behind view and below a top-down view. This also includes 2D games with a 3/4 view where elements of a side view and top-down view are mixed. For example, if the ground/floor is flat and seen from directly overhead, but the sides of the characters are visible, it's a diagonal-down view. If the ground/floor is seen from directly overhead and only the tops of the characters' heads and shoulders are visible, the top-down genre should be applied instead.</p>",
       "genre_id": 129,
       "genre_name": "Diagonal-down"
     },
@@ -180,7 +180,7 @@
       "genre_category_id": 12,
       "genre_description": "<p>The camera is under the player's control and does not follow a specific target. The player is able to freely slide/scroll/rotate through the environment. While zooming is also a part of it, zooming is not sufficient by itself.</p>",
       "genre_id": 134,
-      "genre_name": "Free-roaming camera"
+      "genre_name": "Free camera"
     },
     {
       "genre_category": "Visual Presentation",
@@ -192,7 +192,7 @@
     {
       "genre_category": "Art Style",
       "genre_category_id": 13,
-      "genre_description": "<p>These games use a traditionally \"Japanese\" style of Japanese animation (\"Japanimation\" or \"Anime\"), Japanese comics (\"Manga\"), or the adult oriented “Hentai”.</p>",
+      "genre_description": "<p>These games use a traditionally \"Japanese\" style of Japanese animation (\"Japanimation\" or \"Anime\"), Japanese comics (\"Manga\"), or the adult oriented “Hentai”. This also applies to other traditional styles incorporated in anime such as Chibi.</p>",
       "genre_id": 57,
       "genre_name": "Anime / Manga"
     },
@@ -206,21 +206,21 @@
     {
       "genre_category": "Art Style",
       "genre_category_id": 13,
-      "genre_description": "<p>Games in which most of the game is presented as full motion video (FMV) or other forms of animations as well as live action. Many of these games are interactive movies where the player can from time to time choose a path to take with minimal or timed input. It also covers games where most of the game content is shown through full motion video. This art style refers to the gameplay content, not the cut-scenes.</p>\n<p><strong>Related items</strong>* <a href=\"http://www.mobygames.com/genre/sheet/live-action/\">Art Style: Live action</a> (genre)\n* <a href=\"http://www.mobygames.com/genre/sheet/video-backdrop/\">Art Style: Video backdrop</a> (genre)\n* <a href=\"http://www.mobygames.com/game-group/live-action-cut-scenes\">Live action cut-scenes</a> (game group)</p>",
+      "genre_description": "<p>Games in which most of the game is presented as full motion video (FMV) or other forms of animations as well as live action. Many of these games are interactive movies where the player can from time to time choose a path to take with minimal or timed input. It also covers games where most of the game content is shown through full motion video. This art style refers to the gameplay content, not the cut-scenes.</p>\n<p><strong>Related items</strong></p>\n<ul>\n<li><a href=\"https://www.mobygames.com/genre/live-action/\">Art Style: Live action</a> (genre)</li>\n<li><a href=\"https://www.mobygames.com/genre/video-backdrop/\">Art Style: Video backdrop</a> (genre)</li>\n<li><a href=\"https://www.mobygames.com/search/?q=Live+action+cut-scenes\">Live action cut-scenes</a> (game group)</li>\n</ul>",
       "genre_id": 60,
       "genre_name": "Full Motion Video (FMV)"
     },
     {
       "genre_category": "Art Style",
       "genre_category_id": 13,
-      "genre_description": "<p>Games where a large part of the <strong>interactive gameplay</strong> makes use of live action scenes. This is an art style for videography that uses real actors in footage shot with cameras. It can be complemented with CGI, but the actors themselves are not animated. This art style is not related to the use of motion capture to animate characters. Digitised characters also do not apply. The live action scenes need to be part of the interactive gameplay. Games that use live action scenes exclusively for static cut-scenes use the game group <a href=\"https://www.mobygames.com/group/9157/live-action-cut-scenes/\">Live action cut-scenes</a> instead. A large amount of games with Live action as an art style for the interactive gameplay carry the art style Full Motion Video in addition. It is also used for Chromakey recordings with actors against a video backdrop or an animated background, as long as the actors are part of interactive gameplay sequences.</p>\n<p><strong>Related items</strong>* <a href=\"http://www.mobygames.com/genre/sheet/fmv/\">Art Style: Full Motion Video (FMV)</a> (genre)\n* <a href=\"http://www.mobygames.com/genre/sheet/video-backdrop/\">Art Style: Video backdrop</a> (genre)\n* <a href=\"http://www.mobygames.com/game-group/live-action-cut-scenes\">Live action cut-scenes</a> (game group)</p>",
+      "genre_description": "<p>Games where a large part of the <strong>interactive gameplay</strong> makes use of live action scenes. This is an art style for videography that uses real actors in footage shot with cameras. It can be complemented with CGI, but the actors themselves are not animated. This art style is not related to the use of motion capture to animate characters. Digitised characters also do not apply. The live action scenes need to be part of the interactive gameplay. Games that use live action scenes exclusively for static cut-scenes use the game group <a href=\"https://www.mobygames.com/group/9157/live-action-cut-scenes/\">Live action cut-scenes</a> instead. A large amount of games with Live action as an art style for the interactive gameplay carry the art style Full Motion Video in addition. It is also used for Chromakey recordings with actors against a video backdrop or an animated background, as long as the actors are part of interactive gameplay sequences.</p>\n<p><strong>Related items</strong></p>\n<ul>\n<li><a href=\"https://www.mobygames.com/genre/fmv/\">Art Style: Full Motion Video (FMV)</a> (genre)</li>\n<li><a href=\"https://www.mobygames.com/genre/video-backdrop/\">Art Style: Video backdrop</a> (genre)</li>\n<li><a href=\"https://www.mobygames.com/group/9157/live-action-cut-scenes/\">Live action cut-scenes</a> (game group)</li>\n</ul>",
       "genre_id": 217,
       "genre_name": "Live action"
     },
     {
       "genre_category": "Art Style",
       "genre_category_id": 13,
-      "genre_description": "<p>Games where the <strong>interactive gameplay</strong> largely or entirely takes place against a backdrop with recorded footage. The footage can be edited or enhanced, but it needs to have been recorded with cameras. These games then have other elements in the foreground, either animated characters, vehicles or other elements, or live action actors brought into the game using chromakey.</p>\n<p>This genre is <strong>not to be used</strong> for titles where in interactive parts both the actors and the environment are filmed together. It also does not apply to games where the video backdrop is only used for cut-scenes and not the gameplay itself.</p>\n<p><strong>Related items</strong>* <a href=\"http://www.mobygames.com/genre/sheet/fmv/\">Art Style: Full Motion Video (FMV)</a> (genre)\n* <a href=\"http://www.mobygames.com/genre/sheet/live-action/\">Art Style: Live action</a> (genre)\n* <a href=\"http://www.mobygames.com/game-group/live-action-cut-scenes\">Live action cut-scenes</a> (game group)</p>",
+      "genre_description": "<p>Games where the <strong>interactive gameplay</strong> largely or entirely takes place against a backdrop with recorded footage. The footage can be edited or enhanced, but it needs to have been recorded with cameras. These games then have other elements in the foreground, either animated characters, vehicles or other elements, or live action actors brought into the game using chromakey.</p>\n<p>This genre is <strong>not to be used</strong> for titles where in interactive parts both the actors and the environment are filmed together. It also does not apply to games where the video backdrop is only used for cut-scenes and not the gameplay itself.</p>\n<p><strong>Related items</strong></p>\n<ul>\n<li><a href=\"https://www.mobygames.com/genre/fmv/\">Art Style: Full Motion Video (FMV)</a> (genre)</li>\n<li><a href=\"https://www.mobygames.com/genre/live-action/\">Art Style: Live action</a> (genre)</li>\n<li><a href=\"https://www.mobygames.com/search/?q=Live+action+cut-scenes\">Live action cut-scenes</a> (game group)</li>\n</ul>",
       "genre_id": 67,
       "genre_name": "Video backdrop"
     },
@@ -241,7 +241,7 @@
     {
       "genre_category": "Pacing",
       "genre_category_id": 9,
-      "genre_description": "<p>Real-Time games present the game continuously, as opposed to in turns like a game of Chess. This descriptor is not to be used on action games, which are inherently real-time. In some cases the player can still pause the game at any given time.</p>",
+      "genre_description": "<p>Real-time games present the game continuously, as opposed to in turns like a game of Chess. This descriptor is not to be used on action games, which are inherently real-time. In some cases the player can still pause the game at any given time.</p>",
       "genre_id": 15,
       "genre_name": "Real-time"
     },
@@ -255,7 +255,7 @@
     {
       "genre_category": "Gameplay",
       "genre_category_id": 4,
-      "genre_description": "<p>By definition, 4X is the abbreviation of <strong>eXploration</strong>, <strong>eXpansion</strong>, <strong>eXploitation</strong>, and <strong>eXtermination</strong>, a term originally coined by <a href=\"https://www.mobygames.com/person/2841/alan-emrich/\">Alan Emrich</a>. In terms of use and practice, 4X is some what more complex and may have expanded from its original definition.</p>\n<p>Traditionally 4X was first popularly used to identify strategy games such as <a href=\"https://www.mobygames.com/game/585/sid-meiers-civilization/\">Sid Meier's Civilization</a> and <a href=\"/search/?q=Master+of+Orion\">Master of Orion</a>, although 4X games by its characteristics may have existed far earlier than the aforementioned games.</p>\n<p>A 4X game <strong>must</strong> fulfill <strong>ALL</strong> the following requirements:\n* <strong>Strategic Gameplay</strong></p>\n<p>The player usually plays the role of a leader or adviser to a race, faction, country, civilization, nation, or any bunch of blokes in a large scale population against opposing forces. The game genre is usually limited to the strategy gameplay. No other genres have been identified under 4X.</p>\n<ul>\n<li><strong>eXploration</strong></li>\n</ul>\n<p>The eXploration category identifies the purpose of exploring surrounding territories, which may signify the use of a <strong>map</strong>. Exploration is conducted by sending out units to unexplored regions, where newly discovered locations become and remain revealed, depending on the variations of an implemented fog of war effect.</p>\n<ul>\n<li><strong>eXpansion</strong></li>\n</ul>\n<p>The eXpansion category identifies the objective to expand territory or area of control, usually (optional) after eXploration campaigns have been successfully carried out. The strategy of eXpansion requires a balance between the player's ability to expand as well as the player's ability to defend and hold conquered or areas under the player's control. Existing or new areas/territories (towns, planets, etc.), may then be developed with structural buildings or other enhancements.</p>\n<ul>\n<li><strong>eXploitation</strong></li>\n</ul>\n<p>The eXploitation category identifies the objective to control resources, where resources may or may not be limited. The eXploitation category goes hand-in-hand with the eXpansion category: the more territory the player controls, the less the opponent does, thus the more resources the player has to his/her disposal.</p>\n<ul>\n<li><strong>eXtermination</strong></li>\n</ul>\n<p>The eXtermination category is the result of continuous expansion. Conflict is inevitable and when push comes to shove, extermination of the opponent is eminent. Extermination requires the total elimination of an opponent or to subdue the opponent under the player's direct or indirect control (i.e. vassal, puppet, etc.) via armed conflict or diplomatic devices.</p>\n<ul>\n<li><strong>Randomly Generated Environments</strong></li>\n</ul>\n<p>See the <a href=\"http://www.mobygames.com/game-group/games-with-randomly-generated-environments\">Games with randomly generated environments</a> game group for further information.</p>\n<ul>\n<li><strong>Structural Building</strong></li>\n</ul>\n<p>No 4X game has been identified to do without a structural building or similar devices. Anything from a latrine to a planetary doomsday weapon station may be used to further advance the player's purpose.</p>\n<ul>\n<li><strong>Technological Advancement</strong></li>\n</ul>\n<p>Traditionally, 4X games have identified the use of technology advancements (or popularly known as a technology tree). These advancements are usually identified with the requirement to use resources, time to research, upgrade an idea or object, or other steps/factors needed before a certain (new or upgraded) technological benefit, unit, building, or similar devices be available to the player.</p>\n<ul>\n<li><strong>Diplomacy</strong></li>\n</ul>\n<p>The concept of <em>not being alone in this existence</em> refers to other beings(s) that may have different goals or priorities than the player. Diplomacy is the bridge to those differences of 4X. Diplomacy is used to make allies or enemies, trade resources and information, or even as a channel for espionage. Most 4X games prefer complex uses of diplomacy rather than the standard <em>friend or foe</em> commonly found in non-4X strategy war games.</p>\n<p><strong>Limitations</strong>  </p>\n<p>For purposes of this game group, games where primary gameplay focuses only on <strong>eXtermination</strong> without any other possible victory conditions are <strong>excluded</strong> from this game group.</p>\n<p>This means games such as <a href=\"https://www.mobygames.com/game/384/age-of-empires/\">Age of Empires</a>, <a href=\"/search/?q=Command+%26+Conquer\">Command &amp; Conquer</a>, <a href=\"/search/?q=Heroes+of+Might+and+Magic\">Heroes of Might and Magic</a>, or <a href=\"/search/?q=Warcraft\">Warcraft</a> <strong>should not</strong> go here.</p>\n<p><strong>Additional Note</strong>  </p>\n<p>Some hybrid games do not follow the traditional identification of 4X games, disabling one or more of its common features, yet may officially identify itself under the same genre. Whether or not these games should be included remain open for debate.</p>",
+      "genre_description": "<p>By definition, 4X is the abbreviation of <strong>eXploration</strong>, <strong>eXpansion</strong>, <strong>eXploitation</strong>, and <strong>eXtermination</strong>, a term originally coined by <a href=\"https://www.mobygames.com/person/2841/alan-emrich/\">Alan Emrich</a>. In terms of use and practice, 4X is some what more complex and may have expanded from its original definition.</p>\n<p>Traditionally 4X was first popularly used to identify strategy games such as <a href=\"https://www.mobygames.com/game/585/sid-meiers-civilization/\">Sid Meier's Civilization</a> and <a href=\"https://www.mobygames.com/game/212/master-of-orion/\">Master of Orion</a>, although 4X games by its characteristics may have existed far earlier than the aforementioned games.</p>\n<p>A 4X game <strong>must</strong> fulfill <strong>ALL</strong> the following requirements:</p>\n<ul>\n<li><strong>Strategic gameplay</strong> - the player usually plays the role of a leader or adviser to a race, faction, country, civilization, nation, or any bunch of blokes in a large scale population against opposing forces. The game genre is usually limited to the strategy gameplay. No other genres have been identified under 4X.</li>\n<li><strong>eXploration</strong> - the purpose of exploring surrounding territories, which may signify the use of a <strong>map</strong>. Exploration is conducted by sending out units to unexplored regions, where newly discovered locations become and remain revealed, depending on the variations of an implemented fog of war effect.</li>\n<li><strong>eXpansion</strong> - the objective to expand territory or area of control, usually (optional) after eXploration campaigns have been successfully carried out. The strategy of eXpansion requires a balance between the player's ability to expand as well as the player's ability to defend and hold conquered or areas under the player's control. Existing or new areas/territories (towns, planets, etc.), may then be developed with structural buildings or other enhancements.</li>\n<li><strong>eXploitation</strong> - the objective to control resources, where resources may or may not be limited. The eXploitation category goes hand-in-hand with the eXpansion category: the more territory the player controls, the less the opponent does, thus the more resources the player has to his/her disposal.</li>\n<li><strong>eXtermination</strong> - the result of continuous expansion. Conflict is inevitable and when push comes to shove, extermination of the opponent is eminent. Extermination requires the total elimination of an opponent or to subdue the opponent under the player's direct or indirect control (i.e. vassal, puppet, etc.) via armed conflict or diplomatic devices.</li>\n<li><strong>Randomly generated environments</strong> - See the <a href=\"https://www.mobygames.com/group/8817/games-with-randomly-generated-environments/\">Games with randomly generated environments</a> game group for further information.</li>\n<li><strong>Structural building</strong> - no 4X game has been identified to do without a structural building or similar devices. Anything from a latrine to a planetary doomsday weapon station may be used to further advance the player's purpose.</li>\n<li><strong>Technological advancement</strong> - traditionally, 4X games have identified the use of technology advancements (or popularly known as a technology tree). These advancements are usually identified with the requirement to use resources, time to research, upgrade an idea or object, or other steps/factors needed before a certain (new or upgraded) technological benefit, unit, building, or similar devices be available to the player.</li>\n<li><strong>Diplomacy</strong> - the concept of <em>not being alone in this existence</em> refers to other beings(s) that may have different goals or priorities than the player. Diplomacy is the bridge to those differences of 4X. Diplomacy is used to make allies or enemies, trade resources and information, or even as a channel for espionage. Most 4X games prefer complex uses of diplomacy rather than the standard <em>friend or foe</em> commonly found in non-4X strategy war games.</li>\n</ul>\n<p><strong>Limitations</strong>  </p>\n<p>For purposes of this game group, games where primary gameplay focuses only on <strong>eXtermination</strong> without any other possible victory conditions are <strong>excluded</strong> from this game group.</p>\n<p>This means games such as <a href=\"https://www.mobygames.com/game/384/age-of-empires/\">Age of Empires</a>, <a href=\"https://www.mobygames.com/game/338/command-conquer/\">Command &amp; Conquer</a>, <a href=\"https://www.mobygames.com/game/668/heroes-of-might-and-magic/\">Heroes of Might and Magic</a>, or <a href=\"https://www.mobygames.com/game/371/warcraft-orcs-humans/\">WarCraft</a> <strong>should not</strong> go here.</p>\n<p><strong>Additional note</strong>  </p>\n<p>Some hybrid games do not follow the traditional identification of 4X games, disabling one or more of its common features, yet may officially identify itself under the same genre. Whether or not these games should be included remain open for debate.</p>",
       "genre_id": 142,
       "genre_name": "4X"
     },
@@ -283,7 +283,7 @@
     {
       "genre_category": "Gameplay",
       "genre_category_id": 4,
-      "genre_description": "<p>Beat 'em ups - also known as Brawlers - focus on melee combat with a large number of antagonists. Usually players can perform a wide variety of combat moves and combos to hurt the opponents. These games are usually divided into levels similar to platform games or action games. Beat ‘em ups are not to be confused with Versus Fighting games which offer balanced arena fights between equally balanced teams or single characters.</p>",
+      "genre_description": "<p>Beat 'em ups - also known as Brawlers - focus on close-ranged (melee) combat with a large number of opponents. Usually players can perform multiple combat moves and/or combos to hurt the opponents. These games are usually divided into levels similar to platform games or action games. Beat ‘em ups are not to be confused with Versus Fighting games which offer balanced arena fights between equally balanced teams or single characters.</p>",
       "genre_id": 117,
       "genre_name": "Beat 'em up / brawler"
     },
@@ -325,7 +325,7 @@
     {
       "genre_category": "Gameplay",
       "genre_category_id": 4,
-      "genre_description": "<p>Falling block puzzle games are action based puzzle games in which objects usually enter the screen at the top at a constant rate and have to be arranged by the player to form pairs, lines, or other shapes or combinations of colors and/or shapes. <a href=\"/search/?q=Tetris\">Tetris</a> is a famous example. They should not be confused with <a href=\"https://www.mobygames.com/genre/sheet/tile-matching-puzzle/\">tile-matching puzzle</a> games (e.g. <a href=\"/search/?q=Candy+Crush\">Candy Crush</a>) where objects merely enter the screen to complete or re-fill a grid or field after items have been removed following a match. In tile-matching puzzle games the blocks or objects do not appear with a constant tempo and the position as they enter the field cannot be manipulated by the player.</p>",
+      "genre_description": "<p>Falling block puzzle games are action based puzzle games in which objects usually enter the screen at the top at a constant rate and have to be arranged by the player to form pairs, lines, or other shapes or combinations of colors and/or shapes. <a href=\"https://www.mobygames.com/search/?q=Tetris\">Tetris</a> is a famous example. They should not be confused with <a href=\"https://www.mobygames.com/genre/sheet/tile-matching-puzzle/\">tile-matching puzzle</a> games (e.g. <a href=\"https://www.mobygames.com/search/?q=Candy+Crush\">Candy Crush</a>) where objects merely enter the screen to complete or re-fill a grid or field after items have been removed following a match. In tile-matching puzzle games the blocks or objects do not appear with a constant tempo and the position as they enter the field cannot be manipulated by the player.</p>",
       "genre_id": 145,
       "genre_name": "Falling block puzzle"
     },
@@ -339,14 +339,14 @@
     {
       "genre_category": "Gameplay",
       "genre_category_id": 4,
-      "genre_description": "<p>Games that feature gambling or games of chance (with an in-game currency or real world money) as a mini-game, a side activity or an optional gameplay element.</p>\n<p>Typical examples are games featuring Poker as a mini-game (e.g. <a href=\"/search/?q=Read+Dead+Redemption+II\">Read Dead Redemption II</a> or <a href=\"https://www.mobygames.com/game/379/leisure-suit-larry-in-the-land-of-the-lounge-lizards/\">Leisure Suit Larry in the Land of the Lounge Lizards</a>).</p>\n<p>It also includes titles that are gacha games or incorporate lootboxes where players bet real world money for a chance to receive an item of value. Examples are <a href=\"https://www.mobygames.com/game/172806/fifa-22/\">FIFA 22</a>, <a href=\"https://www.mobygames.com/game/150976/genshin-impact/\">Genshin Impact</a> or <a href=\"https://www.mobygames.com/game/65001/hearthstone-heroes-of-warcraft/\">Hearthstone: Heroes of WarCraft</a>.</p>\n<p>Games where the majority of the gameplay is based around gambling (e.g. slot machines, Poker, Blackjack or Roulette) receive the basic genre Gambling instead, as this subgenre Gambling elements is then implied.</p>",
+      "genre_description": "<p>Games that feature gambling or games of chance (with an in-game currency or real world money) as a mini-game, a side activity or an optional gameplay element.</p>\n<p>Typical examples are games featuring Poker as a mini-game (e.g. <a href=\"https://www.mobygames.com/search/?q=Read+Dead+Redemption+II\">Read Dead Redemption II</a> or <a href=\"https://www.mobygames.com/game/379/leisure-suit-larry-in-the-land-of-the-lounge-lizards/\">Leisure Suit Larry in the Land of the Lounge Lizards</a>).</p>\n<p>It also includes titles that are gacha games or incorporate lootboxes where players bet real world money for a chance to receive an item of value. Examples are <a href=\"https://www.mobygames.com/game/172806/fifa-22/\">FIFA 22</a>, <a href=\"https://www.mobygames.com/game/150976/genshin-impact/\">Genshin Impact</a> or <a href=\"https://www.mobygames.com/game/65001/hearthstone-heroes-of-warcraft/\">Hearthstone: Heroes of WarCraft</a>.</p>\n<p>Games where the majority of the gameplay is based around gambling (e.g. slot machines, Poker, Blackjack or Roulette) receive the basic genre Gambling instead, as this subgenre Gambling elements is then implied.</p>",
       "genre_id": 234,
       "genre_name": "Gambling elements"
     },
     {
       "genre_category": "Gameplay",
       "genre_category_id": 4,
-      "genre_description": "<p>Game Show / Trivia / Quiz games test the player on his knowledge on certain subjects or his ability to discover hidden words or pictures. Usually the player is rewarded with points or virtual currency. </p>",
+      "genre_description": "<p>Game Show / Trivia / Quiz games test the player on their knowledge of certain subjects or their ability to discover hidden words or pictures. Usually the player is rewarded with points or virtual currency.</p>",
       "genre_id": 29,
       "genre_name": "Game show / trivia / quiz"
     },
@@ -360,7 +360,7 @@
     {
       "genre_category": "Gameplay",
       "genre_category_id": 4,
-      "genre_description": "<p>Games with hack and slash gameplay focus on combat with hand-to-hand weapons as opposed to guns, even though the presence of guns as additional weapons does not exclude the use of the genre. Games in this genre will typically feature melee combat that requires tactical depth (weapon choice / stance / timing attacks / parry / defence / evasion). It is predominately used in action games with RPG elements.</p>\n<p><strong>Limitations</strong>* <a href=\"https://www.mobygames.com/genre/sheet/beatemup-brawler/\">Beat 'em ups / Brawlers</a> (think <a href=\"https://www.mobygames.com/game/6599/streets-of-rage/\">Streets of Rage</a>) and <a href=\"https://www.mobygames.com/genre/sheet/fighting/\">Fighting</a> games (think <a href=\"/search/?q=Street+Fighter\">Street Fighter</a>) have their own, specific genre and do not use this one.</p>\n<ul>\n<li>\n<p>Hack and slash games are often played from a behind view because there is strategy to the combat. Typically, side-scrolling 2D platformers do not receive this genre because of the straightforward combat, unless there is an extensive amount of depth to the mechanics.</p>\n</li>\n<li>\n<p>Popular examples of games using hack and slash gameplay are the <a href=\"/search/?q=Devil+May+Cry\">Devil May Cry</a> series, the <a href=\"/search/?q=God+of+War\">God of War</a> games, and games dubbed <em>Soulslike</em> popularized by <a href=\"https://www.mobygames.com/company/2348/fromsoftware-inc/\">FromSoftware's</a> <em>Souls</em> games.</p>\n</li>\n<li>\n<p>While <a href=\"/search/?q=Diablo\">Diablo</a> games and those similar to it had historically been referred to as Hack and Slash it was more done to keep itself separate from games that played similarly to it but offered a more in depth story like <em>Baldur's Gate</em>. These games should be listed as <a href=\"https://www.mobygames.com/genre/sheet/action-rpg/\">Action RPG's</a> unless the melee combat has depth to it.</p>\n</li>\n</ul>",
+      "genre_description": "<p>Games with hack and slash gameplay focus on combat with hand-to-hand weapons as opposed to guns, even though the presence of guns as additional weapons does not exclude the use of the genre. Games in this genre will typically feature melee combat that requires tactical depth (weapon choice / stance / timing attacks / parry / defence / evasion). It is predominately used in action games with RPG elements.</p>\n<p><strong>Limitations</strong></p>\n<ul>\n<li>\n<p><a href=\"https://www.mobygames.com/genre/sheet/beatemup-brawler/\">Beat 'em ups / Brawlers</a> (think <a href=\"https://www.mobygames.com/game/6599/streets-of-rage/\">Streets of Rage</a>) and <a href=\"https://www.mobygames.com/genre/sheet/fighting/\">Fighting</a> games (think <a href=\"https://www.mobygames.com/search/?q=Street+Fighter\">Street Fighter</a>) have their own, specific genre and do not use this one.</p>\n</li>\n<li>\n<p>Hack and slash games are often played from a behind view because there is strategy to the combat. Typically, side-scrolling 2D platformers do not receive this genre because of the straightforward combat, unless there is an extensive amount of depth to the mechanics.</p>\n</li>\n<li>\n<p>Popular examples of games using hack and slash gameplay are the <a href=\"https://www.mobygames.com/search/?q=Devil+May+Cry\">Devil May Cry</a> series, the <a href=\"https://www.mobygames.com/search/?q=God+of+War\">God of War</a> games, and games dubbed <em>Soulslike</em> popularized by <a href=\"https://www.mobygames.com/company/2348/fromsoftware-inc/\">FromSoftware's</a> <em>Souls</em> games.</p>\n</li>\n<li>\n<p>While <a href=\"https://www.mobygames.com/search/?q=Diablo\">Diablo</a> games and those similar to it had historically been referred to as Hack and Slash it was more done to keep itself separate from games that played similarly to it but offered a more in-depth story like <em>Baldur's Gate</em>. These games should be listed as <a href=\"https://www.mobygames.com/genre/sheet/action-rpg/\">Action RPGs</a> unless the melee combat has depth to it.</p>\n</li>\n</ul>",
       "genre_id": 68,
       "genre_name": "Hack and slash"
     },
@@ -437,7 +437,7 @@
     {
       "genre_category": "Gameplay",
       "genre_category_id": 4,
-      "genre_description": "<p>Metroidvania is a subgenre of Action games. The term is a portmanteau of Metroid and Castlevania and refers to games that feature the most distinctive gameplay concepts of the <a href=\"/search/?q=Metroid\">Metroid</a> games and later <a href=\"/search/?q=Castlevania\">Castlevania</a> games, starting with <a href=\"/search/?q=Castlevania%3A+Symphony+of+the+Night\">Castlevania: Symphony of the Night</a> (although <a href=\"/search/?q=Castlevania+II%3A+Simon's+Quest\">Castlevania II: Simon's Quest</a> is sometimes considered to be in the same category). Games of this genre feature gameplay in an explorable world that is gated in content mainly by specific abilities that need to be acquired by the player, and which gradually opens up more as the player overcomes its obstacles. Generally these games have a central hub from which the player can move to various interconnected areas or levels, some degree of persistency to their game worlds and some degree of non-linear progression while subtly guiding the player towards the next intended path.</p>\n<p>The vast majority of Metroidvania games use a side scrolling perspective like the games the term derives from and the term was for a long time used to describe only such games, but this is no longer a requirement. Top-down or bird's-eye view (e.g. <a href=\"/search/?q=The+Legend+of+Zelda%3A+Link's+Awakening\">The Legend of Zelda: Link's Awakening</a>) or 3D games (e.g. <a href=\"https://www.mobygames.com/game/42258/batman-arkham-asylum/\">Batman: Arkham Asylum</a>) can also share these concepts.</p>\n<p>Metroidvania games often feature mild RPG elements such as stat-based character development (upgradable health, strength and luck for example), respawning enemies, NPCs that talk to the player and trading for gear and items. </p>",
+      "genre_description": "<p>Metroidvania is a subgenre of Action games. The term is a portmanteau of Metroid and Castlevania and refers to games that feature the most distinctive gameplay concepts of the <a href=\"https://www.mobygames.com/search/?q=Metroid\">Metroid</a> games and later <a href=\"https://www.mobygames.com/search/?q=Castlevania\">Castlevania</a> games, starting with <a href=\"https://www.mobygames.com/search/?q=Castlevania:+Symphony+of+the+Night\">Castlevania: Symphony of the Night</a> (although <a href=\"https://www.mobygames.com/search/?q=Castlevania+II:+Simon's+Quest\">Castlevania II: Simon's Quest</a> is sometimes considered to be in the same category). Games of this genre feature gameplay in an explorable world that is gated in content mainly by specific abilities that need to be acquired by the player, and which gradually opens up more as the player overcomes its obstacles. Generally these games have a central hub from which the player can move to various interconnected areas or levels, some degree of persistency to their game worlds and some degree of non-linear progression while subtly guiding the player towards the next intended path.</p>\n<p>The vast majority of Metroidvania games use a side scrolling perspective like the games the term derives from and the term was for a long time used to describe only such games, but this is no longer a requirement. Top-down or bird's-eye view (e.g. <a href=\"https://www.mobygames.com/search/?q=The+Legend+of+Zelda:+Link's+Awakening\">The Legend of Zelda: Link's Awakening</a>) or 3D games (e.g. <a href=\"https://www.mobygames.com/game/42258/batman-arkham-asylum/\">Batman: Arkham Asylum</a>) can also share these concepts.</p>\n<p>Metroidvania games often feature mild RPG elements such as stat-based character development (upgradable health, strength and luck for example), respawning enemies, NPCs that talk to the player and trading for gear and items. </p>",
       "genre_id": 24,
       "genre_name": "Metroidvania"
     },
@@ -493,7 +493,7 @@
     {
       "genre_category": "Gameplay",
       "genre_category_id": 4,
-      "genre_description": "<p>Games with Quick Time Events ask the player to react to prompts on the screen to progress. A small time window is provided for a single, exact key or button to be pressed. Contrary to <strong>Timed Input</strong> games where such gameplay forms the entire game, Quick Time Events are small events in addition to very different gameplay which forms that majority of the gameplay. Examples include QTEs in <a href=\"/search/?q=God+of+War\">God of War</a> or <a href=\"/search/?q=Telltale\">Telltale's</a> <a href=\"/search/?q=The+Walking+Dead\">The Walking Dead</a>, even when they only form 1% of the entire gameplay.</p>",
+      "genre_description": "<p>Games with Quick Time Events ask the player to react to prompts on the screen to progress. A small time window is provided for a single, exact key or button to be pressed. Contrary to <strong>Timed Input</strong> games where such gameplay forms the entire game, Quick Time Events are small events in addition to very different gameplay which forms that majority of the gameplay. Examples include QTEs in <a href=\"https://www.mobygames.com/search/?q=God+of+War\">God of War</a> or <a href=\"https://www.mobygames.com/search/?q=Telltale\">Telltale's</a> <a href=\"https://www.mobygames.com/search/?q=The+Walking+Dead\">The Walking Dead</a>, even when they only form 1% of the entire gameplay.</p>",
       "genre_id": 219,
       "genre_name": "Quick Time Events (QTEs)"
     },
@@ -514,9 +514,16 @@
     {
       "genre_category": "Gameplay",
       "genre_category_id": 4,
-      "genre_description": "<p>Real-time strategy (RTS) is a sub-genre of strategy video games in which the game does not progress incrementally in turns.</p>\n<p>Not all real-time games with strategy elements are usually considered RTS. A conventional RTS includes most or all of these features:\n* multiple unit control\n* base building\n* resource gathering\n* training units as opposed to sticking to pre-defined starting units (although the latter may appear in certain missions)\n* two or more player/AI-controlled forces on the map with equal opportunity to build and attack\n* construction and combat approximately equally in focus</p>",
+      "genre_description": "<p>Real-time strategy (RTS) is a sub-genre of strategy video games in which the game does not progress incrementally in turns.</p>\n<p>Not all real-time games with strategy elements are usually considered RTS. A conventional RTS includes most or all of these features:</p>\n<ul>\n<li>multiple unit control</li>\n<li>base building</li>\n<li>resource gathering</li>\n<li>training units as opposed to sticking to pre-defined starting units (although the latter may appear in certain missions)</li>\n<li>two or more player/AI-controlled forces on the map with equal opportunity to build and attack</li>\n<li>construction and combat approximately equally in focus</li>\n</ul>",
       "genre_id": 225,
-      "genre_name": "Real-time strategy"
+      "genre_name": "Real-time strategy (RTS)"
+    },
+    {
+      "genre_category": "Gameplay",
+      "genre_category_id": 4,
+      "genre_description": "<p>A subgenre of tactics games in which players control a small group of units, usually predefined or chosen from several preset characters/units. It focuses on combat on a smaller scale, units can normally not be re-trained when lost and the games are played in real time.</p>",
+      "genre_id": 258,
+      "genre_name": "Real-time tactics (RTT)"
     },
     {
       "genre_category": "Gameplay",
@@ -584,7 +591,7 @@
     {
       "genre_category": "Gameplay",
       "genre_category_id": 4,
-      "genre_description": "<p>In Timed Input games the entire gameplay consists of matching player input to prompts on the screen in a timely manner. This mainly includes games where reflexes are needed (e.g. <a href=\"/search/?q=Dragon's+Lair\">Dragon's Lair</a>). Games where there is ample time is provide to make a choice, without time restriction, do not apply. Games where timed input forms a minority of the gameplay have the genre <strong>Quick Time Events</strong> instead. Games that demand reflexes from the player are not necessarily Timed Input games as there need to be prompts on the screen or a set amount of limited choices that are repeated and there is only a small amount of freedom. Games where a constant rhythm needs to be maintained (e.g. <a href=\"/search/?q=Guitar+Hero\">Guitar Hero</a>, <a href=\"/search/?q=Dance+Dance+Revolution\">Dance Dance Revolution</a>) use the genre <a href=\"http://www.mobygames.com/genre/sheet/rhythm-music/\">Music / Rhythm\nDescription</a> instead. This genre does not include shooting gallery games where the player needs to aim a cross-hair and shoot.</p>",
+      "genre_description": "<p>In Timed Input games the entire gameplay consists of matching player input to prompts on the screen in a timely manner. This mainly includes games where reflexes are needed (e.g. <a href=\"https://www.mobygames.com/search/?q=Dragon's+Lair\">Dragon's Lair</a>). Games where there is ample time is provide to make a choice, without time restriction, do not apply. Games where timed input forms a minority of the gameplay have the genre <strong>Quick Time Events</strong> instead. Games that demand reflexes from the player are not necessarily Timed Input games as there need to be prompts on the screen or a set amount of limited choices that are repeated and there is only a small amount of freedom. Games where a constant rhythm needs to be maintained (e.g. <a href=\"https://www.mobygames.com/search/?q=Guitar+Hero\">Guitar Hero</a>, <a href=\"https://www.mobygames.com/search/?q=Dance+Dance+Revolution\">Dance Dance Revolution</a>) use the genre <a href=\"http://www.mobygames.com/genre/sheet/rhythm-music/\">Music / Rhythm\nDescription</a> instead. This genre does not include shooting gallery games where the player needs to aim a cross-hair and shoot.</p>",
       "genre_id": 218,
       "genre_name": "Timed input"
     },
@@ -614,7 +621,14 @@
       "genre_category_id": 4,
       "genre_description": "<p>Turn-based strategy (TBS) is a sub-genre of strategy video games in which the game progresses incrementally in turns.</p>",
       "genre_id": 226,
-      "genre_name": "Turn-based strategy"
+      "genre_name": "Turn-based strategy (TBS)"
+    },
+    {
+      "genre_category": "Gameplay",
+      "genre_category_id": 4,
+      "genre_description": "<p>A subgenre of tactics games in which players control a small group of units, usually predefined or chosen from several preset characters/units. It focuses on combat on a smaller scale, units can normally not be re-trained when lost and the games are played in turns.</p>",
+      "genre_id": 260,
+      "genre_name": "Turn-based tactics (TBT)"
     },
     {
       "genre_category": "Gameplay",
@@ -647,7 +661,7 @@
     {
       "genre_category": "Interface/Control",
       "genre_category_id": 7,
-      "genre_description": "<p>These games are comprised mostly of menus in which the player selects the actions he wishes to perform. This genre is only to be used for games which use it as a majority part of the gameplay and not for games who simply have a start or options menu.</p>",
+      "genre_description": "<p>These games are comprised mostly of menus in which the player selects the actions they wish to perform. This genre is only to be used for games which use it as a majority part of the gameplay and not for games who simply have a start or options menu.</p>",
       "genre_id": 172,
       "genre_name": "Menu structures"
     },
@@ -661,35 +675,35 @@
     {
       "genre_category": "Interface/Control",
       "genre_category_id": 7,
-      "genre_description": "<p>These games allow the player to control multiple characters or units at the same time.</p>",
+      "genre_description": "<p>These games allow the player to control multiple characters or units at the same time. This does not apply to real-time strategy games, in which lassoing multiple units can be done to select them all at once.</p>",
       "genre_id": 173,
       "genre_name": "Multiple units/characters control"
     },
     {
       "genre_category": "Interface/Control",
       "genre_category_id": 7,
-      "genre_description": "<p>These games are controlled by pointing at desired game elements and selecting them. This is not solely restricted to games that use a mouse (clicking), but can also be used for other types of controllers (including touch), even when they don't say \"click\".</p>",
+      "genre_description": "<p>These games are controlled by pointing at desired game elements and selecting them. This is not solely restricted to games that use a mouse (clicking), but can also be used for other types of controllers (including touch), even when they don't say \"click\". This does not apply to light gun shooters, as pulling the trigger is considered Direct control.</p>",
       "genre_id": 167,
       "genre_name": "Point and select"
     },
     {
       "genre_category": "Interface/Control",
       "genre_category_id": 7,
-      "genre_description": "<p>These games require textual input from the player, typically in the form of simple sentences.</p>",
+      "genre_description": "<p>These games require textual input from the player, typically in the form of simple sentences. This does not apply to typing exercises and tutors in the educational genre, which are considered Direct control.</p>",
       "genre_id": 171,
       "genre_name": "Text parser"
     },
     {
       "genre_category": "Interface/Control",
       "genre_category_id": 7,
-      "genre_description": "<p>These games are controlled by the voice of the player or other sounds the player (or his environment) makes.</p>",
+      "genre_description": "<p>These games are controlled by the voice of the player or other sounds the player (or their environment) makes. This generally requires a recording input device such as a microphone.</p>",
       "genre_id": 170,
       "genre_name": "Voice control"
     },
     {
       "genre_category": "Sports Themes",
       "genre_category_id": 3,
-      "genre_description": "<p>These games simulate athletics sports.</p>",
+      "genre_description": "<p>These games simulate athletics sports including racing tracks on foot, field throws (such as javelin throwing), and field jumps (such as long jump).</p>",
       "genre_id": 135,
       "genre_name": "Athletics"
     },
@@ -717,7 +731,7 @@
     {
       "genre_category": "Sports Themes",
       "genre_category_id": 3,
-      "genre_description": "<p>These games simulate boxing or allow the player to manage boxers.</p>",
+      "genre_description": "<p>These games simulate boxing or allow the player to manage boxers. It mainly involves punching techniques, combos, and footwork inside a ring or some other dedicated area. Certain kinds of boxing like Muay Thai kickboxing also fit with the theme genre Martial arts.</p>",
       "genre_id": 36,
       "genre_name": "Boxing"
     },
@@ -738,14 +752,14 @@
     {
       "genre_category": "Sports Themes",
       "genre_category_id": 3,
-      "genre_description": "<p>Dodgeball</p>",
+      "genre_description": "<p>These games simulate dodgeball or allow the player to manage dodgeball teams.</p>",
       "genre_id": 125,
       "genre_name": "Dodgeball"
     },
     {
       "genre_category": "Sports Themes",
       "genre_category_id": 3,
-      "genre_description": "<p>These games simulate the hobby of catching fish for sport.</p>",
+      "genre_description": "<p>These games simulate the hobby of catching fish for sport. This is also includes traditional fishing above the water with tools such as rods and nets, as well as underwater spearfishing.</p>",
       "genre_id": 18,
       "genre_name": "Fishing"
     },
@@ -836,14 +850,14 @@
     {
       "genre_category": "Sports Themes",
       "genre_category_id": 3,
-      "genre_description": "<p>These games simulate skateboarding or skating, both racing and stunts.</p>",
+      "genre_description": "<p>These games simulate any sport that involves boards or footwear with wheels including skateboarding, roller skating, and roller blading.</p>",
       "genre_id": 52,
       "genre_name": "Skateboarding"
     },
     {
       "genre_category": "Sports Themes",
       "genre_category_id": 3,
-      "genre_description": "<p>These games simulate snowboarding or skiing.</p>",
+      "genre_description": "<p>These games simulate sports that involve maneuvering across snow and ice, mainly snowboarding or skiing.</p>",
       "genre_id": 95,
       "genre_name": "Snowboarding / skiing"
     },
@@ -885,7 +899,7 @@
     {
       "genre_category": "Educational Categories",
       "genre_category_id": 5,
-      "genre_description": "<p>Denotes any game that studies the ecosystem, the environment, etc.</p>",
+      "genre_description": "<p>Denotes any game that studies ecosystems, the natural environment, and the like. This encompasses any living plants, fungi, and animals based on both land and water.</p>",
       "genre_id": 81,
       "genre_name": "Ecology / nature"
     },
@@ -906,7 +920,7 @@
     {
       "genre_category": "Educational Categories",
       "genre_category_id": 5,
-      "genre_description": "<p>Denotes any educational game that develops or explores visual creativity.</p>",
+      "genre_description": "<p>Denotes any educational game that develops or explores visual creativity. This includes paint programs, electronic coloring books, digital stickers, and animation direction.</p>",
       "genre_id": 79,
       "genre_name": "Graphics / art"
     },
@@ -920,7 +934,7 @@
     {
       "genre_category": "Educational Categories",
       "genre_category_id": 5,
-      "genre_description": "<p>Denotes any educational game that teaches history.</p>",
+      "genre_description": "<p>Denotes any educational game that teaches history, ranging from the Stone Age to the Modern Era. Prehistoric times such as the time of the dinosaurs qualify as Science.</p>",
       "genre_id": 74,
       "genre_name": "History"
     },
@@ -948,7 +962,7 @@
     {
       "genre_category": "Educational Categories",
       "genre_category_id": 5,
-      "genre_description": "<p>Educational game centering on building English reading, writing, spelling, or grammar skills.</p>",
+      "genre_description": "<p>Educational game centering on building reading, writing, spelling, or grammar skills in the player's native language.</p>",
       "genre_id": 44,
       "genre_name": "Reading / writing"
     },
@@ -976,7 +990,7 @@
     {
       "genre_category": "Educational Categories",
       "genre_category_id": 5,
-      "genre_description": "<p>Educational game centering on building typing and keyboard skills.  Examples:  \"Mavid Beacon Teaches Typing\", \"Dvorak on Typing\", etc.</p>",
+      "genre_description": "<p>Educational game centering on building typing and keyboard skills. Typically this applies to the QWERTY keyboard layout, utilized by games like  “Mavis Beacon Teaches Typing\". There are games which make use of different keyboard layouts such as \"Dvorak on Typing\" for the DVORAK keyboard.</p>",
       "genre_id": 45,
       "genre_name": "Typing"
     },
@@ -999,7 +1013,7 @@
       "genre_category_id": 11,
       "genre_description": "<p>These games allow the player to take control of a non-motorized bike to explore or race, or allow the player to manage a bike racing team.</p>",
       "genre_id": 104,
-      "genre_name": "Bike / Bicycling"
+      "genre_name": "Bike / bicycling"
     },
     {
       "genre_category": "Vehicular Themes",
@@ -1025,7 +1039,7 @@
     {
       "genre_category": "Vehicular Themes",
       "genre_category_id": 11,
-      "genre_description": "<p>These games allow the player to take control of a hovercraft, a hybrid craft capable of travelling over land, water, mud or ice and other surfaces. This also includes futuristic crafts that hover above the ground (e.g. <a href=\"/search/?q=WipEout\">WipEout</a> or <a href=\"/search/?q=F-Zero\">F-Zero</a>). Hovercraft games do not have the genres Flight/Aviation or Naval/Watercraft.</p>",
+      "genre_description": "<p>These games allow the player to take control of a hovercraft, a hybrid craft capable of travelling over land, water, mud or ice and other surfaces. This also includes futuristic crafts that hover above the ground (e.g. <a href=\"https://www.mobygames.com/search/?q=WipEout\">WipEout</a> or <a href=\"https://www.mobygames.com/search/?q=F-Zero\">F-Zero</a>). Hovercraft games do not have the genres Flight/Aviation or Naval/Watercraft.</p>",
       "genre_id": 189,
       "genre_name": "Hovercraft"
     },
@@ -1095,7 +1109,7 @@
     {
       "genre_category": "Vehicular Themes",
       "genre_category_id": 11,
-      "genre_description": "<p>These games allow the player to participate in or otherwise focus on racing/driving on racing tracks. This does not need to be a real race track, but it needs to be clear the environment has been fenced off or designed in such a way that a track is created, regardless of the surface or the setting. Racing games that take place in open environments where all obstacles or routes are natural, without human intervention to create a track (e.g. <a href=\"https://www.mobygames.com/game/16/outrun/\">Outrun</a>), do not receive this genre. Invisible barriers also do not count as a way to create a track. In order to receive this genre, the majority of the racing needs to take place on a track.</p>",
+      "genre_description": "<p>These games allow the player to participate in or otherwise focus on racing/driving on racing tracks. This does not need to be a real race track, but it needs to be clear the environment has been fenced off or designed in such a way that a track is created, regardless of the surface or the setting. Racing games that take place in open environments where all obstacles or routes are natural, without human intervention to create a track (e.g. <a href=\"https://www.mobygames.com/search/?q=Outrun\">Outrun</a>), do not receive this genre. Invisible barriers also do not count as a way to create a track. In order to receive this genre, the majority of the racing needs to take place on a track.</p>",
       "genre_id": 192,
       "genre_name": "Track racing"
     },
@@ -1144,6 +1158,13 @@
     {
       "genre_category": "Setting",
       "genre_category_id": 10,
+      "genre_description": "<p>A significant part of these games takes place during the Age of Discovery, Age of Enlightenment or a fantasy adaptation thereof (roughly 15th-18th century).</p>",
+      "genre_id": 261,
+      "genre_name": "Age of Discovery / Enlightenment"
+    },
+    {
+      "genre_category": "Setting",
+      "genre_category_id": 10,
       "genre_description": "<p>A significant part of these games is set in historic/present/future/fantasy Asia.</p>",
       "genre_id": 197,
       "genre_name": "Asia"
@@ -1172,7 +1193,7 @@
     {
       "genre_category": "Setting",
       "genre_category_id": 10,
-      "genre_description": "<p>A significant part of these games takes place from 1945 up to the present time.</p>",
+      "genre_description": "<p>These games are set more or less around the time of the game's release, e.g. a 1980s game with an environment and objects typical of that time. It can be used in combination with a game group like <a href=\"https://www.mobygames.com/group/14681/setting-1980s/\">Setting: 1980s</a>. The exact year or time period does not necessarily need to be specified. Minor fantasy or science fiction elements are allowed if most of the setting is still contemporary. When there are no elements that are typical of the contemporary time period, they are vague or the period is too broad, the genre should not be used.</p>",
       "genre_id": 200,
       "genre_name": "Contemporary"
     },
@@ -1382,7 +1403,7 @@
     {
       "genre_category": "Narrative Theme/Topic",
       "genre_category_id": 8,
-      "genre_description": "<p>Martial Arts games revolve around people who fight in specific martial arts, such as judo or karate. Unlike the Fighting genre this theme does not denote a specific gameplay mechanic.</p>",
+      "genre_description": "<p>Martial Arts games revolve around people who fight in specific martial arts, such as Japanese judo, Chinese kung-fu, Brazilian capoeira, and multiple other styles worldwide. Unlike the Fighting genre this theme does not denote a specific gameplay mechanic.</p>",
       "genre_id": 39,
       "genre_name": "Martial arts"
     },
@@ -1422,100 +1443,100 @@
       "genre_name": "War"
     },
     {
-      "genre_category": "DLC/Add-on",
+      "genre_category": "Add-on",
       "genre_category_id": 14,
       "genre_description": "<p>Audio DLC is for added content that doesn't affect the gameplay but change how the game sounds.</p>\n<p><strong>Music</strong>: DLCs may be something like new songs for players to sing via microphone or to play with a guitar controller. Or, it can be the game soundtrack (not just a soundtrack to listen on it's own, that is not a DLC as it doesn't require a game) which changes the music during gameplay to a new tracks.</p>\n<p><strong>SFX</strong>: stands for Sound Effects. This can change how some actions sound (for example, user interface sounds or battle sounds or any other sound effects during gameplay).</p>\n<p><strong>Voice</strong>: DLCs are used to make characters sound different. Either additional or new voice-acting may be added. Adding new languages (voice-acted, not as subtitles) which the game didn't initially supported also falls under this category.</p>\n<p><strong>Important!!!</strong></p>\n<p>This DLC focuses on audio content exclusively. Adding new map/level, new character, new story content which obviously contains new audio materials doesn't require this genre to be selected, and in fact it shouldn't be.</p>",
       "genre_id": 227,
       "genre_name": "Audio (Music / SFX / Voice)"
     },
     {
-      "genre_category": "DLC/Add-on",
+      "genre_category": "Add-on",
       "genre_category_id": 14,
       "genre_description": "<p>In-game currency, premium currency</p>",
       "genre_id": 174,
       "genre_name": "Currency"
     },
     {
-      "genre_category": "DLC/Add-on",
+      "genre_category": "Add-on",
       "genre_category_id": 14,
       "genre_description": "<p>Aesthetic customization element</p>",
       "genre_id": 181,
       "genre_name": "Customization / outfit / skin"
     },
     {
-      "genre_category": "DLC/Add-on",
+      "genre_category": "Add-on",
       "genre_category_id": 14,
       "genre_description": "<p>Edition Upgrade indicates a downloadable content (DLC) which acts like a patch or and update that basically upgrade the base game release to limited or deluxe or special edition release. It adds all the content difference between base and special edition release. Sometimes the content includes additional in-game elements while other times this can be a set of bonus content like digital art book or soundtrack or set of avatars.</p>\n<p><strong>Important:</strong> Similarly to how DLCs that add just non-game elements like digital soundtrack or digital art book that are accessible on their own and are not integrated inside the game itself, edition upgrades that only add such content are also not accepted as game entries. In order to DLCs or edition upgrades with only non-game elements, those elements must be integrated in the game and must be accessible either via main menu or pause menu or any other in-game interface.</p>",
       "genre_id": 232,
-      "genre_name": "Edition Upgrade"
+      "genre_name": "Edition upgrade"
     },
     {
-      "genre_category": "DLC/Add-on",
+      "genre_category": "Add-on",
       "genre_category_id": 14,
       "genre_description": "<p>Non-game elements such as soundtracks, wallpapers, beta access etc.</p>",
       "genre_id": 176,
       "genre_name": "Extras"
     },
     {
-      "genre_category": "DLC/Add-on",
+      "genre_category": "Add-on",
       "genre_category_id": 14,
       "genre_description": "<p>New game modes</p>",
       "genre_id": 177,
       "genre_name": "Game mode"
     },
     {
-      "genre_category": "DLC/Add-on",
+      "genre_category": "Add-on",
       "genre_category_id": 14,
       "genre_description": "<p>New in-game objects: weapons, power-ups, shields, spells</p>",
       "genre_id": 178,
       "genre_name": "Item"
     },
     {
-      "genre_category": "DLC/Add-on",
+      "genre_category": "Add-on",
       "genre_category_id": 14,
       "genre_description": "<p>Environment like a multiplayer map, additional songs for karaoke or music games, no story elements</p>",
       "genre_id": 179,
       "genre_name": "Map / level"
     },
     {
-      "genre_category": "DLC/Add-on",
+      "genre_category": "Add-on",
       "genre_category_id": 14,
       "genre_description": "<p>This genre adds new mechanics to the game. The game will be enhanced with new gameplay systems that significantly change the gameplay compared to how the game was without the DLC. This can be either to the game at large or in a newly added <a href=\"https://www.mobygames.com/genre/sheet/game_mode/\">game mode</a>. </p>",
       "genre_id": 233,
       "genre_name": "Mechanics"
     },
     {
-      "genre_category": "DLC/Add-on",
+      "genre_category": "Add-on",
       "genre_category_id": 14,
       "genre_description": "<p>DLC that adds a non-playable character, whether friend or foe.</p>",
       "genre_id": 175,
       "genre_name": "NPC / enemy"
     },
     {
-      "genre_category": "DLC/Add-on",
+      "genre_category": "Add-on",
       "genre_category_id": 14,
       "genre_description": "<p>Anything that does not fit the other categories. The addition needs to be described in the description.</p>",
       "genre_id": 180,
       "genre_name": "Other"
     },
     {
-      "genre_category": "DLC/Add-on",
+      "genre_category": "Add-on",
       "genre_category_id": 14,
       "genre_description": "<p>Car, military unit, creature - but something controlled by the player</p>",
       "genre_id": 182,
       "genre_name": "Player unit"
     },
     {
-      "genre_category": "DLC/Add-on",
+      "genre_category": "Add-on",
       "genre_category_id": 14,
       "genre_description": "<p>New environment + story/missions OR new story/missions (quests) in an existing location</p>",
       "genre_id": 183,
       "genre_name": "Story / mission"
     },
     {
-      "genre_category": "DLC/Add-on",
+      "genre_category": "Add-on",
       "genre_category_id": 14,
-      "genre_description": "<p>Upgrade DLC is for added content that improves playable character in some way or adds increased resource gathering or experience income.</p>\n<p>Some examples of Upgrade DLCs include:\n- <strong>Skill</strong>: new attack move, new taunt move, new weapon capabilities, etc.</p>\n<ul>\n<li><strong>Boost</strong>: attack, defense, health, resource or experience gathering, etc.</li>\n</ul>\n<p>Skills are new or upgraded skills for a character or vehicle or any other controllable unit, while boosts are consumables that can boos certain actions such as attack, defense, health, speed, number of lives, and other things.</p>\n<p>Concrete examples of skill upgrades would be something like:\n- New sword attack</p>\n<ul>\n<li>\n<p>New fighting technique</p>\n</li>\n<li>\n<p>Ability to carry 3 instead of 2 weapons</p>\n</li>\n<li>\n<p>Added ability to fly</p>\n</li>\n<li>\n<p>Added ability to understand alien language</p>\n</li>\n<li>\n<p>New multiplayer taunt move</p>\n</li>\n<li>\n<p>New weapon type for an aircraft</p>\n</li>\n<li>\n<p>Additional character lives</p>\n</li>\n<li>\n<p>Ability to cross rough terrain</p>\n</li>\n</ul>\n<p>Concrete examples of boost upgrades would be something like:\n- Increased speed for 30 seconds</p>\n<ul>\n<li>\n<p>Increased defense by 5 points for all round shields</p>\n</li>\n<li>\n<p>Premium account (which collects 50% more experience points)</p>\n</li>\n<li>\n<p>Increased endurance</p>\n</li>\n<li>\n<p>Improved steering</p>\n</li>\n<li>\n<p>Decreased collision damage</p>\n</li>\n<li>\n<p>Potion that makes mana deplete at a slower rate</p>\n</li>\n</ul>",
+      "genre_description": "<p>Upgrade DLC is for added content that improves playable character in some way or adds increased resource gathering or experience income.</p>\n<p>Some examples of Upgrade DLCs include:</p>\n<ul>\n<li><strong>Skill</strong>: new attack move, new taunt move, new weapon capabilities, etc.</li>\n<li><strong>Boost</strong>: attack, defense, health, resource or experience gathering, etc.</li>\n</ul>\n<p>Skills are new or upgraded skills for a character or vehicle or any other controllable unit, while boosts are consumables that can boos certain actions such as attack, defense, health, speed, number of lives, and other things.</p>\n<p>Concrete examples of skill upgrades would be something like:</p>\n<ul>\n<li>New sword attack</li>\n<li>New fighting technique</li>\n<li>Ability to carry 3 instead of 2 weapons</li>\n<li>Added ability to fly</li>\n<li>Added ability to understand alien language</li>\n<li>New multiplayer taunt move</li>\n<li>New weapon type for an aircraft</li>\n<li>Additional character lives</li>\n<li>Ability to cross rough terrain</li>\n</ul>\n<p>Concrete examples of boost upgrades would be something like:</p>\n<ul>\n<li>Increased speed for 30 seconds</li>\n<li>Increased defense by 5 points for all round shields</li>\n<li>Premium account (which collects 50% more experience points)</li>\n<li>Increased endurance</li>\n<li>Improved steering</li>\n<li>Decreased collision damage</li>\n<li>Potion that makes mana deplete at a slower rate</li>\n</ul>",
       "genre_id": 230,
       "genre_name": "Upgrade (Skill / Boost)"
     },
@@ -1550,7 +1571,7 @@
     {
       "genre_category": "Other Attributes",
       "genre_category_id": 6,
-      "genre_description": "<p>Denotes any game where the gameplay, storyline, or setting was taken from or inspired by a specific movie, television show, book, board game or other work that predated the game.  Examples: Die Hard Trilogy, Rendezvous with Rama, Below the Root, Mechwarrior, Blade Runner, etc.</p>",
+      "genre_description": "<p>Denotes any game where the gameplay, storyline, or setting was taken from or inspired by a specific movie, television show, book, board game, brand or other work that predated the game. Examples: NBA sports games, titles based on Walt Disney properties, games based on <em>Dragon Ball Z</em>, games based on <em>The Lord of the Rings</em> (book, movie or TV series), games based on Helly Kitty, <em>Ticket to Ride</em> based on the board game.</p>\n<p>It should <strong>not</strong> be used for games where a small part is licensed. E.g. <em>Forza Horizon</em> should not carry the tag because it contains licensed cars from various manufacturers, but a game entirely based around a single license (e.g. <em>Porsche Challenge</em>) should have it. The same applies for games with licensed music. Games based on other games or characters or franchises from other games never carry the tag.</p>",
       "genre_id": 82,
       "genre_name": "Licensed"
     },

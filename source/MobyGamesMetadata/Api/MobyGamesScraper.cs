@@ -33,14 +33,14 @@ namespace MobyGamesMetadata.Api
 
         public IEnumerable<GameSearchResult> GetGameSearchResults(string query)
         {
-            var url = GetSearchUrl("/g " + query, "game");
+            var url = GetSearchUrl(query, "game");
             var response = Downloader.DownloadString(url);
             return ParseGameSearchResultHtml(response.ResponseContent);
         }
 
         public IEnumerable<GroupSearchResult> GetGroupSearchResults(string query)
         {
-            var url = GetSearchUrl("/gr " + query, "group");
+            var url = GetSearchUrl(query, "group");
             var response = Downloader.DownloadString(url);
             return ParseGroupSearchResultHtml(response.ResponseContent);
         }

@@ -97,6 +97,9 @@
     <Compile Include="..\PlayniteExtensions.Metadata.Common\IImageData.cs">
       <Link>Common\Metadata\IImageData.cs</Link>
     </Compile>
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\Settings.cs">
+      <Link>Common\Metadata\Settings.cs</Link>
+    </Compile>
     <Compile Include="Barnite.cs" />
     <Compile Include="BarniteSettings.cs" />
     <Compile Include="BarniteSettingsView.xaml.cs">

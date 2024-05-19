@@ -98,7 +98,7 @@ namespace GOGMetadata
             return false;
         }
 
-        public GameDetails GetDetails(GogSearchResponse.Product searchResult, GlobalProgressActionArgs progressArgs = null)
+        public GameDetails GetDetails(GogSearchResponse.Product searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
         {
             var storeGame = GetGameStoreData(searchResult);
             var gogDetails = GetGameDetails(searchResult.id);

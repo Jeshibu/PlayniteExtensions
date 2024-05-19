@@ -39,7 +39,8 @@ namespace MobyGamesMetadata
                         MetadataField.Publishers,
                         MetadataField.CoverImage,
                         MetadataField.BackgroundImage,
-                        MetadataField.Links
+                        MetadataField.Links,
+                        MetadataField.AgeRating,
                     });
                 }
                 if (settings.Settings.DataSource.HasFlag(DataSource.Scraping))

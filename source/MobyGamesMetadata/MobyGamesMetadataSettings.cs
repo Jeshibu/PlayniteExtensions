@@ -40,6 +40,8 @@ namespace MobyGamesMetadata
             MinHeight = 600,
             AspectRatio = AspectRatio.Any,
         };
+
+        public ReleaseDateSource ReleaseDateSource { get; set; } = ReleaseDateSource.EarliestOverall;
     }
 
     public class MobyGamesGenreSetting : ObservableObject, IHasName
@@ -100,6 +102,12 @@ namespace MobyGamesMetadata
         public AspectRatio AspectRatio { get; set; }
     }
 
+    public enum ReleaseDateSource
+    {
+        EarliestOverall,
+        EarliestForAutomaticallyMatchedPlatform,
+    }
+
     public class MobyGamesMetadataSettingsViewModel : PluginSettingsViewModel<MobyGamesMetadataSettings, MobyGamesMetadata>
     {
         public MobyGamesMetadataSettingsViewModel(MobyGamesMetadata plugin) : base(plugin, plugin.PlayniteApi)
@@ -142,6 +150,12 @@ namespace MobyGamesMetadata
             AspectRatio.Vertical,
             AspectRatio.Horizontal,
             AspectRatio.Square,
+        };
+
+        public Dictionary<ReleaseDateSource, string> ReleaseDateSources { get; } = new Dictionary<ReleaseDateSource, string>
+        {
+            { ReleaseDateSource.EarliestOverall, "Earliest overall" },
+            { ReleaseDateSource.EarliestForAutomaticallyMatchedPlatform, "Earliest for matched platform" },
         };
 
         private void InitializeGenres()
