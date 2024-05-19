@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using PlayniteExtensions.Common;
-using System.Linq;
 
 namespace BigFishLibrary
 {
