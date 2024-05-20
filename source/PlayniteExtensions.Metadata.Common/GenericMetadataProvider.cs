@@ -40,7 +40,7 @@ namespace PlayniteExtensions.Metadata.Common
 
                 var searchResult = GetSearchResultGame(args);
                 if (searchResult != null)
-                    return foundGame = dataSource.GetDetails(searchResult);
+                    return foundGame = dataSource.GetDetails(searchResult, searchGame: options.GameData);
             }
             return foundGame = new GameDetails();
         }

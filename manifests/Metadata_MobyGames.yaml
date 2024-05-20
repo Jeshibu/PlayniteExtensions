@@ -66,3 +66,9 @@ Packages:
     - Added developers and publishers
     - Updated available genres
     - Improved group field targeting
+  - Version: 0.5.1
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-05-20/MobyGamesMetadata_0_5_1.pext
+    Changelog:
+    - Fixed getting release date for the game's platforms instead of earliest overall
