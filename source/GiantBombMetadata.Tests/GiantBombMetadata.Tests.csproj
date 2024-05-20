@@ -96,11 +96,6 @@
       <Name>GiantBombMetadata</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="search_object_barrel.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
