@@ -127,7 +127,7 @@ function Get-ManifestData {
         if ($latestRelease.Version -ne $extensionYamlData.Version) {
             throw "Version mismatch: $projectName\extension.yaml: $($extensionYamlData.Version), $($manifestFile.Name): $($latestRelease.Version)"
         }
-        return @{ Name = $projectName; DisplayName = $extensionYamlData.Name; Version = $latestRelease.Version; ReleaseDate = $latestRelease.ReleaseDate; Changelog = $latestRelease.Changelog }
+        return @{ Name = $projectName; DisplayName = $extensionYamlData.Name; Version = $latestRelease.Version; ReleaseDate = $latestRelease.ReleaseDate; Changelog = $latestRelease.Changelog | ForEach-Object{$_.Replace("'", "''")} }
     }
     throw "Could not find manifest for addon ID $($manifestContent.Id)"
 }
