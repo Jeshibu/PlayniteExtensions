@@ -35,9 +35,18 @@ namespace LegacyGamesLibrary
             foreach (var gameFolderKey in gameFolderKeys)
             {
                 var gameFolder = $@"{legacyGamesFolder}\{gameFolderKey}";
+                logger.Info($"Parsing {gameFolder}");
+
+                var gameId = RegistryValueProvider.GetValueForPath(registryView, RegistryHive.CurrentUser, gameFolder, "InstallerUUID");
+                if (string.IsNullOrWhiteSpace(gameId))
+                {
+                    logger.Warn($@"No value found for {gameFolder}\InstallerUUID");
+                    continue;
+                }
+
                 yield return new RegistryGameData
                 {
-                    InstallerUUID = new Guid(RegistryValueProvider.GetValueForPath(registryView, RegistryHive.CurrentUser, gameFolder, "InstallerUUID")),
+                    InstallerUUID = new Guid(gameId),
                     ProductName = RegistryValueProvider.GetValueForPath(registryView, RegistryHive.CurrentUser, gameFolder, "ProductName"),
                     InstDir = RegistryValueProvider.GetValueForPath(registryView, RegistryHive.CurrentUser, gameFolder, "InstDir"),
                     GameExe = RegistryValueProvider.GetValueForPath(registryView, RegistryHive.CurrentUser, gameFolder, "GameExe"),
