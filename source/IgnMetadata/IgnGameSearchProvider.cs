@@ -19,7 +19,7 @@ namespace IgnMetadata
             this.platformUtility = platformUtility;
         }
 
-        public GameDetails GetDetails(IgnGame searchResult, GlobalProgressActionArgs progressArgs = null)
+        public GameDetails GetDetails(IgnGame searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
         {
             var slug = searchResult?.Slug;
             if (slug == null)

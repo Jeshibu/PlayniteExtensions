@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 
 namespace IgnMetadata
 {
@@ -46,13 +47,13 @@ namespace IgnMetadata
             var extensionsParameter = ToQueryStringParameter(extensions);
             string url = $"https://mollusk.apis.ign.com/graphql?operationName={operationName}&variables={variablesParameter}&extensions={extensionsParameter}";
 
-            var headers = new Dictionary<string, string>
+            Action<WebHeaderCollection> headerSetter = (WebHeaderCollection header) =>
             {
-                { "apollographql-client-name", "kraken" },
-                { "apollographql-client-version", "v0.23.3" },
+                header.Set("apollographql-client-name", "kraken");
+                header.Set("apollographql-client-version", "v0.23.3");
             };
 
-            var response = downloader.DownloadString(url, referer: "https://www.ign.com/reviews/games", customHeaders: headers, contentType: "application/json");
+            var response = downloader.DownloadString(url, referer: "https://www.ign.com/reviews/games", headerSetter: headerSetter, contentType: "application/json");
             if (string.IsNullOrWhiteSpace(response?.ResponseContent))
             {
                 logger.Error($"Failed to get content from {url}");

@@ -28,7 +28,7 @@ namespace BigFishMetadata
             this.settings = settings;
         }
 
-        public GameDetails GetDetails(BigFishSearchResultGame searchResult, GlobalProgressActionArgs progressArgs = null)
+        public GameDetails GetDetails(BigFishSearchResultGame searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
         {
             if (searchResult == null) return null;
 

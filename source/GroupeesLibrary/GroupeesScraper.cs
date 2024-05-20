@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 
 namespace GroupeesLibrary
@@ -119,7 +120,7 @@ namespace GroupeesLibrary
 
         public List<GroupeesOrderRow> GetOrderRows(GroupeesLibrarySettings settings, IWebDownloader downloader, int page, string csrfToken)
         {
-            var response = downloader.DownloadString($"https://groupees.com/users/{settings.UserId}/more_entries?page={page}&kind=games&filters%5Bkey%5D%5B%5D=drm-free", referer: "https://groupees.com/purchases", customHeaders: GetCustomHeaders(csrfToken));
+            var response = downloader.DownloadString($"https://groupees.com/users/{settings.UserId}/more_entries?page={page}&kind=games&filters%5Bkey%5D%5B%5D=drm-free", referer: "https://groupees.com/purchases", headerSetter: GetHeaderSetter(csrfToken));
             if (string.IsNullOrWhiteSpace(response.ResponseContent))
                 return new List<GroupeesOrderRow>();
             var strings = JsonConvert.DeserializeObject<string[]>(response.ResponseContent);
@@ -129,7 +130,7 @@ namespace GroupeesLibrary
         public GroupeesGameDetails GetDetails(GroupeesLibrarySettings settings, IWebDownloader downloader, int gameId, string csrfToken)
         {
             var url = $"https://groupees.com/user_products/{gameId}?user_id={settings.UserId}&_={DateTimeOffset.Now.ToUnixTimeSeconds()}";
-            var response = downloader.DownloadString(url, referer: "https://groupees.com/purchases", customHeaders: GetCustomHeaders(csrfToken));
+            var response = downloader.DownloadString(url, referer: "https://groupees.com/purchases", headerSetter: GetHeaderSetter(csrfToken));
 
             var articleMatch = Regex.Match(response.ResponseContent, @"^article\.html\('(.+)'\);$", RegexOptions.Multiline);
             if (!articleMatch.Success)
@@ -176,12 +177,12 @@ namespace GroupeesLibrary
             return game;
         }
 
-        private Dictionary<string, string> GetCustomHeaders(string csrfToken)
+        private Action<WebHeaderCollection> GetHeaderSetter(string csrfToken)
         {
-            return new Dictionary<string, string>
+            return (WebHeaderCollection header) =>
             {
-                { "X-CSRF-Token", csrfToken },
-                { "X-Requested-With", "XMLHttpRequest" },
+                header["X-CSRF-Token"] = csrfToken;
+                header["X-Requested-With"] = "XMLHttpRequest";
             };
         }
 
