@@ -85,3 +85,9 @@ Packages:
     - Added options to disable bundles for tagging
     - Added support for new bundle - Games for Gaza
     - Games that get tags/links added now have their Date Modified field updated
+  - Version: 0.12
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2024-05-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-05-20/itchIoBundleTagger_0_12.pext
+    Changelog:
+    - Added support for new bundle - Palestinian Relief Bundle 2024

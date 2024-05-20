@@ -19,3 +19,11 @@ Packages:
     Changelog:
      - Added importing from Big Fish Games online account
      - Added metadata provider
+  - Version: 0.3
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-05-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-05-20/BigFishLibrary_0_3.pext
+    Changelog:
+    - Fixed uninstalled/online game import
+    - Added clickable notification that leads to settings when importing without being authenticated
+    - Added store page link via metadata provider

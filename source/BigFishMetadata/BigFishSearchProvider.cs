@@ -38,7 +38,7 @@ namespace BigFishMetadata
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 return null;
 
-            var output = new GameDetails() { Url = searchResult.Url };
+            var output = new GameDetails() { Url = searchResult.Url, Links = new List<Link> { new Link { Name = "Big Fish Games", Url = searchResult.Url } } };
 
             var doc = new HtmlParser().Parse(response.ResponseContent);
             var reviewFetchTask = GetCommunityScore(GetReviewsUrl(doc));

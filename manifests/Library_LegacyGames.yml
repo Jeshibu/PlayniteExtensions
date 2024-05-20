@@ -66,3 +66,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-09-24/LegacyGamesLibrary_0_6_1.pext
     Changelog:
      - Fixed game import breaking on incomplete catalog data
+  - Version: 0.6.2
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2024-05-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-05-20/LegacyGamesLibrary_0_6_2.pext
+    Changelog:
+     - Fixed installed game import breaking on some registry entries

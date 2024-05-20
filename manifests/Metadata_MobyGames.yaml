@@ -56,3 +56,13 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-02-22/MobyGamesMetadata_0_4_4.pext
     Changelog:
      - Optimized game matching for bulk property import
+  - Version: 0.5
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-05-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-05-20/MobyGamesMetadata_0_5.pext
+    Changelog:
+    - Added option to get release date for the game's platform(s) instead of earliest overall
+    - Added ratings
+    - Added developers and publishers
+    - Updated available genres
+    - Improved group field targeting
