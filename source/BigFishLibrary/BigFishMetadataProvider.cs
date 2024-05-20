@@ -1,7 +1,9 @@
 ﻿using BigFishMetadata;
+using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Metadata.Common;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace BigFishLibrary
         private readonly IGameSearchProvider<BigFishSearchResultGame> gameSearchProvider;
         private readonly BigFishLibrarySettings settings;
         private readonly BigFishOnlineLibraryScraper scraper;
+        private readonly ILogger logger = LogManager.GetLogger();
 
         public BigFishMetadataProvider(BigFishRegistryReader registryReader, IGameSearchProvider<BigFishSearchResultGame> gameSearchProvider, BigFishLibrarySettings settings, BigFishOnlineLibraryScraper scraper)
         {
@@ -26,9 +29,17 @@ namespace BigFishLibrary
 
         public override GameMetadata GetMetadata(Game game)
         {
-            var onlineData = GetOnlineMetadata(game);
-            var offlineData = GetOfflineMetadata(game);
-            return Merge(offlineData, onlineData);
+            try
+            {
+                var onlineData = GetOnlineMetadata(game);
+                var offlineData = GetOfflineMetadata(game);
+                return Merge(offlineData, onlineData);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"Error getting metadata for {game.Name}");
+                return null;
+            }
         }
 
         public GameMetadata GetOfflineMetadata(Game game)
@@ -39,15 +50,27 @@ namespace BigFishLibrary
         public GameMetadata GetOfflineMetadata(string sku, bool minimal)
         {
             var registryDetails = registryReader.GetGameDetails(sku);
+            logger.Info($"Getting offline metadata for {sku}");
+            logger.Info(JsonConvert.SerializeObject(registryDetails));
             var output = new GameMetadata
             {
                 GameId = registryDetails.Sku,
                 Name = registryDetails.Name,
                 Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
-                InstallDirectory = new FileInfo(registryDetails.ExecutablePath).DirectoryName,
-                IsInstalled = true,
                 Source = new MetadataNameProperty("Big Fish Games"),
             };
+
+            try
+            {
+                var exeFile = new FileInfo(registryDetails.ExecutablePath);
+                output.InstallDirectory = exeFile.DirectoryName;
+                output.IsInstalled = exeFile.Exists;
+            }
+            catch (ArgumentException)
+            {
+                output.IsInstalled = false;
+            }
+
             if (!minimal)
             {
                 if (File.Exists(registryDetails.Thumbnail))
@@ -68,18 +91,26 @@ namespace BigFishLibrary
 
         public IEnumerable<GameMetadata> GetGames()
         {
-            var games = GetOnlineGames().ToDictionary(g => g.GameId);
-            foreach (var offlineGame in GetOfflineGames())
+            try
             {
-                if (games.TryGetValue(offlineGame.GameId, out var onlineGame))
-                    games[offlineGame.GameId] = Merge(offlineGame, onlineGame);
-                else
-                    games[offlineGame.GameId] = offlineGame;
+                var games = GetOnlineGames().ToDictionary(g => g.GameId);
+                foreach (var offlineGame in GetOfflineGames())
+                {
+                    if (games.TryGetValue(offlineGame.GameId, out var onlineGame))
+                        games[offlineGame.GameId] = Merge(offlineGame, onlineGame);
+                    else
+                        games[offlineGame.GameId] = offlineGame;
+                }
+                return games.Values;
             }
-            return games.Values;
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Error getting games");
+                return Enumerable.Empty<GameMetadata>();
+            }
         }
 
-        private static GameMetadata Merge(GameMetadata offlineData, GameMetadata onlineData)
+        public static GameMetadata Merge(GameMetadata offlineData, GameMetadata onlineData)
         {
             if (offlineData == null) return onlineData;
             if (onlineData == null) return offlineData;
@@ -91,7 +122,7 @@ namespace BigFishLibrary
             return onlineData;
         }
 
-        private IEnumerable<GameMetadata> GetOfflineGames()
+        public IEnumerable<GameMetadata> GetOfflineGames()
         {
             var gameIds = registryReader.GetInstalledGameIds();
             foreach (var gameId in gameIds)
@@ -104,19 +135,23 @@ namespace BigFishLibrary
             }
         }
 
-        private IEnumerable<GameMetadata> GetOnlineGames()
+        public IEnumerable<GameMetadata> GetOnlineGames()
         {
             if (!settings.ImportFromOnline)
-                return Enumerable.Empty<GameMetadata>();
+                yield break;
 
             var products = scraper.GetGames();
 
-            return products.Select(p => new GameMetadata
+            foreach (var product in products)
             {
-                GameId = p.Sku,
-                Name = p.Name,
-                Source = new MetadataNameProperty("Big Fish Games"),
-            });
+                logger.Info($"Product: {JsonConvert.SerializeObject(product)}");
+                yield return new GameMetadata
+                {
+                    GameId = product.Sku,
+                    Name = product.Name,
+                    Source = new MetadataNameProperty("Big Fish Games"),
+                };
+            }
         }
     }
 }

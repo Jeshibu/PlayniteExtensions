@@ -55,9 +55,33 @@ namespace BigFishLibrary
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
         {
-            SetUninstalledStatus();
+            try
+            {
+                SetUninstalledStatus();
 
-            return MetadataProvider.GetGames();
+                var metadataProvider = MetadataProvider;
+                var games = metadataProvider.GetOnlineGames().ToDictionary(g => g.GameId);
+                foreach (var offlineGame in metadataProvider.GetOfflineGames())
+                {
+                    if (games.TryGetValue(offlineGame.GameId, out var onlineGame))
+                        games[offlineGame.GameId] = BigFishMetadataProvider.Merge(offlineGame, onlineGame);
+                    else
+                        games[offlineGame.GameId] = offlineGame;
+                }
+                return games.Values;
+            }
+            catch (NotAuthenticatedException)
+            {
+                logger.Error("Not authenticated");
+                PlayniteApi.Notifications.Add(new NotificationMessage("bigfish-notauthenticated", "Big Fish library isn't authenticated. Click here to authenticate.", NotificationType.Info, () => OpenSettingsView()));
+                return Enumerable.Empty<GameMetadata>();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Error getting games");
+                PlayniteApi.Notifications.Add("bigfish-error", $"Big Fish library error: {ex.Message}", NotificationType.Error);
+                return Enumerable.Empty<GameMetadata>();
+            }
         }
 
         private void SetUninstalledStatus()
@@ -107,7 +131,7 @@ namespace BigFishLibrary
 
             var installData = RegistryReader.GetGameDetails(args.Game.GameId);
 
-            if (installData == null)
+            if (installData == null || string.IsNullOrWhiteSpace(installData.ExecutablePath))
             {
                 logger.Debug($"No install data found for {args.Game.Name}, ID: {args.Game.GameId}");
                 PlayniteApi.Dialogs.ShowErrorMessage("No install data found.", "Big Fish Games launch error");
@@ -137,7 +161,7 @@ namespace BigFishLibrary
 
             var installData = RegistryReader.GetGameDetails(args.Game.GameId);
 
-            if (installData == null)
+            if (installData == null || string.IsNullOrWhiteSpace(installData.ExecutablePath))
             {
                 logger.Debug($"No install data found for {args.Game.Name}, ID: {args.Game.GameId}");
                 PlayniteApi.Dialogs.ShowErrorMessage("No install data found.", "Big Fish Games launch error");

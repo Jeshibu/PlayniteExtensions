@@ -1,8 +1,7 @@
 ﻿using BigFishMetadata;
-using Newtonsoft.Json;
 using Playnite.SDK;
 using System;
-using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
@@ -31,14 +30,7 @@ namespace BigFishLibrary
             var savedSettings = plugin.LoadPluginSettings<BigFishLibrarySettings>();
 
             // LoadPluginSettings returns null if no saved data is available.
-            if (savedSettings != null)
-            {
-                Settings = savedSettings;
-            }
-            else
-            {
-                Settings = new BigFishLibrarySettings();
-            }
+            Settings = savedSettings ?? new BigFishLibrarySettings();
         }
 
         public AuthStatus AuthStatus
@@ -63,13 +55,13 @@ namespace BigFishLibrary
                 }
                 finally
                 {
+                    view.Close();
                     view.Dispose();
                 }
             }
         }
 
         public RelayCommand<object> LoginCommand => new RelayCommand<object>(a => Login());
-        public RelayCommand<object> TestBrowserCommand => new RelayCommand<object>(a => TestBrowser());
 
         private const string accountUrl = "https://susi.bigfishgames.com/edit";
 
@@ -115,35 +107,5 @@ namespace BigFishLibrary
                 Logger.Error(e, "Failed to authenticate user.");
             }
         }
-
-        private void TestBrowser()
-        {
-            try
-            {
-                using (var view = PlayniteApi.WebViews.CreateView(675, 540, Colors.Black))
-                {
-                    view.Navigate("https://www.bigfishgames.com/us/en/store/my-game-library.html");
-                    Logger.Info($"Can execute Javascript: {view.CanExecuteJavascriptInMainFrame}");
-                    view.OpenDialog();
-                    Logger.Info($"Can execute Javascript: {view.CanExecuteJavascriptInMainFrame}");
-                    var localStorageTask = view.EvaluateScriptAsync("window.localStorage['M2_VENIA_BROWSER_PERSISTENCE__signin_token']");
-                    var mathTask = view.EvaluateScriptAsync("2+2");
-                    var tasks = new[] {localStorageTask, mathTask};
-                    Task.WaitAll(tasks, 4000);
-                    var taskResults = tasks.Select(task => task.Result).ToArray();
-                    foreach (var taskResult in taskResults)
-                    {
-                        if(taskResult != null)
-                            Logger.Info(JsonConvert.SerializeObject(taskResults));
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                PlayniteApi.Dialogs.ShowErrorMessage("Error fucking with to Big Fish Games", "");
-                Logger.Error(e, "Failed to authenticate user.");
-            }
-        }
-
     }
 }

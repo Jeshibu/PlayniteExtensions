@@ -49,7 +49,5 @@
                 </TextBlock.Style>
             </TextBlock>
         </StackPanel>
-
-        <Button Command="{Binding TestBrowserCommand}" Padding="5">Test</Button>
     </StackPanel>
 </UserControl>
