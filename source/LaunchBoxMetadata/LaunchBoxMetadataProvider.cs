@@ -163,6 +163,14 @@ namespace LaunchBoxMetadata
             return output;
         }
 
+        private static IEnumerable<MetadataProperty> SplitCompanies(string str)
+        {
+            if (string.IsNullOrWhiteSpace(str))
+                return null;
+
+            return str.SplitCompanies().Select(c => new MetadataNameProperty(c));
+        }
+
         public override string GetName(GetMetadataFieldArgs args)
         {
             return FindGame().Name ?? base.GetName(args);
@@ -232,12 +240,12 @@ namespace LaunchBoxMetadata
 
         public override IEnumerable<MetadataProperty> GetDevelopers(GetMetadataFieldArgs args)
         {
-            return Split(FindGame().Developer, StringExtensions.TrimCompanyForms) ?? base.GetDevelopers(args);
+            return SplitCompanies(FindGame().Developer);
         }
 
         public override IEnumerable<MetadataProperty> GetPublishers(GetMetadataFieldArgs args)
         {
-            return Split(FindGame().Publisher, StringExtensions.TrimCompanyForms) ?? base.GetPublishers(args);
+            return SplitCompanies(FindGame().Publisher);
         }
 
         private bool FilterImage(LaunchBoxImageDetails imgDetails, ICollection<string> whitelistedTypes, ICollection<string> whitelistedRegions, LaunchBoxImageSourceSettings imgSetting)

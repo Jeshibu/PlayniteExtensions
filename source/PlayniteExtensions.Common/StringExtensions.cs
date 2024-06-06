@@ -89,6 +89,12 @@ namespace PlayniteExtensions.Common
             return CompanyFormRegex.Replace(s, string.Empty).Trim();
         }
 
+        public static IEnumerable<string> SplitCompanies(this string s)
+        {
+            var splitRegex = new Regex(@",\s+", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+            return splitRegex.Split(s.TrimCompanyForms()).Select(TrimCompanyForms);
+        }
+
         private static Regex deflateRegex = new Regex(@"[^\p{L}\p{N}]+", RegexOptions.Compiled);
 
         /// <summary>
