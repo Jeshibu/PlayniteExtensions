@@ -125,6 +125,9 @@ namespace BigFishLibrary
         public IEnumerable<GameMetadata> GetOfflineGames()
         {
             var gameIds = registryReader.GetInstalledGameIds();
+            if (gameIds == null)
+                yield break;
+
             foreach (var gameId in gameIds)
             {
                 if (gameId == "F7315T1L1") //Big Fish Casino, not visible in the client and apparently broken
