@@ -86,6 +86,17 @@ namespace Barnite.Scrapers
 
             data.Description = page.DocumentNode.SelectSingleNode("//div[@id='description-text']")?.InnerHtml.Trim();
 
+            if (data.Description == null)
+            {
+                var descriptionNodes = page.DocumentNode
+                    .SelectSingleNode("//section[@id='gameOfficialDescription']/details")
+                    ?.ChildNodes.SkipWhile(node => string.IsNullOrWhiteSpace(node.OuterHtml) || node.Name == "summary")
+                    .Select(node => node.OuterHtml);
+
+                if (descriptionNodes != null)
+                    data.Description = string.Join("", descriptionNodes).Trim();
+            }
+
             var groups = page.DocumentNode.SelectNodes("//section[@id='gameGroups']/ul/li/a")?.Select(e => e.InnerText.HtmlDecode()).ToList() ?? new List<string>();
             foreach (string group in groups)
             {
@@ -124,6 +135,10 @@ namespace Barnite.Scrapers
                         data.CommunityScore = (int)(communityRating * 20);
                 }
             }
+
+            var linkElements = page.DocumentNode.SelectNodes("//section[@id='gameSites' or @id='gameIdentifiers']//a[@href]");
+            if (linkElements != null)
+                data.Links.AddRange(linkElements.Select(le => new Link(le.InnerText, le.GetAttributeValue("href", ""))));
 
             return data;
         }
