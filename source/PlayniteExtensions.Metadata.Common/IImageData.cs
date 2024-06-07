@@ -24,9 +24,4 @@ namespace PlayniteExtensions.Metadata.Common
         public int Height { get; set; }
         public IEnumerable<string> Platforms { get; set; } = new List<string>();
     }
-
-    public interface IHasName
-    {
-        string Name { get; }
-    }
 }

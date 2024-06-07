@@ -15,6 +15,11 @@ using System.Threading;
 
 namespace PlayniteExtensions.Metadata.Common
 {
+    public interface IHasName
+    {
+        string Name { get; }
+    }
+
     public abstract class BulkGamePropertyAssigner<TSearchItem> where TSearchItem : IHasName
     {
         public BulkGamePropertyAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)

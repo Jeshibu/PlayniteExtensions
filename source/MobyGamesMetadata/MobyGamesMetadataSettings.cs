@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Playnite.SDK;
 using PlayniteExtensions.Metadata.Common;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -106,6 +107,15 @@ namespace MobyGamesMetadata
     {
         EarliestOverall,
         EarliestForAutomaticallyMatchedPlatform,
+    }
+
+    [Flags]
+    public enum DataSource
+    {
+        None = 0,
+        Api = 1,
+        Scraping = 2,
+        ApiAndScraping = 3,
     }
 
     public class MobyGamesMetadataSettingsViewModel : PluginSettingsViewModel<MobyGamesMetadataSettings, MobyGamesMetadata>
