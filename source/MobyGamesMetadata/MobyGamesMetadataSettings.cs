@@ -243,7 +243,7 @@ namespace MobyGamesMetadata
         private void UpgradeSettings()
         {
             if (Settings.Version < 1)
-                Settings.MaxDegreeOfParallelism = MobyGamesMetadataSettings.GetDefaultMaxDegreeOfParallelism();
+                Settings.MaxDegreeOfParallelism = BulkImportPluginSettings.GetDefaultMaxDegreeOfParallelism();
 
             Settings.Version = 1;
         }

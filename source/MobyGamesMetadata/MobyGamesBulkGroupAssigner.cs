@@ -21,7 +21,7 @@ namespace MobyGamesMetadata
 
         public override string MetadataProviderName => "MobyGames";
 
-        protected override UserControl GetBulkPropertyImportView(Window window, PlayniteExtensions.Metadata.Common.GamePropertyImportViewModel viewModel)
+        protected override UserControl GetBulkPropertyImportView(Window window, GamePropertyImportViewModel viewModel)
         {
             return new GamePropertyImportView(window) { DataContext = viewModel };
         }

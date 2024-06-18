@@ -171,7 +171,6 @@
     <Compile Include="GamePropertyImportView.xaml.cs">
       <DependentUpon>GamePropertyImportView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GamePropertyImportViewModel.cs" />
     <Compile Include="MobyGamesBulkGenreAssigner.cs" />
     <Compile Include="MobyGamesBulkGroupAssigner.cs" />
     <Compile Include="MobyGamesMetadata.cs" />
