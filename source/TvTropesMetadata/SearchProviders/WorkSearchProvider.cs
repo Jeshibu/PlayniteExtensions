@@ -20,7 +20,7 @@ namespace TvTropesMetadata.SearchProviders
         public GameDetails GetDetails(TvTropesSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
         {
             var result = scraper.GetTropesForGame(searchResult.Url);
-            var output = new GameDetails { Description = result.Description, Tags = result.Tropes, Url = searchResult.Url };
+            var output = new GameDetails { Description = result.Description, Tags = result.Tropes, Series = result.Franchises, Url = searchResult.Url };
             output.Names.Add(result.Title);
             if(!string.IsNullOrWhiteSpace(result.CoverImageUrl))
                 output.CoverOptions.Add(new ImgData { Url = result.CoverImageUrl });

@@ -23,6 +23,7 @@ namespace TvTropesMetadata.Scraping
             {
                 output.CoverImageUrl = GetCoverImageUrl(doc);
                 output.Description = GetDescription(doc);
+                output.Franchises.AddRange(GetFranchises(doc));
 
                 var subcategoryUrls = GetSubcategoryUrls(doc, url);
                 foreach (var subcategoryUrl in subcategoryUrls)
@@ -86,6 +87,16 @@ namespace TvTropesMetadata.Scraping
             }
             return descriptionDoc.Body.InnerHtml;
         }
+
+        private IEnumerable<string> GetFranchises(IHtmlDocument doc)
+        {
+            var links = doc.QuerySelectorAll(".section-links > .links > ul > li:nth-child(2) > a[href*=\"/Franchise/\"]");
+            if (links == null)
+                yield break;
+
+            foreach (var a in links)
+                yield return a.TextContent.HtmlDecode().TrimStart("Franchise/");
+        }
     }
 
     public class ParsedWorkPage
@@ -94,5 +105,6 @@ namespace TvTropesMetadata.Scraping
         public string Description { get; set; }
         public string CoverImageUrl { get; set; }
         public List<string> Tropes { get; set; } = new List<string>();
+        public List<string> Franchises { get; set; } = new List<string>();
     }
 }
