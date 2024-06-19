@@ -35,7 +35,7 @@ namespace TvTropesMetadata
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            var searchProvider = new WorkSearchProvider(new Scraping.WorkScraper(downloader));
+            var searchProvider = new WorkSearchProvider(new Scraping.WorkScraper(downloader), settings.Settings);
             return new TvTropesMetadataProvider(searchProvider, options, PlayniteApi, new PlatformUtility(PlayniteApi));
         }
 
@@ -72,7 +72,7 @@ namespace TvTropesMetadata
 
         public void ImportGameProperty()
         {
-            var searchProvider = new TropeSearchProvider(new Scraping.TropeScraper(downloader));
+            var searchProvider = new TropeSearchProvider(new Scraping.TropeScraper(downloader), settings.Settings);
             var extra = new BulkTropeAssigner(PlayniteApi, searchProvider, new PlatformUtility(PlayniteApi), settings.Settings);
             extra.ImportGameProperty();
         }

@@ -4,25 +4,28 @@ using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
 using System.Threading;
 using TvTropesMetadata.Scraping;
-using PlayniteExtensions.Common;
+using System.Linq;
 
 namespace TvTropesMetadata.SearchProviders
 {
     public class WorkSearchProvider : IGameSearchProvider<TvTropesSearchResult>
     {
         private readonly WorkScraper scraper;
+        private readonly TvTropesMetadataSettings settings;
 
-        public WorkSearchProvider(WorkScraper scraper)
+        public WorkSearchProvider(WorkScraper scraper, TvTropesMetadataSettings settings)
         {
             this.scraper = scraper;
+            this.settings = settings;
         }
 
         public GameDetails GetDetails(TvTropesSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
         {
             var result = scraper.GetTropesForGame(searchResult.Url);
-            var output = new GameDetails { Description = result.Description, Tags = result.Tropes, Series = result.Franchises, Url = searchResult.Url };
+            var output = new GameDetails { Description = result.Description, Series = result.Franchises, Url = searchResult.Url };
             output.Names.Add(result.Title);
-            if(!string.IsNullOrWhiteSpace(result.CoverImageUrl))
+            output.Tags.AddRange(output.Tags.Select(t => $"{settings.TropePrefix}{t}"));
+            if (!string.IsNullOrWhiteSpace(result.CoverImageUrl))
                 output.CoverOptions.Add(new ImgData { Url = result.CoverImageUrl });
             return output;
         }

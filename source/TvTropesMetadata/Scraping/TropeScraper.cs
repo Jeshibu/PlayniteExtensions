@@ -17,7 +17,12 @@ namespace TvTropesMetadata.Scraping
 
         public override IEnumerable<TvTropesSearchResult> Search(string query) => Search(query, "trope");
 
-        public ParsedTropePage GetGamesForTrope(string url, bool pageIsSubsection = false)
+        public ParsedTropePage GetGamesForTrope(string url)
+        {
+            return GetGamesForTrope(url, pageIsSubsection: false);
+        }
+
+        private ParsedTropePage GetGamesForTrope(string url, bool pageIsSubsection)
         {
             var doc = GetDocument(url);
             var output = new ParsedTropePage { Title = GetTitle(doc) };

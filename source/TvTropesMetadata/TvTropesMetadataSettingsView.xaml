@@ -14,6 +14,7 @@
         </StackPanel.Resources>
 
         <CheckBox IsChecked="{Binding Settings.ShowTopPanelButton}" Content="Show top panel button"/>
+        <CheckBox IsChecked="{Binding Settings.OnlyFirstGamePerTropeListItem}" Content="Only import first game per trope list item" Margin="0,10"/>
 
         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
             <TextBlock Text="Parallelism:" VerticalAlignment="Center"/>
