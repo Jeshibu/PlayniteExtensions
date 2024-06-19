@@ -10,9 +10,12 @@ namespace TvTropesMetadata
 {
     public class BulkTropeAssigner : BulkGamePropertyAssigner<TvTropesSearchResult>
     {
-        public BulkTropeAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TvTropesSearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
-            : base(playniteAPI, dataSource, platformUtility, maxDegreeOfParallelism)
+        private readonly TvTropesMetadataSettings settings;
+
+        public BulkTropeAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TvTropesSearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, TvTropesMetadataSettings settings)
+            : base(playniteAPI, dataSource, platformUtility, settings.MaxDegreeOfParallelism)
         {
+            this.settings = settings;
         }
 
         public override string MetadataProviderName { get; } = "TV Tropes";
@@ -34,7 +37,7 @@ namespace TvTropesMetadata
         protected override PropertyImportSetting GetPropertyImportSetting(TvTropesSearchResult searchItem, out string name)
         {
             name = searchItem.Title;
-            return new PropertyImportSetting { ImportTarget = PropertyImportTarget.Tags, Prefix = "Trope: " };
+            return new PropertyImportSetting { ImportTarget = PropertyImportTarget.Tags, Prefix = settings.TropePrefix };
         }
     }
 }

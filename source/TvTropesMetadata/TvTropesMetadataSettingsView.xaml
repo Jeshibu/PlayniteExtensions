@@ -8,7 +8,25 @@
              xmlns:pec="clr-namespace:PlayniteExtensions.Common"
              d:DataContext="{d:DesignInstance Type=tt:TvTropesMetadataSettingsViewModel}"
              d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel>
+    <StackPanel Margin="20">
+        <StackPanel.Resources>
+            <pec:IntegerFormatConverter x:Key="intConverter"/>
+        </StackPanel.Resources>
+
         <CheckBox IsChecked="{Binding Settings.ShowTopPanelButton}" Content="Show top panel button"/>
+
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+            <TextBlock Text="Parallelism:" VerticalAlignment="Center"/>
+            <TextBox Width="100" HorizontalAlignment="Left" Margin="10" Text="{Binding Settings.MaxDegreeOfParallelism, Converter={StaticResource intConverter}}"/>
+        </StackPanel>
+        <TextBlock TextWrapping="Wrap">
+            Parallelism dictates how many simultaneous threads can be used to process the bulk property import game matching. It is recommended to set this lower than the amount of cores in your CPU.
+        </TextBlock>
+
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+            <TextBlock Text="Prefix tropes with:" VerticalAlignment="Center"/>
+            <TextBox Width="100" HorizontalAlignment="Left" Margin="10" Text="{Binding Settings.TropePrefix}"/>
+        </StackPanel>
+
     </StackPanel>
 </UserControl>

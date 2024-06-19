@@ -61,6 +61,9 @@
     <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs">
       <Link>Common\IEnumerableExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs">
+      <Link>Common\IntegerFormatConverter.cs</Link>
+    </Compile>
     <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs">
       <Link>Common\IPlatformUtility.cs</Link>
     </Compile>

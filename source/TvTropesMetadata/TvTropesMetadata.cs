@@ -73,7 +73,7 @@ namespace TvTropesMetadata
         public void ImportGameProperty()
         {
             var searchProvider = new TropeSearchProvider(new Scraping.TropeScraper(downloader));
-            var extra = new BulkTropeAssigner(PlayniteApi, searchProvider, new PlatformUtility(PlayniteApi), settings.Settings.MaxDegreeOfParallelism);
+            var extra = new BulkTropeAssigner(PlayniteApi, searchProvider, new PlatformUtility(PlayniteApi), settings.Settings);
             extra.ImportGameProperty();
         }
     }

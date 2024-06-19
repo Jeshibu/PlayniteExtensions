@@ -12,9 +12,17 @@ namespace TvTropesMetadata.Scraping
     {
         public WorkScraper(IWebDownloader downloader) : base(downloader) { }
 
-        public override IEnumerable<TvTropesSearchResult> Search(string query) => Search(query, "work");
+        public override IEnumerable<TvTropesSearchResult> Search(string query)
+        {
+            return Search(query, "work").OrderByDescending(sr => CategoryWhitelist.Any(c => sr.Url.Contains(c, StringComparison.InvariantCultureIgnoreCase)));
+        }
 
-        public ParsedWorkPage GetTropesForGame(string url, bool pageIsSubsection = false)
+        public ParsedWorkPage GetTropesForGame(string url)
+        {
+            return GetTropesForGame(url, pageIsSubsection: false);
+        }
+
+        private ParsedWorkPage GetTropesForGame(string url, bool pageIsSubsection)
         {
             var doc = GetDocument(url);
             var output = new ParsedWorkPage { Title = GetTitle(doc) };
@@ -41,7 +49,7 @@ namespace TvTropesMetadata.Scraping
             foreach (var item in listItems)
             {
                 var text = item.TextContent;
-                if (BlacklistedWords.Any(w => text.Contains(w, System.StringComparison.InvariantCultureIgnoreCase)))
+                if (BlacklistedWords.Any(w => text.Contains(w, StringComparison.InvariantCultureIgnoreCase)))
                     continue;
 
                 var a = item.QuerySelector("a[href*=\"/Main/\"]");
@@ -66,26 +74,6 @@ namespace TvTropesMetadata.Scraping
         {
             var img = doc.QuerySelector("img.embeddedimage[src]");
             return img?.GetAttribute("src");
-        }
-
-        private string GetDescription(IHtmlDocument doc)
-        {
-            var articleContent = doc.QuerySelector(".article-content")?.InnerHtml.Trim();
-            if (articleContent == null) return null;
-            var descriptionString = articleContent.Split(new[] { "<h2>" }, StringSplitOptions.RemoveEmptyEntries).First();
-
-            var descriptionDoc = new HtmlParser().Parse(descriptionString);
-            var removeElements = descriptionDoc.QuerySelectorAll(".quoteright, .acaptionright");
-            foreach (var r in removeElements)
-                r.Remove();
-
-            var links = descriptionDoc.QuerySelectorAll("a[href]");
-            foreach (var a in links)
-            {
-                var absoluteUrl = a.GetAttribute("href").GetAbsoluteUrl("https://tvtropes.org/");
-                a.SetAttribute("href", absoluteUrl);
-            }
-            return descriptionDoc.Body.InnerHtml;
         }
 
         private IEnumerable<string> GetFranchises(IHtmlDocument doc)

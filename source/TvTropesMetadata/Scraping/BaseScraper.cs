@@ -1,5 +1,6 @@
 ﻿using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
@@ -14,8 +15,13 @@ namespace TvTropesMetadata.Scraping
     public abstract class BaseScraper
     {
         protected readonly IWebDownloader downloader;
+        protected readonly ILogger logger = LogManager.GetLogger();
         public List<string> CategoryWhitelist = new List<string> { "VideoGame", "VisualNovel" };
-        public List<string> BlacklistedWords = new List<string> { "deconstructed", "averted", "inverted", "subverted" };
+        public List<string> BlacklistedWords = new List<string>
+        {
+            "deconstructed", "averted", "inverted", "subverted",
+            "deconstructs", "averts", "inverts", "subverts"
+        };
 
         public abstract IEnumerable<TvTropesSearchResult> Search(string query);
 
@@ -26,6 +32,13 @@ namespace TvTropesMetadata.Scraping
 
         protected IEnumerable<TvTropesSearchResult> Search(string query, string type)
         {
+            var directUrlResult = GetBasicPageInfo(query);
+            if (directUrlResult != null)
+            {
+                yield return directUrlResult;
+                yield break;
+            }
+
             string url = $"https://tvtropes.org/pmwiki/elastic_search_result.php?q={HttpUtility.UrlEncode(query)}&page_type={type}&search_type=article";
             var doc = GetDocument(url);
             var searchResults = doc.QuerySelectorAll("a.search-result[href]");
@@ -54,6 +67,55 @@ namespace TvTropesMetadata.Scraping
                 };
             }
         }
+
+        private TvTropesSearchResult GetBasicPageInfo(string url)
+        {
+            var urlBase = "https://tvtropes.org/pmwiki/pmwiki.php/";
+            if (url == null || !url.StartsWith(urlBase))
+                return null;
+
+            try
+            {
+                var doc = GetDocument(url);
+                var title = GetTitle(doc);
+                return new TvTropesSearchResult
+                {
+                    Name = title,
+                    Title = title,
+                    Description = GetDescription(doc, textOnly: true),
+                    Url = url
+                };
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Error getting basic page info");
+                return null;
+            }
+        }
+
+        protected string GetDescription(IHtmlDocument doc, bool textOnly = false)
+        {
+            var articleContent = doc.QuerySelector(".article-content")?.InnerHtml.Trim();
+            if (articleContent == null) return null;
+            var descriptionString = articleContent.Split(new[] { "<h2>" }, StringSplitOptions.RemoveEmptyEntries).First();
+
+            var descriptionDoc = new HtmlParser().Parse(descriptionString);
+            var removeElements = descriptionDoc.QuerySelectorAll(".quoteright, .acaptionright");
+            foreach (var r in removeElements)
+                r.Remove();
+
+            var links = descriptionDoc.QuerySelectorAll("a[href]");
+            foreach (var a in links)
+            {
+                var absoluteUrl = a.GetAttribute("href").GetAbsoluteUrl("https://tvtropes.org/");
+                a.SetAttribute("href", absoluteUrl);
+            }
+
+            return textOnly
+                ? descriptionDoc.Body.TextContent.HtmlDecode()
+                : descriptionDoc.Body.InnerHtml;
+        }
+
 
         protected IEnumerable<Tuple<string, string>> GetHeaderSegments(string content)
         {
@@ -91,7 +153,7 @@ namespace TvTropesMetadata.Scraping
                 return null;
 
             var strong = titleElement.QuerySelector("strong");
-            if(strong != null) 
+            if (strong != null)
                 strong.Remove();
 
             return titleElement.TextContent.HtmlDecode();
@@ -118,7 +180,7 @@ namespace TvTropesMetadata.Scraping
             var id = Url.TrimStart("https://tvtropes.org/pmwiki/pmwiki.php/");
             var description = $"{id} | {Description}";
 
-            return new GenericItemOption<TvTropesSearchResult>(this) { Description = description, Name = Title };
+            return new GenericItemOption<TvTropesSearchResult>(this) { Description = description, Name = Name };
         }
     }
 
