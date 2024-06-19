@@ -1,9 +1,7 @@
 ﻿using AngleSharp.Dom;
 using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
-using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
-using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,8 +35,6 @@ namespace TvTropesMetadata.Scraping
             }
             return output;
         }
-
-        private static IHtmlCollection<IElement> GetAllListItems(IHtmlDocument doc) => doc.QuerySelectorAll(".article-content ul > li");
 
         private IEnumerable<string> GetSubcategoryUrls(IHtmlDocument doc, string pageUrl)
         {

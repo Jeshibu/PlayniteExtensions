@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="TvTropesScraperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkScraperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TvTropesMetadata\TvTropesMetadata.csproj">
@@ -93,6 +94,15 @@
     <Analyzer Include="..\packages\xunit.analyzers.1.14.0\analyzers\dotnet\cs\xunit.analyzers.fixes.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="html\KingdomHeartsII-TropesAToL.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="html\KingdomHeartsII-TropesMToZ.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="html\KingdomHeartsII.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="html\StalkerWithACrush-VideoGames.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

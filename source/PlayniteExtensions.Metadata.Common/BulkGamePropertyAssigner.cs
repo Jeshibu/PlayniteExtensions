@@ -164,7 +164,7 @@ namespace PlayniteExtensions.Metadata.Common
                     }
 
                     var gameToMatchId = GetGameIdFromUrl(gbGame.Url);
-                    if (gamesById.TryGetValue(gameToMatchId, out var gamesWithThisId))
+                    if (gameToMatchId != null && gamesById.TryGetValue(gameToMatchId, out var gamesWithThisId))
                     {
                         foreach (var g in gamesWithThisId)
                             matchingGames.Add(new GameCheckboxViewModel(g, gbGame));
