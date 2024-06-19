@@ -24,7 +24,7 @@ namespace TvTropesMetadata.SearchProviders
             var result = scraper.GetTropesForGame(searchResult.Url);
             var output = new GameDetails { Description = result.Description, Series = result.Franchises, Url = searchResult.Url };
             output.Names.Add(result.Title);
-            output.Tags.AddRange(output.Tags.Select(t => $"{settings.TropePrefix}{t}"));
+            output.Tags.AddRange(result.Tropes.Select(t => $"{settings.TropePrefix}{t}"));
             if (!string.IsNullOrWhiteSpace(result.CoverImageUrl))
                 output.CoverOptions.Add(new ImgData { Url = result.CoverImageUrl });
             return output;

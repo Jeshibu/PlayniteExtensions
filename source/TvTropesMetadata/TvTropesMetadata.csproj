@@ -58,6 +58,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\PlayniteExtensions.Common\AngleSharpStringExtensions.cs">
+      <Link>Common\AngleSharpStringExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs">
       <Link>Common\IEnumerableExtensions.cs</Link>
     </Compile>

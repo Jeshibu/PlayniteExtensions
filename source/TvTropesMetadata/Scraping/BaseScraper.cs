@@ -104,12 +104,11 @@ namespace TvTropesMetadata.Scraping
             foreach (var r in removeElements)
                 r.Remove();
 
-            var links = descriptionDoc.QuerySelectorAll("a[href]");
-            foreach (var a in links)
-            {
-                var absoluteUrl = a.GetAttribute("href").GetAbsoluteUrl("https://tvtropes.org/");
-                a.SetAttribute("href", absoluteUrl);
-            }
+            descriptionDoc.MakeHtmlUrlsAbsolute("https://tvtropes.org/");
+
+            var removableElements = descriptionDoc.QuerySelectorAll("p:empty, img.rounded");
+            foreach(var x in removableElements)
+                x.Remove();
 
             return textOnly
                 ? descriptionDoc.Body.TextContent.HtmlDecode()

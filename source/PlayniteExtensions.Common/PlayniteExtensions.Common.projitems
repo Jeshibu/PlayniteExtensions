@@ -9,6 +9,7 @@
     <Import_RootNamespace>PlayniteExtensions.Common</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AngleSharpStringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CachedFileDownloader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IEnumerableExtensions.cs" />
