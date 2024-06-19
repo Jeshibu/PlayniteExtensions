@@ -25,7 +25,7 @@ namespace TvTropesMetadata.Tests
             Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/KingdomHeartsII/TropesMToZ", downloader.CalledUrls);
 
             Assert.Equal("Kingdom Hearts II", result.Title);
-            Assert.Equal("https://static.tvtropes.org/pmwiki/pub/images/khii.png", result.CoverImageUrl);
+            Assert.Single("https://static.tvtropes.org/pmwiki/pub/images/khii.png", result.CoverImageUrls);
             Assert.False(string.IsNullOrWhiteSpace(result.Description));
 
             Assert.Contains("Crouching Moron, Hidden Badass", result.Tropes);

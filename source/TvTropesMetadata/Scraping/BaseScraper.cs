@@ -100,15 +100,11 @@ namespace TvTropesMetadata.Scraping
             var descriptionString = articleContent.Split(new[] { "<h2>" }, StringSplitOptions.RemoveEmptyEntries).First();
 
             var descriptionDoc = new HtmlParser().Parse(descriptionString);
-            var removeElements = descriptionDoc.QuerySelectorAll(".quoteright, .acaptionright");
+            var removeElements = descriptionDoc.QuerySelectorAll(".quoteright, .acaptionright, p:empty, img.rounded");
             foreach (var r in removeElements)
                 r.Remove();
 
             descriptionDoc.MakeHtmlUrlsAbsolute("https://tvtropes.org/");
-
-            var removableElements = descriptionDoc.QuerySelectorAll("p:empty, img.rounded");
-            foreach(var x in removableElements)
-                x.Remove();
 
             return textOnly
                 ? descriptionDoc.Body.TextContent.HtmlDecode()

@@ -29,7 +29,7 @@ namespace TvTropesMetadata.Scraping
             output.Tropes.AddRange(GetTropesOnPage(doc));
             if (!pageIsSubsection)
             {
-                output.CoverImageUrl = GetCoverImageUrl(doc);
+                output.CoverImageUrls.AddRange(GetCoverImageUrls(doc));
                 output.Description = GetDescription(doc);
                 output.Franchises.AddRange(GetFranchises(doc));
 
@@ -70,10 +70,10 @@ namespace TvTropesMetadata.Scraping
             }
         }
 
-        private string GetCoverImageUrl(IHtmlDocument doc)
+        private IEnumerable<string> GetCoverImageUrls(IHtmlDocument doc)
         {
-            var img = doc.QuerySelector("img.embeddedimage[src]");
-            return img?.GetAttribute("src");
+            var imgs = doc.QuerySelectorAll("img.embeddedimage[src]");
+            return imgs.Select(i => i.GetAttribute("src").GetAbsoluteUrl("https://tvtropes.org/"));
         }
 
         private IEnumerable<string> GetFranchises(IHtmlDocument doc)
@@ -91,7 +91,7 @@ namespace TvTropesMetadata.Scraping
     {
         public string Title { get; set; }
         public string Description { get; set; }
-        public string CoverImageUrl { get; set; }
+        public List<string> CoverImageUrls { get; set; } = new List<string>();
         public List<string> Tropes { get; set; } = new List<string>();
         public List<string> Franchises { get; set; } = new List<string>();
     }

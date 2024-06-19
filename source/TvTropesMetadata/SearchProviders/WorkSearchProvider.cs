@@ -25,8 +25,7 @@ namespace TvTropesMetadata.SearchProviders
             var output = new GameDetails { Description = result.Description, Series = result.Franchises, Url = searchResult.Url };
             output.Names.Add(result.Title);
             output.Tags.AddRange(result.Tropes.Select(t => $"{settings.TropePrefix}{t}"));
-            if (!string.IsNullOrWhiteSpace(result.CoverImageUrl))
-                output.CoverOptions.Add(new ImgData { Url = result.CoverImageUrl });
+            output.CoverOptions.AddRange(result.CoverImageUrls.Select(ci => new ImgData { Url = ci }));
             return output;
         }
 
