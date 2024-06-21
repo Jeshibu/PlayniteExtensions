@@ -138,7 +138,7 @@ namespace PlayniteExtensions.Metadata.Common
             var addedGameIds = new HashSet<Guid>();
             ICollection<GameCheckboxViewModel> matchingGames = new SynchronizedCollection<GameCheckboxViewModel>();
             var snc = new SortableNameConverter(new string[0], numberLength: 1, removeEditions: true);
-            var deflatedNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+            var deflatedNames = new ConcurrentDictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             bool loopCompleted = false;
             playniteApi.Dialogs.ActivateGlobalProgress(a =>
             {
@@ -152,23 +152,14 @@ namespace PlayniteExtensions.Metadata.Common
                 {
                     var gbGame = gamesToMatch[i];
 
-                    var namesToMatch = new List<string>();
-                    foreach (string name in gbGame.Names)
-                    {
-                        if (!deflatedNames.TryGetValue(name, out string nameToMatch))
-                        {
-                            nameToMatch = snc.Convert(name).Deflate();
-                            deflatedNames[name] = nameToMatch;
-                        }
-                        namesToMatch.Add(nameToMatch);
-                    }
-
                     var gameToMatchId = GetGameIdFromUrl(gbGame.Url);
                     if (gameToMatchId != null && gamesById.TryGetValue(gameToMatchId, out var gamesWithThisId))
                     {
                         foreach (var g in gamesWithThisId)
                             matchingGames.Add(new GameCheckboxViewModel(g, gbGame));
                     }
+
+                    var namesToMatch = GetDeflatedNames(gbGame, deflatedNames, snc).ToList();
 
                     foreach (var g in gamesWithNoKnownId)
                     {
@@ -233,6 +224,19 @@ namespace PlayniteExtensions.Metadata.Common
                 return viewModel;
             else
                 return null;
+        }
+
+        private static IEnumerable<string> GetDeflatedNames(GameDetails gameDetails, ConcurrentDictionary<string,string> deflatedNames, SortableNameConverter snc)
+        {
+            foreach (string name in gameDetails.Names)
+            {
+                if (!deflatedNames.TryGetValue(name, out string nameToMatch))
+                {
+                    nameToMatch = snc.Convert(name).Deflate();
+                    deflatedNames.TryAdd(name, nameToMatch);
+                }
+                yield return nameToMatch;
+            }
         }
 
         private bool windowSizedDown = false;
@@ -315,7 +319,7 @@ namespace PlayniteExtensions.Metadata.Common
                             break;
                     }
 
-                    if (viewModel.AddLink)
+                    if (viewModel.AddLink && !string.IsNullOrEmpty(g.GameDetails.Url))
                     {
                         if (g.Game.Links == null)
                             g.Game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>();

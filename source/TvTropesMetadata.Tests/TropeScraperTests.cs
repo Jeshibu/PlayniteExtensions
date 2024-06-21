@@ -16,6 +16,8 @@ namespace TvTropesMetadata.Tests
             { "https://tvtropes.org/pmwiki/pmwiki.php/Main/StalkerWithACrush", "html/StalkerWithACrush.html" },
             { "https://tvtropes.org/pmwiki/pmwiki.php/StalkerWithACrush/VideoGames", "html/StalkerWithACrush-VideoGames.html" },
             { "https://tvtropes.org/pmwiki/pmwiki.php/StalkerWithACrush/VisualNovels", "html/StalkerWithACrush-VisualNovels.html" },
+            { "https://tvtropes.org/pmwiki/pmwiki.php/Main/WallRun", "html/WallRun.html" },
+            { "https://tvtropes.org/pmwiki/pmwiki.php/Main/WallJump", "html/WallJump.html" },
         });
 
         [Fact]
@@ -51,9 +53,38 @@ namespace TvTropesMetadata.Tests
             ContainsGame(result, "Bendy and the Ink Machine", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/BendyAndTheInkMachine");
         }
 
+        [Fact]
+        public void WallRunContainsTitanFall2()
+        {
+            var scraper = new TropeScraper(downloader);
+            var result = scraper.GetGamesForTrope("https://tvtropes.org/pmwiki/pmwiki.php/Main/WallRun");
+
+            Assert.NotNull(result);
+            Assert.Equal("Wall Run", result.Title);
+            Assert.NotEmpty(result.Items);
+
+            ContainsGame(result, "TitanFall2", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/TitanFall2");
+        }
+
+        [Fact]
+        public void WallJumpContainsVideoGames()
+        {
+            var scraper = new TropeScraper(downloader);
+            var result = scraper.GetGamesForTrope("https://tvtropes.org/pmwiki/pmwiki.php/Main/WallJump");
+
+            Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/Main/WallJump", downloader.CalledUrls);
+
+            Assert.NotNull(result);
+            Assert.Equal("Wall Jump", result.Title);
+            Assert.NotEmpty(result.Items);
+
+            ContainsGame(result, "Shantae: Half-Genie Hero", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/ShantaeHalfGenieHero");
+            Assert.DoesNotContain("Empowered", result.Items.SelectMany(i => i.Works).Select(w => w.Title));
+        }
+
         private void ContainsGame(ParsedTropePage tropePage, string title, string url)
         {
-            var work = tropePage.Items.SelectMany(i=>i.Works).SingleOrDefault(w=>w.Title == title);
+            var work = tropePage.Items.SelectMany(i => i.Works).SingleOrDefault(w => w.Title == title);
             Assert.NotNull(work);
             Assert.Contains(url, work.Urls);
         }

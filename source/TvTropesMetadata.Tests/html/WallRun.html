@@ -1,0 +1,2517 @@
+<!DOCTYPE html>
+	<html>
+		<head lang="en">
+                        <link rel="preload" href="/images/loading-graphic.png" as="image">
+
+            <!-- Google tag (gtag.js) -->
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-XPPLXMRF6Z"></script>
+            <script>
+                var pbjs = pbjs || {};
+
+                // Used for Video players on Tropes
+                var tropes_videos_commands = tropes_videos_commands || [];
+
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-XPPLXMRF6Z');
+
+                window.googletag = window.googletag || {cmd: []};
+            </script>
+
+                        <script>
+                function object(objectId) {
+                    if (document.getElementById && document.getElementById(objectId)) {
+                        return document.getElementById(objectId);
+                    } else if (document.all && document.all(objectId)) {
+                        return document.all(objectId);
+                    } else if (document.layers && document.layers[objectId]) {
+                        return document.layers[objectId];
+                    } else {
+                        return false;
+                    }
+                }
+
+                // JAVASCRIPT COOKIES CODE: for getting and setting user viewing preferences
+                var cookies = {
+                    create: function (name, value, days2expire, path) {
+                        var date = new Date();
+                        date.setTime(date.getTime() + (days2expire * 24 * 60 * 60 * 1000));
+                        var expires = date.toUTCString();
+                        document.cookie = name + '=' + value + ';' + 'expires=' + expires + ';domain=.tvtropes.org;' + 'path=' + path + ';';
+                    },
+										createWithExpire: function(name, value, expires, path) {
+												document.cookie = name + '=' + value + ';' + 'expires=' + expires + ';domain=.tvtropes.org;' + 'path=' + path + ';';
+										},
+                    read: function (name) {
+                        var cookie_value = "",
+                            current_cookie = "",
+                            name_expr = name + "=",
+                            all_cookies = document.cookie.split(';'),
+                            n = all_cookies.length;
+
+                        for (var i = 0; i < n; i++) {
+                            current_cookie = all_cookies[i].trim();
+                            if (current_cookie.indexOf(name_expr) === 0) {
+                                cookie_value = current_cookie.substring(name_expr.length, current_cookie.length);
+                                break;
+                            }
+                        }
+                        return cookie_value;
+                    },
+                    update: function (name, val) {
+                        this.create(name, val, 300, "/");
+                    },
+                    remove: function (name) {
+                        //delete cookie with and without domain setting
+                        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.tvtropes.org; path=/;";
+                        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+                    }
+                };
+
+                function updateUserPrefs() {
+                    //GENERAL: detect and set browser, if not cookied (will be treated like a user-preference and added to the #user-pref element)
+                    if( !cookies.read('user-browser') ){
+                        var broswer = '';
+
+                        if(navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) ){
+                            browser = 'iOS';
+                        } else if (/Opera[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+                            browser = 'opera';
+                        } else if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
+                            browser = 'MSIE';
+                        } else if (/Navigator[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+                            browser = 'netscape';
+                        } else if (/Chrome[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+                            browser = 'chrome';
+                        } else if (/Safari[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+                            browser = 'safari';
+                            /Version[\/\s](\d+\.\d+)/.test(navigator.userAgent);
+                            browserVersion = new Number(RegExp.$1);
+                        } else if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+                            browser = 'firefox';
+                        } else {
+                            browser = 'internet_explorer';
+                        }
+                        cookies.create('user-browser',browser,1,'/');
+                        document.getElementById('user-prefs').classList.add('browser-' + browser);
+                    } else {
+                        document.getElementById('user-prefs').classList.add('browser-' + cookies.read('user-browser'));
+                    }
+                    //update user preference settings
+                    if (cookies.read('wide-load') !== '') document.getElementById('user-prefs').classList.add('wide-load');
+                    if (cookies.read('mono-font') !== '') document.getElementById('user-prefs').classList.add('mono-font');
+                    if (cookies.read('night-vision') !== '') document.getElementById('user-prefs').classList.add('night-vision');
+                    if (cookies.read('sticky-header') !== '') document.getElementById('user-prefs').classList.add('sticky-header');
+                    if (cookies.read('show-spoilers') !== '') document.getElementById('user-prefs').classList.add('show-spoilers');
+                    if (cookies.read('tvtropes-editor-on') !== '') document.getElementById('user-prefs').classList.add('tvtropes-editor-on');
+                    if (cookies.read('folders-open') !== '') document.getElementById('user-prefs').classList.add('folders-open');
+                    if (cookies.read('lefthand-sidebar') !== '') document.getElementById('user-prefs').classList.add('lefthand-sidebar');
+                    if (cookies.read('highlight-links') !== '') document.getElementById('user-prefs').classList.add('highlight-links');
+                    if (cookies.read('forum-gingerbread') !== '') document.getElementById('user-prefs').classList.add('forum-gingerbread');
+                    //if the user is logged in, update cookies based on their database settings
+                                        //updates element
+                    if(cookies.read('shared-avatars') !== '') document.getElementById('user-prefs').classList.add('shared-avatars');
+                    if(cookies.read('new-search') !== '') document.getElementById('user-prefs').classList.add('new-search');
+                    if(cookies.read('stop-auto-play-video') !== '') document.getElementById('user-prefs').classList.add('stop-auto-play-video');
+                    //desktop view on mobile
+                    if (cookies.read('desktop-on-mobile') !== ''){
+                        document.getElementById('user-prefs').classList.add('desktop-on-mobile');
+
+                        var viewport = document.querySelector("meta[name=viewport]");
+                        viewport.setAttribute('content', 'width=1000');
+                    }
+
+                }
+
+                function updateDesktopPrefs() {
+                    if (cookies.read('wide-load') !== '') document.getElementById('sidebar-toggle-wideload').classList.add('active');
+                    if (cookies.read('night-vision') !== '') document.getElementById('sidebar-toggle-nightvision').classList.add('active');
+                    if (cookies.read('sticky-header') !== '') document.getElementById('sidebar-toggle-stickyheader').classList.add('active');
+                    if (cookies.read('show-spoilers') !== '') document.getElementById('sidebar-toggle-showspoilers').classList.add('active');
+
+                }
+
+                function updateMobilePrefs() {
+                    if (cookies.read('show-spoilers') !== '') document.getElementById('mobile-toggle-showspoilers').classList.add('active');
+                    if (cookies.read('night-vision') !== '') document.getElementById('mobile-toggle-nightvision').classList.add('active');
+                    if (cookies.read('sticky-header') !== '') document.getElementById('mobile-toggle-stickyheader').classList.add('active');
+                    if (cookies.read('highlight-links') !== '') document.getElementById('mobile-toggle-highlightlinks').classList.add('active');
+
+                }
+
+                function is_mobile() {
+	                if(document.body.clientWidth && document.body.clientWidth<=768) return true;
+	                else return false;
+                }
+
+            </script>
+			
+						<script type="text/javascript">
+                var country_code_list = ['AT','BE','BG','CH','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GF','GP','GR','HR','HU','IC','IE','IS','IT','LI','LT','LU','LV','MF','MQ','MT','NL','NO','PL','PT','RE','RO','SE','SI','SK','SX','YT'];
+                
+                var site_htl_settings = {
+                        "adx"              : "yes", // yes/no if we should include adx on page
+                        "groupname"        : "Main", // track groupname in htl/gam
+                        "has_folders"      : "yes", // track folder pages in htl/gam
+                        "user_type"        : "guest", // track member/guest in htl/gam
+                        "is_testing"       : "no", // yes/no if in testing mode
+                        "split_testing"    : "1", // 0/1, 0=control, 1=test, for a/b testing
+                        "send_reports"     : "1", // true/false if reports should be sent for logging in DataBricks
+                        "report_url"       : "https://analytics.tvtropes.org/analytics-data/tvtropes/", // Endpoint for logging (data stream)
+                        "logging_turned_on": "1", // true/false if console logging should be turned on
+                        "site_name"        : "tvtropes", // Site name for display in logging
+                        "sticky_slot_names": ["tvtropes_dt_sticky", "tvtropes_m_sticky"], // Possible slot names for the sticky slot
+                }
+			</script>
+
+            
+                        <script>
+                // Create the ad project
+var ads_project = (function(sent_in_settings){
+    //default settings
+    var setting_defaults = {
+        "adx"              : "yes",
+        "groupname"        : "",
+        "has_folders"      : "unknown",
+        "user_type"        : "guest",
+        "is_testing"       : "no",
+        "split_testing"    : "0",
+        "send_reports"     : "0",
+        "logging_turned_on": "false",
+        "site_name"        : "site_name",
+        "report_url"       : "",
+        "page_template"    : "",
+        "sticky_slot_names": []
+    }
+
+    // Combine defaults with sent in parameters
+    var project_settings = {...setting_defaults, ...sent_in_settings};
+
+    /***************************************
+    --------------- AD CODE ---------------
+    ***************************************/
+    window.BCLighthouseTag = window.BCLighthouseTag || {};
+    window.BCLighthouseTag.cmd = window.BCLighthouseTag.cmd || [];
+
+    // If user type is a member
+    if(project_settings.user_type == "member"){
+        // Check for UID2 cookie
+        var uid2_cookie = cookies.read('uid2_identity');
+        var json_cookie = (uid2_cookie) ? JSON.parse(uid2_cookie) : "";
+        
+        // If UID2 cookie exists and it's not in the banned country list, set UID2
+        if(!uid2_cookie || (json_cookie && json_cookie.response)){
+            var request = new XMLHttpRequest();
+        
+            request.open("post", "/ajax/uid2_creation.php", 1);
+
+            request.setRequestHeader("Content-Type", "application/json; charset=UTF-8")
+
+            request.onload = function(){
+                if(request.status == 200){
+                    var json = JSON.parse(request.responseText);
+                    // Create cookie with response from request
+                    cookies.create('uid2_identity', json.response, 7, '/');
+
+                    output_logging("UID2 cookie created");
+
+                    // Refresh specific modules
+                    pbjs.refreshUserIds({ submoduleNames: ['uid2'] });
+                }
+                else output_logging("Failed to create UID2 cookie");
+            }
+
+            request.send();
+        }
+    }
+
+    BCLighthouseTag.cmd.push(function() {
+        // Only set these if given in settings
+        if(project_settings.groupname != "") BCLighthouseTag.setTargeting("groupname", project_settings.groupname);
+        if(project_settings.page_template != "") BCLighthouseTag.setTargeting("page_template", project_settings.page_template);
+
+        BCLighthouseTag.setTargeting("adx", project_settings.adx);
+        BCLighthouseTag.setTargeting('website', project_settings.site_name);
+        BCLighthouseTag.setTargeting('user_type', project_settings.user_type);
+        BCLighthouseTag.setTargeting('has_folders', project_settings.has_folders);
+    });
+    
+    // Logging
+    function output_logging(content){
+        if(project_settings.logging_turned_on){
+            if(typeof content == "string") console.log(project_settings.site_name + " Ads: " + content);
+            else console.log(content);
+        }
+    }
+})(site_htl_settings);            </script>
+
+                        <script>
+                // Add second script to the head
+                var htl_script = document.createElement('script');
+                htl_script.async = "async";
+
+                // Add the fundingchoices script to the head
+                var script = document.createElement('script');
+                    script.src = "https://fundingchoicesmessages.google.com/i/pub-6608306193529351?ers=1";
+                    script.async = true;
+                    script.nonce = "rczD8qB5ececf2fL1Vj9XQ";
+                
+                // Add second script to the head
+                var script2 = document.createElement('script');
+                    script2.nonce = "rczD8qB5ececf2fL1Vj9XQ";
+                    script2.innerHTML = "(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();";
+                
+                // Add both scripts to head
+                document.head.appendChild(script);
+                document.head.appendChild(script2);
+                
+                htl_script.src = "https://dev-lh.bigcrunch.com/main.js";
+                htl_script.id = "bigcrunchtag";
+                htl_script.setAttribute('data-property-id', '34a5ddec-697b-424e-81d2-e6bb46a1b83e');
+                                    
+                // Add both scripts to head
+                document.head.appendChild(htl_script);
+            </script>
+
+                        <script>
+                // Add HTL script to head
+                document.head.appendChild(htl_script);
+            </script>
+			
+			
+											<script>(function(){/*
+							 Copyright The Closure Library Authors.
+							 SPDX-License-Identifier: Apache-2.0
+							*/
+							'use strict';var aa=function(a){var b=0;return function(){return b<a.length?{done:!1,value:a[b++]}:{done:!0}}},ba="function"==typeof Object.create?Object.create:function(a){var b=function(){};b.prototype=a;return new b},k;if("function"==typeof Object.setPrototypeOf)k=Object.setPrototypeOf;else{var m;a:{var ca={a:!0},n={};try{n.__proto__=ca;m=n.a;break a}catch(a){}m=!1}k=m?function(a,b){a.__proto__=b;if(a.__proto__!==b)throw new TypeError(a+" is not extensible");return a}:null}
+							var p=k,q=function(a,b){a.prototype=ba(b.prototype);a.prototype.constructor=a;if(p)p(a,b);else for(var c in b)if("prototype"!=c)if(Object.defineProperties){var d=Object.getOwnPropertyDescriptor(b,c);d&&Object.defineProperty(a,c,d)}else a[c]=b[c];a.v=b.prototype},r=this||self,da=function(){},t=function(a){return a};var u;var w=function(a,b){this.g=b===v?a:""};w.prototype.toString=function(){return this.g+""};var v={},x=function(a){if(void 0===u){var b=null;var c=r.trustedTypes;if(c&&c.createPolicy){try{b=c.createPolicy("goog#html",{createHTML:t,createScript:t,createScriptURL:t})}catch(d){r.console&&r.console.error(d.message)}u=b}else u=b}a=(b=u)?b.createScriptURL(a):a;return new w(a,v)};var A=function(){return Math.floor(2147483648*Math.random()).toString(36)+Math.abs(Math.floor(2147483648*Math.random())^Date.now()).toString(36)};var B={},C=null;var D="function"===typeof Uint8Array;function E(a,b,c){return"object"===typeof a?D&&!Array.isArray(a)&&a instanceof Uint8Array?c(a):F(a,b,c):b(a)}function F(a,b,c){if(Array.isArray(a)){for(var d=Array(a.length),e=0;e<a.length;e++){var f=a[e];null!=f&&(d[e]=E(f,b,c))}Array.isArray(a)&&a.s&&G(d);return d}d={};for(e in a)Object.prototype.hasOwnProperty.call(a,e)&&(f=a[e],null!=f&&(d[e]=E(f,b,c)));return d}
+							function ea(a){return F(a,function(b){return"number"===typeof b?isFinite(b)?b:String(b):b},function(b){var c;void 0===c&&(c=0);if(!C){C={};for(var d="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split(""),e=["+/=","+/","-_=","-_.","-_"],f=0;5>f;f++){var h=d.concat(e[f].split(""));B[f]=h;for(var g=0;g<h.length;g++){var l=h[g];void 0===C[l]&&(C[l]=g)}}}c=B[c];d=Array(Math.floor(b.length/3));e=c[64]||"";for(f=h=0;h<b.length-2;h+=3){var y=b[h],z=b[h+1];l=b[h+2];g=c[y>>2];y=c[(y&3)<<
+							4|z>>4];z=c[(z&15)<<2|l>>6];l=c[l&63];d[f++]=""+g+y+z+l}g=0;l=e;switch(b.length-h){case 2:g=b[h+1],l=c[(g&15)<<2]||e;case 1:b=b[h],d[f]=""+c[b>>2]+c[(b&3)<<4|g>>4]+l+e}return d.join("")})}var fa={s:{value:!0,configurable:!0}},G=function(a){Array.isArray(a)&&!Object.isFrozen(a)&&Object.defineProperties(a,fa);return a};var H;var J=function(a,b,c){var d=H;H=null;a||(a=d);d=this.constructor.u;a||(a=d?[d]:[]);this.j=d?0:-1;this.h=null;this.g=a;a:{d=this.g.length;a=d-1;if(d&&(d=this.g[a],!(null===d||"object"!=typeof d||Array.isArray(d)||D&&d instanceof Uint8Array))){this.l=a-this.j;this.i=d;break a}void 0!==b&&-1<b?(this.l=Math.max(b,a+1-this.j),this.i=null):this.l=Number.MAX_VALUE}if(c)for(b=0;b<c.length;b++)a=c[b],a<this.l?(a+=this.j,(d=this.g[a])?G(d):this.g[a]=I):(d=this.l+this.j,this.g[d]||(this.i=this.g[d]={}),(d=this.i[a])?
+							G(d):this.i[a]=I)},I=Object.freeze(G([])),K=function(a,b){if(-1===b)return null;if(b<a.l){b+=a.j;var c=a.g[b];return c!==I?c:a.g[b]=G([])}if(a.i)return c=a.i[b],c!==I?c:a.i[b]=G([])},M=function(a,b){var c=L;if(-1===b)return null;a.h||(a.h={});if(!a.h[b]){var d=K(a,b);d&&(a.h[b]=new c(d))}return a.h[b]};J.prototype.toJSON=function(){var a=N(this,!1);return ea(a)};
+							var N=function(a,b){if(a.h)for(var c in a.h)if(Object.prototype.hasOwnProperty.call(a.h,c)){var d=a.h[c];if(Array.isArray(d))for(var e=0;e<d.length;e++)d[e]&&N(d[e],b);else d&&N(d,b)}return a.g},O=function(a,b){H=b=b?JSON.parse(b):null;a=new a(b);H=null;return a};J.prototype.toString=function(){return N(this,!1).toString()};var P=function(a){J.call(this,a)};q(P,J);function ha(a){var b,c=(a.ownerDocument&&a.ownerDocument.defaultView||window).document,d=null===(b=c.querySelector)||void 0===b?void 0:b.call(c,"script[nonce]");(b=d?d.nonce||d.getAttribute("nonce")||"":"")&&a.setAttribute("nonce",b)};var Q=function(a,b){b=String(b);"application/xhtml+xml"===a.contentType&&(b=b.toLowerCase());return a.createElement(b)},R=function(a){this.g=a||r.document||document};R.prototype.appendChild=function(a,b){a.appendChild(b)};var S=function(a,b,c,d,e,f){try{var h=a.g,g=Q(a.g,"SCRIPT");g.async=!0;g.src=b instanceof w&&b.constructor===w?b.g:"type_error:TrustedResourceUrl";ha(g);h.head.appendChild(g);g.addEventListener("load",function(){e();d&&h.head.removeChild(g)});g.addEventListener("error",function(){0<c?S(a,b,c-1,d,e,f):(d&&h.head.removeChild(g),f())})}catch(l){f()}};var ia=r.atob("aHR0cHM6Ly93d3cuZ3N0YXRpYy5jb20vaW1hZ2VzL2ljb25zL21hdGVyaWFsL3N5c3RlbS8xeC93YXJuaW5nX2FtYmVyXzI0ZHAucG5n"),ja=r.atob("WW91IGFyZSBzZWVpbmcgdGhpcyBtZXNzYWdlIGJlY2F1c2UgYWQgb3Igc2NyaXB0IGJsb2NraW5nIHNvZnR3YXJlIGlzIGludGVyZmVyaW5nIHdpdGggdGhpcyBwYWdlLg=="),ka=r.atob("RGlzYWJsZSBhbnkgYWQgb3Igc2NyaXB0IGJsb2NraW5nIHNvZnR3YXJlLCB0aGVuIHJlbG9hZCB0aGlzIHBhZ2Uu"),la=function(a,b,c){this.h=a;this.j=new R(this.h);this.g=null;this.i=[];this.l=!1;this.o=b;this.m=c},V=function(a){if(a.h.body&&!a.l){var b=
+							function(){T(a);r.setTimeout(function(){return U(a,3)},50)};S(a.j,a.o,2,!0,function(){r[a.m]||b()},b);a.l=!0}},T=function(a){for(var b=W(1,5),c=0;c<b;c++){var d=X(a);a.h.body.appendChild(d);a.i.push(d)}b=X(a);b.style.bottom="0";b.style.left="0";b.style.position="fixed";b.style.width=W(100,110).toString()+"%";b.style.zIndex=W(2147483544,2147483644).toString();b.style["background-color"]=ma(249,259,242,252,219,229);b.style["box-shadow"]="0 0 12px #888";b.style.color=ma(0,10,0,10,0,10);b.style.display=
+							"flex";b.style["justify-content"]="center";b.style["font-family"]="Roboto, Arial";c=X(a);c.style.width=W(80,85).toString()+"%";c.style.maxWidth=W(750,775).toString()+"px";c.style.margin="24px";c.style.display="flex";c.style["align-items"]="flex-start";c.style["justify-content"]="center";d=Q(a.j.g,"IMG");d.className=A();d.src=ia;d.style.height="24px";d.style.width="24px";d.style["padding-right"]="16px";var e=X(a),f=X(a);f.style["font-weight"]="bold";f.textContent=ja;var h=X(a);h.textContent=ka;Y(a,
+							e,f);Y(a,e,h);Y(a,c,d);Y(a,c,e);Y(a,b,c);a.g=b;a.h.body.appendChild(a.g);b=W(1,5);for(c=0;c<b;c++)d=X(a),a.h.body.appendChild(d),a.i.push(d)},Y=function(a,b,c){for(var d=W(1,5),e=0;e<d;e++){var f=X(a);b.appendChild(f)}b.appendChild(c);c=W(1,5);for(d=0;d<c;d++)e=X(a),b.appendChild(e)},W=function(a,b){return Math.floor(a+Math.random()*(b-a))},ma=function(a,b,c,d,e,f){return"rgb("+W(Math.max(a,0),Math.min(b,255)).toString()+","+W(Math.max(c,0),Math.min(d,255)).toString()+","+W(Math.max(e,0),Math.min(f,
+							255)).toString()+")"},X=function(a){a=Q(a.j.g,"DIV");a.className=A();return a},U=function(a,b){0>=b||null!=a.g&&0!=a.g.offsetHeight&&0!=a.g.offsetWidth||(na(a),T(a),r.setTimeout(function(){return U(a,b-1)},50))},na=function(a){var b=a.i;var c="undefined"!=typeof Symbol&&Symbol.iterator&&b[Symbol.iterator];b=c?c.call(b):{next:aa(b)};for(c=b.next();!c.done;c=b.next())(c=c.value)&&c.parentNode&&c.parentNode.removeChild(c);a.i=[];(b=a.g)&&b.parentNode&&b.parentNode.removeChild(b);a.g=null};var pa=function(a,b,c,d,e){var f=oa(c),h=function(l){l.appendChild(f);r.setTimeout(function(){f?(0!==f.offsetHeight&&0!==f.offsetWidth?b():a(),f.parentNode&&f.parentNode.removeChild(f)):a()},d)},g=function(l){document.body?h(document.body):0<l?r.setTimeout(function(){g(l-1)},e):b()};g(3)},oa=function(a){var b=document.createElement("div");b.className=a;b.style.width="1px";b.style.height="1px";b.style.position="absolute";b.style.left="-10000px";b.style.top="-10000px";b.style.zIndex="-10000";return b};var L=function(a){J.call(this,a)};q(L,J);var qa=function(a){J.call(this,a)};q(qa,J);var ra=function(a,b){this.l=a;this.m=new R(a.document);this.g=b;this.i=K(this.g,1);b=M(this.g,2);this.o=x(K(b,4)||"");this.h=!1;b=M(this.g,13);b=x(K(b,4)||"");this.j=new la(a.document,b,K(this.g,12))};ra.prototype.start=function(){sa(this)};
+							var sa=function(a){ta(a);S(a.m,a.o,3,!1,function(){a:{var b=a.i;var c=r.btoa(b);if(c=r[c]){try{var d=O(P,r.atob(c))}catch(e){b=!1;break a}b=b===K(d,1)}else b=!1}b?Z(a,K(a.g,14)):(Z(a,K(a.g,8)),V(a.j))},function(){pa(function(){Z(a,K(a.g,7));V(a.j)},function(){return Z(a,K(a.g,6))},K(a.g,9),K(a.g,10),K(a.g,11))})},Z=function(a,b){a.h||(a.h=!0,a=new a.l.XMLHttpRequest,a.open("GET",b,!0),a.send())},ta=function(a){var b=r.btoa(a.i);a.l[b]&&Z(a,K(a.g,5))};(function(a,b){r[a]=function(c){for(var d=[],e=0;e<arguments.length;++e)d[e-0]=arguments[e];r[a]=da;b.apply(null,d)}})("__h82AlnkH6D91__",function(a){"function"===typeof window.atob&&(new ra(window,O(qa,window.atob(a)))).start()});}).call(this);
+
+							window.__h82AlnkH6D91__("WyJwdWItMjU3NTc4ODY5MDc5ODI4MiIsW251bGwsbnVsbCxudWxsLCJodHRwczovL2Z1bmRpbmdjaG9pY2VzbWVzc2FnZXMuZ29vZ2xlLmNvbS9iL3B1Yi0yNTc1Nzg4NjkwNzk4MjgyIl0sbnVsbCxudWxsLCJodHRwczovL2Z1bmRpbmdjaG9pY2VzbWVzc2FnZXMuZ29vZ2xlLmNvbS9lbC9BR1NLV3hWV0tMOXhFeS1ZVk1sOTdzcC10MW5mbkxvWmZweWVjaGRJdUxJU244LXpjbUwxM1R5Mlhhb2RoQTJFU3VNS3ljQm1kVHgxSUNlMVBrX2hIeUxHa1ZZNHJ3XHUwMDNkXHUwMDNkP3RlXHUwMDNkVE9LRU5fRVhQT1NFRCIsImh0dHBzOi8vZnVuZGluZ2Nob2ljZXNtZXNzYWdlcy5nb29nbGUuY29tL2VsL0FHU0tXeFZCeVhDdDlWajY1eXNrMWFHVW9LUUpLdktrTlh4WVdlRDBhYnhmS3RVUi00eDZfRTNWOXpqSm5vYkFfVzIxeGNDb3F3M1RmN1dYRmxXZFZaazVMMFlQQ2dcdTAwM2RcdTAwM2Q/YWJcdTAwM2QxXHUwMDI2c2JmXHUwMDNkMSIsImh0dHBzOi8vZnVuZGluZ2Nob2ljZXNtZXNzYWdlcy5nb29nbGUuY29tL2VsL0FHU0tXeFV4bEsxQ0dxcEpGY3lvcXZXZ0ZnWWRBRjhMMzBOU0Y1ci1paGZSd1VRNzV4YmF6NGxydWVfRUhoWmU1ai00UUhRYXc4MUVZREFkQ2pBN21Tb1BxUUsxaFFcdTAwM2RcdTAwM2Q/YWJcdTAwM2QyXHUwMDI2c2JmXHUwMDNkMSIsImh0dHBzOi8vZnVuZGluZ2Nob2ljZXNtZXNzYWdlcy5nb29nbGUuY29tL2VsL0FHU0tXeFZJUWxpOV9jN0NuWWlHWkU3S2xIV2JWVi10NlpYQ2hQTnlHVTRobGhmSjdLQnJnNjllSFhHYm9aSXRqRm42MDViNWpuaG5KYkxCcU1ySURyY2lLVEk0VmdcdTAwM2RcdTAwM2Q/c2JmXHUwMDNkMiIsImRpdi1ncHQtYWQiLDIwLDEwMCwiY0hWaUxUSTFOelUzT0RnMk9UQTNPVGd5T0RJXHUwMDNkIixbbnVsbCxudWxsLG51bGwsImh0dHBzOi8vd3d3LmdzdGF0aWMuY29tLzBlbW4vZi9wL3B1Yi0yNTc1Nzg4NjkwNzk4MjgyLmpzP3VzcXBcdTAwM2RDQkEiXSwiaHR0cHM6Ly9mdW5kaW5nY2hvaWNlc21lc3NhZ2VzLmdvb2dsZS5jb20vZWwvQUdTS1d4V1hNUEJXZjVaNURyT1VGdDZwVVR5eGh1YzBFNlVGQnJJZUhuUUNCMVlUOWVtYlJTbGxYQ3F6NDV5ODdqT3RVWC1SX3JkcmdudFdjejdtazA2WkZYWDQyd1x1MDAzZFx1MDAzZCJd");
+					</script>
+						<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+			<title>Wall Run - TV Tropes</title>
+            <meta name="description" content="The Wall Run trope as used in popular culture. If you want to climb over a building but cannot fly, you could try several options. If you are a good climber &hellip;" />
+                        <link rel="canonical" href="https://tvtropes.org/pmwiki/pmwiki.php/Main/WallRun" />
+            
+
+                        <link rel="shortcut icon" href="https://assets.tvtropes.org/img/icons/favicon.ico" type="image/x-icon" />
+
+                        <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:site" content="@tvtropes" />
+            <meta name="twitter:owner" content="@tvtropes" />
+            <meta name="twitter:title" content="Wall Run - TV Tropes" />
+            <meta name="twitter:description" content="The Wall Run trope as used in popular culture. If you want to climb over a building but cannot fly, you could try several options. If you are a good climber &hellip;" />
+			            	<meta name="twitter:image:src" content="https://static.tvtropes.org/pmwiki/pub/images/rsz_1rsz_quicksilver_wall_running.jpg" />
+	        
+                        <meta property="og:site_name" content="TV Tropes" />
+            <meta property="og:locale" content="en_US" />
+            <meta property="article:publisher" content="https://www.facebook.com/tvtropes" />
+			<meta property="og:title" content="Wall Run - TV Tropes" />
+			<meta property="og:type" content="website" />
+							<meta property="og:url" content="https://tvtropes.org/pmwiki/pmwiki.php/Main/WallRun" />
+			
+			<meta property="og:image" content="https://static.tvtropes.org/pmwiki/pub/images/rsz_1rsz_quicksilver_wall_running.jpg" />
+			<meta property="og:description" content="If you want to climb over a building but cannot fly, you could try several options. If you are a good climber, or a bug, you could Wall Crawl up it. If you are agile enough, you could Wall Jump from wall to wall to slowly but eventually get to &hellip;" />
+
+                        <meta name="robots" content="max-image-preview:large">
+
+						
+
+			            <link rel="apple-touch-icon" sizes="57x57" href="https://assets.tvtropes.org/img/icons/apple-icon-57x57.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="60x60" href="https://assets.tvtropes.org/img/icons/apple-icon-60x60.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="72x72" href="https://assets.tvtropes.org/img/icons/apple-icon-72x72.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="76x76" href="https://assets.tvtropes.org/img/icons/apple-icon-76x76.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="114x114" href="https://assets.tvtropes.org/img/icons/apple-icon-114x114.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="120x120" href="https://assets.tvtropes.org/img/icons/apple-icon-120x120.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="144x144" href="https://assets.tvtropes.org/img/icons/apple-icon-144x144.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="152x152" href="https://assets.tvtropes.org/img/icons/apple-icon-152x152.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="180x180" href="https://assets.tvtropes.org/img/icons/apple-icon-180x180.png" type="image/png">
+            <link rel="icon" sizes="16x16" href="https://assets.tvtropes.org/img/icons/favicon-16x16.png" type="image/png">
+            <link rel="icon" sizes="32x32" href="https://assets.tvtropes.org/img/icons/favicon-32x32.png" type="image/png">
+            <link rel="icon" sizes="96x96" href="https://assets.tvtropes.org/img/icons/favicon-96x96.png" type="image/png">
+            <link rel="icon" sizes="192x192" href="https://assets.tvtropes.org/img/icons/favicon-192x192.png" type="image/png">
+
+                        
+
+						<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+                        <link rel="stylesheet" href="https://assets.tvtropes.org/design/assets/bundle.css?rev=f07af95238e025e8213d0b91650cd7e22b0dd7ec" />
+
+                                                
+                        
+                        
+                        						
+                        <script type="text/javascript">
+
+                var tvtropes_config = {
+                    asteri_stream_enabled : "1",
+                    is_logged_in         : "",
+                    handle               : "",
+                    email_popup          : "0",
+                    troper_email         : "",
+                    get_asteri_stream     : "",
+                    revnum               : "f07af95238e025e8213d0b91650cd7e22b0dd7ec",
+                    img_domain           : "https://static.tvtropes.org",
+                    adblock              : "1",
+                    adblock_url          : "propermessage.io",
+                    universal_page_type  : "Article",
+                    pause_editing        : "0",
+                    pause_editing_msg    : "",
+                    pause_site_changes   : "0",
+                    assets_domain        : "https://assets.tvtropes.org"
+                };
+
+                // This will track the total number of ads inserted over time
+                var globalAdInsertionCount = 0;
+            </script>
+						
+                        						
+												<script type="text/javascript">
+						  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+						  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+						  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+						  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+						  ga('create', 'UA-3821842-1', 'auto');
+						  ga('send', 'pageview');
+						</script>
+
+						        </head>
+ <body class="">
+
+        <i id="user-prefs"></i>
+    <script>updateUserPrefs();</script>
+
+    <div id="fb-root"></div>
+
+    <div id="modal-box">
+        <div class="modal-loading-graphic"></div>
+    </div>
+    <style>
+        @keyframes rotate-forever {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #modal-box > .modal-loading-graphic {
+            display: none; /* Hidden by default */
+
+            background: no-repeat center url('/images/loading-graphic.png');
+            background-size: 80px 80px;
+
+            width: 80px;
+            height: 80px;
+
+            border-radius: 50%;
+
+            position: absolute;
+            top: calc(30% - 40px);
+            left: calc(50% - 40px);
+            z-index: 2;
+
+            animation: rotate-forever 0.34s linear infinite;
+
+        }
+        #modal-box.active > .modal-loading-graphic {
+            display: block; /* Show only when modal is active */
+        }
+    </style>
+    <header id="main-header-bar" class="headroom-element ">
+        <div id="main-header-bar-inner">
+
+            <span id="header-spacer-left" class="header-spacer"></span>
+
+            <a href="#mobile-menu" id="main-mobile-toggle" class="mobile-menu-toggle-button tablet-on"><span></span><span></span><span></span></a>
+
+            <a href="/" id="main-header-logoButton" class="no-dev"></a>
+
+            <span id="header-spacer-right" class="header-spacer"></span>
+
+            <nav id="main-header-nav" class="tablet-off">
+                <a href="/pmwiki/pmwiki.php/Main/Tropes">Tropes</a>
+                <a href="/pmwiki/pmwiki.php/Main/Media">Media</a>
+                <a href="/pmwiki/browse.php" class="nav-browse">Browse</a>
+                <a href="/pmwiki/index_report.php">Indexes</a>
+                <a href="/pmwiki/topics.php">Forums</a>
+                <a href="/pmwiki/recent_videos.php" class="nav-browse">Videos</a>
+            </nav>
+
+            <div id="main-header-bar-right">
+                                <div id="signup-login-box" class="font-xs mobile-off">
+                    <a href="#" class="hover-underline bold" data-modal-target="signup">Join</a>
+                    <a href="#" class="hover-underline bold" data-modal-target="login">Login</a>
+                </div>
+                
+                                <div id="signup-login-mobileToggle" class="mobile-on inline">
+                    <a href="#" data-modal-target="login"><i class="fa fa-user"></i></a>
+                </div>
+                
+                <div id="search-box">
+                    <form class="search" action="/pmwiki/search_result.php">
+                        <input type="text" name="q" class="search-box" placeholder="Search" value="" required>
+                        <input type="submit" class="submit-button" value="&#xf002;" />
+                                                <input type="hidden" name="search_type" value="article">
+                        <input type="hidden" name="page_type" value="all">
+                                                <input type="hidden" name="cx" value="partner-pub-6610802604051523:amzitfn8e7v">
+                        <input type="hidden" name="cof" value="FORID:10">
+                        <input type="hidden" name="ie" value="ISO-8859-1">
+                        <input name="siteurl" type="hidden" value="">
+                        <input name="ref" type="hidden" value="">
+                        <input name="ss" type="hidden" value="">
+                    </form>
+                    <a href="#close-search" class="mobile-on mobile-search-toggle close-x"><i class="fa fa-close"></i></a>
+                </div>
+
+                <div id="random-box">
+                    <a href="/pmwiki/pmwiki.php/Main/OfferingAHand" class="button-random-trope" rel="nofollow" onclick="gtag('event', 'trope_random_button_click', {'is_user': 0});"></a>
+                    <a href="/pmwiki/pmwiki.php/ComicBook/TerminalVelocityDCComics" class="button-random-media" rel="nofollow" onclick="gtag('event', 'media_random_button_click', {'is_user': 0});"></a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="mobile-menu" class="tablet-on"><div class="mobile-menu-options">
+
+    <div class="nav-wrapper">
+        <a href="/pmwiki/pmwiki.php/Main/Tropes" class="xl">Tropes</a>
+        <a href="/pmwiki/pmwiki.php/Main/Media" class="xl">Media</a>
+        <a href="/pmwiki/browse.php" class="xl">Browse</a>
+        <a href="/pmwiki/index_report.php" class="xl">Indexes</a>
+        <a href="/pmwiki/topics.php" class="xl">Forums</a>
+        <a href="/pmwiki/recent_videos.php" class="xl">Videos</a>
+
+        <a href="/pmwiki/query.php?type=att">Ask The Tropers</a>
+        <a href="/pmwiki/query.php?type=tf">Trope Finder</a>
+        <a href="/pmwiki/query.php?type=ykts">Media Finder</a>
+        <a href="/pmwiki/tlp_activity.php">Trope Launch Pad</a>
+        <a href="/pmwiki/query.php?type=wl">Tech Wishlist</a>
+        <a href="/pmwiki/review_activity.php">Reviews</a> 
+        
+        <a href="#tools" data-click-toggle="active">Tools <i class="fa fa-chevron-down"></i></a>
+        <div class="tools-dropdown mobile-dropdown-linkList">
+            <a href="/pmwiki/cutlist.php" data-modal-target="login" rel="nofollow">Cut List</a>
+            <a href="/pmwiki/image-fixer.php" data-modal-target="login" rel="nofollow">Image Fixer</a>
+            <a href="/pmwiki/changes.php">New Edits</a>
+            <a href="/pmwiki/articles_new.php">New Articles</a>
+            <a href="/pmwiki/recent_edit_reasons.php">Edit Reasons</a>
+            <a href="/pmwiki/launches.php" data-modal-target="login" rel="nofollow">Launches</a>
+            <a href="/pmwiki/img_list.php" data-modal-target="login" rel="nofollow">Images List</a>
+            <a href="/pmwiki/crown_activity.php">Crowner Activity</a>
+            <a href="/pmwiki/no_types.php">Un-typed Pages</a>
+            <a href="/pmwiki/page_type_audit.php">Recent Page Type Changes</a>
+            <a href="/pmwiki/changelog.php">Changelog</a>
+        </div>
+
+        <a href="#tips" data-click-toggle="active">Tips <i class="fa fa-chevron-down"></i></a>
+        <div class="tips-dropdown mobile-dropdown-linkList">
+                <a href="/pmwiki/pmwiki.php/Administrivia/CreatingNewRedirects">Creating New Redirects</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/Crosswicking">Cross Wicking</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/TipsForEditing">Tips for Editing</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/TextFormattingRules">Text Formatting Rules</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/TVTropesGlossary?from=Main.TVTropesGlossary">Glossary</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/EditReasonsAndWhyYouShouldUseThem">Edit Reasons</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/HandlingSpoilers">Handling Spoilers</a>
+                <a href="/pmwiki/pmwiki.php/Main/WordCruft">Word Cruft</a>
+                <a href="/pmwiki/pmwiki.php/Main/Administrivia">Administrivia</a>
+                <a href="/pmwiki/pmwiki.php/Main/FAQ">FAQ</a>
+        </div>
+        
+        <a href="#hq" data-click-toggle="active">Tropes HQ <i class="fa fa-chevron-down"></i></a>
+
+        <div class="tools-dropdown mobile-dropdown-linkList">
+            <a href="/pmwiki/about.php">About Us</a>
+            <a href="/pmwiki/contact.php">Contact Us</a>
+            <a href="/pmwiki/dmca.php">DMCA Notice</a>
+            <a href="/pmwiki/privacypolicy.php">Privacy Policy</a>
+            <a href="/pmwiki/query.php?type=bug">Report Bug</a>
+        </div>
+
+        <a href="/pmwiki/ad-free-subscribe.php">Go Ad-Free</a>
+        <a href="/pmwiki/changelog.php">Changelog</a></li>
+
+        <div class="toggle-switches">
+            <ul class="mobile-menu display-toggles">
+                <li>Show Spoilers <div id="mobile-toggle-showspoilers" class="display-toggle show-spoilers"></div></li>
+                <li>Night Vision <div id="mobile-toggle-nightvision" class="display-toggle night-vision"></div></li>
+                <li>Sticky Header <div id="mobile-toggle-stickyheader" class="display-toggle sticky-header"></div></li>
+                <li>Highlight Links <div id="mobile-toggle-highlightlinks" class="display-toggle highlight-links"></div></li>
+            </ul>
+            <script>updateMobilePrefs();</script>
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+    </header>
+
+    <div id="homepage-introBox-mobile" class="mobile-on">
+                  <a href="/"><img src="/images/logo-white-big.png" class="logo-small" /></a>
+        
+        <form class="search" action="/pmwiki/search_result.php" style="margin:10px -5px -6px -5px;">
+            <input type="text" name="q" class="search-box" placeholder="Search" value="" required>
+            <input type="submit" class="submit-button" value="&#xf002;" />
+                        <input type="hidden" name="search_type" value="article">
+            <input type="hidden" name="page_type" value="all">
+                        <input type="hidden" name="cx" value="partner-pub-6610802604051523:amzitfn8e7v">
+            <input type="hidden" name="cof" value="FORID:10">
+            <input type="hidden" name="ie" value="ISO-8859-1">
+            <input name="siteurl" type="hidden" value="">
+            <input name="ref" type="hidden" value="">
+            <input name="ss" type="hidden" value="">
+        </form>
+
+            </div>
+
+    <script>
+                // Get device type
+function get_device_type(){
+    var ua = navigator.userAgent.toLowerCase();
+    var device_type = "";
+    
+    // This is usually "tablet", but for this case we are going to call it mobile
+    if(/(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(ua)) device_type = "mobile";
+    // This is mobile
+    else if(/(mobi|ipod|phone|blackberry|opera mini|fennec|minimo|symbian|psp|nintendo ds|archos|skyfire|puffin|blazer|bolt|gobrowser|iris|maemo|semc|teashark|uzard)/.test(ua)) device_type = "mobile";
+    // Otherwise desktop
+    else device_type = "desktop";
+
+    return device_type;
+}
+
+var show_modal_loaded = false;
+
+//// MOBILE MENU TOGGLE FUNCTIONS ////
+function show_modal(type, message, confirmation_url, call_back, fb_token, groupname, title, video_id) {
+    console.log("showing modal " + type);
+    
+    const modalBox = document.getElementById('modal-box');
+    const childDivs = modalBox.querySelectorAll(':scope > div');
+
+    // Check if there are more than one child divs in the modal box, indicating a modal is already there
+    if (childDivs.length > 1) {
+        kill_modal();
+    }
+    // Show the modal and the loading graphic
+    modalBox.classList.add('active');
+
+    let alert = '';
+    if (typeof message === 'object' && message !== null) {
+        Object.keys(message).forEach(function(key) {
+            alert += '&' + key + '=' + encodeURIComponent(message[key]);
+        });
+    } else {
+        alert = '&message=' + encodeURIComponent(message);
+    }
+
+    // Construct the URL with parameters
+    const url = '/design/parts/component-modalBox.php?window=' + type + alert + 
+                (confirmation_url ? '&curl=' + encodeURIComponent(confirmation_url) : "") + 
+                (fb_token ? '&fb_token=' + encodeURIComponent(fb_token) : "") + 
+                (video_id ? '&video_id=' + encodeURIComponent(video_id) : "");
+
+    fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            modalBox.innerHTML = html;
+
+            // Find and execute scripts
+            const scripts = modalBox.querySelectorAll('script');
+            scripts.forEach(script => {
+                const newScript = document.createElement('script');
+                newScript.type = 'text/javascript';
+                
+                if (script.src) {
+                    newScript.src = script.src;
+
+                    // Wait for Dropzone.js to load before adding the imguploader.js
+                    if(newScript.src.includes('/design/js/dropzone.js')) {
+                        newScript.onload = function() {
+                            
+                            // Now load the imguploader.js script
+                            const img_uploader_script = document.createElement('script');
+                            img_uploader_script.type = 'text/javascript';
+                            img_uploader_script.src = "/design/js/imguploader.js";
+
+                            img_uploader_script.onload = function (){
+                                myAwesomeDropzone = new Dropzone("#myAwesomeDropzone", { url: "/ajax/uploadImg.php" });
+                            }
+                            document.body.appendChild(img_uploader_script);
+                        }
+                    }
+                } else {
+                    newScript.textContent = script.textContent;
+                }
+
+                // Remove the old script and add the new one
+                script.parentNode.removeChild(script);
+                modalBox.appendChild(newScript);
+            });
+
+            if(call_back) { 
+                call_back(); 
+            }
+        });
+
+    if(show_modal_loaded == false){
+        // Kill modal if blackout is clicked
+        modalBox.addEventListener('click', function(e) { 
+            if (e.target === e.currentTarget) { 
+                kill_modal(); 
+            } 
+        });
+    }
+    show_modal_loaded = true;
+}
+
+// Modal kill function
+function kill_modal() {
+    console.log("killing modal");
+    const modalBox = document.getElementById('modal-box');
+    modalBox.classList.remove('active');
+
+    // Replace the content directly with the new loading graphic
+    modalBox.innerHTML = '<div class="modal-loading-graphic"></div>';
+}
+
+// Modal "loading" mode, without killing
+function pause_modal() {
+    var modal = document.querySelector('#modal-box > div.modal');
+    if(!modal) modal = document.querySelector('#modal-box');
+    modal.classList.add('hidden');
+
+    const modalBox = document.getElementById('modal-box');
+    modalBox.classList.add('paused');
+
+    const loadingGraphic = document.createElement('div');
+    loadingGraphic.className = 'modal-loading-graphic';
+    modalBox.appendChild(loadingGraphic);
+}
+
+function unpause_modal() {
+    const modalBox = document.getElementById('modal-box');
+    modalBox.classList.remove('paused');
+
+    var modal = document.querySelector('#modal-box > div.modal');
+    if(!modal) modal = document.querySelector('#modal-box');
+    modal.classList.remove('hidden');
+
+    const loadingGraphic = document.querySelector('#modal-box > div.modal-loading-graphic');
+    if (loadingGraphic) {
+        modalBox.removeChild(loadingGraphic);
+    }
+}
+
+// COMPONENT: LOAD GRAPHIC
+function show_loader() {
+    console.log("Displaying loading graphic");
+    
+    kill_modal();
+    const modalBox = document.getElementById('modal-box');
+    modalBox.classList.add('active');
+
+    const loadingGraphic = document.createElement('div');
+    loadingGraphic.className = 'modal-loading-graphic';
+    modalBox.appendChild(loadingGraphic);
+}
+// TOGGLE NOTES
+function togglenote(id){
+    var ele=object(id);
+    var state = ele.style.display;
+    if(state=='none') ele.style.display='inline';
+    if(state=='inline')ele.style.display='none';
+}
+// Toggle more menu
+function toggle_more_menu(position){
+    var more_menu = document.getElementById(position+"_more_list");
+
+    more_menu.classList.toggle("hidden_more_list");
+    more_menu.classList.toggle("display");
+
+    var menu_button = document.getElementById(position+"_more_button");
+
+    menu_button.classList.toggle("is-open");
+}
+// scroll to top of page
+function scroll_to_top(duration) {
+    var start = window.pageYOffset;
+    var start_time = performance.now();
+
+    if ('requestAnimationFrame' in window === false) {
+        window.scrollTo(0, 0);
+        return;
+    }
+
+    function scroll() {
+        var current_time = performance.now();
+        var elapsed_time = current_time - start_time;
+        var progress = elapsed_time / duration;
+        var ease_in_out_quad = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
+        window.scrollTo(0, start * (1 - ease_in_out_quad));
+
+        if (elapsed_time < duration) {
+            requestAnimationFrame(scroll);
+        } else {
+            window.scrollTo(0, 0);
+        }
+    }
+
+    scroll();
+}
+
+// FOLDER BUTTONS (unused) - declared to prevent console errors.
+function toggleAllFolders() {}
+function togglefolder(id) {}
+
+var device_type = get_device_type();
+
+const mobile_menu_button = document.querySelector('.mobile-menu-toggle-button');
+
+if (mobile_menu_button) {
+    mobile_menu_button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const header = document.querySelector('header#main-header-bar');
+        if (header.classList.contains('mobile-menu-active')) {
+            header.classList.remove('mobile-menu-active');
+        } else {
+            header.classList.add('mobile-menu-active');
+        }
+    });
+}
+
+// MODAL - FOLDER - SPOILER BUTTONS
+document.body.addEventListener('click', function(e) {
+    // WATCH / FOLLOW BUTTONS
+    const target = e.target.closest('.watch-button');
+    const loggedInElement = document.getElementById('logged_in');
+    const loggedIn = loggedInElement ? loggedInElement.value : null;
+
+    //special code for the desktop-on-mobile-toggle cookie link
+    if (e.target.closest('#desktop-on-mobile-toggle > a')) {
+        e.preventDefault();
+        var body_class = "desktop-on-mobile";
+        var userPrefs = document.getElementById('user-prefs');
+
+        if (userPrefs.classList.contains(body_class)) {
+            cookies.remove(body_class);
+        } else {
+            cookies.create(body_class, 'true', 300, '/');
+        }
+
+        location.reload();
+    }
+
+    // Display toggle buttons for user preferences
+    if (e.target.closest('.display-toggles > li')) {
+        var toggle = e.target;
+        if(toggle.tagName.toLowerCase() === 'li') toggle = toggle.children[0];
+
+        var body_class = '';
+        var pref = '';
+        var val = 0;
+
+        // SIDEBAR AND MOBILE MENU OPTIONS
+        if (toggle.classList.contains('wide-load')) {
+            body_class = "wide-load";
+        } else if (toggle.classList.contains('sticky-header')) {
+            body_class = "sticky-header";
+        } else if (toggle.classList.contains('night-vision')) {
+            body_class = "night-vision";
+        } else if (toggle.classList.contains('show-spoilers')) {
+            body_class = "show-spoilers";
+        } else if (toggle.classList.contains('tvtropes-editor-on')) {
+            body_class = "tvtropes-editor-on";
+        }
+
+        // PROFILE PAGE OPTIONS
+        else if (toggle.classList.contains('folders-open')) {
+            body_class = "folders-open";
+        } else if (toggle.classList.contains('wysiwyg-toggle')) {
+            body_class = "wysiwyg-toggle";
+        } else if (toggle.classList.contains('mono-font')) {
+            body_class = "mono-font";
+        } else if (toggle.classList.contains('lefthand-sidebar')) {
+            body_class = "lefthand-sidebar";
+        } else if (toggle.classList.contains('highlight-links')) {
+            body_class = "highlight-links";
+        } else if (toggle.classList.contains('forum-gingerbread')) {
+            body_class = "forum-gingerbread";
+        } else if (toggle.classList.contains('shared-avatars')) {
+            body_class = "shared-avatars";
+            pref = 'accept_share';
+            val = toggle.classList.contains('active') ? 0 : 1;
+        } else if (toggle.classList.contains('new-search')) {
+            body_class = "new-search";
+            pref = 'new_search';
+            val = toggle.classList.contains('active') ? 0 : 1;
+        } else if (toggle.classList.contains('stop-auto-play-video')) {
+            body_class = "stop-auto-play-video";
+            pref = 'stop_auto_play_video';
+            val = toggle.classList.contains('active') ? 0 : 1;
+        } else if (toggle.classList.contains('notification-pm')) {
+            body_class = 'notification-pm';
+            pref = 'toggle_notification_pm';
+            val = toggle.classList.contains('active') ? 0 : 1;
+        } else if (toggle.classList.contains('notification-video')) {
+            body_class = 'notification-video';
+            pref = 'toggle_notification_video';
+            val = toggle.classList.contains('active') ? 0 : 1;
+        } else if (toggle.classList.contains('notification-query')) {
+            body_class = 'notification-query';
+            pref = 'toggle_notification_query';
+            val = toggle.classList.contains('active') ? 0 : 1;
+        }
+
+        if (pref === 'accept_share' || pref === 'new_search' || pref === 'stop_auto_play_video' || pref === 'toggle_notification_query' || pref === 'toggle_notification_pm' || pref === 'toggle_notification_video') {
+            if (pref === 'new_search' && document.querySelector('#new-search-toggle')) show_loader();
+        
+            fetch('/ajax/toggle_user_prefs.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'pref=' + encodeURIComponent(pref) + '&value=' + encodeURIComponent(val)
+            })
+            .then(response => response.json())
+            .then(json => {
+                if (pref === 'new_search') {
+                    const newSearchToggle = document.querySelector('#new-search-toggle');
+                    const searchInput = document.getElementById('srch-term').value;
+                    const pageType = document.getElementsByName('page_type')[0].value;
+                    if (newSearchToggle && newSearchToggle.classList.contains('active')) {
+                        kill_modal();
+                        window.location.href = '/pmwiki/elastic_search_result.php?new_search=true&q=' + encodeURIComponent(searchInput) + '&page_type=' + encodeURIComponent(pageType);
+                    } else if (newSearchToggle) {
+                        kill_modal();
+                        window.location.href = '/pmwiki/search_result.php?new_search=false&q=' + encodeURIComponent(searchInput);
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        
+            document.querySelector('form.search').addEventListener('submit', function(e) {
+                if (cookies.read('new-search') === 'true') {
+                    e.preventDefault();
+                    this.setAttribute('action', "/pmwiki/elastic_search_result.php");
+                }
+            });
+        }
+
+        // Toggle 'active' class based on body_class
+        var displayToggles = document.querySelectorAll('.display-toggle.' + body_class);
+        displayToggles.forEach(item_to_toggle => {
+            item_to_toggle.classList.toggle('active');
+        });
+        
+        var userPrefs = document.getElementById('user-prefs');
+        userPrefs.classList.toggle(body_class);
+
+        console.log('BODY CLASS:',body_class);
+
+        if (userPrefs.classList.contains(body_class)) {
+            cookies.create(body_class, 'true', 300, '/');
+        } else {
+            cookies.remove(body_class);
+    
+            // Specific logic for 'show-spoilers' class
+            if (body_class === "show-spoilers") {
+                document.querySelectorAll('.spoiler').forEach(spoiler => {
+                    spoiler.classList.remove('off');
+                });
+            }
+        }
+    }
+
+    if (target && loggedIn !== null) {
+        e.preventDefault();
+
+        if (loggedIn === 'true') {
+            target.classList.add('processing');
+        }
+
+        // Article
+        if (target.getAttribute('data-watch-info')) {
+            var data = target.dataset.watchInfo.split(',');
+
+            if (!data.length) return;
+
+            var addOrDrop = target.classList.contains('watching') || target.parentElement.classList.contains('watching') ? 'drop' : 'add';
+
+            handleWatchItem(addOrDrop, data[0], data[1], target);
+
+        // Discussion page
+        } else if (target.getAttribute('data-watch-discussion-info')) {
+            var data = target.dataset.watchDiscussionInfo.split(',');
+
+            if (!data.length) return;
+
+            var addOrDrop = target.classList.contains('watching') || target.parentElement.classList.contains('watching') ? 'drop' : 'add';
+            var pageType = 'Discussion';
+
+            handleWatchItem(addOrDrop, data[0], data[1], target, pageType);
+
+        // Forum thread
+        } else if (target.getAttribute('data-watch-thread-id')) {
+            var threadId = target.getAttribute('data-watch-thread-id');
+            var url = target.classList.contains('watching') || target.parentElement.classList.contains('watching') ? '/pmwiki/thread_watch_drop.php?thread=' : '/pmwiki/setthreadwatch.php?d_id=';
+            url += threadId;
+
+            handleWatchThread(url, target);
+        }
+    }
+    // Check for kill modal button click
+    if (e.target.classList.contains('kill-modal-button')) {
+        e.preventDefault();
+        kill_modal();
+    }
+
+    // Check for data-click-toggle without data-click-toggle-target
+    const targetWithoutToggleTarget = e.target.closest('*[data-click-toggle]:not([data-click-toggle-target])');
+    if (targetWithoutToggleTarget) {
+        e.preventDefault();
+        const toggleClass = targetWithoutToggleTarget.getAttribute('data-click-toggle');
+        targetWithoutToggleTarget.classList.toggle(toggleClass);
+    }
+
+    // Check for data-click-toggle with data-click-toggle-target
+    const targetWithToggleTarget = e.target.closest('*[data-click-toggle][data-click-toggle-target]');
+    if (targetWithToggleTarget) {
+        e.preventDefault();
+        e.stopPropagation();
+        const toggleTarget = targetWithToggleTarget.getAttribute('data-click-toggle-target');
+        const toggleClass = targetWithToggleTarget.getAttribute('data-click-toggle');
+        if (toggleTarget.indexOf(',') > -1) {
+            const targets = toggleTarget.split(",");
+            targets.forEach(t => {
+                document.querySelectorAll('#' + t).forEach(el => {
+                    el.classList.toggle(toggleClass);
+                });
+            });
+        } else {
+            document.querySelectorAll('#' + toggleTarget).forEach(el => {
+                el.classList.toggle(toggleClass);
+            });
+        }
+    }
+    // initiate all modals
+    const modalTarget = e.target.closest('*[data-modal-target]');
+    if(modalTarget) {
+        if (!modalTarget) {
+            return; // Skip, if no target found with the specified attribute
+        }
+
+        // Get modal details
+        let modal = modalTarget.getAttribute('data-modal-target');
+        let msg = modalTarget.getAttribute('data-modal-vars');
+        let url = modalTarget.getAttribute('data-modal-confirmation-url');
+
+        // convert to json if possible
+        try {
+            var obj = JSON.parse(msg);
+            if (obj && typeof obj === "object") {
+                msg = obj;
+            }
+        } 
+        catch (e) {
+        }
+
+        // Skip modal and go straight to the link
+        if (modal === "allow") return;
+
+        // Don't allow link since we are showing a modal instead
+        e.preventDefault();
+
+        // Add support for alert tags
+        if (modal.substring(0, 6) === "alert-") {
+            // Message array
+            const msgArr = {
+                "alert-banned": "Your permissions for this area have been suspended. Please visit <a href='/pmwiki/pmwiki.php/Administrivia/WhatToDoIfYouAreSuspended'>this page</a> for more details.",
+                "alert-bounced": "This account has committed severe or repeated violations of our rules and is permanently denied access to many of the account features of the site. If you feel that this may be an error, please <a href=\"/pmwiki/contact.php\">contact the mods</a>.",
+                "alert-denied": "Your account was denied by a moderator. If you believe this was done in error please <a href=\"/pmwiki/contact.php\">contact the mods</a>.",
+                "alert-verify": "You must verify your email address before doing this. Check your email for a link.",
+                "alert-approval": "Your account must be approved by a moderator before you can do this. If you still have this problem in a couple hours try <a href=\"/pmwiki/contact.php\">contacting the mods</a>.",
+                "alert-age": "Your account is not old enough. Give it a little more time.",
+                "alert-mod": "This page is only for moderators. Try something else.",
+                "alert-db": "We are currently updating our database systems to UTF-8MB4. Please try again in 10-12 hours."
+            };
+
+            if (modal in msgArr) {
+                msg = msgArr[modal];
+            } else {
+                msg = "Unknown error. Please <a href=\"/pmwiki/contact.php\">Contact us</a> if the problem persists.";
+            }
+
+            modal = "alert";
+        }
+
+        // Bring up modal now
+        show_modal(modal, msg, url);
+    }
+
+    // SPOILERS
+    const spoilers = e.target.closest('.spoiler');
+    if (spoilers) {
+        spoilers.classList.toggle('off');
+    }
+    
+    // OPEN INDIVIDUAL FOLDERS
+    const folders = e.target.closest('.folderlabel');
+    if (folders && e.target.getAttribute('onclick') !== "toggleAllFolders();") {
+        e.preventDefault();
+
+        folders.classList.toggle('is-open');
+        let folder = folders.nextElementSibling;
+
+        if (folders.classList.contains('is-open')) {
+            gtag('event', 'folder_click', {'device_type': device_type});
+        }
+
+        if (folder && folders.classList.contains('is-open') && live_ads == 1 && (document.body.clientWidth && document.body.clientWidth<=768) 
+        && tvtropes_config.universal_page_type == 'Article') {
+            if (folder.querySelectorAll('.tvtropes-ad-unit').length === 0) {
+                insert_ads_in_content(folder, globalAdInsertionCount);
+            }
+        }
+    }
+
+    // OPEN ALL FOLDERS
+    const allFolders = e.target.closest('div[onclick*="toggleAllFolders()"]');
+    
+    if (allFolders) {
+        let parentElement = allFolders.parentNode;
+        // If the button is inside an H2, select the parent div of it
+        if (parentElement.tagName === 'H2') parentElement = parentElement.parentNode;
+        let isCurrentlyOpen = e.target.classList.contains('is-open');
+        // Select only folder labels that are inside the same parent div as the clicked button
+        let foldersAndButtons = parentElement.querySelectorAll('.folderlabel, .toggle-all-folders-button');
+
+        foldersAndButtons.forEach(function(element) {
+            if (isCurrentlyOpen) {
+                element.classList.remove('is-open');
+            } else {
+                element.classList.add('is-open');
+            }
+        });
+
+        if (!isCurrentlyOpen) {
+            gtag('event', 'all_folders_click', {'device_type': device_type});
+            // Also target only .folder elements within the same parent div
+            parentElement.querySelectorAll('.folder').forEach(function(folder) {
+                if (!folder.querySelector('.tvtropes-ad-unit') && live_ads == 1 && (document.body.clientWidth && document.body.clientWidth<=768) 
+                && tvtropes_config.universal_page_type == 'Article') {
+                    insert_ads_in_content(folder, globalAdInsertionCount);
+                }
+            });
+        }
+    }
+
+});
+// Add/remove watched article
+var handleWatchItem = function(addOrDrop, groupname, title, obj, pageType = '') {
+    fetch("/ajax/watchlist.php", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        body: `groupname=${encodeURIComponent(groupname)}&title=${encodeURIComponent(title)}&type=${encodeURIComponent(addOrDrop)}&json=1&pageType=${encodeURIComponent(pageType)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        obj.classList.remove('processing');
+
+        if (obj.classList.contains('tile-watch-button')) {
+            obj.parentNode.classList.toggle('watching');
+        } else {
+            obj.classList.toggle('watching');
+        }
+    })
+    .catch(error => {
+        obj.classList.remove('processing');
+        show_modal('alert-red', 'Whoops, something went wrong. Please try adding again.');
+    });
+}
+
+// add/remove watched forum thread
+var handleWatchThread = function(url, obj) {
+    fetch(url)
+    .then(response => response.text()) // assuming the server responds with plain text
+    .then(data => {
+        obj.classList.remove('processing');
+
+        if (obj.classList.contains('tile-watch-button')) {
+            obj.parentNode.classList.toggle('watching');
+        } else {
+            obj.classList.toggle('watching');
+        }
+    })
+    .catch(error => {
+        obj.classList.remove('processing');
+        show_modal('alert-red', 'Whoops, something went wrong. Please try adding again.');
+    });
+}
+    </script>
+    
+                    <script>
+                if(is_mobile()) {
+                    document.write("<div class=\"htlad-tvtropes_m_sticky\"></div>");
+                }
+                else {
+                    document.write("<div class=\"htlad-tvtropes_dt_sticky\"></div>");
+                }
+            </script>
+
+                <div id="tvtropes_oop_ad_slot" style="display: none;"></div>
+    <div id="header-fad-wrapper" class="fad">
+    <div id="header-fad">
+    <div class="fad-size-970x90" style="height:20px">&nbsp;</div>    </div>
+</div>
+
+<div id="main-container">
+
+    
+        <div id="action-bar-top" class="action-bar mobile-off">
+
+        <div class="action-bar-right">
+            <p>Follow TV Tropes</p>
+            <a href="https://www.facebook.com/TVTropes" class="button-fb">
+                <i class="fa fa-facebook"></i></a>
+            <a href="https://www.twitter.com/TVTropes" class="button-tw">
+                <i class="fa fa-twitter"></i></a>
+        </div>
+
+                <nav class="actions-wrapper" itemscope itemtype="http://schema.org/SiteNavigationElement">
+            <ul id="top_main_list" class="page-actions">
+            <li class="link-edit">
+                    <a rel = "nofollow" class = "article-edit-button"data-modal-target= "login"href = "/pmwiki/pmwiki.php/Main/WallRun?action=edit">
+                         <i class="fa fa-pencil"></i> Edit Page</a></li><li class="link-related"><a href="/pmwiki/relatedsearch.php?term=Main/WallRun">
+                <i class="fa fa-share-alt"></i> Related</a></li><li class="link-history"><a href="/pmwiki/article_history.php?article=Main.WallRun" data-modal-target="login" rel="nofollow">
+                <i class="fa fa-history"></i> History</a></li><li class="link-discussion"><a href="/pmwiki/remarks.php?trope=Main.WallRun" data-modal-target="login" rel="nofollow">
+                                        <i class="fa fa-comment"></i> Discussion</a></li><li class="link-todo tuck-always"><a href="#todo" data-modal-target="login" rel="nofollow"><i class="fa fa-check-circle"></i> To Do</a></li>                </ul>
+                                    <button id="top_more_button" onclick="toggle_more_menu('top');" type="button" class="nav__dropdown-toggle">More</button>
+                            <ul id="top_more_list" class="more_menu hidden_more_list">
+                <li class="link-pageSource tuck-always more_list_item"><a href="/pmwiki/pmwiki.php/Main/WallRun?action=source" target="_blank" rel="nofollow"data-modal-target= "login"><i class="fa fa-code"></i> Page Source</a></li>            </ul>
+        </nav> 
+
+        <div class="WikiWordModalStub"></div>
+        <div class="ImgUploadModalStub" data-page-type="Article"></div>
+
+        <div class="login-alert" style="display: none;">
+            You need to <a href="/pmwiki/login.php" style="color:#21A0E8">login</a> to do this. <a href="/pmwiki/login.php?tab=register_account" style="color:#21A0E8">Get Known</a> if you don't have an account
+        </div>
+
+    </div>
+    
+    <div id="main-content" class="page-Article ">
+
+        
+                <article id="main-entry" class="with-sidebar">
+        
+        
+
+
+<!-- HIDDEN INPUTS FOR JS -->
+<input type="hidden" id="groupname-hidden" value="Main"/>
+<input type="hidden" id="title-hidden" value="WallRun"/>
+<input type="hidden" id="article_id" value="426478" />
+<input type="hidden" id="logged_in" value="false" />
+<p id="current_url" class="hidden">http://tvtropes.org/pmwiki/pmwiki.php/Main/WallRun</p>
+
+    <meta itemprop="datePublished" content=""/>
+    <meta itemprop="articleSection" content="" />
+    <meta itemprop="image" content="">
+
+
+
+
+
+
+
+
+
+<a href="#watch" class="watch-button " data-modal-target="login" >Follow<span>ing</span></a>
+
+
+
+        
+
+    
+
+             
+
+                        
+                <h1 itemprop="headline" class="entry-title"> Wall Run </h1>
+
+                        
+
+
+    
+
+
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "TV Tropes",
+                "item": "https://tvtropes.org/"
+            },{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Tropes",
+                "item": "https://tvtropes.org/pmwiki/pmwiki.php/Main/Tropes"
+            },{
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Wall Run",
+                "item": "https://tvtropes.org/pmwiki/pmwiki.php/Main/WallRun"
+            }]
+
+        }
+    </script>
+        <script type="application/ld+json">
+                {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "name": "Wall Run",
+          "headline": "Wall Run",
+          "url": "https://tvtropes.org/pmwiki/pmwiki.php/Main/WallRun",
+          "image": "https://static.tvtropes.org/pmwiki/pub/images/rsz_1rsz_quicksilver_wall_running.jpg",
+          "author": {
+            "@type": "Organization",
+            "name": "Contributors to TV Tropes (aka Tropers)"
+          },
+          "datePublished": "2013-07-25T00:00:00-07:00",
+          "dateModified": "2024-06-10T13:41:30-07:00"
+        }
+    </script>
+
+
+<a href="#mobile-actions-toggle" id="mobile-actionbar-toggle" class="mobile-actionbar-toggle mobile-on" data-click-toggle="active" >
+<p class="tiny-off">Go To</p><span></span><span></span><span></span><i class="fa fa-pencil"></i></a>
+<nav id="mobile-actions-bar" class="mobile-actions-wrapper mobile-on"></nav>
+<script>
+    //duplicate action bar to the mobile-action-bar holder
+    if (document.getElementById("mobile-actions-bar")) {
+        // Clone the main list
+        var top_main_list = document.getElementById('top_main_list');
+        var top_main_list_cln = top_main_list.cloneNode(true);
+        // Clone the more list
+        var top_more_list = document.getElementById('top_more_list');
+        var top_more_list_cln = top_more_list.cloneNode(true);
+
+        top_more_list_cln.querySelectorAll("li").forEach(function(child){
+            top_main_list_cln.appendChild(child);
+        });
+
+        document.getElementById("mobile-actions-bar").appendChild(top_main_list_cln);
+    }
+</script>
+
+
+<div id="editLockModal" class="modal fade hidden-until-active" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit Locked</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="body">
+                        <div class="danger troper_locked_message"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav class="body-options" itemscope itemtype="http://schema.org/SiteNavigationElement">
+
+    <ul class="subpage-links">
+
+                            <li>
+                                <a href="/pmwiki/pmwiki.php/Main/WallRun" class="subpage-link curr-subpage" title="The Main page">
+                <span class="wrapper"><span class="spi main-page"></span>Main</span></a>
+            </li>
+        
+        
+                                 
+                                <li>
+                    <a href="/pmwiki/pmwiki.php/Laconic/WallRun" class="subpage-link " title="The Laconic page">
+                    <span class="wrapper"><span class="spi laconic-icon"></span>Laconic</span></a>
+                </li>
+                            
+                
+                            <li>
+                <a href="/pmwiki/pmwiki.php/VideoExamples/WallRun" class="subpage-link video-examples-tab  " title="Video Examples">
+                    <img src="/images/play-button-logo.png" alt="play" class="">
+                    <span class="wrapper">VideoExamples</span>
+                </a>
+            </li>
+        
+
+                            <li class="create-subpage dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    <span class="wrapper">Create Subpage <i class="fa fa-plus-circle"></i></span>
+                    </a>
+
+
+                    <select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                        <option value="">- Create New -</option>
+
+                                                <option value="/pmwiki/pmwiki.php/Analysis/WallRun?action=edit">Analysis</option>
+                                                <option value="/pmwiki/pmwiki.php/Awesome/WallRun?action=edit">Awesome</option>
+                                                <option value="/pmwiki/pmwiki.php/Characters/WallRun?action=edit">Characters</option>
+                                                <option value="/pmwiki/pmwiki.php/FanWorks/WallRun?action=edit">FanWorks</option>
+                                                <option value="/pmwiki/pmwiki.php/FanficRecs/WallRun?action=edit">FanficRecs</option>
+                                                <option value="/pmwiki/pmwiki.php/Fridge/WallRun?action=edit">Fridge</option>
+                                                <option value="/pmwiki/pmwiki.php/Funny/WallRun?action=edit">Funny</option>
+                                                <option value="/pmwiki/pmwiki.php/Haiku/WallRun?action=edit">Haiku</option>
+                                                <option value="/pmwiki/pmwiki.php/Headscratchers/WallRun?action=edit">Headscratchers</option>
+                                                <option value="/pmwiki/pmwiki.php/Heartwarming/WallRun?action=edit">Heartwarming</option>
+                                                <option value="/pmwiki/pmwiki.php/ImageLinks/WallRun?action=edit">ImageLinks</option>
+                                                <option value="/pmwiki/pmwiki.php/NightmareFuel/WallRun?action=edit">NightmareFuel</option>
+                                                <option value="/pmwiki/pmwiki.php/PlayingWith/WallRun?action=edit">PlayingWith</option>
+                                                <option value="/pmwiki/pmwiki.php/Quotes/WallRun?action=edit">Quotes</option>
+                                                <option value="/pmwiki/pmwiki.php/Recap/WallRun?action=edit">Recap</option>
+                                                <option value="/pmwiki/pmwiki.php/ReferencedBy/WallRun?action=edit">ReferencedBy</option>
+                                                <option value="/pmwiki/pmwiki.php/Shocking/WallRun?action=edit">Shocking</option>
+                                                <option value="/pmwiki/pmwiki.php/TearJerker/WallRun?action=edit">TearJerker</option>
+                                                <option value="/pmwiki/pmwiki.php/Timeline/WallRun?action=edit">Timeline</option>
+                                                <option value="/pmwiki/pmwiki.php/Trivia/WallRun?action=edit">Trivia</option>
+                                                <option value="/pmwiki/pmwiki.php/WMG/WallRun?action=edit">WMG</option>
+                                                <option value="/pmwiki/pmwiki.php/YMMV/WallRun?action=edit">YMMV</option>
+                        
+                    </select>
+
+                    
+                            </li>
+            </ul>
+
+
+</nav>
+
+
+
+
+<div id="main-article" class="article-content retro-folders">
+    <p><!-- Image selected per Image Pickin' thread: https://tvtropes.org/pmwiki/posts.php?discussion=1444229749035800500-->
+<!-- Please do not replace or remove without starting a new thread.-->
+<!--&#010;-->
+<div class="quoteright" style="width:350px;" ><a class='twikilink' href='/pmwiki/pmwiki.php/Film/XMenDaysOfFuturePast' title='/pmwiki/pmwiki.php/Film/XMenDaysOfFuturePast' data-format='W1tGaWxtL1hNZW5EYXlzT2ZGdXR1cmVQYXN0IGh0dHBzOi8vc3RhdGljLnR2dHJvcGVzLm9yZy9wbXdpa2kvcHViL2ltYWdlcy9yc3pfMXJzel9xdWlja3NpbHZlcl93YWxsX3J1bm5pbmcuanBnXV0='><div class="lazy_load_img_box" style="padding-top:94.29%"><img src='https://static.tvtropes.org/pmwiki/pub/images/rsz_1rsz_quicksilver_wall_running.jpg' class='embeddedimage' border='0' alt='https://static.tvtropes.org/pmwiki/pub/images/rsz_1rsz_quicksilver_wall_running.jpg' / width=350 height=330></div></a></div><div class="acaptionright" style="width:350px;" >Caution: Do not run when wall is wet.</div>
+</p><p>If you want to climb over a building but cannot fly, you could try several options. If you are a good climber, or a bug, you could <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallCrawl' title='/pmwiki/pmwiki.php/Main/WallCrawl' data-format='V2FsbENyYXds'>Wall Crawl</a> up it. If you are agile enough, you could <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallJump' title='/pmwiki/pmwiki.php/Main/WallJump' data-format='V2FsbEp1bXA='>Wall Jump</a> from wall to wall to slowly but eventually get to the top.
+</p><p>But in this trope, they just run up it! They either have the superhuman strength or speed or ability to simply run up a smooth, flat, vertical surface at high speeds, even if logically they shouldn't be able to.
+</p><p>See <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DrivingUpAWall' title='/pmwiki/pmwiki.php/Main/DrivingUpAWall' data-format='RHJpdmluZ1VwQVdhbGw='>Driving Up a Wall</a> for the vehicular equivalent.
+</p><p><hr data-format='&#8212;&#8212;' />
+<h2>Examples:</h2>
+</p><p><div class="folderlabel" onclick="toggleAllFolders();">&nbsp;&nbsp;&nbsp;&nbsp;open/close all folders&nbsp; </div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder0');">&nbsp;&nbsp;&nbsp;&nbsp;Anime &amp; Manga&nbsp;</div><div id="folder0" class="folder" isfolder="true" style="display:block;">
+<!-- "is able to do this." is not proper contxt.-->
+<!--* In ''Manga/RookiePolicewomanKirukoSan'', Kiruko-->
+<ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/AttackOnTitan' title='/pmwiki/pmwiki.php/Manga/AttackOnTitan' data-format='TWFuZ2EvQXR0YWNrT25UaXRhbg=='>Attack on Titan</a></em>, Sasha runs down Wall Rose and saves Samuel from falling to his death.
+</li><li> In the anime adaptation of <em><a class='twikilink' href='/pmwiki/pmwiki.php/Literature/ChivalryOfAFailedKnight' title='/pmwiki/pmwiki.php/Literature/ChivalryOfAFailedKnight' data-format='TGl0ZXJhdHVyZS9DaGl2YWxyeU9mQUZhaWxlZEtuaWdodA=='>Chivalry of a Failed Knight</a></em>, the protagonist, Ikki, briefly runs along a wall/glass panels while being shot at.
+</li><li> In an episode of <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/CodeGeass' title='/pmwiki/pmwiki.php/Anime/CodeGeass' data-format='QW5pbWUvQ29kZUdlYXNz'>Code Geass</a></em>, Suzaku runs up a wall <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SuperReflexes' title='/pmwiki/pmwiki.php/Main/SuperReflexes' data-format='W1tTdXBlclJlZmxleGVzIHdoaWxlIGRvZGdpbmcgYnVsbGV0c11d'>while dodging bullets</a> and kicks a machine gun turret off the ceiling.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/MagicalGirlLyricalNanohaStrikers' title='/pmwiki/pmwiki.php/Anime/MagicalGirlLyricalNanohaStrikers' data-format='QW5pbWUvTWFnaWNhbEdpcmxMeXJpY2FsTmFub2hhU3RyaWtlcnM='>Magical Girl Lyrical Nanoha StrikerS</a></em>, Subaru's Device allows her to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RollerbladeGood' title='/pmwiki/pmwiki.php/Main/RollerbladeGood' data-format='e3tyb2xsZXJibGFkZXxHb29kfX0='>rollerblade</a> on walls by activating the Absorb Grip spell.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/KillLaKill' title='/pmwiki/pmwiki.php/Anime/KillLaKill' data-format='QW5pbWUvS2lsbExhS2lsbA=='>Kill la Kill</a></em>'s Kiryuin Satsuki can not only run, but <em>walk briskly</em> up a wall while kicking ass.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/K' title='/pmwiki/pmwiki.php/Anime/K' data-format='QW5pbWUve3tLfX0='>K</a>: Missing Kings</em>, Kuroh and Yukari <em>have a sword fight</em> on the outside of a skyscraper like this. Kuroh appears to fall at first, but Yukari just uses his powers to stand on the side of the building, and Kuroh does the same after a moment.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/GunslingerGirl' title='/pmwiki/pmwiki.php/Manga/GunslingerGirl' data-format='TWFuZ2EvR3Vuc2xpbmdlckdpcmw='>Gunslinger Girl</a></em>. Petra does this to take out a terrorist guarding the corridor to the Turin Nuclear Plant's control room. As an older second generation cyborg she has longer legs than the other cyborg girls and so uses this to her advantage.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/RanmaOneHalf' title='/pmwiki/pmwiki.php/Manga/RanmaOneHalf' data-format='TWFuZ2EvUmFubWFPbmVIYWxm'>Ranma ½</a></em>: Ranma can run up vertical things like power-line poles or horizontally on walls.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Literature/RebuildWorld' title='/pmwiki/pmwiki.php/Literature/RebuildWorld' data-format='TGl0ZXJhdHVyZS9SZWJ1aWxkV29ybGQ='>Rebuild World</a></em>: Akira eventually uses his <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GatlingGood' title='/pmwiki/pmwiki.php/Main/GatlingGood' data-format='R2F0bGluZ0dvb2Q='>Gatling Good</a> M421 minigun to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RecoilBoost' title='/pmwiki/pmwiki.php/Main/RecoilBoost' data-format='UmVjb2lsQm9vc3Q='>Recoil Boost</a> to this effect, even running on a ceiling at one point due to firing powerful CWH anti-armor rounds full auto with a similar weapon. Later sets of <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PoweredArmor' title='/pmwiki/pmwiki.php/Main/PoweredArmor' data-format='UG93ZXJlZEFybW9y'>Powered Armor</a> he gets also have a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/StickyShoes' title='/pmwiki/pmwiki.php/Main/StickyShoes' data-format='U3RpY2t5U2hvZXM='>Sticky Shoes</a> feature allowing him to do so without wasting ammo, for instance, jumping out a skyscraper window, doing a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BladeBrake' title='/pmwiki/pmwiki.php/Main/BladeBrake' data-format='QmxhZGVCcmFrZQ=='>Blade Brake</a>, then running back up to surprise his pursuer.
+</li><li> Near the end of <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/ReCutieHoney' title='/pmwiki/pmwiki.php/Anime/ReCutieHoney' data-format='QW5pbWUvUmVDdXRpZUhvbmV5'>Re: Cutie Honey</a></em>, Honey displays this ability by running down a vertical wall with Natsuko in her arms after the latter <a class='twikilink' href='/pmwiki/pmwiki.php/Main/IntimateHealing' title='/pmwiki/pmwiki.php/Main/IntimateHealing' data-format='W1tJbnRpbWF0ZUhlYWxpbmcgcmVzdXNjaXRhdGVzIGhlcl1d'>resuscitates her</a>. "These boots can run anywhere!"
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/TimeStopHero' title='/pmwiki/pmwiki.php/Manga/TimeStopHero' data-format='TWFuZ2EvVGltZVN0b3BIZXJv'>Time Stop Hero</a></em>: Swordmaster Leafa runs along a wall to avoid lava.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder1');">&nbsp;&nbsp;&nbsp;&nbsp;Comic Books&nbsp;</div><div id="folder1" class="folder" isfolder="true" style="display:block;">
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/ComicBook/TheFlash' title='/pmwiki/pmwiki.php/ComicBook/TheFlash' data-format='Q29taWNCb29rL1RoZUZsYXNo'>The Flash</a></em>: The Flash and <a class='twikilink' href='/pmwiki/pmwiki.php/ComicBook/Impulse' title='/pmwiki/pmwiki.php/ComicBook/Impulse' data-format='Q29taWNCb29rL3t7SW1wdWxzZX19'>Impulse</a> can run fast enough to run up vertical surfaces.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/ComicBook/Quicksilver' title='/pmwiki/pmwiki.php/ComicBook/Quicksilver' data-format='Q29taWNCb29rL3t7UXVpY2tzaWx2ZXJ9fQ=='>Quicksilver</a></em>: Quicksilver is sometimes depicted as being fast enough to do this, though it's not a typical ability of his.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/ComicBook/SpiderMan' title='/pmwiki/pmwiki.php/ComicBook/SpiderMan' data-format='Q29taWNCb29rL1NwaWRlck1hbg=='>Spider-Man</a></em>: Spider-Man can do short bursts of wall-running while webswinging.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/ComicBook/WonderWoman' title='/pmwiki/pmwiki.php/ComicBook/WonderWoman' data-format='Q29taWNCb29rL1dvbmRlcldvbWFu'>Wonder Woman</a></em>: Wonder Woman and <a class='twikilink' href='/pmwiki/pmwiki.php/ComicBook/Cheetah' title='/pmwiki/pmwiki.php/ComicBook/Cheetah' data-format='Q29taWNCb29rL3t7Q2hlZXRhaH19'>Cheetah</a> can run along a wall's surface for a bit, but since Wondy started being able to fly in the Silver Age she's not had a need to in a long time.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder2');">&nbsp;&nbsp;&nbsp;&nbsp;Fan Works&nbsp;</div><div id="folder2" class="folder" isfolder="true" style="display:block;">
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Fanfic/AmazingFantasy' title='/pmwiki/pmwiki.php/Fanfic/AmazingFantasy' data-format='RmFuZmljL0FtYXppbmdGYW50YXN5'>Amazing Fantasy</a></em>
+<ul ><li> Izuku and Peter are able to do this thanks to their <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallCrawling' title='/pmwiki/pmwiki.php/Main/WallCrawling' data-format='V2FsbENyYXdsaW5n'>Wall Crawling</a> abilities. Peter is first seen doing this in a flashback, while Izuku does it to demonstrate his new powers to his mom.
+</li><li> The Prowler has the ability to manipulate her own gravity, letting her easily run up walls. She can even apply this to her motorcycle, riding along the sides of buildings while chasing after something. Peter lampshades this and declares that he should sue her for copyright infringement.
+</li></ul></li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Fanfic/AnOrdinaryLife' title='/pmwiki/pmwiki.php/Fanfic/AnOrdinaryLife' data-format='RmFuZmljL0FuT3JkaW5hcnlMaWZl'>An ordinary life</a></em>, Eiko has a Quirk that gives her a perfect sense of balance, allowing her to do this. It is still realistic, so she needs to go fast enough if she wants to do it.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Fanfic/HeroAcademiaDxD' title='/pmwiki/pmwiki.php/Fanfic/HeroAcademiaDxD' data-format='RmFuZmljL0hlcm9BY2FkZW1pYUR4RA=='>Hero Academia Dx D</a></em>: Kiba Yuuto has a Quirk that lets him change his gravitational orientation, but only when he's walking on a surface like a wall.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder3');">&nbsp;&nbsp;&nbsp;&nbsp;Films &#8212; Animation&nbsp;</div><div id="folder3" class="folder" isfolder="true" style="display:block;">
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/AstroBoy' title='/pmwiki/pmwiki.php/WesternAnimation/AstroBoy' data-format='V2VzdGVybkFuaW1hdGlvbi9Bc3Ryb0JveQ=='>Astro Boy</a></em> (2009): Astro sprints up a skyscraper while trying to avoid capture, using momentum from his flight.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder4');">&nbsp;&nbsp;&nbsp;&nbsp;Films &#8212; Live-Action&nbsp;</div><div id="folder4" class="folder" isfolder="true" style="display:block;">
+<ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Film/ZackSnydersJusticeLeague' title='/pmwiki/pmwiki.php/Film/ZackSnydersJusticeLeague' data-format='W1tGaWxtL1phY2tTbnlkZXJzSnVzdGljZUxlYWd1ZSBKdXN0aWNlIExlYWd1ZV1d'>Justice League</a></em>, Flash uses his <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SuperSpeed' title='/pmwiki/pmwiki.php/Main/SuperSpeed' data-format='U3VwZXJTcGVlZA=='>Super-Speed</a> to run on the walls of the shaft the Justice League is battling Steppenwolf in and hit the tip of Diana/Wonder Woman's sword to send it back in her hand.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Film/FiveDeadlyVenoms' title='/pmwiki/pmwiki.php/Film/FiveDeadlyVenoms' data-format='RmlsbS9GaXZlRGVhZGx5VmVub21z'>Five Deadly Venoms</a></em>, the lizard style of kung fu allows the user to not only run up walls, but to stand up there indefinitely, waiting for the right moment to strike. The fourth Venom, who specializes in Lizard Style, and the sixth, who knows a smattering of all five styles, but is a master of none, both use this a lot at the climax of the movie.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/TheMatrix' title='/pmwiki/pmwiki.php/Franchise/TheMatrix' data-format='RnJhbmNoaXNlL1RoZU1hdHJpeA=='>The Matrix</a></em>:
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Film/TheMatrix' title='/pmwiki/pmwiki.php/Film/TheMatrix' data-format='RmlsbS9UaGVNYXRyaXg='>The Matrix</a></em>: In the opening sequence, Trinity evades a cop as he's shooting at her by running up and then along a wall of the room they're in before taking the fight to him. She also does this during the Government Lobby shootout later on in the film. Since this happens inside the Matrix, both instances are justified as Trinity being a redpill.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Film/TheMatrixRevolutions' title='/pmwiki/pmwiki.php/Film/TheMatrixRevolutions' data-format='RmlsbS9UaGVNYXRyaXhSZXZvbHV0aW9ucw=='>The Matrix Revolutions</a></em> has the Club Hel fight scene, with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Mook' title='/pmwiki/pmwiki.php/Main/Mook' data-format='e3tNb29rfX1z'>Mooks</a> doing <a class='twikilink' href='/pmwiki/pmwiki.php/Main/CombatParkour' title='/pmwiki/pmwiki.php/Main/CombatParkour' data-format='Q29tYmF0UGFya291cg=='>Combat Parkour</a> <em>on the ceiling, upside down</em> (justified as them being A.I. programs living in the Matrix, so <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheComputerIsACheatingBastard' title='/pmwiki/pmwiki.php/Main/TheComputerIsACheatingBastard' data-format='VGhlQ29tcHV0ZXJJc0FDaGVhdGluZ0Jhc3RhcmQ='>The Computer Is a Cheating Bastard</a> is in effect here). And it is <a class='twikilink' href='/pmwiki/pmwiki.php/SugarWiki/MomentOfAwesome' title='/pmwiki/pmwiki.php/SugarWiki/MomentOfAwesome' data-format='W1tTdWdhcldpa2kvTW9tZW50T2ZBd2Vzb21lIHV0dGVybHkgZnVja2luZyBhd2Vzb21lXV0='>utterly fucking awesome</a>. Said scene also has Trinity repeating her aforementioned maneuver to get the drop on her target.
+</li></ul></li><li> In the first scene of <em><a class='twikilink' href='/pmwiki/pmwiki.php/Film/TheOne' title='/pmwiki/pmwiki.php/Film/TheOne' data-format='RmlsbS9UaGVPbmU='>The One</a></em>, <a class='twikilink' href='/pmwiki/pmwiki.php/Creator/JetLi' title='/pmwiki/pmwiki.php/Creator/JetLi' data-format='Q3JlYXRvci9KZXRMaQ=='>Jet Li</a>'s <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ActingForTwo' title='/pmwiki/pmwiki.php/Main/ActingForTwo' data-format='W1tBY3RpbmdGb3JUd28gZXZpbCBjaGFyYWN0ZXJdXQ=='>evil character</a> Yulaw ends up doing a short version of this while dodging bullets. It helps that he has superhuman strength, speed, and agility.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Film/XMenDaysOfFuturePast' title='/pmwiki/pmwiki.php/Film/XMenDaysOfFuturePast' data-format='RmlsbS9YTWVuRGF5c09mRnV0dXJlUGFzdA=='>X-Men: Days of Future Past</a></em>, Quicksilver uses his <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SuperSpeed' title='/pmwiki/pmwiki.php/Main/SuperSpeed' data-format='U3VwZXJTcGVlZA=='>Super-Speed</a> to run along the wall of the White House's kitchen at one point during the "rescue" of Magneto.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder5');">&nbsp;&nbsp;&nbsp;&nbsp;Live-Action TV&nbsp;</div><div id="folder5" class="folder" isfolder="true" style="display:block;">
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Series/TheFlash2014' title='/pmwiki/pmwiki.php/Series/TheFlash2014' data-format='U2VyaWVzL3t7VGhlIEZsYXNofDIwMTR9fQ=='>The Flash</a></em>:
+<ul ><li> As in the comics, the 2014 version of The Flash has Barry do that in "Plastique" to rescue a man falling from a maintenance gondola. Bonus points for asking Cisco how fast he needs to run for this to work. Being in a bar, Cisco does his calculations on a napkin (while being drunk) with Barry even providing the height in meters for easier calculations (both are scientists, so using the SI system should come naturally to them). However, Caitlin just tells him to move very fast before Cisco can finish his calculations (despite the fact that this is Cisco's area of expertise) and maintain the speed on the way down to avoid the "splat". It works, and Barry even outruns the falling gondola on the way down. In later episodes, he does this almost casually.
+</li><li> In the season 1 finale, he's running up a collapsing skyscraper, while dodging falling debris. At one point, he <em>jumps over</em> a piece of debris and lands back on the skyscraper, despite the fact that gravity should have pulled him down, not sideways.
+</li><li> In the <em><a class='twikilink' href='/pmwiki/pmwiki.php/Series/Supergirl2015' title='/pmwiki/pmwiki.php/Series/Supergirl2015' data-format='U2VyaWVzL3t7U3VwZXJnaXJsfDIwMTV9fQ=='>Supergirl</a></em> crossover episode, he does this during his initial appearance and rescues <a class='twikilink' href='/pmwiki/pmwiki.php/ComicBook/Supergirl' title='/pmwiki/pmwiki.php/ComicBook/Supergirl' data-format='W1tDb21pY0Jvb2sve3tTdXBlcmdpcmx9fSBLYXJhXV0='>Kara</a>, who's unconscious and falling out of a skyscraper window before zooming away into the countryside. It's not clear how he knew that she needed saving (to be fair, she would've been just fine even if she hit the ground at terminal velocity), as he has just appeared in this world moments before.
+</li></ul></li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder6');">&nbsp;&nbsp;&nbsp;&nbsp;Tabletop Games&nbsp;</div><div id="folder6" class="folder" isfolder="true" style="display:block;">
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/DungeonsAndDragons' title='/pmwiki/pmwiki.php/TabletopGame/DungeonsAndDragons' data-format='VGFibGV0b3BHYW1lL0R1bmdlb25zQW5kRHJhZ29ucw=='>Dungeons & Dragons</a></em>:
+<ul ><li> The 3.5th edition <em>Expanded Psionic Handbook</em> has a psionic feat which pretty much allows to treat walls as any flat surface: "Up the Wall". If you can't reach an horizontal surface at the end of your movement, though, you fall flat on your back.
+</li><li> The skill trick "Walk the Walls" and the Monk alternate class feature "Wall Walker" are more limited in distance, and only allow moving up or down.
+</li><li> The spell <em>balancing lorecall</em> allows balancing on vertical surfaces if the character has enough skill ranks in Balance, and move up and down with much more freedom of movement than when climbing.
+</li><li> The psionic power <em>urban strider</em>, when augmented with no less than 8 power points, allows one to walk on completely vertical surfaces at normal speed.
+</li><li> As of 5th Edition, Monks get a speed boost when not wearing Armor, which at later levels allows them to run on vertical surfaces or <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WalkOnWater' title='/pmwiki/pmwiki.php/Main/WalkOnWater' data-format='W1tXYWxrT25XYXRlciBsaXF1aWRzXV0='>liquids</a>, though they'll still fall or submerge if they don't end their movement on standard terrain.
+</li></ul></li><li> In the <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Warhammer' title='/pmwiki/pmwiki.php/TabletopGame/Warhammer' data-format='VGFibGV0b3BHYW1lL3t7V2FyaGFtbWVyfX0='>Warhammer</a></em> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GaidenGame' title='/pmwiki/pmwiki.php/Main/GaidenGame' data-format='R2FpZGVuR2FtZQ=='>Gaiden Game</a> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Mordheim' title='/pmwiki/pmwiki.php/TabletopGame/Mordheim' data-format='VGFibGV0b3BHYW1lL3t7TW9yZGhlaW19fQ=='>Mordheim</a>,</em> a model usually has to make an Initiative Test in order to climb a wall and can cover up to their maximum movement distance vertically. The unique Skaven skill Wall Runner however allows a model to climb a wall without the need of a test, while the general Speed skill Scale Sheer Surfaces allows a model to climb up to double their movement distance using this trope without making a test.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder7');">&nbsp;&nbsp;&nbsp;&nbsp;Video Games&nbsp;</div><div id="folder7" class="folder" isfolder="true" style="display:block;">
+<ul ><li> <em>Cloudbuilt</em> and <em><a class='createlink' href='/pmwiki/pmwiki.php/VideoGame/SuperCloudbuilt' title='/pmwiki/pmwiki.php/VideoGame/SuperCloudbuilt' data-format='VmlkZW9HYW1lL1N1cGVyQ2xvdWRidWlsdA=='>Super Cloudbuilt</a></em> has a lot of vertical platforms, so expect to be doing this a lot.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TheIncredibleHulkUltimateDestruction' title='/pmwiki/pmwiki.php/VideoGame/TheIncredibleHulkUltimateDestruction' data-format='VmlkZW9HYW1lL1RoZUluY3JlZGlibGVIdWxrVWx0aW1hdGVEZXN0cnVjdGlvbg=='>The Incredible Hulk: Ultimate Destruction</a></em>, Hulk's leg muscles are strong enough to allow him to run up buildings and mountains.
+</li><li> Mario can do this in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioWorld' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioWorld' data-format='VmlkZW9HYW1lL1N1cGVyTWFyaW9Xb3JsZA=='>Super Mario World</a></em> if he runs at a purple incline block first.
+<ul ><li> These purple incline blocks appear in <a class='urllink' href='https://youtu.be/V3f5EYbANC0'>e-reader exclusive level<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> of <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioBros3' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioBros3' data-format='W1tWaWRlb0dhbWUvU3VwZXJNYXJpb0Jyb3MzIFN1cGVyIE1hcmlvIEFkdmFuY2UgNDogU3VwZXIgTWFyaW8gQnJvcy4gM11d'>Super Mario Advance 4: Super Mario Bros. 3</a></em> except now they can be used to have Mario <strong>run on ceilings!</strong>
+</li></ul></li><li> Ever since the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersiaTheSandsOfTime' title='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersiaTheSandsOfTime' data-format='W1tWaWRlb0dhbWUvUHJpbmNlT2ZQZXJzaWFUaGVTYW5kc09mVGltZSBTYW5kcyBvZiBUaW1lXV0='>Sands of Time</a></em> series, this has been a staple of the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersia' title='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersia' data-format='VmlkZW9HYW1lL1ByaW5jZU9mUGVyc2lh'>Prince of Persia</a></em> games, both vertically and horizontally. It's accomplished via <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LeParkour' title='/pmwiki/pmwiki.php/Main/LeParkour' data-format='TGVQYXJrb3Vy'>Le Parkour</a>, so it's less extreme than most examples, but it's still beyond human capabilities.
+<!--* ''VideoGame/DissidiaFinalFantasy''-->
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/SonicTheHedgehog' title='/pmwiki/pmwiki.php/Franchise/SonicTheHedgehog' data-format='RnJhbmNoaXNlL1NvbmljVGhlSGVkZ2Vob2c='>Sonic the Hedgehog</a></em>:
+<ul ><li> Sonic himself, and various other characters, can run on walls in any direction indefinitely, provided they keep going fast enough. And provided the floor leading up to the wall is a ramp of increasing incline. Fortunately, in Sonic's world <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BenevolentArchitecture' title='/pmwiki/pmwiki.php/Main/BenevolentArchitecture' data-format='W1tCZW5ldm9sZW50QXJjaGl0ZWN0dXJlIGl0IGZyZXF1ZW50bHkgaXNdXQ=='>it frequently is</a>. Sonic is capable of doing this when there is water falling down the wall.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SonicTheHedgehogCD' title='/pmwiki/pmwiki.php/VideoGame/SonicTheHedgehogCD' data-format='W1tWaWRlb0dhbWUvU29uaWNUaGVIZWRnZWhvZ0NEIFNvbmljIENEJiMwMzk7c11d'>Sonic CD's</a></em> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PalmtreePanic' title='/pmwiki/pmwiki.php/Main/PalmtreePanic' data-format='UGFsbXRyZWVQYW5pYw=='>Palmtree Panic</a> stage features pseudo-3D wall runs as its main gimmick.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Prototype' title='/pmwiki/pmwiki.php/VideoGame/Prototype' data-format='VmlkZW9HYW1lL3t7UHJvdG90eXBlfX0='>[PROTOTYPE]</a></em>: Alex Mercer can do it as well. While simply running up or along walls is pretty good, stopping will make him fall... unless the "use" key is pressed while facing the wall which makes him latch on and climb, Spider-Man-style. He can't traverse ceilings, though.
+</li><li> Wallrunning is present in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/CallOfDutyBlackOpsIII' title='/pmwiki/pmwiki.php/VideoGame/CallOfDutyBlackOpsIII' data-format='VmlkZW9HYW1lL0NhbGxPZkR1dHlCbGFja09wc0lJSQ=='>Call of Duty: Black Ops III</a></em> and <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/CallOfDutyInfiniteWarfare' title='/pmwiki/pmwiki.php/VideoGame/CallOfDutyInfiniteWarfare' data-format='VmlkZW9HYW1lL0NhbGxPZkR1dHlJbmZpbml0ZVdhcmZhcmU='>Call Of Duty Infinite Warfare</a></em>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TitanFall' title='/pmwiki/pmwiki.php/VideoGame/TitanFall' data-format='VmlkZW9HYW1lL1RpdGFuRmFsbA=='>Titanfall</a> and <a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TitanFall2' title='/pmwiki/pmwiki.php/VideoGame/TitanFall2' data-format='VmlkZW9HYW1lL1RpdGFuRmFsbDI='>Titanfall 2</a></em>: The most common form of movement used to get around for <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AcePilot' title='/pmwiki/pmwiki.php/Main/AcePilot' data-format='W1tBY2VQaWxvdCBQaWxvdHNdXQ=='>Pilots</a>. And not just on specific walls, but on anything that even classifies as a wall.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MyHeroOnesJustice' title='/pmwiki/pmwiki.php/VideoGame/MyHeroOnesJustice' data-format='VmlkZW9HYW1lL015SGVyb09uZXNKdXN0aWNl'>My Hero One's Justice</a></em>, following up on certain attacks that plant an opponent to the wall will temporarily lead to both players fighting on the wall as if it were the floor.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/KingdomHearts' title='/pmwiki/pmwiki.php/Franchise/KingdomHearts' data-format='RnJhbmNoaXNlL0tpbmdkb21IZWFydHM='>Kingdom Hearts</a></em>:
+<ul ><li> In the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SequelHook' title='/pmwiki/pmwiki.php/Main/SequelHook' data-format='U2VxdWVsSG9vaw=='>Sequel Hook</a> movie of the first game's Final Mix, Roxas runs up <em>a skyscraper</em> as he and Riku fend off Neoshadows together. The exact context for this moment wouldn't be made clear for several years.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KingdomHeartsII' title='/pmwiki/pmwiki.php/VideoGame/KingdomHeartsII' data-format='VmlkZW9HYW1lL0tpbmdkb21IZWFydHNJSQ=='>Kingdom Hearts II</a></em>, Sora recreates this moment while fighting Xemnas.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KingdomHeartsIII' title='/pmwiki/pmwiki.php/VideoGame/KingdomHeartsIII' data-format='VmlkZW9HYW1lL0tpbmdkb21IZWFydHNJSUk='>Kingdom Hearts III</a></em>, Sora can finally run freely across certain walls during gameplay, indicated by a glowing effect
+</li></ul></li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ShovelKnight' title='/pmwiki/pmwiki.php/VideoGame/ShovelKnight' data-format='VmlkZW9HYW1lL1Nob3ZlbEtuaWdodA=='>Shovel Knight</a></em> campaign <em>Specter of Torment</em>, by jumping upon certain walls, Specter Knight can run up on them for a few metres before falling down. During that time he can <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallJump' title='/pmwiki/pmwiki.php/Main/WallJump' data-format='W1tXYWxsSnVtcCBqdW1wIG9mZiB0aGVtXV0='>jump off them</a> to get significant horizontal speed.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/YoNoid2EnterTheVoid' title='/pmwiki/pmwiki.php/VideoGame/YoNoid2EnterTheVoid' data-format='VmlkZW9HYW1lL1lvTm9pZDJFbnRlclRoZVZvaWQ='>Yo! Noid 2: Enter the Void</a></em>, Noid can cross longer horizontal distance by jumping diagonally towards a wall while running, which allows him to briefly run along the wall. Gravity still applies, so this isn't useful for very long unless it's combined with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BuildingSwing' title='/pmwiki/pmwiki.php/Main/BuildingSwing' data-format='QnVpbGRpbmdTd2luZw=='>Building Swing</a> or a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallJump' title='/pmwiki/pmwiki.php/Main/WallJump' data-format='V2FsbEp1bXA='>Wall Jump</a>.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Sundered' title='/pmwiki/pmwiki.php/VideoGame/Sundered' data-format='VmlkZW9HYW1lL3t7U3VuZGVyZWR9fQ=='>Sundered</a></em>, Eshe can run up sheer walls after obtaining the Gravitational Boots. She needs to start at the base of the wall, and she’ll fall off if she stops moving partway. Corrupting the Gravitational Boots into Atlach-Nacha’s Grip replaces this ability with a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallCrawl' title='/pmwiki/pmwiki.php/Main/WallCrawl' data-format='V2FsbENyYXds'>Wall Crawl</a>.
+</li><li> Recurring staple in games developed by <a class='twikilink' href='/pmwiki/pmwiki.php/Creator/InsomniacGames' title='/pmwiki/pmwiki.php/Creator/InsomniacGames' data-format='Q3JlYXRvci9JbnNvbW5pYWNHYW1lcw=='>Insomniac Games</a>.
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SunsetOverdrive' title='/pmwiki/pmwiki.php/VideoGame/SunsetOverdrive' data-format='VmlkZW9HYW1lL1N1bnNldE92ZXJkcml2ZQ=='>Sunset Overdrive</a></em> features wall-running as one of its major forms of transportation, which also earns the player <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ExperiencePoints' title='/pmwiki/pmwiki.php/Main/ExperiencePoints' data-format='RXhwZXJpZW5jZVBvaW50cw=='>Experience Points</a>.
+</li><li> The <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SpiderManPS4' title='/pmwiki/pmwiki.php/VideoGame/SpiderManPS4' data-format='W1tWaWRlb0dhbWUvU3BpZGVyTWFuUFM0IFNwaWRlci1NYW5dXQ=='>Spider-Man</a></em> games carry over the mechanic almost unchanged, albeit with smoother controls and faster speed.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/RatchetAndClankRiftApart' title='/pmwiki/pmwiki.php/VideoGame/RatchetAndClankRiftApart' data-format='VmlkZW9HYW1lL1JhdGNoZXRBbmRDbGFua1JpZnRBcGFydA=='>Ratchet & Clank: Rift Apart</a></em> presents a similar ability, though confined to specific, magnetic walls.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/StarWars' title='/pmwiki/pmwiki.php/Franchise/StarWars' data-format='RnJhbmNoaXNlL1N0YXJXYXJz'>Star Wars</a></em>:
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/JediKnightIIJediOutcast' title='/pmwiki/pmwiki.php/VideoGame/JediKnightIIJediOutcast' data-format='VmlkZW9HYW1lL0plZGlLbmlnaHRJSUplZGlPdXRjYXN0'>Jedi Knight II: Jedi Outcast</a></em> and its sequel <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/JediKnightJediAcademy' title='/pmwiki/pmwiki.php/VideoGame/JediKnightJediAcademy' data-format='VmlkZW9HYW1lL0plZGlLbmlnaHRKZWRpQWNhZGVteQ=='>Jedi Knight: Jedi Academy</a></em> have this as an undocumented Jedi power: once your Force Speed and Force Jump powers get strong enough, with the right combination of controls you can jump onto a wall and run along it for a few seconds.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/StarWarsJediFallenOrder' title='/pmwiki/pmwiki.php/VideoGame/StarWarsJediFallenOrder' data-format='VmlkZW9HYW1lL1N0YXJXYXJzSmVkaUZhbGxlbk9yZGVy'>Star Wars Jedi: Fallen Order</a></em>, from the same developers as the aforementioned <em>Titanfall</em> games, has wall-running as a traversal option for certain walls.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/YsIXMonstrumNox' title='/pmwiki/pmwiki.php/VideoGame/YsIXMonstrumNox' data-format='VmlkZW9HYW1lL1lzSVhNb25zdHJ1bU5veA=='>Ys IX: Monstrum Nox</a></em>: <a class='twikilink' href='/pmwiki/pmwiki.php/Main/CatGirl' title='/pmwiki/pmwiki.php/Main/CatGirl' data-format='W1tDYXRHaXJsIFdoaXRlIENhdF1d'>White Cat</a>'s Heaven's Run ability allows her and her allies to run straight up walls, allowing the player to easily climb most buildings.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder8');">&nbsp;&nbsp;&nbsp;&nbsp;Web Comics&nbsp;</div><div id="folder8" class="folder" isfolder="true" style="display:block;">
+<ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Webcomic/ElGoonishShive' title='/pmwiki/pmwiki.php/Webcomic/ElGoonishShive' data-format='V2ViY29taWMvRWxHb29uaXNoU2hpdmU='>El Goonish Shive</a></em>, Elliot needs to return a cell phone a girl dropped, but there's a crowd in the way, so he <a class='urllink' href='http://www.egscomics.com/index.php?id=1731'>runs up the wall of the hallway<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a>. He refers to this as "going around them," and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SelectiveObliviousness' title='/pmwiki/pmwiki.php/Main/SelectiveObliviousness' data-format='W1tTZWxlY3RpdmVPYmxpdmlvdXNuZXNzIHNlZXMgbm90aGluZyBleGNlcHRpb25hbCBhYm91dCBpdF1d'>sees nothing exceptional about it</a>.
+</li></ul></div>
+<!--<div class="folderlabel" onclick="togglefolder('folder9');">&nbsp;&nbsp;&nbsp;&nbsp;Web Videos&nbsp;</div><div id="folder9" class="folder" isfolder="true" style="display:block;">-->
+<!--* Beau of ''WebVideo/CriticalRole'' can do this.-->
+<!--</div>-->
+<!--&#010;-->
+</p><p><div class="folderlabel" onclick="togglefolder('folder10');">&nbsp;&nbsp;&nbsp;&nbsp;Western Animation&nbsp;</div><div id="folder10" class="folder" isfolder="true" style="display:block;">
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/CodeLyoko' title='/pmwiki/pmwiki.php/WesternAnimation/CodeLyoko' data-format='V2VzdGVybkFuaW1hdGlvbi9Db2RlTHlva28='>Code Lyoko</a></em>: On Lyoko, Ulrich sometimes also run up vertical surfaces with his <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SuperSpeed' title='/pmwiki/pmwiki.php/Main/SuperSpeed' data-format='W1tTdXBlclNwZWVkIFN1cGVyIFNwcmludF1d'>Super Sprint</a>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/StevenUniverse' title='/pmwiki/pmwiki.php/WesternAnimation/StevenUniverse' data-format='V2VzdGVybkFuaW1hdGlvbi9TdGV2ZW5Vbml2ZXJzZQ=='>Steven Universe</a></em>: <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LaughablyEvil' title='/pmwiki/pmwiki.php/Main/LaughablyEvil' data-format='W1tMYXVnaGFibHlFdmlsIFBlcmlkb3RdXQ=='>Peridot</a> jogs up a ninety-degree cliff face as casually as running along the ground. As she's a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RubberForeheadAliens' title='/pmwiki/pmwiki.php/Main/RubberForeheadAliens' data-format='W1tSdWJiZXJGb3JlaGVhZEFsaWVucyBHZW1dXQ=='>Gem</a>, it's probable this is just a unique ability of hers- and, keeping with the tradition of Gem abilities, it's revealed with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/NewPowersAsThePlotDemands' title='/pmwiki/pmwiki.php/Main/NewPowersAsThePlotDemands' data-format='W1tOZXdQb3dlcnNBc1RoZVBsb3REZW1hbmRzIHZlcnkgbGl0dGxlIGZhbmZhcmVdXQ=='>very little fanfare</a> and isn't even a successful getaway.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/MyLittlePonyFriendshipIsMagic' title='/pmwiki/pmwiki.php/WesternAnimation/MyLittlePonyFriendshipIsMagic' data-format='V2VzdGVybkFuaW1hdGlvbi9NeUxpdHRsZVBvbnlGcmllbmRzaGlwSXNNYWdpYw=='>My Little Pony: Friendship Is Magic</a></em>: In the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SuperheroEpisode' title='/pmwiki/pmwiki.php/Main/SuperheroEpisode' data-format='U3VwZXJoZXJvRXBpc29kZQ=='>Superhero Episode</a> <a class='twikilink' href='/pmwiki/pmwiki.php/Recap/MyLittlePonyFriendshipIsMagicS4E6PowerPonies' title='/pmwiki/pmwiki.php/Recap/MyLittlePonyFriendshipIsMagicS4E6PowerPonies' data-format='W1tSZWNhcC9NeUxpdHRsZVBvbnlGcmllbmRzaGlwSXNNYWdpY1M0RTZQb3dlclBvbmllcyAiUG93ZXIgUG9uaWVzIl1d'>"Power Ponies"</a>, Pinkie Pie as Fili-second can run on the side of buildings just as fast as on the ground.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/Ben10' title='/pmwiki/pmwiki.php/WesternAnimation/Ben10' data-format='V2VzdGVybkFuaW1hdGlvbi9CZW4xMA=='>Ben 10</a></em>, Ben regularly uses <span class='esc-seq' title='non-wikiword'>XLR8</span>'s <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SuperSpeed' title='/pmwiki/pmwiki.php/Main/SuperSpeed' data-format='U3VwZXJTcGVlZA=='>Super-Speed</a> to do this and, as shown in "<a class='twikilink' href='/pmwiki/pmwiki.php/Recap/Ben10S1E10LuckyGirl' title='/pmwiki/pmwiki.php/Recap/Ben10S1E10LuckyGirl' data-format='W1tSZWNhcC9CZW4xMFMxRTEwTHVja3lHaXJsIEx1Y2t5IEdpcmxdXQ=='>Lucky Girl</a>", he's fast enough to avoid projectiles while wall running.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/XMenTheAnimatedSeries' title='/pmwiki/pmwiki.php/WesternAnimation/XMenTheAnimatedSeries' data-format='V2VzdGVybkFuaW1hdGlvbi9YTWVuVGhlQW5pbWF0ZWRTZXJpZXM='>X-Men: The Animated Series</a></em> has Nightcrawler do this in his debut episode &#8212; which is odd because his talent (besides teleportation) is <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallCrawl' title='/pmwiki/pmwiki.php/Main/WallCrawl' data-format='e3tXYWxsIENyYXdsfX1pbmc='>Wall Crawling</a>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/MiraculousLadybug' title='/pmwiki/pmwiki.php/WesternAnimation/MiraculousLadybug' data-format='V2VzdGVybkFuaW1hdGlvbi9NaXJhY3Vsb3VzTGFkeWJ1Zw=='>Miraculous Ladybug</a></em>: In the first episode, both Ladybug and Cat Noir do a fairly long run on the walls of Parisian buildings. Their powersets clearly involve superhuman agility and defying gravity.
+</li><li> Zuko runs up a wall to get over some booby traps in a season 3 episode of <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/AvatarTheLastAirbender' title='/pmwiki/pmwiki.php/WesternAnimation/AvatarTheLastAirbender' data-format='V2VzdGVybkFuaW1hdGlvbi9BdmF0YXJUaGVMYXN0QWlyYmVuZGVy'>Avatar: The Last Airbender</a></em> while he and Aang are going through a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RaidersOfTheLostParody' title='/pmwiki/pmwiki.php/Main/RaidersOfTheLostParody' data-format='UmFpZGVyc09mVGhlTG9zdFBhcm9keQ=='>Raiders of the Lost Parody</a> style temple.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/FamilyGuy' title='/pmwiki/pmwiki.php/WesternAnimation/FamilyGuy' data-format='V2VzdGVybkFuaW1hdGlvbi9GYW1pbHlHdXk='>Family Guy</a></em>: In "<a class='twikilink' href='/pmwiki/pmwiki.php/Recap/FamilyGuyS19E10FecalMatters' title='/pmwiki/pmwiki.php/Recap/FamilyGuyS19E10FecalMatters' data-format='W1tSZWNhcC9GYW1pbHlHdXlTMTlFMTBGZWNhbE1hdHRlcnMgRmVjYWwgTWF0dGVyc11d'>Fecal Matters</a>", Meg does this during a parody of <a class='twikilink' href='/pmwiki/pmwiki.php/Film/XMenDaysOfFuturePast' title='/pmwiki/pmwiki.php/Film/XMenDaysOfFuturePast' data-format='W1tGaWxtL1hNZW5EYXlzT2ZGdXR1cmVQYXN0IHRoZSBRdWlja3NpbHZlciBzY2VuZV1d'>the Quicksilver scene</a>.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder11');">&nbsp;&nbsp;&nbsp;&nbsp;Real Life&nbsp;</div><div id="folder11" class="folder" isfolder="true" style="display:block;">
+<ul ><li> Many birds are <a class='urllink' href='https://www.youtube.com/watch?v=Owf2iEwV-gk'>capable of doing this<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> by flapping their wings to increase traction as they run, even while they are <a class='urllink' href='https://www.youtube.com/watch?v=5Rjin-tjOxU'>too young to fly.<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> It has been suggested that this behavior was also <a class='urllink' href='http://qilong.deviantart.com/art/Evolution-of-the-Wing-WAIR-414685961'>present<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> in other feathered dinosaurs.
+</li><li> You can perform a literal wall run in a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SpaceStation' title='/pmwiki/pmwiki.php/Main/SpaceStation' data-format='e3tzcGFjZSBzdGF0aW9ufX0='>space station</a>. Since there's no gravity in the outer space, calling a surface a wall would be <em>redundant</em>. The only question is how you keep your feet on the wall...
+</li><li> Wall Running is a thing that actually exists that real people can do. Granted, it's for only a few steps, but it still is an actual thing that is done in <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LeParkour' title='/pmwiki/pmwiki.php/Main/LeParkour' data-format='TGVQYXJrb3Vy'>Le Parkour</a> and Freerunning.
+<!-- * Many insects can do this.-->
+<!-- * [[https://www.youtube.com/watch?v=UfNPihoelPM A suitably long stick and a couple friends makes this trope a practical means of wall scaling in the real world]].-->
+</li></ul></div>
+<hr data-format='&#8212;&#8212;' />
+</p></div>
+
+
+
+                    <div class="lazy-video-script">
+                 <a id="VideoExamples"></a>
+ <div>&nbsp;</div>
+ <div class="video-examples has-thumbnails">
+
+    <div class="video-examples-header">
+    <a href="#feedback" class="font-s float-right text-blue"
+    data-modal-target="login"
+    >Feedback</a>
+    <h3 class="bold">Video Example(s):</h3>
+
+  </div>
+    
+  
+  <div class="video-examples-featured">
+    <div class="example_video_box">
+      <a href="#video-link"
+         data-video-id="w4lm2e"
+         data-video-descrip="Zoro runs up the wall to hack a fishman attacking Luffy during the raid on Arlong's park."
+         data-video-title="Doing the run"
+         data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/w4lm2e_640x360p_qvbr.mp4"
+         data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/w4lm2e.mpd"
+         data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/w4lm2e.m3u8"
+         data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/w4lm2e.jpg"
+         data-video-trope="Main/WallRun"
+         data-video-tropename="Wall Run"
+         data-video-approval="APPROVED"
+         data-video-troper-rating=""
+         data-video-average-rating="5.00"
+         data-video-rating-count="5"
+         data-video-media-sources="Series/OnePiece2023"
+         class="video-launch-link video-overlay-link featured-widget-vid">
+
+          <div class="featured-widget-vid-iframe">
+              <div id="tvtropes_no_volume_player" 
+                  data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/w4lm2e.jpg" 
+                  data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/w4lm2e_640x360p_qvbr.mp4" 
+                  data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/w4lm2e.mpd" 
+                  data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/w4lm2e.m3u8"
+              		data-controls="0"
+              		data-muted="1">
+                  <script>
+                      tropes_videos_commands.push(function(){ new_video_project.load_video("tvtropes_no_volume_player", false); });
+                  </script>
+              </div>
+
+          </div>
+      </a>
+    </div>
+
+    <h2 class="bold font-l">Doing the run</h2>
+    <p class="_pmvv-vidbox-descTxt">
+      Zoro runs up the wall to hack a fishman attacking Luffy during the raid on Arlong's park.    </p>
+    
+
+  </div>
+
+    <div class="video-examples-thumbs">
+
+          
+      <a href="#video-link"
+      data-video-id="1gcgt3"
+      data-video-descrip="Jack runs on the wall instead of falling like everyone else, then does a sick landing."
+      data-video-title="Jack running on the wall"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/1gcgt3_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/1gcgt3.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/1gcgt3.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/1gcgt3.jpg"
+      data-video-trope="Main/WallRun"
+      data-video-tropename="Wall Run"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="VideoGame/MinecraftStoryMode"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/1gcgt3.jpg">
+      <p><span class="bold">Jack running on...</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="7trh31"
+      data-video-descrip="In the My Hero: One's Justice games, following up an attack that sticks the opponent to a wall will cause the fighters to use that wall as a floor for a time."
+      data-video-title="My Hero: One's Justice"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/7trh31_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/7trh31.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/7trh31.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/7trh31.jpg"
+      data-video-trope="Main/WallRun"
+      data-video-tropename="Wall Run"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="VideoGame/MyHeroOnesJustice"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/7trh31.jpg">
+      <p><span class="bold">My Hero: One's ...</span></p>
+    </a>
+
+      </div>
+  
+</div>
+            </div>
+        
+<div class="alt-titles section section-fact">
+    <h3>
+        <strong>Alternative Title(s):</strong>
+                            <span>Wall Running</span>            </h3>
+</div>
+
+
+
+    
+        <div class="section-links" itemscope itemtype="http://schema.org/SiteNavigationElement">
+
+    
+    <div class="titles">
+        <div><h3 class="text-center text-uppercase">Previous</h3></div>
+        <div><h3 class="text-center text-uppercase">Index</h3></div>
+        <div><h3 class="text-center text-uppercase">Next</h3></div>
+    </div>
+
+
+    <div class="links">
+                    
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/WalkThisWay">Walk This Way</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/WalkingTropes">Walking Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/WanderingWalkOfMadness">Wandering Walk of Madness</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/WallJump">Wall Jump</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/DexterityTropes">Dexterity Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/WeaponTwirling">Weapon Twirling</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/WallJump">Wall Jump</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/DangerousHeights">Dangerous Heights</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/AirJousting">Air Jousting</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/FantasticRacism/LiveActionFilms">Live-Action Films</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/ImageSource/XMen">ImageSource/X-Men</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Film/Deadpool2016">Deadpool (2016)</a> 
+                                            </li>
+                </ul>
+
+                    
+        
+            </div>
+</div>
+
+
+
+
+
+
+<script>
+    if( document.getElementById('user-prefs').classList.contains('folders-open') ){
+        console.log('open all folders');
+        var elements = document.querySelectorAll('.folderlabel, .toggle-all-folders-button');
+        elements.forEach((element) => {
+          element.classList.add('is-open');
+        });
+    }
+</script>
+
+
+<script>
+function insert_ad(adCount, paragraph, adName, folder = 0){
+
+        var ad_count = adCount < 10 ? "0"+adCount : adCount;
+        var inside_folder = folder ? "1" : "0";
+
+        // Create element for ad unit
+        var adUnit = document.createElement('div');
+        adUnit.setAttribute("class", `htlad-${adName}`);
+        adUnit.setAttribute("id", `${adName}_${adCount}`);
+        adUnit.setAttribute("data-targeting", `{"slot_number": "${ad_count}", "in_folder": "${inside_folder}"}`);
+
+        // Add Advertisement label
+        var adLabel = document.createElement("span");
+        adLabel.innerHTML = "Advertisement:"
+        adLabel.setAttribute("class","ad-caption");
+
+        var adWrapper = document.createElement("div");
+        adWrapper.setAttribute("class","tvtropes-ad-unit mobile-fad square_fad mobile_unit_scroll");
+        adWrapper.setAttribute("id","mobile_"+adCount);
+
+        // Merge all pieces
+        adWrapper.appendChild(adLabel);
+        adWrapper.appendChild(adUnit);
+
+        // Insert into DOM
+        paragraph.parentNode.insertBefore(adWrapper, paragraph.nextSibling);
+
+        // for getting correct ad count even when ones are deleted
+        globalAdInsertionCount++;
+}
+
+function insert_ads_in_content(folder = 0, totalAdsCount = 0) {
+
+    if(folder) var node = folder.firstElementChild; // Get the first traversable element of the folder
+    else var node = document.getElementById("main-article").firstElementChild;
+
+    var pHeight = 0;
+    var pCount = 0;
+    var adCount = totalAdsCount + 1;
+    var nodeCount = 0;
+    var nodeLevel = 0;
+    var x = 0;
+
+    //loop through elements of content
+    while(x<300) {
+        x++; nodeCount++;
+
+        //traverse to the next element (if exists)
+        if(nodeCount>1) {
+            if(!node.nextElementSibling) {
+                console.log('adparser: no next element');
+
+                if(nodeLevel>0) {
+                    nodeLevel--;
+                    node = node.parentElement;
+                    console.log('adparser: we were down a level, go back up ('+nodeLevel+')');
+                    continue;
+                }
+                else {
+                    break; 
+                }
+            }
+
+            node = node.nextElementSibling;
+        }
+
+
+        //skip inserted ads or empty nodes
+        if(!node || node==="null" || typeof node !== "object") continue;
+        if(!node.offsetHeight || node.offsetHeight==0) continue;
+        if(node.className && node.className.includes('tvtropes-ad-unit')) continue;
+
+        //skip if image block that has a caption after it
+        if(node.className && node.className.includes('quoteright')) {
+            if(node.nextElementSibling && node.nextElementSibling.className && node.nextElementSibling.className.includes('acaptionright')) {
+                pHeight += node.offsetHeight;
+                continue;
+            }
+        } 
+
+        //if very large element, loop through elements inside
+        if(node.offsetHeight>700 && node.firstElementChild) {
+            nodeLevel++;
+            console.log('adparser: traverse through large element='+node.nodeName+', height='+node.offsetHeight+' level='+nodeLevel);
+            node = node.firstElementChild;
+            nodeCount = 0;
+            continue;
+        }
+
+        // Skip if after a folder label or if the current node is a folder label itself
+        if ((node.previousElementSibling && node.previousElementSibling.className && node.previousElementSibling.className.includes("folderlabel")) || (node.className && node.className.includes("folderlabel"))) {
+            console.log('adparser: skipping ad insertion related to folder label');
+            if (!node.className || !node.className.includes("folderlabel")) { // If it's not the folder label itself, skip the insertion
+                continue;
+            } else {
+                pHeight += node.offsetHeight; // If it is the folder label, just add its height to pHeight and continue
+                continue;
+            }
+        }
+
+        //paragraph counter
+        if(node.nodeName=="P") pCount++;
+
+        //add height of node to counter
+        pHeight += node.offsetHeight;
+
+        //add margin of node to counter if available
+        try {
+            var nodeStyle = getComputedStyle(node);
+            if(nodeStyle.marginTop && parseInt(nodeStyle.marginTop)>0) pHeight+=parseInt(nodeStyle.marginTop);
+            if(nodeStyle.marginBottom && parseInt(nodeStyle.marginBottom)>0) pHeight+=parseInt(nodeStyle.marginBottom);
+            //console.log(nodeStyle.marginTop+','+nodeStyle.marginBottom);
+        } catch(e) { }
+
+        //debug logging
+        console.log('adparser: name='+node.nodeName+', height='+node.offsetHeight+' =>'+pHeight);
+        //console.log(node.className);
+
+        // check if user is logged in
+        var logged_in = 0;
+
+        // Calculate the required height based on the user's logged-in status or ad count
+        var requiredHeight           = globalAdInsertionCount > 15 ? 1500 : 750;
+        if(logged_in) requiredHeight=2250;
+
+        // only inserts an ad if the total height and paragraph count conditions are met
+        if ((adCount === 1 && pCount >= 1 && pHeight >= 400) || pHeight >= requiredHeight) {
+            // after 50 ads, stop inserting. Or after 20 ads if the user is logged in
+            if (adCount > 50 || (adCount > 20 && logged_in)) {
+                break;
+            }
+
+            console.log('adparser: insert ad '+adCount);
+            insert_ad(adCount, node, "tvtropes_m_incontent_dynamic", folder);
+            adCount++;
+            pHeight = 0;
+            pCount = 0;
+        }
+    }
+
+    //insert one at end if room
+    var maxpHeight = 500; if(logged_in) maxpHeight=1500;
+    if(pHeight>=maxpHeight && folder==0) {
+        console.log('adparser: insert ad');
+
+        insert_ad(adCount, document.getElementById("main-article").lastElementChild, "tvtropes_m_incontent_dynamic");
+    }
+
+    // delete ads after the 8th one to reduce load times
+    BCLighthouseTag.cmd.push(function() {
+        googletag.cmd.push(function() {
+            googletag.pubads().addEventListener('slotRequested', function(event) {
+                const slot = event.slot;
+                const slotName = slot.getAdUnitPath().split('/').pop() || slot.getAdUnitPath();
+
+                if(slotName === 'tvtropes_m_incontent_dynamic') {
+                    const slotNumber = parseInt(slot.getTargeting('slot_number')[0]);
+                    console.log(slotName+' = '+slotNumber);
+
+                    // Determine the ad slot that needs to be deleted.
+                    const adNumberToDelete = slotNumber - 8;
+
+                    if(adNumberToDelete > 0) {
+                        const adToDelete = document.getElementById(`mobile_${adNumberToDelete}`);
+                        if(adToDelete) {
+                            var adHeight = window.pageYOffset + adToDelete.getBoundingClientRect().top;
+                            var windowHeight = window.scrollY;
+
+                            // Check if the ad element exists and is above the current viewport (above the fold).
+                            if (adHeight < windowHeight) {
+                                console.log('ad delete = '+adNumberToDelete);
+                                adToDelete.remove(); 
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    });
+}
+
+if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
+    insert_ads_in_content();
+}
+</script>
+
+
+                
+
+                
+            </article>
+
+                
+                        <div id="main-content-sidebar"><div class="sidebar-item display-options">
+  <ul class="sidebar display-toggles">
+    <li>Show Spoilers <div id="sidebar-toggle-showspoilers" class="display-toggle show-spoilers"></div></li>
+    <li>Night Vision <div id="sidebar-toggle-nightvision" class="display-toggle night-vision"></div></li>
+    <li>Sticky Header <div id="sidebar-toggle-stickyheader" class="display-toggle sticky-header"></div></li>
+    <li>Wide Load <div id="sidebar-toggle-wideload" class="display-toggle wide-load"></div></li>
+  </ul>
+  <script>updateDesktopPrefs();</script>
+</div>
+
+        <div class="sidebar-item quick-links" itemtype="http://schema.org/SiteNavigationElement">
+
+        <p class="sidebar-item-title" data-title="Important Links">Important Links</p>
+
+        <div class="padded">
+            <a href="/pmwiki/query.php?type=att">Ask The Tropers</a>
+            <a href="/pmwiki/query.php?type=tf">Trope Finder</a>
+            <a href="/pmwiki/query.php?type=ykts">Media Finder</a>
+            <a href="/pmwiki/tlp_activity.php">Trope Launch Pad</a>
+            <a href="/pmwiki/query.php?type=wl">Tech Wishlist</a></li>
+            <a href="/pmwiki/review_activity.php">Reviews</a>
+            <a href="/pmwiki/ad-free-subscribe.php">Go Ad Free!</a>
+            <div class="crucial_browsing_dropdown">
+                <a href="javascript:void(0);" onclick="double_dropdown(); return false;" id="crucial_browsing_dropdown"><span class="new_blue">Crucial Browsing</span><i class="fa fa-angle-down"></i></a>
+                <ul id="main_dropdown">
+                    <li class="first_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Genre</a>
+                        <ul>
+                            <li><a href='/pmwiki/pmwiki.php/Main/ActionAdventureTropes' title='Main/ActionAdventureTropes'>Action Adventure</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/ComedyTropes' title='Main/ComedyTropes'>Comedy</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/CommercialsTropes' title='Main/CommercialsTropes'>Commercials</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/CrimeAndPunishmentTropes' title='Main/CrimeAndPunishmentTropes'>Crime &amp; Punishment</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/DramaTropes' title='Main/DramaTropes'>Drama</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/HorrorTropes' title='Main/HorrorTropes'>Horror</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/LoveTropes' title='Main/LoveTropes'>Love</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/NewsTropes' title='Main/NewsTropes'>News</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/ProfessionalWrestling' title='Main/ProfessionalWrestling'>Professional Wrestling</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/SpeculativeFictionTropes' title='Main/SpeculativeFictionTropes'>Speculative Fiction</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/SportsStoryTropes' title='Main/SportsStoryTropes'>Sports Story</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/WarTropes' title='Main/WarTropes'>War</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="first_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Media</a>
+                        <ul>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Media" title="Main/Media">All Media</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/AnimationTropes" title="Main/AnimationTropes">Animation (Western)</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Anime" title="Main/Anime">Anime</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/ComicBookTropes" title="Main/ComicBookTropes">Comic Book</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/FanFic" title="FanFic/FanFics">Fan Fics</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Film" title="Main/Film">Film</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/GameTropes" title="Main/GameTropes">Game</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Literature" title="Main/Literature">Literature</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/MusicAndSoundEffects" title="Main/MusicAndSoundEffects">Music And Sound Effects</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/NewMediaTropes" title="Main/NewMediaTropes">New Media</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/PrintMediaTropes" title="Main/PrintMediaTropes">Print Media</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Radio" title="Main/Radio">Radio</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/SequentialArt" title="Main/SequentialArt">Sequential Art</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/TabletopGames" title="Main/TabletopGames">Tabletop Games</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/UsefulNotes/Television" title="Main/Television">Television</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Theater" title="Main/Theater">Theater</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/VideogameTropes" title="Main/VideogameTropes">Videogame</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Webcomics" title="Main/Webcomics">Webcomics</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="first_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Narrative</a>
+                        <ul>
+                            <li><a href="/pmwiki/pmwiki.php/Main/UniversalTropes" title="Main/UniversalTropes">Universal</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/AppliedPhlebotinum" title="Main/AppliedPhlebotinum">Applied Phlebotinum</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/CharacterizationTropes" title="Main/CharacterizationTropes">Characterization</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Characters" title="Main/Characters">Characters</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/CharactersAsDevice" title="Main/CharactersAsDevice">Characters As Device</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Dialogue" title="Main/Dialogue">Dialogue</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Motifs" title="Main/Motifs">Motifs</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/NarrativeDevices" title="Main/NarrativeDevices">Narrative Devices</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Paratext" title="Main/Paratext">Paratext</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Plots" title="Main/Plots">Plots</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Settings" title="Main/Settings">Settings</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Spectacle" title="Main/Spectacle">Spectacle</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="first_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Other Categories</a>
+                        <ul>
+                            <li><a href="/pmwiki/pmwiki.php/Main/BritishTellyTropes" title="Main/BritishTellyTropes">British Telly</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/TheContributors" title="Main/TheContributors">The Contributors</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/CreatorSpeak" title="Main/CreatorSpeak">Creator Speak</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Creators" title="Main/Creators">Creators</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/DerivativeWorks" title="Main/DerivativeWorks">Derivative Works</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/LanguageTropes" title="Main/LanguageTropes">Language</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/LawsAndFormulas" title="Main/LawsAndFormulas">Laws And Formulas</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/ShowBusiness" title="Main/ShowBusiness">Show Business</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/SplitPersonalityTropes" title="Main/SplitPersonalityTropes">Split Personality</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/StockRoom" title="Main/StockRoom">Stock Room</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/TropeTropes" title="Main/TropeTropes">Trope</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Tropes" title="Main/Tropes">Tropes</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/TruthAndLies" title="Main/TruthAndLies">Truth And Lies</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/TruthInTelevision" title="Main/TruthInTelevision">Truth In Television</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="first_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Topical Tropes</a>
+                        <ul>
+                            <li><a href="/pmwiki/pmwiki.php/Main/BetrayalTropes" title="Main/BetrayalTropes">Betrayal</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/CensorshipTropes" title="Main/CensorshipTropes">Censorship</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/CombatTropes" title="Main/CombatTropes">Combat</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/DeathTropes" title="Main/DeathTropes">Death</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/FamilyTropes" title="Main/FamilyTropes">Family</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/FateAndProphecyTropes" title="Main/FateAndProphecyTropes">Fate And Prophecy</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/FoodTropes" title="Main/FoodTropes">Food</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/HolidayTropes" title="Main/HolidayTropes">Holiday</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/MemoryTropes" title="Main/MemoryTropes">Memory</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/MoneyTropes" title="Main/MoneyTropes">Money</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/MoralityTropes" title="Main/MoralityTropes">Morality</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/PoliticsTropes" title="Main/PoliticsTropes">Politics</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/ReligionTropes" title="Main/ReligionTropes">Religion</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/SchoolTropes" title="Main/SchoolTropes">School</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="resources_dropdown">
+                <a href="javascript:void(0);" onclick="second_double_dropdown(); return false;" id="resources_dropdown"><span class="new_blue blue">Resources</span><i class="fa fa-angle-down"></i></a>
+
+                <ul id="second_main_dropdown" class="padded font-s" itemscope itemtype="http://schema.org/SiteNavigationElement">
+                                        <li class="second_dropdown"><a href="#test" data-click-toggle="active">Tools</a>
+                        <ul>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/IttyBittyWikiTools">Wiki Tools</a></li>
+                            <li><a href="/pmwiki/cutlist.php" data-modal-target="login" rel="nofollow">Cut List</a></li>
+                            <li><a href="/pmwiki/image-fixer.php" data-modal-target="login" rel="nofollow">Image Fixer</a></li>
+                            <li><a href="/pmwiki/changes.php">New Edits</a></li>
+                            <li><a href="/pmwiki/articles_new.php">New Articles</a></li>
+                            <li><a href="/pmwiki/recent_edit_reasons.php">Edit Reasons</a></li>
+                            <li><a href="/pmwiki/isolated_pages.php">Isolated Pages</a></li> 
+                            <li><a href="/pmwiki/launches.php" data-modal-target="login" rel="nofollow">Launches</a></li>
+                            <li><a href="/pmwiki/img_list.php" data-modal-target="login" rel="nofollow">Images List</a></li>
+                            <li><a href="/pmwiki/recent_videos.php">Recent Videos</a></li>
+                            <li><a href="/pmwiki/crown_activity.php">Crowner Activity</a></li>
+                            <li><a href="/pmwiki/no_types.php">Un-typed Pages</a></li>
+                            <li><a href="/pmwiki/page_type_audit.php">Recent Page Type Changes</a></li>
+                        </ul>
+                    </li>
+                    <li class="second_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Templates</a>
+                        <ul>
+                            <li><a href="/pmwiki/pmwiki.php/Main/TropeEntryTemplate">Trope Entry</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/ProgramEntryTemplate">Works</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/CharacterSheetTemplate">Character Sheet</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/PlayingWithWikiTemplate">Playing With</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/FanficRecs/TemplatePageForNewFandomRecommendations">Fandom</a></li>
+                        </ul>
+                    </li>
+                    <li class="second_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Tips</a>
+                        <ul>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/CreatingNewRedirects">Creating New Redirects</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/Crosswicking">Cross Wicking</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/TipsForEditing">Tips for Editing</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/TextFormattingRules">Text Formatting Rules</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/TVTropesGlossary">Glossary</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/EditReasonsAndWhyYouShouldUseThem">Edit Reasons</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/HandlingSpoilers">Handling Spoilers</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/WordCruft">Word Cruft</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Administrivia">Administrivia</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/FAQ">FAQ</a></li>
+                        </ul>
+                    </li>
+                    <li class="second_dropdown"><a href="/pmwiki/changelog.php">Changelog</a></li>
+                    <li class="second_dropdown"><a href="/pmwiki/query.php?type=bug">Report Bug</a></li>
+                    <li class="second_dropdown"><a href="/pmwiki/conversations.php?topic=renames">Trope Repair Shop</a></li>
+                    <li class="second_dropdown"><a href="/pmwiki/conversations.php?topic=images">Image Pickin'</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="asteri-sidebar" style="display:none">
+            <p style="margin-top: 20px;" class="sidebar-item-title" data-title="Advertisement">Advertisement:</p>
+            <div id="asteri_cont"></div>
+        </div>
+        <script>
+            //asteri enabled
+            if((tvtropes_config.asteri_stream_enabled || tvtropes_config.get_asteri_stream == 'live')) {
+                //aster stream currently live and not a logged-in troper
+                if(!tvtropes_config.is_logged_in && cookies.read('asteri_event_active') != '') {
+                    document.getElementById('asteri-sidebar').style.display="";
+                }
+            }
+        </script>
+
+    </div>
+
+        
+            
+
+    
+        
+            <script>
+    if(!is_mobile()) {
+
+        //don't insert if content is too small on page
+        var tropes_insert_side_ad=true;
+        if(document.getElementById("main-article") && document.getElementById("main-article").clientHeight) {
+            var sidebar_height=document.getElementById("main-article").clientHeight;
+            if(sidebar_height>0 && sidebar_height<500) {
+                tropes_insert_side_ad=false;
+                console.log('ad parser: content too small for sidebar ad');
+            }
+        }
+
+        if(tropes_insert_side_ad) {
+
+       document.write(`
+        <div id="stick-cont"  class="sidebar-item sb-fad-unit">
+            <p class="sidebar-item-title" data-title="Advertisement">Advertisement:</p>
+            <div id="stick-bar" class="sidebar-section">
+                <div class="square_fad fad-size-300x600 fad-section text-center">
+                    <div class='tvtropes-ad-unit '>
+                      <div id='tvtropes_dt_inview' class='htlad-tvtropes_dt_inview'></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `);
+        }
+
+    }
+    </script>
+    
+
+</div>
+        
+    </div>
+
+        <div id="action-bar-bottom" class="action-bar tablet-off">
+        <a href="#top-of-page" class="scroll-to-top dead-button" onclick="scroll_to_top(500);">Top</a>
+    </div>
+    
+</div>    <footer id="main-footer">
+        <div id="main-footer-inner">
+
+
+            <div class="footer-left">
+
+                <a href="/" class="img-link"><img data-src="/img/tvtropes-footer-logo.png" alt="TV Tropes" class="logo_image lazy-image" title="TV Tropes" /></a>
+
+
+                <ul class="social-buttons">
+                   <li><a class="btn fb" target="_blank" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-facebook']);" href="https://www.facebook.com/tvtropes"><i class="fa fa-facebook"></i></a></li>
+                   <li><a class="btn tw" target="_blank" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-twitter']);" href="https://www.twitter.com/tvtropes"><i class="fa fa-twitter"></i></a> </li>
+                                                      </ul>
+
+            </div>
+
+            <hr/>
+
+            <ul class="footer-menu" itemscope itemtype="http://schema.org/SiteNavigationElement">
+                <li><h4 class="footer-menu-header">TVTropes</h4></li>
+                <li><a href="/pmwiki/pmwiki.php/Main/Administrivia">About TVTropes</a></li>
+                <li><a href="/pmwiki/pmwiki.php/Administrivia/TheGoalsOfTVTropes">TVTropes Goals</a></li>
+                <li><a href="/pmwiki/pmwiki.php/Administrivia/TheTropingCode">Troping Code</a></li>
+                <li><a href="/pmwiki/pmwiki.php/Administrivia/TVTropesCustoms">TVTropes Customs</a></li>
+                <li><a href="/pmwiki/pmwiki.php/JustForFun/TropesOfLegend">Tropes of Legend</a></li>
+                <li><a href="/pmwiki/ad-free-subscribe.php">Go Ad-Free</a></li>
+                            </ul>
+
+            <hr/>
+
+            <ul class="footer-menu" itemscope itemtype="http://schema.org/SiteNavigationElement">
+                <li><h4 class="footer-menu-header">Community</h4></li>
+                <li><a href="/pmwiki/query.php?type=att">Ask The Tropers</a></li>
+                <li><a href="/pmwiki/tlp_activity.php">Trope Launch Pad</a></li>
+                <li><a href="/pmwiki/query.php?type=tf">Trope Finder</a></li>
+                <li><a href="/pmwiki/query.php?type=ykts">Media Finder</a></li>
+                <li><a href="/pmwiki/query.php?type=wl">Tech Wishlist</a></li>
+                <li><a href="/pmwiki/review_activity.php">Reviews</a></li>
+                <li><a href="/pmwiki/topics.php">Forum</a></li>
+            </ul>
+
+            <hr/>
+
+            <ul class="footer-menu" itemscope itemtype="http://schema.org/SiteNavigationElement">
+                <li><h4 class="footer-menu-header">Tropes HQ</h4></li>
+                <li><a href="/pmwiki/about.php">About Us</a></li>
+                                <li><a href="/pmwiki/contact.php">Contact Us</a></li>
+                <li><a href="/pmwiki/query.php?type=bug">Report Bug</a></li>
+                <li><a href="/pmwiki/changelog.php">Changelog</a></li>
+                <li><a href="/pmwiki/dmca.php">DMCA Notice</a></li>
+                <li><a href="/pmwiki/privacypolicy.php">Privacy Policy</a></li>
+
+            </ul>
+
+        </div>
+
+        <div id="desktop-on-mobile-toggle" class="text-center gutter-top gutter-bottom tablet-on">
+          <a href="/pmwiki/switchDeviceCss.php?mobileVersion=1" rel="nofollow">Switch to <span class="txt-desktop">Desktop</span><span class="txt-mobile">Mobile</span> Version</a>
+        </div>
+
+        <div class="legal">
+            <p>TVTropes is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. <br>Permissions beyond the scope of this license may be available from <a xmlns:cc="http://creativecommons.org/ns#" href="mailto:thestaff@tvtropes.org" rel="cc:morePermissions"> thestaff@tvtropes.org</a>.</p>
+            <br>
+            <div class="privacy_wrapper">
+            </div>
+        </div>
+    </footer>
+    
+    
+    <style>
+      div.fc-ccpa-root {
+        position: absolute !important;
+        bottom: 93px !important;
+        margin: auto !important;
+        width: 100% !important;
+        z-index: 9999 !important;
+        overflow: hidden !important;
+      }
+      .fc-ccpa-root .fc-dns-dialog .fc-dns-link p{
+        outline: none !important;
+        text-decoration: underline !important;
+        font-size: .7em !important;
+        font-family: sans-serif !important;
+      }
+      .fc-ccpa-root .fc-dns-dialog .fc-dns-link .fc-button-background {
+        background: none !important;
+      }
+    </style>
+
+        <div id="_pm_videoViewer" class="full-screen">
+
+  <a href="#close" class="close" id="_pm_videoViewer-close"></a>
+
+  <div class="_pmvv-body">
+
+    <div class="_pmvv-vidbox">
+
+        <div id="overlay_outer_player_max">
+	<div id="overlay_outer_player_wrapper">
+		<div id="tvtropes_overlay_player" 
+			data-video-id="tvtropes-videos-w4lm2e" 
+			data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/w4lm2e.jpg" 
+			data-video-title="Doing the run" 
+			data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/w4lm2e_640x360p_qvbr.mp4" 
+			data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/w4lm2e.mpd" 
+			data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/w4lm2e.m3u8"
+			data-small-player="never"
+			data-track-events="1"
+			data-do-not-loop="1"
+			data-starting-quality="1"
+			data-autoplay="true">
+		</div>
+	</div>
+</div>
+
+<div class="_pmvv-vidbox-desc">
+
+	<h1 id="overlay-title">Doing the run</h1>
+	<p id="overlay-descrip" class="_pmvv-vidbox-descTxt">
+	    Zoro runs up the wall to hack a fishman attacking Luffy during the raid on Arlong's park.	</p>
+
+      <div class="rating-row"  data-video-id="w4lm2e" >
+        <input type="hidden" name="is_logged_in"  value="0" >
+        <p>How well does it match the trope?</p>
+				<div id="star-rating-group">
+						<div class="trope-rate">
+							<input type="radio" id="lamp5" name="rate" value="5"  />
+							<label for="lamp5" title="Absolutely">&starf;</label>
+							<input type="radio" id="lamp4" name="rate" value="4"  />
+							<label for="lamp4" title="Yes">&starf;</label>
+							<input type="radio" id="lamp3" name="rate" value="3"  />
+							<label for="lamp3" title="Kind of">&starf;</label>
+							<input type="radio" id="lamp2" name="rate" value="2"  />
+							<label for="lamp2" title="Not really">&starf;</label>
+							<input type="radio" id="lamp1" name="rate" value="1"  />
+							<label for="lamp1" title="No">&starf;</label>
+													</div>
+
+                        <div id="star-rating-total">
+                                                            5 (5 votes)
+                                                    </div>
+
+					</div>
+				</div>
+				
+		<div class="example-media-row">
+			<div class="example-overlay">
+				<p>Example of:</p> 
+				<div id="overlay-trope">Main / WallRun</div>
+			</div>
+			<div class="media_second_wrapper">
+				<div class="media-sources-overlay example-overlay">
+					<p>Media sources:</p>
+					<div id="overlay-media"></div>
+				</div>
+				<div class="example-overlay">
+					<div id="secondary_tropes_row"></div>
+					<div id="overlay-second"></div>
+				</div>
+			</div>
+		</div>
+	<p class="_pmvv-vidbox-stats text-right font-s" style="padding-top:8px; border-top: solid 1px rgba(255,255,255,0.2)">
+	<!--    <i class="fa fa-eye"></i> 11,241-->
+
+
+			    <a href="#video-feedback" class="float-right" 
+	    data-modal-target="login" 
+	    >Report</a>
+
+	</p>
+    
+</div>
+
+
+    </div>
+
+  </div>
+
+    <div class="_pmvv-foot">
+
+    <div class="_pmvv-foot-scrollwrapper">
+                <a href="#video-link" 
+             data-video-id="w4lm2e"
+             data-vimeo-id=""
+             data-video-descrip="Zoro runs up the wall to hack a fishman attacking Luffy during the raid on Arlong's park."
+             data-video-title="Doing the run"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/w4lm2e_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/w4lm2e.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/w4lm2e.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/w4lm2e.jpg"
+             data-video-trope="Main/WallRun"
+             data-video-tropename="Wall Run"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="5.00"
+             data-video-rating-count="5"
+             data-video-media-sources="Series/OnePiece2023"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/w4lm2e.jpg">
+            <p><span class="bold">Doing the run</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="1gcgt3"
+             data-vimeo-id=""
+             data-video-descrip="Jack runs on the wall instead of falling like everyone else, then does a sick landing."
+             data-video-title="Jack running on the wall"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/1gcgt3_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/1gcgt3.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/1gcgt3.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/1gcgt3.jpg"
+             data-video-trope="Main/WallRun"
+             data-video-tropename="Wall Run"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="5.00"
+             data-video-rating-count="3"
+             data-video-media-sources="VideoGame/MinecraftStoryMode"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/1gcgt3.jpg">
+            <p><span class="bold">Jack running on...</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="7trh31"
+             data-vimeo-id=""
+             data-video-descrip="In the My Hero: One's Justice games, following up an attack that sticks the opponent to a wall will cause the fighters to use that wall as a floor for a time."
+             data-video-title="My Hero: One's Justice"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/7trh31_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/7trh31.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/7trh31.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/7trh31.jpg"
+             data-video-trope="Main/WallRun"
+             data-video-tropename="Wall Run"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="5.00"
+             data-video-rating-count="5"
+             data-video-media-sources="VideoGame/MyHeroOnesJustice"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/7trh31.jpg">
+            <p><span class="bold">My Hero: One's ...</span></p>
+          </a>
+          </div>
+
+  </div>
+  
+</div>
+
+        
+    
+        <script type="text/javascript">
+
+        var cleanCreativeEnabled = "";
+        var donation = "";
+        var live_ads = "1";
+        var img_domain = "https://static.tvtropes.org";
+        var snoozed = cookies.read('snoozedabm');
+        var elem = document.createElement('script');
+        elem.async = true;
+
+        // if page type is article or homepage load bundle_nojquery. otherwise load regular bundle.js
+        if(tvtropes_config.universal_page_type == "Article" || tvtropes_config.universal_page_type == "HomePage") {
+            elem.src = 'https://assets.tvtropes.org/design/assets/bundle_nojquery.js?rev=f07af95238e025e8213d0b91650cd7e22b0dd7ec';
+        } else {
+            elem.src = 'https://assets.tvtropes.org/design/assets/bundle.js?rev=f07af95238e025e8213d0b91650cd7e22b0dd7ec';
+        }
+
+        elem.onload = function() {
+                                 }
+        document.getElementsByTagName('head')[0].appendChild(elem);
+    </script>
+
+
+    
+    
+
+    
+    
+  <script type="text/javascript">
+      function send_analytics_event(user_type, donation){
+          // if(user_type == 'uncached' || user_type == 'cached'){
+          //   ga('send', 'event', 'caching', 'load', user_type, {'nonInteraction': 1});
+          //   return;
+          // }
+          var event_name = user_type;
+
+          if(donation == 'true'){
+              event_name += "_donation"
+          }else if(typeof(valid_user) == 'undefined'){
+              event_name += "_blocked"
+          }else if(valid_user == true){
+              event_name += "_unblocked";
+          }else{
+              event_name = "_unknown"
+          }
+          ga('send', 'event', 'ads', 'load', event_name, {'nonInteraction': 1});
+      }
+
+    
+    send_analytics_event("guest", "false");
+      </script>
+
+
+
+<!-- Quantcast Tag -->
+<script type="text/javascript">
+  window._qevents = window._qevents || [];
+
+  (function() {
+    var elem = document.createElement('script');
+    elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+    elem.async = true;
+    elem.type = "text/javascript";
+    var scpt = document.getElementsByTagName('script')[0];
+    scpt.parentNode.insertBefore(elem, scpt);
+  })();
+
+  window._qevents.push({
+      qacct:"p-mEzuYq24VEJ-3"
+  });
+</script>
+
+<noscript>
+  <div style="display:none;">
+    <img src="//pixel.quantserve.com/pixel/p-mEzuYq24VEJ-3.gif" border="0" height="1" width="1" alt="Quantcast"/>
+  </div>
+</noscript>
+<!-- End Quantcast tag -->
+
+
+<!-- Begin comScore Tag -->
+<script>
+  var _comscore = _comscore || [];
+  _comscore.push({ c1: "2", c2: "38282685" });
+  (function() {
+    var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+    s.src = "https://sb.scorecardresearch.com/cs/38282685/beacon.js";
+    el.parentNode.insertBefore(s, el);
+  })();
+</script>
+<noscript>
+  <img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=38282685&amp;cv=3.6.0&amp;cj=1">
+</noscript>
+<!-- End comScore Tag -->
+</body>
+</html>

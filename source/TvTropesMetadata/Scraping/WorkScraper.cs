@@ -14,7 +14,7 @@ namespace TvTropesMetadata.Scraping
 
         public override IEnumerable<TvTropesSearchResult> Search(string query)
         {
-            return Search(query, "work").OrderByDescending(sr => CategoryWhitelist.Any(c => sr.Url.Contains(c, StringComparison.InvariantCultureIgnoreCase)));
+            return Search(query, "work").OrderByDescending(sr => UrlBelongsToWhitelistedWorkCategory(sr.Url));
         }
 
         public ParsedWorkPage GetTropesForGame(string url)

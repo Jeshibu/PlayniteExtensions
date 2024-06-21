@@ -1,4 +1,5 @@
-﻿using AngleSharp.Dom.Html;
+﻿using AngleSharp.Dom;
+using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -95,14 +96,19 @@ namespace TvTropesMetadata.Scraping
 
         protected string GetDescription(IHtmlDocument doc, bool textOnly = false)
         {
-            var articleContent = doc.QuerySelector(".article-content")?.InnerHtml.Trim();
-            if (articleContent == null) return null;
-            var descriptionString = articleContent.Split(new[] { "<h2>" }, StringSplitOptions.RemoveEmptyEntries).First();
-
-            var descriptionDoc = new HtmlParser().Parse(descriptionString);
-            var removeElements = descriptionDoc.QuerySelectorAll(".quoteright, .acaptionright, p:empty, img.rounded");
+            var removeElements = doc.QuerySelectorAll(".quoteright, .acaptionright, p:empty, img.rounded");
             foreach (var r in removeElements)
                 r.Remove();
+
+            IElement openingH2;
+            while ((openingH2 = doc.QuerySelector(".article-content > h2:nth-child(1)")) != null)
+                openingH2.Remove();
+
+            var articleContent = doc.QuerySelector(".article-content")?.InnerHtml.Trim();
+            if (articleContent == null) return null;
+            var descriptionString = GetHeaderSegments(articleContent).First().Item2;
+
+            var descriptionDoc = new HtmlParser().Parse(descriptionString);
 
             descriptionDoc.MakeHtmlUrlsAbsolute("https://tvtropes.org/");
 
@@ -111,17 +117,17 @@ namespace TvTropesMetadata.Scraping
                 : descriptionDoc.Body.InnerHtml;
         }
 
-
         protected IEnumerable<Tuple<string, string>> GetHeaderSegments(string content)
         {
             var headerSegments = content.Trim().Split(new[] { "<h2>" }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var segment in headerSegments)
             {
                 var headerAndContent = segment.Trim().Split(new[] { "</h2>" }, StringSplitOptions.RemoveEmptyEntries);
-                if (headerAndContent.Length != 2)
-                    yield return new Tuple<string, string>(string.Empty, segment);
-                else
-                    yield return new Tuple<string, string>(headerAndContent[0].HtmlDecode(), headerAndContent[1]);
+                var segmentHeader = headerAndContent.Length == 2 ? headerAndContent[0].HtmlDecode() : string.Empty;
+                var segmentContent = headerAndContent.Length == 2 ? headerAndContent[1] : segment;
+
+                if (!string.IsNullOrWhiteSpace(segmentContent))
+                    yield return new Tuple<string, string>(segmentHeader, segmentContent);
             }
         }
 
@@ -153,6 +159,10 @@ namespace TvTropesMetadata.Scraping
 
             return titleElement.TextContent.HtmlDecode();
         }
+
+        protected bool UrlBelongsToWhitelistedWorkCategory(string url) => CategoryWhitelist.Any(c => url.Contains(c, StringComparison.InvariantCultureIgnoreCase));
+
+        protected static string GetAbsoluteUrl(string url) => url.GetAbsoluteUrl("https://tvtropes.org/");
     }
 
     public class TvTropesSearchResult : IHasName, IGameSearchResult
