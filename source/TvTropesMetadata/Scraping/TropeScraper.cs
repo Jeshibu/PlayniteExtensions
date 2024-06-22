@@ -93,7 +93,7 @@ namespace TvTropesMetadata.Scraping
                 }
             }
 
-            void AddAllListElementsFromSegments(IList<Tuple<string,string>> hss)
+            void AddAllListElementsFromSegments(IList<Tuple<string, string>> hss)
             {
                 if (hss.Count == 1)
                     AddListElementsFromSourceString(hss[0].Item2);
@@ -143,7 +143,7 @@ namespace TvTropesMetadata.Scraping
                     var url = GetAbsoluteUrl(a.GetAttribute("href"));
                     work.Urls.Add(url);
                     var gameUrlName = GetWikiPathSegments(url).Last();
-                    AddWork(new TvTropesWork { Title = gameUrlName, Urls = new List<string> { url } });
+                    AddWork(new TvTropesWork { Title = ReverseEngineerGameNameFromUrlSegment(gameUrlName), Urls = new List<string> { url } });
                 }
             }
             return output;
@@ -155,12 +155,30 @@ namespace TvTropesMetadata.Scraping
         {
             return element.TagName == "A" && UrlBelongsToWhitelistedWorkCategory(element.GetAttribute("href"));
         }
+
+        private string ReverseEngineerGameNameFromUrlSegment(string urlSegment)
+        {
+            var str = urlSegment.ToList();
+            for (int i = 0; (i + 1) < str.Count; i++)
+            {
+                char a = str[i];
+                char b = str[i + 1];
+                if ((char.IsUpper(b) && !char.IsUpper(a))
+                    || (char.IsDigit(b) && !char.IsDigit(a)))
+                {
+                    str.Insert(i + 1, ' ');
+                    i++;
+                }
+            }
+            return new string(str.ToArray());
+        }
     }
 
     public class ParsedTropePage
     {
         public string Title { get; set; }
         public List<TropePageListItem> Items { get; set; } = new List<TropePageListItem>();
+        public override string ToString() => Title;
     }
 
     public class TropePageListItem
@@ -168,11 +186,14 @@ namespace TvTropesMetadata.Scraping
         public string Text { get; set; }
 
         public List<TvTropesWork> Works { get; set; } = new List<TvTropesWork>();
+
+        public override string ToString() => Text;
     }
 
     public class TvTropesWork
     {
         public string Title { get; set; }
         public List<string> Urls { set; get; } = new List<string>();
+        public override string ToString() => Title;
     }
 }

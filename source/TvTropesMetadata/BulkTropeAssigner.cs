@@ -27,9 +27,12 @@ namespace TvTropesMetadata
 
         protected override string GetGameIdFromUrl(string url)
         {
+            if (string.IsNullOrWhiteSpace(url))
+                return null;
+
             var trimmed = url.TrimStart("https://tvtropes.org/pmwiki/pmwiki.php/");
             if (trimmed != url)
-                return url;
+                return trimmed;
             else
                 return null;
         }

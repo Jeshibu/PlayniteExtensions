@@ -143,38 +143,37 @@ namespace PlayniteExtensions.Metadata.Common
             bool loopCompleted = false;
             playniteApi.Dialogs.ActivateGlobalProgress(a =>
             {
-                a.ProgressMaxValue = gamesToMatch.Count + 1;
+                a.ProgressMaxValue = gamesToMatch.Count + 2;
 
                 var gamesById = GetGamesById(a.CancelToken, out var gamesWithNoKnownId);
+                a.CurrentProgressValue++;
+
+                GetDeflatedNames(gamesWithNoKnownId.Select(g => g.Name), deflatedNames, snc);
                 a.CurrentProgressValue++;
 
                 ParallelOptions parallelOptions = new ParallelOptions() { CancellationToken = a.CancelToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
                 var loopResult = Parallel.For(0, gamesToMatch.Count, parallelOptions, i =>
                 {
-                    var gbGame = gamesToMatch[i];
+                    var externalGameInfo = gamesToMatch[i];
 
-                    var gameToMatchId = GetGameIdFromUrl(gbGame.Url);
+                    var gameToMatchId = GetGameIdFromUrl(externalGameInfo.Url);
                     if (gameToMatchId != null && gamesById.TryGetValue(gameToMatchId, out var gamesWithThisId))
                     {
                         foreach (var g in gamesWithThisId)
-                            matchingGames.Add(new GameCheckboxViewModel(g, gbGame));
+                            matchingGames.Add(new GameCheckboxViewModel(g, externalGameInfo));
                     }
 
-                    var namesToMatch = GetDeflatedNames(gbGame, deflatedNames, snc).ToList();
+                    var namesToMatch = GetDeflatedNames(externalGameInfo.Names, deflatedNames, snc).ToList();
 
                     foreach (var g in gamesWithNoKnownId)
                     {
-                        if (!deflatedNames.TryGetValue(g.Name, out string gName))
-                        {
-                            gName = snc.Convert(g.Name).Deflate();
-                            deflatedNames[g.Name] = gName;
-                        }
+                        var libraryGameNameDeflated = deflatedNames[g.Name];
 
-                        if (namesToMatch.Any(n => string.Equals(n, gName, StringComparison.InvariantCultureIgnoreCase))
-                            && platformUtility.PlatformsOverlap(g.Platforms, gbGame.Platforms)
+                        if (namesToMatch.Contains(libraryGameNameDeflated, StringComparer.InvariantCultureIgnoreCase)
+                            && platformUtility.PlatformsOverlap(g.Platforms, externalGameInfo.Platforms)
                             && addedGameIds.Add(g.Id))
                         {
-                            matchingGames.Add(new GameCheckboxViewModel(g, gbGame));
+                            matchingGames.Add(new GameCheckboxViewModel(g, externalGameInfo));
                         }
                     }
 
@@ -227,17 +226,19 @@ namespace PlayniteExtensions.Metadata.Common
                 return null;
         }
 
-        private static IEnumerable<string> GetDeflatedNames(GameDetails gameDetails, ConcurrentDictionary<string,string> deflatedNames, SortableNameConverter snc)
+        private static IEnumerable<string> GetDeflatedNames(IEnumerable<string> names, ConcurrentDictionary<string,string> deflatedNames, SortableNameConverter snc)
         {
-            foreach (string name in gameDetails.Names)
+            var output = new HashSet<string>();
+            foreach (string name in names)
             {
                 if (!deflatedNames.TryGetValue(name, out string nameToMatch))
                 {
                     nameToMatch = snc.Convert(name).Deflate();
                     deflatedNames.TryAdd(name, nameToMatch);
                 }
-                yield return nameToMatch;
+                output.Add(nameToMatch);
             }
+            return output;
         }
 
         private bool windowSizedDown = false;
