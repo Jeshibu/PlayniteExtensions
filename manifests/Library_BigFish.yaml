@@ -27,3 +27,9 @@ Packages:
     - Fixed uninstalled/online game import
     - Added clickable notification that leads to settings when importing without being authenticated
     - Added store page link via metadata provider
+  - Version: 0.3.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-06-22
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-06-22/BigFishLibrary_0_3_1.pext
+    Changelog:
+    - Fixed exception when no games are installed

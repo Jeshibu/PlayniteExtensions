@@ -68,6 +68,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manifests", "Manifests", "{
 		..\manifests\Library_LegacyGames.yml = ..\manifests\Library_LegacyGames.yml
 		..\manifests\Library_Rawg.yaml = ..\manifests\Library_Rawg.yaml
 		..\manifests\Library_Viveport.yaml = ..\manifests\Library_Viveport.yaml
+		..\manifests\Metadata_BigFish.yaml = ..\manifests\Metadata_BigFish.yaml
 		..\manifests\Metadata_GiantBomb.yaml = ..\manifests\Metadata_GiantBomb.yaml
 		..\manifests\Metadata_GOG.yaml = ..\manifests\Metadata_GOG.yaml
 		..\manifests\Metadata_IGN.yaml = ..\manifests\Metadata_IGN.yaml
