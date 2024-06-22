@@ -110,6 +110,6 @@ Packages:
   - Version: 4.0
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-06-22
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-06-22/SteamTagsImporter_4_0.pext
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-06-22/SteamTagsImporter_4.pext
     Changelog:
     - Added single-property bulk import, similar to Giant Bomb and MobyGames metadata plugins
