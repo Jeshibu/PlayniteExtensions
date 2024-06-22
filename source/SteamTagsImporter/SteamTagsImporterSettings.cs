@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Data;
+using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +8,7 @@ using System.Linq;
 
 namespace SteamTagsImporter
 {
-    public class SteamTagsImporterSettings : ObservableObject, ISettings
+    public class SteamTagsImporterSettings : BulkImportPluginSettings
     {
         private readonly SteamTagsImporter plugin;
         private bool _limitTagsToFixedAmount = false;
@@ -47,68 +48,24 @@ namespace SteamTagsImporter
 
         public ObservableCollection<string> BlacklistedTags { get; set; } = new ObservableCollection<string>();
 
-        // Parameterless constructor must exist if you want to use LoadPluginSettings method.
-        public SteamTagsImporterSettings()
-        {
-        }
+        public bool OnlyImportGamesWithThisLanguageSupport { get; set; } = false;
 
-        public SteamTagsImporterSettings(SteamTagsImporter plugin)
-        {
-            // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
-            this.plugin = plugin;
+        public bool ShowTopPanelButton { get; set; } = true;
+    }
 
+    public class SteamTagsImporterSettingsViewModel : PluginSettingsViewModel<SteamTagsImporterSettings, SteamTagsImporter>
+    {
+        public SteamTagsImporterSettingsViewModel(SteamTagsImporter plugin) : base(plugin, plugin.PlayniteApi)
+        {
             // Load saved settings.
-            var savedSettings = plugin.LoadPluginSettings<SteamTagsImporterSettings>();
-
-            // LoadPluginSettings returns null if no saved data is available.
-            if (savedSettings != null)
+            Settings = plugin.LoadPluginSettings<SteamTagsImporterSettings>() ?? new SteamTagsImporterSettings
             {
-                LimitTagsToFixedAmount = savedSettings.LimitTagsToFixedAmount;
-                FixedTagCount = savedSettings.FixedTagCount;
-                UseTagPrefix = savedSettings.UseTagPrefix;
-                TagPrefix = savedSettings.TagPrefix;
-                TagDelistedGames = savedSettings.TagDelistedGames;
-                DelistedTagName = savedSettings.DelistedTagName;
-                LimitTaggingToPcGames = savedSettings.LimitTaggingToPcGames;
-                AutomaticallyAddTagsToNewGames = savedSettings.AutomaticallyAddTagsToNewGames;
-                LastAutomaticTagUpdate = savedSettings.LastAutomaticTagUpdate;
-                OkayTags = new ObservableCollection<string>(savedSettings.OkayTags.OrderBy(a => a));
-                BlacklistedTags = new ObservableCollection<string>(savedSettings.BlacklistedTags.OrderBy(a => a));
-                LanguageKey = savedSettings.LanguageKey;
-            }
+                LastAutomaticTagUpdate = DateTime.Now,
+                MaxDegreeOfParallelism = BulkImportPluginSettings.GetDefaultMaxDegreeOfParallelism()
+            };
 
-            if (LastAutomaticTagUpdate == default)
-            {
-                LastAutomaticTagUpdate = DateTime.Now;
-            }
-        }
-
-        public void BeginEdit()
-        {
-            // Code executed when settings view is opened and user starts editing values.
-        }
-
-        public void CancelEdit()
-        {
-            // Code executed when user decides to cancel any changes made since BeginEdit was called.
-            // This method should revert any changes made to Option1 and Option2.
-        }
-
-        public void EndEdit()
-        {
-            // Code executed when user decides to confirm changes made since BeginEdit was called.
-            // This method should save settings made to Option1 and Option2.
-            plugin.SavePluginSettings(this);
-            plugin.Settings = this;
-        }
-
-        public bool VerifySettings(out List<string> errors)
-        {
-            // Code execute when user decides to confirm changes made since BeginEdit was called.
-            // Executed before EndEdit is called and EndEdit is not called if false is returned.
-            // List of errors is presented to user if verification fails.
-            errors = new List<string>();
-            return true;
+            Settings.OkayTags = new ObservableCollection<string>(Settings.OkayTags.OrderBy(a => a));
+            Settings.BlacklistedTags = new ObservableCollection<string>(Settings.BlacklistedTags.OrderBy(a => a));
         }
 
         private Dictionary<string, string> _languages = new Dictionary<string, string>
@@ -129,11 +86,12 @@ namespace SteamTagsImporter
             {"greek","Ελληνικά (Greek)"},
             {"french","Français (French)"},
             {"italian","Italiano (Italian)"},
+            {"indonesian", "Bahasa Indonesia (Indonesian)"},
             {"hungarian","Magyar (Hungarian)"},
             {"dutch","Nederlands (Dutch)"},
             {"norwegian","Norsk (Norwegian)"},
             {"polish","Polski (Polish)"},
-            {"portuguese","Português (Portuguese)"},
+            {"portuguese","Português (Portuguese - Portugal)"},
             {"brazilian","Português - Brasil (Portuguese - Brazil)"},
             {"romanian","Română (Romanian)"},
             {"russian","Русский (Russian)"},
@@ -158,8 +116,8 @@ namespace SteamTagsImporter
                 var selectedStrings = selectedItems.Cast<string>().ToList();
                 foreach (string str in selectedStrings)
                 {
-                    BlacklistedTags.Remove(str);
-                    OkayTags.Add(str);
+                    Settings.BlacklistedTags.Remove(str);
+                    Settings.OkayTags.Add(str);
                 }
             }, (a) => a?.Count > 0);
         }
@@ -172,8 +130,8 @@ namespace SteamTagsImporter
                 var selectedStrings = selectedItems.Cast<string>().ToList();
                 foreach (string str in selectedStrings)
                 {
-                    OkayTags.Remove(str);
-                    BlacklistedTags.Add(str);
+                    Settings.OkayTags.Remove(str);
+                    Settings.BlacklistedTags.Add(str);
                 }
             }, (a) => a?.Count > 0);
         }

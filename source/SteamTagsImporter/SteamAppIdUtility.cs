@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using static System.Windows.Forms.LinkLabel;
 
 namespace SteamTagsImporter
 {
@@ -42,14 +43,26 @@ namespace SteamTagsImporter
             {
                 foreach (var link in game.Links)
                 {
-                    var match = SteamUrlRegex.Match(link.Url);
-                    if (match.Success)
-                        return match.Groups["id"].Value;
+                    var urlId = GetSteamGameIdFromUrl(link.Url);
+                    if (urlId != null)
+                        return urlId;
                 }
             }
 
             if (SteamIdsByTitle.TryGetValue(NormalizeTitle(game.Name), out int appId))
                 return appId.ToString();
+
+            return null;
+        }
+
+        public static string GetSteamGameIdFromUrl(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+                return null;
+
+            var match = SteamUrlRegex.Match(url);
+            if (match.Success)
+                return match.Groups["id"].Value;
 
             return null;
         }

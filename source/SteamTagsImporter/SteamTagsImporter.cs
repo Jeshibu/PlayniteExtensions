@@ -3,10 +3,13 @@ using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
+using SteamTagsImporter.BulkImport;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime;
 using System.Text;
 using System.Windows.Controls;
 
@@ -17,11 +20,12 @@ namespace SteamTagsImporter
         private static readonly ILogger logger = LogManager.GetLogger();
         private readonly Func<ISteamAppIdUtility> getAppIdUtility;
         private readonly Func<ISteamTagScraper> getTagScraper;
+        private readonly IWebDownloader downloader = new WebDownloader();
 
-        private SteamTagsImporterSettings _settings;
-        public SteamTagsImporterSettings Settings
+        private SteamTagsImporterSettingsViewModel _settings;
+        public SteamTagsImporterSettingsViewModel Settings
         {
-            get { return _settings ?? (_settings = new SteamTagsImporterSettings(this)); }
+            get { return _settings ?? (_settings = new SteamTagsImporterSettingsViewModel(this)); }
             set { _settings = value; }
         }
 
@@ -48,16 +52,13 @@ namespace SteamTagsImporter
         public SteamTagsImporter(IPlayniteAPI api, Func<ISteamAppIdUtility> getAppIdUtility = null, Func<ISteamTagScraper> getTagScraper = null)
             : base(api)
         {
-            this.Settings = new SteamTagsImporterSettings(this);
+            this.Settings = new SteamTagsImporterSettingsViewModel(this);
             this.getAppIdUtility = getAppIdUtility ?? GetDefaultSteamAppUtility;
             this.getTagScraper = getTagScraper ?? (() => new SteamTagScraper());
             this.Properties = new MetadataPluginProperties { HasSettings = true };
         }
 
-        public override ISettings GetSettings(bool firstRunSettings = false)
-        {
-            return Settings ?? (Settings = new SteamTagsImporterSettings(this));
-        }
+        public override ISettings GetSettings(bool firstRunSettings = false) => Settings;
 
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
@@ -71,21 +72,21 @@ namespace SteamTagsImporter
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {
-            if (!Settings.AutomaticallyAddTagsToNewGames)
+            if (!Settings.Settings.AutomaticallyAddTagsToNewGames)
                 return;
 
             List<Game> games;
-            if (Settings.LastAutomaticTagUpdate == DateTime.MinValue)
+            if (Settings.Settings.LastAutomaticTagUpdate == DateTime.MinValue)
                 games = new List<Game>();
             else
-                games = PlayniteApi.Database.Games.Where(g => g.Added > Settings.LastAutomaticTagUpdate).ToList();
+                games = PlayniteApi.Database.Games.Where(g => g.Added > Settings.Settings.LastAutomaticTagUpdate).ToList();
 
             logger.Debug($"Library update: {games.Count} games");
 
             SetTags(games);
 
-            Settings.LastAutomaticTagUpdate = DateTime.Now;
-            SavePluginSettings(Settings);
+            Settings.Settings.LastAutomaticTagUpdate = DateTime.Now;
+            SavePluginSettings(Settings.Settings);
         }
 
         public void SetTags(List<Game> games)
@@ -102,10 +103,10 @@ namespace SteamTagsImporter
                 var tagScraper = getTagScraper();
 
                 //get settings from this thread because ObservableCollection (for OkayTags) does not like being addressed from other threads
-                var settings = new SteamTagsImporterSettings(this); //this deserializes the settings from storage
+                var settings = new SteamTagsImporterSettingsViewModel(this); //this deserializes the settings from storage
 
-                if (settings.LimitTagsToFixedAmount)
-                    logger.Debug($"Max tags per game: {settings.FixedTagCount}");
+                if (settings.Settings.LimitTagsToFixedAmount)
+                    logger.Debug($"Max tags per game: {settings.Settings.FixedTagCount}");
 
                 bool newTagsAddedToSettings = false;
                 using (PlayniteApi.Database.BufferedUpdate())
@@ -123,7 +124,7 @@ namespace SteamTagsImporter
 
                         try
                         {
-                            SteamTagsGetter tagsGetter = new SteamTagsGetter(settings, appIdUtility, tagScraper);
+                            SteamTagsGetter tagsGetter = new SteamTagsGetter(settings.Settings, appIdUtility, tagScraper);
                             var steamTags = tagsGetter.GetSteamTags(game, out bool newTagsAdded);
                             var tagNames = steamTags.Select(t => tagsGetter.GetFinalTagName(t.Name));
 
@@ -132,7 +133,7 @@ namespace SteamTagsImporter
                             bool tagsAdded = false;
                             foreach (var tag in tagNames)
                             {
-                                tagsAdded |= AddTagToGame(settings, game, tag);
+                                tagsAdded |= AddTagToGame(settings.Settings, game, tag);
                             }
 
                             if (tagsAdded)
@@ -153,8 +154,8 @@ namespace SteamTagsImporter
                 if (newTagsAddedToSettings)
                 {
                     //sort newly added whitelist entries in with the rest
-                    var sortedWhitelist = settings.OkayTags.Distinct().OrderBy(a => a);
-                    settings.OkayTags = new System.Collections.ObjectModel.ObservableCollection<string>(sortedWhitelist);
+                    var sortedWhitelist = settings.Settings.OkayTags.Distinct().OrderBy(a => a);
+                    settings.Settings.OkayTags = new System.Collections.ObjectModel.ObservableCollection<string>(sortedWhitelist);
                 }
 
                 SavePluginSettings(settings);
@@ -192,10 +193,37 @@ namespace SteamTagsImporter
             }
         }
 
-
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new SteamTagsMetadataProvider(new SteamTagsGetter(Settings, getAppIdUtility(), getTagScraper()), options, this);
+            return new SteamTagsMetadataProvider(new SteamTagsGetter(Settings.Settings, getAppIdUtility(), getTagScraper()), options, this);
+        }
+
+        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        {
+            yield return new MainMenuItem { Description = "Import Steam game property", MenuSection = "@Steam Tags Importer", Action = a => ImportGameProperty() };
+        }
+
+        public override IEnumerable<TopPanelItem> GetTopPanelItems()
+        {
+            if (!Settings.Settings.ShowTopPanelButton)
+                yield break;
+
+            var assemblyLocation = Assembly.GetExecutingAssembly().Location;
+            var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation), "icon.png");
+            yield return new TopPanelItem()
+            {
+                Icon = iconPath,
+                Visible = true,
+                Title = "Import Steam game property",
+                Activated = ImportGameProperty
+            };
+        }
+
+        public void ImportGameProperty()
+        {
+            var searchProvider = new SteamPropertySearchProvider(new SteamSearch(downloader, Settings.Settings));
+            var importer = new SteamPropertyBulkImporter(PlayniteApi, searchProvider, new PlatformUtility(PlayniteApi), Settings.Settings);
+            importer.ImportGameProperty();
         }
     }
 }

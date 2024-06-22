@@ -31,11 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
+      <HintPath>..\packages\AngleSharp.0.9.9\lib\net45\AngleSharp.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Playnite.SDK, Version=6.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PlayniteSDK.6.2.2\lib\net462\Playnite.SDK.dll</HintPath>
+    <Reference Include="Playnite.SDK, Version=6.11.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PlayniteSDK.6.11.0\lib\net462\Playnite.SDK.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -76,17 +79,29 @@
     <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs">
       <Link>Common\IEnumerableExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs">
+      <Link>Common\IntegerFormatConverter.cs</Link>
+    </Compile>
     <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs">
       <Link>Common\IPlatformUtility.cs</Link>
     </Compile>
     <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs">
       <Link>Common\PlatformUtility.cs</Link>
     </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
+      <Link>Common\PluginSettingsViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\PlayniteExtensions.Common\SortableNameConverter.cs">
       <Link>Common\SortableNameConverter.cs</Link>
     </Compile>
     <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs">
       <Link>Common\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\TitleComparer.cs">
+      <Link>Common\TitleComparer.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs">
+      <Link>Common\WebDownloader.cs</Link>
     </Compile>
     <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkGamePropertyAssigner.cs">
       <Link>Common\Metadata\BulkGamePropertyAssigner.cs</Link>
@@ -106,12 +121,22 @@
     <Compile Include="..\PlayniteExtensions.Metadata.Common\IGameSearchResult.cs">
       <Link>Common\Metadata\IGameSearchResult.cs</Link>
     </Compile>
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\IImageData.cs">
+      <Link>Common\Metadata\IImageData.cs</Link>
+    </Compile>
     <Compile Include="..\PlayniteExtensions.Metadata.Common\ISearchableDataSource.cs">
       <Link>Common\Metadata\ISearchableDataSource.cs</Link>
     </Compile>
     <Compile Include="..\PlayniteExtensions.Metadata.Common\Settings.cs">
       <Link>Common\Metadata\Settings.cs</Link>
     </Compile>
+    <Compile Include="BulkImport\GamePropertyImportView.xaml.cs">
+      <DependentUpon>GamePropertyImportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BulkImport\Models.cs" />
+    <Compile Include="BulkImport\SteamPropertyBulkImporter.cs" />
+    <Compile Include="BulkImport\SteamPropertySearchProvider.cs" />
+    <Compile Include="BulkImport\SteamSearch.cs" />
     <Compile Include="ISteamAppIdUtility.cs" />
     <Compile Include="ISteamTagScraper.cs" />
     <Compile Include="SteamAppIdUtility.cs" />
@@ -132,6 +157,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="BulkImport\GamePropertyImportView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="SteamTagsImporterSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

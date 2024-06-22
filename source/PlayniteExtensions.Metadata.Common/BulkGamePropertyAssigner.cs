@@ -97,6 +97,8 @@ namespace PlayniteExtensions.Metadata.Common
 
         protected abstract string GetGameIdFromUrl(string url);
 
+        protected virtual string GetIdFromGameLibrary(Guid libraryPluginId, string gameId) => null;
+
         private IDictionary<string, IList<Game>> GetGamesById(CancellationToken cancellationToken, out IReadOnlyCollection<Game> unmatchedGames)
         {
             var gamesById = new ConcurrentDictionary<string, IList<Game>>(StringComparer.InvariantCultureIgnoreCase);
@@ -106,7 +108,13 @@ namespace PlayniteExtensions.Metadata.Common
 
             Parallel.ForEach(playniteApi.Database.Games, options, game =>
             {
-                var ids = game.Links?.Select(l => GetGameIdFromUrl(l.Url)).Where(x => x != null).ToList() ?? new List<string>();
+                var idList = game.Links?.Select(l => GetGameIdFromUrl(l.Url)).Where(x => x != null).ToList() ?? new List<string>();
+                var libraryGameId = GetIdFromGameLibrary(game.PluginId, game.GameId);
+                if (libraryGameId != null)
+                    idList.Add(libraryGameId);
+
+                var ids = new HashSet<string>(idList, StringComparer.InvariantCultureIgnoreCase);
+
                 if (ids.Any())
                 {
                     foreach (var id in ids)
@@ -226,7 +234,7 @@ namespace PlayniteExtensions.Metadata.Common
                 return null;
         }
 
-        private static IEnumerable<string> GetDeflatedNames(IEnumerable<string> names, ConcurrentDictionary<string,string> deflatedNames, SortableNameConverter snc)
+        private static IEnumerable<string> GetDeflatedNames(IEnumerable<string> names, ConcurrentDictionary<string, string> deflatedNames, SortableNameConverter snc)
         {
             var output = new HashSet<string>();
             foreach (string name in names)
@@ -326,7 +334,13 @@ namespace PlayniteExtensions.Metadata.Common
                         if (g.Game.Links == null)
                             g.Game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>();
 
-                        if (!g.Game.Links.Any(l => l.Url == g.GameDetails.Url))
+                        var urlOverlap = g.Game.Links.Any(l => l.Url == g.GameDetails.Url);
+                        
+                        var idsFromLinks = g.Game.Links?.Select(l => GetGameIdFromUrl(l.Url)).Where(id => id != null).ToList() ?? new List<string>();
+                        var externalId = GetGameIdFromUrl(g.GameDetails.Url);
+                        var linkIdsOverlap = externalId != null && idsFromLinks.Contains(externalId, StringComparer.InvariantCultureIgnoreCase);
+
+                        if (!urlOverlap && !linkIdsOverlap)
                         {
                             g.Game.Links.Add(new Link(MetadataProviderName, g.GameDetails.Url));
                             update = true;

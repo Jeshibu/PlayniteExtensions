@@ -63,7 +63,7 @@ namespace TvTropesMetadata.Tests
             Assert.Equal("Wall Run", result.Title);
             Assert.NotEmpty(result.Items);
 
-            ContainsGame(result, "TitanFall2", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/TitanFall2");
+            ContainsGame(result, "Titan Fall 2", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/TitanFall2");
         }
 
         [Fact]

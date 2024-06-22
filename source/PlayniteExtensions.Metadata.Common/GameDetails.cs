@@ -94,5 +94,13 @@ namespace PlayniteExtensions.Metadata.Common
             if (names == null || names.Count == 0) return null;
             return names.Select(n => new MetadataNameProperty(n)).ToHashSet<MetadataProperty>();
         }
+
+        public override string ToString()
+        {
+            if (Names == null)
+                return base.ToString();
+
+            return string.Join(" / ", Names);
+        }
     }
 }
