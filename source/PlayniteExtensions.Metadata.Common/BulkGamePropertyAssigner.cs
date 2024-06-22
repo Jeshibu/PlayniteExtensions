@@ -99,9 +99,8 @@ namespace PlayniteExtensions.Metadata.Common
 
         private IDictionary<string, IList<Game>> GetGamesById(CancellationToken cancellationToken, out IReadOnlyCollection<Game> unmatchedGames)
         {
-            var gamesById = new ConcurrentDictionary<string, IList<Game>>();
+            var gamesById = new ConcurrentDictionary<string, IList<Game>>(StringComparer.InvariantCultureIgnoreCase);
             var umg = new ConcurrentBag<Game>();
-            unmatchedGames = umg;
 
             var options = new ParallelOptions { CancellationToken = cancellationToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
 
@@ -121,6 +120,8 @@ namespace PlayniteExtensions.Metadata.Common
                     umg.Add(game);
                 }
             });
+
+            unmatchedGames = umg.ToList();
 
             return gamesById;
         }
