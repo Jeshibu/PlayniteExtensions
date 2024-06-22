@@ -75,6 +75,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manifests", "Manifests", "{
 		..\manifests\Metadata_LaunchBox.yaml = ..\manifests\Metadata_LaunchBox.yaml
 		..\manifests\Metadata_MobyGames.yaml = ..\manifests\Metadata_MobyGames.yaml
 		..\manifests\Metadata_Rawg.yaml = ..\manifests\Metadata_Rawg.yaml
+		..\manifests\Metadata_TvTropes.yaml = ..\manifests\Metadata_TvTropes.yaml
 		..\manifests\Metadata_Xbox.yaml = ..\manifests\Metadata_Xbox.yaml
 	EndProjectSection
 EndProject

@@ -77,6 +77,7 @@ function Get-ProjectNames {
         "pathreplacer"        = @("PathReplacer")
         "rawg"                = @("RawgLibrary", "RawgMetadata")
         "steamtagsimporter"   = @("SteamTagsImporter")
+        "tvtropes"            = @("TvTropesMetadata")
         "viveport"            = @("ViveportLibrary")
         "xbox"                = @("XboxMetadata")
     }
