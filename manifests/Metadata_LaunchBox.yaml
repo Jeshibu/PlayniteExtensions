@@ -82,3 +82,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-01-31/LaunchBoxMetadata_0_6_4.pext
     Changelog:
     - Fixed image fetching
+  - Version: 0.7
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2024-06-22
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-06-22/LaunchBoxMetadata_0_7.pext
+    Changelog:
+    - Split developers and publishers into separate entries when there are multiple
