@@ -91,3 +91,11 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-05-20/itchIoBundleTagger_0_12.pext
     Changelog:
     - Added support for new bundle - Palestinian Relief Bundle 2024
+  - Version: 0.13
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2024-06-22
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-06-22/itchIoBundleTagger_0_13.pext
+    Changelog:
+    - Added support for new bundle - TTRPGs for Trans Rights - West Virginia
+    - Added support for new bundle - TTRPGs for Palestine
+    - Added support for new bundle - Queer Games Bundle 2024

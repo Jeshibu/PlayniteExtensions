@@ -13,6 +13,9 @@ tag-bundle-abortion = Indie Bundle for Abortion Funds
 tag-bundle-tsermb = Türkiye & Syria Earthquake Relief Mega Bundle
 tag-bundle-games4gaza = Games for Gaza
 tag-bundle-prb24 = Palestinian Relief Bundle 2024
+tag-bundle-ttrpgwv = TTRPGs for Trans Rights - West Virginia
+tag-bundle-ttrpgfp = TTRPGs for Palestine
+tag-bundle-queer2024 = Queer Games Bundle 2024
 
 setting-tag-prefix = Prefix tag names with: 
 setting-add-free-tag = Add "{ tag-free }" tag if applicable
