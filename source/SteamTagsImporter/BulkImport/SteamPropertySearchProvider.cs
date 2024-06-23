@@ -50,7 +50,17 @@ namespace SteamTagsImporter.BulkImport
                     logger.Info($"Actual downloaded game count: {games.Count}");
                 }
             } while (start < total && progressArgs?.CancelToken.IsCancellationRequested != true);
-            return games;
+
+            //deduplicate
+            var groupedGames = games.GroupBy(g => g.Url);
+            foreach (var gr in groupedGames)
+            {
+                var gamesInGroup = gr.ToList();
+                if (gamesInGroup.Count > 1)
+                    logger.Info($"Found {gamesInGroup.Count} games for {gamesInGroup[0]} - {gr.Key}");
+
+                yield return gamesInGroup[0];
+            }
         }
 
         public IEnumerable<SteamProperty> Search(string query, CancellationToken cancellationToken = default)
