@@ -6,6 +6,8 @@ namespace PlayniteExtensions.Metadata.Common
 {
     public class GamePropertyImportViewModel
     {
+        public IPlayniteAPI PlayniteAPI { get; set; }
+
         public GamePropertyImportTargetField[] TargetFieldOptions { get; set; } = new[]
         {
             GamePropertyImportTargetField.Category,
@@ -39,6 +41,17 @@ namespace PlayniteExtensions.Metadata.Common
                 foreach (var game in Games)
                 {
                     game.IsChecked = false;
+                }
+            });
+        }
+
+        public RelayCommand<object> CheckFilteredCommand
+        {
+            get => new RelayCommand<object>((a) =>
+            {
+                foreach (var game in Games)
+                {
+                    game.IsChecked = PlayniteAPI.MainView.FilteredGames.Contains(game.Game);
                 }
             });
         }

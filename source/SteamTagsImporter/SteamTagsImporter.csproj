@@ -134,6 +134,7 @@
       <DependentUpon>GamePropertyImportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="BulkImport\Models.cs" />
+    <Compile Include="BulkImport\SteamGamePropertyImportViewModel.cs" />
     <Compile Include="BulkImport\SteamPropertyBulkImporter.cs" />
     <Compile Include="BulkImport\SteamPropertySearchProvider.cs" />
     <Compile Include="BulkImport\SteamSearch.cs" />

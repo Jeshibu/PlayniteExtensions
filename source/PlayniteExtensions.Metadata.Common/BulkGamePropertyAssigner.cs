@@ -20,7 +20,9 @@ namespace PlayniteExtensions.Metadata.Common
         string Name { get; }
     }
 
-    public abstract class BulkGamePropertyAssigner<TSearchItem> where TSearchItem : IHasName
+    public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewModel>
+        where TSearchItem : IHasName
+        where TApprovalPromptViewModel : GamePropertyImportViewModel, new()
     {
         public BulkGamePropertyAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
         {
@@ -201,7 +203,7 @@ namespace PlayniteExtensions.Metadata.Common
                 return null;
             }
 
-            var viewModel = new GamePropertyImportViewModel() { Name = $"{importSetting.Prefix}{propName}", Games = matchingGames };
+            var viewModel = new TApprovalPromptViewModel() { Name = $"{importSetting.Prefix}{propName}", Games = matchingGames, PlayniteAPI = playniteApi };
             switch (importSetting.ImportTarget)
             {
                 case PropertyImportTarget.Genres:
@@ -270,7 +272,7 @@ namespace PlayniteExtensions.Metadata.Common
             }
         }
 
-        protected abstract UserControl GetBulkPropertyImportView(Window window, GamePropertyImportViewModel viewModel);
+        protected abstract UserControl GetBulkPropertyImportView(Window window, TApprovalPromptViewModel viewModel);
 
         private void UpdateGames(GamePropertyImportViewModel viewModel)
         {

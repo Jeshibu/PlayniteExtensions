@@ -8,10 +8,9 @@ using System;
 
 namespace SteamTagsImporter.BulkImport
 {
-    public class SteamPropertyBulkImporter : BulkGamePropertyAssigner<SteamProperty>
+    public class SteamPropertyBulkImporter : BulkGamePropertyAssigner<SteamProperty, SteamGamePropertyImportViewModel>
     {
         public override string MetadataProviderName => "Steam";
-        private readonly Guid steamLibraryPluginId = Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB");
         private readonly SteamTagsImporterSettings settings;
 
         public SteamPropertyBulkImporter(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<SteamProperty, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, SteamTagsImporterSettings settings)
@@ -21,7 +20,7 @@ namespace SteamTagsImporter.BulkImport
             this.settings = settings;
         }
 
-        protected override UserControl GetBulkPropertyImportView(Window window, GamePropertyImportViewModel viewModel)
+        protected override UserControl GetBulkPropertyImportView(Window window, SteamGamePropertyImportViewModel viewModel)
         {
             return new GamePropertyImportView(window) { DataContext = viewModel };
         }
@@ -41,7 +40,7 @@ namespace SteamTagsImporter.BulkImport
             };
         }
 
-        protected override string GetIdFromGameLibrary(Guid libraryPluginId, string gameId) => libraryPluginId == steamLibraryPluginId ? gameId : null;
+        protected override string GetIdFromGameLibrary(Guid libraryPluginId, string gameId) => libraryPluginId == SteamAppIdUtility.SteamLibraryPluginId ? gameId : null;
 
         private static PropertyImportTarget GetTarget(string param)
         {

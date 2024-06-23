@@ -9,7 +9,7 @@ using System.Windows.Controls;
 namespace GiantBombMetadata
 {
 
-    public class GiantBombBulkPropertyAssigner : BulkGamePropertyAssigner<GiantBombSearchResultItem>
+    public class GiantBombBulkPropertyAssigner : BulkGamePropertyAssigner<GiantBombSearchResultItem, GamePropertyImportViewModel>
     {
         public GiantBombMetadataSettings Settings { get; }
 

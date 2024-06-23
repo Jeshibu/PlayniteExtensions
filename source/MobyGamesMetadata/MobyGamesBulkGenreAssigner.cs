@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace MobyGamesMetadata
 {
-    public class MobyGamesBulkGenreAssigner : BulkGamePropertyAssigner<MobyGamesGenreSetting>
+    public class MobyGamesBulkGenreAssigner : BulkGamePropertyAssigner<MobyGamesGenreSetting, GamePropertyImportViewModel>
     {
         public MobyGamesBulkGenreAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<MobyGamesGenreSetting, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
             : base(playniteAPI, dataSource, platformUtility, maxDegreeOfParallelism)

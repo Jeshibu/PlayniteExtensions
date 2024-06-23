@@ -8,7 +8,7 @@ using TvTropesMetadata.Scraping;
 
 namespace TvTropesMetadata
 {
-    public class BulkTropeAssigner : BulkGamePropertyAssigner<TvTropesSearchResult>
+    public class BulkTropeAssigner : BulkGamePropertyAssigner<TvTropesSearchResult, GamePropertyImportViewModel>
     {
         private readonly TvTropesMetadataSettings settings;
 

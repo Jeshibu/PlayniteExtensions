@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace MobyGamesMetadata
 {
-    public class MobyGamesBulkGroupAssigner : BulkGamePropertyAssigner<SearchResult>
+    public class MobyGamesBulkGroupAssigner : BulkGamePropertyAssigner<SearchResult, GamePropertyImportViewModel>
     {
         private readonly MobyGamesMetadataSettings settings;
 

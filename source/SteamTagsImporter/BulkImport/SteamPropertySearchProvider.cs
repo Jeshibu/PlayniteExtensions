@@ -6,11 +6,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace SteamTagsImporter.BulkImport
 {
     public class SteamPropertySearchProvider : ISearchableDataSourceWithDetails<SteamProperty, IEnumerable<GameDetails>>
     {
+        private readonly ILogger logger = LogManager.GetLogger();
         private readonly SteamSearch steamSearch;
         private SteamProperty[] steamProperties;
         private SteamProperty[] SteamProperties => steamProperties ?? (steamProperties = steamSearch.GetProperties().ToArray());
@@ -22,6 +24,8 @@ namespace SteamTagsImporter.BulkImport
 
         public IEnumerable<GameDetails> GetDetails(SteamProperty prop, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
         {
+            logger.Info("Getting list of games");
+            logger.Info(JsonConvert.SerializeObject(prop));
             int start = 0, total = 0;
             var games = new List<GameDetails>();
             if (progressArgs != null)
@@ -38,9 +42,12 @@ namespace SteamTagsImporter.BulkImport
 
                 if (progressArgs != null)
                 {
+                    var progressText = $"Downloading {prop.Name}… {games.Count}/{total}";
                     progressArgs.ProgressMaxValue = searchResult.TotalCount;
                     progressArgs.CurrentProgressValue = games.Count;
-                    progressArgs.Text = $"Downloading {prop.Name}… {games.Count}/{total}";
+                    progressArgs.Text = progressText;
+                    logger.Info(progressText);
+                    logger.Info($"Actual downloaded game count: {games.Count}");
                 }
             } while (start < total && progressArgs?.CancelToken.IsCancellationRequested != true);
             return games;
