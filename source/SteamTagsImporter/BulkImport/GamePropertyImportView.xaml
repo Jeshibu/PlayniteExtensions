@@ -38,7 +38,7 @@
             <Button Content="Only filtered games" Command="{Binding CheckFilteredCommand}"/>
             <Button Content="Only Steam games" Command="{Binding CheckSteamCommand}"/>
         </StackPanel>
-        <ListBox ItemsSource="{Binding Games}" Grid.Row="3" Margin="20,0">
+        <ListBox ItemsSource="{Binding Games}" Grid.Row="3" Margin="20,0" d:ItemsSource="{d:SampleData ItemCount=50}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox Content="{Binding DisplayName}" IsChecked="{Binding IsChecked}"/>

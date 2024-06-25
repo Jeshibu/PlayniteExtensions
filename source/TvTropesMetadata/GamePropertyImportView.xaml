@@ -35,8 +35,9 @@
             </StackPanel.Resources>
             <Button Content="Uncheck all" Command="{Binding UncheckAllCommand}"/>
             <Button Content="Check all" Command="{Binding CheckAllCommand}"/>
+            <Button Content="Only filtered games" Command="{Binding CheckFilteredCommand}"/>
         </StackPanel>
-        <ListBox ItemsSource="{Binding Games}" Grid.Row="3" Margin="20,0">
+        <ListBox ItemsSource="{Binding Games}" Grid.Row="3" Margin="20,0" d:ItemsSource="{d:SampleData ItemCount=50}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox Content="{Binding DisplayName}" IsChecked="{Binding IsChecked}"/>
