@@ -146,8 +146,7 @@ namespace PlayniteExtensions.Metadata.Common
                 return null;
             }
 
-            var addedGameIds = new HashSet<Guid>();
-            ICollection<GameCheckboxViewModel> matchingGames = new SynchronizedCollection<GameCheckboxViewModel>();
+            var proposedMatches = new ConcurrentDictionary<Guid, GameCheckboxViewModel>();
             var snc = new SortableNameConverter(new string[0], numberLength: 1, removeEditions: true);
             var deflatedNames = new ConcurrentDictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             bool loopCompleted = false;
@@ -165,12 +164,23 @@ namespace PlayniteExtensions.Metadata.Common
                 var loopResult = Parallel.For(0, gamesToMatch.Count, parallelOptions, i =>
                 {
                     var externalGameInfo = gamesToMatch[i];
-
                     var gameToMatchId = GetGameIdFromUrl(externalGameInfo.Url);
+
+                    void AddMatchedGame(Game game)
+                    {
+                        var added = proposedMatches.TryAdd(game.Id, new GameCheckboxViewModel(game, externalGameInfo));
+                        if (!added)
+                        {
+                            var firstMatch = proposedMatches[game.Id];
+                            var firstMatchId = GetGameIdFromUrl(firstMatch.GameDetails.Url);
+                            logger.Info($"Skipped adding ${game.Name} again with [Name: {externalGameInfo}, ID: {gameToMatchId}], already matched with [Name: {firstMatch.GameDetails}, ID: {firstMatchId}]");
+                        }
+                    }
+
                     if (gameToMatchId != null && gamesById.TryGetValue(gameToMatchId, out var gamesWithThisId))
                     {
                         foreach (var g in gamesWithThisId)
-                            matchingGames.Add(new GameCheckboxViewModel(g, externalGameInfo));
+                            AddMatchedGame(g);
                     }
 
                     var namesToMatch = GetDeflatedNames(externalGameInfo.Names, deflatedNames, snc).ToList();
@@ -180,28 +190,27 @@ namespace PlayniteExtensions.Metadata.Common
                         var libraryGameNameDeflated = deflatedNames[g.Name];
 
                         if (namesToMatch.Contains(libraryGameNameDeflated, StringComparer.InvariantCultureIgnoreCase)
-                            && platformUtility.PlatformsOverlap(g.Platforms, externalGameInfo.Platforms)
-                            && addedGameIds.Add(g.Id))
+                            && platformUtility.PlatformsOverlap(g.Platforms, externalGameInfo.Platforms))
                         {
-                            matchingGames.Add(new GameCheckboxViewModel(g, externalGameInfo));
+                            AddMatchedGame(g);
                         }
                     }
 
                     a.CurrentProgressValue++;
                 });
                 loopCompleted = loopResult.IsCompleted;
-
-                matchingGames = matchingGames.OrderBy(g => string.IsNullOrWhiteSpace(g.Game.SortingName) ? g.Game.Name : g.Game.SortingName).ThenBy(g => g.Game.ReleaseDate).ToList();
             }, new GlobalProgressOptions($"Matching {gamesToMatch.Count} games…", true) { IsIndeterminate = false });
 
             if (!loopCompleted)
                 return null;
 
-            if (matchingGames.Count == 0)
+            if (proposedMatches.Count == 0)
             {
                 playniteApi.Dialogs.ShowMessage("No matching games found in your library.", $"{MetadataProviderName} game property assigner", MessageBoxButton.OK, MessageBoxImage.Information);
                 return null;
             }
+
+            var matchingGames = proposedMatches.Values.OrderBy(g => string.IsNullOrWhiteSpace(g.Game.SortingName) ? g.Game.Name : g.Game.SortingName).ThenBy(g => g.Game.ReleaseDate).ToList();
 
             var viewModel = new TApprovalPromptViewModel() { Name = $"{importSetting.Prefix}{propName}", Games = matchingGames, PlayniteAPI = playniteApi };
             switch (importSetting.ImportTarget)
@@ -337,7 +346,7 @@ namespace PlayniteExtensions.Metadata.Common
                             g.Game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>();
 
                         var urlOverlap = g.Game.Links.Any(l => l.Url == g.GameDetails.Url);
-                        
+
                         var idsFromLinks = g.Game.Links?.Select(l => GetGameIdFromUrl(l.Url)).Where(id => id != null).ToList() ?? new List<string>();
                         var externalId = GetGameIdFromUrl(g.GameDetails.Url);
                         var linkIdsOverlap = externalId != null && idsFromLinks.Contains(externalId, StringComparer.InvariantCultureIgnoreCase);
