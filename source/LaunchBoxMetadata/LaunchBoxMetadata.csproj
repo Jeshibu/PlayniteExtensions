@@ -146,9 +146,6 @@
     <Compile Include="..\PlayniteExtensions.Metadata.Common\GameDetails.cs">
       <Link>Common\Metadata\GameDetails.cs</Link>
     </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GamePropertyImportViewModel.cs">
-      <Link>Common\Metadata\GamePropertyImportViewModel.cs</Link>
-    </Compile>
     <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericItemOption.cs">
       <Link>Common\Metadata\GenericItemOption.cs</Link>
     </Compile>

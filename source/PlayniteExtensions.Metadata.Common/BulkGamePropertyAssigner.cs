@@ -164,7 +164,7 @@ namespace PlayniteExtensions.Metadata.Common
                 var loopResult = Parallel.For(0, gamesToMatch.Count, parallelOptions, i =>
                 {
                     var externalGameInfo = gamesToMatch[i];
-                    var gameToMatchId = GetGameIdFromUrl(externalGameInfo.Url);
+                    externalGameInfo.Id = GetGameIdFromUrl(externalGameInfo.Url);
 
                     void AddMatchedGame(Game game)
                     {
@@ -173,11 +173,11 @@ namespace PlayniteExtensions.Metadata.Common
                         {
                             var firstMatch = proposedMatches[game.Id];
                             var firstMatchId = GetGameIdFromUrl(firstMatch.GameDetails.Url);
-                            logger.Info($"Skipped adding ${game.Name} again with [Name: {externalGameInfo}, ID: {gameToMatchId}], already matched with [Name: {firstMatch.GameDetails}, ID: {firstMatchId}]");
+                            logger.Info($"Skipped adding ${game.Name} again with [Name: {externalGameInfo}, ID: {externalGameInfo.Id}], already matched with [Name: {firstMatch.GameDetails}, ID: {firstMatchId}]");
                         }
                     }
 
-                    if (gameToMatchId != null && gamesById.TryGetValue(gameToMatchId, out var gamesWithThisId))
+                    if (externalGameInfo.Id != null && gamesById.TryGetValue(externalGameInfo.Id, out var gamesWithThisId))
                     {
                         foreach (var g in gamesWithThisId)
                             AddMatchedGame(g);
@@ -287,28 +287,29 @@ namespace PlayniteExtensions.Metadata.Common
         {
             using (playniteApi.Database.BufferedUpdate())
             {
+                DatabaseObject GetDatabaseObjectByName<T>(IItemCollection<T> collection, string name) where T : DatabaseObject
+                {
+                    return collection.FirstOrDefault(c => c.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
+                           ?? collection.Add(viewModel.Name);
+                }
+
                 DatabaseObject dbItem;
                 switch (viewModel.TargetField)
                 {
                     case GamePropertyImportTargetField.Category:
-                        dbItem = playniteApi.Database.Categories.FirstOrDefault(c => c.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
-                                 ?? playniteApi.Database.Categories.Add(viewModel.Name);
+                        dbItem = GetDatabaseObjectByName(playniteApi.Database.Categories, viewModel.Name);
                         break;
                     case GamePropertyImportTargetField.Genre:
-                        dbItem = playniteApi.Database.Genres.FirstOrDefault(c => c.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
-                                 ?? playniteApi.Database.Genres.Add(viewModel.Name);
+                        dbItem = GetDatabaseObjectByName(playniteApi.Database.Genres, viewModel.Name);
                         break;
                     case GamePropertyImportTargetField.Tag:
-                        dbItem = playniteApi.Database.Tags.FirstOrDefault(c => c.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
-                                 ?? playniteApi.Database.Tags.Add(viewModel.Name);
+                        dbItem = GetDatabaseObjectByName(playniteApi.Database.Tags, viewModel.Name);
                         break;
                     case GamePropertyImportTargetField.Feature:
-                        dbItem = playniteApi.Database.Features.FirstOrDefault(f => f.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
-                                 ?? playniteApi.Database.Features.Add(viewModel.Name);
+                        dbItem = GetDatabaseObjectByName(playniteApi.Database.Features, viewModel.Name);
                         break;
                     case GamePropertyImportTargetField.Series:
-                        dbItem = playniteApi.Database.Series.FirstOrDefault(f => f.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
-                                 ?? playniteApi.Database.Series.Add(viewModel.Name);
+                        dbItem = GetDatabaseObjectByName(playniteApi.Database.Series, viewModel.Name);
                         break;
                     default:
                         throw new ArgumentException();

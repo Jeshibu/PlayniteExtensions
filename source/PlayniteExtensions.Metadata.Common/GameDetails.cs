@@ -8,6 +8,8 @@ namespace PlayniteExtensions.Metadata.Common
 {
     public class GameDetails
     {
+        public string Id { get; set; }
+
         public List<string> Names { get; set; } = new List<string>();
 
         public string Description { get; set; }
@@ -46,7 +48,7 @@ namespace PlayniteExtensions.Metadata.Common
 
         public string Url { get; set; }
 
-        public string Version { get; internal set; }
+        public string Version { get; set; }
 
         public GameMetadata ToMetadata(IPlayniteAPI playniteAPI = null)
         {
