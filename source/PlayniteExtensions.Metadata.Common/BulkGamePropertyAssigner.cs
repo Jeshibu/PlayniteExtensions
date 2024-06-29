@@ -173,8 +173,7 @@ namespace PlayniteExtensions.Metadata.Common
                         if (!added)
                         {
                             var firstMatch = proposedMatches[game.Id];
-                            var firstMatchId = GetGameIdFromUrl(firstMatch.GameDetails.Url);
-                            logger.Info($"Skipped adding ${game.Name} again with [Name: {externalGameInfo}, ID: {externalGameInfo.Id}], already matched with [Name: {firstMatch.GameDetails}, ID: {firstMatchId}]");
+                            logger.Info($"Skipped adding ${game.Name} again with {externalGameInfo}, already matched with {firstMatch.GameDetails}");
                         }
                     }
 

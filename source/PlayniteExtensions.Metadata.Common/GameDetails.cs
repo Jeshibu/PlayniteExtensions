@@ -102,7 +102,8 @@ namespace PlayniteExtensions.Metadata.Common
             if (Names == null)
                 return base.ToString();
 
-            return string.Join(" / ", Names);
+            var names = string.Join(" / ", Names);
+            return $"{names} ({Id})";
         }
     }
 }
