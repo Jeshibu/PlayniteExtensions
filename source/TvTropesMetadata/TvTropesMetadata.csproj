@@ -119,7 +119,7 @@
       <Link>Common\Metadata\Settings.cs</Link>
     </Compile>
     <Compile Include="BulkTropeAssigner.cs" />
-    <Compile Include="GamePropertyImportView.xaml.cs">
+    <Compile Include="Common\Metadata\GamePropertyImportView.xaml.cs">
       <DependentUpon>GamePropertyImportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Scraping\BaseScraper.cs" />
@@ -156,7 +156,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GamePropertyImportView.xaml">
+    <Page Include="Common\Metadata\GamePropertyImportView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -167,4 +167,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>xcopy "$(SolutionDir)PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$(ProjectDir)Common\Metadata" /Y /I</PreBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace TvTropesMetadata
+namespace PlayniteExtensions.Metadata.Common
 {
     /// <summary>
     /// Interaction logic for GamePropertyImportView.xaml

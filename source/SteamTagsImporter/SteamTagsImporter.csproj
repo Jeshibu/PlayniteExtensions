@@ -130,14 +130,13 @@
     <Compile Include="..\PlayniteExtensions.Metadata.Common\Settings.cs">
       <Link>Common\Metadata\Settings.cs</Link>
     </Compile>
-    <Compile Include="BulkImport\GamePropertyImportView.xaml.cs">
-      <DependentUpon>GamePropertyImportView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="BulkImport\Models.cs" />
-    <Compile Include="BulkImport\SteamGamePropertyImportViewModel.cs" />
     <Compile Include="BulkImport\SteamPropertyBulkImporter.cs" />
     <Compile Include="BulkImport\SteamPropertySearchProvider.cs" />
     <Compile Include="BulkImport\SteamSearch.cs" />
+    <Compile Include="Common\Metadata\GamePropertyImportView.xaml.cs">
+      <DependentUpon>GamePropertyImportView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ISteamAppIdUtility.cs" />
     <Compile Include="ISteamTagScraper.cs" />
     <Compile Include="SteamAppIdUtility.cs" />
@@ -158,7 +157,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="BulkImport\GamePropertyImportView.xaml">
+    <Page Include="Common\Metadata\GamePropertyImportView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -173,4 +172,7 @@
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>xcopy "$(SolutionDir)PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$(ProjectDir)Common\Metadata" /Y /I</PreBuildEvent>
+  </PropertyGroup>
 </Project>

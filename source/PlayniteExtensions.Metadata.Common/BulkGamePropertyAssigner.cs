@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Collections.Concurrent;
 using System.Threading;
+using System.Collections.ObjectModel;
 
 namespace PlayniteExtensions.Metadata.Common
 {
@@ -213,6 +214,7 @@ namespace PlayniteExtensions.Metadata.Common
             var matchingGames = proposedMatches.Values.OrderBy(g => string.IsNullOrWhiteSpace(g.Game.SortingName) ? g.Game.Name : g.Game.SortingName).ThenBy(g => g.Game.ReleaseDate).ToList();
 
             var viewModel = new TApprovalPromptViewModel() { Name = $"{importSetting.Prefix}{propName}", Games = matchingGames, PlayniteAPI = playniteApi };
+            viewModel.Links.AddRange(GetPotentialLinks(selectedItem));
             switch (importSetting.ImportTarget)
             {
                 case PropertyImportTarget.Genres:
@@ -321,42 +323,42 @@ namespace PlayniteExtensions.Metadata.Common
                         continue;
 
                     bool update = false;
+                    void AddItemLocal(Func<Game, List<Guid>> fieldSelector) => update |= AddItem(g.Game, x => x.CategoryIds, dbItem.Id);
 
                     switch (viewModel.TargetField)
                     {
                         case GamePropertyImportTargetField.Category:
-                            update |= AddItem(g.Game, x => x.CategoryIds, dbItem.Id);
+                            AddItemLocal(x => x.CategoryIds);
                             break;
                         case GamePropertyImportTargetField.Genre:
-                            update |= AddItem(g.Game, x => x.GenreIds, dbItem.Id);
+                            AddItemLocal(x => x.GenreIds);
                             break;
                         case GamePropertyImportTargetField.Tag:
-                            update |= AddItem(g.Game, x => x.TagIds, dbItem.Id);
+                            AddItemLocal(x => x.TagIds);
                             break;
                         case GamePropertyImportTargetField.Feature:
-                            update |= AddItem(g.Game, x => x.FeatureIds, dbItem.Id);
+                            AddItemLocal(x => x.FeatureIds);
                             break;
                         case GamePropertyImportTargetField.Series:
-                            update |= AddItem(g.Game, x => x.SeriesIds, dbItem.Id);
+                            AddItemLocal(x => x.SeriesIds);
                             break;
                     }
 
-                    if (viewModel.AddLink && !string.IsNullOrEmpty(g.GameDetails.Url))
+                    foreach (var link in viewModel.Links)
                     {
+                        if (!link.Checked)
+                            continue;
+
                         if (g.Game.Links == null)
-                            g.Game.Links = new System.Collections.ObjectModel.ObservableCollection<Link>();
+                            g.Game.Links = new ObservableCollection<Link>();
 
-                        var urlOverlap = g.Game.Links.Any(l => l.Url == g.GameDetails.Url);
+                        var url = link.GetUrl(g.GameDetails);
 
-                        var idsFromLinks = g.Game.Links?.Select(l => GetGameIdFromUrl(l.Url)).Where(id => id != null).ToList() ?? new List<string>();
-                        var externalId = GetGameIdFromUrl(g.GameDetails.Url);
-                        var linkIdsOverlap = externalId != null && idsFromLinks.Contains(externalId, StringComparer.InvariantCultureIgnoreCase);
+                        if (link.IsAlreadyLinked(g.Game.Links, url))
+                            continue;
 
-                        if (!urlOverlap && !linkIdsOverlap)
-                        {
-                            g.Game.Links.Add(new Link(MetadataProviderName, g.GameDetails.Url));
-                            update = true;
-                        }
+                        g.Game.Links.Add(new Link(link.Name, url));
+                        update = true;
                     }
 
                     if (update)
@@ -366,6 +368,18 @@ namespace PlayniteExtensions.Metadata.Common
                     }
                 }
             }
+        }
+
+        protected virtual IEnumerable<PotentialLink> GetPotentialLinks(TSearchItem searchItem)
+        {
+            yield return new PotentialLink(MetadataProviderName, game => game.Url);
+        }
+
+        protected virtual IEnumerable<CheckboxFilter> GetCheckboxFilters(GamePropertyImportViewModel viewModel)
+        {
+            yield return new CheckboxFilter("Check all", viewModel, x => true);
+            yield return new CheckboxFilter("Uncheck all", viewModel, x => false);
+            yield return new CheckboxFilter("Only filtered games", viewModel, x => playniteApi.MainView.FilteredGames.Contains(x.Game));
         }
 
         private bool AddItem(Game g, Expression<Func<Game, List<Guid>>> collectionSelector, Guid idToAdd)

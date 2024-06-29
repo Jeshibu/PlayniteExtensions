@@ -22,8 +22,8 @@ namespace SteamTagsImporter.BulkImport
             { "specials", "On Sale" },
             { "hidef2p", "Hide Free To Play Games" },
             { "category1", "Type" },
-            { "category2", "Number of players" },
-            { "category3", "Feature" },
+            { "category2", "Feature" },
+            { "category3", "Number of players" },
             { "controllersupport", "Controller support" },
             { "deck_compatibility", "Steam Deck compatibility" },
             { "vrsupport", "VR support" },
@@ -40,7 +40,7 @@ namespace SteamTagsImporter.BulkImport
 
         public IEnumerable<SteamProperty> GetProperties()
         {
-            var source = downloader.DownloadString("https://store.steampowered.com/search/").ResponseContent;
+            var source = downloader.DownloadString($"https://store.steampowered.com/search/?l={settings.LanguageKey}").ResponseContent;
             var doc = new HtmlParser().Parse(source);
             var rows = doc.QuerySelectorAll(".tab_filter_control_row[data-param][data-value][data-loc]");
             foreach (var row in rows)

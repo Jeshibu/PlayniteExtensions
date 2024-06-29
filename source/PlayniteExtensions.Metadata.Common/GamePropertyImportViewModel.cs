@@ -1,6 +1,8 @@
 ﻿using Playnite.SDK.Models;
 using Playnite.SDK;
 using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace PlayniteExtensions.Metadata.Common
 {
@@ -18,43 +20,14 @@ namespace PlayniteExtensions.Metadata.Common
         };
 
         public GamePropertyImportTargetField TargetField { get; set; }
+
         public string Name { get; set; }
-        public bool AddLink { get; set; } = true;
+
+        public List<PotentialLink> Links { get; set; } = new List<PotentialLink>();
+
+        public List<CheckboxFilter> Filters { get; set; } = new List<CheckboxFilter>();
 
         public ICollection<GameCheckboxViewModel> Games { get; set; }
-
-        public RelayCommand<object> CheckAllCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                foreach (var game in Games)
-                {
-                    game.IsChecked = true;
-                }
-            });
-        }
-
-        public RelayCommand<object> UncheckAllCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                foreach (var game in Games)
-                {
-                    game.IsChecked = false;
-                }
-            });
-        }
-
-        public RelayCommand<object> CheckFilteredCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                foreach (var game in Games)
-                {
-                    game.IsChecked = PlayniteAPI.MainView.FilteredGames.Contains(game.Game);
-                }
-            });
-        }
     }
 
     public class GameCheckboxViewModel : ObservableObject
@@ -81,6 +54,59 @@ namespace PlayniteExtensions.Metadata.Common
                     return $"{Game.Name} ({Game.ReleaseDate?.Year})";
             }
         }
+    }
+
+    public class PotentialLink
+    {
+        private readonly Func<GameDetails, string> getUrlMethod;
+        private readonly Func<IEnumerable<Link>, string, bool> isAlreadyLinkedMethod;
+
+        public PotentialLink(string name, Func<GameDetails, string> getUrlMethod, Func<IEnumerable<Link>, string, bool> isAlreadyLinkedMethod = null)
+        {
+            Name = name;
+            this.getUrlMethod = getUrlMethod;
+            this.isAlreadyLinkedMethod = isAlreadyLinkedMethod;
+        }
+
+        public string Name { get; }
+        public bool Checked { get; set; } = true;
+        public string GetUrl(GameDetails game) => getUrlMethod(game);
+        public virtual bool IsAlreadyLinked(IEnumerable<Link> links, string url)
+        {
+            if (links == null) return false;
+
+            if (isAlreadyLinkedMethod != null)
+                return isAlreadyLinkedMethod(links, url);
+
+            if (string.IsNullOrWhiteSpace(url)) return true;
+
+            return links != null && links.Any(l => url.Equals(l.Url, StringComparison.InvariantCultureIgnoreCase));
+        }
+    }
+
+    public class CheckboxFilter
+    {
+        private GamePropertyImportViewModel ViewModel { get; }
+        private Func<GameCheckboxViewModel, bool> FilterFunc { get; }
+
+        public CheckboxFilter()
+        {
+            Cmd = new RelayCommand<object>(_ =>
+            {
+                foreach (var c in ViewModel.Games)
+                    c.IsChecked = FilterFunc(c);
+            });
+        }
+
+        public CheckboxFilter(string text, GamePropertyImportViewModel viewModel, Func<GameCheckboxViewModel, bool> filterFunc) : this()
+        {
+            Text = text;
+            this.ViewModel = viewModel;
+            FilterFunc = filterFunc;
+        }
+
+        public string Text { get; }
+        public RelayCommand<object> Cmd { get; }
     }
 
     public enum GamePropertyImportTargetField

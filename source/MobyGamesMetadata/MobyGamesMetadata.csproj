@@ -168,7 +168,7 @@
     <Compile Include="Api\MobyGamesApiClient.cs" />
     <Compile Include="Api\MobyGamesApiModels.cs" />
     <Compile Include="Api\MobyGamesScraper.cs" />
-    <Compile Include="GamePropertyImportView.xaml.cs">
+    <Compile Include="Common\Metadata\GamePropertyImportView.xaml.cs">
       <DependentUpon>GamePropertyImportView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MobyGamesBulkGenreAssigner.cs" />
@@ -206,7 +206,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GamePropertyImportView.xaml">
+    <Page Include="Common\Metadata\GamePropertyImportView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -216,4 +216,7 @@
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>xcopy "$(SolutionDir)PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$(ProjectDir)Common\Metadata" /Y /I</PreBuildEvent>
+  </PropertyGroup>
 </Project>
