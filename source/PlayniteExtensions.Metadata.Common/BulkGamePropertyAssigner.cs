@@ -214,6 +214,7 @@ namespace PlayniteExtensions.Metadata.Common
 
             var viewModel = new TApprovalPromptViewModel() { Name = $"{importSetting.Prefix}{propName}", Games = matchingGames, PlayniteAPI = playniteApi };
             viewModel.Links.AddRange(GetPotentialLinks(selectedItem));
+            viewModel.Filters.AddRange(GetCheckboxFilters(viewModel));
             switch (importSetting.ImportTarget)
             {
                 case PropertyImportTarget.Genres:
