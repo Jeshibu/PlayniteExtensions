@@ -106,8 +106,8 @@ namespace GOGMetadata
             var output = new GameDetails
             {
                 Names = AsList(searchResult.title),
-                Developers = searchResult.developers,
-                Publishers = searchResult.publishers,
+                Developers = searchResult.developers?.SelectMany(StringExtensions.SplitCompanies).ToList(),
+                Publishers = searchResult.publishers?.SelectMany(StringExtensions.SplitCompanies).ToList(),
                 Features = AsList(searchResult.features),
                 Genres = AsList(searchResult.genres),
                 Tags = AsList(searchResult.tags),
