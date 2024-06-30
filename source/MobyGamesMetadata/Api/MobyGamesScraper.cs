@@ -117,7 +117,7 @@ namespace MobyGamesMetadata.Api
                 if (a == null)
                     continue;
 
-                var description = td.SelectSingleNode("./span[last()]")?.InnerText.Trim();
+                var description = td.SelectSingleNode("./span[last()]")?.InnerText.HtmlDecode();
 
                 var sr = new GroupSearchResult { Name = a.InnerText.HtmlDecode(), Description = description };
                 sr.SetUrlAndId(a.Attributes["href"].Value);
