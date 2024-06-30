@@ -3,8 +3,6 @@ using GiantBombMetadata.SearchProviders;
 using Playnite.SDK;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace GiantBombMetadata
 {
@@ -45,11 +43,6 @@ namespace GiantBombMetadata
         protected override string GetGameIdFromUrl(string url)
         {
             return GiantBombHelper.GetGiantBombGuidFromUrl(url);
-        }
-
-        protected override UserControl GetBulkPropertyImportView(Window window, GamePropertyImportViewModel viewModel)
-        {
-            return new GamePropertyImportView(window) { DataContext = viewModel };
         }
     }
 }

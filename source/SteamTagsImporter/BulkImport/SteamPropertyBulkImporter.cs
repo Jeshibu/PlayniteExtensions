@@ -1,11 +1,9 @@
-﻿using PlayniteExtensions.Metadata.Common;
-using System.Collections.Generic;
-using System.Windows;
-using Playnite.SDK;
-using PlayniteExtensions.Common;
-using System.Windows.Controls;
-using System;
+﻿using Playnite.SDK;
 using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
+using PlayniteExtensions.Metadata.Common;
+using System;
+using System.Collections.Generic;
 
 namespace SteamTagsImporter.BulkImport
 {
@@ -19,11 +17,6 @@ namespace SteamTagsImporter.BulkImport
         {
             AllowEmptySearchQuery = true;
             this.settings = settings;
-        }
-
-        protected override UserControl GetBulkPropertyImportView(Window window, GamePropertyImportViewModel viewModel)
-        {
-            return new GamePropertyImportView(window) { DataContext = viewModel };
         }
 
         protected override string GetGameIdFromUrl(string url) => SteamAppIdUtility.GetSteamGameIdFromUrl(url);

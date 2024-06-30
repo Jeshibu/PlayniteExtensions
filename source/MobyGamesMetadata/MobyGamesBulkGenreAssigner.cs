@@ -3,8 +3,6 @@ using Playnite.SDK;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace MobyGamesMetadata
 {
@@ -17,11 +15,6 @@ namespace MobyGamesMetadata
         }
 
         public override string MetadataProviderName { get; } = "MobyGames";
-
-        protected override UserControl GetBulkPropertyImportView(Window window, PlayniteExtensions.Metadata.Common.GamePropertyImportViewModel viewModel)
-        {
-            return new GamePropertyImportView(window) { DataContext = viewModel };
-        }
 
         protected override string GetGameIdFromUrl(string url)
         {

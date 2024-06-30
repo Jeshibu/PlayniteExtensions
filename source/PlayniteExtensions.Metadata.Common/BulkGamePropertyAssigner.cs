@@ -282,7 +282,10 @@ namespace PlayniteExtensions.Metadata.Common
             }
         }
 
-        protected abstract UserControl GetBulkPropertyImportView(Window window, TApprovalPromptViewModel viewModel);
+        protected virtual UserControl GetBulkPropertyImportView(Window window, TApprovalPromptViewModel viewModel)
+        {
+            return new GamePropertyImportView(window) { DataContext = viewModel };
+        }
 
         private void UpdateGames(GamePropertyImportViewModel viewModel)
         {

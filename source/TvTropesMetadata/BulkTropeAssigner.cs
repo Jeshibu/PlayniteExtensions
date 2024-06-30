@@ -2,8 +2,6 @@
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
 using TvTropesMetadata.Scraping;
 
 namespace TvTropesMetadata
@@ -19,11 +17,6 @@ namespace TvTropesMetadata
         }
 
         public override string MetadataProviderName { get; } = "TV Tropes";
-
-        protected override UserControl GetBulkPropertyImportView(Window window, GamePropertyImportViewModel viewModel)
-        {
-            return new GamePropertyImportView(window) { DataContext = viewModel };
-        }
 
         protected override string GetGameIdFromUrl(string url)
         {
