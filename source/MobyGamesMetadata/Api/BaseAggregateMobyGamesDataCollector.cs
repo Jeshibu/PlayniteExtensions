@@ -50,13 +50,7 @@ namespace MobyGamesMetadata.Api
             return companies;
         }
 
-        protected string FixCompanyName(string companyName)
-        {
-            if (companyName.EndsWith(", the", StringComparison.InvariantCultureIgnoreCase))
-                companyName.Substring(0, companyName.Length - 5);
-
-            return companyName.TrimCompanyForms();
-        }
+        protected static string FixCompanyName(string companyName) => companyName.TrimEnd(", the").TrimCompanyForms();
 
         protected GameSearchResult ToSearchResult(MobyGame mobyGame)
         {
