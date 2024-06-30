@@ -102,7 +102,7 @@ namespace PlayniteExtensions.Metadata.Common
 
         protected virtual string GetIdFromGameLibrary(Guid libraryPluginId, string gameId) => null;
 
-        private IDictionary<string, IList<Game>> GetGamesById(CancellationToken cancellationToken, out IReadOnlyCollection<Game> unmatchedGames)
+        private IDictionary<string, IList<Game>> GetLibraryGamesById(CancellationToken cancellationToken, out IReadOnlyCollection<Game> unmatchedGames)
         {
             var gamesById = new ConcurrentDictionary<string, IList<Game>>(StringComparer.InvariantCultureIgnoreCase);
             var umg = new ConcurrentBag<Game>();
@@ -155,7 +155,7 @@ namespace PlayniteExtensions.Metadata.Common
             {
                 a.ProgressMaxValue = gamesToMatch.Count + 2;
 
-                var gamesById = GetGamesById(a.CancelToken, out var gamesWithNoKnownId);
+                var gamesById = GetLibraryGamesById(a.CancelToken, out var gamesWithNoKnownId);
                 a.CurrentProgressValue++;
 
                 GetDeflatedNames(gamesWithNoKnownId.Select(g => g.Name), deflatedNames, snc);
@@ -292,60 +292,14 @@ namespace PlayniteExtensions.Metadata.Common
         {
             using (playniteApi.Database.BufferedUpdate())
             {
-                DatabaseObject GetDatabaseObjectByName<T>(IItemCollection<T> collection, string name) where T : DatabaseObject
-                {
-                    return collection.FirstOrDefault(c => c.Name.Equals(viewModel.Name, StringComparison.InvariantCultureIgnoreCase))
-                           ?? collection.Add(viewModel.Name);
-                }
-
-                DatabaseObject dbItem;
-                switch (viewModel.TargetField)
-                {
-                    case GamePropertyImportTargetField.Category:
-                        dbItem = GetDatabaseObjectByName(playniteApi.Database.Categories, viewModel.Name);
-                        break;
-                    case GamePropertyImportTargetField.Genre:
-                        dbItem = GetDatabaseObjectByName(playniteApi.Database.Genres, viewModel.Name);
-                        break;
-                    case GamePropertyImportTargetField.Tag:
-                        dbItem = GetDatabaseObjectByName(playniteApi.Database.Tags, viewModel.Name);
-                        break;
-                    case GamePropertyImportTargetField.Feature:
-                        dbItem = GetDatabaseObjectByName(playniteApi.Database.Features, viewModel.Name);
-                        break;
-                    case GamePropertyImportTargetField.Series:
-                        dbItem = GetDatabaseObjectByName(playniteApi.Database.Series, viewModel.Name);
-                        break;
-                    default:
-                        throw new ArgumentException();
-                }
+                var dbItem = GetDatabaseObject(viewModel);
 
                 foreach (var g in viewModel.Games)
                 {
                     if (!g.IsChecked)
                         continue;
 
-                    bool update = false;
-                    void AddItemLocal(Func<Game, List<Guid>> fieldSelector) => update |= AddItem(g.Game, x => x.CategoryIds, dbItem.Id);
-
-                    switch (viewModel.TargetField)
-                    {
-                        case GamePropertyImportTargetField.Category:
-                            AddItemLocal(x => x.CategoryIds);
-                            break;
-                        case GamePropertyImportTargetField.Genre:
-                            AddItemLocal(x => x.GenreIds);
-                            break;
-                        case GamePropertyImportTargetField.Tag:
-                            AddItemLocal(x => x.TagIds);
-                            break;
-                        case GamePropertyImportTargetField.Feature:
-                            AddItemLocal(x => x.FeatureIds);
-                            break;
-                        case GamePropertyImportTargetField.Series:
-                            AddItemLocal(x => x.SeriesIds);
-                            break;
-                    }
+                    bool update = AddItem(g.Game, viewModel.TargetField, dbItem.Id);
 
                     foreach (var link in viewModel.Links)
                     {
@@ -373,6 +327,33 @@ namespace PlayniteExtensions.Metadata.Common
             }
         }
 
+        private static DatabaseObject GetDatabaseObject(GamePropertyImportViewModel viewModel)
+        {
+            var db = viewModel.PlayniteAPI.Database;
+            switch (viewModel.TargetField)
+            {
+                case GamePropertyImportTargetField.Category:
+                    return GetDatabaseObjectByName(db.Categories, viewModel.Name);
+                case GamePropertyImportTargetField.Genre:
+                    return GetDatabaseObjectByName(db.Genres, viewModel.Name);
+                case GamePropertyImportTargetField.Tag:
+                    return GetDatabaseObjectByName(db.Tags, viewModel.Name);
+                case GamePropertyImportTargetField.Feature:
+                    return GetDatabaseObjectByName(db.Features, viewModel.Name);
+                case GamePropertyImportTargetField.Series:
+                    return GetDatabaseObjectByName(db.Series, viewModel.Name);
+                default:
+                    throw new ArgumentException();
+            }
+        }
+
+        private static DatabaseObject GetDatabaseObjectByName<T>(IItemCollection<T> collection, string name) where T : DatabaseObject
+        {
+            return collection.FirstOrDefault(c => c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase))
+                   ?? collection.Add(name);
+        }
+
+
         protected virtual IEnumerable<PotentialLink> GetPotentialLinks(TSearchItem searchItem)
         {
             yield return new PotentialLink(MetadataProviderName, game => game.Url);
@@ -385,7 +366,7 @@ namespace PlayniteExtensions.Metadata.Common
             yield return new CheckboxFilter("Only filtered games", viewModel, x => playniteApi.MainView.FilteredGames.Contains(x.Game));
         }
 
-        private bool AddItem(Game g, Expression<Func<Game, List<Guid>>> collectionSelector, Guid idToAdd)
+        private static bool AddItem(Game g, Expression<Func<Game, List<Guid>>> collectionSelector, Guid idToAdd)
         {
             var collection = collectionSelector.Compile()(g);
             if (collection == null)
@@ -401,5 +382,26 @@ namespace PlayniteExtensions.Metadata.Common
             collection.Add(idToAdd);
             return true;
         }
+
+        private static Expression<Func<Game, List<Guid>>> GetCollectionSelector(GamePropertyImportTargetField targetField)
+        {
+            switch (targetField)
+            {
+                case GamePropertyImportTargetField.Category:
+                    return x => x.CategoryIds;
+                case GamePropertyImportTargetField.Genre:
+                    return x => x.GenreIds;
+                case GamePropertyImportTargetField.Tag:
+                    return x => x.TagIds;
+                case GamePropertyImportTargetField.Feature:
+                    return x => x.FeatureIds;
+                case GamePropertyImportTargetField.Series:
+                    return x => x.SeriesIds;
+                default:
+                    throw new ArgumentException($"Unknown target field: {targetField}");
+            }
+        }
+
+        private static bool AddItem(Game g, GamePropertyImportTargetField targetField, Guid idToAdd) => AddItem(g, GetCollectionSelector(targetField), idToAdd);
     }
 }
