@@ -147,11 +147,56 @@ namespace PlayniteExtensions.Metadata.Common
                 return null;
             }
 
+            var proposedMatches = GetProposedMatches(gamesToMatch).ToList();
+
+            if (proposedMatches.Count == 0)
+            {
+                playniteApi.Dialogs.ShowMessage("No matching games found in your library.", $"{MetadataProviderName} game property assigner", MessageBoxButton.OK, MessageBoxImage.Information);
+                return null;
+            }
+
+            var viewModel = new TApprovalPromptViewModel() { Name = $"{importSetting.Prefix}{propName}", Games = proposedMatches, PlayniteAPI = playniteApi };
+            viewModel.Links.AddRange(GetPotentialLinks(selectedItem));
+            viewModel.Filters.AddRange(GetCheckboxFilters(viewModel));
+            switch (importSetting.ImportTarget)
+            {
+                case PropertyImportTarget.Genres:
+                    viewModel.TargetField = GamePropertyImportTargetField.Genre;
+                    break;
+                case PropertyImportTarget.Series:
+                    viewModel.TargetField = GamePropertyImportTargetField.Series;
+                    break;
+                case PropertyImportTarget.Features:
+                    viewModel.TargetField = GamePropertyImportTargetField.Feature;
+                    break;
+                case PropertyImportTarget.Ignore:
+                case PropertyImportTarget.Tags:
+                default:
+                    viewModel.TargetField = GamePropertyImportTargetField.Tag;
+                    break;
+            }
+
+            var window = playniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
+            var view = GetBulkPropertyImportView(window, viewModel);
+            window.Content = view;
+            window.SizeToContent = SizeToContent.WidthAndHeight;
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            window.Title = "Select games";
+            window.SizeChanged += Window_SizeChanged;
+            var dialogResult = window.ShowDialog();
+            if (dialogResult == true)
+                return viewModel;
+            else
+                return null;
+        }
+
+        private IEnumerable<GameCheckboxViewModel> GetProposedMatches(List<GameDetails> gamesToMatch)
+        {
             var proposedMatches = new ConcurrentDictionary<Guid, GameCheckboxViewModel>();
             var snc = new SortableNameConverter(new string[0], numberLength: 1, removeEditions: true);
             var deflatedNames = new ConcurrentDictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             bool loopCompleted = false;
-            playniteApi.Dialogs.ActivateGlobalProgress(a =>
+            var progressResult = playniteApi.Dialogs.ActivateGlobalProgress(a =>
             {
                 a.ProgressMaxValue = gamesToMatch.Count + 2;
 
@@ -162,9 +207,8 @@ namespace PlayniteExtensions.Metadata.Common
                 a.CurrentProgressValue++;
 
                 ParallelOptions parallelOptions = new ParallelOptions() { CancellationToken = a.CancelToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
-                var loopResult = Parallel.For(0, gamesToMatch.Count, parallelOptions, i =>
+                var loopResult = Parallel.ForEach(gamesToMatch, parallelOptions, externalGameInfo =>
                 {
-                    var externalGameInfo = gamesToMatch[i];
                     externalGameInfo.Id = GetGameIdFromUrl(externalGameInfo.Url);
 
                     void AddMatchedGame(Game game)
@@ -202,49 +246,10 @@ namespace PlayniteExtensions.Metadata.Common
             }, new GlobalProgressOptions($"Matching {gamesToMatch.Count} games…", true) { IsIndeterminate = false });
 
             if (!loopCompleted)
-                return null;
-
-            if (proposedMatches.Count == 0)
-            {
-                playniteApi.Dialogs.ShowMessage("No matching games found in your library.", $"{MetadataProviderName} game property assigner", MessageBoxButton.OK, MessageBoxImage.Information);
-                return null;
-            }
+                return Enumerable.Empty<GameCheckboxViewModel>();
 
             var matchingGames = proposedMatches.Values.OrderBy(g => string.IsNullOrWhiteSpace(g.Game.SortingName) ? g.Game.Name : g.Game.SortingName).ThenBy(g => g.Game.ReleaseDate).ToList();
-
-            var viewModel = new TApprovalPromptViewModel() { Name = $"{importSetting.Prefix}{propName}", Games = matchingGames, PlayniteAPI = playniteApi };
-            viewModel.Links.AddRange(GetPotentialLinks(selectedItem));
-            viewModel.Filters.AddRange(GetCheckboxFilters(viewModel));
-            switch (importSetting.ImportTarget)
-            {
-                case PropertyImportTarget.Genres:
-                    viewModel.TargetField = GamePropertyImportTargetField.Genre;
-                    break;
-                case PropertyImportTarget.Series:
-                    viewModel.TargetField = GamePropertyImportTargetField.Series;
-                    break;
-                case PropertyImportTarget.Features:
-                    viewModel.TargetField = GamePropertyImportTargetField.Feature;
-                    break;
-                case PropertyImportTarget.Ignore:
-                case PropertyImportTarget.Tags:
-                default:
-                    viewModel.TargetField = GamePropertyImportTargetField.Tag;
-                    break;
-            }
-
-            var window = playniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
-            var view = GetBulkPropertyImportView(window, viewModel);
-            window.Content = view;
-            window.SizeToContent = SizeToContent.WidthAndHeight;
-            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            window.Title = "Select games";
-            window.SizeChanged += Window_SizeChanged;
-            var dialogResult = window.ShowDialog();
-            if (dialogResult == true)
-                return viewModel;
-            else
-                return null;
+            return matchingGames;
         }
 
         private static IEnumerable<string> GetDeflatedNames(IEnumerable<string> names, ConcurrentDictionary<string, string> deflatedNames, SortableNameConverter snc)
