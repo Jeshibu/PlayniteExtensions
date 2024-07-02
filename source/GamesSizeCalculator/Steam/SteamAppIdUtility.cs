@@ -2,12 +2,9 @@
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
-using PluginsCommon;
-using PluginsCommon.Web;
 using SteamCommon;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text.RegularExpressions;
 
 namespace GamesSizeCalculator.SteamSizeCalculation
@@ -15,7 +12,7 @@ namespace GamesSizeCalculator.SteamSizeCalculation
     public class SteamAppIdUtility : ISteamAppIdUtility
     {
         private static readonly Guid SteamLibraryPluginId = Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB");
-        private static readonly Regex SteamUrlRegex = new Regex(@"^https?://st(ore\.steampowered|eamcommunity)\.com/app/(?<id>[0-9]+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+        private static readonly Regex SteamUrlRegex = new Regex(@"\bhttps?://st(ore\.steampowered|eamcommunity)\.com/app/(?<id>[0-9]+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
         private static readonly Regex NonLetterOrDigitCharacterRegex = new Regex(@"[^\p{L}\p{Nd}]", RegexOptions.Compiled);
         private static readonly ILogger logger = LogManager.GetLogger();
 
@@ -66,14 +63,7 @@ namespace GamesSizeCalculator.SteamSizeCalculation
 
         private Dictionary<string, int> GetSteamIdsByTitle()
         {
-            var tempPath = Path.Combine(Path.GetTempPath(), "SteamAppList.json");
-            var file = new FileInfo(tempPath);
-            if (!file.Exists || file.LastWriteTime < DateTime.Now.AddHours(-18))
-            {
-                HttpDownloader.DownloadFile("https://api.steampowered.com/ISteamApps/GetAppList/v2/", tempPath);
-            }
-
-            var jsonStr = FileSystem.ReadStringFromFile(tempPath, true);
+            var jsonStr = SteamAppList.GetFileContents();
             var jsonContent = Serialization.FromJson<SteamAppListRoot>(jsonStr);
             Dictionary<string, int> output = new Dictionary<string, int>();
             foreach (var app in jsonContent.Applist.Apps)

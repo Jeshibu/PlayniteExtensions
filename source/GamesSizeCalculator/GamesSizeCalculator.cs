@@ -47,7 +47,7 @@ namespace GamesSizeCalculator
         {
             var appListCache = new CachedFileDownloader("https://api.steampowered.com/ISteamApps/GetAppList/v2/",
                     Path.Combine(GetPluginUserDataPath(), "SteamAppList.json"),
-                    TimeSpan.FromDays(3),
+                    TimeSpan.FromHours(18),
                     Encoding.UTF8);
 
             return new SteamAppIdUtility(appListCache);
@@ -56,10 +56,7 @@ namespace GamesSizeCalculator
         private List<ISizeCalculator> sizeCalculators { get; } = new List<ISizeCalculator>();
         private SteamApiClient steamApiClient;
 
-        private SteamApiClient GetSteamApiClient()
-        {
-            return steamApiClient ?? (steamApiClient = new SteamApiClient());
-        }
+        private SteamApiClient SteamApiClient => steamApiClient ?? (steamApiClient = new SteamApiClient());
 
         private ICollection<ISizeCalculator> GetSizeCalculators()
         {
@@ -67,7 +64,7 @@ namespace GamesSizeCalculator
                 return sizeCalculators;
 
             if (settings.Settings.GetUninstalledGameSizeFromSteam)
-                sizeCalculators.Add(new SteamSizeCalculator(GetSteamApiClient(), GetDefaultSteamAppUtility(), settings.Settings));
+                sizeCalculators.Add(new SteamSizeCalculator(SteamApiClient, GetDefaultSteamAppUtility(), settings.Settings));
 
             return sizeCalculators;
         }
