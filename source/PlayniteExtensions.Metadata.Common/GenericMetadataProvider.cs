@@ -144,7 +144,7 @@ namespace PlayniteExtensions.Metadata.Common
 
         public override int? GetCommunityScore(GetMetadataFieldArgs args)
         {
-            return GetGameDetails(args).CommunityScore;
+            return NullIfZero(GetGameDetails(args).CommunityScore);
         }
 
         public override MetadataFile GetCoverImage(GetMetadataFieldArgs args)
@@ -154,8 +154,10 @@ namespace PlayniteExtensions.Metadata.Common
 
         public override int? GetCriticScore(GetMetadataFieldArgs args)
         {
-            return GetGameDetails(args).CriticScore;
+            return NullIfZero(GetGameDetails(args).CriticScore);
         }
+
+        private static int? NullIfZero(int? number) => number == 0 ? null : number;
 
         public override string GetDescription(GetMetadataFieldArgs args)
         {
@@ -184,7 +186,8 @@ namespace PlayniteExtensions.Metadata.Common
 
         public override ulong? GetInstallSize(GetMetadataFieldArgs args)
         {
-            return GetGameDetails(args).InstallSize;
+            var installSize = GetGameDetails(args).InstallSize;
+            return installSize == 0 ? null : installSize;
         }
 
         public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
