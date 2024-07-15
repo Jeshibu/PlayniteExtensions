@@ -1,0 +1,131 @@
+﻿<UserControl x:Class="MutualGames.MutualGamesSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MutualGames"
+             xmlns:pec="clr-namespace:PlayniteExtensions.Common"
+             xmlns:dd="urn:gong-wpf-dragdrop"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=local:MutualGamesSettingsViewModel}"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <ScrollViewer>
+        <StackPanel Margin="20">
+            <StackPanel.Resources>
+                <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                    <Setter Property="IsReadOnly" Value="True"/>
+                    <Setter Property="IsEditable" Value="False"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Margin" Value="5,0"/>
+                </Style>
+            </StackPanel.Resources>
+
+            <TextBlock TextWrapping="Wrap">
+                Download friends data on the left (authenticate if necessary). Drag-copy friends to the right to group them by friend identities. The name you give one of these identities is how they'll be imported to your library. For the property format below, {0} is the import friend name, and {1} is the service they own the game on.
+            </TextBlock>
+
+            <WrapPanel Orientation="Horizontal" Margin="0,10">
+                <TextBlock VerticalAlignment="Center">Import friends as</TextBlock>
+                <ComboBox ItemsSource="{Binding ImportFieldOptions}" SelectedItem="{Binding Settings.ImportTo}"/>
+                <TextBlock VerticalAlignment="Center"> with the name format:</TextBlock>
+                <TextBox Text="{Binding Settings.PropertyNameFormat}" Width="150" Margin="5,0" VerticalContentAlignment="Center"
+                     d:Text="Owned by {0}"/>
+            </WrapPanel>
+
+            <StackPanel>
+                <TextBlock TextWrapping="Wrap">Import to games that are from different services than your friends' games:</TextBlock>
+                <RadioButton IsChecked="{Binding ImportAllChecked}" Content="Always"/>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton IsChecked="{Binding ImportAllWithFeatureChecked}" Content="Only games with this feature:" VerticalAlignment="Center"/>
+                    <ComboBox ItemsSource="{Binding Features}" SelectedValuePath="Id" SelectedValue="{Binding Settings.ImportCrossLibraryFeatureId}"/>
+                </StackPanel>
+                <RadioButton IsChecked="{Binding SameLibraryChecked}" Content="Only games on the same service"/>
+            </StackPanel>
+
+            <Grid Margin="0,10,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Margin="2" FontWeight="Bold">Sources</TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="1" Margin="2" FontWeight="Bold">Import as</TextBlock>
+                <ItemsControl ItemsSource="{Binding Settings.FriendSources}" d:ItemsSource="{d:SampleData ItemCount=3}" Grid.Row="1" Grid.Column="0">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Expander IsExpanded="True" Margin="0,0,0,5">
+                                <Expander.Header>
+                                    <TextBlock Text="{Binding HeaderText}" VerticalAlignment="Center" d:Text="Friend Source (12 friends)" Style="{StaticResource BaseTextBlockStyle}"/>
+                                </Expander.Header>
+                                <Expander.Content>
+                                    <StackPanel VerticalAlignment="Bottom" Margin="22,0,5,0">
+                                        <StackPanel.Resources>
+                                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                <Setter Property="Margin" Value="2,0,8,0"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                                <Setter Property="Padding" Value="5,2"/>
+                                            </Style>
+                                        </StackPanel.Resources>
+                                        <TextBlock VerticalAlignment="Center" Margin="2,0,0,5">
+                                            <TextBlock.Tag>
+                                                <PriorityBinding>
+                                                    <Binding Path="AuthStatus" IsAsync="True" />
+                                                    <Binding Source="{x:Static local:AuthStatus.Checking}" />
+                                                </PriorityBinding>
+                                            </TextBlock.Tag>
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                                                    <Style.Triggers>
+                                                        <Trigger Property="Tag" Value="{x:Static local:AuthStatus.Checking}">
+                                                            <Setter Property="Text" Value="Checking..." />
+                                                        </Trigger>
+                                                        <Trigger Property="Tag" Value="{x:Static local:AuthStatus.Ok}">
+                                                            <Setter Property="Text" Value="Logged in" />
+                                                        </Trigger>
+                                                        <Trigger Property="Tag" Value="{x:Static local:AuthStatus.AuthRequired}">
+                                                            <Setter Property="Text" Value="Requires authentication" />
+                                                        </Trigger>
+                                                        <Trigger Property="Tag" Value="{x:Static local:AuthStatus.Failed}">
+                                                            <Setter Property="Text" Value="Failed to check authentication status" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                        <WrapPanel Orientation="Horizontal">
+                                            <Button Command="{Binding AuthenticateCommand}" Content="Authenticate"/>
+                                            <Button Command="{Binding RefreshCommand}" Content="Refresh friends"/>
+                                        </WrapPanel>
+                                        <ListBox ItemsSource="{Binding Friends}" d:ItemsSource="{d:SampleData ItemCount=3}" Margin="2" dd:DragDrop.IsDragSource="True">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Name}"/>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </StackPanel>
+                                </Expander.Content>
+                            </Expander>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
+                <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Settings.FriendIdentities.Items}" d:ItemsSource="{d:SampleData ItemCount=5}" MinHeight="100" Padding="0,0,0,20"
+                         dd:DragDrop.DropHandler="{Binding Settings.FriendIdentities}" dd:DragDrop.IsDropTarget="True">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Width="Auto" HorizontalAlignment="Left">
+                                <TextBox Text="{Binding FriendName}" Width="150"/>
+                                <ListBox ItemsSource="{Binding Identities}" DisplayMemberPath="DisplayText" d:ItemsSource="{d:SampleData ItemCount=2}" Margin="30,0,0,0" Padding="0,0,0,10">
+                                </ListBox>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -2,6 +2,7 @@
 using Playnite.SDK;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 
@@ -24,7 +25,7 @@ namespace PlayniteExtensions.Common
                 output = new Dictionary<TKey, TValue>();
             else
                 output = new Dictionary<TKey, TValue>(equalityComparer);
-            
+
             foreach (var item in input)
             {
                 var key = keySelector(item);
@@ -56,6 +57,14 @@ stacktrace: {stacktraceString}";
                 return items;
             else
                 return null;
+        }
+
+        public static void Sort<TSource, TKey>(this ICollection<TSource> source, Func<TSource, TKey> keySelector)
+        {
+            List<TSource> sortedList = source.OrderBy(keySelector).ToList();
+            source.Clear();
+            foreach (var sortedItem in sortedList)
+                source.Add(sortedItem);
         }
     }
 }

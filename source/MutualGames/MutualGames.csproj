@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{46C08BCD-F3AF-4F8E-86C6-67913A028A22}</ProjectGuid>
+    <ProjectGuid>{A513C7B0-4889-4A70-8A10-DC5989BE63EE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TvTropesMetadata</RootNamespace>
-    <AssemblyName>TvTropesMetadata</AssemblyName>
+    <RootNamespace>MutualGames</RootNamespace>
+    <AssemblyName>MutualGames</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -34,6 +34,9 @@
     <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\packages\AngleSharp.0.9.9\lib\net45\AngleSharp.dll</HintPath>
     </Reference>
+    <Reference Include="GongSolutions.WPF.DragDrop, Version=2.0.0.0, Culture=neutral, PublicKeyToken=91f1945125b7a587, processorArchitecture=MSIL">
+      <HintPath>..\packages\gong-wpf-dragdrop.2.4.1\lib\net462\GongSolutions.WPF.DragDrop.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -44,10 +47,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -58,20 +58,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\PlayniteExtensions.Common\AngleSharpStringExtensions.cs">
-      <Link>Common\AngleSharpStringExtensions.cs</Link>
-    </Compile>
     <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs">
       <Link>Common\IEnumerableExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs">
-      <Link>Common\IntegerFormatConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs">
-      <Link>Common\IPlatformUtility.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs">
-      <Link>Common\PlatformUtility.cs</Link>
     </Compile>
     <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
       <Link>Common\PluginSettingsViewModel.cs</Link>
@@ -88,11 +76,8 @@
     <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs">
       <Link>Common\WebDownloader.cs</Link>
     </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkGamePropertyAssigner.cs">
-      <Link>Common\Metadata\BulkGamePropertyAssigner.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkImportPluginSettings.cs">
-      <Link>Common\Metadata\BulkImportPluginSettings.cs</Link>
+    <Compile Include="..\PlayniteExtensions.Common\WebViewWrapper.cs">
+      <Link>Common\WebViewWrapper.cs</Link>
     </Compile>
     <Compile Include="..\PlayniteExtensions.Metadata.Common\GameDetails.cs">
       <Link>Common\Metadata\GameDetails.cs</Link>
@@ -100,41 +85,19 @@
     <Compile Include="..\PlayniteExtensions.Metadata.Common\GameMatchingHelper.cs">
       <Link>Common\Metadata\GameMatchingHelper.cs</Link>
     </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GamePropertyImportViewModel.cs">
-      <Link>Common\Metadata\GamePropertyImportViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericItemOption.cs">
-      <Link>Common\Metadata\GenericItemOption.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericMetadataProvider.cs">
-      <Link>Common\Metadata\GenericMetadataProvider.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\IGameSearchResult.cs">
-      <Link>Common\Metadata\IGameSearchResult.cs</Link>
-    </Compile>
     <Compile Include="..\PlayniteExtensions.Metadata.Common\IImageData.cs">
       <Link>Common\Metadata\IImageData.cs</Link>
     </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\ISearchableDataSource.cs">
-      <Link>Common\Metadata\ISearchableDataSource.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\Settings.cs">
-      <Link>Common\Metadata\Settings.cs</Link>
-    </Compile>
-    <Compile Include="BulkTropeAssigner.cs" />
-    <Compile Include="Common\Metadata\GamePropertyImportView.xaml.cs">
-      <DependentUpon>GamePropertyImportView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Scraping\BaseScraper.cs" />
-    <Compile Include="Scraping\WorkScraper.cs" />
-    <Compile Include="SearchProviders\TropeSearchProvider.cs" />
-    <Compile Include="Scraping\TropeScraper.cs" />
-    <Compile Include="SearchProviders\WorkSearchProvider.cs" />
-    <Compile Include="TvTropesMetadata.cs" />
-    <Compile Include="TvTropesMetadataProvider.cs" />
-    <Compile Include="TvTropesMetadataSettings.cs" />
-    <Compile Include="TvTropesMetadataSettingsView.xaml.cs">
-      <DependentUpon>TvTropesMetadataSettingsView.xaml</DependentUpon>
+    <Compile Include="Clients\EaClient.cs" />
+    <Compile Include="Clients\GogClient.cs" />
+    <Compile Include="Clients\IFriendsGamesClient.cs" />
+    <Compile Include="Clients\NotAuthenticatedException.cs" />
+    <Compile Include="Clients\SteamClient.cs" />
+    <Compile Include="MutualGames.cs" />
+    <Compile Include="MutualGamesImporter.cs" />
+    <Compile Include="MutualGamesSettings.cs" />
+    <Compile Include="MutualGamesSettingsView.xaml.cs">
+      <DependentUpon>MutualGamesSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -143,11 +106,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="icon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Localization\*.xaml">
@@ -159,18 +117,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Common\Metadata\GamePropertyImportView.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="MutualGamesSettingsView.xaml">
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="TvTropesMetadataSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>xcopy "$(SolutionDir)PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$(ProjectDir)Common\Metadata" /Y /I</PreBuildEvent>
-  </PropertyGroup>
 </Project>

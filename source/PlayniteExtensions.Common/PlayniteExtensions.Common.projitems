@@ -24,5 +24,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TitleComparer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)WebDownloader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)WebViewWrapper.cs" />
   </ItemGroup>
 </Project>

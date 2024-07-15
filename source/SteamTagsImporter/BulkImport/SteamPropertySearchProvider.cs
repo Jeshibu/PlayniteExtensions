@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Newtonsoft.Json;
 
 namespace SteamTagsImporter.BulkImport
 {
@@ -24,8 +23,7 @@ namespace SteamTagsImporter.BulkImport
 
         public IEnumerable<GameDetails> GetDetails(SteamProperty prop, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
         {
-            logger.Info("Getting list of games");
-            logger.Info(JsonConvert.SerializeObject(prop));
+            logger.Info($"Getting list of games for {prop}");
             int start = 0, total = 0;
             var games = new List<GameDetails>();
             if (progressArgs != null)

@@ -9,6 +9,11 @@ namespace SteamTagsImporter.BulkImport
         public string Category { get; set; }
         public string Param { get; set; }
         public string Value { get; set; }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class SteamSearchResponse

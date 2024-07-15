@@ -192,9 +192,8 @@ namespace PlayniteExtensions.Metadata.Common
 
         private IEnumerable<GameCheckboxViewModel> GetProposedMatches(List<GameDetails> gamesToMatch)
         {
+            var matchHelper = new GameMatchingHelper();
             var proposedMatches = new ConcurrentDictionary<Guid, GameCheckboxViewModel>();
-            var snc = new SortableNameConverter(new string[0], numberLength: 1, removeEditions: true);
-            var deflatedNames = new ConcurrentDictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             bool loopCompleted = false;
             var progressResult = playniteApi.Dialogs.ActivateGlobalProgress(a =>
             {
@@ -203,7 +202,7 @@ namespace PlayniteExtensions.Metadata.Common
                 var gamesById = GetLibraryGamesById(a.CancelToken, out var gamesWithNoKnownId);
                 a.CurrentProgressValue++;
 
-                GetDeflatedNames(gamesWithNoKnownId.Select(g => g.Name), deflatedNames, snc);
+                matchHelper.GetDeflatedNames(gamesWithNoKnownId.Select(g => g.Name));
                 a.CurrentProgressValue++;
 
                 ParallelOptions parallelOptions = new ParallelOptions() { CancellationToken = a.CancelToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
@@ -227,11 +226,11 @@ namespace PlayniteExtensions.Metadata.Common
                             AddMatchedGame(g);
                     }
 
-                    var namesToMatch = GetDeflatedNames(externalGameInfo.Names, deflatedNames, snc).ToList();
+                    var namesToMatch = matchHelper.GetDeflatedNames(externalGameInfo.Names).ToList();
 
                     foreach (var g in gamesWithNoKnownId)
                     {
-                        var libraryGameNameDeflated = deflatedNames[g.Name];
+                        var libraryGameNameDeflated = matchHelper.DeflatedNames[g.Name];
 
                         if (namesToMatch.Contains(libraryGameNameDeflated, StringComparer.InvariantCultureIgnoreCase)
                             && platformUtility.PlatformsOverlap(g.Platforms, externalGameInfo.Platforms))
@@ -250,21 +249,6 @@ namespace PlayniteExtensions.Metadata.Common
 
             var matchingGames = proposedMatches.Values.OrderBy(g => string.IsNullOrWhiteSpace(g.Game.SortingName) ? g.Game.Name : g.Game.SortingName).ThenBy(g => g.Game.ReleaseDate).ToList();
             return matchingGames;
-        }
-
-        private static IEnumerable<string> GetDeflatedNames(IEnumerable<string> names, ConcurrentDictionary<string, string> deflatedNames, SortableNameConverter snc)
-        {
-            var output = new HashSet<string>();
-            foreach (string name in names)
-            {
-                if (!deflatedNames.TryGetValue(name, out string nameToMatch))
-                {
-                    nameToMatch = snc.Convert(name).Deflate();
-                    deflatedNames.TryAdd(name, nameToMatch);
-                }
-                output.Add(nameToMatch);
-            }
-            return output;
         }
 
         private bool windowSizedDown = false;

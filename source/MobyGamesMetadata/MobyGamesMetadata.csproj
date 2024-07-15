@@ -140,6 +140,9 @@
     <Compile Include="..\PlayniteExtensions.Metadata.Common\GameDetails.cs">
       <Link>Common\Metadata\GameDetails.cs</Link>
     </Compile>
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GameMatchingHelper.cs">
+      <Link>Common\Metadata\GameMatchingHelper.cs</Link>
+    </Compile>
     <Compile Include="..\PlayniteExtensions.Metadata.Common\GamePropertyImportViewModel.cs">
       <Link>Common\Metadata\GamePropertyImportViewModel.cs</Link>
     </Compile>
