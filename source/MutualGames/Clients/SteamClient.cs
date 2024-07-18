@@ -6,6 +6,7 @@ using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MutualGames.Clients
 {
@@ -71,6 +72,14 @@ namespace MutualGames.Clients
             return doc;
         }
 
+        private async Task<IHtmlDocument> GetHtmlAsync(string url)
+        {
+            var response = await webView.DownloadPageSourceAsync(url);
+            var doc = await htmlParser.ParseAsync(response.Content);
+            GateAuthentication(doc);
+            return doc;
+        }
+
         private bool IsAuthenticated(string pageSource) => IsAuthenticated(htmlParser.Parse(pageSource));
         private bool IsAuthenticated(IHtmlDocument doc) => doc.QuerySelector("#account_pulldown") != null;
 
@@ -80,11 +89,11 @@ namespace MutualGames.Clients
                 throw new NotAuthenticatedException();
         }
 
-        public bool IsAuthenticated()
+        public async Task<bool> IsAuthenticatedAsync()
         {
             try
             {
-                var doc = GetHtml("https://steamcommunity.com/search/groups");
+                var doc = await GetHtmlAsync("https://steamcommunity.com/search/groups");
                 return false;
             }
             catch (NotAuthenticatedException)
@@ -93,6 +102,6 @@ namespace MutualGames.Clients
             }
         }
 
-        public bool IsLoginSuccess(IWebView loginWebView) => IsAuthenticated(loginWebView.GetPageSource());
+        public async Task<bool> IsLoginSuccessAsync(IWebView loginWebView) => IsAuthenticated(await loginWebView.GetPageSourceAsync());
     }
 }

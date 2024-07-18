@@ -30,7 +30,7 @@ namespace MutualGames.Clients
 
         public IEnumerable<GameDetails> GetFriendGames(FriendInfo friend)
         {
-            var user = GetLoggedInUser();
+            var user = GetLoggedInUserAsync().Result;
             int page = 0, totalPages = 1;
             do
             {
@@ -86,9 +86,9 @@ namespace MutualGames.Clients
             throw new NotAuthenticatedException();
         }
 
-        private AccountInfo GetLoggedInUser()
+        private async Task<AccountInfo> GetLoggedInUserAsync()
         {
-            var response = offscreenWebView.DownloadPageSource("https://menu.gog.com/v1/account/basic");
+            var response = await offscreenWebView.DownloadPageSourceAsync("https://menu.gog.com/v1/account/basic");
             if (string.IsNullOrWhiteSpace(response.Content))
                 throw new NotAuthenticatedException();
 
@@ -99,11 +99,11 @@ namespace MutualGames.Clients
             return accountInfo;
         }
 
-        public bool IsAuthenticated()
+        public async Task<bool> IsAuthenticatedAsync()
         {
             try
             {
-                var userInfo = GetLoggedInUser();
+                var userInfo = await GetLoggedInUserAsync();
                 return userInfo?.IsLoggedIn ?? false;
             }
             catch
@@ -112,7 +112,7 @@ namespace MutualGames.Clients
             }
         }
 
-        public bool IsLoginSuccess(IWebView loginWebView) => IsAuthenticated();
+        public Task<bool> IsLoginSuccessAsync(IWebView loginWebView) => IsAuthenticatedAsync();
 
         #region models
         private class GetFriendGamesResponse

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace MutualGames.Clients
 {
@@ -17,7 +18,7 @@ namespace MutualGames.Clients
         private readonly ILogger logger = LogManager.GetLogger();
         private AuthTokenResponse _authToken;
         private long _userId;
-        private AuthTokenResponse AuthToken => _authToken ?? (_authToken = GetAccessToken());
+        private AuthTokenResponse AuthToken => _authToken ?? (_authToken = GetAccessTokenAsync().Result);
         private long UserId => _userId != default ? _userId : (_userId = GetUserId(AuthToken));
 
         public string Name { get; } = "EA";
@@ -72,11 +73,11 @@ namespace MutualGames.Clients
             return friendsResponse?.entries?.Select(e => new FriendInfo { Id = e.userId.ToString(), Name = e.nickName, Source = this.Name });
         }
 
-        public bool IsAuthenticated()
+        public async Task<bool> IsAuthenticatedAsync()
         {
             try
             {
-                _authToken = GetValidAccessToken();
+                _authToken = await GetValidAccessTokenAsync();
                 return _authToken != null;
             }
             catch (NotAuthenticatedException)
@@ -85,20 +86,20 @@ namespace MutualGames.Clients
             }
         }
 
-        private AuthTokenResponse GetAccessToken()
+        private async Task<AuthTokenResponse> GetAccessTokenAsync()
         {
             try
             {
-                var response = webView.DownloadPageSource("https://accounts.ea.com/connect/auth?client_id=ORIGIN_JS_SDK&response_type=token&redirect_uri=nucleus:rest&prompt=none");
+                var response = await webView.DownloadPageSourceAsync("https://accounts.ea.com/connect/auth?client_id=ORIGIN_JS_SDK&response_type=token&redirect_uri=nucleus:rest&prompt=none");
                 var tokenData = Serialization.FromJson<AuthTokenResponse>(response.Content);
                 return tokenData;
             }
             catch (Exception e) { throw new NotAuthenticatedException("Error getting access token", e); }
         }
 
-        private AuthTokenResponse GetValidAccessToken()
+        private async Task<AuthTokenResponse> GetValidAccessTokenAsync()
         {
-            var authToken = GetAccessToken();
+            var authToken = await GetAccessTokenAsync();
             if (string.IsNullOrEmpty(authToken.error))
                 return authToken;
 
@@ -122,11 +123,11 @@ namespace MutualGames.Clients
             }
         }
 
-        public bool IsLoginSuccess(IWebView loginWebView)
+        public async Task<bool> IsLoginSuccessAsync(IWebView loginWebView)
         {
             _authToken = null;
             _userId = default;
-            return IsAuthenticated();
+            return await IsAuthenticatedAsync();
         }
 
         #region models

@@ -117,10 +117,9 @@
                          dd:DragDrop.DropHandler="{Binding Settings.FriendIdentities}" dd:DragDrop.IsDropTarget="True">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Width="Auto" HorizontalAlignment="Left">
-                                <TextBox Text="{Binding FriendName}" Width="150"/>
-                                <ListBox ItemsSource="{Binding Identities}" DisplayMemberPath="DisplayText" d:ItemsSource="{d:SampleData ItemCount=2}" Margin="30,0,0,0" Padding="0,0,0,10">
-                                </ListBox>
+                            <StackPanel Width="Auto">
+                                <TextBox Text="{Binding FriendName}" Width="150" HorizontalAlignment="Left"/>
+                                <ListBox ItemsSource="{Binding Identities}" DisplayMemberPath="DisplayText" d:ItemsSource="{d:SampleData ItemCount=2}" Margin="30,0,0,0" Padding="0,0,0,10"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

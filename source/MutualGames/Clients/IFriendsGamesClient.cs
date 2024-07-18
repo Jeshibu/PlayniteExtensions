@@ -2,6 +2,7 @@
 using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MutualGames.Clients
 {
@@ -11,11 +12,11 @@ namespace MutualGames.Clients
         Guid PluginId { get; }
         IEnumerable<FriendInfo> GetFriends();
         IEnumerable<GameDetails> GetFriendGames(FriendInfo friend);
-        bool IsAuthenticated();
+        Task<bool> IsAuthenticatedAsync();
 
         IEnumerable<string> CookieDomains { get; }
         string LoginUrl { get; }
-        bool IsLoginSuccess(IWebView loginWebView);
+        Task<bool> IsLoginSuccessAsync(IWebView loginWebView);
     }
 
     public class FriendInfo : IEquatable<FriendInfo>

@@ -1,11 +1,13 @@
 ﻿using Playnite.SDK;
 using System;
+using System.Threading.Tasks;
 
 namespace PlayniteExtensions.Common
 {
     public interface IWebViewWrapper : IDisposable
     {
         WebViewResponse DownloadPageSource(string url);
+        Task<WebViewResponse> DownloadPageSourceAsync(string url);
     }
 
     public class WebViewResponse
@@ -47,6 +49,19 @@ namespace PlayniteExtensions.Common
                     Content = view.GetPageSource()
                 };
             }
+        }
+
+        public async Task<WebViewResponse> DownloadPageSourceAsync(string url)
+        {
+            logger.Debug($"Getting {url}");
+
+            view.NavigateAndWait(url);
+
+            return new WebViewResponse
+            {
+                Url = view.GetCurrentAddress(),
+                Content = await view.GetPageSourceAsync()
+            };
         }
 
         public void Dispose()

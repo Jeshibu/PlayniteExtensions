@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace MutualGames
 {
@@ -26,9 +28,14 @@ namespace MutualGames
         public string Name { get; set; }
         public ObservableCollection<FriendInfo> Friends { get; set; } = new ObservableCollection<FriendInfo>();
 
-        public RelayCommand RefreshCommand => new RelayCommand(SetFriends);
+        public RelayCommand RefreshCommand => new RelayCommand(BackgroundAction(SetFriends));
 
-        public RelayCommand AuthenticateCommand => new RelayCommand(Login);
+        public RelayCommand AuthenticateCommand => new RelayCommand(BackgroundAction(Login));
+
+        private Action BackgroundAction(Action action)
+        {
+            return () => Application.Current.Dispatcher.BeginInvoke(action);
+        }
 
         private void SetFriends()
         {
@@ -51,27 +58,27 @@ namespace MutualGames
 
                 webView.Navigate(Client.LoginUrl);
 
-                webView.LoadingChanged += (_, e) =>
+                webView.LoadingChanged += async (_, e) =>
                 {
                     if (e.IsLoading)
                         return;
 
-                    if (Client.IsLoginSuccess(webView))
+                    if (await Client.IsLoginSuccessAsync(webView))
                     {
                         webView.Close();
-                        OnPropertyChanged(nameof(IsAuthenticated));
                     }
                 };
 
                 webView.OpenDialog();
             }
+            OnPropertyChanged(nameof(IsAuthenticated));
         }
 
         [DontSerialize]
         public IFriendsGamesClient Client { get; set; }
 
         [DontSerialize]
-        public bool IsAuthenticated => Client.IsAuthenticated();
+        public bool IsAuthenticated => Client.IsAuthenticatedAsync().Result;
 
         [DontSerialize]
         public string HeaderText => $"{Name} ({Friends.Count} friends)";
@@ -89,7 +96,7 @@ namespace MutualGames
             {
                 try
                 {
-                    if (Client.IsAuthenticated())
+                    if (Client.IsAuthenticatedAsync().Result)
                         return AuthStatus.Ok;
                     else
                         return AuthStatus.AuthRequired;
