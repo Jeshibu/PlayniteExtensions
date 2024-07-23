@@ -43,6 +43,7 @@ namespace PlayniteExtensions.Common.Tests
         [InlineData("the Witcher 3", "Witcher 03")]
         [InlineData("A Game", "Game")]
         [InlineData("An Usual Game", "Usual Game")]
+        [InlineData("Title, The", "Title")]
         public void ConvertToSortableNameTest(string input, string expected)
         {
             var c = new SortableNameConverter();

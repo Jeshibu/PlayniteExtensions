@@ -7,7 +7,9 @@ namespace PlayniteExtensions.Common
 {
     public class SortableNameConverter
     {
-        private readonly List<string> articles;
+        private readonly string[] articles;
+        private readonly string[] removeFromStart;
+        private readonly string[] removeFromEnd;
 
         /// <summary>
         /// The minimum string length of numbers. If 4, XXIII or 23 will turn into 0023.
@@ -48,14 +50,14 @@ namespace PlayniteExtensions.Common
         /// 
         /// </summary>
         /// <param name="articles">Words to remove from the start of the title. Suggested: the contents of PlayniteSettings.GameSortingNameRemovedArticles, or "The", "A", "An".</param>
-        public SortableNameConverter(IEnumerable<string> articles, int numberLength = 2, bool removeEditions = false)
+        public SortableNameConverter(IEnumerable<string> articles = null, int numberLength = 2, bool removeEditions = false)
         {
             if (articles == null)
-            {
-                throw new ArgumentNullException(nameof(articles));
-            }
+                articles = new[] { "the", "a", "an" };
 
-            this.articles = articles.ToList();
+            this.articles = articles.ToArray();
+            this.removeFromStart = this.articles.Select(a => a + " ").ToArray();
+            this.removeFromEnd = this.articles.Select(a => ", " + a).ToArray();
             this.numberLength = numberLength;
             this.removeEditions = removeEditions;
         }
@@ -132,14 +134,10 @@ namespace PlayniteExtensions.Common
 
         private string StripArticles(string input)
         {
-            foreach (var article in articles)
-            {
-                if (input.StartsWith(article + " ", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return input.Substring(article.Length).TrimStart();
-                }
-            }
-            return input;
+            return input
+                .TrimStart(removeFromStart)
+                .TrimEnd(removeFromEnd)
+                .Trim();
         }
 
         /// <summary>

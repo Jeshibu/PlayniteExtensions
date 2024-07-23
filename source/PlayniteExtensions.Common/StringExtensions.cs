@@ -51,7 +51,7 @@ namespace PlayniteExtensions.Common
             return TrimStart(s, new[] { remove }, stringComparison);
         }
 
-        public static string TrimStart(this string s, string[] remove, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
+        public static string TrimStart(this string s, IEnumerable<string> remove, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
         {
             if (s == null)
                 return s;
@@ -69,7 +69,7 @@ namespace PlayniteExtensions.Common
             return TrimEnd(s, new[] { remove }, stringComparison);
         }
 
-        public static string TrimEnd(this string s, string[] remove, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
+        public static string TrimEnd(this string s, IEnumerable<string> remove, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
         {
             if (s == null)
                 return s;
