@@ -141,20 +141,9 @@ namespace BigFishLibrary
         public IEnumerable<GameMetadata> GetOnlineGames()
         {
             if (!settings.ImportFromOnline)
-                yield break;
+                return Enumerable.Empty<GameMetadata>();
 
-            var products = scraper.GetGames();
-
-            foreach (var product in products)
-            {
-                logger.Info($"Product: {JsonConvert.SerializeObject(product)}");
-                yield return new GameMetadata
-                {
-                    GameId = product.Sku,
-                    Name = product.Name,
-                    Source = new MetadataNameProperty("Big Fish Games"),
-                };
-            }
+            return scraper.GetGames();
         }
     }
 }

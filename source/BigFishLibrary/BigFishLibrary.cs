@@ -22,7 +22,9 @@ namespace BigFishLibrary
 
         public override Guid Id { get; } = Guid.Parse("37995df7-2ce2-4f7c-83a3-618138ae745d");
 
-        public override string Name => "Big Fish Games";
+        public static string PluginName = "Big Fish Games";
+
+        public override string Name => PluginName;
 
         public override LibraryClient Client => new BigFishLibraryClient(RegistryReader, iconPath);
 
