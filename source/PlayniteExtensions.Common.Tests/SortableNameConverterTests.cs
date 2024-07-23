@@ -52,6 +52,37 @@ namespace PlayniteExtensions.Common.Tests
         }
 
         [Theory]
+        [InlineData("FINAL FANTASY X/X-2 HD Remaster", "FINAL FANTASY 10/10-02")]
+        [InlineData("THE KING OF FIGHTERS XIV STEAM EDITION", "KING OF FIGHTERS 14")]
+        [InlineData("The Elder Scrolls II: Daggerfall Unity - GOG Cut", "Elder Scrolls 02: Daggerfall Unity")]
+        [InlineData("The Elder Scrolls IV: Oblivion - Game of the Year Edition Deluxe", "Elder Scrolls 04: Oblivion")]
+        [InlineData("The Last Oricru – Final Cut", "Last Oricru")]
+        [InlineData("BloodRayne: Terminal Cut", "BloodRayne")]
+        [InlineData("Strike Suit Zero: Director's Cut", "Strike Suit Zero")]
+        [InlineData("Lone Survivor: The Director's Cut", "Lone Survivor")]
+        [InlineData("Divinity II: Developer's Cut", "Divinity 02")]
+        [InlineData("Deadly Premonition: The Director's Cut", "Deadly Premonition")]
+        [InlineData("Saints Row IV: Game of the Century Edition", "Saints Row 04")]
+        [InlineData("POP: Methodology Experiment One - Game of The Saeculum Edition", "POP: Methodology Experiment 01")]
+        [InlineData("Frog Fractions: Game of the Decade Edition", "Frog Fractions")]
+        public void RemoveEditionsTest(string input, string expected)
+        {
+            var c = new SortableNameConverter(removeEditions: true);
+            var output = c.Convert(input);
+            Assert.Equal(expected, output);
+        }
+
+        [Theory]
+        [InlineData("Powerplay: The Game of the Gods")]
+        [InlineData("Coma: Recut")]
+        public void RemoveEditionsIsUnchanged(string input)
+        {
+            var c = new SortableNameConverter(removeEditions: true);
+            var output = c.Convert(input);
+            Assert.Equal(input, output);
+        }
+
+        [Theory]
         [InlineData("SHENZHEN I/O")]
         [InlineData("XIII")]
         [InlineData("X: Beyond the Frontier")]
@@ -131,6 +162,5 @@ namespace PlayniteExtensions.Common.Tests
             int? output = SortableNameConverter.ConvertRomanNumeralToInt(input);
             Assert.Null(output);
         }
-
     }
 }

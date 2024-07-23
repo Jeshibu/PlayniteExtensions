@@ -10,10 +10,6 @@ namespace PlayniteExtensions.Common
         private readonly string[] articles;
         private readonly string[] removeFromStart;
         private readonly string[] removeFromEnd;
-
-        /// <summary>
-        /// The minimum string length of numbers. If 4, XXIII or 23 will turn into 0023.
-        /// </summary>
         private readonly int numberLength;
         private readonly bool removeEditions;
 
@@ -44,12 +40,15 @@ namespace PlayniteExtensions.Common
         //see https://www.regular-expressions.info/modifiers.html
         private static Regex numberRegex = new Regex(@"(?<![\w.]|^)((?<roman>[IVXLCDM\u2160-\u2188]+(?!\.))|(?<arabic>[0-9]+))(?=\W|$)|(?i)\b(?<numberword>one|two|three)\b", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
-        private static Regex ignoredEndWordsRegex = new Regex(@"(\s*[:-])?(\s+([a-z']+\s+(edition|cut)|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the))+$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        //The unicode characters in the first group here are all kinds of hyphens
+        private static Regex ignoredEndWordsRegex = new Regex(@"(\s*[-:\u2010-\u2014\uFE58\uFE63\uFF0D])?(\s+((the\s+)?[a-z']+\s+(edition|cut)|deluxe|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the))+$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="articles">Words to remove from the start of the title. Suggested: the contents of PlayniteSettings.GameSortingNameRemovedArticles, or "The", "A", "An".</param>
+        /// <param name="articles">Words to remove from the start of the title. Default: "The", "A", "An".</param>
+        /// <param name="numberLength">The minimum string length of numbers. If 4, XXIII or 23 will turn into 0023, but 1999 will stay the same.</param>
+        /// <param name="removeEditions">If true, remove editions from the end of titles</param>
         public SortableNameConverter(IEnumerable<string> articles = null, int numberLength = 2, bool removeEditions = false)
         {
             if (articles == null)
@@ -79,24 +78,16 @@ namespace PlayniteExtensions.Common
                     if (match.Value == "I")
                     {
                         if (MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match))
-                        {
                             return "1".PadLeft(numberLength, '0');
-                        }
                         else
-                        {
                             return match.Value;
-                        }
                     }
                     else if (match.Value == "X")
                     {
                         if (MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match, maxDistanceFromEnd: 4) && !MatchComesBeforeDashAndWord(input, match))
-                        {
                             return "10".PadLeft(numberLength, '0');
-                        }
                         else
-                        {
                             return match.Value;
-                        }
                     }
                     else if (excludedRomanNumerals.Contains(match.Value))
                     {
@@ -115,13 +106,9 @@ namespace PlayniteExtensions.Common
                 else if (match.Groups["numberword"].Success)
                 {
                     if (MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match))
-                    {
                         return numberWordValues[match.Value].ToString(new string('0', numberLength));
-                    }
                     else
-                    {
                         return match.Value;
-                    }
                 }
                 return match.Value;
             });
@@ -146,13 +133,10 @@ namespace PlayniteExtensions.Common
         /// <param name="input">The roman numeral.</param>
         /// <param name="validate">If false, parse any roman numeral. If true, reject invalid ones.</param>
         /// <returns>An integer form of the supplied roman numeral, or NULL if the supplied roman numeral is invalid and <paramref name="validate"/> is true.</returns>
-        /// <exception cref="KeyNotFoundException">When the input contains non-numeral characters.</exception>
         public static int? ConvertRomanNumeralToInt(string input, bool validate = true)
         {
             if (string.IsNullOrWhiteSpace(input))
-            {
                 return null;
-            }
 
             int output = 0;
             int biggestNumberToTheRight = 0;
@@ -163,9 +147,7 @@ namespace PlayniteExtensions.Common
             {
                 char c = input[i];
                 if (!romanNumeralValues.TryGetValue(c, out int value))
-                {
                     return null;
-                }
 
                 bool subtract = value < biggestNumberToTheRight;
                 if (subtract)
@@ -181,39 +163,29 @@ namespace PlayniteExtensions.Common
                 #region validation
 
                 if (!validate)
-                {
                     continue;
-                }
 
                 //reject things like IVX and VIX and IIX
                 //subtractive numerals are only ever singular
                 if (subtract && lastNumericValue < biggestNumberToTheRight)
-                {
                     return null;
-                }
 
                 //reject things like VX or LC or DM
                 //subtractions can't be half the bigger value
                 //IV is as close as the two numbers get in value
                 if (subtract && value * 5 > biggestNumberToTheRight)
-                {
                     return null;
-                }
 
                 if (value == lastNumericValue)
                 {
                     //Numerals that aren't 1 or 10ⁿ can't repeat
                     if (!IsOneOrPowerOfTen(value))
-                    {
                         return null;
-                    }
 
                     //No numeral can repeat 4 times
                     prevCharGroupLength++;
                     if (prevCharGroupLength == 4)
-                    {
                         return null;
-                    }
                 }
                 else
                 {
@@ -261,15 +233,11 @@ namespace PlayniteExtensions.Common
         private static bool MatchComesBeforeDashAndWord(string input, Match match)
         {
             if (MatchIsNearEndOfString(input, match, maxDistanceFromEnd: 1))
-            {
                 return false;
-            }
 
             char nextChar = input[match.Index + match.Length];
             if (nextChar != '-')
-            {
                 return false;
-            }
 
             string nextWord = "";
 
@@ -277,14 +245,10 @@ namespace PlayniteExtensions.Common
             {
                 char c = input[i];
                 if (char.IsWhiteSpace(c))
-                {
                     break;
-                }
 
                 if (!char.IsLetter(c))
-                {
                     return false;
-                }
 
                 nextWord += c;
             }
