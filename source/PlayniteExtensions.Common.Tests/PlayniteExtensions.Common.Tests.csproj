@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PlatformUtilityTests.cs" />
+    <Compile Include="SortableNameConverterTests.cs" />
     <Compile Include="StringExtensionsTests.cs" />
     <Compile Include="TitleComparerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
