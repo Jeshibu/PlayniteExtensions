@@ -14,6 +14,8 @@ namespace MutualGames.Clients
     {
         private readonly IWebViewWrapper offscreenWebView;
         private readonly HtmlParser htmlParser = new HtmlParser();
+        private readonly ILogger logger = LogManager.GetLogger();
+        private AccountInfo accountInfo = null;
 
         public GogClient(IWebViewWrapper webView)
         {
@@ -21,6 +23,8 @@ namespace MutualGames.Clients
         }
 
         public string Name { get; } = "GOG";
+
+        public FriendSource Source { get; } = FriendSource.GOG;
 
         public Guid PluginId { get; } = Guid.Parse("AEBE8B7C-6DC3-4A66-AF31-E7375C6B5E9E");
 
@@ -52,7 +56,7 @@ namespace MutualGames.Clients
         private GetFriendGamesResponse GetFriendGames(AccountInfo account, FriendInfo friend, int page)
         {
             var url = $"https://www.gog.com/u/{friend.Name}/games/stats/{account.Username}?sort=recent_playtime&order=desc&page={page}&sort_user={account.UserId}";
-            var response = offscreenWebView.DownloadPageSource(url);
+            var response = offscreenWebView.DownloadPageTextAsync(url).Result;
             return JsonConvert.DeserializeObject<GetFriendGamesResponse>(response.Content);
         }
 
@@ -60,26 +64,31 @@ namespace MutualGames.Clients
         {
             var json = GetFriendsJson();
 
-            var acctInfo = JsonConvert.DeserializeObject<AccountRoot>(json);
-            foreach (var f in acctInfo.Friends)
+            var friends = JsonConvert.DeserializeObject<GogFriendContainer[]>(json);
+            foreach (var f in friends)
             {
+                if (f.User?.Id == null || f.User?.Username == null)
+                    continue;
+
                 yield return new FriendInfo
                 {
-                    Id = f.Id,
-                    Name = f.Username,
-                    Source = this.Name,
+                    Id = f.User.Id,
+                    Name = f.User.Username,
+                    Source = this.Source,
                 };
             }
         }
 
         private string GetFriendsJson()
         {
-            var response = offscreenWebView.DownloadPageSource("https://www.gog.com/account/friends");
+            var acctInfo = GetLoggedInUserAsync().Result;
+
+            var response = offscreenWebView.DownloadPageSource($"https://www.gog.com/u/{acctInfo.Username}/friends");
             var lines = response.Content.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var line in lines)
             {
                 var l = line.Trim().TrimEnd(';');
-                var trimmed = l.TrimStart("var gogData = ");
+                var trimmed = l.TrimStart("window.profilesData.profileUserFriends = ");
                 if (l != trimmed)
                     return trimmed;
             }
@@ -88,13 +97,19 @@ namespace MutualGames.Clients
 
         private async Task<AccountInfo> GetLoggedInUserAsync()
         {
-            var response = await offscreenWebView.DownloadPageSourceAsync("https://menu.gog.com/v1/account/basic");
+            if (accountInfo != null)
+                return accountInfo;
+
+            var response = await offscreenWebView.DownloadPageTextAsync("https://menu.gog.com/v1/account/basic");
             if (string.IsNullOrWhiteSpace(response.Content))
                 throw new NotAuthenticatedException();
 
-            var accountInfo = JsonConvert.DeserializeObject<AccountInfo>(response.Content);
+            accountInfo = JsonConvert.DeserializeObject<AccountInfo>(response.Content);
             if (!accountInfo.IsLoggedIn)
+            {
+                accountInfo = null;
                 throw new NotAuthenticatedException();
+            }
 
             return accountInfo;
         }
@@ -104,6 +119,7 @@ namespace MutualGames.Clients
             try
             {
                 var userInfo = await GetLoggedInUserAsync();
+                logger.Info($"Authenticated: {userInfo?.IsLoggedIn}");
                 return userInfo?.IsLoggedIn ?? false;
             }
             catch
@@ -145,10 +161,9 @@ namespace MutualGames.Clients
             public string Image { get; set; }
         }
 
-
-        private class AccountRoot
+        private class GogFriendContainer
         {
-            public List<GogFriend> Friends { get; set; } = new List<GogFriend>();
+            public GogFriend User { get; set; }
         }
 
         private class GogFriend

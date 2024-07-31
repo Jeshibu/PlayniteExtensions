@@ -5,8 +5,6 @@ using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MutualGames
 {
@@ -125,7 +123,7 @@ namespace MutualGames
         private IEnumerable<Game> GetMatchingGames(FriendInfo friend)
         {
             var output = new List<Game>();
-            var client = clients.FirstOrDefault(c => c.Name == friend.Source);
+            var client = clients.FirstOrDefault(c => c.Source == friend.Source);
             if (client == null) return new Game[0];
 
             var sameLibraryGames = GetSameLibraryGames(client, out var otherLibraryGames);

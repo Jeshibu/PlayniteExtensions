@@ -23,6 +23,8 @@ namespace MutualGames.Clients
 
         public string Name { get; } = "EA";
 
+        public FriendSource Source { get; } = FriendSource.EA;
+
         public Guid PluginId { get; } = Guid.Parse("85DD7072-2F20-4E76-A007-41035E390724");
 
         public IEnumerable<string> CookieDomains => new[] { ".ea.com", "myaccount.ea.com" };
@@ -37,7 +39,8 @@ namespace MutualGames.Clients
 
         public IEnumerable<GameDetails> GetFriendGames(FriendInfo friend)
         {
-            var response = downloader.DownloadString($"https://api3.origin.com/atom/users/{UserId}/other/{friend.Id}/games", headerSetter: headers =>
+            var userId = UserId;
+            var response = downloader.DownloadString($"https://api3.origin.com/atom/users/{userId}/other/{friend.Id}/games", headerSetter: headers =>
             {
                 headers.Set("AuthToken", AuthToken.access_token);
                 headers.Set(HttpRequestHeader.Accept, "application/json");
@@ -58,7 +61,8 @@ namespace MutualGames.Clients
 
         public IEnumerable<FriendInfo> GetFriends()
         {
-            string url = $"https://friends.gs.ea.com/friends/2/users/{UserId}/friends?names=true";
+            var userId = UserId;
+            string url = $"https://friends.gs.ea.com/friends/2/users/{userId}/friends?names=true";
             var response = downloader.DownloadString(url, headerSetter: headers =>
             {
                 headers.Set("AuthToken", AuthToken.access_token);
@@ -70,7 +74,7 @@ namespace MutualGames.Clients
             if (friendsResponse?.entries == null)
                 return null;
 
-            return friendsResponse?.entries?.Select(e => new FriendInfo { Id = e.userId.ToString(), Name = e.nickName, Source = this.Name });
+            return friendsResponse?.entries?.Select(e => new FriendInfo { Id = e.userId.ToString(), Name = e.nickName, Source = this.Source });
         }
 
         public async Task<bool> IsAuthenticatedAsync()
@@ -78,7 +82,9 @@ namespace MutualGames.Clients
             try
             {
                 _authToken = await GetValidAccessTokenAsync();
-                return _authToken != null;
+                var authenticated = _authToken != null;
+                logger.Info($"Authenticated: {authenticated}");
+                return authenticated;
             }
             catch (NotAuthenticatedException)
             {
@@ -90,7 +96,7 @@ namespace MutualGames.Clients
         {
             try
             {
-                var response = await webView.DownloadPageSourceAsync("https://accounts.ea.com/connect/auth?client_id=ORIGIN_JS_SDK&response_type=token&redirect_uri=nucleus:rest&prompt=none");
+                var response = await webView.DownloadPageTextAsync("https://accounts.ea.com/connect/auth?client_id=ORIGIN_JS_SDK&response_type=token&redirect_uri=nucleus:rest&prompt=none");
                 var tokenData = Serialization.FromJson<AuthTokenResponse>(response.Content);
                 return tokenData;
             }

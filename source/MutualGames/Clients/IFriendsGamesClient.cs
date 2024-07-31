@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK;
+using Playnite.SDK.Data;
 using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace MutualGames.Clients
     public interface IFriendsGamesClient
     {
         string Name { get; }
+        FriendSource Source { get; }
         Guid PluginId { get; }
         IEnumerable<FriendInfo> GetFriends();
         IEnumerable<GameDetails> GetFriendGames(FriendInfo friend);
@@ -23,8 +25,9 @@ namespace MutualGames.Clients
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public string Source { get; set; }
+        public FriendSource Source { get; set; }
 
+        [DontSerialize]
         public string DisplayText => $"{Name} ({Source} - {Id})";
 
         public override bool Equals(object obj)
@@ -46,7 +49,7 @@ namespace MutualGames.Clients
         {
             int hashCode = -543865608;
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Id);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Source);
+            hashCode = hashCode * -1521134295 + EqualityComparer<FriendSource>.Default.GetHashCode(Source);
             return hashCode;
         }
 

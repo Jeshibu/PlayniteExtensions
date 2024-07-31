@@ -14,6 +14,7 @@ namespace MutualGames.Clients
     {
         private readonly IWebViewWrapper webView;
         private readonly HtmlParser htmlParser = new HtmlParser();
+        private readonly ILogger logger = LogManager.GetLogger();
 
         public SteamClient(IWebViewWrapper webView)
         {
@@ -21,6 +22,7 @@ namespace MutualGames.Clients
         }
 
         public string Name { get; } = "Steam";
+        public FriendSource Source { get; } = FriendSource.Steam;
         public Guid PluginId { get; } = Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB");
 
         public IEnumerable<string> CookieDomains => new[] { "steamcommunity.com" };
@@ -59,7 +61,7 @@ namespace MutualGames.Clients
                 {
                     Id = friendElement.GetAttribute("data-steamid"),
                     Name = name,
-                    Source = this.Name,
+                    Source = this.Source,
                 };
             }
         }
@@ -68,7 +70,7 @@ namespace MutualGames.Clients
         {
             var response = webView.DownloadPageSource(url);
             var doc = htmlParser.Parse(response.Content);
-            GateAuthentication(doc);
+            GateAuthentication(doc, response.Url);
             return doc;
         }
 
@@ -76,16 +78,21 @@ namespace MutualGames.Clients
         {
             var response = await webView.DownloadPageSourceAsync(url);
             var doc = await htmlParser.ParseAsync(response.Content);
-            GateAuthentication(doc);
+            GateAuthentication(doc, response.Url);
             return doc;
         }
 
-        private bool IsAuthenticated(string pageSource) => IsAuthenticated(htmlParser.Parse(pageSource));
-        private bool IsAuthenticated(IHtmlDocument doc) => doc.QuerySelector("#account_pulldown") != null;
-
-        private void GateAuthentication(IHtmlDocument doc)
+        private bool IsAuthenticated(string pageSource, string url) => IsAuthenticated(htmlParser.Parse(pageSource), url);
+        private bool IsAuthenticated(IHtmlDocument doc, string url)
         {
-            if (!IsAuthenticated(doc))
+            bool authenticated = doc.QuerySelector("#account_pulldown") != null;
+            logger.Info($"Url {url} authenticated: {authenticated}");
+            return authenticated;
+        }
+
+        private void GateAuthentication(IHtmlDocument doc, string url)
+        {
+            if (!IsAuthenticated(doc, url))
                 throw new NotAuthenticatedException();
         }
 
@@ -93,15 +100,17 @@ namespace MutualGames.Clients
         {
             try
             {
-                var doc = await GetHtmlAsync("https://steamcommunity.com/search/groups");
-                return false;
+                var doc = await GetHtmlAsync("https://steamcommunity.com/search/groups"); //gated for authentication
+                logger.Info($"Authenticated!");
+                return true;
             }
             catch (NotAuthenticatedException)
             {
+                logger.Info("Not authenticated");
                 return false;
             }
         }
 
-        public async Task<bool> IsLoginSuccessAsync(IWebView loginWebView) => IsAuthenticated(await loginWebView.GetPageSourceAsync());
+        public async Task<bool> IsLoginSuccessAsync(IWebView loginWebView) => IsAuthenticated(await loginWebView.GetPageSourceAsync(), loginWebView.GetCurrentAddress());
     }
 }

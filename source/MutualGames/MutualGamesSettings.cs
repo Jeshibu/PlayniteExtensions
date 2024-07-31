@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace MutualGames
 {
@@ -26,11 +25,10 @@ namespace MutualGames
     public class FriendSourceSettings : ObservableObject
     {
         public string Name { get; set; }
+
+        public FriendSource Source { get; set; }
+
         public ObservableCollection<FriendInfo> Friends { get; set; } = new ObservableCollection<FriendInfo>();
-
-        public RelayCommand RefreshCommand => new RelayCommand(BackgroundAction(SetFriends));
-
-        public RelayCommand AuthenticateCommand => new RelayCommand(BackgroundAction(Login));
 
         private Action BackgroundAction(Action action)
         {
@@ -39,14 +37,22 @@ namespace MutualGames
 
         private void SetFriends()
         {
-            var friends = Client.GetFriends();
-            Friends.Clear();
-            foreach (var friend in friends)
-                Friends.Add(friend);
+            try
+            {
+                var friends = Client.GetFriends().OrderBy(f => f.Name).ToList();
 
-            Friends.Sort(f => f.Name);
+                Friends.Clear();
+                foreach (var friend in friends)
+                    Friends.Add(friend);
 
-            OnPropertyChanged(nameof(HeaderText));
+                OnPropertyChanged(nameof(HeaderText));
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"Error getting friends for {Name}");
+                PlayniteApi.Dialogs.ShowErrorMessage($"Couldn't get friends for {Client?.Name} - check if you're authenticated.");
+                OnPropertyChanged(nameof(AuthStatus));
+            }
         }
 
         private void Login()
@@ -64,15 +70,19 @@ namespace MutualGames
                         return;
 
                     if (await Client.IsLoginSuccessAsync(webView))
-                    {
                         webView.Close();
-                    }
                 };
 
                 webView.OpenDialog();
             }
             OnPropertyChanged(nameof(IsAuthenticated));
         }
+
+        [DontSerialize]
+        public RelayCommand RefreshCommand => new RelayCommand(BackgroundAction(SetFriends));
+
+        [DontSerialize]
+        public RelayCommand AuthenticateCommand => new RelayCommand(BackgroundAction(Login));
 
         [DontSerialize]
         public IFriendsGamesClient Client { get; set; }
@@ -96,7 +106,7 @@ namespace MutualGames
             {
                 try
                 {
-                    if (Client.IsAuthenticatedAsync().Result)
+                    if (IsAuthenticated)
                         return AuthStatus.Ok;
                     else
                         return AuthStatus.AuthRequired;
@@ -119,12 +129,12 @@ namespace MutualGames
             var sourceItems = GetDragSourceItems(dropInfo);
             if (sourceItems.Count == 0)
             {
-                dropInfo.Effects = System.Windows.DragDropEffects.None;
+                dropInfo.Effects = DragDropEffects.None;
                 dropInfo.DropTargetAdorner = null;
             }
             else
             {
-                dropInfo.Effects = System.Windows.DragDropEffects.Copy;
+                dropInfo.Effects = DragDropEffects.Copy;
                 dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
             }
         }
@@ -194,7 +204,8 @@ namespace MutualGames
     public class MutualGamesSettingsViewModel : PluginSettingsViewModel<MutualGamesSettings, MutualGames>
     {
         private List<GameFeature> gameFeatures;
-        public IFriendsGamesClient[] Clients { get; }
+        private IFriendsGamesClient[] clients;
+        public IFriendsGamesClient[] Clients => clients ?? (clients = Plugin.GetClients().ToArray());
         public GameField[] ImportFieldOptions { get; } = new[] { GameField.Categories, GameField.Tags };
         public List<GameFeature> Features
         {
@@ -212,22 +223,29 @@ namespace MutualGames
         public bool SameLibraryChecked
         {
             get => Settings.CrossLibraryImportMode == CrossLibraryImportMode.SameLibraryOnly;
-            set { if (value) Settings.CrossLibraryImportMode = CrossLibraryImportMode.SameLibraryOnly; }
+            set { if (value) SetCrossLibraryImportMode(CrossLibraryImportMode.SameLibraryOnly); }
         }
         public bool ImportAllChecked
         {
             get => Settings.CrossLibraryImportMode == CrossLibraryImportMode.ImportAll;
-            set { if (value) Settings.CrossLibraryImportMode = CrossLibraryImportMode.ImportAll; }
+            set { if (value) SetCrossLibraryImportMode(CrossLibraryImportMode.ImportAll); }
         }
         public bool ImportAllWithFeatureChecked
         {
             get => Settings.CrossLibraryImportMode == CrossLibraryImportMode.ImportAllWithFeature;
-            set { if (value) Settings.CrossLibraryImportMode = CrossLibraryImportMode.ImportAllWithFeature; }
+            set { if (value) SetCrossLibraryImportMode(CrossLibraryImportMode.ImportAllWithFeature); }
+        }
+
+        private void SetCrossLibraryImportMode(CrossLibraryImportMode crossLibraryImportMode)
+        {
+            Settings.CrossLibraryImportMode = crossLibraryImportMode;
+            base.OnPropertyChanged(nameof(SameLibraryChecked));
+            base.OnPropertyChanged(nameof(ImportAllChecked));
+            base.OnPropertyChanged(nameof(ImportAllWithFeatureChecked));
         }
 
         public MutualGamesSettingsViewModel(MutualGames plugin) : base(plugin, plugin.PlayniteApi)
         {
-            Clients = plugin.GetClients().ToArray();
             InitializeSettings();
         }
 
@@ -235,24 +253,32 @@ namespace MutualGames
         {
             Settings = Plugin.LoadPluginSettings<MutualGamesSettings>();
 
-            if (Settings == null)
+            var firstRun = Settings == null;
+
+            if (firstRun)
             {
                 Settings = new MutualGamesSettings();
+            }
+
+            if (Settings.ImportCrossLibraryFeatureId == default)
+            {
                 var titleComparer = new TitleComparer();
                 var crossPlatformFeature = Features.FirstOrDefault(f => titleComparer.Equals(f.Name, "Cross-Platform Multiplayer"));
                 if (crossPlatformFeature != null)
                 {
-                    Settings.CrossLibraryImportMode = CrossLibraryImportMode.ImportAllWithFeature;
                     Settings.ImportCrossLibraryFeatureId = crossPlatformFeature.Id;
+
+                    if (firstRun)
+                        Settings.CrossLibraryImportMode = CrossLibraryImportMode.ImportAllWithFeature;
                 }
             }
 
             foreach (var c in Clients)
             {
-                var existingSettings = Settings.FriendSources.FirstOrDefault(fs => fs.Name == c.Name);
+                var existingSettings = Settings.FriendSources.FirstOrDefault(fs => fs.Source == c.Source);
                 if (existingSettings == null)
                 {
-                    Settings.FriendSources.Add(new FriendSourceSettings { Client = c, Name = c.Name, PlayniteApi = PlayniteApi });
+                    Settings.FriendSources.Add(new FriendSourceSettings { Client = c, Name = c.Name, Source = c.Source, PlayniteApi = PlayniteApi });
                 }
                 else
                 {
@@ -267,7 +293,7 @@ namespace MutualGames
             errors = new List<string>();
             try
             {
-                var exampleFriend = new FriendInfo { Id = "42069", Name = "xXx_1337Slayer_xXx", Source = "Steam" };
+                var exampleFriend = new FriendInfo { Id = "42069", Name = "xXx_1337Slayer_xXx", Source = FriendSource.Steam };
                 var formatted = string.Format(Settings.PropertyNameFormat, exampleFriend.Name, exampleFriend.Source);
             }
             catch (ArgumentNullException)
@@ -278,6 +304,9 @@ namespace MutualGames
             {
                 errors.Add("Format is invalid. Make sure you only use {0} and {1} as variables, and escape any other uses of { or } with the same character (so {{ or }})");
             }
+
+            if (Settings.CrossLibraryImportMode == CrossLibraryImportMode.ImportAllWithFeature && Settings.ImportCrossLibraryFeatureId == default)
+                errors.Add("Please select a feature for the cross-library import mode");
 
             return errors.Count == 0;
         }

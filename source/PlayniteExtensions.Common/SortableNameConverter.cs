@@ -199,7 +199,7 @@ namespace PlayniteExtensions.Common
             return output;
         }
 
-        private string StripEdition(string input, out string edition)
+        private static string StripEdition(string input, out string edition)
         {
             var match = ignoredEndWordsRegex.Match(input);
             if (match.Success)
