@@ -122,7 +122,7 @@ namespace GiantBombMetadata.SearchProviders
                 if (description.Length > 0)
                     description.AppendLine();
 
-                description.Append(item.Deck);
+                description.Append(item.Deck.HtmlDecode());
             }
 
             output.Description = description.ToString();
