@@ -1,11 +1,13 @@
 ﻿using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
+using Newtonsoft.Json;
 using Playnite.SDK;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MutualGames.Clients
@@ -29,27 +31,27 @@ namespace MutualGames.Clients
 
         public string LoginUrl => "https://steamcommunity.com/login/home/?goto=search%2Fgroups";
 
-        public IEnumerable<GameDetails> GetFriendGames(FriendInfo friend)
+        public IEnumerable<GameDetails> GetFriendGames(FriendInfo friend, CancellationToken cancellationToken)
         {
             const string urlStart = "https://store.steampowered.com/app/";
+            const string jsonAttr = "data-profile-gameslist";
 
             var doc = GetHtml($"https://steamcommunity.com/profiles/{friend.Id}/games/?tab=all");
-            var gameElements = doc.QuerySelectorAll($"a[href^='{urlStart}']");
-            foreach (var e in gameElements)
+            var gamesListTemplate = doc.QuerySelector($"template#gameslist_config[{jsonAttr}]");
+            var jsonStr = gamesListTemplate.GetAttribute(jsonAttr).HtmlDecode();
+            var json = JsonConvert.DeserializeObject<ProfileDataRoot>(jsonStr);
+            foreach (var g in json.rgGames)
             {
-                var textContent = e.TextContent.HtmlDecode();
-                if (string.IsNullOrWhiteSpace(textContent))
-                    continue;
+                var id = g.appid.ToString();
+                var url = urlStart + id;
 
-                var url = e.GetAttribute("href");
-
-                var game = new GameDetails { Url = url, Id = url.Substring(urlStart.Length) };
-                game.Names.Add(textContent);
+                var game = new GameDetails { Url = url, Id = id };
+                game.Names.Add(g.name);
                 yield return game;
             }
         }
 
-        public IEnumerable<FriendInfo> GetFriends()
+        public IEnumerable<FriendInfo> GetFriends(CancellationToken cancellationToken)
         {
             var doc = GetHtml("https://steamcommunity.com/my/friends");
             var friendElements = doc.QuerySelectorAll(".persona[data-steamid]");
@@ -112,5 +114,20 @@ namespace MutualGames.Clients
         }
 
         public async Task<bool> IsLoginSuccessAsync(IWebView loginWebView) => IsAuthenticated(await loginWebView.GetPageSourceAsync(), loginWebView.GetCurrentAddress());
+
+        #region models
+
+        private class ProfileDataRoot
+        {
+            public List<SteamGame> rgGames { get; set; } = new List<SteamGame>();
+        }
+
+        private class SteamGame
+        {
+            public long appid { get; set; }
+            public string name { get; set; }
+        }
+
+        #endregion models
     }
 }

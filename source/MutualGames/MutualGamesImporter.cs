@@ -5,6 +5,7 @@ using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace MutualGames
 {
@@ -43,10 +44,10 @@ namespace MutualGames
 
                         foreach (var friend in friendIdentityGrouping.Identities)
                         {
-                            a.Text = $"Getting games for {friendIdentityGrouping.FriendName} ({friend.Source})";
+                            a.Text = $"Getting games for {friendIdentityGrouping.FriendName} ({friend.Source} - {friend.Name})";
                             try
                             {
-                                var matchingGames = GetMatchingGames(friend);
+                                var matchingGames = GetMatchingGames(friend, a.CancelToken);
                                 foreach (var matchingGame in matchingGames)
                                     if (AddPropertyToGame(matchingGame, dbItem))
                                         playniteAPI.Database.Games.Update(matchingGame);
@@ -120,7 +121,7 @@ namespace MutualGames
 
         #region game matching
 
-        private IEnumerable<Game> GetMatchingGames(FriendInfo friend)
+        private IEnumerable<Game> GetMatchingGames(FriendInfo friend, CancellationToken cancellationToken)
         {
             var output = new List<Game>();
             var client = clients.FirstOrDefault(c => c.Source == friend.Source);
@@ -128,7 +129,7 @@ namespace MutualGames
 
             var sameLibraryGames = GetSameLibraryGames(client, out var otherLibraryGames);
 
-            var friendGames = client.GetFriendGames(friend).ToList();
+            var friendGames = client.GetFriendGames(friend, cancellationToken).ToList();
             foreach (var friendGame in friendGames)
             {
                 var samePluginLibraryGames = playniteAPI.Database.Games.Where(g => g.PluginId == client.PluginId);

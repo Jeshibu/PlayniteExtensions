@@ -37,22 +37,22 @@ namespace MutualGames
 
         private void SetFriends()
         {
-            try
+            PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
             {
-                var friends = Client.GetFriends().OrderBy(f => f.Name).ToList();
+                try
+                {
+                    Friends = Client.GetFriends(a.CancelToken).OrderBy(f => f.Name).ToObservable();
 
-                Friends.Clear();
-                foreach (var friend in friends)
-                    Friends.Add(friend);
-
-                OnPropertyChanged(nameof(HeaderText));
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, $"Error getting friends for {Name}");
-                PlayniteApi.Dialogs.ShowErrorMessage($"Couldn't get friends for {Client?.Name} - check if you're authenticated.");
-                OnPropertyChanged(nameof(AuthStatus));
-            }
+                    OnPropertyChanged(nameof(HeaderText));
+                    OnPropertyChanged(nameof(Friends));
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, $"Error getting friends for {Name}");
+                    PlayniteApi.Dialogs.ShowErrorMessage($"Couldn't get friends for {Client?.Name} - check if you're authenticated.");
+                    OnPropertyChanged(nameof(AuthStatus));
+                }
+            }, new GlobalProgressOptions($"Getting {Source} friends", cancelable: true) { IsIndeterminate = true });
         }
 
         private void Login()
@@ -79,7 +79,7 @@ namespace MutualGames
         }
 
         [DontSerialize]
-        public RelayCommand RefreshCommand => new RelayCommand(BackgroundAction(SetFriends));
+        public RelayCommand RefreshCommand => new RelayCommand(SetFriends);
 
         [DontSerialize]
         public RelayCommand AuthenticateCommand => new RelayCommand(BackgroundAction(Login));

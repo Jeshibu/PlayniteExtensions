@@ -32,12 +32,15 @@ namespace MutualGames.Clients
 
         public string LoginUrl => "https://www.gog.com/##openlogin";
 
-        public IEnumerable<GameDetails> GetFriendGames(FriendInfo friend)
+        public IEnumerable<GameDetails> GetFriendGames(FriendInfo friend, CancellationToken cancellationToken)
         {
             var user = GetLoggedInUserAsync().Result;
             int page = 0, totalPages = 1;
             do
             {
+                if (cancellationToken.IsCancellationRequested)
+                    yield break;
+
                 page++;
                 var response = GetFriendGames(user, friend, page);
                 foreach (var item in response.Embedded.Items)
@@ -60,9 +63,9 @@ namespace MutualGames.Clients
             return JsonConvert.DeserializeObject<GetFriendGamesResponse>(response.Content);
         }
 
-        public IEnumerable<FriendInfo> GetFriends()
+        public IEnumerable<FriendInfo> GetFriends(CancellationToken cancellationToken)
         {
-            var json = GetFriendsJson();
+            var json = GetFriendsJson(cancellationToken);
 
             var friends = JsonConvert.DeserializeObject<GogFriendContainer[]>(json);
             foreach (var f in friends)
@@ -79,7 +82,7 @@ namespace MutualGames.Clients
             }
         }
 
-        private string GetFriendsJson()
+        private string GetFriendsJson(CancellationToken cancellationToken)
         {
             var acctInfo = GetLoggedInUserAsync().Result;
 

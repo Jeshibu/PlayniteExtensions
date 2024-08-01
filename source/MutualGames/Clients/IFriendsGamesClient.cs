@@ -3,6 +3,7 @@ using Playnite.SDK.Data;
 using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MutualGames.Clients
@@ -12,8 +13,8 @@ namespace MutualGames.Clients
         string Name { get; }
         FriendSource Source { get; }
         Guid PluginId { get; }
-        IEnumerable<FriendInfo> GetFriends();
-        IEnumerable<GameDetails> GetFriendGames(FriendInfo friend);
+        IEnumerable<FriendInfo> GetFriends(CancellationToken cancellationToken);
+        IEnumerable<GameDetails> GetFriendGames(FriendInfo friend, CancellationToken cancellationToken);
         Task<bool> IsAuthenticatedAsync();
 
         IEnumerable<string> CookieDomains { get; }

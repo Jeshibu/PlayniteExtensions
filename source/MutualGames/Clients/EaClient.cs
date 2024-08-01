@@ -6,7 +6,8 @@ using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
+using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MutualGames.Clients
@@ -37,13 +38,14 @@ namespace MutualGames.Clients
             this.downloader = downloader;
         }
 
-        public IEnumerable<GameDetails> GetFriendGames(FriendInfo friend)
+        public IEnumerable<GameDetails> GetFriendGames(FriendInfo friend, CancellationToken cancellationToken)
         {
             var userId = UserId;
-            var response = downloader.DownloadString($"https://api3.origin.com/atom/users/{userId}/other/{friend.Id}/games", headerSetter: headers =>
+            var response = downloader.DownloadString($"https://api3.origin.com/atom/users/{userId}/other/{friend.Id}/games",
+                cancellationToken: cancellationToken,
+                headerSetter: headers =>
             {
-                headers.Set("AuthToken", AuthToken.access_token);
-                headers.Set(HttpRequestHeader.Accept, "application/json");
+                headers.Add("AuthToken", AuthToken.access_token);
             });
             var gamesResponse = JsonConvert.DeserializeObject<ProductInfosResponse>(response.ResponseContent);
             if (gamesResponse.productInfos == null)
@@ -59,15 +61,16 @@ namespace MutualGames.Clients
             }
         }
 
-        public IEnumerable<FriendInfo> GetFriends()
+        public IEnumerable<FriendInfo> GetFriends(CancellationToken cancellationToken)
         {
             var userId = UserId;
             string url = $"https://friends.gs.ea.com/friends/2/users/{userId}/friends?names=true";
-            var response = downloader.DownloadString(url, headerSetter: headers =>
+            var response = downloader.DownloadString(url, cancellationToken: cancellationToken, headerSetter: headers =>
             {
-                headers.Set("AuthToken", AuthToken.access_token);
-                headers.Set("X-Api-Version", "2");
-                headers.Set("X-Application-Key", "Origin");
+                headers.Add("AuthToken", AuthToken.access_token);
+                headers.Add("X-Api-Version", "2");
+                headers.Add("X-Application-Key", "Origin");
+                headers.Accept.Set("application/json");
             });
             var friendsResponse = JsonConvert.DeserializeObject<FriendsResponse>(response.ResponseContent);
 
@@ -118,7 +121,8 @@ namespace MutualGames.Clients
             {
                 var response = downloader.DownloadString("https://gateway.ea.com/proxy/identity/pids/me", headerSetter: headers =>
                 {
-                    headers.Set(HttpRequestHeader.Authorization, $"{authToken.token_type} {authToken.access_token}");
+                    headers.Authorization = new AuthenticationHeaderValue(authToken.token_type, authToken.access_token);
+                    headers.Accept.Set("application/json");
                 });
                 var accountInfo = JsonConvert.DeserializeObject<AccountInfoResponse>(response.ResponseContent);
                 return accountInfo.pid.pidId;
