@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,7 +27,7 @@ namespace PlayniteExtensions.Tests.Common
         public Dictionary<string, Redirect> RedirectsByUrl { get; } = new Dictionary<string, Redirect>(StringComparer.Ordinal);
         public List<string> CalledUrls { get; } = new List<string>();
 
-        public CookieCollection Cookies { get; } = new CookieCollection();
+        public CookieContainer Cookies { get; } = new CookieContainer();
 
         public FakeWebDownloader() { }
 
@@ -45,32 +46,12 @@ namespace PlayniteExtensions.Tests.Common
             RedirectsByUrl.Add(url, new Redirect(redirectUrl, depth));
         }
 
-        public virtual async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<WebHeaderCollection> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxResponseDepth = 7)
+        public virtual async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxResponseDepth = 7, CancellationToken? cancellationToken = null)
         {
-            return DownloadString(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType: null, throwExceptionOnErrorResponse, maxResponseDepth);
+            return DownloadString(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType: null, throwExceptionOnErrorResponse, maxResponseDepth, cancellationToken);
         }
 
-        public string DownloadFile(string url, string targetFolder)
-        {
-            CalledUrls.Add(url);
-            if (FilesByUrl.TryGetValue(url, out string filePath))
-            {
-                string targetPath = Path.Combine(targetFolder, Path.GetFileName(filePath));
-                File.Copy(filePath, targetPath, overwrite: true);
-                return targetPath;
-            }
-            else
-            {
-                throw new Exception($"Url not accounted for: {url}");
-            }
-        }
-
-        public string DownloadFile(string url, string targetFolder, CancellationToken cancellationToken, DownloadProgressCallback progressCallback = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<WebHeaderCollection> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7)
+        public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null)
         {
             CalledUrls.Add(url);
             if (FilesByUrl.TryGetValue(url, out string filePath))
@@ -81,7 +62,7 @@ namespace PlayniteExtensions.Tests.Common
                 if (maxRedirectDepth < redir.Depth)
                     return new DownloadStringResponse(redir.RedirectUrl, null, HttpStatusCode.Redirect);
                 else
-                    return DownloadString(redir.RedirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType, throwExceptionOnErrorResponse, maxRedirectDepth);
+                    return DownloadString(redir.RedirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType, throwExceptionOnErrorResponse, maxRedirectDepth, cancellationToken);
             }
 
             throw new Exception($"Url not accounted for: {url}");
