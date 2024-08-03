@@ -41,15 +41,9 @@ namespace MutualGames
             importer.Import();
         }
 
-        public override ISettings GetSettings(bool firstRunSettings)
-        {
-            return Settings;
-        }
+        public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
-        public override UserControl GetSettingsView(bool firstRunSettings)
-        {
-            return new MutualGamesSettingsView();
-        }
+        public override UserControl GetSettingsView(bool firstRunSettings) => new MutualGamesSettingsView();
 
         public IEnumerable<IFriendsGamesClient> GetClients()
         {

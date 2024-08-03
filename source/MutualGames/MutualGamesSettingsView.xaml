@@ -53,73 +53,100 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Margin="2" FontWeight="Bold">Sources</TextBlock>
                 <TextBlock Grid.Row="0" Grid.Column="1" Margin="2" FontWeight="Bold">Import as</TextBlock>
-                <ItemsControl ItemsSource="{Binding Settings.FriendSources}" d:ItemsSource="{d:SampleData ItemCount=3}" Grid.Row="1" Grid.Column="0">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Expander IsExpanded="True" Margin="0,0,0,5">
-                                <Expander.Header>
-                                    <TextBlock Text="{Binding HeaderText}" VerticalAlignment="Center" d:Text="Friend Source (12 friends)" Style="{StaticResource BaseTextBlockStyle}"/>
-                                </Expander.Header>
-                                <Expander.Content>
-                                    <StackPanel VerticalAlignment="Bottom" Margin="22,0,5,0">
-                                        <StackPanel.Resources>
-                                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                                <Setter Property="Margin" Value="2,0,8,0"/>
-                                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                                <Setter Property="Padding" Value="5,2"/>
-                                            </Style>
-                                        </StackPanel.Resources>
-                                        <TextBlock VerticalAlignment="Center" Margin="2,0,0,5">
-                                            <TextBlock.Tag>
-                                                <PriorityBinding>
-                                                    <Binding Path="AuthStatus" IsAsync="True" />
-                                                    <Binding Source="{x:Static local:AuthStatus.Checking}" />
-                                                </PriorityBinding>
-                                            </TextBlock.Tag>
-                                            <TextBlock.Style>
-                                                <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
-                                                    <Style.Triggers>
-                                                        <Trigger Property="Tag" Value="{x:Static local:AuthStatus.Checking}">
-                                                            <Setter Property="Text" Value="Checking..." />
-                                                        </Trigger>
-                                                        <Trigger Property="Tag" Value="{x:Static local:AuthStatus.Ok}">
-                                                            <Setter Property="Text" Value="Logged in" />
-                                                        </Trigger>
-                                                        <Trigger Property="Tag" Value="{x:Static local:AuthStatus.AuthRequired}">
-                                                            <Setter Property="Text" Value="Requires authentication" />
-                                                        </Trigger>
-                                                        <Trigger Property="Tag" Value="{x:Static local:AuthStatus.Failed}">
-                                                            <Setter Property="Text" Value="Failed to check authentication status" />
-                                                        </Trigger>
-                                                    </Style.Triggers>
+                <ScrollViewer Grid.Column="0" Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" MaxHeight="550">
+                    <ItemsControl ItemsSource="{Binding Settings.FriendSources}" d:ItemsSource="{d:SampleData ItemCount=3}" Margin="0,0,2,2">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Expander IsExpanded="True" Margin="0,0,0,5">
+                                    <Expander.Header>
+                                        <TextBlock Text="{Binding HeaderText}" VerticalAlignment="Center" d:Text="Friend Source (12 friends)" Style="{StaticResource BaseTextBlockStyle}"/>
+                                    </Expander.Header>
+                                    <Expander.Content>
+                                        <StackPanel VerticalAlignment="Bottom" Margin="22,0,5,0">
+                                            <StackPanel.Resources>
+                                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                    <Setter Property="Margin" Value="2,0,8,0"/>
+                                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                                    <Setter Property="Padding" Value="5,2"/>
                                                 </Style>
-                                            </TextBlock.Style>
-                                        </TextBlock>
-                                        <WrapPanel Orientation="Horizontal">
-                                            <Button Command="{Binding AuthenticateCommand}" Content="Authenticate"/>
-                                            <Button Command="{Binding RefreshCommand}" Content="Refresh friends"/>
-                                        </WrapPanel>
-                                        <ListBox ItemsSource="{Binding Friends}" d:ItemsSource="{d:SampleData ItemCount=3}" Margin="2" dd:DragDrop.IsDragSource="True">
-                                            <ListBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding Name}"/>
-                                                </DataTemplate>
-                                            </ListBox.ItemTemplate>
-                                        </ListBox>
-                                    </StackPanel>
-                                </Expander.Content>
-                            </Expander>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
+                                            </StackPanel.Resources>
+                                            <TextBlock VerticalAlignment="Center" Margin="2,0,0,5">
+                                                <TextBlock.Tag>
+                                                    <PriorityBinding>
+                                                        <Binding Path="AuthStatus" IsAsync="True" />
+                                                        <Binding Source="{x:Static local:AuthStatus.Checking}" />
+                                                    </PriorityBinding>
+                                                </TextBlock.Tag>
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="Tag" Value="{x:Static local:AuthStatus.Checking}">
+                                                                <Setter Property="Text" Value="Checking..." />
+                                                            </Trigger>
+                                                            <Trigger Property="Tag" Value="{x:Static local:AuthStatus.Ok}">
+                                                                <Setter Property="Text" Value="Logged in" />
+                                                            </Trigger>
+                                                            <Trigger Property="Tag" Value="{x:Static local:AuthStatus.AuthRequired}">
+                                                                <Setter Property="Text" Value="Requires authentication" />
+                                                            </Trigger>
+                                                            <Trigger Property="Tag" Value="{x:Static local:AuthStatus.Failed}">
+                                                                <Setter Property="Text" Value="Failed to check authentication status" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                            <WrapPanel Orientation="Horizontal">
+                                                <Button Command="{Binding AuthenticateCommand}" Content="Authenticate"/>
+                                                <Button Command="{Binding RefreshCommand}" Content="Refresh friends"/>
+                                            </WrapPanel>
+                                            <ListBox ItemsSource="{Binding Friends}" d:ItemsSource="{d:SampleData ItemCount=3}" Margin="2"
+                                                 dd:DragDrop.IsDragSource="True" pec:IgnoreScrollBehaviour.IgnoreScroll="true">
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Name}"/>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                        </StackPanel>
+                                    </Expander.Content>
+                                </Expander>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
 
-                </ItemsControl>
+                    </ItemsControl>
+                </ScrollViewer>
                 <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Settings.FriendIdentities.Items}" d:ItemsSource="{d:SampleData ItemCount=5}" MinHeight="100" Padding="0,0,0,20"
-                         dd:DragDrop.DropHandler="{Binding Settings.FriendIdentities}" dd:DragDrop.IsDropTarget="True">
+                         dd:DragDrop.DropHandler="{Binding Settings.FriendIdentities}" dd:DragDrop.IsDropTarget="True" HorizontalContentAlignment="Stretch" pec:IgnoreScrollBehaviour.IgnoreScroll="True">
+                    <ListBox.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Content" Value="&#xeebb;"/>
+                            <Setter Property="FontFamily" Value="{DynamicResource FontIcoFont}"/>
+                            <Setter Property="Padding" Value="4,0"/>
+                        </Style>
+                    </ListBox.Resources>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Width="Auto">
-                                <TextBox Text="{Binding FriendName}" Width="150" HorizontalAlignment="Left"/>
-                                <ListBox ItemsSource="{Binding Identities}" DisplayMemberPath="DisplayText" d:ItemsSource="{d:SampleData ItemCount=2}" Margin="30,0,0,0" Padding="0,0,0,10"/>
+                                <DockPanel>
+                                    <Button DockPanel.Dock="Right"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:FriendIdentities}}, Path=RemoveCommand}"
+                                            CommandParameter="{Binding}"/>
+                                    <TextBox Text="{Binding FriendName}" DockPanel.Dock="Left"/>
+                                </DockPanel>
+                                <ListBox ItemsSource="{Binding Identities}" d:ItemsSource="{d:SampleData ItemCount=2}" HorizontalContentAlignment="Stretch"
+                                         Margin="30,0,0,0" Padding="0,0,0,10" pec:IgnoreScrollBehaviour.IgnoreScroll="True">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <DockPanel>
+                                                <Button DockPanel.Dock="Right"
+                                                        Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.RemoveCommand}"
+                                                        CommandParameter="{Binding}"/>
+                                                <TextBlock Text="{Binding DisplayText}" VerticalAlignment="Center"/>
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

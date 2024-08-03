@@ -1,4 +1,5 @@
-﻿using GongSolutions.Wpf.DragDrop;
+﻿using AngleSharp.Dom;
+using GongSolutions.Wpf.DragDrop;
 using MutualGames.Clients;
 using Playnite.SDK;
 using Playnite.SDK.Data;
@@ -124,6 +125,14 @@ namespace MutualGames
     {
         public ObservableCollection<FriendIdentityGrouping> Items { get; set; } = new ObservableCollection<FriendIdentityGrouping>();
 
+        [DontSerialize]
+        public RelayCommand<FriendIdentityGrouping> RemoveCommand { get; }
+
+        public FriendIdentities()
+        {
+            RemoveCommand = new RelayCommand<FriendIdentityGrouping>(f => Items.Remove(f));
+        }
+
         public void DragOver(IDropInfo dropInfo)
         {
             var sourceItems = GetDragSourceItems(dropInfo);
@@ -177,6 +186,15 @@ namespace MutualGames
     {
         public string FriendName { get; set; }
         public ObservableCollection<FriendInfo> Identities { get; set; } = new ObservableCollection<FriendInfo>();
+
+        [DontSerialize]
+        public RelayCommand<FriendInfo> RemoveCommand { get; }
+
+        public FriendIdentityGrouping()
+        {
+            RemoveCommand = new RelayCommand<FriendInfo>(f => Identities.Remove(f));
+        }
+
     }
 
     public enum FriendSource
