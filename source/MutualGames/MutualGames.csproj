@@ -92,14 +92,21 @@
       <Link>Common\Metadata\IImageData.cs</Link>
     </Compile>
     <Compile Include="Clients\EaClient.cs" />
+    <Compile Include="Models\Settings\FriendAccountInfo.cs" />
     <Compile Include="Clients\GogClient.cs" />
     <Compile Include="Clients\IFriendsGamesClient.cs" />
     <Compile Include="Clients\NotAuthenticatedException.cs" />
     <Compile Include="Clients\SteamClient.cs" />
+    <Compile Include="Models\Export\ExternalGameData.cs" />
+    <Compile Include="Models\Settings\Enums.cs" />
+    <Compile Include="Models\Settings\FriendIdentities.cs" />
+    <Compile Include="Models\Settings\FriendIdentity.cs" />
+    <Compile Include="Models\Settings\FriendSourceSettings.cs" />
+    <Compile Include="Models\Settings\MutualGamesSettings.cs" />
     <Compile Include="MutualGames.cs" />
     <Compile Include="MutualGamesImporter.cs" />
-    <Compile Include="MutualGamesSettings.cs" />
-    <Compile Include="MutualGamesSettingsView.xaml.cs">
+    <Compile Include="Models\Settings\MutualGamesSettingsViewModel.cs" />
+    <Compile Include="Views\Settings\MutualGamesSettingsView.xaml.cs">
       <DependentUpon>MutualGamesSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,7 +127,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MutualGamesSettingsView.xaml">
+    <Page Include="Views\Settings\MutualGamesSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

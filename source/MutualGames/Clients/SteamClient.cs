@@ -1,9 +1,10 @@
 ﻿using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
+using MutualGames.Models.Export;
+using MutualGames.Models.Settings;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using PlayniteExtensions.Common;
-using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace MutualGames.Clients
 
         public string LoginUrl => "https://steamcommunity.com/login/home/?goto=search%2Fgroups";
 
-        public IEnumerable<GameDetails> GetFriendGames(FriendInfo friend, CancellationToken cancellationToken)
+        public IEnumerable<ExternalGameData> GetFriendGames(FriendAccountInfo friend, CancellationToken cancellationToken)
         {
             const string urlStart = "https://store.steampowered.com/app/";
             const string jsonAttr = "data-profile-gameslist";
@@ -45,13 +46,11 @@ namespace MutualGames.Clients
                 var id = g.appid.ToString();
                 var url = urlStart + id;
 
-                var game = new GameDetails { Url = url, Id = id };
-                game.Names.Add(g.name);
-                yield return game;
+                yield return new ExternalGameData { Id = id, Name = g.name, PluginId = PluginId };
             }
         }
 
-        public IEnumerable<FriendInfo> GetFriends(CancellationToken cancellationToken)
+        public IEnumerable<FriendAccountInfo> GetFriends(CancellationToken cancellationToken)
         {
             var doc = GetHtml("https://steamcommunity.com/my/friends");
             var friendElements = doc.QuerySelectorAll(".persona[data-steamid]");
@@ -59,7 +58,7 @@ namespace MutualGames.Clients
             {
                 var friendNameHtml = friendElement.QuerySelector(".friend_block_content").InnerHtml;
                 var name = friendNameHtml.Split('<').First().HtmlDecode();
-                yield return new FriendInfo
+                yield return new FriendAccountInfo
                 {
                     Id = friendElement.GetAttribute("data-steamid"),
                     Name = name,

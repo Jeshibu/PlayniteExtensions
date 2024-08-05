@@ -1,6 +1,6 @@
-﻿using Playnite.SDK;
-using Playnite.SDK.Data;
-using PlayniteExtensions.Metadata.Common;
+﻿using MutualGames.Models.Export;
+using MutualGames.Models.Settings;
+using Playnite.SDK;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -13,55 +13,12 @@ namespace MutualGames.Clients
         string Name { get; }
         FriendSource Source { get; }
         Guid PluginId { get; }
-        IEnumerable<FriendInfo> GetFriends(CancellationToken cancellationToken);
-        IEnumerable<GameDetails> GetFriendGames(FriendInfo friend, CancellationToken cancellationToken);
+        IEnumerable<FriendAccountInfo> GetFriends(CancellationToken cancellationToken);
+        IEnumerable<ExternalGameData> GetFriendGames(FriendAccountInfo friend, CancellationToken cancellationToken);
         Task<bool> IsAuthenticatedAsync();
 
         IEnumerable<string> CookieDomains { get; }
         string LoginUrl { get; }
         Task<bool> IsLoginSuccessAsync(IWebView loginWebView);
-    }
-
-    public class FriendInfo : IEquatable<FriendInfo>
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public FriendSource Source { get; set; }
-
-        [DontSerialize]
-        public string DisplayText => $"{Name} ({Source} - {Id})";
-
-        public override bool Equals(object obj)
-        {
-            if (obj is FriendInfo fi)
-                return Source == fi.Source && Id == fi.Id;
-            else
-                return false;
-        }
-
-        public bool Equals(FriendInfo other)
-        {
-            return !(other is null) &&
-                   Id == other.Id &&
-                   Source == other.Source;
-        }
-
-        public override int GetHashCode()
-        {
-            int hashCode = -543865608;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Id);
-            hashCode = hashCode * -1521134295 + EqualityComparer<FriendSource>.Default.GetHashCode(Source);
-            return hashCode;
-        }
-
-        public static bool operator ==(FriendInfo left, FriendInfo right)
-        {
-            return EqualityComparer<FriendInfo>.Default.Equals(left, right);
-        }
-
-        public static bool operator !=(FriendInfo left, FriendInfo right)
-        {
-            return !(left == right);
-        }
     }
 }

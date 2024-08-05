@@ -1,4 +1,6 @@
 ﻿using MutualGames.Clients;
+using MutualGames.Models.Settings;
+using MutualGames.Views.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;

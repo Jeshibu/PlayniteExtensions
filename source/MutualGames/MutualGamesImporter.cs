@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using MutualGames.Models.Settings;
 
 namespace MutualGames
 {
@@ -29,7 +30,7 @@ namespace MutualGames
         {
             var result = playniteAPI.Dialogs.ActivateGlobalProgress(a =>
             {
-                a.ProgressMaxValue = settings.FriendIdentities.Items.SelectMany(fg => fg.Identities).Count() + 1;
+                a.ProgressMaxValue = settings.FriendIdentities.Items.SelectMany(fg => fg.Accounts).Count() + 1;
 
                 matchingHelper.GetDeflatedNames(playniteAPI.Database.Games.Select(g => g.Name));
                 a.CurrentProgressValue++;
@@ -42,7 +43,7 @@ namespace MutualGames
 
                         var dbItem = GetDatabaseItem(friendIdentityGrouping.FriendName);
 
-                        foreach (var friend in friendIdentityGrouping.Identities)
+                        foreach (var friend in friendIdentityGrouping.Accounts)
                         {
                             a.Text = $"Getting games for {friendIdentityGrouping.FriendName} ({friend.Source} - {friend.Name})";
                             try
@@ -121,19 +122,17 @@ namespace MutualGames
 
         #region game matching
 
-        private IEnumerable<Game> GetMatchingGames(FriendInfo friend, CancellationToken cancellationToken)
+        private IEnumerable<Game> GetMatchingGames(FriendAccountInfo friend, CancellationToken cancellationToken)
         {
             var output = new List<Game>();
             var client = clients.FirstOrDefault(c => c.Source == friend.Source);
             if (client == null) return new Game[0];
 
-            var sameLibraryGames = GetSameLibraryGames(client, out var otherLibraryGames);
+            var sameLibraryGames = GetSameLibraryGames(client.PluginId, out var otherLibraryGames);
 
             var friendGames = client.GetFriendGames(friend, cancellationToken).ToList();
             foreach (var friendGame in friendGames)
             {
-                var samePluginLibraryGames = playniteAPI.Database.Games.Where(g => g.PluginId == client.PluginId);
-
                 var sameLibraryMatchingGame = sameLibraryGames.FirstOrDefault(g => friendGame.Id == g.GameId);
                 if (sameLibraryMatchingGame != null)
                     output.Add(sameLibraryMatchingGame);
@@ -141,11 +140,11 @@ namespace MutualGames
                 if (!otherLibraryGames.Any())
                     continue;
 
-                var deflatedFriendGameNames = matchingHelper.GetDeflatedNames(friendGame.Names);
+                var deflatedFriendGameName = matchingHelper.GetDeflatedName(friendGame.Name);
                 foreach (var otherLibraryGame in otherLibraryGames)
                 {
                     var deflatedLocalGameName = matchingHelper.GetDeflatedName(otherLibraryGame.Name);
-                    if (deflatedFriendGameNames.Contains(deflatedLocalGameName, StringComparer.InvariantCultureIgnoreCase))
+                    if (deflatedFriendGameName.Equals(deflatedLocalGameName, StringComparison.InvariantCultureIgnoreCase))
                         output.Add(otherLibraryGame);
                 }
             }
@@ -155,14 +154,14 @@ namespace MutualGames
             return output;
         }
 
-        private List<Game> GetSameLibraryGames(IFriendsGamesClient client, out List<Game> otherLibraryGames)
+        private List<Game> GetSameLibraryGames(Guid libraryPluginId, out List<Game> otherLibraryGames)
         {
             var sameLibrary = new List<Game>();
             otherLibraryGames = new List<Game>();
 
             foreach (var game in playniteAPI.Database.Games)
             {
-                if (game.PluginId == client.PluginId)
+                if (game.PluginId == libraryPluginId)
                 {
                     sameLibrary.Add(game);
                     continue;

@@ -1,8 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using MutualGames.Models.Export;
+using MutualGames.Models.Settings;
+using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using PlayniteExtensions.Common;
-using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace MutualGames.Clients
             this.downloader = downloader;
         }
 
-        public IEnumerable<GameDetails> GetFriendGames(FriendInfo friend, CancellationToken cancellationToken)
+        public IEnumerable<ExternalGameData> GetFriendGames(FriendAccountInfo friend, CancellationToken cancellationToken)
         {
             var userId = UserId;
             var response = downloader.DownloadString($"https://api3.origin.com/atom/users/{userId}/other/{friend.Id}/games",
@@ -53,15 +54,16 @@ namespace MutualGames.Clients
 
             foreach (var product in gamesResponse.productInfos)
             {
-                yield return new GameDetails
+                yield return new ExternalGameData
                 {
                     Id = product.productId,
-                    Names = new List<string> { product.displayProductName },
+                    Name = product.displayProductName,
+                    PluginId = PluginId,
                 };
             }
         }
 
-        public IEnumerable<FriendInfo> GetFriends(CancellationToken cancellationToken)
+        public IEnumerable<FriendAccountInfo> GetFriends(CancellationToken cancellationToken)
         {
             var userId = UserId;
             string url = $"https://friends.gs.ea.com/friends/2/users/{userId}/friends?names=true";
@@ -77,7 +79,7 @@ namespace MutualGames.Clients
             if (friendsResponse?.entries == null)
                 return null;
 
-            return friendsResponse?.entries?.Select(e => new FriendInfo { Id = e.userId.ToString(), Name = e.nickName, Source = this.Source });
+            return friendsResponse?.entries?.Select(e => new FriendAccountInfo { Id = e.userId.ToString(), Name = e.nickName, Source = this.Source });
         }
 
         public async Task<bool> IsAuthenticatedAsync()

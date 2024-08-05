@@ -1,8 +1,9 @@
 ﻿using AngleSharp.Parser.Html;
+using MutualGames.Models.Export;
+using MutualGames.Models.Settings;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using PlayniteExtensions.Common;
-using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -32,7 +33,7 @@ namespace MutualGames.Clients
 
         public string LoginUrl => "https://www.gog.com/##openlogin";
 
-        public IEnumerable<GameDetails> GetFriendGames(FriendInfo friend, CancellationToken cancellationToken)
+        public IEnumerable<ExternalGameData> GetFriendGames(FriendAccountInfo friend, CancellationToken cancellationToken)
         {
             var user = GetLoggedInUserAsync().Result;
             int page = 0, totalPages = 1;
@@ -45,25 +46,24 @@ namespace MutualGames.Clients
                 var response = GetFriendGames(user, friend, page);
                 foreach (var item in response.Embedded.Items)
                 {
-                    var game = new GameDetails
+                    yield return new ExternalGameData
                     {
                         Id = item.Game.Id,
-                        Url = item.Game.Url.GetAbsoluteUrl("https://www.gog.com"),
+                        Name = item.Game.Title,
+                        PluginId = PluginId,
                     };
-                    game.Names.Add(item.Game.Title);
-                    yield return game;
                 }
             } while (page < totalPages);
         }
 
-        private GetFriendGamesResponse GetFriendGames(AccountInfo account, FriendInfo friend, int page)
+        private GetFriendGamesResponse GetFriendGames(AccountInfo account, FriendAccountInfo friend, int page)
         {
             var url = $"https://www.gog.com/u/{friend.Name}/games/stats/{account.Username}?sort=recent_playtime&order=desc&page={page}&sort_user={account.UserId}";
             var response = offscreenWebView.DownloadPageTextAsync(url).Result;
             return JsonConvert.DeserializeObject<GetFriendGamesResponse>(response.Content);
         }
 
-        public IEnumerable<FriendInfo> GetFriends(CancellationToken cancellationToken)
+        public IEnumerable<FriendAccountInfo> GetFriends(CancellationToken cancellationToken)
         {
             var json = GetFriendsJson(cancellationToken);
 
@@ -73,7 +73,7 @@ namespace MutualGames.Clients
                 if (f.User?.Id == null || f.User?.Username == null)
                     continue;
 
-                yield return new FriendInfo
+                yield return new FriendAccountInfo
                 {
                     Id = f.User.Id,
                     Name = f.User.Username,

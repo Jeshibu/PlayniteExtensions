@@ -1,13 +1,14 @@
-﻿<UserControl x:Class="MutualGames.MutualGamesSettingsView"
+﻿<UserControl x:Class="MutualGames.Views.Settings.MutualGamesSettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:MutualGames"
+             xmlns:local="clr-namespace:MutualGames.Views.Settings"
+             xmlns:model="clr-namespace:MutualGames.Models.Settings"
              xmlns:pec="clr-namespace:PlayniteExtensions.Common"
              xmlns:dd="urn:gong-wpf-dragdrop"
              mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance Type=local:MutualGamesSettingsViewModel}"
+             d:DataContext="{d:DesignInstance Type=model:MutualGamesSettingsViewModel}"
              d:DesignHeight="400" d:DesignWidth="600">
     <ScrollViewer>
         <StackPanel Margin="20">
@@ -74,22 +75,22 @@
                                                 <TextBlock.Tag>
                                                     <PriorityBinding>
                                                         <Binding Path="AuthStatus" IsAsync="True" />
-                                                        <Binding Source="{x:Static local:AuthStatus.Checking}" />
+                                                        <Binding Source="{x:Static model:AuthStatus.Checking}" />
                                                     </PriorityBinding>
                                                 </TextBlock.Tag>
                                                 <TextBlock.Style>
                                                     <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
                                                         <Style.Triggers>
-                                                            <Trigger Property="Tag" Value="{x:Static local:AuthStatus.Checking}">
+                                                            <Trigger Property="Tag" Value="{x:Static model:AuthStatus.Checking}">
                                                                 <Setter Property="Text" Value="Checking..." />
                                                             </Trigger>
-                                                            <Trigger Property="Tag" Value="{x:Static local:AuthStatus.Ok}">
+                                                            <Trigger Property="Tag" Value="{x:Static model:AuthStatus.Ok}">
                                                                 <Setter Property="Text" Value="Logged in" />
                                                             </Trigger>
-                                                            <Trigger Property="Tag" Value="{x:Static local:AuthStatus.AuthRequired}">
+                                                            <Trigger Property="Tag" Value="{x:Static model:AuthStatus.AuthRequired}">
                                                                 <Setter Property="Text" Value="Requires authentication" />
                                                             </Trigger>
-                                                            <Trigger Property="Tag" Value="{x:Static local:AuthStatus.Failed}">
+                                                            <Trigger Property="Tag" Value="{x:Static model:AuthStatus.Failed}">
                                                                 <Setter Property="Text" Value="Failed to check authentication status" />
                                                             </Trigger>
                                                         </Style.Triggers>
@@ -104,7 +105,7 @@
                                                  dd:DragDrop.IsDragSource="True" pec:IgnoreScrollBehaviour.IgnoreScroll="true">
                                                 <ListBox.ItemTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Name}"/>
+                                                        <TextBlock Text="{Binding Name}" ToolTip="Drag me to the right!"/>
                                                     </DataTemplate>
                                                 </ListBox.ItemTemplate>
                                             </ListBox>
@@ -129,19 +130,17 @@
                         <DataTemplate>
                             <StackPanel Width="Auto">
                                 <DockPanel>
-                                    <Button DockPanel.Dock="Right"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type local:FriendIdentities}}, Path=RemoveCommand}"
-                                            CommandParameter="{Binding}"/>
+                                    <Button DockPanel.Dock="Right" CommandParameter="{Binding}"
+                                            Command="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=DataContext.Settings.FriendIdentities.RemoveCommand}"/>
                                     <TextBox Text="{Binding FriendName}" DockPanel.Dock="Left"/>
                                 </DockPanel>
-                                <ListBox ItemsSource="{Binding Identities}" d:ItemsSource="{d:SampleData ItemCount=2}" HorizontalContentAlignment="Stretch"
+                                <ListBox ItemsSource="{Binding Accounts}" d:ItemsSource="{d:SampleData ItemCount=2}" HorizontalContentAlignment="Stretch"
                                          Margin="30,0,0,0" Padding="0,0,0,10" pec:IgnoreScrollBehaviour.IgnoreScroll="True">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
                                             <DockPanel>
-                                                <Button DockPanel.Dock="Right"
-                                                        Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.RemoveCommand}"
-                                                        CommandParameter="{Binding}"/>
+                                                <Button DockPanel.Dock="Right" CommandParameter="{Binding}"
+                                                        Command="{Binding RelativeSource={RelativeSource AncestorType=ListBox}, Path=DataContext.RemoveCommand}"/>
                                                 <TextBlock Text="{Binding DisplayText}" VerticalAlignment="Center"/>
                                             </DockPanel>
                                         </DataTemplate>
