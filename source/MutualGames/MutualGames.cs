@@ -24,6 +24,8 @@ namespace MutualGames
 
         public string Name { get; } = "Mutual Games";
 
+        public static string ExportFileFilter = "Games export (*.mutualgames)|*.mutualgames";
+
         public MutualGames(IPlayniteAPI api) : base(api)
         {
             Properties = new GenericPluginProperties
@@ -34,13 +36,28 @@ namespace MutualGames
 
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
-            yield return new MainMenuItem { Description = "Import Mutual Games", Action = Import, MenuSection = $"@{Name}" };
+            var section = $"@{Name}";
+            yield return new MainMenuItem { Description = "Import mutual games from friend accounts", Action = ImportAccounts, MenuSection = section };
+            yield return new MainMenuItem { Description = "Import mutual games from friend's exported file", Action = ImportFile, MenuSection = section };
+            yield return new MainMenuItem { Description = "Export games file to send to friends", Action = ExportFile, MenuSection = section };
         }
 
-        private void Import(MainMenuItemActionArgs args)
+        private void ImportAccounts(MainMenuItemActionArgs args)
         {
-            var importer = new MutualGamesImporter(PlayniteApi, Settings.Settings, GetClients());
+            var importer = new MutualGamesAccountImporter(PlayniteApi, Settings.Settings, GetClients());
             importer.Import();
+        }
+
+        private void ImportFile(MainMenuItemActionArgs args)
+        {
+            var importer = new MutualGamesFileImporter(PlayniteApi, Settings.Settings);
+            importer.Import();
+        }
+
+        private void ExportFile(MainMenuItemActionArgs args)
+        {
+            var exporter = new MutualGamesFileExporter(PlayniteApi, Settings.Settings);
+            exporter.Export();
         }
 
         public override ISettings GetSettings(bool firstRunSettings) => Settings;

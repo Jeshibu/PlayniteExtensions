@@ -10,7 +10,7 @@ namespace MutualGames.Models.Export
         public string Id { get; set; }
         public string Name { get; set; }
         public Guid PluginId { get; set; }
-        public List<Platform> Platforms { get; set; }
+        public List<Guid> PlatformIds { get; set; }
 
         public static ExternalGameData FromGame(Game game)
         {
@@ -19,7 +19,7 @@ namespace MutualGames.Models.Export
                 Id = game.GameId,
                 PluginId = game.PluginId,
                 Name = game.Name,
-                Platforms = game.Platforms.ToList(),
+                PlatformIds = game.PlatformIds,
             };
         }
     }

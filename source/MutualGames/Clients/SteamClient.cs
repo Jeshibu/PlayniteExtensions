@@ -102,7 +102,7 @@ namespace MutualGames.Clients
             try
             {
                 var doc = await GetHtmlAsync("https://steamcommunity.com/search/groups"); //gated for authentication
-                logger.Info($"Authenticated!");
+                logger.Info("Authenticated!");
                 return true;
             }
             catch (NotAuthenticatedException)
