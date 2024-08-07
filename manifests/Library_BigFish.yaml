@@ -33,3 +33,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-06-22/BigFishLibrary_0_3_1.pext
     Changelog:
     - Fixed exception when no games are installed
+  - Version: 0.4
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-08-08
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/BigFishLibrary_0_4.pext
+    Changelog:
+    - Fetching uninstalled games now uses the legacy API too, for older purchases

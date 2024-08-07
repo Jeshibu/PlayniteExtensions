@@ -9,7 +9,8 @@ namespace GOGMetadata
 {
     public class GOGMetadata : MetadataPlugin
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private readonly ILogger logger = LogManager.GetLogger();
+        private readonly IWebDownloader downloader = new WebDownloader();
 
         private GOGMetadataSettingsViewModel settings { get; set; }
 
@@ -33,7 +34,7 @@ namespace GOGMetadata
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
             var platformUtility = new PlatformUtility(PlayniteApi);
-            var searchProvider = new GogApiClient(new WebDownloader(), settings.Settings, platformUtility);
+            var searchProvider = new GogApiClient(downloader, settings.Settings, platformUtility);
             return new GOGMetadataProvider(searchProvider, options, PlayniteApi, platformUtility);
         }
 

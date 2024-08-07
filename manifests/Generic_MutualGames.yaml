@@ -1,0 +1,8 @@
+AddonId: MutualGames
+Packages:
+  - Version: 0.3
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-08-08
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/MutualGames_0_3.pext
+    Changelog:
+    - Initial release

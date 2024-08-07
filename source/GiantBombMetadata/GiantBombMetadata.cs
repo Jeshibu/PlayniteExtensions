@@ -14,6 +14,7 @@ namespace GiantBombMetadata
     public class GiantBombMetadata : MetadataPlugin
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private IWebDownloader downloader = new WebDownloader();
 
         public GiantBombMetadataSettingsViewModel Settings { get; set; }
 
@@ -100,7 +101,7 @@ namespace GiantBombMetadata
             if (BlockMissingApiKey())
                 return;
 
-            var searchProvider = new GiantBombGamePropertySearchProvider(ApiClient, new GiantBombScraper(new WebDownloader(), PlatformUtility));
+            var searchProvider = new GiantBombGamePropertySearchProvider(ApiClient, new GiantBombScraper(downloader, PlatformUtility));
             var extra = new GiantBombBulkPropertyAssigner(PlayniteApi, Settings.Settings, searchProvider, new PlatformUtility(PlayniteApi), Settings.Settings.MaxDegreeOfParallelism);
             extra.ImportGameProperty();
         }

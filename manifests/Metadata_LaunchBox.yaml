@@ -88,3 +88,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-06-22/LaunchBoxMetadata_0_7.pext
     Changelog:
     - Split developers and publishers into separate entries when there are multiple
+  - Version: 0.7.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2024-08-08
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/LaunchBoxMetadata_0_7_1.pext
+    Changelog:
+    - Lists in settings no longer block mousewheel scrolling when the cursor is on them

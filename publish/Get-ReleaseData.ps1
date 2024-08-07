@@ -74,6 +74,7 @@ function Get-ProjectNames {
         "launchbox"           = @("LaunchBoxMetadata")
         "legacygames"         = @("LegacyGamesLibrary")
         "mobygames"           = @("MobyGamesMetadata")
+        "mutualgames"         = @("MutualGames")
         "pathreplacer"        = @("PathReplacer")
         "rawg"                = @("RawgLibrary", "RawgMetadata")
         "steamtagsimporter"   = @("SteamTagsImporter")

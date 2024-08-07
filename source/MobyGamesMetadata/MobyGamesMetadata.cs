@@ -13,7 +13,8 @@ namespace MobyGamesMetadata
 {
     public class MobyGamesMetadata : MetadataPlugin
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private readonly ILogger logger = LogManager.GetLogger();
+        private readonly IWebDownloader downloader = new WebDownloader();
         private MobyGamesApiClient apiClient;
         public MobyGamesApiClient ApiClient { get { return apiClient ?? (apiClient = new MobyGamesApiClient(settings?.Settings?.ApiKey)); } }
 
@@ -78,7 +79,6 @@ namespace MobyGamesMetadata
 
             settings.Settings.DataSource = DataSource.ApiAndScraping;
             var platformUtility = new PlatformUtility(PlayniteApi);
-            var downloader = new WebDownloader();
             var scraper = new MobyGamesScraper(platformUtility, downloader);
             var aggr = new MobyGamesGameSearchProvider(ApiClient, scraper, settings.Settings, platformUtility);
             return new MobyGamesMetadataProvider(options, this, aggr, platformUtility, settings.Settings);
@@ -143,7 +143,6 @@ namespace MobyGamesMetadata
             if (chosenOption == null || chosenOption == cancelOption) return;
 
             var platformUtility = new PlatformUtility(PlayniteApi);
-            var downloader = new WebDownloader();
             var scraper = new MobyGamesScraper(platformUtility, downloader);
             if (chosenOption == groupOption)
             {

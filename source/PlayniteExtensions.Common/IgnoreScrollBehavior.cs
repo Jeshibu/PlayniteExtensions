@@ -3,6 +3,9 @@ using System.Windows.Input;
 
 namespace PlayniteExtensions.Common
 {
+    /// <summary>
+    /// Taken from https://stackoverflow.com/a/44000109/1622598
+    /// </summary>
     public static class IgnoreScrollBehaviour
     {
         public static readonly DependencyProperty IgnoreScrollProperty = DependencyProperty.RegisterAttached("IgnoreScroll", typeof(bool), typeof(IgnoreScrollBehaviour), new PropertyMetadata(OnIgnoreScollChanged));

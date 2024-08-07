@@ -107,3 +107,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-06-22/GiantBombMetadata_0_8_2.pext
     Changelog:
      - Fixed deadlock when importing properties
+  - Version: 0.9
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2024-08-08
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/GiantBombMetadata_0_9.pext
+    Changelog:
+     - Added bulk import option to only match filtered games
+     - Fixed HTML entities showing up in search result descriptions

@@ -168,6 +168,9 @@ namespace PlayniteExtensions.Common
         }
     }
 
+    /// <summary>
+    /// Taken from https://stackoverflow.com/a/15588878/1622598
+    /// </summary>
     internal class DangerouslySimpleCookieContainer : DelegatingHandler
     {
         internal DangerouslySimpleCookieContainer(CookieContainer cookieContainer = null)
