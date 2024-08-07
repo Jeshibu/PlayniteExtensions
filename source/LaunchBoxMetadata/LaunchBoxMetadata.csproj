@@ -116,6 +116,9 @@
     <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs">
       <Link>Common\IEnumerableExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\IgnoreScrollBehavior.cs">
+      <Link>Common\IgnoreScrollBehavior.cs</Link>
+    </Compile>
     <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs">
       <Link>Common\IntegerFormatConverter.cs</Link>
     </Compile>

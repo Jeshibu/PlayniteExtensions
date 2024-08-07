@@ -64,6 +64,13 @@
                         <RowDefinition x:Name="Body"/>
                     </Grid.RowDefinitions>
                     <Grid.Resources>
+                        <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+                            <Setter Property="DockPanel.Dock" Value="Top"/>
+                            <Setter Property="SelectionMode" Value="Extended"/>
+                            <Setter Property="MinHeight" Value="220"/>
+                            <Setter Property="VerticalAlignment" Value="Stretch"/>
+                            <Setter Property="Grid.Row" Value="1"/>
+                        </Style>
                         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                             <Setter Property="FontSize" Value="40"/>
                             <Setter Property="Margin" Value="20,12"/>
@@ -74,16 +81,8 @@
                     </Grid.Resources>
                     <TextBlock HorizontalAlignment="Center" Grid.Column="0" Grid.Row="0">Available tags</TextBlock>
                     <TextBlock HorizontalAlignment="Center" Grid.Column="2" Grid.Row="0">Excluded tags</TextBlock>
-                    <ListBox DockPanel.Dock="Top" Name="Whitelist"
-                             SelectionMode="Extended" MinHeight="220"
-                             VerticalAlignment="Stretch"
-                             ItemsSource="{Binding OkayTags}"
-                             Grid.Column="0" Grid.Row="1"/>
-                    <ListBox DockPanel.Dock="Top" Name="Blacklist"
-                             SelectionMode="Extended" MinHeight="220"
-                             VerticalAlignment="Stretch"
-                             ItemsSource="{Binding BlacklistedTags}"
-                             Grid.Column="2" Grid.Row="1"/>
+                    <ListBox Name="Whitelist" ItemsSource="{Binding OkayTags}" Grid.Column="0"/>
+                    <ListBox Name="Blacklist" ItemsSource="{Binding BlacklistedTags}" Grid.Column="2"/>
                     <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
                         <Button Content="&#xEA94;" Command="{Binding BlacklistCommand}" CommandParameter="{Binding SelectedItems, ElementName=Whitelist}" ToolTip="Add to excluded tags"/>
                         <Button Content="&#xEA93;" Command="{Binding WhitelistCommand}" CommandParameter="{Binding SelectedItems, ElementName=Blacklist}" ToolTip="Remove from excluded tags"/>

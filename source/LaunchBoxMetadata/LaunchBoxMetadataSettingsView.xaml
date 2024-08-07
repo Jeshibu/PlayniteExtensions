@@ -97,7 +97,7 @@
                         <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedValue="{Binding Settings.Icon.AspectRatio}" SelectedValuePath="Key" DisplayMemberPath="Value"/>
                     </Grid>
                     <TextBlock TextWrapping="Wrap">Use the following image types for icons, in the specified order (drag and drop to reorder):</TextBlock>
-                    <ListBox Name="IconImageTypes" ItemsSource="{Binding Settings.Icon.ImageTypes}" d:ItemsSource="{d:SampleData ItemCount=25}">
+                    <ListBox Name="IconImageTypes" ItemsSource="{Binding Settings.Icon.ImageTypes}" pec:IgnoreScrollBehaviour.IgnoreScroll="True" d:ItemsSource="{d:SampleData ItemCount=25}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
@@ -147,7 +147,7 @@
                         <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedValue="{Binding Settings.Cover.AspectRatio}" SelectedValuePath="Key" DisplayMemberPath="Value"/>
                     </Grid>
                     <TextBlock TextWrapping="Wrap">Use the following image types for covers, in the specified order (drag and drop to reorder):</TextBlock>
-                    <ListBox Name="CoverImageTypes" ItemsSource="{Binding Settings.Cover.ImageTypes}" d:ItemsSource="{d:SampleData ItemCount=25}">
+                    <ListBox Name="CoverImageTypes" ItemsSource="{Binding Settings.Cover.ImageTypes}" pec:IgnoreScrollBehaviour.IgnoreScroll="True" d:ItemsSource="{d:SampleData ItemCount=25}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
@@ -194,7 +194,7 @@
                         <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedValue="{Binding Settings.Background.AspectRatio}" SelectedValuePath="Key" DisplayMemberPath="Value"/>
                     </Grid>
                     <TextBlock TextWrapping="Wrap">Use the following image types for backgrounds, in the specified order (drag and drop to reorder):</TextBlock>
-                    <ListBox Name="BackgroundImageTypes" ItemsSource="{Binding Settings.Background.ImageTypes}" d:ItemsSource="{d:SampleData ItemCount=25}">
+                    <ListBox Name="BackgroundImageTypes" ItemsSource="{Binding Settings.Background.ImageTypes}" pec:IgnoreScrollBehaviour.IgnoreScroll="True" d:ItemsSource="{d:SampleData ItemCount=25}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
@@ -229,6 +229,7 @@
                 <ListView ItemsSource="{Binding Settings.Regions}" Name="GenreSettingsView" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                           ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False"
                           VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling"
+                          pec:IgnoreScrollBehaviour.IgnoreScroll="True"
                           dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" d:ItemsSource="{d:SampleData ItemCount=25}" Grid.Row="2" MinHeight="200">
                     <ListView.View>
                         <GridView>
