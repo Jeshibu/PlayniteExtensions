@@ -66,7 +66,7 @@ namespace GroupeesLibrary
                 }
                 finally
                 {
-                    Settings.Cookies = Plugin.Downloader.Cookies.Cast<Cookie>().ToList();
+                    Plugin.SaveDownloaderCookiesToSettings(Settings);
                 }
             }
         }

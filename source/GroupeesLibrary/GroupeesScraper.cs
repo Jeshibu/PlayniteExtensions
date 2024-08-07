@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
+using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 
 namespace GroupeesLibrary
@@ -177,12 +177,12 @@ namespace GroupeesLibrary
             return game;
         }
 
-        private Action<WebHeaderCollection> GetHeaderSetter(string csrfToken)
+        private Action<HttpRequestHeaders> GetHeaderSetter(string csrfToken)
         {
-            return (WebHeaderCollection header) =>
+            return headers =>
             {
-                header["X-CSRF-Token"] = csrfToken;
-                header["X-Requested-With"] = "XMLHttpRequest";
+                headers.Add("X-CSRF-Token", csrfToken);
+                headers.Add("X-Requested-With", "XMLHttpRequest");
             };
         }
 

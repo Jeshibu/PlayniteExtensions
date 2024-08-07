@@ -54,7 +54,7 @@ namespace GroupeesLibrary
             }
             finally
             {
-                settings.Settings.Cookies = Downloader.Cookies.Cast<Cookie>().ToList();
+                SaveDownloaderCookiesToSettings(settings.Settings);
                 SavePluginSettings(settings.Settings);
             }
         }
@@ -86,9 +86,14 @@ namespace GroupeesLibrary
             }
             finally
             {
-                settings.Settings.Cookies = Downloader.Cookies.Cast<Cookie>().ToList();
+                SaveDownloaderCookiesToSettings(settings.Settings);
                 SavePluginSettings(settings.Settings);
             }
+        }
+
+        public void SaveDownloaderCookiesToSettings(GroupeesLibrarySettings s)
+        {
+            s.Cookies = Downloader.Cookies.GetCookies(new Uri("https://groupees.com/")).Cast<Cookie>().ToList();
         }
 
         public override ISettings GetSettings(bool firstRunSettings)

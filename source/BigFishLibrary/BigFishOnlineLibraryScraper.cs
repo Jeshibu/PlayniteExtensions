@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Linq;
 using Playnite.SDK.Models;
+using System.Net.Http.Headers;
 
 namespace BigFishLibrary
 {
@@ -98,13 +99,13 @@ namespace BigFishLibrary
             return data.GameLibrary;
         }
 
-        private static Action<WebHeaderCollection> GetHeaderSetAction(string token)
+        private static Action<HttpRequestHeaders> GetHeaderSetAction(string token)
         {
-            return (WebHeaderCollection header) =>
+            return headers =>
             {
-                header.Set(HttpRequestHeader.Authorization, $"Bearer {token}");
-                header.Set("origin", "https://www.bigfishgames.com");
-                header.Set(HttpRequestHeader.CacheControl, "no-cache");
+                headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                headers.Add("origin", "https://www.bigfishgames.com");
+                headers.CacheControl.NoCache = true;
             };
         }
 

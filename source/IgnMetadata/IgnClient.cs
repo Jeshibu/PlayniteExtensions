@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 
 namespace IgnMetadata
 {
@@ -47,10 +48,10 @@ namespace IgnMetadata
             var extensionsParameter = ToQueryStringParameter(extensions);
             string url = $"https://mollusk.apis.ign.com/graphql?operationName={operationName}&variables={variablesParameter}&extensions={extensionsParameter}";
 
-            Action<WebHeaderCollection> headerSetter = (WebHeaderCollection header) =>
+            Action<HttpRequestHeaders> headerSetter = headers =>
             {
-                header.Set("apollographql-client-name", "kraken");
-                header.Set("apollographql-client-version", "v0.23.3");
+                headers.Add("apollographql-client-name", "kraken");
+                headers.Add("apollographql-client-version", "v0.66.1");
             };
 
             var response = downloader.DownloadString(url, referer: "https://www.ign.com/reviews/games", headerSetter: headerSetter, contentType: "application/json");
