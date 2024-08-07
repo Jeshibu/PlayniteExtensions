@@ -1,4 +1,5 @@
-﻿using MutualGames.Models.Export;
+﻿using Microsoft.Win32;
+using MutualGames.Models.Export;
 using MutualGames.Models.Settings;
 using MutualGames.Views.Export;
 using Newtonsoft.Json;
@@ -13,7 +14,7 @@ using System.Windows;
 
 namespace MutualGames
 {
-    public class MutualGamesFileExporter
+    public sealed class MutualGamesFileExporter
     {
         private IPlayniteAPI PlayniteAPI { get; }
         private MutualGamesSettings Settings { get; }
@@ -30,9 +31,7 @@ namespace MutualGames
             if (promptResult == null)
                 return;
 
-            var filePath = PlayniteAPI.Dialogs.SaveFile(MutualGames.ExportFileFilter, promptOverwrite: true);
-
-            if (filePath == null)
+            if (!TryGetExportFilePath(out var filePath))
                 return;
 
             var games = GetGames(promptResult.Mode).Select(ExternalGameData.FromGame);
@@ -63,6 +62,24 @@ namespace MutualGames
                 return null;
 
             return promptViewModel;
+        }
+
+        private bool TryGetExportFilePath(out string filePath)
+        {
+            var myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            var fileName = Environment.UserName + ".mutualgames";
+
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog
+            {
+                Filter = MutualGamesHelper.ExportFileFilter,
+                Title = "Save Mutual Games export file",
+                InitialDirectory = myDocuments,
+                FileName = fileName,
+            };
+            var result = saveFileDialog1.ShowDialog();
+
+            filePath = saveFileDialog1.FileName;
+            return (result ?? false) && !string.IsNullOrWhiteSpace(filePath);
         }
 
         private IEnumerable<Game> GetGames(ExportGamesMode mode)

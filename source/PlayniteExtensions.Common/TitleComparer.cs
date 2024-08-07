@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace PlayniteExtensions.Common
 {
@@ -16,6 +17,9 @@ namespace PlayniteExtensions.Common
                     return 1;
             }
 
+            x = x.Normalize(NormalizationForm.FormKD);
+            y = y.Normalize(NormalizationForm.FormKD);
+
             int ix = 0, iy = 0;
             bool xend = false, yend = false;
             while (!xend && !yend)
@@ -30,7 +34,7 @@ namespace PlayniteExtensions.Common
                 if (charComparison != 0)
                     return charComparison;
 
-                //bump the indexes because GetNextLetterOrNumber won't if the character at the current index is a letter or number
+                //bump the indexes to account for the characters that have been read
                 ix++;
                 iy++;
             }

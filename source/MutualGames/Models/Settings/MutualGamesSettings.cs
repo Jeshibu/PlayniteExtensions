@@ -13,5 +13,6 @@ namespace MutualGames.Models.Settings
         public string PropertyNameFormat { get; set; } = "Owned by {0}";
         public CrossLibraryImportMode CrossLibraryImportMode { get; set; } = CrossLibraryImportMode.ImportAll;
         public Guid ImportCrossLibraryFeatureId { get; set; } = Guid.Empty;
+        public bool LimitPlayniteLibraryGamesToSamePlatform { get; set; } = true;
     }
 }

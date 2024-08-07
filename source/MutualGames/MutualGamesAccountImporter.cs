@@ -9,7 +9,7 @@ using MutualGames.Models.Settings;
 
 namespace MutualGames
 {
-    public class MutualGamesAccountImporter : MutualGamesBaseImporter
+    public sealed class MutualGamesAccountImporter : MutualGamesBaseImporter
     {
         private readonly IFriendsGamesClient[] clients;
 
@@ -33,14 +33,12 @@ namespace MutualGames
                     {
                         if (a.CancelToken.IsCancellationRequested) break;
 
-                        var dbItem = GetDatabaseItem(friendIdentityGrouping.FriendName);
-
                         foreach (var friend in friendIdentityGrouping.Accounts)
                         {
                             a.Text = $"Getting games for {friendIdentityGrouping.FriendName} ({friend.Source} - {friend.Name})";
                             try
                             {
-                                var matchingGames = GetMatchingGames(friend, a.CancelToken);
+                                var matchingGames = GetMatchingGames(friend, a.CancelToken, out var dbItem);
                                 foreach (var matchingGame in matchingGames)
                                     if (AddPropertyToGame(matchingGame, dbItem))
                                         playniteAPI.Database.Games.Update(matchingGame);
@@ -59,11 +57,15 @@ namespace MutualGames
             playniteAPI.Dialogs.ShowMessage($"Imported {updatedCount} new friends' games.", "Mutual Games import done");
         }
 
-        private IEnumerable<Game> GetMatchingGames(FriendAccountInfo friend, CancellationToken cancellationToken)
+        private IEnumerable<Game> GetMatchingGames(FriendAccountInfo friend, CancellationToken cancellationToken, out DatabaseObject dbItem)
         {
+            dbItem = null;
+
             var output = new List<Game>();
             var client = clients.FirstOrDefault(c => c.Source == friend.Source);
             if (client == null) return new Game[0];
+
+            dbItem = GetDatabaseItem(friend.Name, client.Name);
 
             var friendGames = client.GetFriendGames(friend, cancellationToken).ToList();
 

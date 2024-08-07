@@ -12,13 +12,11 @@ namespace PlayniteExtensions.Common
     {
         private readonly IPlayniteAPI api;
         private Dictionary<string, string[]> platformSpecNameByNormalName;
-        private Dictionary<string, string[]> PlatformSpecNameByNormalName
-        {
-            get
-            {
-                return platformSpecNameByNormalName ?? (platformSpecNameByNormalName = GetPlatformSpecsByNormalName(api));
-            }
-        }
+        private HashSet<string> platformSpecNames;
+
+        private Dictionary<string, string[]> PlatformSpecNameByNormalName => platformSpecNameByNormalName ?? (platformSpecNameByNormalName = GetPlatformSpecsByNormalName(api));
+
+        private HashSet<string> PlatformSpecNames => platformSpecNames ?? (platformSpecNames = api?.Database?.Platforms?.Select(p => p.SpecificationId).Where(x => x != null).ToHashSet());
 
         public PlatformUtility(IPlayniteAPI api)
         {
@@ -42,7 +40,7 @@ namespace PlayniteExtensions.Common
         public PlatformUtility(string platformName, params string[] specIds)
         {
             platformSpecNameByNormalName = GetPlatformSpecsByNormalName(null);
-            if(!string.IsNullOrWhiteSpace(platformName) && specIds != null && specIds.Any())
+            if (!string.IsNullOrWhiteSpace(platformName) && specIds != null && specIds.Any())
                 TryAddPlatformByName(platformSpecNameByNormalName, platformName, specIds);
         }
 
@@ -136,7 +134,7 @@ namespace PlayniteExtensions.Common
             TryAddPlatformByName(output, "SG1K", "sega_sg1000");
             TryAddPlatformByName(output, "SVIS", "watara_supervision");
             TryAddPlatformByName(output, "N3DS", "nintendo_3ds"); //New Nintendo 3DS, count it as part of 3DS for emulation purposes
-            TryAddPlatformByName(output, "NSW", "nintendo_switch");            
+            TryAddPlatformByName(output, "NSW", "nintendo_switch");
             return output;
         }
 
@@ -281,16 +279,12 @@ namespace PlayniteExtensions.Common
         {
             bool success = true;
             foreach (var platformName in platformNames)
-            {
                 success &= TryAddPlatformByName(dict, platformName, platformSpecNames);
-            }
+
             return success;
         }
 
-        public IEnumerable<MetadataProperty> GetPlatforms(string platformName)
-        {
-            return GetPlatforms(platformName, strict: false);
-        }
+        public IEnumerable<MetadataProperty> GetPlatforms(string platformName) => GetPlatforms(platformName, strict: false);
 
         public IEnumerable<MetadataProperty> GetPlatforms(string platformName, bool strict)
         {
@@ -306,6 +300,9 @@ namespace PlayniteExtensions.Common
 
             if (nameAbbreviations.TryGetValue(sanitizedPlatformName, out string foundPlatformName))
                 return new[] { new MetadataNameProperty(foundPlatformName) };
+
+            if (PlatformSpecNames.Contains(platformName))
+                return new[] { new MetadataSpecProperty(platformName) };
 
             if (strict)
                 return new List<MetadataProperty>();

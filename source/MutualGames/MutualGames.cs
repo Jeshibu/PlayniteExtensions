@@ -24,8 +24,6 @@ namespace MutualGames
 
         public string Name { get; } = "Mutual Games";
 
-        public static string ExportFileFilter = "Games export (*.mutualgames)|*.mutualgames";
-
         public MutualGames(IPlayniteAPI api) : base(api)
         {
             Properties = new GenericPluginProperties
@@ -50,7 +48,7 @@ namespace MutualGames
 
         private void ImportFile(MainMenuItemActionArgs args)
         {
-            var importer = new MutualGamesFileImporter(PlayniteApi, Settings.Settings);
+            var importer = new MutualGamesFileImporter(PlayniteApi, Settings.Settings, new PlatformUtility(PlayniteApi));
             importer.Import();
         }
 

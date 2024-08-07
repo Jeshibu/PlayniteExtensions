@@ -64,6 +64,12 @@
     <Compile Include="..\PlayniteExtensions.Common\IgnoreScrollBehavior.cs">
       <Link>Common\IgnoreScrollBehavior.cs</Link>
     </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs">
+      <Link>Common\IPlatformUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs">
+      <Link>Common\PlatformUtility.cs</Link>
+    </Compile>
     <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
       <Link>Common\PluginSettingsViewModel.cs</Link>
     </Compile>
@@ -116,6 +122,7 @@
     <Compile Include="MutualGamesFileImporter.cs" />
     <Compile Include="MutualGamesAccountImporter.cs" />
     <Compile Include="Models\Settings\MutualGamesSettingsViewModel.cs" />
+    <Compile Include="MutualGamesHelper.cs" />
     <Compile Include="Views\Settings\MutualGamesSettingsView.xaml.cs">
       <DependentUpon>MutualGamesSettingsView.xaml</DependentUpon>
     </Compile>

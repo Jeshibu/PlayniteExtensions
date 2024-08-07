@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,9 @@ namespace MutualGames
 
         #region property getting and assigning
 
-        protected DatabaseObject GetDatabaseItem(string friendName)
+        protected DatabaseObject GetDatabaseItem(string friendName, string sourceName)
         {
-            var propName = string.Format(settings.PropertyNameFormat.Trim(), friendName);
+            var propName = string.Format(settings.PropertyNameFormat.Trim(), friendName, sourceName);
             var existingProperty = GetDatabaseCollectionToImportTo().FirstOrDefault(x => propName.Equals(x.Name, StringComparison.InvariantCultureIgnoreCase));
             return existingProperty ?? CreateProperty(propName);
         }

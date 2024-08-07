@@ -101,7 +101,7 @@ namespace MutualGames.Models.Settings
             try
             {
                 var exampleFriend = new FriendAccountInfo { Id = "42069", Name = "xXx_1337Slayer_xXx", Source = FriendSource.Steam };
-                var formatted = string.Format(Settings.PropertyNameFormat, exampleFriend.Name, exampleFriend.Source);
+                var formatted = MutualGamesHelper.GetPropertyName(Settings, exampleFriend);
             }
             catch (ArgumentNullException)
             {
