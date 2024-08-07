@@ -39,3 +39,4 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/BigFishLibrary_0_4.pext
     Changelog:
     - Fetching uninstalled games now uses the legacy API too, for older purchases
+    - Improvement in connection handling; less likely to run out of connections

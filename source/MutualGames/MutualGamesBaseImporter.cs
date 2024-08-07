@@ -1,12 +1,11 @@
-﻿using Playnite.SDK;
+﻿using MutualGames.Models.Export;
+using MutualGames.Models.Settings;
+using Playnite.SDK;
 using Playnite.SDK.Models;
-using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MutualGames.Models.Settings;
-using MutualGames.Models.Export;
 
 namespace MutualGames
 {

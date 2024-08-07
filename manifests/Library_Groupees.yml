@@ -26,3 +26,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-09-24/GroupeesLibrary_0_3.pext
     Changelog:
      - Added option to disable game import to skip authentication error notification
+  - Version: 0.3.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2024-08-08
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/GroupeesLibrary_0_3_1.pext
+    Changelog:
+     - Improvement in connection handling; less likely to run out of connections

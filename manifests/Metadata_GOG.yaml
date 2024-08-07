@@ -18,3 +18,4 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/GOGMetadata_0_2_1.pext
     Changelog:
     - Split companies when multiple are entered in a single entry
+    - Improvement in connection handling; less likely to run out of connections

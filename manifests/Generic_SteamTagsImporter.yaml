@@ -121,3 +121,4 @@ Packages:
     - Added options to add more links to bulk tag import
     - Added options to only match filtered or Steam games
     - Deduplicated bulk import proposed game matches
+    - Improvement in connection handling; less likely to run out of connections

@@ -114,3 +114,4 @@ Packages:
     Changelog:
      - Added bulk import option to only match filtered games
      - Fixed HTML entities showing up in search result descriptions
+     - Improvement in connection handling; less likely to run out of connections

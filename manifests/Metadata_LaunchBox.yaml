@@ -94,3 +94,4 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/LaunchBoxMetadata_0_7_1.pext
     Changelog:
     - Lists in settings no longer block mousewheel scrolling when the cursor is on them
+    - Improvement in connection handling; less likely to run out of connections

@@ -27,10 +27,7 @@ namespace RawgLibrary
 
         public override string Name { get; } = "RAWG";
 
-        public IWebDownloader Downloader { get; } = new WebDownloader();
-
         private TitleComparer TitleComparer = new TitleComparer();
-
 
         public RawgLibrary(IPlayniteAPI api) : base(api)
         {

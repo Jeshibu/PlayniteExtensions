@@ -62,3 +62,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-07-26/Barnite_0_6_3.pext
     Changelog:
     - Small platform matching improvements
+  - Version: 0.6.4
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2024-08-08
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/Barnite_0_6_4.pext
+    Changelog:
+    - Improvement in connection handling; less likely to run out of connections

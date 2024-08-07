@@ -86,3 +86,4 @@ Packages:
     - Added bulk import option to only match filtered games
     - Fixed HTML entities showing up in search result descriptions
     - Removed ', the' from the end of company names
+    - Improvement in connection handling; less likely to run out of connections
