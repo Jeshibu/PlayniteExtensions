@@ -18,11 +18,8 @@ namespace LaunchBoxMetadata
         public string GetLaunchBoxGamesDatabaseUrl(string databaseId)
         {
             var redirectRequestUrl = $"https://gamesdb.launchbox-app.com/games/dbid/{databaseId}/";
-            var redirectResponse = downloader.DownloadString(redirectRequestUrl, maxRedirectDepth: -1); //don't accept redirects, just get the URL
-            if (WebDownloader.HttpRedirectStatusCodes.Contains(redirectResponse.StatusCode))
-                return redirectResponse.ResponseUrl;
-            else
-                return null;
+            var redirectResponse = downloader.DownloadString(redirectRequestUrl, getContent: false, maxRedirectDepth: -1); //don't accept redirects, just get the URL
+            return redirectResponse.ResponseUrl;
         }
 
         public IEnumerable<LaunchBoxImageDetails> GetGameImageDetails(string detailsUrl)

@@ -18,8 +18,8 @@ namespace PlayniteExtensions.Common
         /// The total collection of cookies used both as input for requests and output for responses
         /// </summary>
         CookieContainer Cookies { get; }
-        DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null);
-        Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null);
+        DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null, bool getContent = true);
+        Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null, bool getContent = true);
     }
 
     public class DownloadStringResponse
@@ -53,25 +53,25 @@ namespace PlayniteExtensions.Common
             httpClient = new HttpClient(cookieContainer, false);
         }
 
-        public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null)
+        public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null, bool getContent = true)
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
-            var output = DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType, throwExceptionOnErrorResponse, maxRedirectDepth, depth: 0).Result;
+            var output = DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType, throwExceptionOnErrorResponse, maxRedirectDepth, 0, cancellationToken, getContent).Result;
             sw.Stop();
             logger.Info($"Call to {url} completed in {sw.Elapsed}, status: {output?.StatusCode}");
             return output;
         }
 
-        public async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null)
+        public async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null, bool getContent = true)
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
-            var output = await DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType, throwExceptionOnErrorResponse, maxRedirectDepth, depth: 0);
+            var output = await DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType, throwExceptionOnErrorResponse, maxRedirectDepth, 0, cancellationToken, getContent);
             sw.Stop();
             logger.Info($"Call to {url} completed in {sw.Elapsed}, status: {output?.StatusCode}");
             return output;
         }
 
-        private async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, int depth = 0, CancellationToken? cancellationToken = null)
+        private async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc, Func<string, CookieCollection> jsCookieGetFunc, string referer, Action<HttpRequestHeaders> headerSetter, string contentType, bool throwExceptionOnErrorResponse, int maxRedirectDepth, int depth, CancellationToken? cancellationToken, bool getContent)
         {
             var request = new HttpRequestMessage(HttpMethod.Get, url);
 
@@ -91,7 +91,7 @@ namespace PlayniteExtensions.Common
 
             HttpStatusCode statusCode;
             string responseUrl;
-            string responseContent;
+            string responseContent = null;
             string redirectUrl = null;
 
             HttpResponseMessage response;
@@ -113,22 +113,31 @@ namespace PlayniteExtensions.Common
             }
 
             using (response)
-            using (var stream = await response.Content.ReadAsStreamAsync())
-            using (var reader = new StreamReader(stream))
             {
                 statusCode = response.StatusCode;
                 responseUrl = response.RequestMessage.RequestUri.ToString();
-                responseContent = await reader.ReadToEndAsync();
                 if (HttpRedirectStatusCodes.Contains(response.StatusCode))
                 {
                     redirectUrl = response.Headers.Location.ToString();
                     if (!string.IsNullOrWhiteSpace(redirectUrl))
                         redirectUrl = new Uri(new Uri(url), redirectUrl).AbsoluteUri;
                 }
+
+                if (getContent)
+                {
+                    using (var stream = await response.Content.ReadAsStreamAsync())
+                    using (var reader = new StreamReader(stream))
+                    {
+                        responseContent = await reader.ReadToEndAsync();
+                    }
+                }
             }
 
-            var jsCookies = jsCookieGetFunc?.Invoke(responseContent);
-            Combine(Cookies, jsCookies);
+            if (responseContent != null)
+            {
+                var jsCookies = jsCookieGetFunc?.Invoke(responseContent);
+                Combine(Cookies, jsCookies);
+            }
 
             redirectUrl = redirectUrl ?? redirectUrlGetFunc?.Invoke(url, responseContent);
             if (redirectUrl != null)
@@ -136,7 +145,7 @@ namespace PlayniteExtensions.Common
                 if (depth > maxRedirectDepth)
                     return new DownloadStringResponse(redirectUrl, null, statusCode);
 
-                var redirectOutput = await DownloadStringAsync(redirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer: url, headerSetter, contentType: null, throwExceptionOnErrorResponse, maxRedirectDepth, depth + 1, cancellationToken);
+                var redirectOutput = await DownloadStringAsync(redirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer: url, headerSetter, contentType: null, throwExceptionOnErrorResponse, maxRedirectDepth, depth + 1, cancellationToken, getContent);
                 return redirectOutput;
             }
             else
@@ -161,7 +170,7 @@ namespace PlayniteExtensions.Common
 
     public static class HttpRequestHeaderExtensionMethods
     {
-        public static void Set<T>(this HttpHeaderValueCollection<T> header, string value) where T:class
+        public static void Set<T>(this HttpHeaderValueCollection<T> header, string value) where T : class
         {
             header.Clear();
             header.ParseAdd(value);
