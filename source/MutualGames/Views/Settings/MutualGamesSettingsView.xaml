@@ -120,7 +120,7 @@
                                                  dd:DragDrop.IsDragSource="True" pec:IgnoreScrollBehaviour.IgnoreScroll="true">
                                             <ListBox.ItemTemplate>
                                                 <DataTemplate>
-                                                    <TextBlock Text="{Binding Name}" ToolTip="Drag me to the right!"/>
+                                                    <TextBlock Text="{Binding DisplayTextNoSource}" ToolTip="Drag me to the right!"/>
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
                                         </ListBox>

@@ -229,7 +229,6 @@
                 <ListView ItemsSource="{Binding Settings.Regions}" Name="GenreSettingsView" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                           ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False"
                           VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.VirtualizationMode="Recycling"
-                          pec:IgnoreScrollBehaviour.IgnoreScroll="True"
                           dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" d:ItemsSource="{d:SampleData ItemCount=25}" Grid.Row="2" MinHeight="200">
                     <ListView.View>
                         <GridView>

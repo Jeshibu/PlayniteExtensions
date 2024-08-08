@@ -11,6 +11,9 @@ namespace MutualGames.Models.Settings
         public FriendSource Source { get; set; }
 
         [DontSerialize]
+        public string DisplayTextNoSource => $"{Name} ({Id})";
+
+        [DontSerialize]
         public string DisplayText => $"{Name} ({Source} - {Id})";
 
         public override bool Equals(object obj)

@@ -6,3 +6,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/MutualGames_0_3.pext
     Changelog:
     - Initial release
+  - Version: 0.3.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-08-08
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/MutualGames_0_3_1.pext
+    Changelog:
+    - Fixed categories/tags using account name instead of friend name
+    - Added IDs to settings accounts lists

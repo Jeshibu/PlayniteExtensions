@@ -38,7 +38,7 @@ namespace MutualGames
                             a.Text = $"Getting games for {friendIdentityGrouping.FriendName} ({friend.Source} - {friend.Name})";
                             try
                             {
-                                var matchingGames = GetMatchingGames(friend, a.CancelToken, out var dbItem);
+                                var matchingGames = GetMatchingGames(friend, friendIdentityGrouping.FriendName, a.CancelToken, out var dbItem);
                                 foreach (var matchingGame in matchingGames)
                                     if (AddPropertyToGame(matchingGame, dbItem))
                                         playniteAPI.Database.Games.Update(matchingGame);
@@ -57,19 +57,19 @@ namespace MutualGames
             playniteAPI.Dialogs.ShowMessage($"Imported {updatedCount} new friends' games.", "Mutual Games import done");
         }
 
-        private IEnumerable<Game> GetMatchingGames(FriendAccountInfo friend, CancellationToken cancellationToken, out DatabaseObject dbItem)
+        private IEnumerable<Game> GetMatchingGames(FriendAccountInfo account, string friendName, CancellationToken cancellationToken, out DatabaseObject dbItem)
         {
             dbItem = null;
 
             var output = new List<Game>();
-            var client = clients.FirstOrDefault(c => c.Source == friend.Source);
+            var client = clients.FirstOrDefault(c => c.Source == account.Source);
             if (client == null) return new Game[0];
 
-            dbItem = GetDatabaseItem(friend.Name, client.Name);
+            dbItem = GetDatabaseItem(friendName, client.Name);
 
-            var friendGames = client.GetFriendGames(friend, cancellationToken).ToList();
+            var friendGames = client.GetFriendGames(account, cancellationToken).ToList();
 
-            return GetMatchingGames(client.PluginId, friendGames, friend.DisplayText);
+            return GetMatchingGames(client.PluginId, friendGames, account.DisplayText);
         }
     }
 }
