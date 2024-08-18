@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -44,7 +45,7 @@ namespace PlayniteExtensions.Common
         public static HttpStatusCode[] HttpRedirectStatusCodes = new[] { HttpStatusCode.Redirect, HttpStatusCode.Moved, HttpStatusCode.TemporaryRedirect, (HttpStatusCode)308 };
 
         public CookieContainer Cookies => cookieContainer.Container;
-        public string UserAgent { get; set; } = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0";
+        public string UserAgent { get; set; } = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0";
         public string Accept { get; set; } = "text/html,application/json,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
 
         public WebDownloader()
@@ -87,7 +88,7 @@ namespace PlayniteExtensions.Common
             headerSetter?.Invoke(request.Headers);
 
             if (contentType != null)
-                request.Headers.Add("Content-Type", contentType);
+                request.Headers.AddInvalid("Content-Type", contentType);
 
             HttpStatusCode statusCode;
             string responseUrl;
@@ -174,6 +175,14 @@ namespace PlayniteExtensions.Common
         {
             header.Clear();
             header.ParseAdd(value);
+        }
+
+        public static void AddInvalid(this HttpRequestHeaders headers, string header, string value)
+        {
+            var invalidHeadersField = typeof(HttpHeaders).GetField("invalidHeaders", BindingFlags.NonPublic | BindingFlags.Instance);
+            var invalidHeaders = (HashSet<string>)invalidHeadersField.GetValue(headers);
+            invalidHeaders?.Remove(header);
+            headers.Add(header, value);
         }
     }
 

@@ -46,12 +46,12 @@ namespace PlayniteExtensions.Tests.Common
             RedirectsByUrl.Add(url, new Redirect(redirectUrl, depth));
         }
 
-        public virtual async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxResponseDepth = 7, CancellationToken? cancellationToken = null)
+        public virtual async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxResponseDepth = 7, CancellationToken? cancellationToken = null, bool getContent = true)
         {
-            return DownloadString(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType: null, throwExceptionOnErrorResponse, maxResponseDepth, cancellationToken);
+            return DownloadString(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType: null, throwExceptionOnErrorResponse, maxResponseDepth, cancellationToken, getContent);
         }
 
-        public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null)
+        public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null, bool getContent = true)
         {
             CalledUrls.Add(url);
             if (FilesByUrl.TryGetValue(url, out string filePath))

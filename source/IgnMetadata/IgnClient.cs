@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Net;
 using System.Net.Http.Headers;
 
 namespace IgnMetadata
@@ -51,7 +50,7 @@ namespace IgnMetadata
             Action<HttpRequestHeaders> headerSetter = headers =>
             {
                 headers.Add("apollographql-client-name", "kraken");
-                headers.Add("apollographql-client-version", "v0.66.1");
+                headers.Add("apollographql-client-version", "v0.67.0");
             };
 
             var response = downloader.DownloadString(url, referer: "https://www.ign.com/reviews/games", headerSetter: headerSetter, contentType: "application/json");
@@ -152,7 +151,7 @@ namespace IgnMetadata
                 var names = Names;
                 var name = names.First();
                 if (names.Count > 1)
-                    name += $" (AKA {string.Join(" / ", AlternateNames)}";
+                    name += $" (AKA {string.Join(" / ", AlternateNames)})";
                 return name;
             }
         }
