@@ -208,35 +208,42 @@ namespace PlayniteExtensions.Metadata.Common
                 ParallelOptions parallelOptions = new ParallelOptions() { CancellationToken = a.CancelToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
                 var loopResult = Parallel.ForEach(gamesToMatch, parallelOptions, externalGameInfo =>
                 {
-                    externalGameInfo.Id = GetGameIdFromUrl(externalGameInfo.Url);
-
-                    void AddMatchedGame(Game game)
+                    try
                     {
-                        var added = proposedMatches.TryAdd(game.Id, new GameCheckboxViewModel(game, externalGameInfo));
-                        if (!added)
+                        externalGameInfo.Id = GetGameIdFromUrl(externalGameInfo.Url);
+
+                        void AddMatchedGame(Game game)
                         {
-                            var firstMatch = proposedMatches[game.Id];
-                            logger.Info($"Skipped adding ${game.Name} again with {externalGameInfo}, already matched with {firstMatch.GameDetails}");
+                            var added = proposedMatches.TryAdd(game.Id, new GameCheckboxViewModel(game, externalGameInfo));
+                            if (!added)
+                            {
+                                var firstMatch = proposedMatches[game.Id];
+                                logger.Info($"Skipped adding ${game.Name} again with {externalGameInfo}, already matched with {firstMatch.GameDetails}");
+                            }
+                        }
+
+                        if (externalGameInfo.Id != null && gamesById.TryGetValue(externalGameInfo.Id, out var gamesWithThisId))
+                        {
+                            foreach (var g in gamesWithThisId)
+                                AddMatchedGame(g);
+                        }
+
+                        var namesToMatch = matchHelper.GetDeflatedNames(externalGameInfo.Names).Where(n => !string.IsNullOrEmpty(n)).ToList();
+
+                        foreach (var g in gamesWithNoKnownId)
+                        {
+                            var libraryGameNameDeflated = matchHelper.DeflatedNames[g.Name];
+
+                            if (namesToMatch.Contains(libraryGameNameDeflated, StringComparer.InvariantCultureIgnoreCase)
+                                && platformUtility.PlatformsOverlap(g.Platforms, externalGameInfo.Platforms))
+                            {
+                                AddMatchedGame(g);
+                            }
                         }
                     }
-
-                    if (externalGameInfo.Id != null && gamesById.TryGetValue(externalGameInfo.Id, out var gamesWithThisId))
+                    catch (Exception ex)
                     {
-                        foreach (var g in gamesWithThisId)
-                            AddMatchedGame(g);
-                    }
-
-                    var namesToMatch = matchHelper.GetDeflatedNames(externalGameInfo.Names).ToList();
-
-                    foreach (var g in gamesWithNoKnownId)
-                    {
-                        var libraryGameNameDeflated = matchHelper.DeflatedNames[g.Name];
-
-                        if (namesToMatch.Contains(libraryGameNameDeflated, StringComparer.InvariantCultureIgnoreCase)
-                            && platformUtility.PlatformsOverlap(g.Platforms, externalGameInfo.Platforms))
-                        {
-                            AddMatchedGame(g);
-                        }
+                        logger.Error(ex, "Error matching games");
                     }
 
                     a.CurrentProgressValue++;

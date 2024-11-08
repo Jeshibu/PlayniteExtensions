@@ -105,7 +105,7 @@ namespace PlayniteExtensions.Common
         public static string Deflate(this string gameName)
         {
             if (string.IsNullOrEmpty(gameName))
-                return null;
+                return string.Empty;
 
             return deflateRegex.Replace(gameName, string.Empty);
         }
