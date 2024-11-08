@@ -52,7 +52,7 @@ namespace BigFishLibrary
                 HasSettings = false
             };
             RegistryReader = new BigFishRegistryReader(new RegistryValueProvider());
-            Downloader = new WebDownloader();
+            Downloader = new WebDownloader { Accept = "*/*" };
         }
 
         public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)

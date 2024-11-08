@@ -40,3 +40,9 @@ Packages:
     Changelog:
     - Fetching uninstalled games now uses the legacy API too, for older purchases
     - Improvement in connection handling; less likely to run out of connections
+  - Version: 0.4.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-11-08
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/BigFishLibrary_0_4_1.pext
+    Changelog:
+    - Fixed online library fetching

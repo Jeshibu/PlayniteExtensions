@@ -92,6 +92,12 @@ namespace BigFishLibrary
                 return Enumerable.Empty<ArchivedGame>();
             }
 
+            if (string.IsNullOrEmpty(tokens?.Token))
+            {
+                logger.Error("No token");
+                return Enumerable.Empty<ArchivedGame>();
+            }
+
             string url = "https://www.bigfishgames.com/bin/servlet/public/archived/purchasehistory?gamesOnly=true&limit=0&offset=0";
             downloader.Cookies.Add(tokens.SessionCookie);
             var response = downloader.DownloadString(url, headerSetter: GetHeaderSetAction(tokens.Token));
@@ -104,8 +110,6 @@ namespace BigFishLibrary
             return headers =>
             {
                 headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                headers.Add("origin", "https://www.bigfishgames.com");
-                headers.CacheControl.NoCache = true;
             };
         }
 
