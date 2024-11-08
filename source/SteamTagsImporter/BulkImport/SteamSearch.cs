@@ -40,7 +40,8 @@ namespace SteamTagsImporter.BulkImport
 
         public IEnumerable<SteamProperty> GetProperties()
         {
-            var source = downloader.DownloadString($"https://store.steampowered.com/search/?l={settings.LanguageKey}").ResponseContent;
+            //category2=35 here because that's the In-App Purchases feature, which is normally hidden unless already part of the filter like this
+            var source = downloader.DownloadString($"https://store.steampowered.com/search/?category2=35&l={settings.LanguageKey}").ResponseContent;
             var doc = new HtmlParser().Parse(source);
             var rows = doc.QuerySelectorAll(".tab_filter_control_row[data-param][data-value][data-loc]");
             foreach (var row in rows)

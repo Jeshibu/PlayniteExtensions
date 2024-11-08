@@ -122,9 +122,10 @@ Packages:
     - Added options to only match filtered or Steam games
     - Deduplicated bulk import proposed game matches
     - Improvement in connection handling; less likely to run out of connections
-  - Version: 4.2.1
+  - Version: 4.2.2
     RequiredApiVersion: 6.11.0
-    ReleaseDate: 2024-11-07
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/SteamTagsImporter_4_2_1.pext
+    ReleaseDate: 2024-11-08
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/SteamTagsImporter_4_2_2.pext
     Changelog:
     - Fixed bulk import breaking when it included a Steam game with no name
+    - Added missing In-App Purchases feature for bulk import
