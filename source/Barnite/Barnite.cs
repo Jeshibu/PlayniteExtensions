@@ -81,7 +81,7 @@ namespace Barnite
             if (barcodes.Length == 0)
                 return;
 
-            Dictionary<string, Tuple<Game, string>> barcodeGameDict = new Dictionary<string, Tuple<Game, string>>();
+            Dictionary<string, Tuple<string, string>> barcodeGameDict = new Dictionary<string, Tuple<string, string>>();
             foreach (var barcode in barcodes)
             {
                 barcodeGameDict.Add(barcode, null);
@@ -116,7 +116,7 @@ namespace Barnite
                                 logger.Debug($"Game found in {scraper.Name} for {barcode}!");
                                 var game = PlayniteApi.Database.ImportGame(data);
                                 addedGuids.Add(game.Id);
-                                barcodeGameDict[barcode] = Tuple.Create(game, scraper.Name);
+                                barcodeGameDict[barcode] = Tuple.Create(game.Name, scraper.Name);
                                 break;
                             }
                         }
@@ -135,13 +135,13 @@ namespace Barnite
             PlayniteApi.MainView.SelectGames(addedGuids);
             ShowResults(barcodes, barcodeGameDict);
         }
-        private void ShowResults(string[] barcodes, Dictionary<string, Tuple<Game, string>> barcodeGameDict)
+        private void ShowResults(string[] barcodes, Dictionary<string, Tuple<string, string>> barcodeGameDict)
         {
-            var entries = barcodeGameDict.Select(kvp => new BarcodeEntry
+            var entries = barcodes.Select(barcode => new BarcodeEntry
             {
-                Barcode = kvp.Key,
-                Title = kvp.Value?.Item1?.Name ?? "Not Found",
-                Source = kvp.Value?.Item2 ?? "N/A"
+                Barcode = barcode,
+                Title = barcodeGameDict[barcode]?.Item1 ?? "Not Found",
+                Source = barcodeGameDict[barcode]?.Item2 ?? "N/A"
             }).ToList();
 
             PlayniteApi.MainView.UIDispatcher.Invoke(() =>
