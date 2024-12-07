@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 
 namespace LaunchBoxMetadata
 {
@@ -121,14 +122,36 @@ namespace LaunchBoxMetadata
         public string ExtractMetadataXmlFromZipFile(string zipFilePath)
         {
             var xmlPath = Path.GetTempFileName() + ".xml";
+            var cleanedXmlPath = Path.GetTempFileName() + ".xml";
+            tempPaths.Add(xmlPath);
+            tempPaths.Add(cleanedXmlPath);
+
             playniteAPI.Dialogs.ActivateGlobalProgress(a =>
             {
                 var zip = ZipFile.Open(zipFilePath, ZipArchiveMode.Read);
                 var entry = zip.GetEntry("Metadata.xml");
                 entry.ExtractToFile(xmlPath, overwrite: true);
-                tempPaths.Add(xmlPath);
+
+                a.Text = "Cleaning up file...";
+
+                PurgeControlCharacterEntities(xmlPath, cleanedXmlPath);
             }, new GlobalProgressOptions("Extracting zip file..."));
-            return xmlPath;
+
+            return cleanedXmlPath;
+        }
+
+        private static void PurgeControlCharacterEntities(string inputFilePath, string outputFilePath)
+        {
+            var hexEntityRegex = new Regex(@"&#x[0-9A-F]{1,2};", RegexOptions.Compiled);
+
+            using (var writer = new StreamWriter(outputFilePath))
+            {
+                foreach (var line in File.ReadLines(inputFilePath))
+                {
+                    var cleanLine = hexEntityRegex.Replace(line, string.Empty);
+                    writer.WriteLine(cleanLine);
+                }
+            }
         }
     }
 }

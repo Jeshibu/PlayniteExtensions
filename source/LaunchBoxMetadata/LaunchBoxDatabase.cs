@@ -103,19 +103,6 @@ limit {limit.Value}";
             }
         }
 
-        public IEnumerable<LaunchBoxGameImage> GetGameImages(string id)
-        {
-            var query = @"
-select *
-from GameImages
-where DatabaseID = ?";
-
-            using (var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY))
-            {
-                return db.Load<LaunchBoxGameImage>(query, id).ToList();
-            }
-        }
-
         public IEnumerable<string> GetGameImageTypes()
         {
             var query = @"

@@ -202,15 +202,27 @@ namespace LaunchBoxMetadata
 
                 var xmlParser = new LaunchBoxXmlParser(xmlPath);
                 var database = GetDatabase();
+                Exception exception = null;
                 PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
                 {
-                    database.CreateDatabase(xmlParser, a);
+                    try
+                    {
+                        database.CreateDatabase(xmlParser, a);
+                    }
+                    catch (Exception ex) { exception = ex; }
                 }, new GlobalProgressOptions("Initializing database...", false));
 
-
                 OnPropertyChanged(nameof(StatusText));
-                InitializeDatabaseLists();
-                PlayniteApi.Dialogs.ShowMessage("Local LaunchBox metadata database successfully initialized!", "LaunchBox database", System.Windows.MessageBoxButton.OK);
+
+                if (exception != null)
+                {
+                    PlayniteApi.Dialogs.ShowMessage($"Failed to initialize local Launchbox metadata database: {exception.Message}", "LaunchBox database", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                }
+                else
+                {
+                    InitializeDatabaseLists();
+                    PlayniteApi.Dialogs.ShowMessage("Local LaunchBox metadata database successfully initialized!", "LaunchBox database", System.Windows.MessageBoxButton.OK);
+                }
             }
             catch (Exception ex)
             {
