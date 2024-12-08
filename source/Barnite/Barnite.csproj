@@ -100,7 +100,8 @@
     <Compile Include="..\PlayniteExtensions.Metadata.Common\Settings.cs">
       <Link>Common\Metadata\Settings.cs</Link>
     </Compile>
-    <Compile Include="BarcodeEntry.cs" />
+    <Compile Include="BarcodeResultEntry.cs" />
+    <Compile Include="BarcodeResultsGridViewModel.cs" />
     <Compile Include="Barnite.cs" />
     <Compile Include="BarniteSettings.cs" />
     <Compile Include="BarcodeResultsGrid.xaml.cs">

@@ -6,11 +6,11 @@ namespace Barnite
 {
     public partial class BarcodeResultsGrid : UserControl
     {
-        public List<BarcodeEntry> Entries { get; }
+        public List<BarcodeResultEntry> Entries { get; }
 
-        public BarcodeResultsGrid(Window window, List<BarcodeEntry> entries)
+        public BarcodeResultsGrid(Window window, BarcodeResultsGridViewModel viewModel)
         {
-            Entries = entries;
+            Entries = viewModel.ResultEntries;
             DataContext = this;  // Set DataContext for binding
             Window = window;
             InitializeComponent();

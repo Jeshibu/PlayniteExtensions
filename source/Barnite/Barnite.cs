@@ -81,13 +81,9 @@ namespace Barnite
             if (barcodes.Length == 0)
                 return;
 
-            Dictionary<string, Tuple<string, string>> barcodeGameDict = new Dictionary<string, Tuple<string, string>>();
-            foreach (var barcode in barcodes)
-            {
-                barcodeGameDict.Add(barcode, null);
-            }
-            
+            var resultEntries = new List<BarcodeResultEntry>();
             var addedGuids = new List<Guid>();
+            var scraperExceptions = new List<String>();
 
             PlayniteApi.Dialogs.ActivateGlobalProgress((args) =>
             {
@@ -97,6 +93,13 @@ namespace Barnite
                 foreach (var barcode in barcodes)
                 {
                     int scraperCount = 0;
+                    //Assume we didn't find it until it's found
+                    BarcodeResultEntry result = new BarcodeResultEntry { 
+                        Barcode = barcode,
+                        Title = "Not Found", 
+                        Source = "N/A",
+                        IsSuccessful = false
+                    };
                     foreach (var scraper in orderedScrapers)
                     {
                         if (args.CancelToken.IsCancellationRequested)
@@ -116,38 +119,37 @@ namespace Barnite
                                 logger.Debug($"Game found in {scraper.Name} for {barcode}!");
                                 var game = PlayniteApi.Database.ImportGame(data);
                                 addedGuids.Add(game.Id);
-                                barcodeGameDict[barcode] = Tuple.Create(game.Name, scraper.Name);
+                                result.Title = game.Name;
+                                result.Source = scraper.Name;
+                                result.IsSuccessful = true;
                                 break;
                             }
                         }
                         catch (Exception ex)
                         {
-                            logger.Error(ex, $"Error while getting metadata from barcode {barcode} with {scraper.Name}");
-                            PlayniteApi.Notifications.Add(new NotificationMessage($"barcode_{barcode}_scraper_{scraper.Name}_error", $"Error while getting barcode {barcode} with {scraper.Name}: {ex.Message}", NotificationType.Error));
+                            logger.Error(ex, $"Error while getting metadata from barcode {barcode} with {scraper.Name}: {ex.Message}");
+                            scraperExceptions.Add($"Error while getting barcode {barcode} with {scraper.Name}: {ex.Message}");
                         }
                         args.CurrentProgressValue++;
                     }
+                    resultEntries.Add(result);
                     args.CurrentProgressValue += (orderedScrapers.Count - scraperCount);
                     barcodeCount++;
                 }
             }, new GlobalProgressOptions("Searching barcode databases…") { Cancelable = true, IsIndeterminate = false });
 
+            if(scraperExceptions.Any())
+                PlayniteApi.Notifications.Add(new NotificationMessage("barnite_scraper_errors", String.Join(Environment.NewLine, scraperExceptions), NotificationType.Error));
+            
             PlayniteApi.MainView.SelectGames(addedGuids);
-            ShowResults(barcodes, barcodeGameDict);
+            ShowResults(resultEntries);
         }
-        private void ShowResults(string[] barcodes, Dictionary<string, Tuple<string, string>> barcodeGameDict)
+        private void ShowResults(List<BarcodeResultEntry> resultEntries)
         {
-            var entries = barcodes.Select(barcode => new BarcodeEntry
-            {
-                Barcode = barcode,
-                Title = barcodeGameDict[barcode]?.Item1 ?? "Not Found",
-                Source = barcodeGameDict[barcode]?.Item2 ?? "N/A"
-            }).ToList();
-
             PlayniteApi.MainView.UIDispatcher.Invoke(() =>
             {
                 var resultsWindow = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowMinimizeButton = false });
-                var view = new BarcodeResultsGrid(resultsWindow, entries);
+                var view = new BarcodeResultsGrid(resultsWindow, new BarcodeResultsGridViewModel { ResultEntries = resultEntries });
                 resultsWindow.Content = view;
                 resultsWindow.Width = 600;
                 resultsWindow.Height = 400;
