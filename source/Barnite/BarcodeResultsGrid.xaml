@@ -12,7 +12,7 @@
             <RowDefinition Height="*" /> <!-- DataGrid -->
             <RowDefinition Height="Auto" /> <!-- Lower Section -->
         </Grid.RowDefinitions>
-        <DataGrid ItemsSource="{Binding Entries}" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True">
+        <DataGrid ItemsSource="{Binding ResultEntries}" AutoGenerateColumns="False" HeadersVisibility="Column" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Barcode" Binding="{Binding Barcode}" Width="Auto" />
                 <DataGridTemplateColumn Header="Title" Width="*">
