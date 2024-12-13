@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Playnite.SDK;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Barnite
 {
     public class BarcodeResultsGridViewModel
     {
         public List<BarcodeResultEntry> ResultEntries { get; set; }
+        public RelayCommand RetryFailedCommand { get; set; }
+        public bool CanRetryFailed => ResultEntries.Any(entry => !entry.IsSuccessful);
     }
 }

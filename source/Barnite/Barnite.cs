@@ -1,6 +1,5 @@
 ﻿using Barnite.Scrapers;
 using Playnite.SDK;
-using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using System;
@@ -82,74 +81,96 @@ namespace Barnite
                 return;
 
             var resultEntries = new List<BarcodeResultEntry>();
-            var addedGuids = new List<Guid>();
-            var scraperExceptions = new List<String>();
+            foreach (var barcode in barcodes)
+            {
+                //Assume we didn't find any until they're found
+                resultEntries.Add(new BarcodeResultEntry
+                {
+                    Barcode = barcode,
+                    Title = "Not Found",
+                    Source = "N/A",
+                    IsSuccessful = false,
+                    Guid = Guid.Empty,
+                });
+            }
+            ProcessEntries(resultEntries);
+        }
 
+        private void ProcessEntries(List<BarcodeResultEntry> resultEntries)
+        {
+            var scraperExceptions = new List<String>();
             PlayniteApi.Dialogs.ActivateGlobalProgress((args) =>
             {
                 var orderedScrapers = _scraperManager.GetOrderedListFromSettings(settings.Settings.Scrapers);
-                args.ProgressMaxValue = orderedScrapers.Count * barcodes.Length;
+                args.ProgressMaxValue = orderedScrapers.Count * resultEntries.Count;
                 int barcodeCount = 1;
-                foreach (var barcode in barcodes)
+                foreach (var entry in resultEntries)
                 {
                     int scraperCount = 0;
-                    //Assume we didn't find it until it's found
-                    BarcodeResultEntry result = new BarcodeResultEntry { 
-                        Barcode = barcode,
-                        Title = "Not Found", 
-                        Source = "N/A",
-                        IsSuccessful = false
-                    };
-                    foreach (var scraper in orderedScrapers)
+                    if (!entry.IsSuccessful)
                     {
-                        if (args.CancelToken.IsCancellationRequested)
-                            return;
+                        foreach (var scraper in orderedScrapers)
+                        {
+                            if (args.CancelToken.IsCancellationRequested)
+                                return;
 
-                        args.Text = $"{barcodeCount} of {barcodes.Length}: Searching {scraper.Name} for {barcode}…";
-                        scraperCount++;
-                        try
-                        {
-                            var data = scraper.GetMetadataFromBarcode(barcode);
-                            if (data == null)
+                            args.Text = $"{barcodeCount} of {resultEntries.Count}: Searching {scraper.Name} for {entry.Barcode}…";
+                            scraperCount++;
+                            try
                             {
-                                logger.Debug($"No game found in {scraper.Name} for {barcode}");
+                                var data = scraper.GetMetadataFromBarcode(entry.Barcode);
+                                if (data == null)
+                                {
+                                    logger.Debug($"No game found in {scraper.Name} for {entry.Barcode}");
+                                }
+                                else
+                                {
+                                    logger.Debug($"Game found in {scraper.Name} for {entry.Barcode}!");
+                                    var game = PlayniteApi.Database.ImportGame(data);
+                                    entry.Guid = game.Id;
+                                    entry.Title = game.Name;
+                                    entry.Source = scraper.Name;
+                                    entry.IsSuccessful = true;
+                                    break;
+                                }
                             }
-                            else
+                            catch (Exception ex)
                             {
-                                logger.Debug($"Game found in {scraper.Name} for {barcode}!");
-                                var game = PlayniteApi.Database.ImportGame(data);
-                                addedGuids.Add(game.Id);
-                                result.Title = game.Name;
-                                result.Source = scraper.Name;
-                                result.IsSuccessful = true;
-                                break;
+                                logger.Error(ex, $"Error while getting metadata from barcode {entry.Barcode} with {scraper.Name}: {ex.Message}");
+                                scraperExceptions.Add($"Error while getting barcode {entry.Barcode} with {scraper.Name}: {ex.Message}");
                             }
+                            args.CurrentProgressValue++;
                         }
-                        catch (Exception ex)
-                        {
-                            logger.Error(ex, $"Error while getting metadata from barcode {barcode} with {scraper.Name}: {ex.Message}");
-                            scraperExceptions.Add($"Error while getting barcode {barcode} with {scraper.Name}: {ex.Message}");
-                        }
-                        args.CurrentProgressValue++;
                     }
-                    resultEntries.Add(result);
                     args.CurrentProgressValue += (orderedScrapers.Count - scraperCount);
                     barcodeCount++;
                 }
             }, new GlobalProgressOptions("Searching barcode databases…") { Cancelable = true, IsIndeterminate = false });
 
-            if(scraperExceptions.Any())
+            if (scraperExceptions.Any())
+            {
                 PlayniteApi.Notifications.Add(new NotificationMessage("barnite_scraper_errors", String.Join(Environment.NewLine, scraperExceptions), NotificationType.Error));
-            
-            PlayniteApi.MainView.SelectGames(addedGuids);
+                scraperExceptions.Clear(); //Only keep errors from the most recent run
+            }
+
+            PlayniteApi.MainView.SelectGames(resultEntries.Where(entry => entry.Guid != Guid.Empty).Select(entry => entry.Guid));
             ShowResults(resultEntries);
         }
+
         private void ShowResults(List<BarcodeResultEntry> resultEntries)
         {
             PlayniteApi.MainView.UIDispatcher.Invoke(() =>
             {
                 var resultsWindow = PlayniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowMinimizeButton = false });
-                var view = new BarcodeResultsGrid(resultsWindow, new BarcodeResultsGridViewModel { ResultEntries = resultEntries });
+                var viewModel = new BarcodeResultsGridViewModel
+                {
+                    ResultEntries = resultEntries,
+                    RetryFailedCommand = new RelayCommand(() =>
+                    {
+                        ProcessEntries(resultEntries);
+                    })
+                };
+                var view = new BarcodeResultsGrid(resultsWindow, viewModel);
                 resultsWindow.Content = view;
                 resultsWindow.Width = 600;
                 resultsWindow.Height = 400;

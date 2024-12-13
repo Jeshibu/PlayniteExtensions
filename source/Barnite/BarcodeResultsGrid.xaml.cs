@@ -20,5 +20,12 @@ namespace Barnite
             Window.DialogResult = true;
             Window.Close();
         }
+
+        private void Retry_Click(object sender, RoutedEventArgs e)
+        {
+            Window.Close();
+            var viewModel = (BarcodeResultsGridViewModel) DataContext;
+            viewModel.RetryFailedCommand.Execute(viewModel.ResultEntries);
+        }
     }
 }

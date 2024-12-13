@@ -43,14 +43,21 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5">
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" /> <!-- TextBlock -->
+                <RowDefinition Height="Auto" /> <!-- Buttons -->
+            </Grid.RowDefinitions>
             <TextBlock Text="It's recommended to use metadata plugins to get more data on any added game(s)." 
-                       TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,10">
+               TextAlignment="Center" TextWrapping="Wrap" Margin="0,0,0,10" Grid.Row="0">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}" />
                 </TextBlock.Style>
             </TextBlock>
-            <Button Content="OK" Width="100" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" Click="OK_Click" />
-        </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
+                <Button Content="OK" Width="100" Height="30" Margin="0,0,10,0" Click="OK_Click" />
+                <Button Content="Retry Failed" Width="100" Height="30" Click="Retry_Click" IsEnabled="{Binding CanRetryFailed}" />
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>
