@@ -67,7 +67,7 @@ namespace PlayniteExtensions.Common
                 }
             }
             TryAddPlatformByName(output, "3DO", "3do");
-            TryAddPlatformByName(output, new[] { "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM", "Windows Apps", "win" }, new[] { "pc_windows" });
+            TryAddPlatformByName(output, new[] { "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM", "Windows Apps", "win", "Windows 3.x" }, new[] { "pc_windows" });
             TryAddPlatformByName(output, new[] { "DOS", "MS-DOS" }, "pc_dos");
             TryAddPlatformByName(output, new[] { "Linux", "LIN" }, "pc_linux");
             TryAddPlatformByName(output, new[] { "Mac", "OSX" }, "macintosh");

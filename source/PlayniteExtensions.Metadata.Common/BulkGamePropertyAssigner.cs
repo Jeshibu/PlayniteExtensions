@@ -11,7 +11,6 @@ using System.Windows.Controls;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Collections.Concurrent;
-using System.Threading;
 using System.Collections.ObjectModel;
 
 namespace PlayniteExtensions.Metadata.Common
@@ -25,11 +24,13 @@ namespace PlayniteExtensions.Metadata.Common
         where TSearchItem : IHasName
         where TApprovalPromptViewModel : GamePropertyImportViewModel, new()
     {
-        public BulkGamePropertyAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
+        public BulkGamePropertyAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, IExternalDatabaseIdUtility databaseIdUtility, ExternalDatabase databaseType, int maxDegreeOfParallelism = 8)
         {
             playniteApi = playniteAPI;
             this.dataSource = dataSource;
             this.platformUtility = platformUtility;
+            DatabaseIdUtility = databaseIdUtility;
+            DatabaseType = databaseType;
             MaxDegreeOfParallelism = maxDegreeOfParallelism;
         }
 
@@ -39,6 +40,8 @@ namespace PlayniteExtensions.Metadata.Common
         protected readonly IPlayniteAPI playniteApi;
         public abstract string MetadataProviderName { get; }
         protected bool AllowEmptySearchQuery { get; set; } = false;
+        public IExternalDatabaseIdUtility DatabaseIdUtility { get; }
+        public ExternalDatabase DatabaseType { get; }
         public int MaxDegreeOfParallelism { get; }
 
         protected virtual GlobalProgressOptions GetGameDownloadProgressOptions(TSearchItem selectedItem)
@@ -70,7 +73,7 @@ namespace PlayniteExtensions.Metadata.Common
             UpdateGames(viewModel);
         }
 
-        private TSearchItem SelectGameProperty()
+        protected virtual TSearchItem SelectGameProperty()
         {
             var selectedItem = playniteApi.Dialogs.ChooseItemWithSearch(null, (a) =>
             {
@@ -101,41 +104,6 @@ namespace PlayniteExtensions.Metadata.Common
         protected abstract string GetGameIdFromUrl(string url);
 
         protected virtual string GetIdFromGameLibrary(Guid libraryPluginId, string gameId) => null;
-
-        private IDictionary<string, IList<Game>> GetLibraryGamesById(CancellationToken cancellationToken, out IReadOnlyCollection<Game> unmatchedGames)
-        {
-            var gamesById = new ConcurrentDictionary<string, IList<Game>>(StringComparer.InvariantCultureIgnoreCase);
-            var umg = new ConcurrentBag<Game>();
-
-            var options = new ParallelOptions { CancellationToken = cancellationToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
-
-            Parallel.ForEach(playniteApi.Database.Games, options, game =>
-            {
-                var idList = game.Links?.Select(l => GetGameIdFromUrl(l.Url)).Where(x => x != null).ToList() ?? new List<string>();
-                var libraryGameId = GetIdFromGameLibrary(game.PluginId, game.GameId);
-                if (libraryGameId != null)
-                    idList.Add(libraryGameId);
-
-                var ids = new HashSet<string>(idList, StringComparer.InvariantCultureIgnoreCase);
-
-                if (ids.Any())
-                {
-                    foreach (var id in ids)
-                    {
-                        gamesById.AddOrUpdate(id, new List<Game> { game },
-                            (string i, IList<Game> existing) => { existing.Add(game); return existing; });
-                    }
-                }
-                else
-                {
-                    umg.Add(game);
-                }
-            });
-
-            unmatchedGames = umg.ToList();
-
-            return gamesById;
-        }
 
         private GamePropertyImportViewModel PromptGamePropertyImportUserApproval(TSearchItem selectedItem, List<GameDetails> gamesToMatch)
         {
@@ -169,6 +137,12 @@ namespace PlayniteExtensions.Metadata.Common
                 case PropertyImportTarget.Features:
                     viewModel.TargetField = GamePropertyImportTargetField.Feature;
                     break;
+                case PropertyImportTarget.Developers:
+                    viewModel.TargetField = GamePropertyImportTargetField.Developers;
+                    break;
+                case PropertyImportTarget.Publishers:
+                    viewModel.TargetField = GamePropertyImportTargetField.Publishers;
+                    break;
                 case PropertyImportTarget.Ignore:
                 case PropertyImportTarget.Tags:
                 default:
@@ -190,28 +164,33 @@ namespace PlayniteExtensions.Metadata.Common
                 return null;
         }
 
+        protected virtual IList<(ExternalDatabase Database, string Id)> GetIds(GameDetails gameDetails)
+        {
+            var output = new List<(ExternalDatabase Database, string Id)>(gameDetails.ExternalIds);
+            var id = gameDetails.Id ?? GetGameIdFromUrl(gameDetails.Url);
+            if (id != null)
+                output.Add((DatabaseType, id));
+
+            return output;
+        }
+
         private IEnumerable<GameCheckboxViewModel> GetProposedMatches(List<GameDetails> gamesToMatch)
         {
-            var matchHelper = new GameMatchingHelper();
             var proposedMatches = new ConcurrentDictionary<Guid, GameCheckboxViewModel>();
             bool loopCompleted = false;
             var progressResult = playniteApi.Dialogs.ActivateGlobalProgress(a =>
             {
-                a.ProgressMaxValue = gamesToMatch.Count + 2;
+                a.ProgressMaxValue = gamesToMatch.Count + 10;
 
-                var gamesById = GetLibraryGamesById(a.CancelToken, out var gamesWithNoKnownId);
-                a.CurrentProgressValue++;
-
-                matchHelper.GetDeflatedNames(gamesWithNoKnownId.Select(g => g.Name));
-                a.CurrentProgressValue++;
+                var matchHelper = new GameMatchingHelper(DatabaseIdUtility, MaxDegreeOfParallelism);
+                matchHelper.Prepare(playniteApi.Database.Games, a.CancelToken);
+                a.CurrentProgressValue += 10;
 
                 ParallelOptions parallelOptions = new ParallelOptions() { CancellationToken = a.CancelToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
                 var loopResult = Parallel.ForEach(gamesToMatch, parallelOptions, externalGameInfo =>
                 {
                     try
                     {
-                        externalGameInfo.Id = GetGameIdFromUrl(externalGameInfo.Url);
-
                         void AddMatchedGame(Game game)
                         {
                             var added = proposedMatches.TryAdd(game.Id, new GameCheckboxViewModel(game, externalGameInfo));
@@ -222,21 +201,25 @@ namespace PlayniteExtensions.Metadata.Common
                             }
                         }
 
-                        if (externalGameInfo.Id != null && gamesById.TryGetValue(externalGameInfo.Id, out var gamesWithThisId))
+                        foreach (var dbId in GetIds(externalGameInfo))
                         {
+                            if (!matchHelper.TryGetGamesById(dbId, out var gamesWithThisId))
+                                continue;
+
                             foreach (var g in gamesWithThisId)
                                 AddMatchedGame(g);
                         }
 
-                        var namesToMatch = matchHelper.GetDeflatedNames(externalGameInfo.Names).Where(n => !string.IsNullOrEmpty(n)).ToList();
-
-                        foreach (var g in gamesWithNoKnownId)
+                        foreach (var name in externalGameInfo.Names)
                         {
-                            var libraryGameNameDeflated = matchHelper.DeflatedNames[g.Name];
+                            if (!matchHelper.TryGetGamesByName(name, out var gamesWithThisName))
+                                continue;
 
-                            if (namesToMatch.Contains(libraryGameNameDeflated, StringComparer.InvariantCultureIgnoreCase)
-                                && platformUtility.PlatformsOverlap(g.Platforms, externalGameInfo.Platforms))
+                            foreach (var g in gamesWithThisName)
                             {
+                                if (!platformUtility.PlatformsOverlap(g.Platforms, externalGameInfo.Platforms))
+                                    continue;
+
                                 AddMatchedGame(g);
                             }
                         }
@@ -260,7 +243,7 @@ namespace PlayniteExtensions.Metadata.Common
 
         private bool windowSizedDown = false;
 
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        protected void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (windowSizedDown) return;
 
@@ -338,6 +321,9 @@ namespace PlayniteExtensions.Metadata.Common
                     return GetDatabaseObjectByName(db.Features, viewModel.Name);
                 case GamePropertyImportTargetField.Series:
                     return GetDatabaseObjectByName(db.Series, viewModel.Name);
+                case GamePropertyImportTargetField.Developers:
+                case GamePropertyImportTargetField.Publishers:
+                    return GetDatabaseObjectByName(db.Companies, viewModel.Name);
                 default:
                     throw new ArgumentException();
             }
@@ -348,7 +334,6 @@ namespace PlayniteExtensions.Metadata.Common
             return collection.FirstOrDefault(c => c.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase))
                    ?? collection.Add(name);
         }
-
 
         protected virtual IEnumerable<PotentialLink> GetPotentialLinks(TSearchItem searchItem)
         {
@@ -393,6 +378,10 @@ namespace PlayniteExtensions.Metadata.Common
                     return x => x.FeatureIds;
                 case GamePropertyImportTargetField.Series:
                     return x => x.SeriesIds;
+                case GamePropertyImportTargetField.Developers:
+                    return x => x.DeveloperIds;
+                case GamePropertyImportTargetField.Publishers:
+                    return x => x.PublisherIds;
                 default:
                     throw new ArgumentException($"Unknown target field: {targetField}");
             }

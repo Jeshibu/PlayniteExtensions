@@ -17,6 +17,8 @@ namespace PlayniteExtensions.Metadata.Common
             GamePropertyImportTargetField.Tag,
             GamePropertyImportTargetField.Feature,
             GamePropertyImportTargetField.Series,
+            GamePropertyImportTargetField.Developers,
+            GamePropertyImportTargetField.Publishers,
         };
 
         public GamePropertyImportTargetField TargetField { get; set; }
@@ -116,5 +118,7 @@ namespace PlayniteExtensions.Metadata.Common
         Tag,
         Feature,
         Series,
+        Developers,
+        Publishers,
     }
 }

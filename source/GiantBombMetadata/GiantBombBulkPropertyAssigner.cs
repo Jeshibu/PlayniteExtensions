@@ -14,7 +14,7 @@ namespace GiantBombMetadata
         public override string MetadataProviderName => "Giant Bomb";
 
         public GiantBombBulkPropertyAssigner(IPlayniteAPI playniteAPI, GiantBombMetadataSettings settings, GiantBombGamePropertySearchProvider dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
-            : base(playniteAPI, dataSource, platformUtility, maxDegreeOfParallelism)
+            : base(playniteAPI, dataSource, platformUtility, new GiantBombIdUtility(), ExternalDatabase.GiantBomb, maxDegreeOfParallelism)
         {
             Settings = settings;
         }

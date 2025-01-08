@@ -1,5 +1,7 @@
 ﻿using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -72,6 +74,22 @@ namespace GiantBombMetadata
                 }
             }
             return doc.DocumentNode.OuterHtml;
+        }
+    }
+
+    public class GiantBombIdUtility : SingleExternalDatabaseIdUtility
+    {
+        public override ExternalDatabase Database { get; } = ExternalDatabase.GiantBomb;
+
+        public override IEnumerable<Guid> LibraryIds { get; } = new Guid[0];
+
+        public override (ExternalDatabase Database, string Id) GetIdFromUrl(string url)
+        {
+            var id = GiantBombHelper.GetGiantBombGuidFromUrl(url);
+            if (id == null)
+                return (ExternalDatabase.None, null);
+            else
+                return (ExternalDatabase.GiantBomb, id);
         }
     }
 }

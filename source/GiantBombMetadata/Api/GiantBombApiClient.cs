@@ -14,12 +14,26 @@ namespace GiantBombMetadata.Api
         GiantBombSearchResultItem[] SearchGames(string query, CancellationToken cancellationToken);
     }
 
-    public class GiantBombApiClient : IGiantBombApiClient
+    public class GiantBombApiClient : IGiantBombApiClient, IDisposable
     {
+        public void Dispose()
+        {
+            if (!disposed)
+                restClient?.Dispose();
+
+            disposed = true;
+        }
+
+        ~GiantBombApiClient()
+        {
+            Dispose();
+        }
+
         public const string BaseUrl = "https://www.giantbomb.com/api/";
         private string apiKey;
         private RestClient restClient;
         private ILogger logger = LogManager.GetLogger();
+        private bool disposed = false;
 
         public string ApiKey
         {

@@ -13,8 +13,13 @@ namespace MobyGamesMetadata.Api
 
     public class MobyGamesGameSearchProvider : BaseAggregateMobyGamesDataCollector, IGameSearchProvider<GameSearchResult>
     {
+        private readonly MobyGamesHelper helper;
+
         public MobyGamesGameSearchProvider(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility)
-            : base(apiClient, scraper, settings, platformUtility) { }
+            : base(apiClient, scraper, settings, platformUtility)
+        {
+            helper = new MobyGamesHelper(platformUtility);
+        }
 
         public GameDetails GetDetails(GameSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
         {
@@ -68,7 +73,7 @@ namespace MobyGamesMetadata.Api
 
             foreach (var link in game.Links)
             {
-                var id = MobyGamesHelper.GetMobyGameIdFromUrl(link.Url);
+                var id = helper.GetMobyGameIdFromUrl(link.Url);
                 if (id == null)
                     continue;
 

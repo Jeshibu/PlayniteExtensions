@@ -15,5 +15,7 @@ namespace PlayniteExtensions.Metadata.Common
         Tags,
         Series,
         Features,
+        Developers,
+        Publishers,
     }
 }

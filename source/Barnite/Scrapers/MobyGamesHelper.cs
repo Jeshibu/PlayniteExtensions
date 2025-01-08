@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace Barnite.Scrapers
 {
-    public class MobyGamesHelper
+    public class MobyGamesHelper : MobyGamesIdUtility
     {
         public MobyGamesHelper(IPlatformUtility platformUtility)
         {
@@ -18,24 +18,19 @@ namespace Barnite.Scrapers
         }
 
         public IPlatformUtility PlatformUtility { get; }
-        private static Regex UrlIdRegex = new Regex(@"\bmobygames\.com/game/(?<id>[0-9]+)(/|$)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
-        public static string GetMobyGameIdStringFromUrl(string url)
+        public string GetMobyGameIdStringFromUrl(string url)
         {
-            if (url == null) return null;
-
-            var match = UrlIdRegex.Match(url);
-            if (!match.Success) return null;
-            var idString = match.Groups["id"].Value;
-            return idString;
+            return GetIdFromUrl(url).Id;
         }
-        public static int? GetMobyGameIdFromUrl(string url)
+
+        public int? GetMobyGameIdFromUrl(string url)
         {
-            var idString = GetMobyGameIdStringFromUrl(url);
-            if (idString == null)
+            var id = GetIdFromUrl(url);
+            if (id.Database == ExternalDatabase.None)
                 return null;
 
-            return int.Parse(idString);
+            return int.Parse(id.Id);
         }
 
         public GameDetails ParseGameDetailsHtml(string html, bool parseGenres = true)

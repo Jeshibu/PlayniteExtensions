@@ -3,6 +3,7 @@ using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -11,8 +12,8 @@ namespace SteamTagsImporter
 {
     public class SteamAppIdUtility : ISteamAppIdUtility
     {
-        public static readonly Guid SteamLibraryPluginId = Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB");
-        public static readonly Regex SteamUrlRegex = new Regex(@"^(steam://openurl/)?https?://st(ore\.steampowered|eamcommunity)\.com/app/(?<id>[0-9]+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+        private readonly SteamIdUtility steamIdUtility = new SteamIdUtility();
+
         private static readonly Regex NonLetterOrDigitCharacterRegex = new Regex(@"[^\p{L}\p{Nd}]", RegexOptions.Compiled);
 
         private Dictionary<string, int> _steamIds;
@@ -35,33 +36,12 @@ namespace SteamTagsImporter
 
         public string GetSteamGameId(Game game)
         {
-            if (game.PluginId == SteamLibraryPluginId)
-                return game.GameId;
-
-            if (game.Links != null)
-            {
-                foreach (var link in game.Links)
-                {
-                    var urlId = GetSteamGameIdFromUrl(link.Url);
-                    if (urlId != null)
-                        return urlId;
-                }
-            }
+            var ids = steamIdUtility.GetIdsFromGame(game).ToList();
+            if (ids.Any())
+                return ids[0].Id;
 
             if (SteamIdsByTitle.TryGetValue(NormalizeTitle(game.Name), out int appId))
                 return appId.ToString();
-
-            return null;
-        }
-
-        public static string GetSteamGameIdFromUrl(string url)
-        {
-            if (string.IsNullOrWhiteSpace(url))
-                return null;
-
-            var match = SteamUrlRegex.Match(url);
-            if (match.Success)
-                return match.Groups["id"].Value;
 
             return null;
         }

@@ -1,0 +1,7 @@
+﻿Id: PCGamingWikiBulkImport
+Name: Generic Plugin
+Author: Jeshibu
+Version: 0.1
+Module: PCGamingWikiBulkImport.dll
+Type: GenericPlugin
+Icon: icon.png

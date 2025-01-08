@@ -10,6 +10,7 @@ namespace MobyGamesMetadata
     public class MobyGamesBulkGroupAssigner : BulkGamePropertyAssigner<SearchResult, GamePropertyImportViewModel>
     {
         private readonly MobyGamesMetadataSettings settings;
+        private readonly MobyGamesIdUtility idUtility = new MobyGamesIdUtility();
 
         public MobyGamesBulkGroupAssigner(IPlayniteAPI playniteAPI, MobyGamesMetadataSettings settings, ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
             : base(playniteAPI, dataSource, platformUtility, maxDegreeOfParallelism)
@@ -21,7 +22,7 @@ namespace MobyGamesMetadata
 
         protected override string GetGameIdFromUrl(string url)
         {
-            return MobyGamesHelper.GetMobyGameIdStringFromUrl(url);
+            return idUtility.GetIdFromUrl(url).Id;
         }
 
         protected override PropertyImportSetting GetPropertyImportSetting(SearchResult searchItem, out string propName)
