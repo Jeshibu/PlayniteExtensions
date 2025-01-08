@@ -1,0 +1,56 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCPCGWSettingsTabTags">Теги</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabFeatures">Функции</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportXboxPlayAnywhere">Добавьте функцию Xbox Play Anywhere в поддерживаемые игры</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagEngine">Игровой движок</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMonetization">Монетизация</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMicrotransactions">Микротранзакции</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagModes">Режимы</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPacing">Шаг</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPerspectives">Перспективы</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagControls">Элементы управления</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagVehicles">Транспорт</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagThemes">Темы</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagArtStyle">Художественный стиль</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagNoCloudSaves">Добавить тег для игр, которые не поддерживают облачное сохранение</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsAddTagsPrefix">Добавить префикс типа для включенных тегов</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTaxonomyTags">Теги таксономии</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherTags">Другие теги</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherFeatures">Другие особенности</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsVideoFeatures">Особенности видео</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsControllerFeatures">Возможности контроллера</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportRayTracing">Трассировка лучей</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate60">60 кадров в секунду</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate120">120 кадров в секунду</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportUltrawide">Ультра широкоэкранный</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVR">VR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRHTCVive">ХТС Виве</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROSVR">ОСВР</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRWMR">Смешанная реальность Windows</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROculusRift">Oculus Rift</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureRayTracing">Трассировка лучей</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportMultiplayerTypes">Добавьте подробные многопользовательские функции</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationControllers">Контроллеры PlayStation</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationButtonPrompts">Подсказки кнопки PlayStation</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportLightBar">Поддержка световой панели</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportAdaptiveTrigger">Адаптивная поддержка триггеров</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHapticFeedback">Поддержка тактильной обратной связи</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTabTagPrefix">Префикс тега</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabLinks">Ссылки</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMonetization">Монетизация</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMicrotransactions">Микротранзакции</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPacing">Шаг</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPerspectives">Перспективы</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixControls">Элементы управления</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixVehicles">Транспорт</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixThemes">Темы</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixEngines">Игровой движок</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixArtStyles">Художественный стиль</sys:String>
+
+</ResourceDictionary>

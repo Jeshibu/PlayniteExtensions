@@ -1,0 +1,56 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCPCGWSettingsTabTags">Címkék</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabFeatures">Jellemzők</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportXboxPlayAnywhere">Adja hozzá az Xbox Play Anywhere funkciót a támogatott játékokhoz</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagEngine">Game Engine</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMonetization">Bevételszerzés</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMicrotransactions">Mikrotranzakciók</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagModes">Módok</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPacing">Lépés</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPerspectives">Perspektívák</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagControls">Vezérlők</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagVehicles">Járművek</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagThemes">Témák</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagArtStyle">Művészeti stílus</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagNoCloudSaves">Adjon hozzá címkét azokhoz a játékokhoz, amelyek nem támogatják a felhőalapú mentést</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsAddTagsPrefix">Típuselőtag hozzáadása az engedélyezett címkékhez</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTaxonomyTags">Taxonómiai címkék</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherTags">Egyéb címkék</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherFeatures">Más funkciók</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsVideoFeatures">Videó funkciók</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsControllerFeatures">A vezérlő jellemzői</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportRayTracing">Sugárkövetés</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate60">60 FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate120">120 FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportUltrawide">Ultra széles képernyő</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVR">VR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRHTCVive">HTC Vive</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROSVR">OSVR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRWMR">Windows vegyes valóság</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROculusRift">Oculus Rift</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureRayTracing">Sugárkövetés</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportMultiplayerTypes">Adjon hozzá részletes többjátékos funkciókat</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationControllers">PlayStation kontrollerek</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationButtonPrompts">PlayStation Gomb Prompts</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportLightBar">Light Bar támogatás</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportAdaptiveTrigger">Adaptív trigger támogatás</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHapticFeedback">Haptic Feedback támogatás</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTabTagPrefix">Címke előtag</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabLinks">Linkek</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMonetization">Bevételszerzés</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMicrotransactions">Mikrotranzakciók</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPacing">Lépés</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPerspectives">Perspektívák</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixControls">Vezérlők</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixVehicles">Járművek</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixThemes">Témák</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixEngines">Game Engine</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixArtStyles">Művészeti stílus</sys:String>
+
+</ResourceDictionary>

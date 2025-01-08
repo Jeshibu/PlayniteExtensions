@@ -1,0 +1,56 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCPCGWSettingsTabTags">Etiketler</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabFeatures">Özellikler</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportXboxPlayAnywhere">Desteklenen oyunlara Xbox Play Anywhere özelliği ekleyin</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagEngine">Oyun Motoru</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMonetization">para kazanma</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMicrotransactions">mikroişlemler</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagModes">modlar</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPacing">ilerleme hızı</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPerspectives">Perspektifler</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagControls">Kontroller</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagVehicles">Araçlar</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagThemes">Temalar</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagArtStyle">Sanat tarzı</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagNoCloudSaves">Buluta kaydetmeyi desteklemeyen oyunlar için etiket ekleyin</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsAddTagsPrefix">Etkinleştirilmiş etiketler için tür öneki ekleyin</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTaxonomyTags">Taksonomi Etiketleri</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherTags">Diğer Etiketler</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherFeatures">Diğer özellikler</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsVideoFeatures">Video Özellikleri</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsControllerFeatures">Denetleyici Özellikleri</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportRayTracing">Işın izleme</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate60">60 kare/sn</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate120">120 FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportUltrawide">Ultra Geniş Ekran</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVR">sanal gerçeklik</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRHTCVive">HTC Vive</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROSVR">OSVR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRWMR">Windows Karma Gerçeklik</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROculusRift">Oculus Yarığı</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureRayTracing">Işın izleme</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportMultiplayerTypes">Ayrıntılı çok oyunculu özellikler ekleyin</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationControllers">PlayStation Kontrol Cihazları</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationButtonPrompts">PlayStation Düğme İstemleri</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportLightBar">Işık Çubuğu Desteği</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportAdaptiveTrigger">Uyarlanabilir Tetikleme Desteği</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHapticFeedback">Dokunsal Geribildirim Desteği</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTabTagPrefix">Etiket Öneki</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabLinks">Bağlantılar</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMonetization">para kazanma</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMicrotransactions">mikro dönüşümler</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPacing">ilerleme hızı</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPerspectives">Perspektifler</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixControls">Kontroller</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixVehicles">Araçlar</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixThemes">Temalar</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixEngines">Oyun Motoru</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixArtStyles">Sanat tarzı</sys:String>
+
+</ResourceDictionary>

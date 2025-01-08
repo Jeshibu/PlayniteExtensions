@@ -1,0 +1,56 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCPCGWSettingsTabTags">Thẻ</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabFeatures">Đặc trưng</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportXboxPlayAnywhere">Thêm tính năng Xbox Play Anywhere vào các tựa game được hỗ trợ</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagEngine">Công cụ trò chơi</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMonetization">Kiếm tiền</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMicrotransactions">Giao dịch vi mô</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagModes">Các chế độ</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPacing">Nhịp độ</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPerspectives">Quan điểm</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagControls">Kiểm soát</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagVehicles">Xe cộ</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagThemes">Chủ đề</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagArtStyle">Phong cách nghệ thuật</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagNoCloudSaves">Thêm thẻ cho các trò chơi không hỗ trợ tính năng lưu vào đám mây</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsAddTagsPrefix">Thêm tiền tố loại cho các thẻ đã bật</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTaxonomyTags">Thẻ phân loại</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherTags">Các thẻ khác</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherFeatures">Các tính năng khác</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsVideoFeatures">Tính năng Video</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsControllerFeatures">Tính năng điều khiển</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportRayTracing">Có hi vọng</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate60">60 FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate120">120 FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportUltrawide">Màn hình siêu rộng</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVR">VR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRHTCVive">HTC Vive</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROSVR">OSVR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRWMR">Thực tế hỗn hợp Windows</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROculusRift">Oculus Rift</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureRayTracing">Có hi vọng</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportMultiplayerTypes">Thêm các tính năng nhiều người chơi chi tiết</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationControllers">Bộ điều khiển PlayStation</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationButtonPrompts">Lời nhắc nút PlayStation</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportLightBar">Hỗ trợ thanh ánh sáng</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportAdaptiveTrigger">Hỗ trợ kích hoạt thích ứng</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHapticFeedback">Hỗ trợ phản hồi xúc giác</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTabTagPrefix">Tiền tố thẻ</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabLinks">liên kết</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMonetization">kiếm tiền</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMicrotransactions">giao dịch vi mô</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPacing">nhịp độ</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPerspectives">quan điểm</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixControls">điều khiển</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixVehicles">Xe cộ</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixThemes">chủ đề</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixEngines">Công cụ trò chơi</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixArtStyles">Phong cách nghệ thuật</sys:String>
+
+</ResourceDictionary>

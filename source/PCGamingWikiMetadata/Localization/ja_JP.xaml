@@ -1,0 +1,56 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCPCGWSettingsTabTags">タグ</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabFeatures">特徴</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportXboxPlayAnywhere">サポートされているタイトルにXboxPlayAnywhere機能を追加する</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagEngine">ゲームエンジン</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMonetization">現金化</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMicrotransactions">マイクロトランザクション</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagModes">モード</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPacing">ペーシング</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPerspectives">展望</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagControls">コントロール</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagVehicles">車両</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagThemes">テーマ</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagArtStyle">アートスタイル</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagNoCloudSaves">クラウド保存をサポートしていないゲームのタグを追加する</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsAddTagsPrefix">有効なタグのタイププレフィックスを追加します</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTaxonomyTags">分類タグ</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherTags">その他のタグ</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherFeatures">その他の機能</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsVideoFeatures">ビデオ機能</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsControllerFeatures">コントローラーの機能</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportRayTracing">レイトレーシング</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate60">60 FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate120">120 FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportUltrawide">超ワイドスクリーン</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVR">VR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRHTCVive">HTC Vive</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROSVR">OSVR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRWMR">Windows Mixed Reality</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROculusRift">Oculus Rift</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureRayTracing">レイトレーシング</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportMultiplayerTypes">詳細なマルチプレイヤー機能を追加する</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationControllers">プレイステーション コントローラー</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationButtonPrompts">PlayStation ボタンプロンプト</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportLightBar">ライトバーサポート</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportAdaptiveTrigger">アダプティブトリガーサポート</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHapticFeedback">触覚フィードバックサポート</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTabTagPrefix">タグプレフィックス</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabLinks">リンク</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMonetization">収益化</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMicrotransactions">マイクロトランザクション</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPacing">ペーシング</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPerspectives">視点</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixControls">コントロール</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixVehicles">乗り物</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixThemes">テーマ</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixEngines">ゲームエンジン</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixArtStyles">アートスタイル</sys:String>
+
+</ResourceDictionary>

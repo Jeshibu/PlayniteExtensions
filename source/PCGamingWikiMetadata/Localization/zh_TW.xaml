@@ -1,0 +1,56 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCPCGWSettingsTabTags">標籤</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabFeatures">特徵</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportXboxPlayAnywhere">將 Xbox Play Anywhere 功能添加到支持的遊戲</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagEngine">遊戲引擎</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMonetization">貨幣化</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMicrotransactions">微交易</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagModes">模式</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPacing">起搏</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPerspectives">觀點</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagControls">控件</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagVehicles">汽車</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagThemes">主題</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagArtStyle">藝術風格</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagNoCloudSaves">為不支持雲存檔的遊戲添加標籤</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsAddTagsPrefix">為啟用的標籤添加類型前綴</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTaxonomyTags">分類標籤</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherTags">其他標籤</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherFeatures">其他特性</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsVideoFeatures">視頻功能</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsControllerFeatures">控制器特點</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportRayTracing">光線追踪</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate60">60 幀</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate120">120 幀/秒</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportUltrawide">超寬屏</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVR">虛擬現實</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRHTCVive">HTC 萬歲</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROSVR">OSVR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRWMR">Windows 混合現實</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROculusRift">眼裂</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureRayTracing">光線追踪</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportMultiplayerTypes">添加詳細的多人遊戲功能</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationControllers">PlayStation 控制器</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationButtonPrompts">PlayStation 按鈕提示</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportLightBar">燈條支持</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportAdaptiveTrigger">自適應觸發支持</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHapticFeedback">觸覺回饋支持</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTabTagPrefix">標記前綴</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabLinks">鏈接</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMonetization">貨幣化</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMicrotransactions">微交易</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPacing">起搏</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPerspectives">觀點</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixControls">控件</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixVehicles">汽車</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixThemes">主題</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixEngines">遊戲引擎</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixArtStyles">美術風格</sys:String>
+
+</ResourceDictionary>

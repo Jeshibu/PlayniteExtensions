@@ -1,0 +1,56 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCPCGWSettingsTabTags">Ознаке</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabFeatures">Карактеристике</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportXboxPlayAnywhere">Додајте функцију Ксбок Плаи Анивхере подржаним насловима</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagEngine">Гаме Енгине</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMonetization">Монетизација</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMicrotransactions">Микротрансакције</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagModes">Режими</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPacing">Пацинг</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPerspectives">Перспецтивес</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagControls">Контроле</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagVehicles">Возила</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagThemes">Теме</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagArtStyle">Арт Стиле</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagNoCloudSaves">Додајте ознаку за игре које не подржавају чување у облаку</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsAddTagsPrefix">Додајте префикс типа за омогућене ознаке</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTaxonomyTags">Такономи Тагс</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherTags">Отхер Тагс</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherFeatures">Остале карактеристике</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsVideoFeatures">Видео Феатурес</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsControllerFeatures">Карактеристике контролера</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureHDR">ХДР</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHDR">ХДР</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportRayTracing">Раи Трацинг</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate60">60 ФПС</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate120">120 ФПС</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportUltrawide">Ултра Видесцреен</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVR">ВР</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRHTCVive">ХТЦ Виве</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROSVR">ОСВР</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRWMR">Виндовс Микед Реалити</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROculusRift">Оцулус Рифт</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureRayTracing">Раи Трацинг</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportMultiplayerTypes">Додајте детаљне функције за више играча</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationControllers">ПлаиСтатион контролери</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationButtonPrompts">Упутства за дугме ПлаиСтатион</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportLightBar">Подршка за светлосну траку</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportAdaptiveTrigger">Адаптиве Триггер Суппорт</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHapticFeedback">Хаптиц Феедбацк Суппорт</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTabTagPrefix">Префикс ознаке</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabLinks">Линкови</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMonetization">Монетизација</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMicrotransactions">Микротрансакције</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPacing">Пацинг</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPerspectives">Перспецтивес</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixControls">Контроле</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixVehicles">Возила</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixThemes">Теме</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixEngines">Гаме Енгине</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixArtStyles">Арт Стиле</sys:String>
+
+</ResourceDictionary>

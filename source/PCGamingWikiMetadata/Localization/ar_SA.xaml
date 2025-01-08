@@ -1,0 +1,56 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCPCGWSettingsTabTags">العلامات</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabFeatures">سمات</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportXboxPlayAnywhere">أضف ميزة Xbox Play Anywhere إلى العناوين المدعومة</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagEngine">محرك اللعبة</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMonetization">تسييل</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMicrotransactions">المعاملات الدقيقة</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagModes">أساليب</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPacing">سرعة</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPerspectives">توقعات - وجهات نظر</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagControls">ضوابط</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagVehicles">مركبات</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagThemes">ثيمات</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagArtStyle">اسلوب فني</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagNoCloudSaves">أضف علامة للألعاب التي لا تدعم عمليات الحفظ السحابية</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsAddTagsPrefix">إضافة نوع بادئة للعلامات الممكّنة</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTaxonomyTags">علامات التصنيف</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherTags">علامات أخرى</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherFeatures">ميزات أخرى</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsVideoFeatures">ميزات الفيديو</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsControllerFeatures">ميزات وحدة التحكم</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportRayTracing">تتبع الشعاع</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate60">60 إطارًا في الثانية</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate120">120 إطارًا في الثانية</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportUltrawide">شاشة عريضة للغاية</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVR">VR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRHTCVive">إتش تي سي فيف</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROSVR">OSVR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRWMR">Windows Mixed Reality</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROculusRift">كوة المتصدع</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureRayTracing">تتبع الشعاع</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportMultiplayerTypes">أضف ميزات مفصلة متعددة اللاعبين</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationControllers">وحدات تحكم بلاي ستيشن</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationButtonPrompts">مطالبات زر بلاي ستيشن</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportLightBar">دعم شريط الضوء</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportAdaptiveTrigger">دعم الزناد التكيفي</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHapticFeedback">دعم ردود الفعل اللمسية</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTabTagPrefix">بادئة العلامة</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabLinks">الروابط</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMonetization">تسييل</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMicrotransactions">المعاملات الدقيقة</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPacing">سرعة</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPerspectives">توقعات - وجهات نظر</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixControls">ضوابط</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixVehicles">مركبات</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixThemes">ثيمات</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixEngines">محرك اللعبة</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixArtStyles">اسلوب فني</sys:String>
+
+</ResourceDictionary>

@@ -1,0 +1,56 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCPCGWSettingsTabTags">Ετικέτες</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabFeatures">Χαρακτηριστικά</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportXboxPlayAnywhere">Προσθέστε τη δυνατότητα Xbox Play Anywhere στους υποστηριζόμενους τίτλους</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagEngine">Μηχανή παιχνιδιού</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMonetization">Νομισματοποίηση</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMicrotransactions">Μικροσυναλλαγές</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagModes">Λειτουργίες</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPacing">Βηματοδότηση</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPerspectives">Προοπτικές</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagControls">Έλεγχοι</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagVehicles">Οχήματα</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagThemes">Θέματα</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagArtStyle">Στυλ Τέχνης</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagNoCloudSaves">Προσθήκη ετικέτας για παιχνίδια που δεν υποστηρίζουν αποθήκευση στο cloud</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsAddTagsPrefix">Προσθήκη προθέματος τύπου για ενεργοποιημένες ετικέτες</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTaxonomyTags">Taxonomy Ετικέτες</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherTags">Άλλες Ετικέτες</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherFeatures">Αλλα χαρακτηριστικά</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsVideoFeatures">Χαρακτηριστικά βίντεο</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsControllerFeatures">Χαρακτηριστικά ελεγκτή</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportRayTracing">Ανίχνευση ακτίνων</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate60">60 FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate120">120 FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportUltrawide">Υπερευρεία οθόνη</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVR">VR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRHTCVive">HTC Vive</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROSVR">OSVR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRWMR">Μικτή πραγματικότητα των Windows</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROculusRift">Oculus Rift</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureRayTracing">Ανίχνευση ακτίνων</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportMultiplayerTypes">Προσθέστε λεπτομερείς λειτουργίες για πολλούς παίκτες</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationControllers">Χειριστήρια PlayStation</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationButtonPrompts">Υποδείξεις κουμπιών PlayStation</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportLightBar">Υποστήριξη Light Bar</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportAdaptiveTrigger">Adaptive Trigger Support</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHapticFeedback">Υποστήριξη απτικής ανατροφοδότησης</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTabTagPrefix">Πρόθεμα ετικέτας</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabLinks">Συνδέσεις</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMonetization">Νομισματοποίηση</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMicrotransactions">Μικροσυναλλαγές</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPacing">Βηματοδότηση</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPerspectives">Προοπτικές</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixControls">Έλεγχοι</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixVehicles">Οχήματα</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixThemes">Θέματα</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixEngines">Μηχανή παιχνιδιού</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixArtStyles">Στυλ Τέχνης</sys:String>
+
+</ResourceDictionary>

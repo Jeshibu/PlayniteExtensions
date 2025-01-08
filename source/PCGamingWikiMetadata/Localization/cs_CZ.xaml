@@ -1,0 +1,56 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCPCGWSettingsTabTags">Tagy</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabFeatures">Funkce</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportXboxPlayAnywhere">Přidejte k podporovaným titulům funkci Xbox Play Anywhere</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagEngine">Herní engine</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMonetization">Monetizace</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMicrotransactions">Mikrotransakce</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagModes">Režimy</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPacing">Stimulování</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPerspectives">Perspektivy</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagControls">Řízení</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagVehicles">Vozidla</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagThemes">Témata</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagArtStyle">Umělecký styl</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagNoCloudSaves">Přidejte štítek pro hry, které nepodporují ukládání do cloudu</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsAddTagsPrefix">Přidejte předponu typu pro povolené značky</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTaxonomyTags">Značky taxonomie</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherTags">Další značky</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherFeatures">Další funkce</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsVideoFeatures">Funkce videa</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsControllerFeatures">Vlastnosti ovladače</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportRayTracing">Ray Tracing</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate60">60 FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate120">120 FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportUltrawide">Ultra širokoúhlý</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVR">VR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRHTCVive">HTC Vive</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROSVR">OSVR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRWMR">Windows smíšená realita</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROculusRift">Oculus Rift</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureRayTracing">Ray Tracing</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportMultiplayerTypes">Přidejte podrobné funkce pro více hráčů</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationControllers">Ovladače PlayStation</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationButtonPrompts">Výzvy tlačítka PlayStation</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportLightBar">Podpora světelné lišty</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportAdaptiveTrigger">Podpora adaptivního spouštění</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHapticFeedback">Podpora haptické zpětné vazby</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTabTagPrefix">Předpona značky</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabLinks">Odkazy</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMonetization">Monetizace</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMicrotransactions">Mikrotransakce</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPacing">Stimulování</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPerspectives">Perspektivy</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixControls">Řízení</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixVehicles">Vozidla</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixThemes">Témata</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixEngines">Herní engine</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixArtStyles">Umělecký styl</sys:String>
+
+</ResourceDictionary>

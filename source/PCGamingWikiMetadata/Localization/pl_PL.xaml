@@ -1,0 +1,56 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCPCGWSettingsTabTags">Tagi</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabFeatures">Cechy</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportXboxPlayAnywhere">Dodaj funkcję Xbox Play Anywhere do obsługiwanych tytułów</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagEngine">Silnik gry</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMonetization">Monetyzacja</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMicrotransactions">Mikrotransakcje</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagModes">Tryby</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPacing">Tempo</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPerspectives">Perspektywy</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagControls">Sterownica</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagVehicles">Pojazdy</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagThemes">Motywy</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagArtStyle">Styl artystyczny</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagNoCloudSaves">Dodaj tag dla gier, które nie obsługują zapisywania w chmurze</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsAddTagsPrefix">Dodaj prefiks typu dla włączonych tagów</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTaxonomyTags">Tagi taksonomii</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherTags">Inne Tagi</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherFeatures">Inne funkcje</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsVideoFeatures">Funkcje wideo</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsControllerFeatures">Funkcje kontrolera</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportRayTracing">Śledzenie promieni</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate60">60 FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate120">120 FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportUltrawide">Ultraszerokoekranowy</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVR">VR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRHTCVive">HTC Vive</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROSVR">OSVR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRWMR">Rzeczywistość mieszana systemu Windows</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROculusRift">Oculus Rift</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureRayTracing">Śledzenie promieni</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportMultiplayerTypes">Dodaj szczegółowe funkcje gry wieloosobowej</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationControllers">Kontrolery PlayStation</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationButtonPrompts">Monity dotyczące przycisków PlayStation</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportLightBar">Wsparcie paska świetlnego</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportAdaptiveTrigger">Adaptacyjna obsługa wyzwalania</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHapticFeedback">Obsługa sprzężenia zwrotnego dotykowego</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTabTagPrefix">Prefiks tagu</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabLinks">Spinki do mankietów</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMonetization">Monetyzacja</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMicrotransactions">Mikrotransakcje</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPacing">Tempo</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPerspectives">Perspektywy</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixControls">Sterownica</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixVehicles">Pojazdy</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixThemes">Motywy</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixEngines">Silnik gry</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixArtStyles">Styl artystyczny</sys:String>
+
+</ResourceDictionary>

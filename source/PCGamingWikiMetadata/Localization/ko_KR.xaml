@@ -1,0 +1,56 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCPCGWSettingsTabTags">태그</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabFeatures">특징</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportXboxPlayAnywhere">지원되는 타이틀에 Xbox Play Anywhere 기능 추가</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagEngine">게임 엔진</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMonetization">수익 창출</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMicrotransactions">소액결제</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagModes">모드</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPacing">속도</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPerspectives">관점</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagControls">통제 수단</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagVehicles">차량</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagThemes">테마</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagArtStyle">아트 스타일</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagNoCloudSaves">클라우드 저장을 지원하지 않는 게임에 대한 태그 추가</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsAddTagsPrefix">활성화된 태그에 대한 유형 접두사 추가</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTaxonomyTags">분류 태그</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherTags">기타 태그</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherFeatures">다른 특징들</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsVideoFeatures">비디오 기능</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsControllerFeatures">컨트롤러 기능</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportRayTracing">광선 추적</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate60">60FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate120">120FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportUltrawide">울트라 와이드스크린</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVR">VR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRHTCVive">HTC 바이브</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROSVR">OSVR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRWMR">Windows 혼합 현실</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROculusRift">오큘러스 리프트</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureRayTracing">광선 추적</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportMultiplayerTypes">자세한 멀티플레이어 기능 추가</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationControllers">PlayStation 컨트롤러</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationButtonPrompts">PlayStation 버튼 프롬프트</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportLightBar">라이트 바 지원</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportAdaptiveTrigger">적응형 트리거 지원</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHapticFeedback">햅틱 피드백 지원</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTabTagPrefix">태그 접두사</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabLinks">연결</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMonetization">수익 창출</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMicrotransactions">소액 결제</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPacing">페이싱</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPerspectives">관점</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixControls">통제 수단</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixVehicles">차량</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixThemes">테마</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixEngines">게임 엔진</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixArtStyles">아트 스타일</sys:String>
+
+</ResourceDictionary>

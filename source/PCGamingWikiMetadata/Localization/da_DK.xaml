@@ -1,0 +1,56 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCPCGWSettingsTabTags">Tags</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabFeatures">Funktioner</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportXboxPlayAnywhere">Tilføj Xbox Play Anywhere-funktionen til understøttede titler</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagEngine">Spilmotor</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMonetization">Indtægtsgenerering</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMicrotransactions">Mikrotransaktioner</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagModes">Tilstande</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPacing">Pacing</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagPerspectives">Perspektiver</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagControls">Kontrolelementer</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagVehicles">Køretøjer</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagThemes">Temaer</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagArtStyle">Kunststil</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagNoCloudSaves">Tilføj tag til spil, der ikke understøtter skylagring</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsAddTagsPrefix">Tilføj typepræfiks for aktiverede tags</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTaxonomyTags">Taksonomi tags</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherTags">Andre tags</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsOtherFeatures">Andre funktioner</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsVideoFeatures">Videofunktioner</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsControllerFeatures">Controller funktioner</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHDR">HDR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportRayTracing">Ray Tracing</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate60">60 FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportFramerate120">120 FPS</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportUltrawide">Ultra Widescreen</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVR">VR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRHTCVive">HTC Vive</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROSVR">OSVR</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVRWMR">Windows Mixed Reality</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportVROculusRift">Oculus Rift</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsFeatureRayTracing">Ray Tracing</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportMultiplayerTypes">Tilføj detaljerede multiplayer-funktioner</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationControllers">PlayStation-controllere</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportPlayStationButtonPrompts">PlayStation Button Prompts</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportLightBar">Light Bar Support</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportAdaptiveTrigger">Adaptiv triggerstøtte</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportHapticFeedback">Haptisk feedbacksupport</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTabTagPrefix">Tag præfiks</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTabLinks">Links</sys:String>
+
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMonetization">Indtægtsgenerering</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMicrotransactions">Mikrotransaktioner</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPacing">Pacing</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixPerspectives">Perspektiver</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixControls">Kontrolelementer</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixVehicles">Køretøjer</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixThemes">Temaer</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixEngines">Spilmotor</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixArtStyles">Kunststil</sys:String>
+
+</ResourceDictionary>
