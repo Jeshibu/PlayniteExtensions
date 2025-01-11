@@ -162,17 +162,9 @@ namespace PlayniteExtensions.Common
 
         public IEnumerable<ExternalDatabase> Databases => databaseIdUtilities.SelectMany(x => x.Databases).Distinct();
 
-        public AggregateExternalDatabaseUtility(params ExternalDatabase[] databases)
+        public AggregateExternalDatabaseUtility(params ISingleExternalDatabaseIdUtility[] dbIdUtilities)
         {
-            if (databases == null)
-                return;
-
-            foreach (var database in databases)
-            {
-                var dbIdUtil = Create(database);
-                if (dbIdUtil != null)
-                    databaseIdUtilities.Add(dbIdUtil);
-            }
+            databaseIdUtilities.AddRange(dbIdUtilities);
         }
 
         public (ExternalDatabase Database, string Id) GetIdFromUrl(string url)
@@ -207,21 +199,6 @@ namespace PlayniteExtensions.Common
                 output.AddRange(linkIds);
 
             return output;
-        }
-
-        private static ISingleExternalDatabaseIdUtility Create(ExternalDatabase database)
-        {
-            switch (database)
-            {
-                case ExternalDatabase.Steam:
-                    return new SteamIdUtility();
-                case ExternalDatabase.GOG:
-                    return new GOGIdUtility();
-                case ExternalDatabase.PCGamingWiki:
-                    return new PCGamingWikiIdUtility();
-                default:
-                    return null;
-            }
         }
     }
 }

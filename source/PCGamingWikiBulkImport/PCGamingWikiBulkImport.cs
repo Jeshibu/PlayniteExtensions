@@ -46,9 +46,9 @@ namespace PCGamingWikiBulkImport
         public void ImportGameProperty()
         {
             var platformUtility = new PlatformUtility(PlayniteApi);
-            var idUtility = new AggregateExternalDatabaseUtility(ExternalDatabase.PCGamingWiki, ExternalDatabase.Steam, ExternalDatabase.GOG);
+            var idUtility = new AggregateExternalDatabaseUtility(new PCGamingWikiIdUtility(), new SteamIdUtility(), new GOGIdUtility());
             var searchProvider = new PCGamingWikiPropertySearchProvider(new CargoQuery(), platformUtility);
-            var extra = new PCGamingWikiBulkGamePropertyAssigner(PlayniteApi, idUtility, searchProvider, platformUtility, maxDegreeOfParallelism: 8);
+            var extra = new PCGamingWikiBulkGamePropertyAssigner(PlayniteApi, idUtility, searchProvider, platformUtility, maxDegreeOfParallelism: 8); //TODO: change to settings value
             extra.ImportGameProperty();
         }
 

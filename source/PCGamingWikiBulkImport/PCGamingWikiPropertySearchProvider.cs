@@ -91,7 +91,12 @@ namespace PCGamingWikiBulkImport
 
         public IEnumerable<ItemCount> GetCounts(CargoFieldInfo field, string searchString)
         {
-            return CargoQuery.GetValueCounts(field.Table, field.Field, searchString);
+            var counts = CargoQuery.GetValueCounts(field.Table, field.Field, searchString).ToList();
+            foreach (var c in counts)
+            {
+                c.Value = WebUtility.HtmlDecode(c.Value);
+            }
+            return counts;
         }
 
         private GameDetails ToGameDetails(CargoResultGame g)
@@ -106,13 +111,7 @@ namespace PCGamingWikiBulkImport
             };
 
             game.Platforms = g.OS?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).SelectMany(PlatformUtility.GetPlatforms).ToList();
-            var releaseDateStrings = g.Released?.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-            if (releaseDateStrings != null && releaseDateStrings.Length > 0)
-            {
-                var releaseDates = releaseDateStrings.Select(StringExtensions.ParseReleaseDate).Where(d => d.HasValue).Select(d => d.Value).ToList();
-                if (releaseDates.Any())
-                    game.ReleaseDate = releaseDates.OrderBy(d => d).First();
-            }
+            game.ReleaseDate = GetReleaseDate(g.Released);
 
             if (!string.IsNullOrWhiteSpace(g.SteamID))
                 game.ExternalIds.AddRange(SplitIds(g.SteamID, ExternalDatabase.Steam));
@@ -121,6 +120,19 @@ namespace PCGamingWikiBulkImport
                 game.ExternalIds.AddRange(SplitIds(g.GOGID, ExternalDatabase.GOG));
 
             return game;
+        }
+
+        private ReleaseDate? GetReleaseDate(string releaseDateString)
+        {
+            var releaseDateStrings = releaseDateString?.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            if (releaseDateStrings == null || releaseDateStrings.Length == 0)
+                return null;
+
+            var releaseDates = releaseDateStrings.Select(StringExtensions.ParseReleaseDate).Where(d => d.HasValue).Select(d => d.Value).ToList();
+            if (releaseDates.Any())
+                return releaseDates.Min();
+
+            return null;
         }
 
         public static string TitleToSlug(string title)
