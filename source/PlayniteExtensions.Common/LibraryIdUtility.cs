@@ -14,6 +14,7 @@ namespace PlayniteExtensions.Common
         PCGamingWiki,
         MobyGames,
         GiantBomb,
+        TvTropes,
     }
 
     public interface IExternalDatabaseIdUtility
@@ -64,7 +65,7 @@ namespace PlayniteExtensions.Common
 
     public class SteamIdUtility : SingleExternalDatabaseIdUtility
     {
-        private readonly Regex SteamUrlRegex = new Regex(@"^(steam://openurl/)?https?://(store\.steampowered\.com|steamcommunity\.com|steamdb\.info)/app/(?<id>[0-9]+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+        public readonly Regex SteamUrlRegex = new Regex(@"^(steam://openurl/)?https?://(store\.steampowered\.com|steamcommunity\.com|steamdb\.info)/app/(?<id>[0-9]+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
         public override ExternalDatabase Database { get; } = ExternalDatabase.Steam;
 

@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading;
 
 namespace PCGamingWikiBulkImport
@@ -27,11 +28,7 @@ namespace PCGamingWikiBulkImport
 
         public IEnumerable<GameDetails> GetDetails(PCGamingWikiSelectedValues searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
         {
-            Func<int, CargoResultRoot<CargoResultGame>> fetch;
-            if (searchResult.FieldInfo.HasReferenceTable)
-                fetch = (int o) => CargoQuery.GetGamesByHolds(searchResult.FieldInfo.Table, searchResult.FieldInfo.Field, searchResult.SelectedValues.First(), o);
-            else
-                fetch = (int o) => CargoQuery.GetGamesByExactValues(searchResult.FieldInfo.Table, searchResult.FieldInfo.Field, searchResult.SelectedValues, o);
+            var fetch = GetMatchingGamesFunction(searchResult);
 
             var output = new List<GameDetails>();
 
@@ -54,6 +51,23 @@ namespace PCGamingWikiBulkImport
             }
 
             return output;
+        }
+
+        private Func<int, CargoResultRoot<CargoResultGame>> GetMatchingGamesFunction(PCGamingWikiSelectedValues selected)
+        {
+            switch (selected.FieldInfo.FieldType)
+            {
+                case CargoFieldType.ListOfString:
+                    var wa = selected.FieldInfo.ValueWorkaround(selected.SelectedValues.First());
+                    if (wa.UseLike)
+                        return offset => CargoQuery.GetGamesByHoldsLike(selected.FieldInfo.Table, selected.FieldInfo.Field, wa.Value, offset);
+                    else
+                        return offset => CargoQuery.GetGamesByHolds(selected.FieldInfo.Table, selected.FieldInfo.Field, wa.Value, offset);
+                case CargoFieldType.String:
+                    return offset => CargoQuery.GetGamesByExactValues(selected.FieldInfo.Table, selected.FieldInfo.Field, selected.SelectedValues, offset);
+                default:
+                    throw new ArgumentException($"Invalid selected value field info type: {selected.FieldInfo.FieldType}");
+            }
         }
 
         public IEnumerable<PCGamingWikiSelectedValues> Search(string query, CancellationToken cancellationToken = default)
@@ -82,16 +96,23 @@ namespace PCGamingWikiBulkImport
 
         private GameDetails ToGameDetails(CargoResultGame g)
         {
-            var slug = TitleToSlug(g.Name);
+            var name = WebUtility.HtmlDecode(g.Name);
+            var slug = TitleToSlug(name);
             var game = new GameDetails
             {
                 Id = slug,
-                Names = new List<string> { g.Name },
+                Names = new List<string> { name },
                 Url = $"https://www.pcgamingwiki.com/wiki/{slug}",
             };
 
             game.Platforms = g.OS?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).SelectMany(PlatformUtility.GetPlatforms).ToList();
-            game.ReleaseDate = g.Released.ParseReleaseDate(Logger);
+            var releaseDateStrings = g.Released?.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            if (releaseDateStrings != null && releaseDateStrings.Length > 0)
+            {
+                var releaseDates = releaseDateStrings.Select(StringExtensions.ParseReleaseDate).Where(d => d.HasValue).Select(d => d.Value).ToList();
+                if (releaseDates.Any())
+                    game.ReleaseDate = releaseDates.OrderBy(d => d).First();
+            }
 
             if (!string.IsNullOrWhiteSpace(g.SteamID))
                 game.ExternalIds.AddRange(SplitIds(g.SteamID, ExternalDatabase.Steam));
@@ -102,7 +123,38 @@ namespace PCGamingWikiBulkImport
             return game;
         }
 
-        private static string TitleToSlug(string title) => WebUtility.UrlEncode(title.Replace(' ', '_'));
+        public static string TitleToSlug(string title)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+                return title;
+
+            var sb = new StringBuilder();
+            foreach (char c in title)
+                sb.Append(EscapeSlugCharacter(c));
+
+            return sb.ToString();
+        }
+
+        private static string EscapeSlugCharacter(char c)
+        {
+            if (char.IsLetterOrDigit(c))
+                return c.ToString();
+
+            switch (c)
+            {
+                case ' ':
+                    return "_";
+                case ':':
+                case '-':
+                case '.':
+                case '/':
+                case '~':
+                case ';':
+                    return c.ToString();
+                default:
+                    return WebUtility.UrlEncode(c.ToString());
+            };
+        }
 
         private static IEnumerable<(ExternalDatabase, string)> SplitIds(string str, ExternalDatabase db)
         {

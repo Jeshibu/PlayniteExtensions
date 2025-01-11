@@ -1,4 +1,5 @@
 ﻿using PlayniteExtensions.Metadata.Common;
+using System;
 
 namespace PCGamingWikiBulkImport.DataCollection
 {
@@ -24,13 +25,20 @@ namespace PCGamingWikiBulkImport.DataCollection
     public class CargoFieldInfo : CargoFieldBase
     {
         public PropertyImportTarget PreferredField { get; set; } = PropertyImportTarget.Features;
-        public EntityDefinitionInfo EntityDefinition { get; set; }
-
-        public bool HasReferenceTable => EntityDefinition != null;
+        public CargoFieldType FieldType { get; set; }
+        public string PageNamePrefix { get; set; }
+        public Func<string,CargoValueWorkaround> ValueWorkaround { get; set; } = v => new CargoValueWorkaround { Value = v };
     }
 
-    public class EntityDefinitionInfo : CargoFieldBase
+    public class CargoValueWorkaround
     {
-        public string Where { get; set; }
+        public string Value { get; set; }
+        public bool UseLike { get; set; } = false;
+    }
+
+    public enum CargoFieldType
+    {
+        String,
+        ListOfString,
     }
 }

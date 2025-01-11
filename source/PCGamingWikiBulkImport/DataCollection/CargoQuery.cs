@@ -1,5 +1,4 @@
-﻿using PlayniteExtensions.Metadata.Common;
-using RestSharp;
+﻿using RestSharp;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,6 +8,7 @@ namespace PCGamingWikiBulkImport.DataCollection
     {
         CargoResultRoot<CargoResultGame> GetGamesByExactValues(string table, string field, IEnumerable<string> values, int offset);
         CargoResultRoot<CargoResultGame> GetGamesByHolds(string table, string field, string holds, int offset);
+        CargoResultRoot<CargoResultGame> GetGamesByHoldsLike(string table, string field, string holds, int offset);
         IEnumerable<ItemCount> GetValueCounts(string table, string field, string filter = null);
     }
 
@@ -49,6 +49,16 @@ namespace PCGamingWikiBulkImport.DataCollection
             return response.Data;
         }
 
+        public CargoResultRoot<CargoResultGame> GetGamesByHoldsLike(string table, string field, string holds, int offset)
+        {
+            var request = GetBaseGameRequest(table, field)
+                .AddQueryParameter("where", $"{table}.{field} HOLDS LIKE '{holds}'")
+                .AddQueryParameter("offset", $"{offset:0}");
+
+            var response = restClient.Execute<CargoResultRoot<CargoResultGame>>(request);
+            return response.Data;
+        }
+
         public CargoResultRoot<CargoResultGame> GetGamesByExactValues(string table, string field, IEnumerable<string> values, int offset)
         {
             var valuesList = string.Join(", ", values.Select(v => $"'{v}'"));
@@ -71,7 +81,8 @@ namespace PCGamingWikiBulkImport.DataCollection
             if (table == baseTable)
                 request.AddQueryParameter("tables", baseTable);
             else
-                request.AddQueryParameter("tables", $"{baseTable},{table}").AddQueryParameter("join_on", $"{baseTable}._pageID={table}._pageID");
+                request.AddQueryParameter("tables", $"{baseTable},{table}")
+                       .AddQueryParameter("join_on", $"{baseTable}._pageID={table}._pageID");
 
             return request;
         }

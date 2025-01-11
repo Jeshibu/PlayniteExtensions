@@ -50,47 +50,56 @@ namespace PCGamingWikiBulkImport
             if (selectedProperty == null)
                 return null;
 
-            var counts = pcgwDataSource.GetCounts(selectedProperty.FieldInfo).Where(c => c.Value != null).ToList();
-
-            if (selectedProperty.FieldInfo.HasReferenceTable)
+            switch (selectedProperty.FieldInfo.FieldType)
             {
+                case CargoFieldType.ListOfString:
+                    return SelectStringListProperty(selectedProperty);
+                case CargoFieldType.String:
+                    return SelectStringProperty(selectedProperty);
+                default:
+                    return null;
+            }
+        }
+
+        private PCGamingWikiSelectedValues SelectStringListProperty(PCGamingWikiSelectedValues selectedPropertyCategory)
+        {
+            var selectedValue = playniteApi.Dialogs.ChooseItemWithSearch(null, query =>
+            {
+                var counts = pcgwDataSource.GetCounts(selectedPropertyCategory.FieldInfo, query);
                 var options = counts.Select(c => new GenericItemOption(c.Value, null)).ToList();
-                var selectedValue = playniteApi.Dialogs.ChooseItemWithSearch(options, query =>
-                {
-                    if (string.IsNullOrWhiteSpace(query))
-                        return options;
+                return options;
+            });
+            if (selectedValue == null)
+                return null;
 
-                    return options.Where(o => o.Name.Contains(query, StringComparison.InvariantCultureIgnoreCase)).ToList();
-                });
-                if (selectedValue == null)
-                    return null;
+            selectedPropertyCategory.SelectedValues.Add(selectedValue.Name);
+            return selectedPropertyCategory;
+        }
 
-                selectedProperty.SelectedValues.Add(selectedValue.Name);
-            }
-            else
+        private PCGamingWikiSelectedValues SelectStringProperty(PCGamingWikiSelectedValues selectedPropertyCategory)
+        {
+            var counts = pcgwDataSource.GetCounts(selectedPropertyCategory.FieldInfo, null).ToList();
+            var items = counts.Select(c => new SelectableStringViewModel
             {
-                var items = counts.Select(c => new SelectableStringViewModel
-                {
-                    Value = c.Value,
-                    DisplayName = $"{c.Value} ({c.Count})",
-                    IsSelected = GetDefaultSelectionStatus(c.Value)
-                });
-                var vm = new SelectStringsViewModel(selectedProperty.Name, items);
+                Value = c.Value,
+                DisplayName = $"{c.Value} ({c.Count})",
+                IsSelected = GetDefaultSelectionStatus(c.Value)
+            });
+            var vm = new SelectStringsViewModel(selectedPropertyCategory.Name, items);
 
-                var window = playniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
-                var view = new SelectStringsView(window) { DataContext = vm };
-                window.Content = view;
-                window.SizeToContent = SizeToContent.WidthAndHeight;
-                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-                window.Title = "Select games";
-                window.SizeChanged += Window_SizeChanged;
-                var dialogResult = window.ShowDialog();
-                if (dialogResult != true)
-                    return null;
+            var window = playniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
+            var view = new SelectStringsView(window) { DataContext = vm };
+            window.Content = view;
+            window.SizeToContent = SizeToContent.WidthAndHeight;
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            window.Title = "Select games";
+            window.SizeChanged += Window_SizeChanged;
+            var dialogResult = window.ShowDialog();
+            if (dialogResult != true)
+                return null;
 
-                selectedProperty.SelectedValues = vm.Items.Where(i => i.IsSelected).Select(i => i.Value).ToList();
-            }
-            return selectedProperty;
+            selectedPropertyCategory.SelectedValues = vm.Items.Where(i => i.IsSelected).Select(i => i.Value).ToList();
+            return selectedPropertyCategory;
         }
 
         private string[] falseValues = new[] { "false", "unknown", "n/a", "hackable" };
@@ -99,9 +108,9 @@ namespace PCGamingWikiBulkImport
 
         protected override PropertyImportSetting GetPropertyImportSetting(PCGamingWikiSelectedValues searchItem, out string name)
         {
-            name = searchItem.FieldInfo.HasReferenceTable
-                ? searchItem.SelectedValues.FirstOrDefault()
-                : searchItem.FieldInfo.FieldDisplayName;
+            name = searchItem.FieldInfo.FieldType == CargoFieldType.String
+                ? searchItem.FieldInfo.FieldDisplayName
+                : searchItem.SelectedValues.FirstOrDefault().TrimStart(searchItem.FieldInfo.PageNamePrefix);
             return new PropertyImportSetting { ImportTarget = searchItem.FieldInfo.PreferredField };
         }
     }

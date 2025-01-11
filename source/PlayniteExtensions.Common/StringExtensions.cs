@@ -53,12 +53,12 @@ namespace PlayniteExtensions.Common
 
         public static string TrimStart(this string s, IEnumerable<string> remove, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
         {
-            if (s == null)
+            if (s == null || remove == null)
                 return s;
 
             foreach (var r in remove)
             {
-                if (s.StartsWith(r, stringComparison))
+                if (r != null && s.StartsWith(r, stringComparison))
                     s = s.Substring(r.Length);
             }
             return s;
@@ -114,9 +114,17 @@ namespace PlayniteExtensions.Common
         /// Parse a release date in the yyyy-MM-dd or yyyy-MM or yyyy formats
         /// </summary>
         /// <param name="dateString"></param>
+        /// <returns></returns>
+        public static ReleaseDate? ParseReleaseDate(this string dateString) => ParseReleaseDate(dateString, null);
+
+
+        /// <summary>
+        /// Parse a release date in the yyyy-MM-dd or yyyy-MM or yyyy formats
+        /// </summary>
+        /// <param name="dateString"></param>
         /// <param name="logger"></param>
         /// <returns></returns>
-        public static ReleaseDate? ParseReleaseDate(this string dateString, ILogger logger = null)
+        public static ReleaseDate? ParseReleaseDate(this string dateString, ILogger logger)
         {
             if (string.IsNullOrWhiteSpace(dateString))
                 return null;
