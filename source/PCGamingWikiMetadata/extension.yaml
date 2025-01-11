@@ -1,0 +1,7 @@
+﻿Id: PCGamingWikiMetadata_c038558e-427b-4551-be4c-be7009ce5a8d
+Name: PCGamingWiki Metadata Provider
+Author: sharkusmanch
+Version: 1.3.0
+Module: PCGamingWikiMetadata.dll
+Type: MetadataProvider
+Icon: icon.png

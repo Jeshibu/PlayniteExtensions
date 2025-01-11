@@ -9,7 +9,7 @@ namespace MobyGamesMetadata
     public class MobyGamesBulkGenreAssigner : BulkGamePropertyAssigner<MobyGamesGenreSetting, GamePropertyImportViewModel>
     {
         public MobyGamesBulkGenreAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<MobyGamesGenreSetting, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
-            : base(playniteAPI, dataSource, platformUtility, maxDegreeOfParallelism)
+            : base(playniteAPI, dataSource, platformUtility, new MobyGamesIdUtility(), ExternalDatabase.MobyGames, maxDegreeOfParallelism)
         {
             AllowEmptySearchQuery = true;
         }
@@ -18,7 +18,8 @@ namespace MobyGamesMetadata
 
         protected override string GetGameIdFromUrl(string url)
         {
-            return MobyGamesHelper.GetMobyGameIdStringFromUrl(url);
+            var dbId = DatabaseIdUtility.GetIdFromUrl(url);
+            return dbId.Database == ExternalDatabase.MobyGames ? dbId.Id : null;
         }
 
         protected override PropertyImportSetting GetPropertyImportSetting(MobyGamesGenreSetting searchItem, out string name)

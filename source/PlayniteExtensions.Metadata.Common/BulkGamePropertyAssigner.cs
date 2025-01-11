@@ -345,6 +345,7 @@ namespace PlayniteExtensions.Metadata.Common
             yield return new CheckboxFilter("Check all", viewModel, x => true);
             yield return new CheckboxFilter("Uncheck all", viewModel, x => false);
             yield return new CheckboxFilter("Only filtered games", viewModel, x => playniteApi.MainView.FilteredGames.Contains(x.Game));
+            yield return new CheckboxFilter("Only matching platforms", viewModel, x => platformUtility.PlatformsOverlap(x.Game.Platforms, x.GameDetails.Platforms));
         }
 
         private static bool AddItem(Game g, Expression<Func<Game, List<Guid>>> collectionSelector, Guid idToAdd)

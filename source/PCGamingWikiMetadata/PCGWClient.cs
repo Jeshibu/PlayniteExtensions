@@ -20,8 +20,6 @@ namespace PCGamingWikiMetadata
         public PCGWClient(MetadataRequestOptions options, PCGWGameController gameController)
         {
             client = new RestClient(baseUrl);
-            client.UserAgent = "Playnite";
-            client.Encoding = Encoding.UTF8;
             this.options = options;
             this.gameController = gameController;
         }
@@ -57,7 +55,7 @@ namespace PCGamingWikiMetadata
             List<GenericItemOption> gameResults = new List<GenericItemOption>();
             logger.Info(searchName);
 
-            var request = new RestRequest("/", Method.GET);
+            var request = new RestRequest("/", Method.Get);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddHeader("Accept", "application/json, text/json, text/x-json");
 
@@ -99,7 +97,7 @@ namespace PCGamingWikiMetadata
 
         public virtual void FetchGamePageContent(PCGWGame game)
         {
-            var request = new RestRequest("/", Method.GET);
+            var request = new RestRequest("/", Method.Get);
             request.AddParameter("action", "parse", ParameterType.QueryString);
             request.AddParameter("page", game.Name.Replace(" ", "_"), ParameterType.QueryString);
 

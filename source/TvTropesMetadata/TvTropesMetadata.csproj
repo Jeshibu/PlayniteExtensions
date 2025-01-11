@@ -136,6 +136,7 @@
     <Compile Include="SearchProviders\TropeSearchProvider.cs" />
     <Compile Include="Scraping\TropeScraper.cs" />
     <Compile Include="SearchProviders\WorkSearchProvider.cs" />
+    <Compile Include="TvTropesIdUtility.cs" />
     <Compile Include="TvTropesMetadata.cs" />
     <Compile Include="TvTropesMetadataProvider.cs" />
     <Compile Include="TvTropesMetadataSettings.cs" />

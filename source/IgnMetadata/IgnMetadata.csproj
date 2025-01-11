@@ -67,6 +67,9 @@
     <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs">
       <Link>Common\IPlatformUtility.cs</Link>
     </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs">
+      <Link>Common\LibraryIdUtility.cs</Link>
+    </Compile>
     <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs">
       <Link>Common\PlatformUtility.cs</Link>
     </Compile>

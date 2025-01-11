@@ -4,22 +4,32 @@ using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SteamTagsImporter.BulkImport
 {
     public class SteamPropertyBulkImporter : BulkGamePropertyAssigner<SteamProperty, GamePropertyImportViewModel>
     {
-        public override string MetadataProviderName => "Steam";
+        public override string MetadataProviderName { get; } = "Steam";
         private readonly SteamTagsImporterSettings settings;
+        private readonly SteamIdUtility steamIdUtility;
 
         public SteamPropertyBulkImporter(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<SteamProperty, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, SteamTagsImporterSettings settings)
-            : base(playniteAPI, dataSource, platformUtility, settings.MaxDegreeOfParallelism)
+            : base(playniteAPI, dataSource, platformUtility, new SteamIdUtility(), ExternalDatabase.Steam, settings.MaxDegreeOfParallelism)
         {
             AllowEmptySearchQuery = true;
             this.settings = settings;
+            this.steamIdUtility = (SteamIdUtility)DatabaseIdUtility;
         }
 
-        protected override string GetGameIdFromUrl(string url) => SteamAppIdUtility.GetSteamGameIdFromUrl(url);
+        protected override string GetGameIdFromUrl(string url)
+        {
+            var dbId = DatabaseIdUtility.GetIdFromUrl(url);
+            if (dbId.Database == ExternalDatabase.Steam)
+                return dbId.Id;
+
+            return null;
+        }
 
         protected override PropertyImportSetting GetPropertyImportSetting(SteamProperty searchItem, out string name)
         {
@@ -34,7 +44,7 @@ namespace SteamTagsImporter.BulkImport
             };
         }
 
-        protected override string GetIdFromGameLibrary(Guid libraryPluginId, string gameId) => libraryPluginId == SteamAppIdUtility.SteamLibraryPluginId ? gameId : null;
+        protected override string GetIdFromGameLibrary(Guid libraryPluginId, string gameId) => steamIdUtility.GetDatabaseFromPluginId(libraryPluginId) == ExternalDatabase.Steam ? gameId : null;
 
         private static PropertyImportTarget GetTarget(string param)
         {
@@ -69,7 +79,7 @@ namespace SteamTagsImporter.BulkImport
             }
         }
 
-        private static bool ContainsUrl(IEnumerable<Link> links, string url)
+        private bool ContainsUrl(IEnumerable<Link> links, string url)
         {
             if (links == null)
                 return false;
@@ -85,7 +95,7 @@ namespace SteamTagsImporter.BulkImport
             return false;
         }
 
-        private static string StripUrl(string steamUrl)
+        private string StripUrl(string steamUrl)
         {
             if (string.IsNullOrWhiteSpace(steamUrl))
                 return steamUrl;
@@ -93,9 +103,9 @@ namespace SteamTagsImporter.BulkImport
             return StripSlugIfStoreUrl(steamUrl).TrimStart("steam://openurl/").TrimEnd("/");
         }
 
-        private static string StripSlugIfStoreUrl(string steamUrl)
+        private string StripSlugIfStoreUrl(string steamUrl)
         {
-            var match = SteamAppIdUtility.SteamUrlRegex.Match(steamUrl);
+            var match = steamIdUtility.SteamUrlRegex.Match(steamUrl);
             if (!match.Success || !steamUrl.Contains("store.steampowered.com"))
                 return steamUrl;
 
@@ -107,7 +117,7 @@ namespace SteamTagsImporter.BulkImport
             foreach (var f in base.GetCheckboxFilters(viewModel))
                 yield return f;
 
-            yield return new CheckboxFilter("Only Steam games", viewModel, c => c.Game.PluginId == SteamAppIdUtility.SteamLibraryPluginId);
+            yield return new CheckboxFilter("Only Steam games", viewModel, c => steamIdUtility.LibraryIds.Contains(c.Game.PluginId));
         }
     }
 }

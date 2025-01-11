@@ -11,7 +11,7 @@ namespace TvTropesMetadata
         private readonly TvTropesMetadataSettings settings;
 
         public BulkTropeAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TvTropesSearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, TvTropesMetadataSettings settings)
-            : base(playniteAPI, dataSource, platformUtility, settings.MaxDegreeOfParallelism)
+            : base(playniteAPI, dataSource, platformUtility, new TvTropesIdUtility(), ExternalDatabase.TvTropes, settings.MaxDegreeOfParallelism)
         {
             this.settings = settings;
         }
@@ -20,14 +20,11 @@ namespace TvTropesMetadata
 
         protected override string GetGameIdFromUrl(string url)
         {
-            if (string.IsNullOrWhiteSpace(url))
-                return null;
+            var dbId = DatabaseIdUtility.GetIdFromUrl(url);
+            if (dbId.Database == ExternalDatabase.TvTropes)
+                return dbId.Id;
 
-            var trimmed = url.TrimStart("https://tvtropes.org/pmwiki/pmwiki.php/");
-            if (trimmed != url)
-                return trimmed;
-            else
-                return null;
+            return null;
         }
 
         protected override PropertyImportSetting GetPropertyImportSetting(TvTropesSearchResult searchItem, out string name)

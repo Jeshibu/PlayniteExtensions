@@ -2,6 +2,7 @@
 using MutualGames.Models.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace MutualGames
     {
         protected readonly IPlayniteAPI playniteAPI;
         protected readonly MutualGamesSettings settings;
-        protected readonly GameMatchingHelper matchingHelper = new GameMatchingHelper();
+        protected readonly GameMatchingHelper matchingHelper = new GameMatchingHelper(new SteamIdUtility(), 2); //not going to use these args, but no other constructor for now
         protected readonly ILogger logger = LogManager.GetLogger();
         protected int updatedCount = 0;
 
