@@ -76,6 +76,7 @@ function Get-ProjectNames {
         "mobygames"           = @("MobyGamesMetadata")
         "mutualgames"         = @("MutualGames")
         "pathreplacer"        = @("PathReplacer")
+        "pcgw"                = @("PCGamingWikiMetadata")
         "rawg"                = @("RawgLibrary", "RawgMetadata")
         "steamtagsimporter"   = @("SteamTagsImporter")
         "tvtropes"            = @("TvTropesMetadata")

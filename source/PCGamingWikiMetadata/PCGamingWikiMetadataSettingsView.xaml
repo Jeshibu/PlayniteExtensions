@@ -4,6 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
+             xmlns:pcgw="clr-namespace:PCGamingWikiMetadata"
+             xmlns:pec="clr-namespace:PlayniteExtensions.Common"
+             d:DataContext="{d:DesignInstance Type=pcgw:PCGamingWikiMetadataSettingsViewModel}"
              d:DesignHeight="400" d:DesignWidth="600">
 
     <TabControl Name="tcSettings">
@@ -20,7 +23,7 @@
 
                         <Expander.Header>
                             <Grid>
-                                <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding ImportFeatureVR}" VerticalAlignment="Center">
+                                <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding Settings.ImportFeatureVR}" VerticalAlignment="Center">
                                     <Label Content="{DynamicResource LOCPCGWSettingsImportVR}"></Label>
                                 </CheckBox>
                             </Grid>
@@ -51,19 +54,19 @@
                                             <RowDefinition Height="auto" />
                                     </Grid.RowDefinitions>
 
-                                    <CheckBox Grid.Row="0" Padding="4" IsChecked="{Binding ImportFeatureVRHTCVive}">
+                                    <CheckBox Grid.Row="0" Padding="4" IsChecked="{Binding Settings.ImportFeatureVRHTCVive}">
                                         <Label Content="{DynamicResource LOCPCGWSettingsImportVRHTCVive}" />
                                     </CheckBox>
 
-                                    <CheckBox Grid.Row="3" Padding="4" IsChecked="{Binding ImportFeatureVROculusRift}">
+                                    <CheckBox Grid.Row="3" Padding="4" IsChecked="{Binding Settings.ImportFeatureVROculusRift}">
                                         <Label Content="{DynamicResource LOCPCGWSettingsImportVROculusRift}" />
                                     </CheckBox>
 
-                                    <CheckBox Grid.Row="6" Padding="4" IsChecked="{Binding ImportFeatureVROSVR}">
+                                    <CheckBox Grid.Row="6" Padding="4" IsChecked="{Binding Settings.ImportFeatureVROSVR}">
                                         <Label Content="{DynamicResource LOCPCGWSettingsImportVROSVR}" />
                                     </CheckBox>
 
-                                    <CheckBox Grid.Row="9" Padding="4" IsChecked="{Binding ImportFeatureVRWMR}">
+                                    <CheckBox Grid.Row="9" Padding="4" IsChecked="{Binding Settings.ImportFeatureVRWMR}">
                                         <Label Content="{DynamicResource LOCPCGWSettingsImportVRWMR}" />
                                     </CheckBox>
                                 </Grid>
@@ -73,19 +76,19 @@
                 </StackPanel>
 
                 <StackPanel Margin="5">
-                    <CheckBox IsChecked="{Binding ImportFeatureRayTracing}" Content="{DynamicResource LOCPCGWSettingsImportHDR}"/>
+                    <CheckBox IsChecked="{Binding Settings.ImportFeatureRayTracing}" Content="{DynamicResource LOCPCGWSettingsImportHDR}"/>
                 </StackPanel>
                 <StackPanel Margin="5">
-                    <CheckBox IsChecked="{Binding ImportFeatureHDR}" Content="{DynamicResource LOCPCGWSettingsImportRayTracing}"/>
+                    <CheckBox IsChecked="{Binding Settings.ImportFeatureHDR}" Content="{DynamicResource LOCPCGWSettingsImportRayTracing}"/>
                 </StackPanel>
                 <StackPanel Margin="5">
-                    <CheckBox IsChecked="{Binding ImportFeatureFramerate60}" Content="{DynamicResource LOCPCGWSettingsImportFramerate60}"/>
+                    <CheckBox IsChecked="{Binding Settings.ImportFeatureFramerate60}" Content="{DynamicResource LOCPCGWSettingsImportFramerate60}"/>
                 </StackPanel>
                 <StackPanel Margin="5">
-                    <CheckBox IsChecked="{Binding ImportFeatureFramerate120}" Content="{DynamicResource LOCPCGWSettingsImportFramerate120}"/>
+                    <CheckBox IsChecked="{Binding Settings.ImportFeatureFramerate120}" Content="{DynamicResource LOCPCGWSettingsImportFramerate120}"/>
                 </StackPanel>
                 <StackPanel Margin="5">
-                    <CheckBox IsChecked="{Binding ImportFeatureUltrawide}" Content="{DynamicResource LOCPCGWSettingsImportUltrawide}"/>
+                    <CheckBox IsChecked="{Binding Settings.ImportFeatureUltrawide}" Content="{DynamicResource LOCPCGWSettingsImportUltrawide}"/>
                 </StackPanel>
 
                 <Label Margin="5" Height="25" Content="{DynamicResource LOCPCGWSettingsControllerFeatures}"/>
@@ -99,7 +102,7 @@
 
                         <Expander.Header>
                             <Grid>
-                                <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding ImportFeaturePlayStationControllers}" VerticalAlignment="Center">
+                                <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding Settings.ImportFeaturePlayStationControllers}" VerticalAlignment="Center">
                                     <Label Content="{DynamicResource LOCPCGWSettingsImportPlayStationControllers}"></Label>
                                 </CheckBox>
                             </Grid>
@@ -130,19 +133,19 @@
                                         <RowDefinition Height="auto" />
                                     </Grid.RowDefinitions>
 
-                                    <CheckBox Grid.Row="0" Padding="4" IsChecked="{Binding ImportFeaturePlayStationButtonPrompts}">
+                                    <CheckBox Grid.Row="0" Padding="4" IsChecked="{Binding Settings.ImportFeaturePlayStationButtonPrompts}">
                                         <Label Content="{DynamicResource LOCPCGWSettingsImportPlayStationButtonPrompts}" />
                                     </CheckBox>
 
-                                    <CheckBox Grid.Row="3" Padding="4" IsChecked="{Binding ImportFeatureLightBar}">
+                                    <CheckBox Grid.Row="3" Padding="4" IsChecked="{Binding Settings.ImportFeatureLightBar}">
                                         <Label Content="{DynamicResource LOCPCGWSettingsImportLightBar}" />
                                     </CheckBox>
 
-                                    <CheckBox Grid.Row="6" Padding="4" IsChecked="{Binding ImportFeatureAdaptiveTrigger}">
+                                    <CheckBox Grid.Row="6" Padding="4" IsChecked="{Binding Settings.ImportFeatureAdaptiveTrigger}">
                                         <Label Content="{DynamicResource LOCPCGWSettingsImportAdaptiveTrigger}" />
                                     </CheckBox>
 
-                                    <CheckBox Grid.Row="9" Padding="4" IsChecked="{Binding ImportFeatureHapticFeedback}">
+                                    <CheckBox Grid.Row="9" Padding="4" IsChecked="{Binding Settings.ImportFeatureHapticFeedback}">
                                         <Label Content="{DynamicResource LOCPCGWSettingsImportHapticFeedback}" />
                                     </CheckBox>
                                 </Grid>
@@ -153,10 +156,10 @@
 
                 <Label Margin="5" Height="25" Content="{DynamicResource LOCPCGWSettingsOtherFeatures}"/>
                 <StackPanel Margin="15">
-                    <CheckBox IsChecked="{Binding ImportXboxPlayAnywhere}" Content="{DynamicResource LOCPCGWSettingsImportXboxPlayAnywhere}"/>
+                    <CheckBox IsChecked="{Binding Settings.ImportXboxPlayAnywhere}" Content="{DynamicResource LOCPCGWSettingsImportXboxPlayAnywhere}"/>
                 </StackPanel>
                 <StackPanel Margin="15">
-                    <CheckBox IsChecked="{Binding ImportMultiplayerTypes}" Content="{DynamicResource LOCPCGWSettingsImportMultiplayerTypes}"/>
+                    <CheckBox IsChecked="{Binding Settings.ImportMultiplayerTypes}" Content="{DynamicResource LOCPCGWSettingsImportMultiplayerTypes}"/>
                 </StackPanel>
             </StackPanel>
         </TabItem>
@@ -164,39 +167,39 @@
             <ScrollViewer HorizontalScrollBarVisibility="Auto">
                 <StackPanel>
                     <StackPanel Margin="7">
-                        <CheckBox IsChecked="{Binding AddTagPrefix}" Content="{DynamicResource LOCPCGWSettingsAddTagsPrefix}"/>
+                        <CheckBox IsChecked="{Binding Settings.AddTagPrefix}" Content="{DynamicResource LOCPCGWSettingsAddTagsPrefix}"/>
                     </StackPanel>
                     <Label Margin="5" Height="25" Content="{DynamicResource LOCPCGWSettingsTaxonomyTags}"/>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportTagEngine}" Content="{DynamicResource LOCPCGWSettingsImportTagEngine}"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportTagEngine}" Content="{DynamicResource LOCPCGWSettingsImportTagEngine}"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportTagPacing}" Content="{DynamicResource LOCPCGWSettingsImportTagPacing}"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportTagPacing}" Content="{DynamicResource LOCPCGWSettingsImportTagPacing}"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportTagPerspectives}" Content="{DynamicResource LOCPCGWSettingsImportTagPerspectives}"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportTagPerspectives}" Content="{DynamicResource LOCPCGWSettingsImportTagPerspectives}"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportTagControls}" Content="{DynamicResource LOCPCGWSettingsImportTagControls}"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportTagControls}" Content="{DynamicResource LOCPCGWSettingsImportTagControls}"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportTagVehicles}" Content="{DynamicResource LOCPCGWSettingsImportTagVehicles}"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportTagVehicles}" Content="{DynamicResource LOCPCGWSettingsImportTagVehicles}"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportTagThemes}" Content="{DynamicResource LOCPCGWSettingsImportTagThemes}"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportTagThemes}" Content="{DynamicResource LOCPCGWSettingsImportTagThemes}"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportTagArtStyle}" Content="{DynamicResource LOCPCGWSettingsImportTagArtStyle}"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportTagArtStyle}" Content="{DynamicResource LOCPCGWSettingsImportTagArtStyle}"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportTagMonetization}" Content="{DynamicResource LOCPCGWSettingsImportTagMonetization}"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportTagMonetization}" Content="{DynamicResource LOCPCGWSettingsImportTagMonetization}"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportTagMicrotransactions}" Content="{DynamicResource LOCPCGWSettingsImportTagMicrotransactions}"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportTagMicrotransactions}" Content="{DynamicResource LOCPCGWSettingsImportTagMicrotransactions}"/>
                     </StackPanel>
                     <Label Margin="5" Height="25" Content="{DynamicResource LOCPCGWSettingsOtherTags}"/>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportTagNoCloudSaves}" Content="{DynamicResource LOCPCGWSettingsImportTagNoCloudSaves}"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportTagNoCloudSaves}" Content="{DynamicResource LOCPCGWSettingsImportTagNoCloudSaves}"/>
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
@@ -206,39 +209,39 @@
                 <StackPanel>
                     <StackPanel Margin="15">
                         <TextBlock Text="{DynamicResource LOCPCGWSettingsTagPrefixMonetization}"/>
-                        <TextBox Margin="0,2,0,0" Text="{Binding TagPrefixMonetization}" x:Name="TagPrefixMonetization" />
+                        <TextBox Margin="0,2,0,0" Text="{Binding Settings.TagPrefixMonetization}" x:Name="TagPrefixMonetization" />
                     </StackPanel>
                     <StackPanel Margin="15">
                         <TextBlock Text="{DynamicResource LOCPCGWSettingsTagPrefixMicrotransactions}"/>
-                        <TextBox Margin="0,2,0,0" Text="{Binding TagPrefixMicrotransactions}" x:Name="TagPrefixMicrotransactions" />
+                        <TextBox Margin="0,2,0,0" Text="{Binding Settings.TagPrefixMicrotransactions}" x:Name="TagPrefixMicrotransactions" />
                     </StackPanel>
                     <StackPanel Margin="15">
                         <TextBlock Text="{DynamicResource LOCPCGWSettingsTagPrefixPacing}"/>
-                        <TextBox Margin="0,2,0,0" Text="{Binding TagPrefixPacing}" x:Name="TagPrefixPacing" />
+                        <TextBox Margin="0,2,0,0" Text="{Binding Settings.TagPrefixPacing}" x:Name="TagPrefixPacing" />
                     </StackPanel>
                     <StackPanel Margin="15">
                         <TextBlock Text="{DynamicResource LOCPCGWSettingsTagPrefixPerspectives}"/>
-                        <TextBox Margin="0,2,0,0" Text="{Binding TagPrefixPerspectives}" x:Name="TagPrefixPerspectives" />
+                        <TextBox Margin="0,2,0,0" Text="{Binding Settings.TagPrefixPerspectives}" x:Name="TagPrefixPerspectives" />
                     </StackPanel>
                     <StackPanel Margin="15">
                         <TextBlock Text="{DynamicResource LOCPCGWSettingsTagPrefixControls}"/>
-                        <TextBox Margin="0,2,0,0" Text="{Binding TagPrefixControls}" x:Name="TagPrefixControls" />
+                        <TextBox Margin="0,2,0,0" Text="{Binding Settings.TagPrefixControls}" x:Name="TagPrefixControls" />
                     </StackPanel>
                     <StackPanel Margin="15">
                         <TextBlock Text="{DynamicResource LOCPCGWSettingsTagPrefixVehicles}"/>
-                        <TextBox Margin="0,2,0,0" Text="{Binding TagPrefixVehicles}" x:Name="TagPrefixVehicles" />
+                        <TextBox Margin="0,2,0,0" Text="{Binding Settings.TagPrefixVehicles}" x:Name="TagPrefixVehicles" />
                     </StackPanel>
                     <StackPanel Margin="15">
                         <TextBlock Text="{DynamicResource LOCPCGWSettingsTagPrefixThemes}"/>
-                        <TextBox Margin="0,2,0,0" Text="{Binding TagPrefixThemes}" x:Name="TagPrefixThemes" />
+                        <TextBox Margin="0,2,0,0" Text="{Binding Settings.TagPrefixThemes}" x:Name="TagPrefixThemes" />
                     </StackPanel>
                     <StackPanel Margin="15">
                         <TextBlock Text="{DynamicResource LOCPCGWSettingsTagPrefixEngines}"/>
-                        <TextBox Margin="0,2,0,0" Text="{Binding TagPrefixEngines}" x:Name="TagPrefixEngines" />
+                        <TextBox Margin="0,2,0,0" Text="{Binding Settings.TagPrefixEngines}" x:Name="TagPrefixEngines" />
                     </StackPanel>
                     <StackPanel Margin="15">
                         <TextBlock Text="{DynamicResource LOCPCGWSettingsTagPrefixArtStyles}"/>
-                        <TextBox Margin="0,2,0,0" Text="{Binding TagPrefixArtStyles}" x:Name="TagPrefixArtStyles" />
+                        <TextBox Margin="0,2,0,0" Text="{Binding Settings.TagPrefixArtStyles}" x:Name="TagPrefixArtStyles" />
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
@@ -247,44 +250,61 @@
             <ScrollViewer HorizontalScrollBarVisibility="Auto">
                 <StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportLinkOfficialSite}" Content="Official site"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportLinkOfficialSite}" Content="Official site"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportLinkHowLongToBeat}" Content="HowLongToBeat"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportLinkHowLongToBeat}" Content="HowLongToBeat"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportLinkIGDB}" Content="IGDB"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportLinkIGDB}" Content="IGDB"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportLinkIsThereAnyDeal}" Content="IsThereAnyDeal"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportLinkIsThereAnyDeal}" Content="IsThereAnyDeal"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportLinkProtonDB}" Content="ProtonDB"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportLinkProtonDB}" Content="ProtonDB"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportLinkSteamDB}" Content="SteamDB"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportLinkSteamDB}" Content="SteamDB"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportLinkStrategyWiki}" Content="StrategyWiki"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportLinkStrategyWiki}" Content="StrategyWiki"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportLinkWikipedia}" Content="Wikipedia"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportLinkWikipedia}" Content="Wikipedia"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportLinkNexusMods}" Content="Nexus Mods"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportLinkNexusMods}" Content="Nexus Mods"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportLinkMobyGames}" Content="MobyGames"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportLinkMobyGames}" Content="MobyGames"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportLinkWSGF}" Content="WSGF"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportLinkWSGF}" Content="WSGF"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportLinkWineHQ}" Content="WineHQ"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportLinkWineHQ}" Content="WineHQ"/>
                     </StackPanel>
                     <StackPanel Margin="5">
-                        <CheckBox IsChecked="{Binding ImportLinkGOGDatabase}" Content="GOG Database"/>
+                        <CheckBox IsChecked="{Binding Settings.ImportLinkGOGDatabase}" Content="GOG Database"/>
                     </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </TabItem>
+        <TabItem Header="Bulk property import">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ScrollViewer.Resources>
+                    <pec:IntegerFormatConverter x:Key="intConverter"/>
+                </ScrollViewer.Resources>
+                <StackPanel>
+                    <WrapPanel Margin="5">
+                        <TextBlock Text="Parallelism:" VerticalAlignment="Center"/>
+                        <TextBox Width="100" HorizontalAlignment="Left" Margin="10" Text="{Binding Settings.MaxDegreeOfParallelism, Converter={StaticResource intConverter}}"/>
+                        <TextBlock TextWrapping="Wrap">
+                            Parallelism dictates how many simultaneous threads can be used to process the bulk property import game matching. It is recommended to set this lower than the amount of cores in your CPU.
+                        </TextBlock>
+                    </WrapPanel>
+                    <CheckBox Margin="5,10,0,10" IsChecked="{Binding Settings.ShowTopPanelButton}" Content="Show top panel button"/>
                 </StackPanel>
             </ScrollViewer>
         </TabItem>

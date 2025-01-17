@@ -9,7 +9,8 @@ namespace PCGamingWikiMetadata
     public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
     {
         private readonly MetadataRequestOptions options;
-        private readonly PCGamingWikiMetadata plugin;
+        private readonly IPlayniteAPI playniteApi;
+        private readonly PCGamingWikiMetadataSettings settings;
 
         private PCGWClient client;
 
@@ -65,7 +66,7 @@ namespace PCGamingWikiMetadata
             if (!options.IsBackgroundDownload)
             {
                 logger.Debug("not background");
-                var item = plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, (a) =>
+                var item = playniteApi.Dialogs.ChooseItemWithSearch(null, (a) =>
                 {
                     return client.SearchGames(a);
                 }, options.GameData.Name);
@@ -78,7 +79,7 @@ namespace PCGamingWikiMetadata
                 }
                 else
                 {
-                    this.gameController.Game = new PCGWGame((PCGamingWikiMetadataSettings)this.plugin.GetSettings(false));
+                    this.gameController.Game = new PCGWGame(settings);
                     logger.Warn($"Cancelled search");
                 }
             }
@@ -90,7 +91,7 @@ namespace PCGamingWikiMetadata
 
                     if (results.Count == 0)
                     {
-                        this.gameController.Game = new PCGWGame((PCGamingWikiMetadataSettings)this.plugin.GetSettings(false));
+                        this.gameController.Game = new PCGWGame(settings);
                         return;
                     }
 
@@ -109,11 +110,12 @@ namespace PCGamingWikiMetadata
             }
         }
 
-        public PCGamingWikiMetadataProvider(MetadataRequestOptions options, PCGamingWikiMetadata plugin)
+        public PCGamingWikiMetadataProvider(MetadataRequestOptions options, IPlayniteAPI playniteApi, PCGamingWikiMetadataSettings settings)
         {
             this.options = options;
-            this.plugin = plugin;
-            this.gameController = new PCGWGameController((PCGamingWikiMetadataSettings)this.plugin.GetSettings(false));
+            this.playniteApi = playniteApi;
+            this.settings = settings;
+            this.gameController = new PCGWGameController(settings);
             this.client = new PCGWClient(this.options, this.gameController);
         }
 

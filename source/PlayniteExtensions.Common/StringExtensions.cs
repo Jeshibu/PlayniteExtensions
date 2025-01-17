@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace PlayniteExtensions.Common
 {
@@ -22,7 +22,7 @@ namespace PlayniteExtensions.Common
             if (input == null)
                 return null;
 
-            return Regex.Replace(HttpUtility.HtmlDecode(input), @"\s+", match =>
+            return Regex.Replace(WebUtility.HtmlDecode(input), @"\s+", match =>
             {
                 if (match.Value.Contains('\n'))
                     return Environment.NewLine;
