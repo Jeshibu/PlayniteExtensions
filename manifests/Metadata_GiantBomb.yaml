@@ -115,3 +115,9 @@ Packages:
      - Added bulk import option to only match filtered games
      - Fixed HTML entities showing up in search result descriptions
      - Improvement in connection handling; less likely to run out of connections
+  - Version: 0.9.1
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2025-01-18
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/GiantBombMetadata_0_9_1.pext
+    Changelog:
+     - Improved game matching speed for bulk property import
