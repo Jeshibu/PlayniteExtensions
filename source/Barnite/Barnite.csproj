@@ -106,8 +106,13 @@
     <Compile Include="..\PlayniteExtensions.Metadata.Common\Settings.cs">
       <Link>Common\Metadata\Settings.cs</Link>
     </Compile>
+    <Compile Include="BarcodeResultEntry.cs" />
+    <Compile Include="BarcodeResultsGridViewModel.cs" />
     <Compile Include="Barnite.cs" />
     <Compile Include="BarniteSettings.cs" />
+    <Compile Include="BarcodeResultsGrid.xaml.cs">
+      <DependentUpon>BarcodeResultsGrid.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BarniteSettingsView.xaml.cs">
       <DependentUpon>BarniteSettingsView.xaml</DependentUpon>
     </Compile>
@@ -133,6 +138,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BarcodeResultsGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="BarniteSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
