@@ -129,3 +129,9 @@ Packages:
     Changelog:
     - Fixed bulk import breaking when it included a Steam game with no name
     - Added missing In-App Purchases feature for bulk import
+  - Version: 4.2.3
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-01-18
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/SteamTagsImporter_4_2_3.pext
+    Changelog:
+    - Improved game matching speed for bulk property import
