@@ -68,3 +68,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/Barnite_0_6_4.pext
     Changelog:
     - Improvement in connection handling; less likely to run out of connections
+  - Version: 0.7
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-01-18
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/Barnite_0_7.pext
+    Changelog:
+    - Input now accepts comma-separated batches - contributed by pennstatephil
