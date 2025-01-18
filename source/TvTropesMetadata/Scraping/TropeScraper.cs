@@ -163,8 +163,13 @@ namespace TvTropesMetadata.Scraping
             {
                 char a = str[i];
                 char b = str[i + 1];
-                if ((char.IsUpper(b) && !char.IsUpper(a))
-                    || (char.IsDigit(b) && !char.IsDigit(a)))
+                char? c = str.Count > i + 2 ? str[i + 2] : (char?)null;
+
+                bool upperAfterLower = char.IsUpper(b) && !char.IsUpper(a);
+                bool digitAfterNonDigit = char.IsDigit(b) && !char.IsDigit(a);
+                bool startOfWordAfterUpper = char.IsUpper(a) && char.IsUpper(b) && c.HasValue && char.IsLower(c.Value);
+
+                if (upperAfterLower || digitAfterNonDigit || startOfWordAfterUpper)
                 {
                     str.Insert(i + 1, ' ');
                     i++;

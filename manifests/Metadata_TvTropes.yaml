@@ -12,3 +12,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/TvTropesMetadata_0_4_3.pext
     Changelog:
     - Improvement in connection handling; less likely to run out of connections
+  - Version: 0.4.4
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-01-18
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/TvTropesMetadata_0_4_4.pext
+    Changelog:
+    - Improved game matching speed for bulk property import
+    - Slightly improved title matching using URLs where capital letters follow each other like in TheElderScrollsVSkyrim

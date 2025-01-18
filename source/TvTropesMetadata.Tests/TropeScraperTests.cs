@@ -18,6 +18,7 @@ namespace TvTropesMetadata.Tests
             { "https://tvtropes.org/pmwiki/pmwiki.php/StalkerWithACrush/VisualNovels", "html/StalkerWithACrush-VisualNovels.html" },
             { "https://tvtropes.org/pmwiki/pmwiki.php/Main/WallRun", "html/WallRun.html" },
             { "https://tvtropes.org/pmwiki/pmwiki.php/Main/WallJump", "html/WallJump.html" },
+            { "https://tvtropes.org/pmwiki/pmwiki.php/Main/KillTheGod", "html/KillTheGod.html" },
         });
 
         [Fact]
@@ -80,6 +81,21 @@ namespace TvTropesMetadata.Tests
 
             ContainsGame(result, "Shantae: Half-Genie Hero", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/ShantaeHalfGenieHero");
             Assert.DoesNotContain("Empowered", result.Items.SelectMany(i => i.Works).Select(w => w.Title));
+        }
+
+        [Fact]
+        public void KillTheGodParsesRight()
+        {
+            var scraper = new TropeScraper(downloader);
+            var result = scraper.GetGamesForTrope("https://tvtropes.org/pmwiki/pmwiki.php/Main/KillTheGod");
+
+            ContainsGame(result, "Nier Automata", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/NierAutomata");
+            ContainsGame(result, "The Elder Scrolls V Skyrim", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/TheElderScrollsVSkyrim");
+            ContainsGame(result, "Final Fantasy XIII-2", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/FinalFantasyXIII2");
+            ContainsGame(result, "God of War", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/GodOfWar");
+            ContainsGame(result, "Neverwinter Nights 2", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/NeverwinterNights2");
+            ContainsGame(result, "Neverwinter Nights 2: Mask of the Betrayer", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/NeverwinterNights2");
+            ContainsGame(result, "Pillars of Eternity", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/PillarsOfEternity");
         }
 
         private void ContainsGame(ParsedTropePage tropePage, string title, string url)
