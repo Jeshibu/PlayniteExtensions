@@ -87,3 +87,9 @@ Packages:
     - Fixed HTML entities showing up in search result descriptions
     - Removed ', the' from the end of company names
     - Improvement in connection handling; less likely to run out of connections
+  - Version: 0.6.1
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-01-18
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/MobyGamesMetadata_0_6_1.pext
+    Changelog:
+    - Improved game matching speed for bulk property import
