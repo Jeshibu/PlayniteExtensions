@@ -75,7 +75,7 @@ namespace PCGamingWikiMetadata
         {
             yield return new MainMenuItem
             {
-                MenuSection = "PCGamingWiki",
+                MenuSection = "@PCGamingWiki",
                 Description = "Import PCGamingWiki property",
                 Action = _ => ImportGameProperty(),
             };
@@ -85,7 +85,7 @@ namespace PCGamingWikiMetadata
             var platformUtility = new PlatformUtility(PlayniteApi);
             var idUtility = new AggregateExternalDatabaseUtility(new PCGamingWikiIdUtility(), new SteamIdUtility(), new GOGIdUtility());
             var searchProvider = new PCGamingWikiPropertySearchProvider(new CargoQuery(), platformUtility);
-            var bulk = new PCGamingWikiBulkGamePropertyAssigner(PlayniteApi, idUtility, searchProvider, platformUtility, settings.Settings.MaxDegreeOfParallelism);
+            var bulk = new PCGamingWikiBulkGamePropertyAssigner(PlayniteApi, settings.Settings, idUtility, searchProvider, platformUtility, settings.Settings.MaxDegreeOfParallelism);
             bulk.ImportGameProperty();
         }
     }

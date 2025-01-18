@@ -1,7 +1,9 @@
 ﻿using PCGamingWikiBulkImport.DataCollection;
 using PCGamingWikiBulkImport.Models;
 using PCGamingWikiBulkImport.Views;
+using PCGamingWikiMetadata;
 using Playnite.SDK;
+using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System;
@@ -13,11 +15,13 @@ namespace PCGamingWikiBulkImport
 {
     internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<PCGamingWikiSelectedValues, GamePropertyImportViewModel>
     {
+        private readonly PCGamingWikiMetadataSettings settings;
         private readonly PCGamingWikiPropertySearchProvider pcgwDataSource;
 
-        public PCGamingWikiBulkGamePropertyAssigner(IPlayniteAPI playniteAPI, IExternalDatabaseIdUtility databaseIdUtility, PCGamingWikiPropertySearchProvider dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
+        public PCGamingWikiBulkGamePropertyAssigner(IPlayniteAPI playniteAPI, PCGamingWikiMetadataSettings settings, IExternalDatabaseIdUtility databaseIdUtility, PCGamingWikiPropertySearchProvider dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
             : base(playniteAPI, dataSource, platformUtility, databaseIdUtility, ExternalDatabase.PCGamingWiki, maxDegreeOfParallelism)
         {
+            this.settings = settings;
             this.pcgwDataSource = dataSource;
             AllowEmptySearchQuery = true;
         }
@@ -121,10 +125,47 @@ namespace PCGamingWikiBulkImport
 
         protected override PropertyImportSetting GetPropertyImportSetting(PCGamingWikiSelectedValues searchItem, out string name)
         {
-            name = searchItem.FieldInfo.FieldType == CargoFieldType.String
-                ? searchItem.FieldInfo.FieldDisplayName
-                : searchItem.SelectedValues.FirstOrDefault().TrimStart(searchItem.FieldInfo.PageNamePrefix);
+            var p = GetPrefix(searchItem.FieldInfo);
+            var n = GetTagName(searchItem);
+            name = $"{p} {n}".Trim();
             return new PropertyImportSetting { ImportTarget = searchItem.FieldInfo.PreferredField };
+        }
+
+        private string GetTagName(PCGamingWikiSelectedValues searchItem)
+        {
+            return searchItem.FieldInfo.FieldType == CargoFieldType.String
+             ? searchItem.FieldInfo.FieldDisplayName
+             : searchItem.SelectedValues.FirstOrDefault().TrimStart(searchItem.FieldInfo.PageNamePrefix);
+        }
+
+        private string GetPrefix(CargoFieldInfo fieldInfo)
+        {
+            if (fieldInfo.Table != CargoTables.GameInfoBoxTableName)
+                return null;
+
+            switch (fieldInfo.Field)
+            {
+                case "Monetization":
+                    return settings.TagPrefixMonetization;
+                case "Microtransactions":
+                    return settings.TagPrefixMicrotransactions;
+                case "Pacing":
+                    return settings.TagPrefixPacing;
+                case "Perspectives":
+                    return settings.TagPrefixPerspectives;
+                case "Controls":
+                    return settings.TagPrefixControls;
+                case "Vehicles":
+                    return settings.TagPrefixVehicles;
+                case "Themes":
+                    return settings.TagPrefixThemes;
+                case "Engines":
+                    return settings.TagPrefixEngines;
+                case "Art_styles":
+                    return settings.TagPrefixArtStyles;
+                default:
+                    return null;
+            }
         }
     }
 

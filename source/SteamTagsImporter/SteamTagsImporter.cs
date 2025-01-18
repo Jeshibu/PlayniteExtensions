@@ -67,7 +67,7 @@ namespace SteamTagsImporter
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            return new GameMenuItem[] { new GameMenuItem { Description = "Import Steam tags", Action = x => SetTags(x.Games) } };
+            yield return new GameMenuItem { Description = "Import Steam tags", Action = x => SetTags(x.Games) };
         }
 
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)

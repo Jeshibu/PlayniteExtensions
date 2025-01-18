@@ -30,27 +30,27 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="BulkImport\Common\IEnumerableExtensions.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs" Link="BulkImport\Common\IntegerFormatConverter.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs" Link="BulkImport\Common\IPlatformUtility.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="BulkImport\Common\LibraryIdUtility.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs" Link="BulkImport\Common\PlatformUtility.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs" Link="BulkImport\Common\PluginSettingsViewModel.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\SortableNameConverter.cs" Link="BulkImport\Common\SortableNameConverter.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs" Link="BulkImport\Common\StringExtensions.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\TitleComparer.cs" Link="BulkImport\Common\TitleComparer.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs" Link="BulkImport\Common\WebDownloader.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkGamePropertyAssigner.cs" Link="BulkImport\Common\Metadata\BulkGamePropertyAssigner.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkImportPluginSettings.cs" Link="BulkImport\Common\Metadata\BulkImportPluginSettings.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GameDetails.cs" Link="BulkImport\Common\Metadata\GameDetails.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GameMatchingHelper.cs" Link="BulkImport\Common\Metadata\GameMatchingHelper.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GamePropertyImportViewModel.cs" Link="BulkImport\Common\Metadata\GamePropertyImportViewModel.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericItemOption.cs" Link="BulkImport\Common\Metadata\GenericItemOption.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericMetadataProvider.cs" Link="BulkImport\Common\Metadata\GenericMetadataProvider.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\IGameSearchResult.cs" Link="BulkImport\Common\Metadata\IGameSearchResult.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\IImageData.cs" Link="BulkImport\Common\Metadata\IImageData.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\ISearchableDataSource.cs" Link="BulkImport\Common\Metadata\ISearchableDataSource.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\Settings.cs" Link="BulkImport\Common\Metadata\Settings.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Common\IEnumerableExtensions.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs" Link="Common\IntegerFormatConverter.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Common\IPlatformUtility.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="Common\LibraryIdUtility.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs" Link="Common\PlatformUtility.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs" Link="Common\PluginSettingsViewModel.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\SortableNameConverter.cs" Link="Common\SortableNameConverter.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs" Link="Common\StringExtensions.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\TitleComparer.cs" Link="Common\TitleComparer.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs" Link="Common\WebDownloader.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkGamePropertyAssigner.cs" Link="Common\Metadata\BulkGamePropertyAssigner.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkImportPluginSettings.cs" Link="Common\Metadata\BulkImportPluginSettings.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GameDetails.cs" Link="Common\Metadata\GameDetails.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GameMatchingHelper.cs" Link="Common\Metadata\GameMatchingHelper.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GamePropertyImportViewModel.cs" Link="Common\Metadata\GamePropertyImportViewModel.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericItemOption.cs" Link="Common\Metadata\GenericItemOption.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericMetadataProvider.cs" Link="Common\Metadata\GenericMetadataProvider.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\IGameSearchResult.cs" Link="Common\Metadata\IGameSearchResult.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\IImageData.cs" Link="Common\Metadata\IImageData.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\ISearchableDataSource.cs" Link="Common\Metadata\ISearchableDataSource.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\Settings.cs" Link="Common\Metadata\Settings.cs" />
   </ItemGroup>
 
   <ItemGroup>
