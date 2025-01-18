@@ -29,8 +29,8 @@ jobs:
         #outputs projects, testprojects, releasetitle
         #also writes release notes to ./publish/release_notes.txt
 
-      - name: Setup Nuget.exe
-        uses: NuGet/setup-nuget@v1
+      - name: Copy Common files for SDK style projects
+        run: xcopy "$Env:GITHUB_WORKSPACE\source\PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$Env:GITHUB_WORKSPACE\source\PCGamingWikiMetadata\Common\Metadata" /Y /I
 
       - name: Nuget Restore 
         run: nuget restore .\source\PlayniteExtensions.sln
