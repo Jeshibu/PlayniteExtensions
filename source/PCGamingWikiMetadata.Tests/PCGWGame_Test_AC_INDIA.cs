@@ -1,34 +1,36 @@
-using Xunit;
-using PCGamingWikiMetadata;
+using FluentAssertions;
 using System;
 using System.Linq;
-using FluentAssertions;
+using Xunit;
 
-public class PCGWGame_Test_AC_INDIA : IDisposable
+namespace PCGamingWikiMetadata.Tests
 {
-    private PCGWGame testGame;
-    private LocalPCGWClient client;
-    private TestMetadataRequestOptions options;
-
-    public PCGWGame_Test_AC_INDIA()
+    public class PCGWGame_Test_AC_INDIA : IDisposable
     {
-        this.options = new TestMetadataRequestOptions();
-        this.options.SetGameSourceBattleNet();
-        this.client = new LocalPCGWClient(this.options);
-        this.testGame = new PCGWGame(this.client.GetSettings(), "Assassin's Creed Chronicles: India", -1);
-        this.client.FetchGamePageContent(this.testGame);
-    }
+        private PCGWGame testGame;
+        private LocalPCGWClient client;
+        private TestMetadataRequestOptions options;
 
-    [Fact]
-    public void TestParseSeries()
-    {
-        var arr = this.testGame.Series.Select(i => i.ToString()).ToArray();
-        arr.Should().Contain("Assassin's Creed Chronicles");
-        arr.Should().Contain("Assassin's Creed");
-    }
+        public PCGWGame_Test_AC_INDIA()
+        {
+            this.options = new TestMetadataRequestOptions();
+            this.options.SetGameSourceBattleNet();
+            this.client = new LocalPCGWClient(this.options);
+            this.testGame = new PCGWGame(this.client.GetSettings(), "Assassin's Creed Chronicles: India", -1);
+            this.client.FetchGamePageContent(this.testGame);
+        }
 
-    public void Dispose()
-    {
+        [Fact]
+        public void TestParseSeries()
+        {
+            var arr = this.testGame.Series.Select(i => i.ToString()).ToArray();
+            arr.Should().Contain("Assassin's Creed Chronicles");
+            arr.Should().Contain("Assassin's Creed");
+        }
 
+        public void Dispose()
+        {
+
+        }
     }
 }
