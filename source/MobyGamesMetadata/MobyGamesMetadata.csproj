@@ -1,201 +1,90 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{22577C83-FCF9-49F2-9957-6C67D59FCBD6}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MobyGamesMetadata</RootNamespace>
-    <AssemblyName>MobyGamesMetadata</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <TargetFramework>net462</TargetFramework>
+    <AssemblyTitle>MobyGamesMetadata</AssemblyTitle>
+    <Product>MobyGamesMetadata</Product>
+    <Copyright>Copyright ©  2019</Copyright>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <PreBuildEvent>xcopy "$(SolutionDir)PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$(ProjectDir)Common\Metadata" /Y /I</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>xcopy "$(SolutionDir)PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$(ProjectDir)Common\Metadata" /Y /I</PreBuildEvent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ComposableAsync.Core, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ComposableAsync.Core.1.3.0\lib\netstandard2.0\ComposableAsync.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.11.61.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.11.61\lib\Net45\HtmlAgilityPack.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Playnite.SDK, Version=6.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PlayniteSDK.6.9.0\lib\net462\Playnite.SDK.dll</HintPath>
-    </Reference>
+    <PackageReference Include="ComposableAsync.Core" Version="1.3.0" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="PlayniteSDK" Version="6.9.0" />
+    <PackageReference Include="RateLimiter" Version="2.2.0" />
+    <PackageReference Include="RestSharp" Version="108.0.2" />
+    <PackageReference Include="System.Buffers" Version="4.5.1" />
+    <PackageReference Include="System.Memory" Version="4.5.5" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="7.0.0" />
+    <PackageReference Include="System.Text.Json" Version="5.0.0" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="RateLimiter, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RateLimiter.2.2.0\lib\netstandard2.0\RateLimiter.dll</HintPath>
-    </Reference>
-    <Reference Include="RestSharp, Version=108.0.2.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.108.0.2\lib\netstandard2.0\RestSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Text.Encodings.Web, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encodings.Web.7.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Text.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Json.5.0.0\lib\net461\System.Text.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Barnite\Scrapers\MobyGamesHelper.cs">
-      <Link>Api\MobyGamesHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\GiantBombMetadata\GiantBombHelper.cs">
-      <Link>Shared\GiantBombHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs">
-      <Link>Common\IEnumerableExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs">
-      <Link>Common\IntegerFormatConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs">
-      <Link>Common\IPlatformUtility.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs">
-      <Link>Common\LibraryIdUtility.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs">
-      <Link>Common\PlatformUtility.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\PlayniteConvert.cs">
-      <Link>Common\PlayniteConvert.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
-      <Link>Common\PluginSettingsViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\SortableNameConverter.cs">
-      <Link>Common\SortableNameConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs">
-      <Link>Common\StringExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\TitleComparer.cs">
-      <Link>Common\TitleComparer.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs">
-      <Link>Common\WebDownloader.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkGamePropertyAssigner.cs">
-      <Link>Common\Metadata\BulkGamePropertyAssigner.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkImportPluginSettings.cs">
-      <Link>Common\Metadata\BulkImportPluginSettings.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GameDetails.cs">
-      <Link>Common\Metadata\GameDetails.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GameMatchingHelper.cs">
-      <Link>Common\Metadata\GameMatchingHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GamePropertyImportViewModel.cs">
-      <Link>Common\Metadata\GamePropertyImportViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericItemOption.cs">
-      <Link>Common\Metadata\GenericItemOption.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericMetadataProvider.cs">
-      <Link>Common\Metadata\GenericMetadataProvider.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\IGameSearchResult.cs">
-      <Link>Common\Metadata\IGameSearchResult.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\IImageData.cs">
-      <Link>Common\Metadata\IImageData.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\ISearchableDataSource.cs">
-      <Link>Common\Metadata\ISearchableDataSource.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\Settings.cs">
-      <Link>Common\Metadata\Settings.cs</Link>
-    </Compile>
-    <Compile Include="Api\MobyGamesGameSearchProvider.cs" />
-    <Compile Include="Api\MobyGamesGenreSearchProvider.cs" />
-    <Compile Include="Api\MobyGamesGroupSearchProvider.cs" />
-    <Compile Include="Api\BaseAggregateMobyGamesDataCollector.cs" />
-    <Compile Include="Api\MobyGamesApiClient.cs" />
-    <Compile Include="Api\MobyGamesApiModels.cs" />
-    <Compile Include="Api\MobyGamesScraper.cs" />
-    <Compile Include="Common\Metadata\GamePropertyImportView.xaml.cs">
+    <Compile Include="..\Barnite\Scrapers\MobyGamesHelper.cs" Link="Api\MobyGamesHelper.cs" />
+    <Compile Include="..\GiantBombMetadata\GiantBombHelper.cs" Link="Shared\GiantBombHelper.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Common\IEnumerableExtensions.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs" Link="Common\IntegerFormatConverter.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Common\IPlatformUtility.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="Common\LibraryIdUtility.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs" Link="Common\PlatformUtility.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\PlayniteConvert.cs" Link="Common\PlayniteConvert.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs" Link="Common\PluginSettingsViewModel.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\SortableNameConverter.cs" Link="Common\SortableNameConverter.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs" Link="Common\StringExtensions.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\TitleComparer.cs" Link="Common\TitleComparer.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs" Link="Common\WebDownloader.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkGamePropertyAssigner.cs" Link="Common\Metadata\BulkGamePropertyAssigner.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkImportPluginSettings.cs" Link="Common\Metadata\BulkImportPluginSettings.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GameDetails.cs" Link="Common\Metadata\GameDetails.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GameMatchingHelper.cs" Link="Common\Metadata\GameMatchingHelper.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GamePropertyImportViewModel.cs" Link="Common\Metadata\GamePropertyImportViewModel.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericItemOption.cs" Link="Common\Metadata\GenericItemOption.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericMetadataProvider.cs" Link="Common\Metadata\GenericMetadataProvider.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\IGameSearchResult.cs" Link="Common\Metadata\IGameSearchResult.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\IImageData.cs" Link="Common\Metadata\IImageData.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\ISearchableDataSource.cs" Link="Common\Metadata\ISearchableDataSource.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\Settings.cs" Link="Common\Metadata\Settings.cs" />
+    <Compile Update="Common\Metadata\GamePropertyImportView.xaml.cs">
       <DependentUpon>GamePropertyImportView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MobyGamesBulkGenreAssigner.cs" />
-    <Compile Include="MobyGamesBulkGroupAssigner.cs" />
-    <Compile Include="MobyGamesMetadata.cs" />
-    <Compile Include="MobyGamesMetadataProvider.cs" />
-    <Compile Include="MobyGamesMetadataSettings.cs" />
-    <Compile Include="MobyGamesMetadataSettingsView.xaml.cs">
+    <Compile Update="MobyGamesMetadataSettingsView.xaml.cs">
       <DependentUpon>MobyGamesMetadataSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="extension.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="genres.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="icon.png">
@@ -221,8 +110,4 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>xcopy "$(SolutionDir)PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$(ProjectDir)Common\Metadata" /Y /I</PreBuildEvent>
-  </PropertyGroup>
 </Project>

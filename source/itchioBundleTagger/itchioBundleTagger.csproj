@@ -1,109 +1,53 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0FC7F312-402B-4466-9E05-721CE2638268}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>itchioBundleTagger</RootNamespace>
-    <AssemblyName>itchioBundleTagger</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
+    <TargetFramework>net462</TargetFramework>
+    <AssemblyTitle>itchioBundleTagger</AssemblyTitle>
+    <Product>itchioBundleTagger</Product>
+    <Copyright>Copyright © 2022</Copyright>
+    <AssemblyVersion>0.11.0.0</AssemblyVersion>
+    <FileVersion>0.11.0.0</FileVersion>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="IndexRange, Version=1.0.2.0, Culture=neutral, PublicKeyToken=35e6a3c4212514c6, processorArchitecture=MSIL">
-      <HintPath>..\packages\IndexRange.1.0.2\lib\net45\IndexRange.dll</HintPath>
-    </Reference>
-    <Reference Include="Linguini.Bundle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Linguini.Bundle.0.3.2\lib\net461\Linguini.Bundle.dll</HintPath>
-    </Reference>
-    <Reference Include="Linguini.Shared, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Linguini.Shared.0.3.0\lib\net461\Linguini.Shared.dll</HintPath>
-    </Reference>
-    <Reference Include="Linguini.Syntax, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Linguini.Syntax.0.3.0\lib\net461\Linguini.Syntax.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Playnite.SDK, Version=6.2.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PlayniteSDK.6.2.2\lib\net462\Playnite.SDK.dll</HintPath>
-    </Reference>
+    <PackageReference Include="IndexRange" Version="1.0.2" />
+    <PackageReference Include="Linguini.Bundle" Version="0.3.2" />
+    <PackageReference Include="Linguini.Shared" Version="0.3.0" />
+    <PackageReference Include="Linguini.Syntax" Version="0.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="PlayniteSDK" Version="6.2.2" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\PlayniteExtensions.Common\CachedFileDownloader.cs">
-      <Link>Common\CachedFileDownloader.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs">
-      <Link>Common\IntegerFormatConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs">
-      <Link>Common\IPlatformUtility.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs">
-      <Link>Common\PlatformUtility.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\PlayniteConvert.cs">
-      <Link>Common\PlayniteConvert.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
-      <Link>Common\PluginSettingsViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\SortableNameConverter.cs">
-      <Link>Common\SortableNameConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs">
-      <Link>Common\StringExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\TitleComparer.cs">
-      <Link>Common\TitleComparer.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs">
-      <Link>Common\WebDownloader.cs</Link>
-    </Compile>
-    <Compile Include="itchioBundleTagger.cs" />
-    <Compile Include="itchioBundleTaggerSettings.cs" />
-    <Compile Include="itchioBundleTaggerSettingsView.xaml.cs">
+    <Compile Include="..\PlayniteExtensions.Common\CachedFileDownloader.cs" Link="Common\CachedFileDownloader.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs" Link="Common\IntegerFormatConverter.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Common\IPlatformUtility.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs" Link="Common\PlatformUtility.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\PlayniteConvert.cs" Link="Common\PlayniteConvert.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs" Link="Common\PluginSettingsViewModel.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\SortableNameConverter.cs" Link="Common\SortableNameConverter.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs" Link="Common\StringExtensions.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\TitleComparer.cs" Link="Common\TitleComparer.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs" Link="Common\WebDownloader.cs" />
+    <Compile Update="itchioBundleTaggerSettingsView.xaml.cs">
       <DependentUpon>itchioBundleTaggerSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Translator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Localization\zh-CN.ftl">
@@ -127,7 +71,6 @@
     <Content Include="Localization\gl-ES.ftl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="itchioBundleTaggerSettingsView.xaml">
@@ -140,5 +83,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Remove="obj\x86\Debug\.NETFramework,Version=v4.6.2.AssemblyAttributes.cs" />
+    <Compile Remove="obj\x86\Debug\itchioBundleTaggerSettingsView.g.i.cs" />
+  </ItemGroup>
 </Project>

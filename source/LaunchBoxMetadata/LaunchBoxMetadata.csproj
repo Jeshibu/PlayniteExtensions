@@ -1,194 +1,86 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B59FB65D-3C86-41D5-B3E6-EA4EAC476FEC}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LaunchBoxMetadata</RootNamespace>
-    <AssemblyName>LaunchBoxMetadata</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <TargetFramework>net462</TargetFramework>
+    <AssemblyTitle>LaunchBoxMetadata</AssemblyTitle>
+    <Product>LaunchBoxMetadata</Product>
+    <Copyright>Copyright ©  2019</Copyright>
+    <AssemblyVersion>0.6.4.0</AssemblyVersion>
+    <FileVersion>0.6.4.0</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
     <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\x86\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
     <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AngleSharp, Version=0.9.9.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
-      <HintPath>..\packages\AngleSharp.0.9.9\lib\net45\AngleSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="GongSolutions.WPF.DragDrop, Version=2.0.0.0, Culture=neutral, PublicKeyToken=91f1945125b7a587, processorArchitecture=MSIL">
-      <HintPath>..\packages\gong-wpf-dragdrop.2.4.1\lib\net462\GongSolutions.WPF.DragDrop.dll</HintPath>
-    </Reference>
-    <Reference Include="Magick.NET-Q16-AnyCPU, Version=12.3.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\packages\Magick.NET-Q16-AnyCPU.12.3.0\lib\netstandard20\Magick.NET-Q16-AnyCPU.dll</HintPath>
-    </Reference>
-    <Reference Include="Magick.NET.Core, Version=12.3.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\packages\Magick.NET.Core.12.3.0\lib\netstandard20\Magick.NET.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Playnite.SDK, Version=6.8.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PlayniteSDK.6.8.0\lib\net462\Playnite.SDK.dll</HintPath>
-    </Reference>
+    <PackageReference Include="AngleSharp" Version="0.9.9" />
+    <PackageReference Include="gong-wpf-dragdrop" Version="2.4.1" />
+    <PackageReference Include="Magick.NET.Core" Version="12.3.0" />
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="12.3.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="PlayniteSDK" Version="6.8.0" />
+    <PackageReference Include="SqlNado" Version="1.3.3" />
+    <PackageReference Include="System.Buffers" Version="4.5.1" />
+    <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
+    <PackageReference Include="System.Memory" Version="4.5.5" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="SqlNado, Version=1.3.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SqlNado.1.3.3\lib\netstandard2.0\SqlNado.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
-    </Reference>
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\PlayniteExtensions.Common\GlobalCommands.cs">
-      <Link>Common\GlobalCommands.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs">
-      <Link>Common\IEnumerableExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\IgnoreScrollBehavior.cs">
-      <Link>Common\IgnoreScrollBehavior.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs">
-      <Link>Common\IntegerFormatConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs">
-      <Link>Common\IPlatformUtility.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs">
-      <Link>Common\LibraryIdUtility.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs">
-      <Link>Common\PlatformUtility.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\PlayniteConvert.cs">
-      <Link>Common\PlayniteConvert.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
-      <Link>Common\PluginSettingsViewModel.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\SortableNameConverter.cs">
-      <Link>Common\SortableNameConverter.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs">
-      <Link>Common\StringExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\TitleComparer.cs">
-      <Link>Common\TitleComparer.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs">
-      <Link>Common\WebDownloader.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GameDetails.cs">
-      <Link>Common\Metadata\GameDetails.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericItemOption.cs">
-      <Link>Common\Metadata\GenericItemOption.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericMetadataProvider.cs">
-      <Link>Common\Metadata\GenericMetadataProvider.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\IGameSearchResult.cs">
-      <Link>Common\Metadata\IGameSearchResult.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\IImageData.cs">
-      <Link>Common\Metadata\IImageData.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\ISearchableDataSource.cs">
-      <Link>Common\Metadata\ISearchableDataSource.cs</Link>
-    </Compile>
-    <Compile Include="LaunchBoxDatabase.cs" />
-    <Compile Include="LaunchBoxMetadata.cs" />
-    <Compile Include="LaunchBoxMetadataProvider.cs" />
-    <Compile Include="LaunchBoxMetadataSettings.cs" />
-    <Compile Include="LaunchBoxMetadataSettingsView.xaml.cs">
+    <Compile Include="..\PlayniteExtensions.Common\GlobalCommands.cs" Link="Common\GlobalCommands.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Common\IEnumerableExtensions.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\IgnoreScrollBehavior.cs" Link="Common\IgnoreScrollBehavior.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs" Link="Common\IntegerFormatConverter.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Common\IPlatformUtility.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="Common\LibraryIdUtility.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs" Link="Common\PlatformUtility.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\PlayniteConvert.cs" Link="Common\PlayniteConvert.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs" Link="Common\PluginSettingsViewModel.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\SortableNameConverter.cs" Link="Common\SortableNameConverter.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs" Link="Common\StringExtensions.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\TitleComparer.cs" Link="Common\TitleComparer.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs" Link="Common\WebDownloader.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GameDetails.cs" Link="Common\Metadata\GameDetails.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericItemOption.cs" Link="Common\Metadata\GenericItemOption.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericMetadataProvider.cs" Link="Common\Metadata\GenericMetadataProvider.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\IGameSearchResult.cs" Link="Common\Metadata\IGameSearchResult.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\IImageData.cs" Link="Common\Metadata\IImageData.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\ISearchableDataSource.cs" Link="Common\Metadata\ISearchableDataSource.cs" />
+    <Compile Update="LaunchBoxMetadataSettingsView.xaml.cs">
       <DependentUpon>LaunchBoxMetadataSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LaunchBoxWebscraper.cs" />
-    <Compile Include="LaunchBoxXmlParser.cs" />
-    <Compile Include="MetadataZipFileHandler.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DbModels.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="extension.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="icon.png">
@@ -215,12 +107,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Magick.NET-Q16-AnyCPU.12.3.0\build\netstandard20\Magick.NET-Q16-AnyCPU.targets" Condition="Exists('..\packages\Magick.NET-Q16-AnyCPU.12.3.0\build\netstandard20\Magick.NET-Q16-AnyCPU.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Magick.NET-Q16-AnyCPU.12.3.0\build\netstandard20\Magick.NET-Q16-AnyCPU.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Magick.NET-Q16-AnyCPU.12.3.0\build\netstandard20\Magick.NET-Q16-AnyCPU.targets'))" />
-  </Target>
+  <ItemGroup>
+    <Compile Remove="obj\x86\Debug\.NETFramework,Version=v4.6.2.AssemblyAttributes.cs" />
+    <Compile Remove="obj\x86\Debug\LaunchBoxMetadataSettingsView.g.cs" />
+    <Compile Remove="obj\x86\Debug\LaunchBoxMetadataSettingsView.g.i.cs" />
+  </ItemGroup>
 </Project>

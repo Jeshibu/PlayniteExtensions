@@ -275,13 +275,13 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PlayniteExtensions.Metadata.Common\PlayniteExtensions.Metadata.Common.projitems*{0ff03408-7c1a-4c04-819a-ecdb3ed82a25}*SharedItemsImports = 13
 		Rawg.Common\Rawg.Common.projitems*{298abb0d-9b79-4bfd-9cdd-ae26e2672a5f}*SharedItemsImports = 13
-		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{40ee28e8-2e62-4d62-8be4-e7507893c414}*SharedItemsImports = 4
-		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{55b6d58f-97e4-4364-bb36-d1b3f47c41a4}*SharedItemsImports = 4
+		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{40ee28e8-2e62-4d62-8be4-e7507893c414}*SharedItemsImports = 5
+		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{55b6d58f-97e4-4364-bb36-d1b3f47c41a4}*SharedItemsImports = 5
 		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{646571a9-6445-4f20-9ead-4f6b7e1073c5}*SharedItemsImports = 13
 		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{956848b6-6b29-4810-8802-3a8bc01c855f}*SharedItemsImports = 13
-		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{b2be4cbd-25a7-41f3-bb78-6bd3bc510323}*SharedItemsImports = 4
-		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{d539c1ad-040e-4da2-b2be-c2ccc4f147f8}*SharedItemsImports = 4
-		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{eba8f49f-aa6f-4329-985b-a6ed6e9f8490}*SharedItemsImports = 4
-		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{eba8f49f-aa6f-4329-985b-a6ed6e9f8490}*SharedItemsImports = 4
+		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{b2be4cbd-25a7-41f3-bb78-6bd3bc510323}*SharedItemsImports = 5
+		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{d539c1ad-040e-4da2-b2be-c2ccc4f147f8}*SharedItemsImports = 5
+		PlayniteExtensions.Common\PlayniteExtensions.Common.projitems*{eba8f49f-aa6f-4329-985b-a6ed6e9f8490}*SharedItemsImports = 5
+		PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems*{eba8f49f-aa6f-4329-985b-a6ed6e9f8490}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
