@@ -111,8 +111,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TvTropesMetadata.Tests", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MutualGames", "MutualGames\MutualGames.csproj", "{A513C7B0-4889-4A70-8A10-DC5989BE63EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCGamingWikiBulkImport", "PCGamingWikiBulkImport\PCGamingWikiBulkImport.csproj", "{1F299FA8-D631-49F0-9E45-EC4A4BBE156F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCGamingWikiMetadata", "PCGamingWikiMetadata\PCGamingWikiMetadata.csproj", "{FB5D69C0-9C95-41A3-ADC1-E68AFF663FF5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCGamingWikiMetadata.Tests", "PCGamingWikiMetadata.Tests\PCGamingWikiMetadata.Tests.csproj", "{9B35799C-CE7F-4180-AB31-F834990259F8}"
@@ -259,10 +257,6 @@ Global
 		{A513C7B0-4889-4A70-8A10-DC5989BE63EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A513C7B0-4889-4A70-8A10-DC5989BE63EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A513C7B0-4889-4A70-8A10-DC5989BE63EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F299FA8-D631-49F0-9E45-EC4A4BBE156F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F299FA8-D631-49F0-9E45-EC4A4BBE156F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F299FA8-D631-49F0-9E45-EC4A4BBE156F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F299FA8-D631-49F0-9E45-EC4A4BBE156F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FB5D69C0-9C95-41A3-ADC1-E68AFF663FF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FB5D69C0-9C95-41A3-ADC1-E68AFF663FF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB5D69C0-9C95-41A3-ADC1-E68AFF663FF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
