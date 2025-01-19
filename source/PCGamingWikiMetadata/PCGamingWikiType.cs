@@ -16,7 +16,7 @@ namespace PCGamingWikiType
         public const string Xbox = "Xbox Cloud";
         public const string GOG = "GOG Galaxy";
         public const string Ubisoft = "Ubisoft Connect";
-        public const string Origin = "Origin";
+        public const string Origin = "EA app";
     }
 
     public class Multiplayer
