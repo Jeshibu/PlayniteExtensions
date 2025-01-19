@@ -7,8 +7,8 @@ namespace SteamTagsImporter.Tests
 {
     public class SteamPropertySearchProviderTests
     {
-        private FakeWebDownloader downloader = new FakeWebDownloader("https://store.steampowered.com/search/", "search.html");
-        private SteamTagsImporterSettings settings = new SteamTagsImporterSettings();
+        private FakeWebDownloader downloader = new FakeWebDownloader("https://store.steampowered.com/search/?category2=35&l=english", "search.html");
+        private SteamTagsImporterSettings settings = new SteamTagsImporterSettings { LanguageKey = "english" };
         private SteamSearch steamSearch;
         private SteamPropertySearchProvider searchProvider;
 
@@ -48,7 +48,7 @@ namespace SteamTagsImporter.Tests
             var footballSearchResults = searchProvider.GetDetails(props[0]).ToList();
             Assert.Equal(116, footballSearchResults.Count);
 
-            var names = footballSearchResults.Select(x=>x.Names.Single());
+            var names = footballSearchResults.Select(x => x.Names.Single());
             Assert.Contains("Madden NFL 24", names);
             Assert.Contains("Greats of the Gridiron", names);
         }
