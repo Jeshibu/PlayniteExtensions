@@ -12,6 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)AngleSharpStringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CachedFileDownloader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalCommands.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HtmlAgilityPackExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IEnumerableExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IgnoreScrollBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IntegerFormatConverter.cs" />

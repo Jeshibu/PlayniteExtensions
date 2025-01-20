@@ -139,7 +139,7 @@ namespace GiantBombMetadata.SearchProviders
             output.Names.Add(details.Name.Trim());
             output.Names.AddRange(details.AliasesSplit);
             output.Url = details.SiteDetailUrl;
-            output.Description = GiantBombHelper.MakeHtmlUrlsAbsolute(details.Description, details.SiteDetailUrl);
+            output.Description = details.Description.MakeHtmlUrlsAbsolute(details.SiteDetailUrl);
             output.ReleaseDate = details.ReleaseDate.ParseReleaseDate(logger);
             output.Genres.AddRange(GetValues(PropertyImportTarget.Genres, details));
             output.Tags.AddRange(GetValues(PropertyImportTarget.Tags, details));

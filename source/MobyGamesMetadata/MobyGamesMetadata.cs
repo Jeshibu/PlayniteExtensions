@@ -2,7 +2,6 @@
 using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
-using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;

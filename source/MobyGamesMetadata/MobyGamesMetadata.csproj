@@ -37,7 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Barnite\Scrapers\MobyGamesHelper.cs" Link="Api\MobyGamesHelper.cs" />
-    <Compile Include="..\GiantBombMetadata\GiantBombHelper.cs" Link="Shared\GiantBombHelper.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\HtmlAgilityPackExtensions.cs" Link="Common\HtmlAgilityPackExtensions.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Common\IEnumerableExtensions.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs" Link="Common\IntegerFormatConverter.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Common\IPlatformUtility.cs" />
