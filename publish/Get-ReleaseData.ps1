@@ -12,14 +12,22 @@ function Get-ReleaseData {
         [Parameter(Mandatory = $true, HelpMessage = "The tag name of this release")]
         [string]$tagName
     )
-    #$releaseTitle = ""
-    if ($tagName -match '[0-9]{4}(-[0-9]{2}){2}') {
+
+    $newrelease = $true
+    $releasetag = $tagName
+
+    if ($tagName -match '^[0-9]{4}(-[0-9]{2}){2}$') {
         $all = $true
         $projectNames = Get-ProjectNames "all"
     }
-    elseif ($tagName -match '(?<Name>[a-z]+)(?<Version>([0-9]+\.){1,3}[0-9]+)') {
+    elseif ($tagName -match '^(?<Name>[a-z]+)(?<Version>([0-9]+\.){1,3}[0-9]+)(-addto-(?<AddToTag>.+))?$') {
         $all = $false
         $projectNames = Get-ProjectNames $Matches.Name
+
+        if ($Matches.AddToTag -ne $null) {
+            $newrelease = $false
+            $releasetag = $Matches.AddToTag
+        }
     }
     else {
         throw "No name + version match found for $t"
@@ -45,6 +53,8 @@ function Get-ReleaseData {
     $testProjectNames = Get-TestProjectNames $filteredProjectNames
 
     $output = @(
+        "newrelease=$newrelease"
+        "releasetag=$releasetag"
         "releasetitle=$releaseTitle"
         "projects=$($manifests | ConvertTo-Json -Compress)"
         "testprojects=$($testProjectNames | ConvertTo-Json -Compress)"

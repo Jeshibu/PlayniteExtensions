@@ -10,32 +10,36 @@ jobs:
     runs-on: windows-2022
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: checkout powershell-yaml
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: cloudbase/powershell-yaml
           path: powershell-yaml
 
       - id: tagName
         name: Get tag name
-        uses: olegtarasov/get-tag@v2.1.2
+        uses: olegtarasov/get-tag@v2.1.4
         #puts the tag name in $env:GIT_TAG_NAME
 
       - id: projectselection
         name: Set build and test projects by tag
         run: ./publish/Get-ReleaseData.ps1 $env:GIT_TAG_NAME
-        #outputs projects, testprojects, releasetitle
+        #outputs projects, testprojects, releasetitle, newrelease (boolean), releasetag
         #also writes release notes to ./publish/release_notes.txt
 
-      - name: Copy Common files for SDK style projects
-        run: xcopy "$Env:GITHUB_WORKSPACE\source\PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$Env:GITHUB_WORKSPACE\source\PCGamingWikiMetadata\Common\Metadata" /Y /I
+      - name: Copy shared xaml for bulk import projects
+        run: |
+            $bulkImportProjects = @('GiantBombMetadata', 'MobyGamesMetadata', 'PCGamingWikiMetadata', 'SteamTagsImporter', 'TvTropesMetadata')
+            foreach ($proj in $bulkImportProjects){
+              xcopy "$Env:GITHUB_WORKSPACE\source\PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$Env:GITHUB_WORKSPACE\source\$proj\Common\Metadata" /Y /I
+            }
 
       - name: Nuget Restore 
         run: nuget restore .\source\PlayniteExtensions.sln
 
-      - name: Build (DotNET4.6.2)
+      - name: Build entire solution (.NET Framework 4.6.2)
         run: |
            cd "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\"
            .\MSBuild.exe $Env:GITHUB_WORKSPACE\source\PlayniteExtensions.sln -p:Configuration=Release -restore -clp:ErrorsOnly
@@ -46,7 +50,7 @@ jobs:
           $runnerpath = "$Env:GITHUB_WORKSPACE\source\packages\xunit.runner.console.2.8.1\tools\net462\xunit.console.x86.exe"
           foreach ($tp in $testprojects){
             "Executing tests in project: $tp"
-            & $runnerpath "$Env:GITHUB_WORKSPACE\source\$tp\bin\Release\$tp.dll"
+            & $runnerpath "$Env:GITHUB_WORKSPACE\source\$tp\bin\Release\net462\$tp.dll"
           }
 
       - name: Setup Playnite
@@ -63,16 +67,24 @@ jobs:
           foreach ($p in $projects) {
             Write-Host "Packing project $p"
             $ver = $p.Version -replace '\.', '_'
-            & "$Env:GITHUB_WORKSPACE\Playnite\Toolbox.exe" pack "$Env:GITHUB_WORKSPACE\source\$($p.Name)\bin\Release\" "$Env:GITHUB_WORKSPACE\PackingOutput"
+            & "$Env:GITHUB_WORKSPACE\Playnite\Toolbox.exe" pack "$Env:GITHUB_WORKSPACE\source\$($p.Name)\bin\Release\net462" "$Env:GITHUB_WORKSPACE\PackingOutput"
             Get-ChildItem "$Env:GITHUB_WORKSPACE\PackingOutput" -Filter *.pext | Rename-Item -NewName "$($p.Name)_${ver}.pext"
             Move-Item -Path "$Env:GITHUB_WORKSPACE\PackingOutput\*.pext" -Destination $Env:GITHUB_WORKSPACE
           }
 
       - name: Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        if: steps.projectselection.outputs.newrelease
         with:
           draft: false
           name: "${{ steps.projectselection.outputs.releasetitle }}"
           body_path: 'publish/release_notes.txt'
           files: '*.pext'
+
+      - name: Upload file to existing release
+        if: steps.projectselection.outputs.newrelease == false
+        run: |
+            $files = Get-ChildItem -Path *.pext -Name
+            foreach ($file in $files) {
+              gh release upload ${{ steps.projectselection.outputs.releasetag }} $file
+            }
