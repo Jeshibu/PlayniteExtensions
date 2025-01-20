@@ -186,10 +186,11 @@ Packages:
   PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.3.0/PCGamingWiki_Metadata_Provider_v1.3.0.pext
   Changelog:
     - Support additional PlayStation controller metadata (@lscholte)
-- Version: 1.4.0
+- Version: 1.4.1
   RequiredApiVersion: 6.11.0
-  ReleaseDate: 2025-01-18
-  PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/PCGamingWiki_Metadata_Provider_1_4_0.pext
+  ReleaseDate: 2025-01-20
+  PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/PCGamingWiki_Metadata_Provider_1_4_1.pext
   Changelog:
-    - Added bulk import functionality
+    - Added bulk property import functionality
+    - Fixed cloud saves feature not importing for EA app games
     - Development taken over by Jeshibu for now
