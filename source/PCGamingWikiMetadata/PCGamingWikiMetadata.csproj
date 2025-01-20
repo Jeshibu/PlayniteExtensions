@@ -3,9 +3,6 @@
     <TargetFramework>net462</TargetFramework>
     <UseWPF>true</UseWPF>
   </PropertyGroup>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="xcopy &quot;$(SolutionDir)PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*&quot; &quot;$(ProjectDir)Common\Metadata&quot; /Y /I" />
-  </Target>
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="7.0.0" />
@@ -59,4 +56,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="xcopy &quot;$(SolutionDir)PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*&quot; &quot;$(ProjectDir)Common\Metadata&quot; /Y /I" />
+  </Target>
 </Project>

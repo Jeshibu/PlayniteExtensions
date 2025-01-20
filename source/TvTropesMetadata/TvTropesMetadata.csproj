@@ -5,17 +5,6 @@
     <AssemblyTitle>TvTropesMetadata</AssemblyTitle>
     <Product>TvTropesMetadata</Product>
     <Copyright>Copyright ©  2019</Copyright>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <PreBuildEvent>xcopy "$(SolutionDir)PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$(ProjectDir)Common\Metadata" /Y /I</PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>xcopy "$(SolutionDir)PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$(ProjectDir)Common\Metadata" /Y /I</PreBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.9.9" />
@@ -94,4 +83,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="xcopy &quot;$(SolutionDir)PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*&quot; &quot;$(ProjectDir)Common\Metadata&quot; /Y /I" />
+  </Target>
 </Project>
