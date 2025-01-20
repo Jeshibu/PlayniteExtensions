@@ -90,10 +90,4 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="obj\x86\Debug\.NETFramework,Version=v4.6.2.AssemblyAttributes.cs" />
-    <Compile Remove="obj\x86\Debug\LoginPrompt.g.i.cs" />
-    <Compile Remove="obj\x86\Debug\RawgActionReviewControl.g.i.cs" />
-    <Compile Remove="obj\x86\Debug\RawgLibrarySettingsView.g.i.cs" />
-  </ItemGroup>
 </Project>

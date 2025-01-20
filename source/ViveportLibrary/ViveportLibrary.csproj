@@ -78,8 +78,4 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="obj\x86\Debug\.NETFramework,Version=v4.6.2.AssemblyAttributes.cs" />
-    <Compile Remove="obj\x86\Debug\ViveportLibrarySettingsView.g.i.cs" />
-  </ItemGroup>
 </Project>

@@ -62,7 +62,4 @@
   <ItemGroup>
     <ProjectReference Include="..\GamersGateLibrary\GamersGateLibrary.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="obj\x86\Debug\.NETFramework,Version=v4.6.2.AssemblyAttributes.cs" />
-  </ItemGroup>
 </Project>
