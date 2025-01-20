@@ -74,7 +74,7 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v2
-        if: steps.projectselection.outputs.newrelease
+        if: "steps.projectselection.outputs.newrelease == 'True'"
         with:
           draft: false
           name: "${{ steps.projectselection.outputs.releasetitle }}"
@@ -82,7 +82,7 @@ jobs:
           files: '*.pext'
 
       - name: Upload file to existing release
-        if: steps.projectselection.outputs.newrelease == false
+        if: "steps.projectselection.outputs.newrelease == 'False'"
         run: |
             $files = Get-ChildItem -Path *.pext -Name
             foreach ($file in $files) {
