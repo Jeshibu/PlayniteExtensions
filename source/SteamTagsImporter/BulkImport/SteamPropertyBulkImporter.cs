@@ -44,8 +44,6 @@ namespace SteamTagsImporter.BulkImport
             };
         }
 
-        protected override string GetIdFromGameLibrary(Guid libraryPluginId, string gameId) => steamIdUtility.GetDatabaseFromPluginId(libraryPluginId) == ExternalDatabase.Steam ? gameId : null;
-
         private static PropertyImportTarget GetTarget(string param)
         {
             switch (param)

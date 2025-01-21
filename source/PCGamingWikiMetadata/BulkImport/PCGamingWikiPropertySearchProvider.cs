@@ -105,7 +105,7 @@ namespace PCGamingWikiBulkImport
             var slug = name.TitleToSlug();
             var game = new GameDetails
             {
-                Id = slug,
+                Id = PCGamingWikiIdUtility.SlugToId(slug),
                 Names = new List<string> { name },
                 Url = slug.SlugToUrl(),
             };

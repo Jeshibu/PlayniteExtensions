@@ -103,8 +103,6 @@ namespace PlayniteExtensions.Metadata.Common
 
         protected abstract string GetGameIdFromUrl(string url);
 
-        protected virtual string GetIdFromGameLibrary(Guid libraryPluginId, string gameId) => null;
-
         private GamePropertyImportViewModel PromptGamePropertyImportUserApproval(TSearchItem selectedItem, List<GameDetails> gamesToMatch)
         {
             var importSetting = GetPropertyImportSetting(selectedItem, out string propName);

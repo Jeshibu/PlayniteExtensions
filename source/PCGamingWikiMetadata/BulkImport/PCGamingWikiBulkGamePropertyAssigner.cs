@@ -36,15 +36,6 @@ namespace PCGamingWikiBulkImport
             return null;
         }
 
-        protected override string GetIdFromGameLibrary(Guid libraryPluginId, string gameId)
-        {
-            var db = DatabaseIdUtility.GetDatabaseFromPluginId(libraryPluginId);
-            if (db == ExternalDatabase.None)
-                return null;
-
-            return IdToString(db, gameId);
-        }
-
         private static string IdToString(ExternalDatabase db, string id) => $"{db}:{id}";
 
         protected override PCGamingWikiSelectedValues SelectGameProperty()
