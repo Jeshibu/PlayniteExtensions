@@ -72,7 +72,7 @@ jobs:
             Move-Item -Path "$Env:GITHUB_WORKSPACE\PackingOutput\*.pext" -Destination $Env:GITHUB_WORKSPACE
           }
 
-      - name: Release
+      - name: New release
         uses: softprops/action-gh-release@v2
         if: "steps.projectselection.outputs.newrelease == 'True'"
         with:

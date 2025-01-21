@@ -3,7 +3,6 @@ using PCGamingWikiBulkImport.Models;
 using PCGamingWikiBulkImport.Views;
 using PCGamingWikiMetadata;
 using Playnite.SDK;
-using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System;
@@ -125,7 +124,7 @@ namespace PCGamingWikiBulkImport
 
         protected override PropertyImportSetting GetPropertyImportSetting(PCGamingWikiSelectedValues searchItem, out string name)
         {
-            var p = GetPrefix(searchItem.FieldInfo);
+            var p = settings.AddTagPrefix ? GetPrefix(searchItem.FieldInfo) : null;
             var n = GetTagName(searchItem);
             name = $"{p} {n}".Trim();
             return new PropertyImportSetting { ImportTarget = searchItem.FieldInfo.PreferredField };

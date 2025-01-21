@@ -194,3 +194,12 @@ Packages:
     - Added bulk property import functionality
     - Fixed cloud saves feature not importing for EA app games
     - Development taken over by Jeshibu for now
+- Version: 1.4.2
+  RequiredApiVersion: 6.11.0
+  ReleaseDate: 2025-01-21
+  PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/PCGamingWikiMetadata_1_4_2.pext
+  Changelog:
+    - Fixed getting no results on search
+    - Fixed property import for series targeting the publishers field by default
+    - Property import names now take the prefix setting checkbox into account
+    - Made property import gracefully handle URL escaped PCGW links to match on

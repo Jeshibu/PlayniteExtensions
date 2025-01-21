@@ -24,7 +24,7 @@ namespace PCGamingWikiBulkImport.DataCollection
             AddListField(GameInfoBoxTableName, "Themes", PropertyImportTarget.Tags);
             AddListField(GameInfoBoxTableName, "Vehicles", PropertyImportTarget.Tags);
             AddListField(GameInfoBoxTableName, "Engines", PropertyImportTarget.Tags, pageNamePrefix: "Engine:");
-            AddListField(GameInfoBoxTableName, "Series", PropertyImportTarget.Publishers);
+            AddListField(GameInfoBoxTableName, "Series", PropertyImportTarget.Series);
             AddCompanyField("Developers");
             AddCompanyField("Publishers", PropertyImportTarget.Publishers);
             AddCompanyField("Porters_PC_booter");

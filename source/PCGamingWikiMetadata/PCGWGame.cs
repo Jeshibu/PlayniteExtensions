@@ -4,6 +4,7 @@ using Playnite.SDK.Models;
 using System.Collections.Generic;
 using Microsoft.VisualBasic.FileIO;
 using System.IO;
+using PCGamingWikiBulkImport;
 
 namespace PCGamingWikiMetadata
 {
@@ -14,20 +15,14 @@ namespace PCGamingWikiMetadata
 
         private PCGamingWikiMetadataSettings settings;
 
-        private List<MetadataProperty> genres;
-        public List<MetadataProperty> Genres { get { return genres; } }
-        private List<MetadataProperty> developers;
-        public List<MetadataProperty> Developers { get { return developers; } }
-        private List<MetadataProperty> publishers;
-        public List<MetadataProperty> Publishers { get { return publishers; } }
-        private List<MetadataProperty> features;
-        public List<MetadataProperty> Features { get { return features; } }
-        private List<MetadataProperty> series;
-        public List<MetadataProperty> Series { get { return series; } }
-        private List<Link> links;
-        public List<Link> Links { get { return links; } }
-        private List<MetadataProperty> tags;
-        public List<MetadataProperty> Tags { get { return tags; } }
+        public List<MetadataProperty> Genres { get; }
+        public List<MetadataProperty> Developers { get; }
+        public List<MetadataProperty> Publishers { get; }
+        public List<MetadataProperty> Features { get; }
+        public List<MetadataProperty> Series { get; }
+
+        public List<Link> Links { get; }
+        public List<MetadataProperty> Tags { get; }
 
         private IDictionary<string, int?> reception;
         private IDictionary<string, ReleaseDate?> ReleaseDates;
@@ -37,13 +32,13 @@ namespace PCGamingWikiMetadata
         public PCGWGame(PCGamingWikiMetadataSettings settings)
         {
             this.settings = settings;
-            this.links = new List<Link>();
-            this.genres = new List<MetadataProperty>();
-            this.features = new List<MetadataProperty>();
-            this.series = new List<MetadataProperty>();
-            this.developers = new List<MetadataProperty>();
-            this.publishers = new List<MetadataProperty>();
-            this.tags = new List<MetadataProperty>();
+            this.Links = new List<Link>();
+            this.Genres = new List<MetadataProperty>();
+            this.Features = new List<MetadataProperty>();
+            this.Series = new List<MetadataProperty>();
+            this.Developers = new List<MetadataProperty>();
+            this.Publishers = new List<MetadataProperty>();
+            this.Tags = new List<MetadataProperty>();
             this.ReleaseDates = new Dictionary<string, ReleaseDate?>();
             this.reception = new Dictionary<string, int?>();
         }
@@ -57,13 +52,13 @@ namespace PCGamingWikiMetadata
 
         protected Link PCGamingWikiLink()
         {
-            string escapedName = Uri.EscapeUriString(this.Name);
-            return new Link("PCGamingWiki", $"https://www.pcgamingwiki.com/wiki/{escapedName}");
+            string url = this.Name.TitleToSlug().SlugToUrl();
+            return new Link("PCGamingWiki", url);
         }
 
         public void AddPCGamingWikiLink()
         {
-            this.links.Add(PCGamingWikiLink());
+            this.Links.Add(PCGamingWikiLink());
         }
 
         public void AddReception(string aggregator, int score)
@@ -247,17 +242,17 @@ namespace PCGamingWikiMetadata
 
         public void AddTag(string t)
         {
-            this.tags.Add(new MetadataNameProperty(t));
+            this.Tags.Add(new MetadataNameProperty(t));
         }
 
         public void AddFeature(string t)
         {
-            this.features.AddMissing(new MetadataNameProperty(t));
+            this.Features.AddMissing(new MetadataNameProperty(t));
         }
 
         public void AddSeries(string t)
         {
-            this.series.Add(new MetadataNameProperty(t));
+            this.Series.Add(new MetadataNameProperty(t));
         }
 
         public void AddCSVSeries(string csv)
@@ -334,7 +329,7 @@ namespace PCGamingWikiMetadata
 
             foreach (string genre in genres)
             {
-                this.genres.Add(new MetadataNameProperty(genre));
+                this.Genres.Add(new MetadataNameProperty(genre));
             }
         }
 

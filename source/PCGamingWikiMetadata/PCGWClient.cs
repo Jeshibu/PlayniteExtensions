@@ -6,28 +6,26 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Text;
+using PCGamingWikiBulkImport;
 
 namespace PCGamingWikiMetadata
 {
     public class PCGWClient
     {
         private readonly ILogger logger = LogManager.GetLogger();
-        private readonly string baseUrl = @"https://www.pcgamingwiki.com/w/api.php";
         private RestClient client;
         protected MetadataRequestOptions options;
         protected PCGWGameController gameController;
 
         public PCGWClient(MetadataRequestOptions options, PCGWGameController gameController)
         {
-            client = new RestClient(baseUrl);
+            client = new RestClient("https://www.pcgamingwiki.com/w/api.php").AddDefaultQueryParameter("format", "json");
             this.options = options;
             this.gameController = gameController;
         }
 
         public JObject ExecuteRequest(RestRequest request)
         {
-            request.AddParameter("format", "json", ParameterType.QueryString);
-
             var fullUrl = client.BuildUri(request);
             logger.Info(fullUrl.ToString());
 
@@ -47,7 +45,7 @@ namespace PCGamingWikiMetadata
         private string NormalizeSearchString(string search)
         {
             // Replace ' with " as a workaround for search API returning no results
-            return search.Replace("-", " ").Replace("'", "\"");
+            return search.Replace('-', ' ').Replace('\'', '"');
         }
 
         public List<GenericItemOption> SearchGames(string searchName)
@@ -55,15 +53,12 @@ namespace PCGamingWikiMetadata
             List<GenericItemOption> gameResults = new List<GenericItemOption>();
             logger.Info(searchName);
 
-            var request = new RestRequest("/", Method.Get);
-            request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
-            request.AddHeader("Accept", "application/json, text/json, text/x-json");
-
-            request.AddParameter("action", "query", ParameterType.QueryString);
-            request.AddParameter("list", "search", ParameterType.QueryString);
-            request.AddParameter("srlimit", 300, ParameterType.QueryString);
-            request.AddParameter("srwhat", "title", ParameterType.QueryString);
-            request.AddParameter("srsearch", $"\"{NormalizeSearchString(searchName)}\"", ParameterType.QueryString);
+            var request = new RestRequest();
+            request.AddQueryParameter("action", "query");
+            request.AddQueryParameter("list", "search");
+            request.AddQueryParameter("srlimit", 300);
+            request.AddQueryParameter("srwhat", "title");
+            request.AddQueryParameter("srsearch", $"\"{NormalizeSearchString(searchName)}\"");
 
             try
             {
@@ -97,9 +92,9 @@ namespace PCGamingWikiMetadata
 
         public virtual void FetchGamePageContent(PCGWGame game)
         {
-            var request = new RestRequest("/", Method.Get);
-            request.AddParameter("action", "parse", ParameterType.QueryString);
-            request.AddParameter("page", game.Name.Replace(" ", "_"), ParameterType.QueryString);
+            var request = new RestRequest()
+                .AddQueryParameter("action", "parse")
+                .AddQueryParameter("page", game.Name.TitleToSlug());
 
             game.LibraryGame = this.options.GameData;
 
@@ -137,9 +132,8 @@ namespace PCGamingWikiMetadata
         }
 
         // https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#C.23
-        private int NameStringCompare(string a, string b)
+        private static int NameStringCompare(string a, string b)
         {
-
             if (string.IsNullOrEmpty(a))
             {
                 if (!string.IsNullOrEmpty(b))

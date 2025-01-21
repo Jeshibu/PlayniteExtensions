@@ -39,17 +39,19 @@ namespace PCGamingWikiMetadata
                 GetPCGWMetadata();
             }
 
-            var fields = new List<MetadataField>();
-            fields.Add(MetadataField.Name);
-            fields.Add(MetadataField.Links);
-            fields.Add(MetadataField.ReleaseDate);
-            fields.Add(MetadataField.Genres);
-            fields.Add(MetadataField.Series);
-            fields.Add(MetadataField.Features);
-            fields.Add(MetadataField.Developers);
-            fields.Add(MetadataField.Publishers);
-            fields.Add(MetadataField.CriticScore);
-            fields.Add(MetadataField.Tags);
+            var fields = new List<MetadataField>
+            {
+                MetadataField.Name,
+                MetadataField.Links,
+                MetadataField.ReleaseDate,
+                MetadataField.Genres,
+                MetadataField.Series,
+                MetadataField.Features,
+                MetadataField.Developers,
+                MetadataField.Publishers,
+                MetadataField.CriticScore,
+                MetadataField.Tags
+            };
 
             return fields;
         }
