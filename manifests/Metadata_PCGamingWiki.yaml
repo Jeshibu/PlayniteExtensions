@@ -196,10 +196,16 @@ Packages:
     - Development taken over by Jeshibu for now
 - Version: 1.4.2
   RequiredApiVersion: 6.11.0
-  ReleaseDate: 2025-01-22
+  ReleaseDate: 2025-01-21
   PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/PCGamingWikiMetadata_1_4_2.pext
   Changelog:
     - Fixed getting no results in search
     - Fixed property import for series targeting the publishers field by default
     - Property import names now take the prefix setting checkbox into account
     - "Made property import gracefully handle URL encoded PCGW links to match on. If you have PCGW links with %20 in the URLs you might want to run any bulk property import you've run in the past few days again."
+- Version: 1.4.3
+  RequiredApiVersion: 6.11.0
+  ReleaseDate: 2025-01-22
+  PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/PCGamingWikiMetadata_1_4_3.pext
+  Changelog:
+    - Fixed duplicate links being added by bulk property import

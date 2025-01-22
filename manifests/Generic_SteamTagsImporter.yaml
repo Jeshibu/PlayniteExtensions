@@ -135,3 +135,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/SteamTagsImporter_4_2_3.pext
     Changelog:
     - Improved game matching speed for bulk property import
+  - Version: 4.2.4
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-01-22
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/SteamTagsImporter_4_2_4.pext
+    Changelog:
+    - Fixed bulk import links other than the store page missing Steam app ID in the URL
