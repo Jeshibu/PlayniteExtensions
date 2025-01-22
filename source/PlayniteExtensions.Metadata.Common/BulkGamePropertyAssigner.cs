@@ -276,6 +276,9 @@ namespace PlayniteExtensions.Metadata.Common
                     if (!g.IsChecked)
                         continue;
 
+                    if (g.GameDetails.Id == null)
+                        g.GameDetails.Id = GetGameIdFromUrl(g.GameDetails.Url);
+
                     bool update = AddItem(g.Game, viewModel.TargetField, dbItem.Id);
 
                     foreach (var link in viewModel.Links)
