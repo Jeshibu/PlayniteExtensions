@@ -16,8 +16,9 @@ function Get-ReleaseData {
     $newrelease = $true
     $releasetag = $tagName
 
-    if ($tagName -match '^[0-9]{4}(-[0-9]{2}){2}(-addto-(?<AddToTag>.+))?$') {
+    if ($tagName -match '^(?<Date>[0-9]{4}(-[0-9]{2}){2})(-addto-(?<AddToTag>.+))?$') {
         $all = $true
+        $tagName = $Matches.Date
         $projectNames = Get-ProjectNames "all"
     }
     elseif ($tagName -match '^(?<Name>[a-z]+)(?<Version>([0-9]+\.){1,3}[0-9]+)(-addto-(?<AddToTag>.+))?$') {
