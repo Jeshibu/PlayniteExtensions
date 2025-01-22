@@ -3,6 +3,7 @@ using PCGamingWikiBulkImport.Models;
 using PCGamingWikiBulkImport.Views;
 using PCGamingWikiMetadata;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System;
@@ -107,6 +108,30 @@ namespace PCGamingWikiBulkImport
                 logger.Error(ex, "Error selecting values");
                 return null;
             }
+        }
+
+        protected override IEnumerable<PotentialLink> GetPotentialLinks(PCGamingWikiSelectedValues searchItem)
+        {
+            yield return new PotentialLink(MetadataProviderName, gameDetails => gameDetails.Url, ContainsUrl);
+        }
+
+        private bool ContainsUrl(IEnumerable<Link> links, string url)
+        {
+            if (links == null)
+                return false;
+
+            var gdId = DatabaseIdUtility.GetIdFromUrl(url).Id;
+
+            foreach (var link in links)
+            {
+                var gId = DatabaseIdUtility.GetIdFromUrl(link.Url);
+                if (gId.Database != ExternalDatabase.PCGamingWiki)
+                    continue;
+
+                if(string.Equals(gdId, gId.Id, StringComparison.InvariantCultureIgnoreCase))
+                    return true;
+            }
+            return false;
         }
 
         private string[] falseValues = new[] { "false", "unknown", "n/a", "hackable" };
