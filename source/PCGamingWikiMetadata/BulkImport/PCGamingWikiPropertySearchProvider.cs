@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
 
 namespace PCGamingWikiBulkImport
@@ -135,7 +134,7 @@ namespace PCGamingWikiBulkImport
             return null;
         }
 
-        private static IEnumerable<(ExternalDatabase, string)> SplitIds(string str, ExternalDatabase db)
+        private static IEnumerable<DbId> SplitIds(string str, ExternalDatabase db)
         {
             if (string.IsNullOrWhiteSpace(str))
                 yield break;
@@ -146,7 +145,7 @@ namespace PCGamingWikiBulkImport
                 if (string.IsNullOrWhiteSpace(id))
                     continue;
 
-                yield return (db, id.Trim());
+                yield return new DbId(db, id.Trim());
             }
         }
     }

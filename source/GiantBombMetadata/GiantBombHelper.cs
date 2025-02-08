@@ -45,13 +45,13 @@ namespace GiantBombMetadata
 
         public override IEnumerable<Guid> LibraryIds { get; } = new Guid[0];
 
-        public override (ExternalDatabase Database, string Id) GetIdFromUrl(string url)
+        public override DbId GetIdFromUrl(string url)
         {
             var id = GiantBombHelper.GetGiantBombGuidFromUrl(url);
             if (id == null)
-                return (ExternalDatabase.None, null);
+                return default;
             else
-                return (ExternalDatabase.GiantBomb, id);
+                return DbId.GiantBomb(id);
         }
     }
 }

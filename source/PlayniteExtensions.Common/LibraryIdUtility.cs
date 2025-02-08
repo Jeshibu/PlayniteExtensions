@@ -17,12 +17,32 @@ namespace PlayniteExtensions.Common
         TvTropes,
     }
 
+    public struct DbId
+    {
+        public readonly ExternalDatabase Database;
+        public readonly string Id;
+
+        public DbId(ExternalDatabase database, string id)
+        {
+            Database = database;
+            Id = id?.ToLowerInvariant();
+        }
+
+        public static DbId NoDb(string id) => new DbId(ExternalDatabase.None, id);
+        public static DbId Steam(string id) => new DbId(ExternalDatabase.Steam, id);
+        public static DbId GOG(string id) => new DbId(ExternalDatabase.GOG, id);
+        public static DbId PCGW(string id) => new DbId(ExternalDatabase.PCGamingWiki, id);
+        public static DbId Moby(string id) => new DbId(ExternalDatabase.MobyGames, id);
+        public static DbId GiantBomb(string id) => new DbId(ExternalDatabase.GiantBomb, id);
+        public static DbId TvTropes(string id) => new DbId(ExternalDatabase.TvTropes, id);
+    }
+
     public interface IExternalDatabaseIdUtility
     {
         IEnumerable<ExternalDatabase> Databases { get; }
-        (ExternalDatabase Database, string Id) GetIdFromUrl(string url);
+        DbId GetIdFromUrl(string url);
         ExternalDatabase GetDatabaseFromPluginId(Guid libraryId);
-        IEnumerable<(ExternalDatabase Database, string Id)> GetIdsFromGame(Game game);
+        IEnumerable<DbId> GetIdsFromGame(Game game);
     }
 
     public interface ISingleExternalDatabaseIdUtility : IExternalDatabaseIdUtility
@@ -47,14 +67,14 @@ namespace PlayniteExtensions.Common
             return ExternalDatabase.None;
         }
 
-        public abstract (ExternalDatabase Database, string Id) GetIdFromUrl(string url);
+        public abstract DbId GetIdFromUrl(string url);
 
-        public IEnumerable<(ExternalDatabase Database, string Id)> GetIdsFromGame(Game game)
+        public IEnumerable<DbId> GetIdsFromGame(Game game)
         {
             var output = new List<(ExternalDatabase, string)>();
 
             if (LibraryIds.Contains(game.PluginId))
-                yield return (Database, game.GameId);
+                yield return new DbId(Database, game.GameId);
 
             var linkIds = game.Links?.Select(l => GetIdFromUrl(l?.Url)).Where(id => id.Database != ExternalDatabase.None);
             if (linkIds != null)
@@ -71,16 +91,16 @@ namespace PlayniteExtensions.Common
 
         public override IEnumerable<Guid> LibraryIds { get; } = new[] { Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB") };
 
-        public override (ExternalDatabase Database, string Id) GetIdFromUrl(string url)
+        public override DbId GetIdFromUrl(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
-                return (ExternalDatabase.None, null);
+                return default;
 
             var match = SteamUrlRegex.Match(url);
             if (match.Success)
-                return (ExternalDatabase.Steam, match.Groups["id"].Value);
+                return DbId.Steam(match.Groups["id"].Value);
 
-            return (ExternalDatabase.None, null);
+            return default;
         }
     }
 
@@ -95,16 +115,16 @@ namespace PlayniteExtensions.Common
             Guid.Parse("03689811-3F33-4DFB-A121-2EE168FB9A5C"), // GOG OSS
         };
 
-        public override (ExternalDatabase Database, string Id) GetIdFromUrl(string url)
+        public override DbId GetIdFromUrl(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
-                return (ExternalDatabase.None, null);
+                return default;
 
             var match = GOGUrlRegex.Match(url);
             if (match.Success)
-                return (ExternalDatabase.GOG, match.Groups["id"].Value);
+                return DbId.GOG(match.Groups["id"].Value);
 
-            return (ExternalDatabase.None, null);
+            return default;
         }
     }
 
@@ -116,14 +136,14 @@ namespace PlayniteExtensions.Common
 
         public override IEnumerable<Guid> LibraryIds { get; } = new Guid[0];
 
-        public override (ExternalDatabase Database, string Id) GetIdFromUrl(string url)
+        public override DbId GetIdFromUrl(string url)
         {
-            if (url == null) return (ExternalDatabase.None, null);
+            if (url == null) return default;
 
             var match = UrlIdRegex.Match(url);
-            if (!match.Success) return (ExternalDatabase.None, null);
+            if (!match.Success) return default;
             var idString = match.Groups["id"].Value;
-            return (ExternalDatabase.MobyGames, idString);
+            return DbId.Moby(idString);
         }
     }
 
@@ -138,7 +158,7 @@ namespace PlayniteExtensions.Common
             databaseIdUtilities.AddRange(dbIdUtilities);
         }
 
-        public (ExternalDatabase Database, string Id) GetIdFromUrl(string url)
+        public DbId GetIdFromUrl(string url)
         {
             foreach (var dbIdUtil in databaseIdUtilities)
             {
@@ -146,7 +166,7 @@ namespace PlayniteExtensions.Common
                 if (id.Database != ExternalDatabase.None)
                     return id;
             }
-            return (ExternalDatabase.None, null);
+            return default;
         }
 
         public ExternalDatabase GetDatabaseFromPluginId(Guid libraryId)
@@ -158,12 +178,12 @@ namespace PlayniteExtensions.Common
             return ExternalDatabase.None;
         }
 
-        public IEnumerable<(ExternalDatabase Database, string Id)> GetIdsFromGame(Game game)
+        public IEnumerable<DbId> GetIdsFromGame(Game game)
         {
-            var output = new List<(ExternalDatabase, string)>();
+            var output = new List<DbId>();
             var libraryDb = GetDatabaseFromPluginId(game.PluginId);
             if (libraryDb != ExternalDatabase.None)
-                output.Add((libraryDb, game.GameId));
+                output.Add(new DbId(libraryDb, game.GameId));
 
             var linkIds = game.Links?.Select(l => GetIdFromUrl(l?.Url)).Where(id => id.Database != ExternalDatabase.None);
             if (linkIds != null)

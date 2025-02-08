@@ -162,12 +162,12 @@ namespace PlayniteExtensions.Metadata.Common
                 return null;
         }
 
-        protected virtual IList<(ExternalDatabase Database, string Id)> GetIds(GameDetails gameDetails)
+        protected virtual IList<DbId> GetIds(GameDetails gameDetails)
         {
-            var output = new List<(ExternalDatabase Database, string Id)>(gameDetails.ExternalIds);
+            var output = new List<DbId>(gameDetails.ExternalIds);
             var id = gameDetails.Id ?? GetGameIdFromUrl(gameDetails.Url);
             if (id != null)
-                output.Add((DatabaseType, id));
+                output.Add(new DbId(DatabaseType, id));
 
             return output;
         }
@@ -201,25 +201,17 @@ namespace PlayniteExtensions.Metadata.Common
 
                         foreach (var dbId in GetIds(externalGameInfo))
                         {
-                            if (!matchHelper.TryGetGamesById(dbId, out var gamesWithThisId))
-                                continue;
-
-                            foreach (var g in gamesWithThisId)
-                                AddMatchedGame(g);
+                            if (matchHelper.TryGetGamesById(dbId, out var gamesWithThisId))
+                                foreach (var g in gamesWithThisId)
+                                    AddMatchedGame(g);
                         }
 
                         foreach (var name in externalGameInfo.Names)
                         {
-                            if (!matchHelper.TryGetGamesByName(name, out var gamesWithThisName))
-                                continue;
-
-                            foreach (var g in gamesWithThisName)
-                            {
-                                if (!platformUtility.PlatformsOverlap(g.Platforms, externalGameInfo.Platforms))
-                                    continue;
-
-                                AddMatchedGame(g);
-                            }
+                            if (matchHelper.TryGetGamesByName(name, out var gamesWithThisName))
+                                foreach (var g in gamesWithThisName)
+                                    if (platformUtility.PlatformsOverlap(g.Platforms, externalGameInfo.Platforms))
+                                        AddMatchedGame(g);
                         }
                     }
                     catch (Exception ex)

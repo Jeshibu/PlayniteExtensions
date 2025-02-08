@@ -24,7 +24,7 @@ namespace PCGamingWikiMetadata.Tests
             matchHelper.Prepare(new[] { libraryGame }, default);
 
             var slug = "Vivisector - Beast Within".TitleToSlug();
-            var expectedId = (ExternalDatabase.PCGamingWiki, PCGamingWikiIdUtility.SlugToId(slug));
+            var expectedId = DbId.PCGW(PCGamingWikiIdUtility.SlugToId(slug));
 
             Assert.True(matchHelper.TryGetGamesById(expectedId, out var games));
 

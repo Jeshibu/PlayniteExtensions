@@ -16,10 +16,10 @@ namespace PlayniteExtensions.Metadata.Common
         {
             ExternalDatabaseIdUtility = externalDatabaseIdUtility;
             MaxDegreeOfParallelism = maxDegreeOfParallelism;
-            GamesById = new ConcurrentDictionary<(ExternalDatabase Database, string Id), IList<Game>>();
+            GamesById = new ConcurrentDictionary<DbId, IList<Game>>();
         }
 
-        private ConcurrentDictionary<(ExternalDatabase Database, string Id), IList<Game>> GamesById { get; }
+        private ConcurrentDictionary<DbId, IList<Game>> GamesById { get; }
 
         public ConcurrentDictionary<string, string> DeflatedNames { get; } = new ConcurrentDictionary<string, string>();
         public IExternalDatabaseIdUtility ExternalDatabaseIdUtility { get; }
@@ -34,7 +34,15 @@ namespace PlayniteExtensions.Metadata.Common
 
         public string GetDeflatedName(string name)
         {
-            return DeflatedNames.GetOrAdd(name, x => sortableNameConverter.Convert(x).Deflate().Normalize(NormalizationForm.FormKD));
+            return DeflatedNames.GetOrAdd(name, GenerateDeflatedName);
+        }
+
+        private string GenerateDeflatedName(string name)
+        {
+            return sortableNameConverter
+                .Convert(name)
+                .Deflate()
+                .Normalize(NormalizationForm.FormKD);
         }
 
         public void Prepare(IEnumerable<Game> library, CancellationToken cancellationToken)
@@ -52,15 +60,14 @@ namespace PlayniteExtensions.Metadata.Common
                 }
                 else
                 {
-                    AddGameById((ExternalDatabase.None, GetDeflatedName(game.Name)), game);
+                    AddGameById(DbId.NoDb(GetDeflatedName(game.Name)), game);
                 }
             });
         }
 
-        private IList<Game> AddGameById((ExternalDatabase Database, string Id) key, Game game)
+        private IList<Game> AddGameById(DbId key, Game game)
         {
-            key = Transform(key);
-            return GamesById.AddOrUpdate(key, new List<Game> { game }, ((ExternalDatabase Database, string Id) _, IList<Game> existing) =>
+            return GamesById.AddOrUpdate(key, new List<Game> { game }, (DbId _, IList<Game> existing) =>
             {
                 if (!existing.Contains(game))
                     existing.Add(game);
@@ -69,7 +76,7 @@ namespace PlayniteExtensions.Metadata.Common
             });
         }
 
-        public bool TryGetGamesById((ExternalDatabase Database, string Id) key, out IList<Game> games)
+        public bool TryGetGamesById(DbId key, out IList<Game> games)
         {
             if (string.IsNullOrWhiteSpace(key.Id))
             {
@@ -77,7 +84,6 @@ namespace PlayniteExtensions.Metadata.Common
                 return false;
             }
 
-            key = Transform(key);
             return GamesById.TryGetValue(key, out games);
         }
 
@@ -89,14 +95,8 @@ namespace PlayniteExtensions.Metadata.Common
                 return false;
             }
 
-            var key = (ExternalDatabase.None, GetDeflatedName(name));
+            var key = DbId.NoDb(GetDeflatedName(name));
             return TryGetGamesById(key, out games);
-        }
-
-        private (ExternalDatabase Database, string Id) Transform((ExternalDatabase Database, string Id) key)
-        {
-            key.Id = key.Id.ToLowerInvariant();
-            return key;
         }
     }
 }

@@ -10,16 +10,16 @@ namespace TvTropesMetadata
 
         public override IEnumerable<Guid> LibraryIds { get; } = new Guid[0];
 
-        public override (ExternalDatabase Database, string Id) GetIdFromUrl(string url)
+        public override DbId GetIdFromUrl(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
-                return (ExternalDatabase.None, null);
+                return default;
 
             var trimmed = url.TrimStart("https://tvtropes.org/pmwiki/pmwiki.php/");
             if (trimmed != url)
-                return (ExternalDatabase.TvTropes, trimmed);
+                return DbId.TvTropes(trimmed);
             else
-                return (ExternalDatabase.None, null);
+                return default;
         }
     }
 }

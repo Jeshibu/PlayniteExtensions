@@ -44,7 +44,7 @@ namespace PlayniteExtensions.Metadata.Common
 
         public List<string> Features { get; set; } = new List<string>();
 
-        public List<(ExternalDatabase Database, string Id)> ExternalIds { get; set; } = new List<(ExternalDatabase Database, string Id)>();
+        public List<DbId> ExternalIds { get; set; } = new List<DbId>();
 
         public ulong? InstallSize { get; set; }
 

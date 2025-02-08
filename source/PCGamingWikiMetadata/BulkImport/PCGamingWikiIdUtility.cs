@@ -14,24 +14,24 @@ namespace PCGamingWikiBulkImport
 
         public override IEnumerable<Guid> LibraryIds { get; } = new Guid[0];
 
-        public override (ExternalDatabase Database, string Id) GetIdFromUrl(string url)
+        public override DbId GetIdFromUrl(string url)
         {
             if (string.IsNullOrWhiteSpace(url))
-                return (ExternalDatabase.None, null);
+                return default;
 
             var match = PCGamingWikiUrlRegex.Match(url);
             if (!match.Success)
-                return (ExternalDatabase.None, null);
+                return default;
 
             var slugGroup = match.Groups["slug"];
             if (slugGroup.Success)
-                return (ExternalDatabase.PCGamingWiki, SlugToId(slugGroup.Value));
+                return DbId.PCGW(SlugToId(slugGroup.Value));
 
             var steamIdGroup = match.Groups["steamId"];
             if (steamIdGroup.Success)
-                return (ExternalDatabase.Steam, steamIdGroup.Value);
+                return DbId.Steam(steamIdGroup.Value);
 
-            return (ExternalDatabase.None, null);
+            return default;
         }
 
         /// <summary>
