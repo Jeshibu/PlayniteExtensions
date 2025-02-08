@@ -80,7 +80,7 @@ namespace PlayniteExtensions.Common
                 {
                     if (match.Value == "I")
                     {
-                        if (MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match))
+                        if (MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match) || MatchComesBeforeConnectingCharacter(input, match))
                             return "1".PadLeft(numberLength, '0');
                         else
                             return match.Value;
@@ -238,7 +238,7 @@ namespace PlayniteExtensions.Common
             if (MatchIsNearEndOfString(input, match, maxDistanceFromEnd: 1))
                 return false;
 
-            char nextChar = input[match.Index + match.Length];
+            char? nextChar = GetNextChar(input, match, skipWhitespace: false);
             if (nextChar != '-')
                 return false;
 
@@ -257,6 +257,29 @@ namespace PlayniteExtensions.Common
             }
 
             return excludedRomanNumerals.Contains(nextWord) || ConvertRomanNumeralToInt(nextWord) == null;
+        }
+
+        /// <summary>
+        /// Discern whether a matched numeral is at the start of a range (for example I-III)
+        /// </summary>
+        private static bool MatchComesBeforeConnectingCharacter(string input, Match match)
+        {
+            char? nextChar = GetNextChar(input, match, skipWhitespace: true);
+            return nextChar.HasValue && new[] {'-', '+', '&'}.Contains(nextChar.Value);
+        }
+
+        private static char? GetNextChar(string input, Match match, bool skipWhitespace = true)
+        {
+            int endOfMatchIndex = match.Index + match.Length;
+            for (int i = endOfMatchIndex; i < input.Length; i++)
+            {
+                char c = input[i];
+                if (skipWhitespace && char.IsWhiteSpace(c))
+                    continue;
+
+                return c;
+            }
+            return null;
         }
 
         private static bool IsOneOrPowerOfTen(int x)

@@ -15,7 +15,6 @@ namespace PlayniteExtensions.Common.Tests
         //Army of Two	                                    ->      Army of 02
         //                                                          Army of Two: The Devil's Cartel won't be changed, but this will still preserve release order sorting
         //Hyperdimension Neptunia Re;Birth3 V Generation	->      Hyperdimension Neptunia Re;Birth3 05 Generation
-        //STAR WARS: Rebel Assault I + II                   ->      STAR WARS: Rebel Assault I + 02
         //Emily is Away <3	                                ->      Emily is Away <03
 
         [Theory]
@@ -37,6 +36,10 @@ namespace PlayniteExtensions.Common.Tests
         [InlineData("Unravel Two", "Unravel 02")]
         [InlineData("The Elder Scrolls II: Daggerfall Unity - GOG Cut", "Elder Scrolls 02: Daggerfall Unity - GOG Cut")]
         [InlineData("Metal Slug XX", "Metal Slug 20")]
+        [InlineData("STAR WARS Episode I Racer", "STAR WARS Episode 01 Racer")]
+        [InlineData("STAR WARS: Rebel Assault I + II", "STAR WARS: Rebel Assault 01 + 02")]
+        [InlineData("Shenmue I & II", "Shenmue 01 & 02")]
+        [InlineData("Descending I - House of Nightmares", "Descending 01 - House of Nightmares")]
         [InlineData("The Uncanny X-Men", "Uncanny X-Men")]
         [InlineData("Test X-", "Test 10-")]
         [InlineData("The Witcher 3", "Witcher 03")]
@@ -75,6 +78,8 @@ namespace PlayniteExtensions.Common.Tests
         [InlineData("Project Zero: Maiden of Black Water (Limited Edition)", "Project Zero: Maiden of Black Water")]
         [InlineData("Borderlands GOTY Enhanced", "Borderlands")]
         [InlineData("Batman: Arkham City GOTY", "Batman: Arkham City")]
+        [InlineData("Tomb Raider I-III Remastered", "Tomb Raider 01-03")]
+        [InlineData("Tomb Raider IV-VI Remastered", "Tomb Raider 04-06")]
         public void RemoveEditionsTest(string input, string expected)
         {
             var c = new SortableNameConverter(removeEditions: true);
