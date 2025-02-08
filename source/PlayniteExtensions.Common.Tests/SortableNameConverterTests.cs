@@ -65,6 +65,12 @@ namespace PlayniteExtensions.Common.Tests
         [InlineData("Saints Row IV: Game of the Century Edition", "Saints Row 04")]
         [InlineData("POP: Methodology Experiment One - Game of The Saeculum Edition", "POP: Methodology Experiment 01")]
         [InlineData("Frog Fractions: Game of the Decade Edition", "Frog Fractions")]
+        [InlineData("Apothecarium: The Renaissance of Evil Collector's Edition", "Apothecarium: The Renaissance of Evil")]
+        [InlineData("Apothecarium: The Renaissance of Evil (Premium Edition)", "Apothecarium: The Renaissance of Evil")]
+        [InlineData("Estigma [Steam Edition]", "Estigma")]
+        [InlineData("Unsolved Mystery Club: Ancient Astronauts (Collector´s Edition)", "Unsolved Mystery Club: Ancient Astronauts")]
+        [InlineData("Hop Step Sing! Kimamani☆Summer vacation (HQ Edition)", "Hop Step Sing! Kimamani☆Summer vacation")]
+        [InlineData("Project Zero: Maiden of Black Water (Limited Edition)", "Project Zero: Maiden of Black Water")]
         public void RemoveEditionsTest(string input, string expected)
         {
             var c = new SortableNameConverter(removeEditions: true);

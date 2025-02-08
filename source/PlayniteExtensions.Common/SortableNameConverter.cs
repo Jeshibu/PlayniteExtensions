@@ -41,7 +41,10 @@ namespace PlayniteExtensions.Common
         private static Regex numberRegex = new Regex(@"(?<![\w.]|^)((?<roman>[IVXLCDM\u2160-\u2188]+(?!\.))|(?<arabic>[0-9]+))(?=\W|$)|(?i)\b(?<numberword>one|two|three)\b", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
         //The unicode characters in the first group here are all kinds of hyphens
-        private static Regex ignoredEndWordsRegex = new Regex(@"(\s*[-:\u2010-\u2014\uFE58\uFE63\uFF0D])?(\s+((the\s+)?[a-z']+\s+(edition|cut)|deluxe|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the))+$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        //The 'a', 'b', '-a' and '-b' groups are balancing groups used to optionally match an arbitrary number of [] or () braces around the edition string
+        //(?(a)(?!)) is a conditional that fails if the 'a' capturing group has any matches - the '-a' group removes a match for every match it finds
+        //For a more thorough explanation, see https://www.regular-expressions.info/balancing.html
+        private static Regex ignoredEndWordsRegex = new Regex(@"(\s*[-:\u2010-\u2014\uFE58\uFE63\uFF0D])?(\s+(?<a>\()*(?<b>\[)*((the\s+)?\S+\s+(edition|cut)|deluxe|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the))+(?<-b>\])*(?<-a>\))*(?(a)(?!))(?(b)(?!))$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>
         /// 
