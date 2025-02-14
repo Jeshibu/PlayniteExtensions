@@ -15,6 +15,7 @@ namespace PlayniteExtensions.Common
         MobyGames,
         GiantBomb,
         TvTropes,
+        // if you add an 8 value here, update the bit shift in DbId.GetHashCode() to 4 instead of 3
     }
 
     public struct DbId
@@ -26,6 +27,19 @@ namespace PlayniteExtensions.Common
         {
             Database = database;
             Id = id?.ToLowerInvariant();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is DbId otherId))
+                return false;
+
+            return Database == otherId.Database && Id == otherId.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return (int)Database ^ Id.GetHashCode() << 3;
         }
 
         public static DbId NoDb(string id) => new DbId(ExternalDatabase.None, id);
