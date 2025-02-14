@@ -191,12 +191,12 @@ namespace PlayniteExtensions.Metadata.Common
                     {
                         void AddMatchedGame(Game game)
                         {
-                            var added = proposedMatches.TryAdd(game.Id, new GameCheckboxViewModel(game, externalGameInfo));
-                            if (!added)
+                            proposedMatches.AddOrUpdate(game.Id, new GameCheckboxViewModel(game, externalGameInfo), (id, existingCheckboxVM) =>
                             {
-                                var firstMatch = proposedMatches[game.Id];
-                                logger.Info($"Skipped adding ${game.Name} again with {externalGameInfo}, already matched with {firstMatch.GameDetails}");
-                            }
+                                existingCheckboxVM.GameDetails.Add(externalGameInfo);
+
+                                return existingCheckboxVM;
+                            });
                         }
 
                         foreach (var dbId in GetIds(externalGameInfo))
@@ -268,8 +268,9 @@ namespace PlayniteExtensions.Metadata.Common
                     if (!g.IsChecked)
                         continue;
 
-                    if (g.GameDetails.Id == null)
-                        g.GameDetails.Id = GetGameIdFromUrl(g.GameDetails.Url);
+                    foreach (var gd in g.GameDetails)
+                        if (gd.Id == null)
+                            gd.Id = GetGameIdFromUrl(gd.Url);
 
                     bool update = AddItem(g.Game, viewModel.TargetField, dbItem.Id);
 
@@ -281,13 +282,16 @@ namespace PlayniteExtensions.Metadata.Common
                         if (g.Game.Links == null)
                             g.Game.Links = new ObservableCollection<Link>();
 
-                        var url = link.GetUrl(g.GameDetails);
+                        foreach (var gd in g.GameDetails)
+                        {
+                            var url = link.GetUrl(gd);
 
-                        if (link.IsAlreadyLinked(g.Game.Links, url))
-                            continue;
+                            if (link.IsAlreadyLinked(g.Game.Links, url))
+                                continue;
 
-                        g.Game.Links.Add(new Link(link.Name, url));
-                        update = true;
+                            g.Game.Links.Add(new Link(link.Name, url));
+                            update = true;
+                        }
                     }
 
                     if (update)
@@ -338,7 +342,17 @@ namespace PlayniteExtensions.Metadata.Common
             yield return new CheckboxFilter("Check all", viewModel, x => true);
             yield return new CheckboxFilter("Uncheck all", viewModel, x => false);
             yield return new CheckboxFilter("Only filtered games", viewModel, x => playniteApi.MainView.FilteredGames.Contains(x.Game));
-            yield return new CheckboxFilter("Only matching platforms", viewModel, x => platformUtility.PlatformsOverlap(x.Game.Platforms, x.GameDetails.Platforms));
+            yield return new CheckboxFilter("Only matching platforms", viewModel, PlatformsOverlap);
+        }
+
+        private bool PlatformsOverlap(GameCheckboxViewModel checkbox)
+        {
+            var gdPlatforms = new List<MetadataProperty>();
+            foreach (var gd in checkbox.GameDetails)
+                if (gd.Platforms != null)
+                    gdPlatforms.AddRange(gd.Platforms);
+
+            return platformUtility.PlatformsOverlap(checkbox.Game.Platforms, gdPlatforms);
         }
 
         private static bool AddItem(Game g, Expression<Func<Game, List<Guid>>> collectionSelector, Guid idToAdd)

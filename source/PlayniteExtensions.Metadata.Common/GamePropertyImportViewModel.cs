@@ -39,12 +39,12 @@ namespace PlayniteExtensions.Metadata.Common
         public GameCheckboxViewModel(Game game, GameDetails gameDetails, bool isChecked = true)
         {
             Game = game;
-            GameDetails = gameDetails;
+            GameDetails.Add(gameDetails);
             IsChecked = isChecked;
         }
 
         public Game Game { get; set; }
-        public GameDetails GameDetails { get; set; }
+        public List<GameDetails> GameDetails { get; } = new List<GameDetails>();
         public bool IsChecked { get => isChecked; set => SetValue(ref isChecked, value); }
         public string DisplayName
         {
