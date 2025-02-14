@@ -23,7 +23,7 @@ namespace MobyGamesMetadata.Api
         public static string GetSearchUrl(string query, string objectType)
         {
             query = Uri.EscapeDataString(query);
-            return $"https://www.mobygames.com/search/?q={query}&type={objectType}";
+            return $"https://www.mobygames.com/search/?q={query}&type={objectType}&adult=true";
         }
 
         public static string GetGameDetailsUrl(int id)
