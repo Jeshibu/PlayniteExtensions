@@ -15,23 +15,11 @@ namespace GamesSizeCalculator.SteamSizeCalculation
 
         private bool isRunning = false;
 
-        private bool isConnected = false;
-        public bool IsConnected
-        {
-            get
-            {
-                return isConnected;
-            }
-        }
+        public bool IsConnected { get; private set; } = false;
 
-        private bool isLoggedIn = false;
-        public bool IsLoggedIn
-        {
-            get
-            {
-                return isLoggedIn;
-            }
-        }
+        public bool IsLoggedIn { get; private set; } = false;
+
+        public DateTime LastUsed { get; private set; } = DateTime.Now;
 
         public SteamApiClient()
         {
@@ -97,12 +85,12 @@ namespace GamesSizeCalculator.SteamSizeCalculation
                 onConnectedEvent.WaitOne(10000);
                 if (onConnectedResult != EResult.OK)
                 {
-                    isConnected = false;
+                    this.IsConnected = false;
                     result = onConnectedResult;
                 }
                 else
                 {
-                    isConnected = true;
+                    this.IsConnected = true;
                 }
             });
 
@@ -119,12 +107,12 @@ namespace GamesSizeCalculator.SteamSizeCalculation
                 onLoggedOnEvent.WaitOne(10000);
                 if (onLoggedOnResult != EResult.OK)
                 {
-                    isLoggedIn = false;
+                    this.IsLoggedIn = false;
                     result = onLoggedOnResult;
                 }
                 else
                 {
-                    isLoggedIn = true;
+                    this.IsLoggedIn = true;
                 }
             });
 
@@ -134,8 +122,8 @@ namespace GamesSizeCalculator.SteamSizeCalculation
         public void Logout()
         {
             steamClient.Disconnect();
-            isConnected = false;
-            isLoggedIn = false;
+            IsConnected = false;
+            IsLoggedIn = false;
             isRunning = false;
         }
 
@@ -153,7 +141,7 @@ namespace GamesSizeCalculator.SteamSizeCalculation
                     }
                 }
 
-                isConnected = true;
+                IsConnected = true;
             }
 
             if (!IsLoggedIn)
@@ -164,7 +152,7 @@ namespace GamesSizeCalculator.SteamSizeCalculation
                     throw new Exception("Failed to logon to Steam " + logon);
                 }
 
-                isLoggedIn = true;
+                IsLoggedIn = true;
             }
         }
 
@@ -203,6 +191,8 @@ namespace GamesSizeCalculator.SteamSizeCalculation
                 {
                     throw new Exception("Failed to get product info for app " + id);
                 }
+
+                LastUsed = DateTime.Now;
 
                 return productInfo.Apps[id].KeyValues;
             }

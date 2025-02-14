@@ -56,22 +56,40 @@ namespace GamesSizeCalculator
         private List<ISizeCalculator> sizeCalculators { get; } = new List<ISizeCalculator>();
         private SteamApiClient steamApiClient;
 
-        private SteamApiClient SteamApiClient => steamApiClient ?? (steamApiClient = new SteamApiClient());
-
-        private ICollection<ISizeCalculator> GetSizeCalculators()
+        private SteamApiClient SteamApiClient
         {
-            if (sizeCalculators.Any())
-                return sizeCalculators;
+            get
+            {
+                if (steamApiClient != null)
+                {
+                    var timeSinceLastUse = DateTime.Now - steamApiClient.LastUsed;
+                    if (timeSinceLastUse.TotalSeconds > 60)
+                    {
+                        try
+                        {
+                            steamApiClient.Dispose();
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.Error(ex, "Error disposing of SteamApiClient");
+                        }
+                        steamApiClient = null;
+                    }
+                }
 
+                return steamApiClient ?? (steamApiClient = new SteamApiClient());
+            }
+        }
+
+        private IEnumerable<ISizeCalculator> GetSizeCalculators()
+        {
             if (settings.Settings.GetUninstalledGameSizeFromSteam)
-                sizeCalculators.Add(new SteamSizeCalculator(SteamApiClient, GetDefaultSteamAppUtility(), settings.Settings));
-
-            return sizeCalculators;
+                yield return new SteamSizeCalculator(SteamApiClient, GetDefaultSteamAppUtility(), settings.Settings);
         }
 
         public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
         {
-            return new InstallSizeProvider(options.GameData, PlayniteApi, GetSizeCalculators());
+            return new InstallSizeProvider(options.GameData, PlayniteApi, GetSizeCalculators().ToList());
         }
 
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
@@ -87,7 +105,7 @@ namespace GamesSizeCalculator
             PlayniteApi.Dialogs.ActivateGlobalProgress((GlobalProgressActionArgs a) =>
             {
                 a.ProgressMaxValue = args.Games.Count;
-                
+
                 var ps3Calc = new PS3InstallSizeCalculator(PlayniteApi);
                 foreach (var g in args.Games)
                 {
