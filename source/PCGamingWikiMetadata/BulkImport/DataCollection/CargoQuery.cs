@@ -24,10 +24,7 @@ namespace PCGamingWikiBulkImport.DataCollection
             string having = "Value IS NOT NULL";
 
             if (!string.IsNullOrWhiteSpace(filter))
-            {
-                var escapedFilter = filter.Replace(@"\", @"\\").Replace("'", @"\'");
-                having = $"Value LIKE '%{escapedFilter}%'";
-            }
+                having = $"Value LIKE '%{EscapeString(filter)}%'";
 
             var request = new RestRequest()
                     .AddQueryParameter("tables", table)
@@ -42,7 +39,7 @@ namespace PCGamingWikiBulkImport.DataCollection
         public CargoResultRoot<CargoResultGame> GetGamesByHolds(string table, string field, string holds, int offset)
         {
             var request = GetBaseGameRequest(table, field)
-                .AddQueryParameter("where", $"{table}.{field} HOLDS '{holds}'")
+                .AddQueryParameter("where", $"{table}.{field} HOLDS '{EscapeString(holds)}'")
                 .AddQueryParameter("offset", $"{offset:0}");
 
             var response = restClient.Execute<CargoResultRoot<CargoResultGame>>(request);
@@ -52,7 +49,7 @@ namespace PCGamingWikiBulkImport.DataCollection
         public CargoResultRoot<CargoResultGame> GetGamesByHoldsLike(string table, string field, string holds, int offset)
         {
             var request = GetBaseGameRequest(table, field)
-                .AddQueryParameter("where", $"{table}.{field} HOLDS LIKE '{holds}'")
+                .AddQueryParameter("where", $"{table}.{field} HOLDS LIKE '{EscapeString(holds)}'")
                 .AddQueryParameter("offset", $"{offset:0}");
 
             var response = restClient.Execute<CargoResultRoot<CargoResultGame>>(request);
@@ -61,7 +58,7 @@ namespace PCGamingWikiBulkImport.DataCollection
 
         public CargoResultRoot<CargoResultGame> GetGamesByExactValues(string table, string field, IEnumerable<string> values, int offset)
         {
-            var valuesList = string.Join(", ", values.Select(v => $"'{v}'"));
+            var valuesList = string.Join(", ", values.Select(v => $"'{EscapeString(v)}'"));
 
             var request = GetBaseGameRequest(table, field)
                 .AddQueryParameter("where", $"{table}.{field} IN ({valuesList})")
@@ -86,5 +83,7 @@ namespace PCGamingWikiBulkImport.DataCollection
 
             return request;
         }
+
+        private static string EscapeString(string str) => str?.Replace(@"\", @"\\").Replace("'", @"\'");
     }
 }
