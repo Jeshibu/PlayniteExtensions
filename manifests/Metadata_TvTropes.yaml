@@ -19,3 +19,10 @@ Packages:
     Changelog:
     - Improved game matching speed for bulk property import
     - Slightly improved title matching using URLs where capital letters follow each other like in TheElderScrollsVSkyrim
+  - Version: 0.4.5
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-02-15
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/TvTropesMetadata_0_4_5.pext
+    Changelog:
+    - Improved property bulk import title matching with regard to editions in braces and roman numerals
+    - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them

@@ -209,3 +209,11 @@ Packages:
   PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/PCGamingWikiMetadata_1_4_3.pext
   Changelog:
     - Fixed duplicate links being added by bulk property import
+- Version: 1.4.4
+  RequiredApiVersion: 6.11.0
+  ReleaseDate: 2025-02-15
+  PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/PCGamingWikiMetadata_1_4_4.pext
+  Changelog:
+    - Fixed property bulk import failing for items with an apostrophe
+    - Improved property bulk import title matching with regard to editions in braces and roman numerals
+    - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them

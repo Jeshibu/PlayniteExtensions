@@ -121,3 +121,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/GiantBombMetadata_0_9_1.pext
     Changelog:
      - Improved game matching speed for bulk property import
+  - Version: 0.9.2
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2025-02-15
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/GiantBombMetadata_0_9_2.pext
+    Changelog:
+     - Improved property bulk import title matching with regard to editions in braces and roman numerals
+     - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them

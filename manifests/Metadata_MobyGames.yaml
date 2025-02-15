@@ -93,3 +93,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/MobyGamesMetadata_0_6_1.pext
     Changelog:
     - Improved game matching speed for bulk property import
+  - Version: 0.6.2
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-02-15
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/MobyGamesMetadata_0_6_2.pext
+    Changelog:
+    - Improved property bulk import title matching with regard to editions in braces and roman numerals
+    - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them
