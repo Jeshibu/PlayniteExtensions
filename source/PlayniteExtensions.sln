@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "itchioBundleTagger", "itchi
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PlayniteExtensions.Common", "PlayniteExtensions.Common\PlayniteExtensions.Common.shproj", "{646571A9-6445-4F20-9EAD-4F6B7E1073C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GroupeesLibrary", "GroupeesLibrary\GroupeesLibrary.csproj", "{6CB8C312-70CC-4A45-ACBD-9974EA8611F8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamersGateLibrary", "GamersGateLibrary\GamersGateLibrary.csproj", "{A971E332-D479-48A2-9238-0659C64F30F5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamersGateLibrary.Tests", "GamersGateLibrary.Tests\GamersGateLibrary.Tests.csproj", "{55B6D58F-97E4-4364-BB36-D1B3F47C41A4}"
@@ -65,7 +63,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manifests", "Manifests", "{
 		..\manifests\Generic_SteamTagsImporter.yaml = ..\manifests\Generic_SteamTagsImporter.yaml
 		..\manifests\Library_BigFish.yaml = ..\manifests\Library_BigFish.yaml
 		..\manifests\Library_GamersGate.yml = ..\manifests\Library_GamersGate.yml
-		..\manifests\Library_Groupees.yml = ..\manifests\Library_Groupees.yml
 		..\manifests\Library_LegacyGames.yml = ..\manifests\Library_LegacyGames.yml
 		..\manifests\Library_Rawg.yaml = ..\manifests\Library_Rawg.yaml
 		..\manifests\Library_Viveport.yaml = ..\manifests\Library_Viveport.yaml
@@ -149,10 +146,6 @@ Global
 		{0FC7F312-402B-4466-9E05-721CE2638268}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FC7F312-402B-4466-9E05-721CE2638268}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FC7F312-402B-4466-9E05-721CE2638268}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6CB8C312-70CC-4A45-ACBD-9974EA8611F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6CB8C312-70CC-4A45-ACBD-9974EA8611F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6CB8C312-70CC-4A45-ACBD-9974EA8611F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6CB8C312-70CC-4A45-ACBD-9974EA8611F8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A971E332-D479-48A2-9238-0659C64F30F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A971E332-D479-48A2-9238-0659C64F30F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A971E332-D479-48A2-9238-0659C64F30F5}.Release|Any CPU.ActiveCfg = Release|Any CPU

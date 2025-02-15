@@ -79,7 +79,6 @@ function Get-ProjectNames {
         "gamessizecalculator" = @("GamesSizeCalculator")
         "giantbomb"           = @("GiantBombMetadata")
         "gog"                 = @("GOGMetadata")
-        "groupees"            = @("GroupeesLibrary")
         "ign"                 = @("IgnMetadata")
         "itchiobundletagger"  = @("itchIoBundleTagger")
         "launchbox"           = @("LaunchBoxMetadata")
