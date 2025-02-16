@@ -1,0 +1,7 @@
+﻿Id: OpenCriticMetadata
+Name: OpenCritic Metadata Provider
+Author: Jeshibu
+Version: 0.1
+Module: OpenCriticMetadata.dll
+Type: MetadataProvider
+Icon: icon.png

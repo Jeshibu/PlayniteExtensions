@@ -112,6 +112,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCGamingWikiMetadata", "PCG
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PCGamingWikiMetadata.Tests", "PCGamingWikiMetadata.Tests\PCGamingWikiMetadata.Tests.csproj", "{9B35799C-CE7F-4180-AB31-F834990259F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCriticMetadata", "OpenCriticMetadata\OpenCriticMetadata.csproj", "{0F1BDB81-CD1C-4DF0-867F-B733A9513CA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -258,6 +260,10 @@ Global
 		{9B35799C-CE7F-4180-AB31-F834990259F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B35799C-CE7F-4180-AB31-F834990259F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B35799C-CE7F-4180-AB31-F834990259F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F1BDB81-CD1C-4DF0-867F-B733A9513CA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F1BDB81-CD1C-4DF0-867F-B733A9513CA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F1BDB81-CD1C-4DF0-867F-B733A9513CA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F1BDB81-CD1C-4DF0-867F-B733A9513CA8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
