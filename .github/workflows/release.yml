@@ -36,7 +36,17 @@ jobs:
               xcopy "$Env:GITHUB_WORKSPACE\source\PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$Env:GITHUB_WORKSPACE\source\$proj\Common\Metadata" /Y /I
             }
 
-      - name: Nuget Restore 
+      - name: Setup Playnite
+        run: |
+           Invoke-WebRequest -Uri "https://github.com/JosefNemec/Playnite/releases/download/10.35/Playnite1035.zip" -OutFile "$Env:GITHUB_WORKSPACE\Playnite.zip"
+           Expand-Archive "$Env:GITHUB_WORKSPACE\Playnite.zip" -DestinationPath "$Env:GITHUB_WORKSPACE\Playnite"
+
+      - name: Copy Playnite Emulation directory to ExtraEmulatorProfiles
+        run: |
+           xcopy "$Env:GITHUB_WORKSPACE\Playnite\Emulation\*.yaml" "$Env:GITHUB_WORKSPACE\source\ExtraEmulatorProfiles\EmulationFiles\Original" /Y /I
+           xcopy "$Env:GITHUB_WORKSPACE\Playnite\Emulation\Emulators" "$Env:GITHUB_WORKSPACE\source\ExtraEmulatorProfiles\EmulationFiles\Original\Emulators" /Y /I /E
+
+      - name: Nuget Restore
         run: nuget restore .\source\PlayniteExtensions.sln
 
       - name: Build entire solution (.NET Framework 4.6.2)
@@ -52,11 +62,6 @@ jobs:
             "Executing tests in project: $tp"
             & $runnerpath "$Env:GITHUB_WORKSPACE\source\$tp\bin\Release\net462\$tp.dll"
           }
-
-      - name: Setup Playnite
-        run: |
-           Invoke-WebRequest -Uri "https://github.com/JosefNemec/Playnite/releases/download/10.34/Playnite1034.zip" -OutFile "$Env:GITHUB_WORKSPACE\Playnite.zip"
-           Expand-Archive "$Env:GITHUB_WORKSPACE\Playnite.zip" -DestinationPath "$Env:GITHUB_WORKSPACE\Playnite"
 
       - name: Pack with Playnite
         run: |

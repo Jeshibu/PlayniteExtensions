@@ -1,0 +1,15 @@
+Id: flycast
+Name: Flycast
+Website: 'https://github.com/flyinghead/flycast'
+Profiles:
+  - Name: Dreamcast
+    StartupArguments: '"{ImagePath}"'
+    Platforms: [sega_dreamcast, arcade]
+    ImageExtensions: [gdi, cdi, chd, zip, 7z, dat, lst]
+    StartupExecutable: ^flycast\.exe$
+
+  - Name: Arcade
+    StartupArguments: '"{ImagePath}"'
+    Platforms: [arcade]
+    ImageExtensions: [chd, zip, 7z, dat, lst]
+    StartupExecutable: ^flycast\.exe$

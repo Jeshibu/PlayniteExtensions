@@ -1,0 +1,7 @@
+﻿Id: ExtraEmulatorProfiles
+Name: Extra Emulator Profiles
+Author: Jeshibu
+Version: 1.0
+Module: ExtraEmulatorProfiles.dll
+Type: GenericPlugin
+Icon: icon.png

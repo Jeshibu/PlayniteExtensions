@@ -350,3 +350,4 @@ MigrationBackup/
 # Visual Studio Code config files
 .vscode/
 /source/*/Common/Metadata/GamePropertyImportView.xaml*
+/source/ExtraEmulatorProfiles/EmulationFiles/Original/
