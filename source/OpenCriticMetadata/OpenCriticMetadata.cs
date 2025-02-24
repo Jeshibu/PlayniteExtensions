@@ -37,7 +37,7 @@ namespace OpenCriticMetadata
             settings = new OpenCriticMetadataSettingsViewModel(this);
             Properties = new MetadataPluginProperties
             {
-                HasSettings = true
+                HasSettings = false
             };
             platformUtility = new PlatformUtility(api);
         }
