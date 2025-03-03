@@ -28,6 +28,7 @@ namespace OpenCriticMetadata
             MetadataField.Developers,
             MetadataField.Publishers,
             MetadataField.Links,
+            MetadataField.ReleaseDate,
         };
 
         public override string Name => "OpenCritic";

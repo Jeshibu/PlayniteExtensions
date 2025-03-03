@@ -26,6 +26,7 @@ namespace OpenCriticMetadata
 
     public class OpenCriticSearchProvider : IGameSearchProvider<OpenCriticSearchResultItem>
     {
+        private readonly ILogger logger = LogManager.GetLogger();
         private readonly IPlatformUtility platformUtility;
         private readonly RestClient restClient = new RestClient("https://api.opencritic.com/api/")
             .AddDefaultHeader("Referer", "https://opencritic.com/");
@@ -39,6 +40,13 @@ namespace OpenCriticMetadata
         {
             var request = new RestRequest("game/{id}").AddUrlSegment("id", searchResult.Id);
             var result = restClient.Execute<OpenCriticGame>(request);
+
+            if(result.Data == null)
+            {
+                logger.Warn($"No data gotten from game {searchResult.Id}: {result.ErrorMessage}");
+                logger.Info(result.Content);
+            }
+
             return ToGameDetails(result.Data);
         }
 
@@ -96,6 +104,9 @@ namespace OpenCriticMetadata
             if (game.Images?.Screenshots.Count > 0)
                 output.BackgroundOptions.AddRange(game.Images.Screenshots);
 
+            if (game.FirstReleaseDate.HasValue)
+                output.ReleaseDate = new ReleaseDate(game.FirstReleaseDate.Value.LocalDateTime);
+
             return output;
         }
 
@@ -129,7 +140,7 @@ namespace OpenCriticMetadata
 
     public class OpenCriticGame : OpenCriticBaseModel
     {
-        public bool HasLootboxes { get; set; }
+        public bool? HasLootboxes { get; set; }
         public bool IsMajorRelease { get; set; }
         public OpenCriticImageCollection Images { get; set; }
         public int NumReviews { get; set; }
@@ -139,7 +150,7 @@ namespace OpenCriticMetadata
         public double Percentile { get; set; }
         public double PercentRecommended { get; set; }
         public string Description { get; set; }
-        public DateTimeOffset FirstReleaseDate { get; set; }
+        public DateTimeOffset? FirstReleaseDate { get; set; }
         public List<OpenCriticCompany> Companies { get; set; } = new List<OpenCriticCompany>();
         public List<OpenCriticBaseModel> Genres { get; set; } = new List<OpenCriticBaseModel>();
         public List<OpenCriticPlatform> Platforms { get; set; } = new List<OpenCriticPlatform>();
