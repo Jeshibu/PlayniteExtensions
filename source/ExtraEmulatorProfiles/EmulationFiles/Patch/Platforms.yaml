@@ -89,7 +89,7 @@
   Id: coleco_vision
   IgdbId: 68
   Databases: [Coleco - ColecoVision]
-  Emulators: [ares, bizhawk, bluemsx, fbalpha, retroarch]
+  Emulators: [ares, bizhawk, bluemsx, fbalpha, fbneo, retroarch]
   
 - Name: Commodore 64
   Id: commodore_64
@@ -138,7 +138,7 @@
 
 - Name: Fairchild Channel F
   Id: fairchild_channelf
-  Emulators: [ralibretro]
+  Emulators: [ralibretro, fbneo]
   
 - Name: GCE Vectrex
   Id: vectrex
@@ -170,7 +170,7 @@
   Id: microsoft_msx
   IgdbId: 27
   Databases: [Microsoft - MSX]
-  Emulators: [ares, bluemsx, retroarch]
+  Emulators: [ares, bluemsx, retroarch, fbneo]
   
 - Name: Microsoft MSX2
   Id: microsoft_msx2
@@ -218,13 +218,13 @@
   Id: nec_supergrafx
   IgdbId: 128
   Databases: [NEC - PC Engine SuperGrafx]
-  Emulators: [ares, bizhawk, higan, mednafen, mesen, retroarch]
+  Emulators: [ares, bizhawk, fbneo, higan, mednafen, mesen, retroarch]
   
 - Name: NEC TurboGrafx 16
   Id: nec_turbografx_16
   IgdbId: 86
   Databases: [NEC - PC Engine - TurboGrafx 16]
-  Emulators: [ares, bizhawk, higan, mednafen, mesen, retroarch]
+  Emulators: [ares, bizhawk, fbneo, higan, mednafen, mesen, retroarch]
   
 - Name: NEC TurboGrafx-CD
   Id: nec_turbografx_cd
@@ -260,13 +260,13 @@
   Id: nintendo_nes
   IgdbId: 18
   Databases: [Nintendo - Nintendo Entertainment System]
-  Emulators: [ares, bizhawk, fceux, higan, mednafen, mesen, nestopia, punes, retroarch]
+  Emulators: [ares, bizhawk, fbneo, fceux, higan, mednafen, mesen, nestopia, punes, retroarch]
   
 - Name: Nintendo Family Computer Disk System
   Id: nintendo_famicom_disk
   IgdbId: 51
   Databases: [Nintendo - Family Computer Disk System]
-  Emulators: [fceux, retroarch]
+  Emulators: [fbneo, fceux, retroarch]
 
 - Name: Nintendo Game & Watch
   Id: nintendo_gameandwatch
@@ -304,12 +304,12 @@
   Id: nintendo_super_nes
   IgdbId: 19
   Databases: [Nintendo - Super Nintendo Entertainment System]
-  Emulators: [ares, bizhawk, bsnes, bsnes-hd, bsnes-mt, higan, mednafen, mesen, mesen-s, retroarch, snes9x, zsnes]
+  Emulators: [ares, bizhawk, bsnes, bsnes-hd, bsnes-mt, fbneo, higan, mednafen, mesen, mesen-s, retroarch, snes9x, zsnes]
   
 - Name: Nintendo Switch
   Id: nintendo_switch
   IgdbId: 130
-  Emulators: [ryujinx, yuzu, suyu, sudachi]
+  Emulators: [ryujinx, suyu, sudachi, citron]
   
 - Name: Nintendo Virtual Boy
   Id: nintendo_virtualboy
@@ -366,19 +366,19 @@
   Id: sega_gamegear
   IgdbId: 35
   Databases: [Sega - Game Gear]
-  Emulators: [ares, bizhawk, higan, kegafusion, mednafen, retroarch]
+  Emulators: [ares, bizhawk, fbneo, higan, kegafusion, mednafen, retroarch]
   
 - Name: Sega Genesis
   Id: sega_genesis
   IgdbId: 29
   Databases: [Sega - Mega Drive - Genesis]
-  Emulators: [bizhawk, blastem, higan, kegafusion, mednafen, retroarch, ares]
+  Emulators: [bizhawk, blastem, fbneo, higan, kegafusion, mednafen, retroarch, ares]
   
 - Name: Sega Master System
   Id: sega_mastersystem
   IgdbId: 64
   Databases: [Sega - Master System - Mark III]
-  Emulators: [ares, bizhawk, higan, kegafusion, mednafen, retroarch]
+  Emulators: [ares, bizhawk, fbneo, higan, kegafusion, mednafen, retroarch]
   
 - Name: Sega Saturn
   Id: sega_saturn
@@ -390,7 +390,7 @@
   Id: sega_sg1000
   IgdbId: 84
   Databases: [Sega - SG-1000]
-  Emulators: [ares, retroarch]
+  Emulators: [ares, fbneo, retroarch]
 
 - Name: Sharp X1
   Id: sharp_x1
@@ -411,7 +411,7 @@
   Id: sinclair_zxspectrum
   IgdbId: 26
   Databases: [Sinclair - ZX Spectrum]
-  Emulators: [bizhawk, fuse, retroarch]
+  Emulators: [bizhawk, fbneo, fuse, retroarch]
   
 - Name: Sinclair ZX81
   Id: sinclair_zx81
@@ -428,7 +428,7 @@
   Id: snk_neogeo_cd
   IgdbId: 136
   Databases: [SNK - Neo Geo CD]
-  Emulators: [retroarch]
+  Emulators: [fbneo, retroarch]
   
 - Name: SNK Neo Geo Pocket Color
   Id: snk_neogeopocket_color
@@ -440,7 +440,7 @@
   Id: snk_neogeopocket
   IgdbId: 119
   Databases: [SNK - Neo Geo Pocket]
-  Emulators: [ares, bizhawk, mednafen, retroarch]
+  Emulators: [ares, bizhawk, fbneo, mednafen, retroarch]
   
 - Name: Sony PlayStation 2
   Id: sony_playstation2
