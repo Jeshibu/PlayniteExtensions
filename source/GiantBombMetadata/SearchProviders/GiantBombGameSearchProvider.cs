@@ -170,7 +170,7 @@ namespace GiantBombMetadata.SearchProviders
             if (details.Image != null)
                 output.CoverOptions.Add(details.Image);
             if (details.Images != null)
-                output.BackgroundOptions.AddRange(details.Images.Where(ImageCanBeUsedAsBackground).Where(i => i.Original != details.Image?.Original));
+                output.BackgroundOptions.AddRange(details.Images.Where(ImageCanBeUsedAsBackground).Where(i => i.Original != details.Image?.Original).Take(4));
             if (details.Genres != null)
                 output.Genres.AddRange(details.Genres.Select(g => g.Name.Trim()));
 
