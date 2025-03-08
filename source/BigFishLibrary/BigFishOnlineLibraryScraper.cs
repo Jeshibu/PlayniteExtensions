@@ -18,6 +18,8 @@ namespace BigFishLibrary
         private readonly IWebDownloader downloader;
         private readonly ILogger logger = LogManager.GetLogger();
         private const string SessionCookieName = "bfgsess";
+        public const string OrderHistoryUrl = "https://www.bigfishgames.com/us/en/store/my-orders-history.html";
+
 
         public BigFishOnlineLibraryScraper(IPlayniteAPI playniteApi, IWebDownloader downloader)
         {
@@ -145,17 +147,21 @@ namespace BigFishLibrary
         {
             using (var webView = playniteApi.WebViews.CreateOffscreenView())
             {
-                string token = GetToken(webView);
-                var sessionCookie = GetSessionCookie(webView);
-                return new BigFishTokens { Token = token, SessionCookie = sessionCookie };
+                return GetTokens(webView);
             }
+        }
+
+        private static BigFishTokens GetTokens(IWebView webView)
+        {
+            string token = GetToken(webView);
+            var sessionCookie = GetSessionCookie(webView);
+            return new BigFishTokens { Token = token, SessionCookie = sessionCookie };
         }
 
         private static string GetToken(IWebView webView)
         {
-            const string url = "https://www.bigfishgames.com/us/en/store/my-orders-history.html";
             const string script = "window.localStorage['M2_VENIA_BROWSER_PERSISTENCE__signin_token']";
-            var scriptTask = ExecuteJavaScriptOnPage(webView, url, script, maxAttempts: 2, millisecondsExtraDelay: 4000);
+            var scriptTask = ExecuteJavaScriptOnPage(webView, OrderHistoryUrl, script, maxAttempts: 2, millisecondsExtraDelay: 3500);
             scriptTask.Wait();
             if ((scriptTask?.Result) == null)
                 return null;
@@ -165,6 +171,12 @@ namespace BigFishLibrary
                 return value.ToString().Trim('"');
 
             return null;
+        }
+
+        public static bool IsLoggedIn(IWebView webView)
+        {
+            var tokens = GetTokens(webView);
+            return !string.IsNullOrWhiteSpace(tokens.Token);
         }
 
         private static Cookie GetSessionCookie(IWebView webView)

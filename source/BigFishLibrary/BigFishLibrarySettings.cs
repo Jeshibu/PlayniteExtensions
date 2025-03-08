@@ -40,10 +40,7 @@ namespace BigFishLibrary
                 var view = PlayniteApi.WebViews.CreateOffscreenView();
                 try
                 {
-                    view.NavigateAndWait(accountUrl);
-                    string actualUrl = view.GetCurrentAddress(); //this will be a login URL if not authenticated
-
-                    if (actualUrl == accountUrl)
+                    if (BigFishOnlineLibraryScraper.IsLoggedIn(view))
                         return AuthStatus.Ok;
                     else
                         return AuthStatus.AuthRequired;
@@ -63,38 +60,22 @@ namespace BigFishLibrary
 
         public RelayCommand<object> LoginCommand => new RelayCommand<object>(a => Login());
 
-        private const string accountUrl = "https://susi.bigfishgames.com/edit";
-
         private void Login()
         {
             try
             {
+                PlayniteApi.Dialogs.ShowMessage(
+                    "Close the login browser window once you're logged in. Due to website changes and limitations this plugin cannot automatically close the window once you're logged in anymore.",
+                    "Close the next window yourself!",
+                    System.Windows.MessageBoxButton.OK);
+
                 using (var view = PlayniteApi.WebViews.CreateView(675, 540, Colors.Black))
                 {
                     view.DeleteDomainCookies(".bigfishgames.com");
                     view.DeleteDomainCookies("bigfishgames.com");
                     view.DeleteDomainCookies(".www.bigfishgames.com");
                     view.DeleteDomainCookies("www.bigfishgames.com");
-                    view.Navigate(accountUrl);
-
-                    view.LoadingChanged += (s, e) =>
-                    {
-                        try
-                        {
-                            if (e.IsLoading)
-                                return;
-
-                            var address = view.GetCurrentAddress();
-                            if (address == accountUrl)
-                            {
-                                view.Close();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Logger.Error(ex, "Error logging into Big Fish Games");
-                        }
-                    };
+                    view.Navigate(BigFishOnlineLibraryScraper.OrderHistoryUrl);
 
                     view.OpenDialog();
                 }
