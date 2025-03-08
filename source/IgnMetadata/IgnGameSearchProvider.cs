@@ -45,6 +45,7 @@ namespace IgnMetadata
                 Platforms = ignDetails.Platforms.SelectMany(platformUtility.GetPlatforms).ToList(),
                 ReleaseDate = ignDetails.ReleaseDate,
             };
+            gameDetails.Links.Add(new Link("IGN", $"https://www.ign.com/games/{slug}"));
 
             if (ignDetails?.PrimaryImage?.Url != null)
                 gameDetails.CoverOptions.Add(new BasicImage(ignDetails.PrimaryImage.Url));

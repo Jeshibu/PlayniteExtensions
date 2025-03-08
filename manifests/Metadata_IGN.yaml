@@ -58,3 +58,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/IgnMetadata_0_3_3.pext
     Changelog:
     - Fixed search results being empty
+  - Version: 0.4
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2025-03-09
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/IgnMetadata_0_4.pext
+    Changelog:
+    - Added IGN game page link to provided metadata

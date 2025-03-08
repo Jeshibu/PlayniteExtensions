@@ -30,6 +30,7 @@ namespace IgnMetadata
             MetadataField.AgeRating,
             MetadataField.ReleaseDate,
             MetadataField.Platform,
+            MetadataField.Links,
         };
 
         public override string Name => "IGN";
