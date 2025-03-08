@@ -46,3 +46,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/BigFishLibrary_0_4_1.pext
     Changelog:
     - Fixed online library fetching
+  - Version: 0.4.2
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-03-09
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/BigFishLibrary_0_4_2.pext
+    Changelog:
+    - Fixed online library fetching

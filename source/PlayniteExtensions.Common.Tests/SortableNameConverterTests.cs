@@ -86,6 +86,7 @@ namespace PlayniteExtensions.Common.Tests
         [InlineData("Batman: Arkham City GOTY", "Batman: Arkham City")]
         [InlineData("Tomb Raider I-III Remastered", "Tomb Raider 01-03")]
         [InlineData("Tomb Raider IV-VI Remastered", "Tomb Raider 04-06")]
+        [InlineData("Paranautical Activity: Deluxe Atonement Edition", "Paranautical Activity")]
         public void RemoveEditionsTest(string input, string expected)
         {
             var c = new SortableNameConverter(removeEditions: true);
