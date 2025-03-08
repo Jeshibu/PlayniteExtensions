@@ -1,14 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using System;
-using System.Net;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http.Headers;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using System.Linq;
-using Playnite.SDK.Models;
-using System.Net.Http.Headers;
 
 namespace BigFishLibrary
 {
@@ -17,7 +16,6 @@ namespace BigFishLibrary
         private readonly IPlayniteAPI playniteApi;
         private readonly IWebDownloader downloader;
         private readonly ILogger logger = LogManager.GetLogger();
-        private const string SessionCookieName = "bfgsess";
         public const string OrderHistoryUrl = "https://www.bigfishgames.com/us/en/store/my-orders-history.html";
 
 
@@ -34,7 +32,6 @@ namespace BigFishLibrary
             {
                 tokens = GetTokens();
                 logger.Info($"Got token with length {tokens.Token?.Length}");
-                logger.Info($"Got session cookie: {tokens.SessionCookie}");
             }
             catch (Exception ex)
             {
@@ -43,21 +40,6 @@ namespace BigFishLibrary
             }
             var graphQlGames = GetGamesGraphQL(tokens.Token);
             var games = graphQlGames.Select(ToGameDetails).ToDictionarySafe(g => g.GameId);
-            try
-            {
-                var archivedGames = GetGamesArchived(tokens);
-                foreach (var archivedGame in archivedGames)
-                {
-                    if (games.ContainsKey(archivedGame.WrappingId))
-                        continue;
-
-                    games.Add(archivedGame.WrappingId, ToGameDetails(archivedGame));
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "Error getting archived games");
-            }
             return games.Values;
         }
 
@@ -86,27 +68,6 @@ namespace BigFishLibrary
             } while (pg <= pageTotal);
         }
 
-        private IEnumerable<ArchivedGame> GetGamesArchived(BigFishTokens tokens)
-        {
-            if (tokens.SessionCookie == null)
-            {
-                logger.Error("No session cookie available");
-                return Enumerable.Empty<ArchivedGame>();
-            }
-
-            if (string.IsNullOrEmpty(tokens?.Token))
-            {
-                logger.Error("No token");
-                return Enumerable.Empty<ArchivedGame>();
-            }
-
-            string url = "https://www.bigfishgames.com/bin/servlet/public/archived/purchasehistory?gamesOnly=true&limit=0&offset=0";
-            downloader.Cookies.Add(tokens.SessionCookie);
-            var response = downloader.DownloadString(url, headerSetter: GetHeaderSetAction(tokens.Token));
-            var data = JsonConvert.DeserializeObject<ArchivedLibraryRoot>(response.ResponseContent);
-            return data.GameLibrary;
-        }
-
         private static Action<HttpRequestHeaders> GetHeaderSetAction(string token)
         {
             return headers =>
@@ -126,21 +87,9 @@ namespace BigFishLibrary
             };
         }
 
-        private GameMetadata ToGameDetails(ArchivedGame archivedGame)
-        {
-            logger.Info($"Archived game: {JsonConvert.SerializeObject(archivedGame)}");
-            return new GameMetadata
-            {
-                GameId = archivedGame.WrappingId,
-                Name = archivedGame.Title.HtmlDecode().TrimEnd('™', '®', ' '),
-                Source = new MetadataNameProperty(BigFishLibrary.PluginName),
-            };
-        }
-
         private class BigFishTokens
         {
             public string Token { get; set; }
-            public Cookie SessionCookie { get; set; }
         }
 
         private BigFishTokens GetTokens()
@@ -154,8 +103,7 @@ namespace BigFishLibrary
         private static BigFishTokens GetTokens(IWebView webView)
         {
             string token = GetToken(webView);
-            var sessionCookie = GetSessionCookie(webView);
-            return new BigFishTokens { Token = token, SessionCookie = sessionCookie };
+            return new BigFishTokens { Token = token };
         }
 
         private static string GetToken(IWebView webView)
@@ -177,15 +125,6 @@ namespace BigFishLibrary
         {
             var tokens = GetTokens(webView);
             return !string.IsNullOrWhiteSpace(tokens.Token);
-        }
-
-        private static Cookie GetSessionCookie(IWebView webView)
-        {
-            var cookies = webView.GetCookies();
-            var cookie = cookies.FirstOrDefault(c => c.Domain == ".bigfishgames.com" && c.Name == SessionCookieName);
-            if (cookie == null)
-                return null;
-            return new Cookie(cookie.Name, cookie.Value, cookie.Path, cookie.Domain);
         }
 
         private static async Task<object> ExecuteJavaScriptOnPage(IWebView webView, string url, string script, int maxAttempts = 1, int millisecondsExtraDelay = 0)
@@ -292,50 +231,6 @@ namespace BigFishLibrary
 
             [JsonProperty("link_hash")]
             public string LinkHash { get; set; }
-        }
-
-        private class ArchivedLibraryRoot
-        {
-            public List<ArchivedGame> GameLibrary { get; set; } = new List<ArchivedGame>();
-        }
-
-        private class ArchivedGame
-        {
-            [JsonProperty("transaction_id")]
-            public long TransactionId { get; set; }
-
-            public long Date { get; set; }
-
-            [JsonProperty("revoke_date")]
-            public long RevokeDate { get; set; }
-
-            [JsonProperty("refund_date")]
-            public long RefundDate { get; set; }
-
-            public bool IsActivationAvailable { get; set; }
-
-            [JsonProperty("download_link")]
-            public string DownloadLink { get; set; }
-
-            [JsonProperty("language_id")]
-            public int LanguageId { get; set; }
-
-            [JsonProperty("game_id")]
-            public int GameId { get; set; }
-
-            [JsonProperty("wrapping_id")]
-            public string WrappingId { get; set; }
-
-            [JsonProperty("image_6040")]
-            public string Image6040 { get; set; }
-
-            [JsonProperty("image_feature")]
-            public string ImageFeature { get; set; }
-
-            public string Title { get; set; }
-
-            [JsonProperty("asset_folder_name")]
-            public string AssetFolderName { get; set; }
         }
         #endregion json models
     }
