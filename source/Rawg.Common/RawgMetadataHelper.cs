@@ -214,7 +214,7 @@ namespace Rawg.Common
             return null;
         }
 
-        private static Guid RawgLibraryId = Guid.Parse("e894b739-2d6e-41ee-aed4-2ea898e29803");
+        public static Guid RawgLibraryId = Guid.Parse("e894b739-2d6e-41ee-aed4-2ea898e29803");
 
         /// <summary>
         /// Set a link to more easily find the RAWG game in the future. This saves having to search for the game every time, which would burn through API key use limits.
@@ -246,6 +246,17 @@ namespace Rawg.Common
             links.Add(rawgLink);
             game.Links = links;
             playniteApi.Database.Games.Update(game);
+        }
+
+        private static RawgIdUtility IdUtility = new RawgIdUtility();
+
+        public static int? GetRawgIdFromGame(Game game)
+        {
+            var stringId = IdUtility.GetIdsFromGame(game).FirstOrDefault(i=>i.Database == ExternalDatabase.RAWG).Id;
+            if (int.TryParse(stringId, out int id))
+                return id;
+
+            return null;
         }
     }
 }

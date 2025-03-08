@@ -15,6 +15,7 @@ namespace PlayniteExtensions.Common
         MobyGames,
         GiantBomb,
         TvTropes,
+        RAWG,
         // if you add an 8 value here, update the bit shift in DbId.GetHashCode() to 4 instead of 3
     }
 

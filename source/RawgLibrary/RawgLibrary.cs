@@ -23,7 +23,7 @@ namespace RawgLibrary
 
         private RawgApiClient rawgApiClient = null;
 
-        public override Guid Id { get; } = Guid.Parse("e894b739-2d6e-41ee-aed4-2ea898e29803");
+        public override Guid Id { get; } = RawgMetadataHelper.RawgLibraryId;
 
         public override string Name { get; } = "RAWG";
 
@@ -382,27 +382,6 @@ namespace RawgLibrary
             SyncUserScore(game, rawgId.Value, client, token);
         }
 
-        private static Regex rawgGameUrlRegex = new Regex(@"^https://rawg\.io/games/(?<id>[0-9]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-        private int? GetRawgIdFromGameLinks(Game game)
-        {
-            if (game.PluginId == Id && int.TryParse(game.GameId, out int rawgId))
-                return rawgId;
-
-            if (game.Links == null)
-                return null;
-
-            foreach (var link in game.Links)
-            {
-                var match = rawgGameUrlRegex.Match(link.Url);
-                if (!match.Success)
-                    continue;
-                int id = int.Parse(match.Groups["id"].Value);
-                return id;
-            }
-            return null;
-        }
-
         private bool TryGetRawgIdFromGame(Game game, RawgApiClient client, bool setLink, out int rawgId)
         {
             rawgId = GetRawgIdFromGame(game, client, setLink) ?? -1;
@@ -411,7 +390,7 @@ namespace RawgLibrary
 
         private int? GetRawgIdFromGame(Game game, RawgApiClient client = null, bool setLink = true)
         {
-            var id = GetRawgIdFromGameLinks(game);
+            var id = RawgMetadataHelper.GetRawgIdFromGame(game);
             if (id.HasValue)
                 return id;
 

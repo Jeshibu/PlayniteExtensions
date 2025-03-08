@@ -38,3 +38,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-09-22/RawgMetadata_0_4.pext
     Changelog:
      - Tweaked automatic game matching
+  - Version: 0.4.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2025-03-09
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/RawgMetadata_0_4_1.pext
+    Changelog:
+     - Fixed fetching metadata for games potentially adding a link for a different game of the same name

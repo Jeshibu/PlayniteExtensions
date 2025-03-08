@@ -52,6 +52,7 @@
     <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Common\IEnumerableExtensions.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs" Link="Common\IntegerFormatConverter.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Common\IPlatformUtility.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="Common\LibraryIdUtility.cs" />
     <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs" Link="Common\PlatformUtility.cs" />
     <Compile Include="..\PlayniteExtensions.Common\PlayniteConvert.cs" Link="Common\PlayniteConvert.cs" />
     <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs" Link="Common\PluginSettingsViewModel.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="..\Rawg.Common\Models.cs" Link="Common\Rawg\Models.cs" />
     <Compile Include="..\Rawg.Common\RawgApiClient.cs" Link="Common\Rawg\RawgApiClient.cs" />
     <Compile Include="..\Rawg.Common\RawgBaseSettings.cs" Link="Common\Rawg\RawgBaseSettings.cs" />
+    <Compile Include="..\Rawg.Common\RawgIdUtility.cs" Link="Common\Rawg\RawgIdUtility.cs" />
     <Compile Include="..\Rawg.Common\RawgMetadataHelper.cs" Link="Common\Rawg\RawgMetadataHelper.cs" />
     <Compile Update="RawgMetadataSettingsView.xaml.cs">
       <DependentUpon>RawgMetadataSettingsView.xaml</DependentUpon>
