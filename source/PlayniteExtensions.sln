@@ -56,6 +56,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manifests", "Manifests", "{62B49CE1-49F2-4800-AA32-1FA35CB7B961}"
 	ProjectSection(SolutionItems) = preProject
 		..\manifests\Generic_Barnite.yaml = ..\manifests\Generic_Barnite.yaml
+		..\manifests\Generic_ExtraEmulatorProfiles.yaml = ..\manifests\Generic_ExtraEmulatorProfiles.yaml
 		..\manifests\Generic_GamesSizeCalculator.yaml = ..\manifests\Generic_GamesSizeCalculator.yaml
 		..\manifests\Generic_itchIoBundleTagger.yaml = ..\manifests\Generic_itchIoBundleTagger.yaml
 		..\manifests\Generic_MutualGames.yaml = ..\manifests\Generic_MutualGames.yaml

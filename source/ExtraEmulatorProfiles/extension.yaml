@@ -1,7 +1,12 @@
 ﻿Id: ExtraEmulatorProfiles
 Name: Extra Emulator Profiles
 Author: Jeshibu
-Version: 1.0
+Version: 1.1 #When updating this, update the .csproj version too! The emulator profile patching process depends on it
 Module: ExtraEmulatorProfiles.dll
 Type: GenericPlugin
 Icon: icon.png
+Links:
+  - Name: GitHub repository
+    Url: https://github.com/Jeshibu/PlayniteExtensions
+  - Name: Donate via Ko-fi
+    Url: https://ko-fi.com/Jeshibu
