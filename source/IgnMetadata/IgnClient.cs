@@ -34,7 +34,7 @@ namespace IgnMetadata
 
         public IgnGame Get(string slug, string region)
         {
-            var variables = new { slug = slug, objectType = "Game", region = region, state = "Published" };
+            var variables = new { slug, objectType = "Game", region, state = "Published" };
             var data = Call<IgnGetGameResultData>("ObjectSelectByTypeAndSlug", variables, "c5ceac7141d5e6900705417171625a0d7383ee89056a5b5edaf5f61cb466fb5f");
 
             return data?.ObjectSelectByTypeAndSlug;

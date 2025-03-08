@@ -16,6 +16,7 @@ namespace PlayniteExtensions.Common.Tests
         //                                                          Army of Two: The Devil's Cartel won't be changed, but this will still preserve release order sorting
         //Hyperdimension Neptunia Re;Birth3 V Generation	->      Hyperdimension Neptunia Re;Birth3 05 Generation
         //Emily is Away <3	                                ->      Emily is Away <03
+        //Prince Maker美少年梦工厂3：重生                      ->      Unchanged, but wouldn't help for this series until they hit double digits
 
         [Theory]
         [InlineData("Final Fantasy XIII-2", "Final Fantasy 13-02")]
@@ -72,10 +73,15 @@ namespace PlayniteExtensions.Common.Tests
         [InlineData("Apothecarium: The Renaissance of Evil Collector's Edition", "Apothecarium: The Renaissance of Evil")]
         [InlineData("Apothecarium: The Renaissance of Evil (Premium Edition)", "Apothecarium: The Renaissance of Evil")]
         [InlineData("Plants vs. Zombies: Game of the Year", "Plants vs. Zombies")]
+        [InlineData("Krai Mira: Extended Cut", "Krai Mira")]
+        [InlineData("Age of Barbarian Extended Cut", "Age of Barbarian")]
+        [InlineData("Demeo - PC Edition", "Demeo")]
+        [InlineData("Slime Rancher: Plortable Edition", "Slime Rancher")]
         [InlineData("Estigma [Steam Edition]", "Estigma")]
         [InlineData("Unsolved Mystery Club: Ancient Astronauts (Collector´s Edition)", "Unsolved Mystery Club: Ancient Astronauts")]
         [InlineData("Hop Step Sing! Kimamani☆Summer vacation (HQ Edition)", "Hop Step Sing! Kimamani☆Summer vacation")]
         [InlineData("Project Zero: Maiden of Black Water (Limited Edition)", "Project Zero: Maiden of Black Water")]
+        [InlineData("Roarr! Jurassic Edition", "Roarr!")]
         [InlineData("Borderlands GOTY Enhanced", "Borderlands")]
         [InlineData("Batman: Arkham City GOTY", "Batman: Arkham City")]
         [InlineData("Tomb Raider I-III Remastered", "Tomb Raider 01-03")]
@@ -124,6 +130,7 @@ namespace PlayniteExtensions.Common.Tests
         [InlineData("Worms W M D")]
         [InlineData("Sonic Adventure DX")]
         [InlineData("Zone of The Enders: The 2nd Runner M∀RS")]
+        [InlineData("BMX XXX")]
         [InlineData("AnUsual Game")]
         [InlineData(null)]
         [InlineData("")]

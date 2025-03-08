@@ -25,7 +25,7 @@ namespace XboxMetadata.Scrapers
         public IEnumerable<XboxGameSearchResultItem> Search(XboxMetadataSettings settings, Game game, string searchString, bool onlyExactMatches = false)
         {
             var tasks = Scrapers.Values.OrderBy(s => s.ExecutionOrder).Select(s => s.SearchAsync(settings, searchString)).ToArray();
-            SortableNameConverter snc = new SortableNameConverter(new[] { "the", "a", "an" });
+            var snc = new SortableNameConverter();
             var searchNameNormalized = snc.Convert(searchString).Deflate();
             Task.WaitAll(tasks, 30000);
             var perfectMatches = new List<XboxGameSearchResultItem>();
