@@ -3,6 +3,6 @@ Packages:
   - Version: 1.1
     RequiredApiVersion: 6.2.0
     ReleaseDate: 2025-03-09
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/ExtraEmulatorProfiles_0_2.pext
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/ExtraEmulatorProfiles_1_1.pext
     Changelog:
      - Initial release
