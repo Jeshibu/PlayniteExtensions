@@ -5,5 +5,5 @@ Profiles:
   - Name: Default
     StartupArguments: '"{ImagePath}"'
     Platforms: [sega_dreamcast, arcade]
-    ImageExtensions: [gdi, cdi, chd, zip, 7z, dat, lst]
+    ImageExtensions: [gdi, cdi, chd, cue, zip, 7z, dat, lst]
     StartupExecutable: ^flycast\.exe$
