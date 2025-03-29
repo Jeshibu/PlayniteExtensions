@@ -1,3 +1,5 @@
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/Jeshibu/PlayniteExtensions/total)
+
 This is a collection of extensions for the videogame library manager [Playnite](https://playnite.link) (repository: https://github.com/JosefNemec/Playnite).
 
 # Installation
