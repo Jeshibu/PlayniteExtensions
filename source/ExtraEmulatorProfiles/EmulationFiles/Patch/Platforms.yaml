@@ -212,7 +212,7 @@
   Id: nec_pcfx
   IgdbId: 274
   Databases: [NEC - PC-FX]
-  Emulators: [mednafen, retroarch]
+  Emulators: [bizhawk, mednafen, retroarch]
   
 - Name: NEC SuperGrafx
   Id: nec_supergrafx
@@ -236,7 +236,7 @@
   Id: nintendo_3ds
   IgdbId: 37
   Databases: [Nintendo - Nintendo 3DS, Nintendo - Nintendo 3DS (Digital)]
-  Emulators: [citra, retroarch]
+  Emulators: [azahar, bizhawk, borked3ds, citra, retroarch]
   
 - Name: Nintendo 64
   Id: nintendo_64
@@ -348,13 +348,13 @@
   Id: sega_32x
   IgdbId: 30
   Databases: [Sega - 32X]
-  Emulators: [ares, kegafusion, retroarch]
+  Emulators: [ares, bizhawk, kegafusion, retroarch]
   
 - Name: Sega CD
   Id: sega_cd
   IgdbId: 78
   Databases: [Sega - Mega-CD - Sega CD]
-  Emulators: [ares, kegafusion, retroarch]
+  Emulators: [ares, bizhawk, kegafusion, retroarch]
   
 - Name: Sega Dreamcast
   Id: sega_dreamcast
@@ -390,7 +390,7 @@
   Id: sega_sg1000
   IgdbId: 84
   Databases: [Sega - SG-1000]
-  Emulators: [ares, fbneo, retroarch]
+  Emulators: [ares, bizhawk, fbneo, retroarch]
 
 - Name: Sharp X1
   Id: sharp_x1
