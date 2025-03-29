@@ -156,5 +156,7 @@ namespace ViveportLibrary
         public ulong? ExpiryTime;
         public ulong? OwnershipEndTime;
         public string Licensing;
+
+        public bool IsSubscription => Licensing == "rsu";
     }
 }

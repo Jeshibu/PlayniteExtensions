@@ -37,3 +37,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-03-11/ViveportLibrary_0_3_1.pext
     Changelog:
      - Fixed empty collection values not allowing fallback to other metadata providers
+  - Version: 0.4
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2025-03-29
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-03-29/ViveportLibrary_0_4.pext
+    Changelog:
+     - Made Viveport Infinity a separate source
+     - Added a main menu > Extensions > Viveport entry to reset sources for already imported Viveport games

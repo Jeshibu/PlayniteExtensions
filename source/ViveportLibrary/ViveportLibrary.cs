@@ -4,6 +4,7 @@ using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -67,10 +68,15 @@ namespace ViveportLibrary
 
             foreach (var key in keys)
             {
+                if (args.CancelToken.IsCancellationRequested)
+                    yield break;
+
                 installedDict.TryGetValue(key, out var installedAppData);
 
                 if (!metadataDict.TryGetValue(key, out var appMetadata))
                     logger.Warn($"Couldn't find metadata for app {key} ({installedAppData?.Title})");
+
+                bool subscription = licenseDict.TryGetValue(key, out var licenseData) && licenseData.IsSubscription;
 
                 var game = new GameMetadata
                 {
@@ -78,13 +84,12 @@ namespace ViveportLibrary
                     Name = appMetadata.Title ?? installedAppData.Title,
                     InstallDirectory = installedAppData?.Path,
                     IsInstalled = installedAppData != null,
-                    Source = new MetadataNameProperty("Viveport"),
+                    Source = new MetadataNameProperty(subscription ? "Viveport Infinity" : "Viveport"),
                 };
 
-                if (settings.Settings.TagSubscriptionGames
-                    && !string.IsNullOrWhiteSpace(settings.Settings.SubscriptionTagName)
-                    && licenseDict.TryGetValue(key, out var licenseData)
-                    && licenseData.Licensing == "rsu")
+                if (subscription
+                    && settings.Settings.TagSubscriptionGames
+                    && !string.IsNullOrWhiteSpace(settings.Settings.SubscriptionTagName))
                 {
                     game.Tags = new HashSet<MetadataProperty> { new MetadataNameProperty(settings.Settings.SubscriptionTagName) };
                 }
@@ -155,7 +160,10 @@ namespace ViveportLibrary
         }
         public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
-            yield return new MainMenuItem { MenuSection = "@Viveport", Description = $"Tag all Viveport Infinity games as {settings?.Settings?.SubscriptionTagName}", Action = a => SetSubscriptionTags() };
+            if(!string.IsNullOrWhiteSpace(settings?.Settings?.SubscriptionTagName))
+                yield return new MainMenuItem { MenuSection = "@Viveport", Description = $"Tag all Viveport Infinity games as {settings?.Settings?.SubscriptionTagName}", Action = a => SetSubscriptionTags() };
+
+            yield return new MainMenuItem { MenuSection = "@Viveport", Description = "Set Viveport game sources based on Viveport Infinity depending on license", Action = a => SetSubscriptionSources() };
         }
 
         public override LibraryMetadataProvider GetMetadataDownloader()
@@ -171,35 +179,74 @@ namespace ViveportLibrary
                 return;
             }
 
-            var games = PlayniteApi.Database.Games.Where(g => g.PluginId == Id).ToList();
-            PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
+            var subscriptionTag = PlayniteApi.Database.Tags.Add(settings.Settings.SubscriptionTagName);
+
+            ChangeMetadataBasedOnSubscriptionStatus((Game game, bool subscription) =>
             {
-                a.ProgressMaxValue = games.Count + 1;
-                a.CurrentProgressValue++;
-                var licenses = AppDataReader.GetLicenseData().ToDictionary(x => x.AppId);
+                bool gameHasTag = game.TagIds?.Contains(subscriptionTag.Id) ?? false;
 
-                using (PlayniteApi.Database.BufferedUpdate())
+                if (subscription && !gameHasTag)
                 {
-                    var subscriptionTag = PlayniteApi.Database.Tags.Add(settings.Settings.SubscriptionTagName);
+                    if (game.TagIds == null)
+                        game.TagIds = new List<Guid>();
 
-                    foreach (var game in games)
+                    game.TagIds.Add(subscriptionTag.Id);
+                    return true;
+                }
+                else if (!subscription && gameHasTag)
+                {
+                    return game.TagIds.Remove(subscriptionTag.Id);
+                }
+                return false;
+            });
+        }
+
+
+        public void SetSubscriptionSources()
+        {
+            var viveportSource = PlayniteApi.Database.Sources.Add("Viveport");
+            var subscriptionSource = PlayniteApi.Database.Sources.Add("Viveport Infinity");
+
+            ChangeMetadataBasedOnSubscriptionStatus((Game game, bool subscription) =>
+            {
+                var source = subscription ? subscriptionSource : viveportSource;
+
+                if (game.SourceId != source.Id)
+                {
+                    game.SourceId = source.Id;
+                    return true;
+                }
+
+                return false;
+            });
+        }
+
+        private delegate bool UpdateGameMetadataBasedOnSubscriptionStatus(Game game, bool subscription);
+
+        private void ChangeMetadataBasedOnSubscriptionStatus(UpdateGameMetadataBasedOnSubscriptionStatus updateFunc)
+        {
+            var games = PlayniteApi.Database.Games.Where(g => g.PluginId == Id).ToList();
+            var licenses = AppDataReader.GetLicenseData().ToDictionary(x => x.AppId);
+            int updatedGameCount = 0;
+
+            using (PlayniteApi.Database.BufferedUpdate())
+            {
+                foreach (var game in games)
+                {
+                    if (!licenses.TryGetValue(game.GameId, out var license))
+                        continue;
+
+                    var updated = updateFunc(game, license.IsSubscription);
+
+                    if (updated)
                     {
-                        a.CurrentProgressValue++;
-                        if (a.CancelToken.IsCancellationRequested)
-                            break;
-
-                        if (!licenses.TryGetValue(game.GameId, out var license))
-                            continue;
-
-                        if (license.Licensing == "rsu" && game.TagIds?.Contains(subscriptionTag.Id) == false)
-                        {
-                            var tagIds = game.TagIds ?? new List<Guid>();
-                            tagIds.Add(subscriptionTag.Id);
-                            game.TagIds = tagIds;
-                        }
+                        updatedGameCount++;
+                        game.Modified = DateTime.Now;
                     }
                 }
-            }, new GlobalProgressOptions("Settings Viveport subscription tag", true) { IsIndeterminate = false });
+            }
+
+            PlayniteApi.Dialogs.ShowMessage($"Updated {updatedGameCount} games!");
         }
     }
 }
