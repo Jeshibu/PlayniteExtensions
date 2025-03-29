@@ -378,7 +378,7 @@ Profiles:
     Platforms: [arcade]
     ImageExtensions: [zip,7z]
     ProfileFiles: ['cores\fbneo_libretro.dll']
-    StartupExecutable: ^RALibretro\.exe\$
+    StartupExecutable: ^retroarch\.exe\$
 
   - Name: fixGB
     StartupArguments: '-L ".\cores\fixgb_libretro.dll" "{ImagePath}"'
