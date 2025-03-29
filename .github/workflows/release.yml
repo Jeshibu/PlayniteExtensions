@@ -66,7 +66,7 @@ jobs:
       - name: Pack with Playnite
         run: |
           mkdir "PackingOutput"
-          Write-Host "${{ steps.projectselection.outputs.projects }}"
+          Write-Host '${{ steps.projectselection.outputs.projects }}'
           $projects = ConvertFrom-Json '${{ steps.projectselection.outputs.projects }}'
 
           foreach ($p in $projects) {
@@ -82,7 +82,7 @@ jobs:
         if: "steps.projectselection.outputs.newrelease == 'True'"
         with:
           draft: false
-          name: "${{ steps.projectselection.outputs.releasetitle }}"
+          name: '${{ steps.projectselection.outputs.releasetitle }}'
           body_path: 'publish/release_notes.txt'
           files: '*.pext'
 
