@@ -6,7 +6,7 @@
     <Product>ExtraEmulatorProfiles</Product>
     <Copyright>Copyright © 2025</Copyright>
     <OutputPath>bin\$(Configuration)\</OutputPath>
-    <Version>1.1</Version>
+    <Version>1.2</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -18,9 +18,6 @@
     <PackageReference Include="PlayniteSDK" Version="6.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Playnite.SDK, Version=6.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\PlayniteSDK.6.2.0\lib\net462\Playnite.SDK.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System.Xaml" />

@@ -6,3 +6,13 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/ExtraEmulatorProfiles_1_1.pext
     Changelog:
      - Initial release
+  - Version: 1.2
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2025-03-29
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-03-29/ExtraEmulatorProfiles_1_2.pext
+    Changelog:
+     - Added Azahar 3DS emulator profile - contributed by RetroFlock
+     - Added Borked3DS emulator profile
+     - Added BizHawk PC-FX, 3DS, SG-1000, 32DX and Sega CD profiles - contributed by NinoNook1
+     - Fixed Final Burn Neo core profile for RetroArch
+     - Added .cue extension to Flycast emulator profile
