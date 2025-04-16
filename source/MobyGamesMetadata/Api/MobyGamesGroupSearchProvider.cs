@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using MobyGamesMetadata.Api.V2;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
@@ -15,8 +16,8 @@ namespace MobyGamesMetadata.Api
 
         public IEnumerable<GameDetails> GetDetails(SearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
         {
-            var details = new List<GameDetails>();
-            return apiClient.GetAllGamesForGroup(searchResult.Id, progressArgs).Select(ToGameDetails);
+            var result = apiClient.GetAllGamesForGroup(searchResult.Id, progressArgs);
+            return result.Select(g => ToGameDetails(g, searchGame));
         }
 
         IEnumerable<SearchResult> ISearchableDataSource<SearchResult>.Search(string query, CancellationToken cancellationToken = default)

@@ -1,4 +1,5 @@
 ﻿using MobyGamesMetadata.Api;
+using MobyGamesMetadata.Api.V2;
 using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
@@ -40,7 +41,6 @@ namespace MobyGamesMetadata
                         MetadataField.CoverImage,
                         MetadataField.BackgroundImage,
                         MetadataField.Links,
-                        MetadataField.AgeRating,
                     });
                 }
                 if (settings.Settings.DataSource.HasFlag(DataSource.Scraping))

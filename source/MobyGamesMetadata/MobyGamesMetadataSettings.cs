@@ -17,12 +17,8 @@ namespace MobyGamesMetadata
         public DataSource DataSource { get; set; } = DataSource.Api;
         public string ApiKey
         {
-            get { return apiKey; }
-            set
-            {
-                apiKey = value?.Trim();
-                OnPropertyChanged(nameof(ApiKey));
-            }
+            get => apiKey;
+            set => SetValue(ref apiKey, value?.Trim());
         }
         public bool ShowTopPanelButton { get; set; } = true;
 
@@ -42,6 +38,11 @@ namespace MobyGamesMetadata
             AspectRatio = AspectRatio.Any,
         };
 
+        public bool MatchPlatformsForReleaseDate { get; set; } = false;
+        public bool MatchPlatformsForDevelopers { get; set; } = true;
+        public bool MatchPlatformsForPublishers { get; set; } = true;
+
+        [Obsolete]
         public ReleaseDateSource ReleaseDateSource { get; set; } = ReleaseDateSource.EarliestOverall;
     }
 
@@ -65,21 +66,13 @@ namespace MobyGamesMetadata
         public string NameOverride
         {
             get { return nameOverride; }
-            set
-            {
-                nameOverride = value;
-                OnPropertyChanged(nameof(NameOverride));
-            }
+            set { SetValue(ref nameOverride, value); }
         }
 
         public PropertyImportTarget ImportTarget
         {
             get { return importTarget; }
-            set
-            {
-                importTarget = value;
-                OnPropertyChanged(nameof(ImportTarget));
-            }
+            set { SetValue(ref importTarget, value); }
         }
     }
 
@@ -101,6 +94,7 @@ namespace MobyGamesMetadata
         public int MinHeight { get; set; }
         public int MinWidth { get; set; }
         public AspectRatio AspectRatio { get; set; }
+        public bool MatchPlatforms { get; set; }
     }
 
     public enum ReleaseDateSource
@@ -160,12 +154,6 @@ namespace MobyGamesMetadata
             AspectRatio.Vertical,
             AspectRatio.Horizontal,
             AspectRatio.Square,
-        };
-
-        public Dictionary<ReleaseDateSource, string> ReleaseDateSources { get; } = new Dictionary<ReleaseDateSource, string>
-        {
-            { ReleaseDateSource.EarliestOverall, "Earliest overall" },
-            { ReleaseDateSource.EarliestForAutomaticallyMatchedPlatform, "Earliest for matched platform" },
         };
 
         private void InitializeGenres()
@@ -245,7 +233,10 @@ namespace MobyGamesMetadata
             if (Settings.Version < 1)
                 Settings.MaxDegreeOfParallelism = BulkImportPluginSettings.GetDefaultMaxDegreeOfParallelism();
 
-            Settings.Version = 1;
+            if (Settings.Version < 2)
+                Settings.MatchPlatformsForReleaseDate = Settings.ReleaseDateSource == ReleaseDateSource.EarliestForAutomaticallyMatchedPlatform;
+
+            Settings.Version = 2;
         }
     }
 }

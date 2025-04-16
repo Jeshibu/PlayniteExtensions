@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using MobyGamesMetadata.Api.V2;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
@@ -17,7 +18,7 @@ namespace MobyGamesMetadata.Api
         public IEnumerable<GameDetails> GetDetails(MobyGamesGenreSetting searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
         {
             var result = apiClient.GetAllGamesForGenre(searchResult.Id, progressArgs);
-            return result.Select(ToGameDetails);
+            return result.Select(g => ToGameDetails(g, searchGame));
         }
 
         public IEnumerable<MobyGamesGenreSetting> Search(string query, CancellationToken cancellationToken = default)

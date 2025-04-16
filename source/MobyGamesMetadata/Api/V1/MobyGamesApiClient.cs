@@ -10,7 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 
-namespace MobyGamesMetadata.Api
+namespace MobyGamesMetadata.Api.V1
 {
     public class MobyGamesApiClient
     {
@@ -32,7 +32,7 @@ namespace MobyGamesMetadata.Api
         public MobyGamesApiClient(ExecuteRestRequest restHandlerOverride)
         {
             this.restHandlerOverride = restHandlerOverride;
-            this.apiKey = "something";
+            apiKey = "something";
         }
 
         private T Execute<T>(RestRequest request, CancellationToken cancellationToken = default)
@@ -40,7 +40,7 @@ namespace MobyGamesMetadata.Api
             return Execute<T>(request, out _, cancellationToken);
         }
 
-        public T Execute<T>(RestRequest request, out System.Net.HttpStatusCode statusCode, CancellationToken cancellationToken = default)
+        private T Execute<T>(RestRequest request, out System.Net.HttpStatusCode statusCode, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(apiKey))
                 throw new Exception("No Moby Games API key. Please enter one in the add-on settings.");
@@ -85,7 +85,7 @@ namespace MobyGamesMetadata.Api
                 throw new Exception($"Error requesting {request?.Resource}: {statusCode} unable to parse response: {response.Content}");
         }
 
-        public ICollection<MobyGame> ExecuteGamesRequest(RestRequest request, CancellationToken cancellationToken)
+        private ICollection<MobyGame> ExecuteGamesRequest(RestRequest request, CancellationToken cancellationToken)
         {
             var result = Execute<GamesRoot>(request, cancellationToken);
 
@@ -138,36 +138,6 @@ namespace MobyGamesMetadata.Api
                 .AddQueryParameter("offset", offset);
 
             return ExecuteGamesRequest(request, cancellationToken);
-        }
-
-        public ICollection<MobyGroup> GetGroups(int offset = 0, int limit = 100, CancellationToken cancellationToken = default)
-        {
-            var request = new RestRequest("groups")
-                .AddQueryParameter("limit", limit)
-                .AddQueryParameter("offset", offset);
-
-            var response = Execute<GroupsRoot>(request, cancellationToken);
-
-            if (cancellationToken.IsCancellationRequested)
-                return new List<MobyGroup>();
-
-            return response.Groups;
-        }
-
-        public IEnumerable<MobyGroup> GetAllGroups(CancellationToken cancellationToken = default)
-        {
-            var output = new List<MobyGroup>();
-            int limit = 100, offset = 0;
-            ICollection<MobyGroup> response;
-            do
-            {
-                response = GetGroups(offset, limit, cancellationToken);
-                if (response == null || cancellationToken.IsCancellationRequested) break;
-
-                output.AddRange(response);
-                offset += limit;
-            } while (response.Count == limit);
-            return output;
         }
 
         private delegate ICollection<MobyGame> GetGames(int entityId, int offset, int limit, CancellationToken cancellationToken = default);

@@ -178,7 +178,7 @@
     {
       "genre_category": "Visual Presentation",
       "genre_category_id": 12,
-      "genre_description": "<p>The camera is under the player's control and does not follow a specific target. The player is able to freely slide/scroll/rotate through the environment. While zooming is also a part of it, zooming is not sufficient by itself.</p>",
+      "genre_description": "<p>DO NOT SELECT THIS FOR FIRST-PERSON GAMES! This genre is used when the camera is not attached to a specific avatar and does not follow a specific target, which is most commonly seen in sandbox or strategy games. The player is able to freely slide/scroll/rotate through the environment. Zooming in and out of the environment may also be possible, but zooming by itself is not sufficient to qualify a game for this genre.</p>",
       "genre_id": 134,
       "genre_name": "Free camera"
     },
@@ -325,7 +325,7 @@
     {
       "genre_category": "Gameplay",
       "genre_category_id": 4,
-      "genre_description": "<p>Falling block puzzle games are action based puzzle games in which objects usually enter the screen at the top at a constant rate and have to be arranged by the player to form pairs, lines, or other shapes or combinations of colors and/or shapes. <a href=\"https://www.mobygames.com/search/?q=Tetris\">Tetris</a> is a famous example. They should not be confused with <a href=\"https://www.mobygames.com/genre/sheet/tile-matching-puzzle/\">tile-matching puzzle</a> games (e.g. <a href=\"https://www.mobygames.com/search/?q=Candy+Crush\">Candy Crush</a>) where objects merely enter the screen to complete or re-fill a grid or field after items have been removed following a match. In tile-matching puzzle games the blocks or objects do not appear with a constant tempo and the position as they enter the field cannot be manipulated by the player.</p>",
+      "genre_description": "<p>Falling block puzzle games are action based puzzle games in which objects usually enter the screen at the top at a constant rate and have to be arranged by the player to form pairs, lines, or other shapes or combinations of colors and/or shapes. <a href=\"https://www.mobygames.com/game/1630/tetris/\">Tetris</a> is a famous example. They should not be confused with <a href=\"https://www.mobygames.com/genre/tile-matching-puzzle/\">tile-matching puzzle</a> games (e.g. <a href=\"https://www.mobygames.com/game/61070/candy-crush-saga/\">Candy Crush Saga</a>) where objects merely enter the screen to complete or re-fill a grid or field after items have been removed following a match. In tile-matching puzzle games the blocks or objects do not appear with a constant tempo and the position as they enter the field cannot be manipulated by the player.</p>",
       "genre_id": 145,
       "genre_name": "Falling block puzzle"
     },
@@ -1165,6 +1165,13 @@
     {
       "genre_category": "Setting",
       "genre_category_id": 10,
+      "genre_description": "<p>These games take place in an altered historical setting and are based on real historical events which are then altered to provide setting that is different from actual historical events and outcomes.</p>",
+      "genre_id": 262,
+      "genre_name": "Alternate history"
+    },
+    {
+      "genre_category": "Setting",
+      "genre_category_id": 10,
       "genre_description": "<p>A significant part of these games is set in historic/present/future/fantasy Asia.</p>",
       "genre_id": 197,
       "genre_name": "Asia"
@@ -1361,7 +1368,7 @@
     {
       "genre_category": "Narrative Theme/Topic",
       "genre_category_id": 8,
-      "genre_description": "<p>Adult games feature explicit sexual situations.</p>",
+      "genre_description": "<p>Adult games feature explicit sexual situations.</p>\n<p>Releases with this tag will not show on the front page and will have their cover art redacted from the main search boxes. The tag can (and should) be used in add-ons, compilations and special editions where applicable for this reason.</p>",
       "genre_id": 87,
       "genre_name": "Adult"
     },
@@ -1564,7 +1571,7 @@
     {
       "genre_category": "Other Attributes",
       "genre_category_id": 6,
-      "genre_description": "<p>Fangames are games based on popular properties, generally established video game series, in other cases comics, movies, and TV shows, without an official commercial license. They are made by fans of the property and distributed through non-commercial means.</p>",
+      "genre_description": "<p>Fangames are games based on popular properties, generally established video game series, comics, movies, or TV shows without an official commercial license. They are made by fans of the property and distributed through non-commercial means.</p>",
       "genre_id": 231,
       "genre_name": "Fangame"
     },

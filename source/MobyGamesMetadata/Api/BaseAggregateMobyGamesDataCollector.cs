@@ -5,6 +5,7 @@ using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using MobyGamesMetadata.Api.V2;
 
 namespace MobyGamesMetadata.Api
 {
@@ -55,50 +56,72 @@ namespace MobyGamesMetadata.Api
         protected GameSearchResult ToSearchResult(MobyGame mobyGame)
         {
             var result = new GameSearchResult();
-            result.SetName(mobyGame.Title.HtmlDecode(), mobyGame.AlternateTitles.Select(t => t.Title.HtmlDecode()));
-            result.PlatformNames = mobyGame.Platforms.Select(p => p.Name).ToList();
-            result.Platforms = mobyGame.Platforms.SelectMany(p => platformUtility.GetPlatforms(p.Name)).ToList();
-            result.ReleaseDate = mobyGame.Platforms.Select(p => p.FirstReleaseDate).OrderBy(d => d).FirstOrDefault()?.ParseReleaseDate(logger);
-            result.SetUrlAndId(mobyGame.MobyUrl);
+            result.SetName(mobyGame.title, mobyGame.highlights);
+            result.PlatformNames = mobyGame.platforms.Select(p => p.name).ToList();
+            result.Platforms = mobyGame.platforms.SelectMany(p => platformUtility.GetPlatforms(p.name)).ToList();
+            result.ReleaseDate = mobyGame.platforms.Select(p => p.release_date).OrderBy(d => d).FirstOrDefault()?.ParseReleaseDate(logger);
+            result.SetUrlAndId(mobyGame.moby_url);
             return result;
         }
 
-        protected GameDetails ToGameDetails(MobyGame mobyGame)
+        protected GameDetails ToGameDetails(MobyGame mobyGame, Game searchGame = null)
         {
             if (mobyGame == null) return null;
             var gameDetails = new GameDetails
             {
-                Description = mobyGame.Description.MakeHtmlUrlsAbsolute(mobyGame.MobyUrl),
+                Description = mobyGame.description.MakeHtmlUrlsAbsolute(mobyGame.moby_url),
             };
-            gameDetails.Names.Add(mobyGame.Title);
-            if (mobyGame.AlternateTitles != null)
-                gameDetails.Names.AddRange(mobyGame.AlternateTitles.Select(t => t.Title));
 
-            if (mobyGame.SampleCover?.Image != null)
-                gameDetails.CoverOptions.Add(ToIImageData(mobyGame.SampleCover));
+            gameDetails.Names.Add(mobyGame.title);
+            if (mobyGame.highlights != null)
+                gameDetails.Names.AddRange(mobyGame.highlights);
 
-            if (mobyGame.Genres != null)
-                foreach (var genre in mobyGame.Genres)
-                    AssignGenre(gameDetails, genre);
+            foreach (var genre in mobyGame.genres)
+                AssignGenre(gameDetails, genre);
 
-            gameDetails.Url = mobyGame.MobyUrl;
-            if (mobyGame.OfficialUrl != null)
-                gameDetails.Links.Add(new Link("Official website", mobyGame.OfficialUrl));
-
-            if (mobyGame.Platforms != null)
+            foreach (var platform in mobyGame.platforms)
             {
-                foreach (var platform in mobyGame.Platforms)
-                {
-                    gameDetails.Platforms.AddRange(platformUtility.GetPlatforms(platform.Name));
-                    var releaseDate = platform.FirstReleaseDate.ParseReleaseDate(logger);
-                    gameDetails.ReleaseDate = GetEarliestReleaseDate(releaseDate, gameDetails.ReleaseDate);
-                }
+                gameDetails.Platforms.AddRange(platformUtility.GetPlatforms(platform.name));
+                if (settings.MatchPlatformsForReleaseDate && platformUtility.PlatformsOverlap(searchGame.Platforms, new[] { platform.name }))
+                    gameDetails.ReleaseDate = GetEarliestReleaseDate(gameDetails.ReleaseDate, platform.release_date.ParseReleaseDate());
             }
 
-            if (mobyGame.SampleScreenshots != null)
-                gameDetails.BackgroundOptions.AddRange(mobyGame.SampleScreenshots.Select(ToIImageData));
+            if (!settings.MatchPlatformsForReleaseDate)
+                gameDetails.ReleaseDate = mobyGame.release_date.ParseReleaseDate();
+
+            if (mobyGame.moby_score.HasValue)
+                gameDetails.CommunityScore = (int)Math.Round(mobyGame.moby_score.Value * 10);
+
+            foreach (var dev in MatchPlatforms(searchGame, mobyGame.developers, settings.MatchPlatformsForDevelopers))
+                gameDetails.Developers.Add(FixCompanyName(dev.name));
+
+            foreach (var pub in MatchPlatforms(searchGame, mobyGame.publishers, settings.MatchPlatformsForPublishers))
+                gameDetails.Publishers.Add(FixCompanyName(pub.name));
+
+            //images
+            foreach (var covergroup in MatchPlatforms(searchGame, mobyGame.covers, settings.Cover.MatchPlatforms))
+                gameDetails.CoverOptions.AddRange(covergroup.images.Select(ToIImageData));
+
+            foreach (var screenshotGroup in MatchPlatforms(searchGame, mobyGame.screenshots, settings.Background.MatchPlatforms))
+                gameDetails.BackgroundOptions.AddRange(screenshotGroup.images.Select(ToIImageData));
+
+            //links
+            gameDetails.Url = mobyGame.moby_url;
+            if (mobyGame.official_url != null)
+                gameDetails.Links.Add(new Link("Official website", mobyGame.official_url));
 
             return gameDetails;
+        }
+
+        private IEnumerable<T> MatchPlatforms<T>(Game searchGame, IEnumerable<T> objects, bool onlyMatchingPlatforms) where T : IHasPlatforms
+        {
+            if (objects == null)
+                return new T[0];
+
+            if (!onlyMatchingPlatforms || searchGame?.Platforms == null)
+                return objects;
+
+            return objects.Where(o => platformUtility.PlatformsOverlap(searchGame.Platforms, o.Platforms));
         }
 
         protected ReleaseDate? GetEarliestReleaseDate(ReleaseDate? r1, ReleaseDate? r2)
@@ -109,12 +132,12 @@ namespace MobyGamesMetadata.Api
             return dates.OrderBy(d => d.Date).First();
         }
 
-        protected void AssignGenre(GameDetails gameDetails, Genre g)
+        protected void AssignGenre(GameDetails gameDetails, MobyGenre g)
         {
-            var genreSettings = settings.Genres.FirstOrDefault(x => x.Id == g.Id);
+            var genreSettings = settings.Genres.FirstOrDefault(x => x.Id == g.id);
             if (genreSettings == null)
             {
-                gameDetails.Tags.Add(g.Name);
+                gameDetails.Tags.Add(g.name);
                 return;
             }
             List<string> list;
@@ -137,27 +160,29 @@ namespace MobyGamesMetadata.Api
                     return;
             }
             if (string.IsNullOrWhiteSpace(genreSettings.NameOverride))
-                list.Add(g.Name);
+                list.Add(g.name);
             else
                 list.Add(genreSettings.NameOverride);
         }
 
         protected static BasicImage ToIImageData(MobyImage image)
         {
-            return new BasicImage(image.Image)
+            return new BasicImage(image.image_url)
             {
-                Height = image.Height,
-                Width = image.Width,
-                ThumbnailUrl = image.ThumbnailImage,
+                Height = image.height,
+                Width = image.width,
+                ThumbnailUrl = image.thumbnail_url,
             };
         }
 
-        protected static BasicImage ToIImageData(CoverImage image)
+        protected static BasicImage ToIImageData(MobyImage image, IEnumerable<string> platforms)
         {
-            var img = ToIImageData((MobyImage)image);
-            img.Platforms = image.Platforms;
-            return img;
-        }
+            var output = ToIImageData(image);
 
+            if (platforms != null)
+                output.Platforms = platforms;
+
+            return output;
+        }
     }
 }

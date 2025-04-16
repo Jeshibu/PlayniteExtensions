@@ -1,4 +1,5 @@
 ﻿using Barnite.Scrapers;
+using MobyGamesMetadata.Api.V2;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
@@ -32,8 +33,7 @@ namespace MobyGamesMetadata.Api
             {
                 var scraperDetails = scraper.GetGameDetails(id);
                 var apiDetails = apiClient.GetMobyGame(id);
-                var output = Merge(scraperDetails, ToGameDetails(apiDetails));
-                SetReleaseDetails(output, apiDetails, searchGame);
+                var output = Merge(scraperDetails, ToGameDetails(apiDetails, searchGame));
                 return output;
             }
             else if (settings.DataSource.HasFlag(DataSource.Scraping))
@@ -45,8 +45,7 @@ namespace MobyGamesMetadata.Api
             else if (settings.DataSource.HasFlag(DataSource.Api))
             {
                 var apiDetails = apiClient.GetMobyGame(id);
-                var output = ToGameDetails(apiDetails);
-                SetReleaseDetails(output, apiDetails, searchGame);
+                var output = ToGameDetails(apiDetails, searchGame);
                 return output;
             }
             return null;
@@ -92,56 +91,6 @@ namespace MobyGamesMetadata.Api
                 Description = item.Description,
             };
             return output;
-        }
-
-        private void SetReleaseDetails(GameDetails output, MobyGame foundGame, Game searchGame = null)
-        {
-            var matchingPlatforms = foundGame.Platforms.Where(p => platformUtility.PlatformsOverlap(searchGame?.Platforms, new[] { p.Name })).ToList();
-            var earliestReleasePlatform = matchingPlatforms.OrderBy(p => p.FirstReleaseDate).FirstOrDefault();
-
-            if (earliestReleasePlatform == null) return;
-
-            var platformResult = apiClient.GetMobyGamePlatform(foundGame.Id, earliestReleasePlatform.Id);
-
-            if (platformResult == null)
-            {
-                logger.Info($"Empty platform result for Moby Game ID {foundGame.Id}, platform {earliestReleasePlatform.Name}");
-                return;
-            }
-
-            SetRatings(output, platformResult);
-
-            var release = platformResult.Releases.OrderBy(r => r.ReleaseDate).FirstOrDefault();
-            if (release == null) return;
-
-            if (settings.ReleaseDateSource == ReleaseDateSource.EarliestForAutomaticallyMatchedPlatform)
-                output.ReleaseDate = release.ReleaseDate.ParseReleaseDate(logger);
-
-            output.Developers = GetCompanyNames(release, "Developed by");
-            output.Publishers = GetCompanyNames(release, "Published by");
-        }
-
-        private List<string> GetCompanyNames(MobyGameRelease release, params string[] roles)
-        {
-            return release.Companies
-                .Where(c => roles.Contains(c.Role, StringComparer.InvariantCultureIgnoreCase))
-                .Select(c => FixCompanyName(c.Name))
-                .ToList();
-        }
-
-        private void SetRatings(GameDetails output, GamePlatformDetails gamePlatformDetails)
-        {
-            foreach (var rating in gamePlatformDetails.Ratings)
-            {
-                var systemName = rating.SystemName.TrimEnd(" Rating");
-                if (systemName.EndsWith(")") && systemName.Contains(" ("))
-                    systemName = systemName.Substring(0, systemName.IndexOf(" ("));
-
-                if (systemName == "VRCR")
-                    output.Tags.Add($"VR Comfort: {rating.Name}");
-                else
-                    output.AgeRatings.Add($"{systemName} {rating.Name}");
-            }
         }
     }
 }

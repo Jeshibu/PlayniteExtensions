@@ -1,25 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace MobyGamesMetadata.Api
+namespace MobyGamesMetadata.Api.V1
 {
-    public class GroupsRoot
-    {
-        public List<MobyGroup> Groups { get; set; } = new List<MobyGroup>();
-    }
-
-    public class MobyGroup
-    {
-        [JsonProperty("group_id")]
-        public int Id { get; set; }
-
-        [JsonProperty("group_description")]
-        public string Description { get; set; }
-
-        [JsonProperty("group_name")]
-        public string Name { get; set; }
-    }
-
     public class GamesRoot
     {
         public List<MobyGame> Games { get; set; } = new List<MobyGame>();

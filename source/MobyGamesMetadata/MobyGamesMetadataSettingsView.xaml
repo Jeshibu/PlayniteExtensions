@@ -42,6 +42,7 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="API Key:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
                     <TextBox Name="ApiKeyTextbox" Text="{Binding Settings.ApiKey}" Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
@@ -58,10 +59,24 @@
                     <TextBlock Grid.Row="5" Grid.ColumnSpan="3" TextWrapping="Wrap">
                         Parallelism dictates how many simultaneous threads can be used to process the bulk property import game matching. It is recommended to set it lower than the amount of cores in your CPU.
                     </TextBlock>
-                    <TextBlock Grid.Row="6" Grid.Column="0">
-                        Release date:
-                    </TextBlock>
-                    <ComboBox Grid.Row="6" Grid.Column="1" Margin="10" ItemsSource="{Binding ReleaseDateSources}" SelectedValue="{Binding Settings.ReleaseDateSource}" DisplayMemberPath="Value" SelectedValuePath="Key"/>
+
+                    <StackPanel Orientation="Vertical" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10">
+                        <StackPanel.Resources>
+                            <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                <Setter Property="Margin" Value="0,5"/>
+                            </Style>
+                        </StackPanel.Resources>
+
+                        <CheckBox IsChecked="{Binding Settings.MatchPlatformsForReleaseDate}">
+                            Use only matching platforms for release date
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding Settings.MatchPlatformsForDevelopers}">
+                            Use only matching platforms for developers
+                        </CheckBox>
+                        <CheckBox IsChecked="{Binding Settings.MatchPlatformsForPublishers}">
+                            Use only matching platforms for publishers
+                        </CheckBox>
+                    </StackPanel>
                 </Grid>
             </StackPanel>
         </TabItem>
@@ -138,11 +153,11 @@
             <ScrollViewer>
                 <StackPanel Margin="20" ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <TextBlock TextWrapping="Wrap">
-                        Images smaller than either of the minimum dimensions or not matching the orientation will be ignored.<LineBreak/>
-                        Currently only the main cover for a game will be used, not platform-specific alternatives.
+                        Images smaller than either of the minimum dimensions or not matching the orientation will be ignored.
                     </TextBlock>
                     <Grid Width="Auto" Margin="0,0,0,10">
                         <Grid.RowDefinitions>
+                            <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
@@ -158,8 +173,10 @@
                             <TextBlock>h</TextBlock>
                         </WrapPanel>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
                         <ComboBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Cover.AspectRatio}" Width="162"/>
+
+                        <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="Only matching platforms" Margin="0,5" IsChecked="{Binding Settings.Cover.MatchPlatforms}"/>
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
@@ -173,6 +190,7 @@
                     </TextBlock>
                     <Grid Width="Auto" Margin="0,0,0,10">
                         <Grid.RowDefinitions>
+                            <RowDefinition/>
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
@@ -190,6 +208,8 @@
 
                         <TextBlock Grid.Row="1" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
                         <ComboBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedItem="{Binding Settings.Background.AspectRatio}" Width="162"/>
+
+                        <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="Only matching platforms" Margin="0,5" IsChecked="{Binding Settings.Background.MatchPlatforms}"/>
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
