@@ -1,5 +1,6 @@
 ﻿using Barnite.Scrapers;
 using HtmlAgilityPack;
+using MobyGamesMetadata.Api.V2;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
@@ -78,11 +79,6 @@ namespace MobyGamesMetadata.Api
                                 .Select(n => n.InnerText.HtmlDecode())
                                 .Where(n => !string.IsNullOrWhiteSpace(n))
                                 .ToList();
-                var descriptionElements = new List<string>();
-                if (releaseDateString != null)
-                    descriptionElements.Add(releaseDateString);
-                if (platforms != null && platforms.Any())
-                    descriptionElements.Add(string.Join(", ", platforms));
 
                 var alternateNames = td.ChildNodes.FirstOrDefault(n => n.InnerText.StartsWith("AKA: "))
                     ?.InnerText.TrimStart("AKA: ")
@@ -91,13 +87,12 @@ namespace MobyGamesMetadata.Api
 
                 var sr = new GameSearchResult
                 {
-                    Description = string.Join(" | ", descriptionElements),
                     PlatformNames = platforms,
-                    Platforms = platforms.SelectMany(PlatformUtility.GetPlatforms).ToList(),
                     ReleaseDate = MobyGamesHelper.ParseReleaseDate(releaseDateString),
                 };
                 sr.SetUrlAndId(a.Attributes["href"].Value);
                 sr.SetName(a.InnerText.HtmlDecode(), alternateNames);
+                sr.SetDescription(releaseDateString, platforms);
                 yield return sr;
             }
         }
@@ -150,11 +145,12 @@ namespace MobyGamesMetadata.Api
 
     public class GameSearchResult : SearchResult, IGameSearchResult
     {
-        public List<MetadataProperty> Platforms { get; set; } = new List<MetadataProperty>();
         public List<string> PlatformNames { get; set; } = new List<string>();
         public List<string> AlternateTitles { get; set; } = new List<string>();
         public string Title { get; set; }
         public ReleaseDate? ReleaseDate { get; set; }
+
+        public MobyGame ApiGameResult { get; private set; }
 
         public IEnumerable<string> AlternateNames => AlternateTitles;
 
@@ -168,6 +164,31 @@ namespace MobyGamesMetadata.Api
                 Name = $"{Title} (AKA {string.Join("/", AlternateTitles)})";
             else
                 Name = Title;
+        }
+
+        public void SetDescription(string releaseDate, List<string> platforms)
+        {
+            var descriptionElements = new List<string>();
+            if (!string.IsNullOrWhiteSpace(releaseDate))
+                descriptionElements.Add(releaseDate);
+
+            if (platforms != null && platforms.Any())
+                descriptionElements.Add(string.Join(", ", platforms));
+
+            Description = string.Join(" | ", descriptionElements);
+        }
+
+        public GameSearchResult() { }
+
+        public GameSearchResult(MobyGame game)
+        {
+            ApiGameResult = game;
+            Id = game.game_id;
+            Url = game.moby_url;
+            SetName(game.title, game.highlights);
+            PlatformNames.AddRange(game.platforms.Select(p => p.name));
+            ReleaseDate = game.release_date.ParseReleaseDate();
+            SetDescription(game.release_date, PlatformNames);
         }
     }
 }

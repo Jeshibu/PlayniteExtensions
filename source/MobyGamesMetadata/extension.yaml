@@ -1,13 +1,15 @@
 ﻿Id: MobyGamesMetadata
 Name: MobyGames Metadata Provider
 Author: Jeshibu
-Version: 0.6.2
+Version: 0.7
 Module: MobyGamesMetadata.dll
 Type: MetadataProvider
 Icon: icon.png
 Links:
   - Name: MobyGames
     Url: https://www.mobygames.com/
+  - Name: API subscription options
+    Url: https://www.mobygames.com/api/subscribe/
   - Name: GitHub repository
     Url: https://github.com/Jeshibu/PlayniteExtensions
   - Name: Donate via Ko-fi

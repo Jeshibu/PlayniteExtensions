@@ -53,16 +53,7 @@ namespace MobyGamesMetadata.Api
 
         protected static string FixCompanyName(string companyName) => companyName.TrimEnd(", the").TrimCompanyForms();
 
-        protected GameSearchResult ToSearchResult(MobyGame mobyGame)
-        {
-            var result = new GameSearchResult();
-            result.SetName(mobyGame.title, mobyGame.highlights);
-            result.PlatformNames = mobyGame.platforms.Select(p => p.name).ToList();
-            result.Platforms = mobyGame.platforms.SelectMany(p => platformUtility.GetPlatforms(p.name)).ToList();
-            result.ReleaseDate = mobyGame.platforms.Select(p => p.release_date).OrderBy(d => d).FirstOrDefault()?.ParseReleaseDate(logger);
-            result.SetUrlAndId(mobyGame.moby_url);
-            return result;
-        }
+        protected GameSearchResult ToSearchResult(MobyGame mobyGame) => new GameSearchResult(mobyGame);
 
         protected GameDetails ToGameDetails(MobyGame mobyGame, Game searchGame = null)
         {

@@ -100,3 +100,13 @@ Packages:
     Changelog:
     - Improved property bulk import title matching with regard to editions in braces and roman numerals
     - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them
+  - Version: 0.7
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-04-15
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/mobygames0.7/MobyGamesMetadata_0_7.pext
+    Changelog:
+    - "Transitioned to MobyGames API v2 (v1 is deactivated as far as I can tell)"
+    - "Unfortunately this new API is stricter in several ways:"
+    - "Only one request per 5 seconds can be made now, as opposed to 1 per second."
+    - "Bulk property import is limited to fetching 10 games every 5 seconds. I've discussed this with their developer and he's indicated this page size will be increased in the future, at which point I'll update this plugin again."
+    - "And finally, API use is now exclusive to students, academic researchers, and paying subscribers ($10 a month minimum at time of writing) - see the API subscription options (and find a link to apply for a free API key) at https://www.mobygames.com/api/subscribe/"

@@ -76,7 +76,6 @@ namespace MobyGamesMetadata
             if (BlockMissingApiKey())
                 return null;
 
-            settings.Settings.DataSource = DataSource.ApiAndScraping;
             var platformUtility = new PlatformUtility(PlayniteApi);
             var scraper = new MobyGamesScraper(platformUtility, downloader);
             var aggr = new MobyGamesGameSearchProvider(ApiClient, scraper, settings.Settings, platformUtility);

@@ -4,7 +4,6 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -24,15 +23,15 @@ namespace MobyGamesMetadata.Api
 
         public GameDetails GetDetails(GameSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
         {
-            return GetDetails(searchResult.Id, searchGame);
+            return GetDetails(searchResult.Id, searchGame, searchResult.ApiGameResult);
         }
 
-        public GameDetails GetDetails(int id, Game searchGame = null)
+        public GameDetails GetDetails(int id, Game searchGame = null, MobyGame searchResultGame = null)
         {
             if (settings.DataSource == DataSource.ApiAndScraping)
             {
                 var scraperDetails = scraper.GetGameDetails(id);
-                var apiDetails = apiClient.GetMobyGame(id);
+                var apiDetails = searchResultGame ?? apiClient.GetMobyGame(id);
                 var output = Merge(scraperDetails, ToGameDetails(apiDetails, searchGame));
                 return output;
             }
@@ -44,7 +43,7 @@ namespace MobyGamesMetadata.Api
             }
             else if (settings.DataSource.HasFlag(DataSource.Api))
             {
-                var apiDetails = apiClient.GetMobyGame(id);
+                var apiDetails = searchResultGame ?? apiClient.GetMobyGame(id);
                 var output = ToGameDetails(apiDetails, searchGame);
                 return output;
             }

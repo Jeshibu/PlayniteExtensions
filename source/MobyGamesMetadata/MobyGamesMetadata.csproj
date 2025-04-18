@@ -4,6 +4,7 @@
     <TargetFramework>net462</TargetFramework>
     <AssemblyTitle>MobyGamesMetadata</AssemblyTitle>
     <Product>MobyGamesMetadata</Product>
+    <Version>0.7</Version>
     <Copyright>Copyright © 2019</Copyright>
   </PropertyGroup>
   <ItemGroup>
