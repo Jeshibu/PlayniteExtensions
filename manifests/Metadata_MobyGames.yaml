@@ -102,7 +102,7 @@ Packages:
     - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them
   - Version: 0.7
     RequiredApiVersion: 6.9.0
-    ReleaseDate: 2025-04-15
+    ReleaseDate: 2025-04-18
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/mobygames0.7/MobyGamesMetadata_0_7.pext
     Changelog:
     - "Transitioned to MobyGames API v2 (v1 is deactivated as far as I can tell)"
