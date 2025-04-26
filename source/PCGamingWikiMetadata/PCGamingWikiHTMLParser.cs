@@ -4,6 +4,7 @@ using HtmlAgilityPack;
 using System.Text.RegularExpressions;
 using Playnite.SDK;
 using System.Globalization;
+using PlayniteExtensions.Common;
 
 namespace PCGamingWikiMetadata
 {
@@ -34,11 +35,11 @@ namespace PCGamingWikiMetadata
 
         private void RemoveChildElementTypes(HtmlNode node, string type)
         {
-            var removeChil = node.SelectNodes(type);
+            var removeChildren = node.SelectNodes(type);
 
-            if (removeChil != null && removeChil.Count > 0)
+            if (removeChildren?.Count > 0)
             {
-                node.RemoveChildren(removeChil);
+                node.RemoveChildren(removeChildren);
             }
         }
 
@@ -375,11 +376,9 @@ namespace PCGamingWikiMetadata
             DateTime? date = ParseWikiDate(releaseDate);
 
             if (date == null)
-            {
                 return;
-            }
 
-            this.gameController.Game.AddReleaseDate(platform, ParseWikiDate(releaseDate));
+            this.gameController.Game.AddReleaseDate(platform, date);
         }
 
         private DateTime? ParseWikiDate(string dateString)

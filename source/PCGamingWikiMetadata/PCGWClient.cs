@@ -87,7 +87,7 @@ namespace PCGamingWikiMetadata
                 logger.Error(e, "Error performing search");
             }
 
-            return gameResults.OrderBy(game => NameStringCompare(searchName, game.Name)).ToList<GenericItemOption>();
+            return gameResults.OrderBy(game => NameStringCompare(searchName, game.Name)).ToList();
         }
 
         public virtual void FetchGamePageContent(PCGWGame game)

@@ -1,4 +1,7 @@
-﻿using RestSharp;
+﻿using Newtonsoft.Json;
+using Playnite.SDK;
+using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,6 +17,8 @@ namespace PCGamingWikiBulkImport.DataCollection
 
     internal class CargoQuery : ICargoQuery
     {
+        private ILogger logger = LogManager.GetLogger();
+
         private RestClient restClient = new RestClient("https://www.pcgamingwiki.com/w/api.php")
             .AddDefaultQueryParameter("action", "cargoquery")
             .AddDefaultQueryParameter("limit", "max")
@@ -32,8 +37,8 @@ namespace PCGamingWikiBulkImport.DataCollection
                     .AddQueryParameter("group_by", $"{table}.{field}")
                     .AddQueryParameter("having", having);
 
-            var result = restClient.Execute<CargoResultRoot<ItemCount>>(request);
-            return result.Data?.CargoQuery.Select(t => t.Title) ?? Enumerable.Empty<ItemCount>();
+            var result = Execute<CargoResultRoot<ItemCount>>(request);
+            return result?.CargoQuery.Select(t => t.Title) ?? Enumerable.Empty<ItemCount>();
         }
 
         public CargoResultRoot<CargoResultGame> GetGamesByHolds(string table, string field, string holds, int offset)
@@ -42,8 +47,7 @@ namespace PCGamingWikiBulkImport.DataCollection
                 .AddQueryParameter("where", $"{table}.{field} HOLDS '{EscapeString(holds)}'")
                 .AddQueryParameter("offset", $"{offset:0}");
 
-            var response = restClient.Execute<CargoResultRoot<CargoResultGame>>(request);
-            return response.Data;
+            return Execute<CargoResultRoot<CargoResultGame>>(request);
         }
 
         public CargoResultRoot<CargoResultGame> GetGamesByHoldsLike(string table, string field, string holds, int offset)
@@ -52,8 +56,7 @@ namespace PCGamingWikiBulkImport.DataCollection
                 .AddQueryParameter("where", $"{table}.{field} HOLDS LIKE '{EscapeString(holds)}'")
                 .AddQueryParameter("offset", $"{offset:0}");
 
-            var response = restClient.Execute<CargoResultRoot<CargoResultGame>>(request);
-            return response.Data;
+            return Execute<CargoResultRoot<CargoResultGame>>(request);
         }
 
         public CargoResultRoot<CargoResultGame> GetGamesByExactValues(string table, string field, IEnumerable<string> values, int offset)
@@ -64,8 +67,7 @@ namespace PCGamingWikiBulkImport.DataCollection
                 .AddQueryParameter("where", $"{table}.{field} IN ({valuesList})")
                 .AddQueryParameter("offset", $"{offset:0}");
 
-            var response = restClient.Execute<CargoResultRoot<CargoResultGame>>(request);
-            return response.Data;
+            return Execute<CargoResultRoot<CargoResultGame>>(request);
         }
 
         private RestRequest GetBaseGameRequest(string table, string field)
@@ -82,6 +84,21 @@ namespace PCGamingWikiBulkImport.DataCollection
                        .AddQueryParameter("join_on", $"{baseTable}._pageID={table}._pageID");
 
             return request;
+        }
+
+        private T Execute<T>(RestRequest request) where T : class
+        {
+            var response = restClient.Execute(request);
+            try
+            {
+                var data = JsonConvert.DeserializeObject<T>(response.Content);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                logger.Warn(ex, "Error executing request");
+                return null;
+            }
         }
 
         private static string EscapeString(string str) => str?.Replace(@"\", @"\\").Replace("'", @"\'");
