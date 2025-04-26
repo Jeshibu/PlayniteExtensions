@@ -217,3 +217,10 @@ Packages:
     - Fixed property bulk import failing for items with an apostrophe
     - Improved property bulk import title matching with regard to editions in braces and roman numerals
     - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them
+- Version: 1.5
+  RequiredApiVersion: 6.11.0
+  ReleaseDate: 2025-04-26
+  PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-04-26/PCGamingWikiMetadata_1_5.pext
+  Changelog:
+    - "Game search now includes redirect pages (which are used as aliases)"
+    - "Added the availability table to the bulk property import functionality. Mainly useful for tagging (removed) DRM."
