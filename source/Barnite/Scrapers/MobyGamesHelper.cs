@@ -131,7 +131,7 @@ namespace Barnite.Scrapers
                 }
             }
 
-            var linkElements = page.DocumentNode.SelectNodes("//section[@id='gameSites' or @id='gameIdentifiers']//a[@href]");
+            var linkElements = page.DocumentNode.SelectNodes("//section[@id='gameSites' or @id='gameIdentifiers']//li/a[@href]");
             if (linkElements != null)
                 data.Links.AddRange(linkElements.Select(le => new Link(le.InnerText, le.GetAttributeValue("href", ""))));
 

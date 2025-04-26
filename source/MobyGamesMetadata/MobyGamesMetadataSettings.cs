@@ -236,7 +236,10 @@ namespace MobyGamesMetadata
             if (Settings.Version < 2)
                 Settings.MatchPlatformsForReleaseDate = Settings.ReleaseDateSource == ReleaseDateSource.EarliestForAutomaticallyMatchedPlatform;
 
-            Settings.Version = 2;
+            if (Settings.Version < 3 && Settings.DataSource == DataSource.ApiAndScraping)
+                Settings.DataSource = DataSource.Api;
+
+            Settings.Version = 3;
         }
     }
 }

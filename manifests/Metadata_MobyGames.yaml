@@ -110,3 +110,10 @@ Packages:
     - "Only one request per 5 seconds can be made now, as opposed to 1 per second."
     - "Bulk property import is limited to fetching 10 games every 5 seconds. I've discussed this with their developer and he's indicated this page size will be increased in the future, at which point I'll update this plugin again."
     - "And finally, API use is now exclusive to students, academic researchers, and paying subscribers ($10 a month minimum at time of writing) - see the API subscription options (and find a link to apply for a free API key) at https://www.mobygames.com/api/subscribe/"
+  - Version: 0.7.1
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-04-26
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-04-26/MobyGamesMetadata_0_7_1.pext
+    Changelog:
+    - "Fixed useless links being added to games"
+    - "Reminder that API access is no longer free (except to researchers or academics). The cheapest subscription is $10 per month at the moment. API keys previously granted for free should have expired by now."
