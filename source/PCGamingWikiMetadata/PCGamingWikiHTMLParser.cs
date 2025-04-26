@@ -86,7 +86,7 @@ namespace PCGamingWikiMetadata
 
             if (node != null)
             {
-                redirectPage = node.InnerText;
+                redirectPage = node.InnerText.HtmlDecode();
                 return true;
             }
 
@@ -106,7 +106,7 @@ namespace PCGamingWikiMetadata
                     switch (child.Attributes["class"].Value)
                     {
                         case "table-settings-vr-body-parameter":
-                            headset = child.FirstChild.InnerText.Trim();
+                            headset = child.FirstChild.InnerText.HtmlDecode();
                             break;
                         case "table-settings-vr-body-rating":
                             rating = child.FirstChild.Attributes["title"].Value;
@@ -135,7 +135,7 @@ namespace PCGamingWikiMetadata
                     switch (child.Attributes["class"].Value)
                     {
                         case "table-settings-video-body-parameter":
-                            feature = child.FirstChild.InnerText.Trim();
+                            feature = child.FirstChild.InnerText.HtmlDecode();
                             break;
                         case "table-settings-video-body-rating":
                             rating = child.FirstChild.Attributes["title"].Value;
@@ -163,13 +163,13 @@ namespace PCGamingWikiMetadata
                     switch (child.Attributes["class"].Value)
                     {
                         case "table-network-multiplayer-body-parameter":
-                            networkType = child.FirstChild.InnerText;
+                            networkType = child.FirstChild.InnerText.HtmlDecode();
                             break;
                         case "table-network-multiplayer-body-rating":
                             rating = child.FirstChild.Attributes["title"].Value;
                             break;
                         case "table-network-multiplayer-body-players":
-                            Int16.TryParse(child.FirstChild.InnerText, out playerCount);
+                            short.TryParse(child.FirstChild.InnerText.HtmlDecode(), out playerCount);
                             break;
                         case "table-network-multiplayer-body-notes":
                             IList<string> notes = ParseMultiplayerNotes(child);
@@ -215,7 +215,7 @@ namespace PCGamingWikiMetadata
                     switch (child.Attributes["class"].Value)
                     {
                         case "table-settings-input-body-parameter":
-                            param = child.FirstChild.InnerText;
+                            param = child.FirstChild.InnerText.HtmlDecode();
                             break;
                         case "table-settings-input-body-rating":
                             switch (param)
@@ -267,7 +267,7 @@ namespace PCGamingWikiMetadata
                     switch (child.Attributes["class"].Value)
                     {
                         case "table-cloudsync-body-system":
-                            launcher = child.FirstChild.InnerText;
+                            launcher = child.FirstChild.InnerText.HtmlDecode();
                             break;
                         case "table-cloudsync-body-rating":
                             this.gameController.AddCloudSaves(launcher, child.FirstChild.Attributes["title"].Value);
@@ -299,7 +299,7 @@ namespace PCGamingWikiMetadata
                     RemoveSpanFromHTMLNode(child);
                     RemoveCitationsFromHTMLNode(child);
 
-                    string text = HtmlEntity.DeEntitize(child.InnerText.Trim());
+                    string text = HtmlEntity.DeEntitize(child.InnerText.HtmlDecode());
 
                     switch (child.Name)
                     {
@@ -326,7 +326,7 @@ namespace PCGamingWikiMetadata
                                         case "Taxonomy":
                                             foreach (HtmlNode data in child.SelectNodes(".//a"))
                                             {
-                                                text = HtmlEntity.DeEntitize(data.InnerText.Trim());
+                                                text = HtmlEntity.DeEntitize(data.InnerText.HtmlDecode());
                                                 this.gameController.AddTaxonomy(key, text);
                                             }
                                             break;
@@ -361,7 +361,7 @@ namespace PCGamingWikiMetadata
         {
             int score;
 
-            if (Int32.TryParse(node.SelectNodes(".//a")[0].InnerText, out score))
+            if (int.TryParse(node.SelectNodes(".//a")[0].InnerText.HtmlDecode(), out score))
             {
                 this.gameController.Game.AddReception(aggregator, score);
             }

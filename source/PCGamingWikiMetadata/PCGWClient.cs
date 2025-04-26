@@ -1,12 +1,11 @@
-using Playnite.SDK.Plugins;
+using Newtonsoft.Json.Linq;
+using PCGamingWikiBulkImport;
 using Playnite.SDK;
+using Playnite.SDK.Plugins;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json.Linq;
 using System.Linq;
-using System.Text;
-using PCGamingWikiBulkImport;
 
 namespace PCGamingWikiMetadata
 {
@@ -75,11 +74,8 @@ namespace PCGamingWikiMetadata
 
                 foreach (dynamic game in searchResults["query"]["search"])
                 {
-                    if (!((string)game.snippet).Contains("#REDIRECT"))
-                    {
-                        PCGWGame g = new PCGWGame(gameController.Settings, (string)game.title, (int)game.pageid);
-                        gameResults.Add(g);
-                    }
+                    PCGWGame g = new PCGWGame(gameController.Settings, (string)game.title, (int)game.pageid);
+                    gameResults.Add(g);
                 }
             }
             catch (Exception e)
