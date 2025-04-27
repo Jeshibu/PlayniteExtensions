@@ -224,3 +224,10 @@ Packages:
   Changelog:
     - "Game search now includes redirect pages (which are used as aliases)"
     - "Added the availability table to the bulk property import functionality. Mainly useful for tagging (removed) DRM."
+- Version: 1.5.1
+  RequiredApiVersion: 6.11.0
+  ReleaseDate: 2025-04-27
+  PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-04-26/PCGamingWikiMetadata_1_5_1.pext
+  Changelog:
+    - "Fixed failing to get data for games with special URL characters in the name"
+    - "Fixed PCGW link for redirect pages"
