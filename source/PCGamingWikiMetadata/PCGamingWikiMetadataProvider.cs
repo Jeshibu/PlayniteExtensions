@@ -136,7 +136,10 @@ namespace PCGamingWikiMetadata
         {
             if (AvailableFields.Contains(MetadataField.Links))
             {
-                var links = new List<Link> { this.gameController.Game.PCGamingWikiLink() };
+                var links = new List<Link>();
+                if (this.gameController.Game.PageID != 0)
+                    links.Add(this.gameController.Game.PCGamingWikiLink());
+
                 links.AddRange(this.gameController.Game.Links);
                 return links;
             }
