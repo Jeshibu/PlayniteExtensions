@@ -5,14 +5,14 @@ namespace PCGamingWikiBulkImport
 {
     public static class PCGamingWikiUrlHelper
     {
-        public static string TitleToSlug(this string title)
+        public static string TitleToSlug(this string title, bool urlEncode = true)
         {
             if (string.IsNullOrWhiteSpace(title))
                 return title;
 
             var sb = new StringBuilder();
             foreach (char c in title)
-                sb.Append(EscapeSlugCharacter(c));
+                sb.Append(EscapeSlugCharacter(c, urlEncode));
 
             return sb.ToString();
         }
@@ -22,7 +22,7 @@ namespace PCGamingWikiBulkImport
             return $"https://www.pcgamingwiki.com/wiki/{slug}";
         }
 
-        private static string EscapeSlugCharacter(char c)
+        private static string EscapeSlugCharacter(char c, bool urlEncode)
         {
             if (char.IsLetterOrDigit(c))
                 return c.ToString();
@@ -41,8 +41,12 @@ namespace PCGamingWikiBulkImport
                 case '\'':
                     return c.ToString();
                 default:
-                    return WebUtility.UrlEncode(c.ToString());
-            };
+                    if (urlEncode)
+                        return WebUtility.UrlEncode(c.ToString());
+                    else
+                        return c.ToString();
+            }
+            ;
         }
     }
 }

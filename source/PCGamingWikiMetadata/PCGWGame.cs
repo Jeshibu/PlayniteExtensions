@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Microsoft.VisualBasic.FileIO;
 using System.IO;
 using PCGamingWikiBulkImport;
+using System.Linq;
 
 namespace PCGamingWikiMetadata
 {
@@ -47,18 +48,12 @@ namespace PCGamingWikiMetadata
         {
             this.Name = name;
             this.PageID = pageid;
-            AddPCGamingWikiLink();
         }
 
-        protected Link PCGamingWikiLink()
+        public Link PCGamingWikiLink()
         {
             string url = this.Name.TitleToSlug().SlugToUrl();
             return new Link("PCGamingWiki", url);
-        }
-
-        public void AddPCGamingWikiLink()
-        {
-            this.Links.Add(PCGamingWikiLink());
         }
 
         public void AddReception(string aggregator, int score)

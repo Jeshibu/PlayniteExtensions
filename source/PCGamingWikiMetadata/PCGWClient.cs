@@ -90,7 +90,7 @@ namespace PCGamingWikiMetadata
         {
             var request = new RestRequest()
                 .AddQueryParameter("action", "parse")
-                .AddQueryParameter("page", game.Name.TitleToSlug());
+                .AddQueryParameter("page", game.Name.TitleToSlug(urlEncode: false));
 
             game.LibraryGame = this.options.GameData;
 
