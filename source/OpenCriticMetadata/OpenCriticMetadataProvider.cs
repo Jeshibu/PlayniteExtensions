@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using Newtonsoft.Json;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
@@ -14,13 +15,16 @@ namespace OpenCriticMetadata
 {
     public class OpenCriticMetadataProvider : GenericMetadataProvider<OpenCriticSearchResultItem>
     {
-        public override List<MetadataField> AvailableFields => throw new NotImplementedException();
+        private readonly OpenCriticMetadata plugin;
+
+        public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 
         protected override string ProviderName { get; } = "OpenCritic";
 
         public OpenCriticMetadataProvider(MetadataRequestOptions options, OpenCriticMetadata plugin, IGameSearchProvider<OpenCriticSearchResultItem> gameSearchProvider, IPlatformUtility platformUtility)
             : base(gameSearchProvider, options, plugin.PlayniteApi, platformUtility)
         {
+            this.plugin = plugin;
         }
     }
 
@@ -39,22 +43,15 @@ namespace OpenCriticMetadata
         public GameDetails GetDetails(OpenCriticSearchResultItem searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
         {
             var request = new RestRequest("game/{id}").AddUrlSegment("id", searchResult.Id);
-            var result = restClient.Execute<OpenCriticGame>(request);
-
-            if(result.Data == null)
-            {
-                logger.Warn($"No data gotten from game {searchResult.Id}: {result.ErrorMessage}");
-                logger.Info(result.Content);
-            }
-
-            return ToGameDetails(result.Data);
+            var result = Execute<OpenCriticGame>(request);
+            return ToGameDetails(result);
         }
 
         public IEnumerable<OpenCriticSearchResultItem> Search(string query, CancellationToken cancellationToken = default)
         {
             var request = new RestRequest("meta/search").AddQueryParameter("criteria", query.Replace(' ', '+'));
-            var result = restClient.Execute<OpenCriticSearchResultItem[]>(request);
-            return result.Data?.Where(x => x.Relation == "game");
+            var result = Execute<OpenCriticSearchResultItem[]>(request);
+            return result?.Where(x => x.Relation == "game");
         }
 
         public GenericItemOption<OpenCriticSearchResultItem> ToGenericItemOption(OpenCriticSearchResultItem item)
@@ -70,6 +67,9 @@ namespace OpenCriticMetadata
 
         private GameDetails ToGameDetails(OpenCriticGame game)
         {
+            if (game == null)
+                return null;
+
             var output = new GameDetails
             {
                 Platforms = game.Platforms.SelectMany(p => this.platformUtility.GetPlatforms(p.Name)).ToList(),
@@ -83,7 +83,7 @@ namespace OpenCriticMetadata
                 output.Description = Regex.Replace(game.Description, @"\r?\n", "<br>$0");
 
             if (output.CommunityScore < 1) output.CommunityScore = null;
-            if (output.CriticScore< 1) output.CriticScore = null;
+            if (output.CriticScore < 1) output.CriticScore = null;
 
             output.Names.Add(game.Name);
             output.Developers.AddRange(GetCompanies(game, "DEVELOPER"));
@@ -116,6 +116,25 @@ namespace OpenCriticMetadata
                 return new string[0];
 
             return game.Companies.Where(c => string.Equals(c.Type, type, StringComparison.InvariantCultureIgnoreCase)).Select(c => c.Name);
+        }
+
+        private T Execute<T>(RestRequest request) where T : class
+        {
+            try
+            {
+                var response = restClient.Execute(request);
+                if (!string.IsNullOrEmpty(response.ErrorMessage))
+                {
+                    logger.Error(response.ErrorMessage);
+                }
+                var data = JsonConvert.DeserializeObject<T>(response.Content);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, $"Error getting {request.Resource}");
+                return null;
+            }
         }
     }
 
