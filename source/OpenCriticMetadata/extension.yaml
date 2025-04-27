@@ -1,12 +1,14 @@
 ﻿Id: OpenCriticMetadata
 Name: OpenCritic Metadata Provider
 Author: Jeshibu
-Version: 0.1
+Version: 0.1.1
 Module: OpenCriticMetadata.dll
 Type: MetadataProvider
 Icon: icon.png
 Links:
   - Name: GitHub repository
     Url: https://github.com/Jeshibu/PlayniteExtensions
+  - Name: OpenCritic
+    Url: https://opencritic.com/
   - Name: Donate via Ko-fi
     Url: https://ko-fi.com/Jeshibu

@@ -87,7 +87,8 @@ namespace PlayniteExtensions.Metadata.Common
                     try
                     {
                         var searchResult = dataSource.Search(a, new System.Threading.CancellationToken());
-                        searchOutput.AddRange(searchResult.Select(dataSource.ToGenericItemOption));
+                        if (searchResult != null)
+                            searchOutput.AddRange(searchResult.Select(dataSource.ToGenericItemOption));
                     }
                     catch (Exception e)
                     {

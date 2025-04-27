@@ -6,3 +6,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/OpenCriticMetadata_0_1.pext
     Changelog:
     - Initial release
+  - Version: 0.1.1
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2025-04-27
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-04-26/OpenCriticMetadata_0_1_1.pext
+    Changelog:
+    - Fixed DLL conflict with some other Playnite plugins preventing fetching of data
