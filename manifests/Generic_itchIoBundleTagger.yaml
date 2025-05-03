@@ -99,3 +99,13 @@ Packages:
     - Added support for new bundle - TTRPGs for Trans Rights - West Virginia
     - Added support for new bundle - TTRPGs for Palestine
     - Added support for new bundle - Queer Games Bundle 2024
+  - Version: 0.14
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2025-05-03
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.14/itchIoBundleTagger_0_14.pext
+    Changelog:
+    - "Fixed Steam link sometimes being added to games that already had one if the URLs didn't match exactly"
+    - "Added support for new bundle - California Fire Relief Bundle"
+    - "Added support for new bundle - Amor per Valencia / Love for Valencia"
+    - "Added support for new bundle - TTRPGs for Trans Rights - Ohio"
+    - "Added support for new bundle - Crips for eSims for Gaza Bundle"
