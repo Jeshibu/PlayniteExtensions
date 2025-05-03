@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
 namespace itchioBundleTagger
@@ -112,10 +113,8 @@ namespace itchioBundleTagger
                 tag = PlayniteApi.Database.Tags.FirstOrDefault(t => t.Name == computedTagName);
 
             if (tag == null)
-            {
-                tag = new Tag(computedTagName);
-                PlayniteApi.Database.Tags.Add(tag);
-            }
+                PlayniteApi.Database.Tags.Add(tag = new Tag(computedTagName));
+
             TagsCache.Add(key, tag);
             Settings.Settings.TagIds[key] = tag.Id;
             return tag;
@@ -189,25 +188,19 @@ namespace itchioBundleTagger
                             if (game.GameId == null || !allData.TryGetValue(game.GameId, out var data))
                                 continue;
 
-                            if (!string.IsNullOrWhiteSpace(data.Steam))
+                            var steamId = GetSteamStoreUrlId(data.Steam);
+
+                            if (steamId != null)
                             {
                                 if (Settings.Settings.AddAvailableOnSteamTag)
                                     gameUpdated |= AddTagToGame(game, "steam");
 
-                                if (Settings.Settings.AddSteamLink)
+                                if (Settings.Settings.AddSteamLink && !GameHasSteamStoreLink(game, steamId))
                                 {
-                                    List<Link> links = new List<Link>();
-                                    if (game.Links != null)
-                                        links = new List<Link>(game.Links);
-                                    else
-                                        links = new List<Link>();
-
-                                    if (!links.Any(l => l.Url.StartsWith(data.Steam)))
-                                    {
-                                        links.Add(new Link("Steam", data.Steam));
-                                        game.Links = new ObservableCollection<Link>(links); //adding to observablecollections on another thread throws exceptions, so just replace them
-                                        gameUpdated = true;
-                                    }
+                                    var links = game.Links != null ? new ObservableCollection<Link>(game.Links) : new ObservableCollection<Link>();
+                                    links.Add(new Link("Steam", data.Steam));
+                                    game.Links = links; //adding to observablecollections on another thread throws exceptions, so just replace them
+                                    gameUpdated = true;
                                 }
                             }
 
@@ -241,6 +234,34 @@ namespace itchioBundleTagger
                     TagsCache.Clear();
                 }
             }, new GlobalProgressOptions(Translator.ProgressStart) { Cancelable = true, IsIndeterminate = false });
+        }
+
+        private Regex SteamUrlRegex = new Regex(@"https://store\.steampowered\.com/app/(?<id>[0-9]+)", RegexOptions.Compiled);
+        private string GetSteamStoreUrlId(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+                return null;
+
+            var match = SteamUrlRegex.Match(url);
+            if (!match.Success)
+                return null;
+
+            return match.Groups["id"].Value;
+        }
+
+        private bool GameHasSteamStoreLink(Game game, string steamId)
+        {
+            if (string.IsNullOrWhiteSpace(steamId))
+                return true;
+
+            if (game.Links == null || game.Links.Count == 0)
+                return false;
+
+            foreach (var link in game.Links)
+                if (GetSteamStoreUrlId(link.Url) == steamId)
+                    return true;
+
+            return false;
         }
     }
 
