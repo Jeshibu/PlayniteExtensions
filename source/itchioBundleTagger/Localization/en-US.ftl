@@ -16,6 +16,10 @@ tag-bundle-prb24 = Palestinian Relief Bundle 2024
 tag-bundle-ttrpgwv = TTRPGs for Trans Rights - West Virginia
 tag-bundle-ttrpgfp = TTRPGs for Palestine
 tag-bundle-queer2024 = Queer Games Bundle 2024
+tag-bundle-cfr2025 = California Fire Relief Bundle
+tag-bundle-valencia = Amor per Valencia / Love for Valencia
+tag-bundle-ttrpgfohio = TTRPGs for Trans Rights - Ohio
+tag-bundle-crips = Crips for eSims for Gaza Bundle
 
 setting-tag-prefix = Prefix tag names with: 
 setting-add-free-tag = Add "{ tag-free }" tag if applicable
