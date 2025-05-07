@@ -90,7 +90,7 @@ namespace MobyGamesMetadata.Api.V2
     public abstract class MobyImage
     {
         public string caption { get; set; }
-        public int ordering { get; set; }
+        public int? ordering { get; set; }
         public int thumbnail_width { get; set; }
         public int thumbnail_height { get; set; }
         public int width { get; set; }

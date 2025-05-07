@@ -39,6 +39,10 @@ namespace MobyGamesMetadata.Api
             if (apiDetails.Description == null)
                 apiDetails.Description = scraperDetails.Description;
 
+            foreach (var scraperLink in scraperDetails.Links)
+                if (!apiDetails.Links.Any(l => l.Url == scraperLink.Url))
+                    apiDetails.Links.Add(scraperLink);
+
             return apiDetails;
         }
 

@@ -5,7 +5,8 @@
     <AssemblyTitle>MobyGamesMetadata</AssemblyTitle>
     <Product>MobyGamesMetadata</Product>
     <Version>0.7</Version>
-    <Copyright>Copyright © 2019</Copyright>
+    <Copyright>Copyright © 2025</Copyright>
+    <LangVersion>12.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="ComposableAsync.Core" Version="1.3.0" />

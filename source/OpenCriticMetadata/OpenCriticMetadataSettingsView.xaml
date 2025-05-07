@@ -3,9 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:pec="clr-namespace:PlayniteExtensions.Common"
+             xmlns:opencriticmetadata="clr-namespace:OpenCriticMetadata"
+             d:DataContext="{d:DesignInstance Type=opencriticmetadata:OpenCriticMetadataSettingsViewModel}"
+             xmlns:dd="urn:gong-wpf-dragdrop"
              mc:Ignorable="d"
-             d:DesignHeight="400" d:DesignWidth="600">
-    <StackPanel>
-        <TextBlock Text="No settings yet!"/>
+             d:DesignHeight="400" d:DesignWidth="600" d:Background="White">
+    <StackPanel Margin="20">
+        <StackPanel.Resources>
+            <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+                <Setter Property="SelectionMode" Value="Extended"/>
+                <Setter Property="MinHeight" Value="15"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="dd:DragDrop.IsDragSource" Value="True"/>
+                <Setter Property="dd:DragDrop.IsDropTarget" Value="True"/>
+                <Setter Property="Width" Value="350"/>
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="pec:IgnoreScrollBehaviour.IgnoreScroll" Value="True" />
+            </Style>
+        </StackPanel.Resources>
+
+        <TextBlock TextWrapping="Wrap">Use the following image types for covers, in the specified order (drag and drop to reorder):</TextBlock>
+        <ListBox Name="IconImageTypes" ItemsSource="{Binding Settings.Icon.ImageTypes}" d:ItemsSource="{d:SampleData ItemCount=2}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
+                        <TextBlock Text="░" Padding="10,0"/>
+                        <CheckBox IsChecked="{Binding Checked}" Content="{Binding Name}" Width="Auto"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </StackPanel>
 </UserControl>

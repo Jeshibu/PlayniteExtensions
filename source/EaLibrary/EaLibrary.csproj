@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{D0EFC813-C836-4167-A120-2DE785E140A1}</ProjectGuid>
+    <ProjectGuid>{C8D3E73F-8236-4B04-8456-095FF702FABA}</ProjectGuid>
     <TargetFramework>net462</TargetFramework>
     <AssemblyTitle>OriginLibrary</AssemblyTitle>
     <Product>OriginLibrary</Product>
@@ -64,7 +64,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\originicon.png">
+    <None Include="Resources\ea_icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
