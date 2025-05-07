@@ -1,27 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace OriginLibrary.Models
+namespace EaLibrary.Models;
+
+public class StorePageMetadata
 {
-    public class StorePageMetadata
+    public class Components
     {
-        public class Components
-        {
-            public List<Dictionary<string, object>> items;
-        }
-
-        public class GameHub
-        {
-            public string name;
-            public string type;
-            public string locale;
-            public string country;
-            public Components components;
-        }
-
-        public GameHub gamehub;
+        public List<Dictionary<string, object>> items;
     }
+
+    public class GameHub
+    {
+        public string name;
+        public string type;
+        public string locale;
+        public string country;
+        public Components components;
+    }
+
+    public GameHub gamehub;
 }

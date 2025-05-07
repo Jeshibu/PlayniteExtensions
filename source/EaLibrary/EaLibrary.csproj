@@ -2,13 +2,13 @@
   <PropertyGroup>
     <ProjectGuid>{C8D3E73F-8236-4B04-8456-095FF702FABA}</ProjectGuid>
     <TargetFramework>net462</TargetFramework>
-    <AssemblyTitle>OriginLibrary</AssemblyTitle>
-    <Product>OriginLibrary</Product>
-    <Description>Origin library support plugin for Playnite</Description>
-    <Copyright>Copyright © Josef Nemec 2018</Copyright>
+    <AssemblyTitle>EaLibrary</AssemblyTitle>
+    <Product>EaLibrary</Product>
+    <Description>EA library support plugin for Playnite</Description>
+    <Copyright>Copyright © Jeshibu 2025</Copyright>
     <Deterministic>false</Deterministic>
-    <AssemblyVersion>2.13.0.*</AssemblyVersion>
-    <FileVersion>2.13.0.*</FileVersion>
+    <AssemblyVersion>3.0</AssemblyVersion>
+    <FileVersion>3.0</FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <LangVersion>12.0</LangVersion>
   </PropertyGroup>
@@ -43,7 +43,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="addon.yaml" />
     <None Include="extension.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace EaLibrary;
 
-namespace OriginLibrary
+public class Environment
 {
-    public class Environment
+    public static bool IsDebugBuild
     {
-        public static bool IsDebugBuild
+        get
         {
-            get
-            {
 #if DEBUG
-                return true;
+            return true;
 #else
-                return false;
+            return false;
 #endif
-            }
         }
     }
 }

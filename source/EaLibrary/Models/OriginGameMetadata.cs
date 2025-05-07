@@ -1,15 +1,9 @@
 ﻿using Playnite.SDK.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OriginLibrary.Models
+namespace EaLibrary.Models;
+
+public class OriginGameMetadata : GameMetadata
 {
-    public class OriginGameMetadata : GameMetadata
-    {
-        public GameStoreDataResponse StoreDetails { get; set; }
-        public StorePageMetadata StoreMetadata { get; set; }
-    }
+    public GameStoreDataResponse StoreDetails { get; set; }
+    public StorePageMetadata StoreMetadata { get; set; }
 }

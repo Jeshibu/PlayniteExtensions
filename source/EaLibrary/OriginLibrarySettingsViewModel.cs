@@ -1,84 +1,77 @@
-﻿using OriginLibrary.Services;
-using Playnite;
+﻿using EaLibrary.Services;
 using Playnite.SDK;
-using Playnite.Commands;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OriginLibrary
+namespace EaLibrary;
+
+public class OriginLibrarySettings
 {
-    public class OriginLibrarySettings
+    public int Version { get; set; }
+    public bool ImportInstalledGames { get; set; } = true;
+    public bool ConnectAccount { get; set; } = false;
+    public bool ImportUninstalledGames { get; set; } = false;
+}
+
+public class OriginLibrarySettingsViewModel : PluginSettingsViewModel<OriginLibrarySettings, OriginLibrary>
+{
+    public bool IsUserLoggedIn
     {
-        public int Version { get; set; }
-        public bool ImportInstalledGames { get; set; } = true;
-        public bool ConnectAccount { get; set; } = false;
-        public bool ImportUninstalledGames { get; set; } = false;
+        get
+        {
+            using (var view = PlayniteApi.WebViews.CreateOffscreenView())
+            {
+                var api = new OriginAccountClient(view);
+                return api.GetIsUserLoggedIn();
+            }
+        }
     }
 
-    public class OriginLibrarySettingsViewModel : PluginSettingsViewModel<OriginLibrarySettings, OriginLibrary>
+    public RelayCommand<object> LoginCommand
     {
-        public bool IsUserLoggedIn
+        get => new RelayCommand<object>((a) =>
         {
-            get
+            Login();
+        });
+    }
+
+    public OriginLibrarySettingsViewModel(OriginLibrary library, IPlayniteAPI api) : base(library, api)
+    {
+        var savedSettings = LoadSavedSettings();
+        if (savedSettings != null)
+        {
+            if (savedSettings.Version == 0)
             {
-                using (var view = PlayniteApi.WebViews.CreateOffscreenView())
+                Logger.Debug("Updating Origin settings from version 0.");
+                if (savedSettings.ImportUninstalledGames)
                 {
-                    var api = new OriginAccountClient(view);
-                    return api.GetIsUserLoggedIn();
+                    savedSettings.ConnectAccount = true;
                 }
             }
+
+            savedSettings.Version = 1;
+            Settings = savedSettings;
         }
-
-        public RelayCommand<object> LoginCommand
+        else
         {
-            get => new RelayCommand<object>((a) =>
-            {
-                Login();
-            });
+            Settings = new OriginLibrarySettings { Version = 1 };
         }
+    }
 
-        public OriginLibrarySettingsViewModel(OriginLibrary library, IPlayniteAPI api) : base(library, api)
+    private void Login()
+    {
+        try
         {
-            var savedSettings = LoadSavedSettings();
-            if (savedSettings != null)
+            using (var view = PlayniteApi.WebViews.CreateView(490, 670))
             {
-                if (savedSettings.Version == 0)
-                {
-                    Logger.Debug("Updating Origin settings from version 0.");
-                    if (savedSettings.ImportUninstalledGames)
-                    {
-                        savedSettings.ConnectAccount = true;
-                    }
-                }
+                var api = new OriginAccountClient(view);
+                api.Login();
+            }
 
-                savedSettings.Version = 1;
-                Settings = savedSettings;
-            }
-            else
-            {
-                Settings = new OriginLibrarySettings { Version = 1 };
-            }
+            OnPropertyChanged(nameof(IsUserLoggedIn));
         }
-
-        private void Login()
+        catch (Exception e) when (!Environment.IsDebugBuild)
         {
-            try
-            {
-                using (var view = PlayniteApi.WebViews.CreateView(490, 670))
-                {
-                    var api = new OriginAccountClient(view);
-                    api.Login();
-                }
-
-                OnPropertyChanged(nameof(IsUserLoggedIn));
-            }
-            catch (Exception e) when (!Environment.IsDebugBuild)
-            {
-                Logger.Error(e, "Failed to authenticate user.");
-            }
+            Logger.Error(e, "Failed to authenticate user.");
         }
     }
 }

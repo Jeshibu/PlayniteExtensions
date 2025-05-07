@@ -1,102 +1,98 @@
-﻿using OriginLibrary.Models;
+﻿using EaLibrary.Models;
 using Playnite.SDK;
 using Playnite.SDK.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace OriginLibrary.Services
+namespace EaLibrary.Services;
+
+public class OriginAccountClient
 {
-    public class OriginAccountClient
+    private const string loginUrl = @"https://www.ea.com/login";
+    private const string profileUrl = @"https://myaccount.ea.com/cp-ui/aboutme/index";
+    private const string logoutUrl = @"https://accounts.ea.com/connect/logout?client_id=EADOTCOM-WEB-SERVER&locale=en_US&redirect_uri=https%3A%2F%2Fwww.ea.com";
+    private const string tokenUrl = @"https://accounts.ea.com/connect/auth?client_id=ORIGIN_JS_SDK&response_type=token&redirect_uri=nucleus:rest&prompt=none";
+    private ILogger logger = LogManager.GetLogger();
+    private IWebView webView;
+
+    public OriginAccountClient(IWebView webView)
     {
-        private const string loginUrl = @"https://www.ea.com/login";
-        private const string profileUrl = @"https://myaccount.ea.com/cp-ui/aboutme/index";
-        private const string logoutUrl = @"https://accounts.ea.com/connect/logout?client_id=EADOTCOM-WEB-SERVER&locale=en_US&redirect_uri=https%3A%2F%2Fwww.ea.com";
-        private const string tokenUrl = @"https://accounts.ea.com/connect/auth?client_id=ORIGIN_JS_SDK&response_type=token&redirect_uri=nucleus:rest&prompt=none";
-        private ILogger logger = LogManager.GetLogger();
-        private IWebView webView;
+        this.webView = webView;
+    }
 
-        public OriginAccountClient(IWebView webView)
+    public List<AccountEntitlementsResponse.Entitlement> GetOwnedGames(long userId, AuthTokenResponse token)
+    {
+        var client = new WebClient();
+        client.Headers.Add("authtoken", token.access_token);
+        client.Headers.Add("accept", "application/vnd.origin.v3+json; x-cache/force-write");
+
+        var stringData = client.DownloadString(string.Format(@"https://api1.origin.com/ecommerce2/consolidatedentitlements/{0}?machine_hash=1", userId));
+        var data = Serialization.FromJson<AccountEntitlementsResponse>(stringData);
+        return data.entitlements;
+    }
+
+    public AccountInfoResponse GetAccountInfo(AuthTokenResponse token)
+    {
+        var client = new WebClient();
+        client.Headers.Add("Authorization", token.token_type + " " + token.access_token);
+        var stringData = client.DownloadString(@"https://gateway.ea.com/proxy/identity/pids/me");
+        return Serialization.FromJson<AccountInfoResponse>(stringData);
+    }
+
+    public UsageResponse GetUsage(long userId, string gameId, AuthTokenResponse token)
+    {
+        var gameStoreData = OriginApiClient.GetGameStoreData(gameId);
+        string multiplayerId = gameStoreData.platforms.First(a => a.platform == "PCWIN").multiplayerId;
+        string masterTitleId = gameStoreData.masterTitleId;
+
+        var client = new WebClient();
+        client.Headers.Add("authtoken", token.access_token);
+        client.Headers.Add("X-Origin-Platform", "PCWIN");
+        if (!string.IsNullOrEmpty(multiplayerId))
         {
-            this.webView = webView;
+            client.Headers.Add("MultiplayerId", multiplayerId);
         }
 
-        public List<AccountEntitlementsResponse.Entitlement> GetOwnedGames(long userId, AuthTokenResponse token)
+        var stringData = client.DownloadString(string.Format(@"https://api1.origin.com/atom/users/{0}/games/{1}/usage", userId, masterTitleId));
+        return new UsageResponse(stringData);
+    }
+
+    public AuthTokenResponse GetAccessToken()
+    {
+        webView.NavigateAndWait(tokenUrl);
+        var stringInfo = webView.GetPageText();
+        var tokenData = Serialization.FromJson<AuthTokenResponse>(stringInfo);
+        return tokenData;
+    }
+
+    public void Login()
+    {
+        webView.LoadingChanged += async (s, e) =>
         {
-            var client = new WebClient();
-            client.Headers.Add("authtoken", token.access_token);
-            client.Headers.Add("accept", "application/vnd.origin.v3+json; x-cache/force-write");
-
-            var stringData = client.DownloadString(string.Format(@"https://api1.origin.com/ecommerce2/consolidatedentitlements/{0}?machine_hash=1", userId));
-            var data = Serialization.FromJson<AccountEntitlementsResponse>(stringData);
-            return data.entitlements;
-        }
-
-        public AccountInfoResponse GetAccountInfo(AuthTokenResponse token)
-        {
-            var client = new WebClient();
-            client.Headers.Add("Authorization", token.token_type + " " + token.access_token);
-            var stringData = client.DownloadString(@"https://gateway.ea.com/proxy/identity/pids/me");
-            return Serialization.FromJson<AccountInfoResponse>(stringData);
-        }
-
-        public UsageResponse GetUsage(long userId, string gameId, AuthTokenResponse token)
-        {
-            var gameStoreData = OriginApiClient.GetGameStoreData(gameId);
-            string multiplayerId = gameStoreData.platforms.First(a => a.platform == "PCWIN").multiplayerId;
-            string masterTitleId = gameStoreData.masterTitleId;
-
-            var client = new WebClient();
-            client.Headers.Add("authtoken", token.access_token);
-            client.Headers.Add("X-Origin-Platform", "PCWIN");
-            if (!string.IsNullOrEmpty(multiplayerId))
+            var address = webView.GetCurrentAddress();
+            if (address.StartsWith(profileUrl) && (await webView.GetPageTextAsync()).Contains("EA ID"))
             {
-                client.Headers.Add("MultiplayerId", multiplayerId);
+                webView.Close();
+                return;
             }
 
-            var stringData = client.DownloadString(string.Format(@"https://api1.origin.com/atom/users/{0}/games/{1}/usage", userId, masterTitleId));
-            return new UsageResponse(stringData);
-        }
-
-        public AuthTokenResponse GetAccessToken()
-        {
-            webView.NavigateAndWait(tokenUrl);
-            var stringInfo = webView.GetPageText();
-            var tokenData = Serialization.FromJson<AuthTokenResponse>(stringInfo);
-            return tokenData;
-        }
-
-        public void Login()
-        {
-            webView.LoadingChanged += async (s, e) =>
+            if (address.StartsWith(@"https://www.ea.com/") &&
+                !address.StartsWith(loginUrl) &&
+                !address.StartsWith(logoutUrl) &&
+                !address.StartsWith(profileUrl))
             {
-                var address = webView.GetCurrentAddress();
-                if (address.StartsWith(profileUrl) && (await webView.GetPageTextAsync()).Contains("EA ID"))
-                {
-                    webView.Close();
-                    return;
-                }
+                webView.Navigate(profileUrl);
+            }
+        };
 
-                if (address.StartsWith(@"https://www.ea.com/") &&
-                    !address.StartsWith(loginUrl) &&
-                    !address.StartsWith(logoutUrl) &&
-                    !address.StartsWith(profileUrl))
-                {
-                    webView.Navigate(profileUrl);
-                }
-            };
+        webView.Navigate(logoutUrl);
+        webView.OpenDialog();
+    }
 
-            webView.Navigate(logoutUrl);
-            webView.OpenDialog();
-        }
-
-        public bool GetIsUserLoggedIn()
-        {
-            var token = GetAccessToken();
-            return string.IsNullOrEmpty(token?.error);
-        }
+    public bool GetIsUserLoggedIn()
+    {
+        var token = GetAccessToken();
+        return string.IsNullOrEmpty(token?.error);
     }
 }

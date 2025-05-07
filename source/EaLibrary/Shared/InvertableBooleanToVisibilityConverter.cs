@@ -1,59 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Playnite.Converters
+namespace Playnite.Converters;
+
+[ValueConversion(typeof(bool), typeof(Visibility))]
+public class InvertedBooleanToVisibilityConverter : MarkupExtension, IValueConverter
 {
-    [ValueConversion(typeof(bool), typeof(Visibility))]
-    public class InvertedBooleanToVisibilityConverter : MarkupExtension, IValueConverter
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var boolValue = (bool)value;
-            return boolValue ? Visibility.Collapsed : Visibility.Visible;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return null;
-        }
-
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return this;
-        }
+        var boolValue = (bool)value;
+        return boolValue ? Visibility.Collapsed : Visibility.Visible;
     }
 
-    [ValueConversion(typeof(bool), typeof(Visibility))]
-    public class InvertableBooleanToVisibilityConverter : IValueConverter
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        enum Parameters
+        return null;
+    }
+
+    public override object ProvideValue(IServiceProvider serviceProvider)
+    {
+        return this;
+    }
+}
+
+[ValueConversion(typeof(bool), typeof(Visibility))]
+public class InvertableBooleanToVisibilityConverter : IValueConverter
+{
+    enum Parameters
+    {
+        Normal, Inverted
+    }
+
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        var boolValue = (bool)value;
+        var direction = (Parameters)Enum.Parse(typeof(Parameters), (string)parameter);
+
+        if (direction == Parameters.Inverted)
         {
-            Normal, Inverted
+            return !boolValue ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var boolValue = (bool)value;
-            var direction = (Parameters)Enum.Parse(typeof(Parameters), (string)parameter);
+        return boolValue ? Visibility.Visible : Visibility.Collapsed;
+    }
 
-            if (direction == Parameters.Inverted)
-            {
-                return !boolValue ? Visibility.Visible : Visibility.Collapsed;
-            }
-
-            return boolValue ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return null;
-        }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return null;
     }
 }
