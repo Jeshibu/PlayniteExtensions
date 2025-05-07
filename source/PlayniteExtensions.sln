@@ -118,6 +118,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCriticMetadata", "OpenC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtraEmulatorProfiles", "ExtraEmulatorProfiles\ExtraEmulatorProfiles.csproj", "{9E96D1DD-7223-4948-A297-D0F731CBE9B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OriginLibrary", "OriginLibrary\OriginLibrary.csproj", "{D0EFC813-C836-4167-A120-2DE785E140A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -272,6 +274,10 @@ Global
 		{9E96D1DD-7223-4948-A297-D0F731CBE9B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E96D1DD-7223-4948-A297-D0F731CBE9B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E96D1DD-7223-4948-A297-D0F731CBE9B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0EFC813-C836-4167-A120-2DE785E140A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0EFC813-C836-4167-A120-2DE785E140A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0EFC813-C836-4167-A120-2DE785E140A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0EFC813-C836-4167-A120-2DE785E140A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
