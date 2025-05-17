@@ -21,7 +21,9 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="PlayniteSDK" Version="6.4.0" />
+    <PackageReference Include="RestSharp" Version="108.0.2" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Playnite.SDK">
@@ -30,6 +32,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Management.Automation" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Data.DataSetExtensions" />
