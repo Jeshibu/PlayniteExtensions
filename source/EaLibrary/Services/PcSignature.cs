@@ -14,20 +14,20 @@ public class PcSignature
 
     public static string GetPcSignature(HardwareInfo h)
     {
-        var serialized = JsonConvert.SerializeObject(h, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.None });
+        var serialized = ToJson(h);
         var s1 = Base64Encode(serialized);
 
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes("ISa3dpGOc8wW7Adn4auACSQmaccrOyR2")); //nt5FfJbdPzNcl2pkC3zgjO43Knvscxft if sv=v2
-        var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(serialized));
-        var s2 = Convert.ToBase64String(hashBytes);
+        var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(s1));
+        var s2 = Base64Encode(hashBytes);
         return $"{s1}.{s2}";
     }
 
-    public static string Base64Encode(string plainText)
-    {
-        var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
-        return Convert.ToBase64String(plainTextBytes);
-    }
+    private static string ToJson(object obj) => JsonConvert.SerializeObject(obj, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.None });
+
+    private static string Base64Encode(string plainText) => Base64Encode(Encoding.UTF8.GetBytes(plainText));
+
+    private static string Base64Encode(byte[] data) => Convert.ToBase64String(data).TrimEnd('=').Replace('+', '-');
 }
 
 public class HardwareInfo
@@ -60,7 +60,7 @@ public class HardwareInfo
         var output = new HardwareInfo(
             bsn: GetWmiProperty("Win32_BIOS", "SerialNumber").Single(),
             gid: GetGpuId(),
-            hsn: GetWmiProperty("Win32_DiskDrive", "SerialNumber").First().Trim(),
+            hsn: GetWmiProperty("Win32_DiskDrive", "SerialNumber").First(),
             msn: GetWmiProperty("Win32_BaseBoard", "SerialNumber").First().Trim(),
             mac: GetPhysicalMacAddresses().FirstOrDefault()
         );
@@ -70,17 +70,18 @@ public class HardwareInfo
 
     public void SetMidField()
     {
-        var hwBytes = Encoding.UTF8.GetBytes($"{bsn}{gid}{hsn}{msn}");
+        var data = Encoding.UTF8.GetBytes($"{bsn}{gid}{hsn}{msn}");
         ulong offset = 0xcbf29ce484222325;
-        ulong prime = 0x100000001b3;
+        const ulong prime = 0x100000001b3;
 
-        foreach (var b in hwBytes)
+        foreach (byte b in data)
         {
             offset ^= b;
-            offset = (offset * prime) & 0xFFFFFFFFFFFFFFFF;
+            offset *= prime;
         }
 
-        mid = offset.ToString("x16");
+        //mid = offset.ToString("x16");
+        mid = offset.ToString();
     }
 
     private static IEnumerable<string> GetWmiProperty(string className, string propertyName)
@@ -111,11 +112,18 @@ public class HardwareInfo
         foreach (var obj in searcher.Get())
         {
             var name = obj.GetPropertyValue("Name");
-            bool physical = (bool)obj.GetPropertyValue("PhysicalAdapter");
-            if (!physical)
+            if (!(bool)obj.GetPropertyValue("PhysicalAdapter"))
                 continue;
 
-            yield return obj.GetPropertyValue("MACAddress").ToString();
+            object speed = obj.GetPropertyValue("Speed") as ulong?;
+            if (speed is null or 0)
+                continue;
+
+            var macAddress = obj.GetPropertyValue("MACAddress") as string;
+            if (macAddress is null)
+                continue;
+
+            yield return "$" + macAddress.Replace(":", "").ToLowerInvariant();
         }
     }
 
