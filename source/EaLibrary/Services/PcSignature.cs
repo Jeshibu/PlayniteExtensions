@@ -68,7 +68,7 @@ namespace EaLibrary.Services
                 gid: GetGpuId(),
                 hsn: GetWmiProperty("Win32_DiskDrive", "SerialNumber").FirstOrDefault()?.Trim() ?? string.Empty,
                 msn: GetWmiProperty("Win32_BaseBoard", "SerialNumber").FirstOrDefault()?.Trim() ?? string.Empty,
-                mac: GetPhysicalMacAddresses().FirstOrDefault()
+                mac: GetPhysicalMacAddresses().FirstOrDefault() ?? null
             );
         }
 
