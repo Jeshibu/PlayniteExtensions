@@ -163,13 +163,14 @@ namespace EaLibrary.Services
                 {
                     var macAddress = obj.GetPropertyValue("MACAddress") as string;
                     if (!string.IsNullOrEmpty(macAddress))
-                        yield return macAddress;
+                        return macAddress;
                 }
             }
             catch
             {
-                yield break;
+                // Ignore exceptions and return an empty collection
             }
+            return null;
         }
 
         private static string GetTimeStampString() => DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff");
