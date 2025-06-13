@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 
 namespace Barnite.Scrapers;
@@ -40,7 +41,7 @@ public class MobyGamesHelper : MobyGamesIdUtility
         var title = page.DocumentNode.SelectSingleNode(@"//h1")?.InnerText.HtmlDecode();
         if (title == null) return null;
 
-        var platforms = page.DocumentNode.SelectNodes("//ul[@id='platformLinks']/li//a[starts-with(@href, '/game/platform:')]")?.SelectMany(a => PlatformUtility.GetPlatforms(a.InnerText.HtmlDecode())).ToHashSet();
+        var platforms = page.DocumentNode.SelectNodes("//ul[@id='platformLinks']/li//a[starts-with(@href, '/platform/')]")?.SelectMany(a => PlatformUtility.GetPlatforms(a.InnerText.HtmlDecode())).ToHashSet();
 
         var data = new GameDetails();
         data.Names.Add(title);
@@ -131,11 +132,50 @@ public class MobyGamesHelper : MobyGamesIdUtility
             }
         }
 
-        var linkElements = page.DocumentNode.SelectNodes("//section[@id='gameSites' or @id='gameIdentifiers']//li/a[@href]");
-        if (linkElements != null)
-            data.Links.AddRange(linkElements.Select(le => new Link(le.InnerText, le.GetAttributeValue("href", ""))));
+        data.Links.AddRange(GetLinks(page));
 
         return data;
+    }
+
+    private Regex WhiteSpaceRegex = new Regex(@"\s+", RegexOptions.Compiled);
+
+    private string NormalizeHtmlWhitespace(string input) => WhiteSpaceRegex.Replace(input, " ");
+
+    private IEnumerable<Link> GetLinks(HtmlDocument page)
+    {
+        var linkElements = page.DocumentNode.SelectNodes("//main//a[@href and contains(concat(' ',normalize-space(@class),' '),' link-external ')]");
+        if (linkElements == null)
+            yield break;
+
+        foreach (var le in linkElements)
+        {
+            if (le.GetAttributeValue("id", "") == "store-offers-top")
+                continue;
+
+            var linkText = NormalizeHtmlWhitespace(le.InnerText);
+            if (linkText.Contains("eBay") || linkText.Contains("Amazon"))
+                continue;
+
+            var name = linkText.Split([" new on "], StringSplitOptions.None).Last();
+            if (name == "GOG.com")
+                name = "GOG";
+
+            var url = le.GetAttributeValue("href", "");
+            if (url.Contains('?'))
+            {
+                var queryStrings = url.Split(['?'], 2).Last().Split(['&']);
+                foreach (var q in queryStrings)
+                {
+                    var segments = q.Split(['='], 2);
+                    if (segments.Length == 2 && segments[0] == "url")
+                    {
+                        url = new Uri(WebUtility.UrlDecode(segments[1])).GetLeftPart(UriPartial.Path);
+                        break;
+                    }
+                }
+            }
+            yield return new Link(name, url);
+        }
     }
 
     public static ReleaseDate? ParseReleaseDate(string releaseDateString)

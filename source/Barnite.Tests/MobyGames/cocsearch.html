@@ -1,23 +1,54 @@
 <!doctype html>
 <html lang="en" onclick>
   <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DF0Y2K8D8P"></script>
     <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){
+        dataLayer.push(arguments);
+        }
+      gtag('config', 'GA_MEASUREMENT_ID', {
+        'debug_mode': true
+      });
+      gtag('js', new Date());
+      gtag('config', 'G-DF0Y2K8D8P');
 
-      ga('create', 'UA-258321-1', 'auto');
-      ga('send', 'pageview');
+      window.onload = function() {
+        document.getElementById('store-offers-top')?.addEventListener('click', function() {
+          gtag('event', 'store_offers_top', {
+            'event_category': 'click',
+            'event_label': 'store_offers_top'
+            });
+          });
+        document.getElementById('show-more-offers')?.addEventListener('click', function() {
+          gtag('event', 'more_offers', {
+            'event_category': 'click',
+            'event_label': 'more_offers'
+            });
+          });
+        document.getElementById('atari-advert-wide')?.addEventListener('click', function() {
+          gtag('event', 'banner-click', {
+            'event_category': 'click',
+            'event_label': 'atari-advert'
+            });
+          });
+        document.getElementById('atari-advert-narrow')?.addEventListener('click', function() {
+          gtag('event', 'banner-click', {
+            'event_category': 'click',
+            'event_label': 'atari-advert'
+            });
+          });
+        }
+
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link loading="lazy" rel="shortcut icon" href="/static/img/favicon.ico">
     <link rel="apple-touch-icon" href="/static/img/moby-avatar.png">
     <link rel="search" type="application/opensearchdescription+xml" href="https://www.mobygames.com/search.xml" title="MobyGames">
-    <link rel="modulepreload" href="https://www.mobygames.com/static/js/shared.52fe9187.js">
-<link rel="modulepreload" href="https://www.mobygames.com/static/js/main.a32da2e1.js">
-    <link rel="stylesheet" href="https://www.mobygames.com/static/css/style.a897d96e.css">
+    <link rel="modulepreload" href="https://www.mobygames.com/static/js/shared.3fb97551.js">
+<link rel="modulepreload" href="https://www.mobygames.com/static/js/main.52efc182.js">
+    <link rel="stylesheet" href="https://www.mobygames.com/static/css/style.b784b7af.css">
     <meta property="og:site_name" content="MobyGames">
     <meta property="og:type" content="website">
 <meta name="robots" content="noindex">
@@ -32,6 +63,7 @@
         <ul class="navbar-menu">
           <li class="navbar-logo">
             <a href="/"><img src="https://www.mobygames.com/static/img/logo.37887f87.png" width="108" height="50" alt="mobygames logo" class="logo"></a>
+            
           </li>
           <li class="navbar-status show-sm">
           </li>
@@ -42,23 +74,35 @@
                 <input id="search" type="search" class="form-input navbar-search-input" name="q" value="093155118706" placeholder="Search games, people, companies..." aria-label="Search">
               </form>
               </noscript>
-              <search s-url="/search/" a-url="/search/auto/" q="093155118706" :trending='[{"a": false, "i": "https://cdn.mobygames.com/3b3cf2e8-af63-11ed-a6d3-02420a0001ba.webp", "n": "System Shock", "t": 1, "u": "https://www.mobygames.com/game/681/system-shock/"}, {"a": false, "i": "https://cdn.mobygames.com/845970dc-af36-11ed-8847-02420a0001be.webp", "n": "The Company of Myself", "t": 1, "u": "https://www.mobygames.com/game/43859/the-company-of-myself/"}, {"a": false, "i": "https://cdn.mobygames.com/b5011940-af3d-11ed-a6d3-02420a0001ba.webp", "n": "Indiana Jones and the Last Crusade: The Graphic Adventure", "t": 1, "u": "https://www.mobygames.com/game/534/indiana-jones-and-the-last-crusade-the-graphic-adventure/"}, {"a": false, "i": "https://cdn.mobygames.com/d9b1c622-af47-11ed-86b5-02420a0001ba.webp", "n": "Burger Time Deluxe", "t": 1, "u": "https://www.mobygames.com/game/14705/burger-time-deluxe/"}, {"a": false, "i": "https://cdn.mobygames.com/b0e45184-af3c-11ed-86b5-02420a0001ba.webp", "n": "Giants: Citizen Kabuto", "t": 1, "u": "https://www.mobygames.com/game/2800/giants-citizen-kabuto/"}, {"a": false, "i": "https://cdn.mobygames.com/42134ec6-af3d-11ed-8847-02420a0001be.webp", "n": "Descent", "t": 1, "u": "https://www.mobygames.com/game/692/descent/"}, {"a": false, "i": "https://cdn.mobygames.com/18b5cdfc-bc75-11ed-bde2-02420a000179.webp", "n": "Zippo Games", "t": 2, "u": "https://www.mobygames.com/company/8877/zippo-games/"}, {"a": false, "i": "https://cdn.mobygames.com/8dd32096-c4e8-11ed-855b-02420a00013b.webp", "n": "Nokia", "t": 2, "u": "https://www.mobygames.com/company/4215/nokia/"}, {"a": false, "i": "https://cdn.mobygames.com/b8367cb0-af13-11ed-98f0-02420a00019c.webp", "n": "Lance Reddick", "t": 3, "u": "https://www.mobygames.com/person/400284/lance-reddick/"}, {"a": false, "i": "https://cdn.mobygames.com/e1f8a14e-af0a-11ed-8fcc-02420a00019c.webp", "n": "Filip O\u0161\u010d\u00e1dal", "t": 3, "u": "https://www.mobygames.com/person/64363/filip-oscadal/"}]'></search>
+              <search s-url="/search/" a-url="/search/auto/" q="093155118706" :trending='[{"adult": false, "image": "https://cdn.mobygames.com/3279cd60-22bc-11f0-86e0-02420a0001d3.webp", "name": "Clair Obscur: Expedition 33", "type": 1, "url": "https://www.mobygames.com/game/241065/clair-obscur-expedition-33/", "year": 2025}, {"adult": false, "image": "https://cdn.mobygames.com/f4ee0d12-3009-11ef-8d32-02420a0001c2.webp", "name": "fell in love with coser", "type": 1, "url": "https://www.mobygames.com/game/226556/fell-in-love-with-coser/", "year": 2024}, {"adult": false, "image": "https://cdn.mobygames.com/18a0bb84-af45-11ed-a6d3-02420a0001ba.webp", "name": "Avatar: The Last Airbender", "type": 1, "url": "https://www.mobygames.com/game/25427/avatar-the-last-airbender/", "year": 2006}, {"adult": false, "image": "https://cdn.mobygames.com/93075fc6-afaf-11ed-a112-02420a0001be.webp", "name": "Captain Gysi: Galaxis Futura", "type": 1, "url": "https://www.mobygames.com/game/66305/captain-gysi-galaxis-futura/", "year": 1998}, {"adult": false, "image": "https://cdn.mobygames.com/20cd1024-af76-11ed-9f64-02420a0001be.webp", "name": "StarCraft II: Wings of Liberty", "type": 1, "url": "https://www.mobygames.com/game/47486/starcraft-ii-wings-of-liberty/", "year": 2010}, {"adult": false, "image": "https://cdn.mobygames.com/9bfc3e44-af3c-11ed-a6d3-02420a0001ba.webp", "name": "NASCAR Racing", "type": 1, "url": "https://www.mobygames.com/game/1571/nascar-racing/", "year": 1994}, {"adult": false, "image": "https://cdn.mobygames.com/33ead1a4-af13-11ed-98f0-02420a00019c.webp", "name": "Psygnosis Limited", "type": 2, "url": "https://www.mobygames.com/company/63/psygnosis-limited/"}, {"adult": false, "image": "https://cdn.mobygames.com/477083ec-20d9-11f0-8c52-02420a0001cd.webp", "name": "Sandfall SAS", "type": 2, "url": "https://www.mobygames.com/company/64675/sandfall-sas/"}, {"adult": false, "image": "https://cdn.mobygames.com/c8526d18-2adf-11ef-ba4c-02420a0001c3.webp", "name": "Guillaume Broche", "type": 3, "url": "https://www.mobygames.com/person/774198/guillaume-broche/"}, {"adult": false, "image": "https://cdn.mobygames.com/be729238-220e-11f0-ac16-02420a0001d3.webp", "name": "Jennifer Svedberg-Yen", "type": 3, "url": "https://www.mobygames.com/person/1822798/jennifer-svedberg-yen/"}]'></search>
             </div>
           </li>
           <li class="navbar-links">
             <ul class="list-group flex flex-space-between h100">
               <li class="navbar-link">
                 <div class="flex-center h100">
+                  <b><a href="/mobyplus/" class="navbar-mobypro-link">Plus</a></b>
+                </div>
+              </li>
+              <li class="navbar-link">
+                <div class="flex-center h100">
+                  <b><a href="/api/subscribe/" class="navbar-mobypro-link">API</a></b>
+                </div>
+              </li>
+              <li class="navbar-link">
+                <div class="flex-center h100">
                   <b class="no-select">Browse</b>
                 </div>
                 <ul class="navbar-dropdown">
                   <li><a href="/random/" rel="nofollow">Random</a></li>
+                  <li><a href="/platform/">Platforms</a></li>
                   <li><a href="/game/" rel="nofollow">Games</a></li>
+                  <li><a href="/company/">Companies</a></li>
+                  <li><a href="/person/">People</a></li>
                   <li><a href="/group/">Groups</a></li>
                   <li><a href="/genre/">Genres</a></li>
                   <li><a href="/attributes/tech-specs/">Attributes</a></li>
-                  <li><a href="/company/" rel="nofollow">Companies</a></li>
-                  <li><a href="/person/" rel="nofollow">People</a></li>
+                  <li><a href="/critic/">Critics</a></li>
                   <li><a href="/this-day-in-gaming/">This Day</a></li>
                   <li><a href="/stats/">Stats</a></li>
                 </ul>
@@ -68,10 +112,12 @@
                   <b class="no-select">Contribute</b>
                 </div>
                 <ul class="navbar-dropdown">
-                  <li><a href="/contribute/game/" rel="nofollow">Add Game</a></li>
-                  <li><a href="/most-wanted/" rel="nofollow">Most Wanted</a></li>
+                  <li><a href="/most-wanted/" rel="nofollow" class="link-contributor">Most Wanted</a></li>
+                  <li><a href="/contribute/missing-games/" rel="nofollow" class="link-contributor">Missing Games</a></li>
+                  <li><a href="/contribute/game/" rel="nofollow" class="link-contributor">Add Game</a></li>
                   <li><a href="/info/contribute/">Instructions</a></li>
                   <li><a href="/info/standards/">Standards</a></li>
+                  <li><a href="/info/style-guide/">Style Guide</a></li>
                 </ul>
               </li>
               <li class="navbar-link">
@@ -81,18 +127,19 @@
                 <ul class="navbar-dropdown">
                   <li><a href="/leaderboard/">Contributors</a></li>
                   <li><a href="/forum/">Forums</a></li>
+                  <li><a href="/feed/player-reviews/">Reviews</a></li>
                   <li><a href="https://discord.gg/8zWGTQp" rel="nofollow" class="link-external">Discord</a></li>
                   <li><a href="https://twitter.com/MobyGames" rel="nofollow" class="link-external">Twitter</a></li>
+                  <li><a href="https://bsky.app/profile/mobygames.com" rel="nofollow" class="link-external">Bluesky</a></li>
                 </ul>
               </li>
               <li class="navbar-link navbar-lights flex-center" tabindex="-1" aria-hidden="true">
                 <toggle-dark-mode :is-dark="true"></toggle-dark-mode>
               </li>
               <li class="navbar-profile navbar-link">
-                
                 <div class="flex-center h100">
                   <b class="no-select">
-                    <img src="/static/img/moby-avatar.png" width="38" height="38" alt="user avatar" class="avatar avatar-sm hide-sm">
+                    <img src="/static/img/icon-user.png" width="38" height="38" alt="user avatar" class="avatar avatar-sm hide-sm">
                     Login
                   </b>
                 </div>
@@ -100,7 +147,6 @@
                   <li><a href="/user/login/">Login</a></li>
                   <li><a href="/user/register/">Register</a></li>
                 </ul>
-                
               </li>
             </ul>
           </li>
@@ -110,321 +156,273 @@
     <div class="bg-notice">
       <div class="container pt-1 pb-1 statusbar-grid">
         <div class="statusbar-message">
-          🐳 <b>New!</b> <a href="/#n3750">Moby v2023.03.16</a>
+          
         </div>
       </div>
     </div>
     <main id="main">
+      <div id="message_top_image">
+          <div class="flex-center mb hide-sm" id="atari-advert-wide">
+  <a href="https://grnh.se/233a82ae8us" target="_blank">
+    <img src="https://cdn.mobygames.com/user/20073245-image.png" width="1180" height="90" alt="Digital Eclipse: Now hiring UI/UX Designer" class="img-fluid">
+  </a>
+</div>
+<div class="flex-center mb show-sm"  id="atari-advert-narrow">
+  <a href="https://grnh.se/233a82ae8us" target="_blank">
+    <img src="https://cdn.mobygames.com/user/20073247-image.png" width="320" height="90" alt="Digital Eclipse: Now hiring UI/UX Designer" class="img-fluid">
+  </a>
+</div>
+      </div>
       
-
-
+<p>
+  This search excludes games marked as <span class="text-danger">Adult</span>.
+  <a href="/search/?q=093155118706&amp;adult=true" onclick="setAdultCookie('true')">Click here</a> to repeat the search with Adult
+  games included.
+</p>
   <ul class="dot-list text-sm mb">
-    
     <li><a href="/search/?q=093155118706">All</a></li>
-    
     <li>
       Game
     </li>
     <li>
-      <a href="/search/?q=093155118706&type=person">Person</a>
+      <a href="/search/?q=093155118706&amp;type=person">Person</a>
     </li>
     <li>
-      <a href="/search/?q=093155118706&type=company">Company</a>
+      <a href="/search/?q=093155118706&amp;type=company">Company</a>
     </li>
     <li>
-      <a href="/search/?q=093155118706&type=group">Group</a>
+      <a href="/search/?q=093155118706&amp;type=group">Group</a>
     </li>
   </ul>
+  <p class="text-sm">
+    953 results for "093155118706"
+    [ <a href="/game/title:093155118706/">filter for '093155118706' in game browser</a> ]
+  </p>
   <table class="table mb">
     <tr>
       <td width="60" valign="top">
         <link rel="prefetch" href="https://www.mobygames.com/game/20705/call-of-cthulhu-dark-corners-of-the-earth/" />
-        
         <a href="https://www.mobygames.com/game/20705/call-of-cthulhu-dark-corners-of-the-earth/">
           <img src="https://cdn.mobygames.com/3c7c6974-af3e-11ed-86b5-02420a0001ba.webp" width="96" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
         </a>
-        
       </td>
       <td valign="top">
         <small><span class="text-muted">GAME:</span></small>
-        <b><a href="https://www.mobygames.com/game/20705/call-of-cthulhu-dark-corners-of-the-earth/">Call of Cthulhu: Dark Corners of the Earth</a></b> <span class="text-muted">(October 24th, 2005)</span>
+        <b><a href="https://www.mobygames.com/game/20705/call-of-cthulhu-dark-corners-of-the-earth/">Call of Cthulhu: Dark Corners of the Earth</a></b> <span class="text-muted">(October 24, 2005)</span>
         <br>
         <small class="text-muted">Product code: <em>093155118706</em></small>
         <br>
         <small>
-          
             Xbox <small class="text-muted">(2005),</small>
-          
             Windows <small class="text-muted">(2006)</small>
-          
         </small>
       </td>
     </tr>
     <tr>
       <td width="60" valign="top">
         <link rel="prefetch" href="https://www.mobygames.com/game/37114/nhl-09/" />
-        
         <a href="https://www.mobygames.com/game/37114/nhl-09/">
           <img src="https://cdn.mobygames.com/c6034a2c-af49-11ed-8847-02420a0001be.webp" width="115" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
         </a>
-        
       </td>
       <td valign="top">
         <small><span class="text-muted">GAME:</span></small>
-        <b><a href="https://www.mobygames.com/game/37114/nhl-09/">NHL 09</a></b> <span class="text-muted">(September 11th, 2008)</span>
+        <b><a href="https://www.mobygames.com/game/37114/nhl-09/">NHL 09</a></b> <span class="text-muted">(September 11, 2008)</span>
         <br>
         <small>
-          
             Xbox 360 <small class="text-muted">(2008),</small>
-          
-            PlayStation 3 <small class="text-muted">(2008),</small>
-          
-            Windows <small class="text-muted">(2008),</small>
-          
-            PlayStation 2 <small class="text-muted">(2008)</small>
-          
+            PlayStation 3 <small class="text-muted">(2008)</small>
         </small>
       </td>
     </tr>
     <tr>
       <td width="60" valign="top">
-        <link rel="prefetch" href="https://www.mobygames.com/game/36182/nascar-09/" />
-        
+        <link rel="prefetch" href="https://www.mobygames.com/game/206382/nhl-09/" />
+        <a href="https://www.mobygames.com/game/206382/nhl-09/">
+          <img src="https://cdn.mobygames.com/41e578f2-af4c-11ed-8847-02420a0001be.webp" width="97" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/206382/nhl-09/">NHL 09</a></b> <span class="text-muted">(October 22, 2008)</span>
+        <br>
+        <small>
+            Windows <small class="text-muted">(2008),</small>
+            PlayStation 2 <small class="text-muted">(2008)</small>
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
         <a href="https://www.mobygames.com/game/36182/nascar-09/">
           <img src="https://cdn.mobygames.com/d4331b36-af44-11ed-86b5-02420a0001ba.webp" width="117" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
         </a>
-        
       </td>
       <td valign="top">
         <small><span class="text-muted">GAME:</span></small>
-        <b><a href="https://www.mobygames.com/game/36182/nascar-09/">NASCAR 09</a></b> <span class="text-muted">(June 11th, 2008)</span>
+        <b><a href="https://www.mobygames.com/game/36182/nascar-09/">NASCAR 09</a></b> <span class="text-muted">(June 11, 2008)</span>
         <br>
         <small>
-          
             PlayStation 2 <small class="text-muted">(2008),</small>
-          
             Xbox 360 <small class="text-muted">(2008),</small>
-          
             PlayStation 3 <small class="text-muted">(2008)</small>
-          
         </small>
       </td>
     </tr>
     <tr>
       <td width="60" valign="top">
-        
-        <a href="https://www.mobygames.com/game/42298/fifa-soccer-09/">
-          <img src="https://cdn.mobygames.com/6411f7b4-af4e-11ed-8847-02420a0001be.webp" width="118" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
-        </a>
-        
-      </td>
-      <td valign="top">
-        <small><span class="text-muted">GAME:</span></small>
-        <b><a href="https://www.mobygames.com/game/42298/fifa-soccer-09/">FIFA Soccer 09</a></b> <span class="text-muted">(October 2nd, 2008)</span>
-        <br>
-        <small>
-          
-            PlayStation 3 <small class="text-muted">(2008),</small>
-          
-            Xbox 360 <small class="text-muted">(2008)</small>
-          
-        </small>
-      </td>
-    </tr>
-    <tr>
-      <td width="60" valign="top">
-        
-        <a href="https://www.mobygames.com/game/35614/madden-nfl-09/">
-          <img src="https://cdn.mobygames.com/d83bd25e-af0d-11ed-8fcc-02420a00019c.webp" width="117" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
-        </a>
-        
-      </td>
-      <td valign="top">
-        <small><span class="text-muted">GAME:</span></small>
-        <b><a href="https://www.mobygames.com/game/35614/madden-nfl-09/">Madden NFL 09</a></b> <span class="text-muted">(August 12th, 2008)</span>
-        <br>
-        <small>
-          
-            Xbox 360 <small class="text-muted">(2008),</small>
-          
-            PlayStation 3 <small class="text-muted">(2008)</small>
-          
-        </small>
-      </td>
-    </tr>
-    <tr>
-      <td width="60" valign="top">
-        
-        <a href="https://www.mobygames.com/game/46172/fifa-soccer-09/">
-          <img src="https://cdn.mobygames.com/fc464b72-af4c-11ed-a6d3-02420a0001ba.webp" width="80" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
-        </a>
-        
-      </td>
-      <td valign="top">
-        <small><span class="text-muted">GAME:</span></small>
-        <b><a href="https://www.mobygames.com/game/46172/fifa-soccer-09/">FIFA Soccer 09</a></b> <span class="text-muted">(October 3rd, 2008)</span>
-        <br>
-        <small>
-          
-            PSP <small class="text-muted">(2008)</small>
-          
-        </small>
-      </td>
-    </tr>
-    <tr>
-      <td width="60" valign="top">
-        
-        <a href="https://www.mobygames.com/game/47592/nba-live-09/">
-          <img src="https://cdn.mobygames.com/0005d2fc-af50-11ed-ba54-02420a0001ba.webp" width="94" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
-        </a>
-        
-      </td>
-      <td valign="top">
-        <small><span class="text-muted">GAME:</span></small>
-        <b><a href="https://www.mobygames.com/game/47592/nba-live-09/">NBA Live 09</a></b> <span class="text-muted">(October 7th, 2008)</span>
-        <br>
-        <small>
-          
-            PlayStation 2 <small class="text-muted">(2008)</small>
-          
-        </small>
-      </td>
-    </tr>
-    <tr>
-      <td width="60" valign="top">
-        
         <a href="https://www.mobygames.com/game/144839/fifa-09/">
           <img src="https://cdn.mobygames.com/471056fe-c2ab-11ed-bae4-02420a0001a1.webp" width="102" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
         </a>
-        
       </td>
       <td valign="top">
         <small><span class="text-muted">GAME:</span></small>
-        <b><a href="https://www.mobygames.com/game/144839/fifa-09/">FIFA 09</a></b> <span class="text-muted">(November 20th, 2008)</span>
+        <b><a href="https://www.mobygames.com/game/144839/fifa-09/">FIFA 09</a></b> <span class="text-muted">(November 20, 2008)</span>
         <br>
         <small>
-          
             Symbian <small class="text-muted">(2008),</small>
-          
             N-Gage (service) <small class="text-muted">(2008)</small>
-          
         </small>
       </td>
     </tr>
     <tr>
       <td width="60" valign="top">
-        
-        <a href="https://www.mobygames.com/game/35499/ncaa-football-09/">
-          <img src="https://cdn.mobygames.com/9ee2584c-af45-11ed-86b5-02420a0001ba.webp" width="117" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        <a href="https://www.mobygames.com/game/42298/fifa-soccer-09/">
+          <img src="https://cdn.mobygames.com/6411f7b4-af4e-11ed-8847-02420a0001be.webp" width="118" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
         </a>
-        
       </td>
       <td valign="top">
         <small><span class="text-muted">GAME:</span></small>
-        <b><a href="https://www.mobygames.com/game/35499/ncaa-football-09/">NCAA Football 09</a></b> <span class="text-muted">(July 15th, 2008)</span>
+        <b><a href="https://www.mobygames.com/game/42298/fifa-soccer-09/">FIFA Soccer 09</a></b> <span class="text-muted">(October 2, 2008)</span>
         <br>
         <small>
-          
-            PlayStation 2 <small class="text-muted">(2008),</small>
-          
-            PSP <small class="text-muted">(2008),</small>
-          
-            Xbox 360 <small class="text-muted">(2008),</small>
-          
-            PlayStation 3 <small class="text-muted">(2008)</small>
-          
+            PlayStation 3 <small class="text-muted">(2008),</small>
+            Xbox 360 <small class="text-muted">(2008)</small>
         </small>
       </td>
     </tr>
     <tr>
       <td width="60" valign="top">
-        
-        <a href="https://www.mobygames.com/game/44846/fifa-manager-09/">
-          <img src="https://cdn.mobygames.com/eff9838e-af6a-11ed-8485-02420a0001be.webp" width="96" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
-        </a>
-        
-      </td>
-      <td valign="top">
-        <small><span class="text-muted">GAME:</span></small>
-        <b><a href="https://www.mobygames.com/game/44846/fifa-manager-09/">FIFA Manager 09</a></b> <span class="text-muted">(October 30th, 2008)</span>
-        <br>
-        <small>
-          
-            Windows <small class="text-muted">(2008)</small>
-          
-        </small>
-      </td>
-    </tr>
-    <tr>
-      <td width="60" valign="top">
-        
         <a href="https://www.mobygames.com/game/199030/fifa-soccer-09/">
           <img src="https://cdn.mobygames.com/dbd10764-afa7-11ed-8073-02420a0001be.webp" width="96" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
         </a>
-        
       </td>
       <td valign="top">
         <small><span class="text-muted">GAME:</span></small>
-        <b><a href="https://www.mobygames.com/game/199030/fifa-soccer-09/">FIFA Soccer 09</a></b> <span class="text-muted">(October 2nd, 2008)</span>
+        <b><a href="https://www.mobygames.com/game/199030/fifa-soccer-09/">FIFA Soccer 09</a></b> <span class="text-muted">(October 2, 2008)</span>
         <br>
         <small>
-          
             Windows <small class="text-muted">(2008),</small>
-          
             PlayStation 2 <small class="text-muted">(2008)</small>
-          
         </small>
       </td>
     </tr>
     <tr>
       <td width="60" valign="top">
-        
-        <a href="https://www.mobygames.com/game/73471/madden-nfl-09/">
-          <img src="https://cdn.mobygames.com/9d142b48-af41-11ed-8ca8-02420a0001be.webp" width="95" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        <a href="https://www.mobygames.com/game/35499/ncaa-football-09/">
+          <img src="https://cdn.mobygames.com/9ee2584c-af45-11ed-86b5-02420a0001ba.webp" width="117" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
         </a>
-        
       </td>
       <td valign="top">
         <small><span class="text-muted">GAME:</span></small>
-        <b><a href="https://www.mobygames.com/game/73471/madden-nfl-09/">Madden NFL 09</a></b> <span class="text-muted">(August 12th, 2008)</span>
+        <b><a href="https://www.mobygames.com/game/35499/ncaa-football-09/">NCAA Football 09</a></b> <span class="text-muted">(July 15, 2008)</span>
         <br>
         <small>
-          
             PlayStation 2 <small class="text-muted">(2008),</small>
-          
+            PSP <small class="text-muted">(2008),</small>
+            Xbox 360 <small class="text-muted">(2008),</small>
+            PlayStation 3 <small class="text-muted">(2008)</small>
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
+        <a href="https://www.mobygames.com/game/35614/madden-nfl-09/">
+          <img src="https://cdn.mobygames.com/d83bd25e-af0d-11ed-8fcc-02420a00019c.webp" width="117" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/35614/madden-nfl-09/">Madden NFL 09</a></b> <span class="text-muted">(August 12, 2008)</span>
+        <br>
+        <small>
+            Xbox 360 <small class="text-muted">(2008),</small>
+            PlayStation 3 <small class="text-muted">(2008)</small>
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
+        <a href="https://www.mobygames.com/game/46172/fifa-soccer-09/">
+          <img src="https://cdn.mobygames.com/aaa57ac8-af32-11ed-9f64-02420a0001be.webp" width="79" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/46172/fifa-soccer-09/">FIFA Soccer 09</a></b> <span class="text-muted">(October 3, 2008)</span>
+        <br>
+        <small>
+            PSP <small class="text-muted">(2008)</small>
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
+        <a href="https://www.mobygames.com/game/73471/madden-nfl-09/">
+          <img src="https://cdn.mobygames.com/53fee4ec-c139-11ee-ac68-02420a0001c5.webp" width="99" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/73471/madden-nfl-09/">Madden NFL 09</a></b> <span class="text-muted">(August 12, 2008)</span>
+        <br>
+        <small>
+            PlayStation 2 <small class="text-muted">(2008),</small>
             Xbox <small class="text-muted">(2008)</small>
-          
+        </small>
+      </td>
+    </tr>
+    <tr>
+      <td width="60" valign="top">
+        <a href="https://www.mobygames.com/game/44846/fifa-manager-09/">
+          <img src="https://cdn.mobygames.com/eff9838e-af6a-11ed-8485-02420a0001be.webp" width="96" height="136" alt="game cover" class="img-thumbnail-box mt-xxs">
+        </a>
+      </td>
+      <td valign="top">
+        <small><span class="text-muted">GAME:</span></small>
+        <b><a href="https://www.mobygames.com/game/44846/fifa-manager-09/">FIFA Manager 09</a></b> <span class="text-muted">(October 30, 2008)</span>
+        <br>
+        <small>
+            Windows <small class="text-muted">(2008)</small>
         </small>
       </td>
     </tr>
   </table>
   <div class="mb">
-     [ <b>Page 1</b> ]
-    
-     [ <a href="/search/?q=093155118706&type=game&page=1" rel="nofollow">Next</a> ]
-    
+     [ Page 1 of 80 ]
+     [ <a href="/search/?q=093155118706&amp;type=game&amp;page=1" rel="nofollow">Next</a> ]
   </div>
-  
-
     </main>
     <hr>
     <footer>
       <p>
         <a href="/info/about/">About</a> &middot;
         <a href="/info/faq/">FAQ</a> &middot;
+        <a href="/mobyplus/">MobyPlus</a> &middot;
         <a href="/stats/">Stats</a> &middot;
         <a href="/info/standards/">Standards</a> &middot;
-        <a href="/info/api/">API</a> &middot;
+        <a href="/info/style-guide/">Style Guide</a> &middot;
+        <a href="/api/subscribe/">API</a> &middot;
         <a href="/info/contact/">Contact</a> &middot;
         <a href="/changelog/">Change Log</a> &middot;
         <a href="/info/privacy/">Privacy Policy</a> &middot;
         <a href="/info/terms/">Terms of Use</a>
       </p>
       <p>
-        &copy; 1999 - 2023 MobyGames &trade;
+        &copy; 1999&ndash;2025 MobyGames &trade;
       </p>
       <p>
-        <small class="text-muted">v2023.03.16e</small>
+        <small class="text-muted">v20250501</small>
       </p>
       
     </footer>
@@ -432,8 +430,19 @@
     <tooltip ref="tooltip"></tooltip>
     <popover ref="popover"></popover>
   </div>
-  <script type="module" src="https://www.mobygames.com/static/js/shared.52fe9187.js"></script>
-<script type="module" src="https://www.mobygames.com/static/js/main.a32da2e1.js"></script>
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vaafb692b2aea4879b33c060e79fe94621666317369993" integrity="sha512-0ahDYl866UMhKuYcW078ScMalXqtFJggm7TmlUtp0UlD4eQk0Ixfnm5ykXKvGJNFjLMoortdseTfsRT8oCfgGA==" data-cf-beacon='{"rayId":"7ab5b64bd809b8a6","token":"045373f648914c3f8d8f48abf482fec7","version":"2023.2.0","si":100}' crossorigin="anonymous"></script>
-</body>
+  <script>
+  document.body.addEventListener('htmx:configRequest', (event) => {
+    event.detail.headers['X-CSRF-Token'] = 'c3c7d123-3bd6-4672-826d-b2651ac8f4da';
+  })
+  </script>
+  <script type="module" src="https://www.mobygames.com/static/js/shared.3fb97551.js"></script>
+<script type="module" src="https://www.mobygames.com/static/js/main.52efc182.js"></script>
+<script>
+  function setAdultCookie(value) {
+    const expires = new Date(Date.now() + 365 * 864e5).toUTCString();
+    document.cookie = `adult_quicksearch=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+    return true;
+  }
+</script>
+  </body>
 </html>
