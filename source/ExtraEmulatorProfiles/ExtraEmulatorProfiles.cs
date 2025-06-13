@@ -1,8 +1,10 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Events;
+using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Controls;
 
 namespace ExtraEmulatorProfiles;
@@ -26,6 +28,8 @@ public class ExtraEmulatorProfiles : GenericPlugin
 
     public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
     {
+        FixPlatformSpecIds();
+
         if (settings.Settings.InstalledPatchVersion < settings.PluginVersion)
             settings.ExecutePatch();
     }
@@ -45,4 +49,24 @@ public class ExtraEmulatorProfiles : GenericPlugin
         yield return new MainMenuItem { MenuSection = "@Extra Emulator Profiles", Description = "Add and update emulator profiles", Action = _ => settings.ExecutePatch() };
         yield return new MainMenuItem { MenuSection = "@Extra Emulator Profiles", Description = "Reset emulator profiles to defaults", Action = _ => settings.Reset() };
     }
+
+    private void FixPlatformSpecIds()
+    {
+        foreach (var platform in PlayniteApi.Database.Platforms.ToArray())
+        {
+            var specId = GetFixedSpecId(platform);
+            if (specId == null)
+                continue;
+
+            platform.SpecificationId = specId;
+            PlayniteApi.Database.Platforms.Update(platform);
+        }
+    }
+
+    private static string GetFixedSpecId(Platform platform) => platform switch
+    {
+        { SpecificationId: "nintendo_pokemonmini" } => "pokemon_mini",
+        { SpecificationId: null, Name: "Nintendo Switch 2" } => "nintendo_switch2",
+        _ => null,
+    };
 }
