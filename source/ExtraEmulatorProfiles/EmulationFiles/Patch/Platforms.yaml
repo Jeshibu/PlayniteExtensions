@@ -242,7 +242,7 @@
   Id: nintendo_64
   IgdbId: 4
   Databases: [Nintendo - Nintendo 64, Nintendo - Nintendo 64DD]
-  Emulators: [ares, bizhawk, m64p, m64py, project64, retroarch, rosaliesmupengui, simple64]
+  Emulators: [ares, bizhawk, m64p, m64py, raproject64, project64, retroarch, rosaliesmupengui, simple64, gopher64]
   
 - Name: Nintendo DS
   Id: nintendo_ds
@@ -295,10 +295,6 @@
   IgdbId: 21
   Databases: [Nintendo - GameCube]
   Emulators: [dolphin, retroarch]
-
-- Name: Nintendo Pokémon Mini
-  Id: nintendo_pokemonmini
-  Emulators: [ralibretro]
   
 - Name: Nintendo SNES
   Id: nintendo_super_nes
@@ -310,6 +306,10 @@
   Id: nintendo_switch
   IgdbId: 130
   Emulators: [ryujinx, suyu, sudachi, citron]
+
+- Name: Nintendo Switch 2
+  Id: nintendo_switch2
+  IgdbId: 508
   
 - Name: Nintendo Virtual Boy
   Id: nintendo_virtualboy
@@ -514,3 +514,12 @@
   Id: watara_supervision
   Databases: [Watara - Supervision]
   Emulators: [retroarch]
+
+- Name: Philips CD-i
+  Id: philips_cdi
+  IgdbId: 117
+
+- Name: Pokémon mini
+  Id: pokemon_mini
+  IgdbId: 166
+  Emulators: [ralibretro]
