@@ -31,7 +31,8 @@ public class SteamSearch
         "os" => "Operating System",
         "tags" => "Tags",
         "supportedlang" => "Supported Language",
-        _ => null,
+        "accessibility" => "Accessibility",
+        _ => param,
     };
 
     public SteamSearch(IWebDownloader downloader, SteamTagsImporterSettings settings)
