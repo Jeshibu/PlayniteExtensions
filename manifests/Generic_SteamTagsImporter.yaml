@@ -148,3 +148,10 @@ Packages:
     Changelog:
     - Improved property bulk import title matching with regard to editions in braces and roman numerals
     - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them
+  - Version: 4.2.6
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-06-14
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-06-14/SteamTagsImporter_4_2_6.pext
+    Changelog:
+    - "Fixed accessibility features always showing up in bulk property import search results"
+    - "Fixed accessibility features not showing a category in bulk property import search results"
