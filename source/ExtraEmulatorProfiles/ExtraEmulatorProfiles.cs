@@ -42,7 +42,7 @@ public class ExtraEmulatorProfiles : GenericPlugin
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
-        yield return new MainMenuItem { MenuSection = @"Extra Emulator Profiles", Description = "Add and update emulator profiles", Action = _ => settings.ExecutePatch() };
-        yield return new MainMenuItem { MenuSection = @"Extra Emulator Profiles", Description = "Reset emulator profiles to defaults", Action = _ => settings.Reset() };
+        yield return new MainMenuItem { MenuSection = "@Extra Emulator Profiles", Description = "Add and update emulator profiles", Action = _ => settings.ExecutePatch() };
+        yield return new MainMenuItem { MenuSection = "@Extra Emulator Profiles", Description = "Reset emulator profiles to defaults", Action = _ => settings.Reset() };
     }
 }
