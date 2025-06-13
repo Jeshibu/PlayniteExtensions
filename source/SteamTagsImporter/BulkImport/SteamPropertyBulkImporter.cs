@@ -44,14 +44,11 @@ public class SteamPropertyBulkImporter : BulkGamePropertyAssigner<SteamProperty,
         };
     }
 
-    private static PropertyImportTarget GetTarget(string param)
+    private static PropertyImportTarget GetTarget(string param) => param switch
     {
-        switch (param)
-        {
-            case "tags": return PropertyImportTarget.Tags;
-            default: return PropertyImportTarget.Features;
-        }
-    }
+        "tags" => PropertyImportTarget.Tags,
+        _ => PropertyImportTarget.Features,
+    };
 
     protected override IEnumerable<PotentialLink> GetPotentialLinks(SteamProperty searchItem)
     {

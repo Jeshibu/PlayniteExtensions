@@ -1,12 +1,12 @@
-﻿using Playnite.SDK.Models;
-using PlayniteExtensions.Metadata.Common;
+﻿using AngleSharp.Parser.Html;
+using Newtonsoft.Json;
+using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
+using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using AngleSharp.Parser.Html;
-using Newtonsoft.Json;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace SteamTagsImporter.BulkImport;
@@ -16,20 +16,22 @@ public class SteamSearch
     private readonly HtmlParser htmlParser = new HtmlParser();
     private readonly IWebDownloader downloader;
     private readonly SteamTagsImporterSettings settings;
-    private readonly string[] NotUserSelectableParams = new[] { "specials", "hidef2p", "category1", "supportedlang", "os" };
-    private readonly Dictionary<string, string> ParamNames = new Dictionary<string, string>
+    private readonly string[] NotUserSelectableParams = ["specials", "hidef2p", "category1", "supportedlang", "os"];
+
+    private static string GetCategory(string param) => param switch
     {
-        { "specials", "On Sale" },
-        { "hidef2p", "Hide Free To Play Games" },
-        { "category1", "Type" },
-        { "category2", "Feature" },
-        { "category3", "Number of players" },
-        { "controllersupport", "Controller support" },
-        { "deck_compatibility", "Steam Deck compatibility" },
-        { "vrsupport", "VR support" },
-        { "os", "Operating System" },
-        { "tags", "Tags" },
-        { "supportedlang", "Supported Language" },
+        "specials" => "On Sale",
+        "hidef2p" => "Hide Free To Play Games",
+        "category1" => "Type",
+        "category2" => "Feature",
+        "category3" => "Number of players",
+        "controllersupport" => "Controller support",
+        "deck_compatibility" => "Steam Deck compatibility",
+        "vrsupport" => "VR support",
+        "os" => "Operating System",
+        "tags" => "Tags",
+        "supportedlang" => "Supported Language",
+        _ => null,
     };
 
     public SteamSearch(IWebDownloader downloader, SteamTagsImporterSettings settings)
@@ -53,11 +55,10 @@ public class SteamSearch
                 Value = row.GetAttribute("data-value"),
             };
 
+            prop.Category = GetCategory(prop.Param);
+
             if (NotUserSelectableParams.Contains(prop.Param))
                 continue;
-
-            if (ParamNames.TryGetValue(prop.Param, out var category))
-                prop.Category = category;
 
             yield return prop;
         }

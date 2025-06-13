@@ -49,20 +49,18 @@ public class GameMatchingHelper
     {
         var options = new ParallelOptions { CancellationToken = cancellationToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
 
-        Parallel.ForEach(library, options, game =>
-        {
-            var dbIDs = ExternalDatabaseIdUtility.GetIdsFromGame(game).ToList();
+        Parallel.ForEach(library, options, AddGame);
+    }
 
-            if (dbIDs.Any())
-            {
-                foreach (var dbID in dbIDs)
-                    AddGameById(dbID, game);
-            }
-            else
-            {
-                AddGameById(DbId.NoDb(GetDeflatedName(game.Name)), game);
-            }
-        });
+    private void AddGame(Game game)
+    {
+        var dbIDs = ExternalDatabaseIdUtility.GetIdsFromGame(game).ToList();
+
+        if (dbIDs.Any())
+            foreach (var dbID in dbIDs)
+                AddGameById(dbID, game);
+        else
+            AddGameByName(game);
     }
 
     private IList<Game> AddGameById(DbId key, Game game)
@@ -75,6 +73,8 @@ public class GameMatchingHelper
             return existing;
         });
     }
+
+    private IList<Game> AddGameByName(Game game) => AddGameById(DbId.NoDb(GetDeflatedName(game.Name)), game);
 
     public bool TryGetGamesById(DbId key, out IList<Game> games)
     {
