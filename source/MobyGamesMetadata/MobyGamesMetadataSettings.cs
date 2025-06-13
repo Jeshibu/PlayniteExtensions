@@ -8,238 +8,237 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace MobyGamesMetadata
+namespace MobyGamesMetadata;
+
+public class MobyGamesMetadataSettings : BulkImportPluginSettings
 {
-    public class MobyGamesMetadataSettings : BulkImportPluginSettings
-    {
-        private string apiKey;
+    private string apiKey;
 
-        public DataSource DataSource { get; set; } = DataSource.Api;
-        public string ApiKey
+    public DataSource DataSource { get; set; } = DataSource.Api;
+    public string ApiKey
+    {
+        get => apiKey;
+        set => SetValue(ref apiKey, value?.Trim());
+    }
+    public bool ShowTopPanelButton { get; set; } = true;
+
+    public ObservableCollection<MobyGamesGenreSetting> Genres { get; set; } = new ObservableCollection<MobyGamesGenreSetting>();
+
+    public MobyGamesImageSourceSettings Cover { get; set; } = new MobyGamesImageSourceSettings
+    {
+        MinWidth = 200,
+        MinHeight = 300,
+        AspectRatio = AspectRatio.Vertical,
+    };
+
+    public MobyGamesImageSourceSettings Background { get; set; } = new MobyGamesImageSourceSettings
+    {
+        MinWidth = 900,
+        MinHeight = 600,
+        AspectRatio = AspectRatio.Any,
+    };
+
+    public bool MatchPlatformsForReleaseDate { get; set; } = false;
+    public bool MatchPlatformsForDevelopers { get; set; } = true;
+    public bool MatchPlatformsForPublishers { get; set; } = true;
+
+    [Obsolete]
+    public ReleaseDateSource ReleaseDateSource { get; set; } = ReleaseDateSource.EarliestOverall;
+}
+
+public class MobyGamesGenreSetting : ObservableObject, IHasName
+{
+    private string nameOverride;
+    private PropertyImportTarget importTarget = PropertyImportTarget.Genres;
+
+    [JsonProperty("genre_category_id")]
+    public int CategoryId { get; set; }
+
+    [JsonProperty("genre_category")]
+    public string Category { get; set; }
+
+    [JsonProperty("genre_id")]
+    public int Id { get; set; }
+
+    [JsonProperty("genre_name")]
+    public string Name { get; set; }
+
+    public string NameOverride
+    {
+        get { return nameOverride; }
+        set { SetValue(ref nameOverride, value); }
+    }
+
+    public PropertyImportTarget ImportTarget
+    {
+        get { return importTarget; }
+        set { SetValue(ref importTarget, value); }
+    }
+}
+
+internal class MobyGamesGenresRoot
+{
+    public List<MobyGamesGenreSetting> Genres { get; set; }
+}
+
+public enum AspectRatio
+{
+    Any,
+    Vertical,
+    Horizontal,
+    Square,
+}
+
+public class MobyGamesImageSourceSettings
+{
+    public int MinHeight { get; set; }
+    public int MinWidth { get; set; }
+    public AspectRatio AspectRatio { get; set; }
+    public bool MatchPlatforms { get; set; }
+}
+
+public enum ReleaseDateSource
+{
+    EarliestOverall,
+    EarliestForAutomaticallyMatchedPlatform,
+}
+
+[Flags]
+public enum DataSource
+{
+    None = 0,
+    Api = 1,
+    Scraping = 2,
+    ApiAndScraping = 3,
+}
+
+public class MobyGamesMetadataSettingsViewModel : PluginSettingsViewModel<MobyGamesMetadataSettings, MobyGamesMetadata>
+{
+    public MobyGamesMetadataSettingsViewModel(MobyGamesMetadata plugin) : base(plugin, plugin.PlayniteApi)
+    {
+        // Load saved settings.
+        var savedSettings = plugin.LoadPluginSettings<MobyGamesMetadataSettings>();
+
+        // LoadPluginSettings returns null if no saved data is available.
+        if (savedSettings != null)
         {
-            get => apiKey;
-            set => SetValue(ref apiKey, value?.Trim());
+            Settings = savedSettings;
+            UpgradeSettings();
         }
-        public bool ShowTopPanelButton { get; set; } = true;
-
-        public ObservableCollection<MobyGamesGenreSetting> Genres { get; set; } = new ObservableCollection<MobyGamesGenreSetting>();
-
-        public MobyGamesImageSourceSettings Cover { get; set; } = new MobyGamesImageSourceSettings
+        else
         {
-            MinWidth = 200,
-            MinHeight = 300,
-            AspectRatio = AspectRatio.Vertical,
-        };
-
-        public MobyGamesImageSourceSettings Background { get; set; } = new MobyGamesImageSourceSettings
-        {
-            MinWidth = 900,
-            MinHeight = 600,
-            AspectRatio = AspectRatio.Any,
-        };
-
-        public bool MatchPlatformsForReleaseDate { get; set; } = false;
-        public bool MatchPlatformsForDevelopers { get; set; } = true;
-        public bool MatchPlatformsForPublishers { get; set; } = true;
-
-        [Obsolete]
-        public ReleaseDateSource ReleaseDateSource { get; set; } = ReleaseDateSource.EarliestOverall;
-    }
-
-    public class MobyGamesGenreSetting : ObservableObject, IHasName
-    {
-        private string nameOverride;
-        private PropertyImportTarget importTarget = PropertyImportTarget.Genres;
-
-        [JsonProperty("genre_category_id")]
-        public int CategoryId { get; set; }
-
-        [JsonProperty("genre_category")]
-        public string Category { get; set; }
-
-        [JsonProperty("genre_id")]
-        public int Id { get; set; }
-
-        [JsonProperty("genre_name")]
-        public string Name { get; set; }
-
-        public string NameOverride
-        {
-            get { return nameOverride; }
-            set { SetValue(ref nameOverride, value); }
+            Settings = new MobyGamesMetadataSettings() { Version = 1 };
         }
+        InitializeGenres();
+    }
 
-        public PropertyImportTarget ImportTarget
+    public RelayCommand<object> GetApiKeyCommand
+    {
+        get => new RelayCommand<object>((a) =>
         {
-            get { return importTarget; }
-            set { SetValue(ref importTarget, value); }
-        }
+            Process.Start(@"https://www.mobygames.com/info/api/");
+        });
     }
 
-    internal class MobyGamesGenresRoot
+    public PropertyImportTarget[] ImportTargets { get; } = new[]
     {
-        public List<MobyGamesGenreSetting> Genres { get; set; }
-    }
+        PropertyImportTarget.Ignore,
+        PropertyImportTarget.Genres,
+        PropertyImportTarget.Tags,
+        PropertyImportTarget.Features,
+    };
 
-    public enum AspectRatio
+    public AspectRatio[] AspectRatios { get; } = new[]
     {
-        Any,
-        Vertical,
-        Horizontal,
-        Square,
-    }
+        AspectRatio.Any,
+        AspectRatio.Vertical,
+        AspectRatio.Horizontal,
+        AspectRatio.Square,
+    };
 
-    public class MobyGamesImageSourceSettings
+    private void InitializeGenres()
     {
-        public int MinHeight { get; set; }
-        public int MinWidth { get; set; }
-        public AspectRatio AspectRatio { get; set; }
-        public bool MatchPlatforms { get; set; }
-    }
-
-    public enum ReleaseDateSource
-    {
-        EarliestOverall,
-        EarliestForAutomaticallyMatchedPlatform,
-    }
-
-    [Flags]
-    public enum DataSource
-    {
-        None = 0,
-        Api = 1,
-        Scraping = 2,
-        ApiAndScraping = 3,
-    }
-
-    public class MobyGamesMetadataSettingsViewModel : PluginSettingsViewModel<MobyGamesMetadataSettings, MobyGamesMetadata>
-    {
-        public MobyGamesMetadataSettingsViewModel(MobyGamesMetadata plugin) : base(plugin, plugin.PlayniteApi)
+        var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+        var genresPath = Path.Combine(Path.GetDirectoryName(assemblyLocation), "genres.json");
+        var genresContent = File.ReadAllText(genresPath);
+        var root = JsonConvert.DeserializeObject<MobyGamesGenresRoot>(genresContent);
+        bool genreAdded = false;
+        foreach (var newGenre in root.Genres)
         {
-            // Load saved settings.
-            var savedSettings = plugin.LoadPluginSettings<MobyGamesMetadataSettings>();
-
-            // LoadPluginSettings returns null if no saved data is available.
-            if (savedSettings != null)
+            var existingGenre = Settings.Genres.FirstOrDefault(g => g.Id == newGenre.Id);
+            if (existingGenre != null)
             {
-                Settings = savedSettings;
-                UpgradeSettings();
+                existingGenre.CategoryId = newGenre.CategoryId;
+                existingGenre.Category = newGenre.Category;
+                existingGenre.Name = newGenre.Name;
             }
             else
             {
-                Settings = new MobyGamesMetadataSettings() { Version = 1 };
-            }
-            InitializeGenres();
-        }
-
-        public RelayCommand<object> GetApiKeyCommand
-        {
-            get => new RelayCommand<object>((a) =>
-            {
-                Process.Start(@"https://www.mobygames.com/info/api/");
-            });
-        }
-
-        public PropertyImportTarget[] ImportTargets { get; } = new[]
-        {
-            PropertyImportTarget.Ignore,
-            PropertyImportTarget.Genres,
-            PropertyImportTarget.Tags,
-            PropertyImportTarget.Features,
-        };
-
-        public AspectRatio[] AspectRatios { get; } = new[]
-        {
-            AspectRatio.Any,
-            AspectRatio.Vertical,
-            AspectRatio.Horizontal,
-            AspectRatio.Square,
-        };
-
-        private void InitializeGenres()
-        {
-            var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            var genresPath = Path.Combine(Path.GetDirectoryName(assemblyLocation), "genres.json");
-            var genresContent = File.ReadAllText(genresPath);
-            var root = JsonConvert.DeserializeObject<MobyGamesGenresRoot>(genresContent);
-            bool genreAdded = false;
-            foreach (var newGenre in root.Genres)
-            {
-                var existingGenre = Settings.Genres.FirstOrDefault(g => g.Id == newGenre.Id);
-                if (existingGenre != null)
-                {
-                    existingGenre.CategoryId = newGenre.CategoryId;
-                    existingGenre.Category = newGenre.Category;
-                    existingGenre.Name = newGenre.Name;
-                }
-                else
-                {
-                    newGenre.ImportTarget = GetDefaultImportTarget(newGenre);
-                    Settings.Genres.Add(newGenre);
-                    genreAdded = true;
-                }
-            }
-            if (genreAdded)
-            {
-                var orderedGenres = Settings.Genres.OrderBy(g => g.Category).ThenBy(g => g.Name).ToList();
-                Settings.Genres.Clear();
-                foreach (var g in orderedGenres)
-                {
-                    Settings.Genres.Add(g);
-                }
-            }
-            Logger.Debug($"{Settings.Genres.Count} genres");
-        }
-
-        private PropertyImportTarget GetDefaultImportTarget(MobyGamesGenreSetting genre)
-        {
-            switch (genre.CategoryId)
-            {
-                case 1: //Basic Genres
-                case 2: //Perspective
-                case 4: //Gameplay
-                    return PropertyImportTarget.Genres;
-                case 14: //DLC/Add-on
-                case 15: //Special Edition
-                    return PropertyImportTarget.Ignore;
-                case 3: //Sports Themes
-                case 5: //Educational Categories
-                case 6: //Other Attributes
-                case 7: //Interface/Control
-                case 8: //Narrative Theme/Topic
-                case 9: //Pacing
-                case 10: //Setting
-                case 11: //Vehicular Themes
-                case 12: //Visual Presentation
-                case 13: //Art Style
-                default:
-                    return PropertyImportTarget.Tags;
+                newGenre.ImportTarget = GetDefaultImportTarget(newGenre);
+                Settings.Genres.Add(newGenre);
+                genreAdded = true;
             }
         }
-
-        public void SetImportTarget(PropertyImportTarget target, ICollection<MobyGamesGenreSetting> settings)
+        if (genreAdded)
         {
-            if (settings == null)
-                return;
-
-            foreach (var s in settings)
+            var orderedGenres = Settings.Genres.OrderBy(g => g.Category).ThenBy(g => g.Name).ToList();
+            Settings.Genres.Clear();
+            foreach (var g in orderedGenres)
             {
-                s.ImportTarget = target;
+                Settings.Genres.Add(g);
             }
         }
+        Logger.Debug($"{Settings.Genres.Count} genres");
+    }
 
-        private void UpgradeSettings()
+    private PropertyImportTarget GetDefaultImportTarget(MobyGamesGenreSetting genre)
+    {
+        switch (genre.CategoryId)
         {
-            if (Settings.Version < 1)
-                Settings.MaxDegreeOfParallelism = BulkImportPluginSettings.GetDefaultMaxDegreeOfParallelism();
-
-            if (Settings.Version < 2)
-                Settings.MatchPlatformsForReleaseDate = Settings.ReleaseDateSource == ReleaseDateSource.EarliestForAutomaticallyMatchedPlatform;
-
-            if (Settings.Version < 3 && Settings.DataSource == DataSource.ApiAndScraping)
-                Settings.DataSource = DataSource.Api;
-
-            Settings.Version = 3;
+            case 1: //Basic Genres
+            case 2: //Perspective
+            case 4: //Gameplay
+                return PropertyImportTarget.Genres;
+            case 14: //DLC/Add-on
+            case 15: //Special Edition
+                return PropertyImportTarget.Ignore;
+            case 3: //Sports Themes
+            case 5: //Educational Categories
+            case 6: //Other Attributes
+            case 7: //Interface/Control
+            case 8: //Narrative Theme/Topic
+            case 9: //Pacing
+            case 10: //Setting
+            case 11: //Vehicular Themes
+            case 12: //Visual Presentation
+            case 13: //Art Style
+            default:
+                return PropertyImportTarget.Tags;
         }
+    }
+
+    public void SetImportTarget(PropertyImportTarget target, ICollection<MobyGamesGenreSetting> settings)
+    {
+        if (settings == null)
+            return;
+
+        foreach (var s in settings)
+        {
+            s.ImportTarget = target;
+        }
+    }
+
+    private void UpgradeSettings()
+    {
+        if (Settings.Version < 1)
+            Settings.MaxDegreeOfParallelism = BulkImportPluginSettings.GetDefaultMaxDegreeOfParallelism();
+
+        if (Settings.Version < 2)
+            Settings.MatchPlatformsForReleaseDate = Settings.ReleaseDateSource == ReleaseDateSource.EarliestForAutomaticallyMatchedPlatform;
+
+        if (Settings.Version < 3 && Settings.DataSource == DataSource.ApiAndScraping)
+            Settings.DataSource = DataSource.Api;
+
+        Settings.Version = 3;
     }
 }

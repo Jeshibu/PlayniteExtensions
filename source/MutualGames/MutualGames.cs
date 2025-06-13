@@ -8,68 +8,67 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 
-namespace MutualGames
+namespace MutualGames;
+
+public class MutualGames : GenericPlugin
 {
-    public class MutualGames : GenericPlugin
+    //So for anyone using GongSolutions.Wpf.DragDrop - be aware you have to instantiate something from it before referencing the package in your XAML
+    private GongSolutions.Wpf.DragDrop.DefaultDragHandler dropInfo = new GongSolutions.Wpf.DragDrop.DefaultDragHandler();
+    private static readonly ILogger logger = LogManager.GetLogger();
+
+    private MutualGamesSettingsViewModel _settings;
+    private IWebDownloader _downloader;
+
+    private MutualGamesSettingsViewModel Settings { get => _settings ?? (_settings = new MutualGamesSettingsViewModel(this)); set => _settings = value; }
+    private IWebDownloader Downloader => _downloader ?? (_downloader = new WebDownloader());
+
+    public override Guid Id { get; } = Guid.Parse("c615a8d1-c262-430a-b74b-6302d3328466");
+
+    public string Name { get; } = "Mutual Games";
+
+    public MutualGames(IPlayniteAPI api) : base(api)
     {
-        //So for anyone using GongSolutions.Wpf.DragDrop - be aware you have to instantiate something from it before referencing the package in your XAML
-        private GongSolutions.Wpf.DragDrop.DefaultDragHandler dropInfo = new GongSolutions.Wpf.DragDrop.DefaultDragHandler();
-        private static readonly ILogger logger = LogManager.GetLogger();
-
-        private MutualGamesSettingsViewModel _settings;
-        private IWebDownloader _downloader;
-
-        private MutualGamesSettingsViewModel Settings { get => _settings ?? (_settings = new MutualGamesSettingsViewModel(this)); set => _settings = value; }
-        private IWebDownloader Downloader => _downloader ?? (_downloader = new WebDownloader());
-
-        public override Guid Id { get; } = Guid.Parse("c615a8d1-c262-430a-b74b-6302d3328466");
-
-        public string Name { get; } = "Mutual Games";
-
-        public MutualGames(IPlayniteAPI api) : base(api)
+        Properties = new GenericPluginProperties
         {
-            Properties = new GenericPluginProperties
-            {
-                HasSettings = true
-            };
-        }
+            HasSettings = true
+        };
+    }
 
-        public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
-        {
-            var section = $"@{Name}";
-            yield return new MainMenuItem { Description = "Import mutual games from friend accounts", Action = ImportAccounts, MenuSection = section };
-            yield return new MainMenuItem { Description = "Import mutual games from friend's exported file", Action = ImportFile, MenuSection = section };
-            yield return new MainMenuItem { Description = "Export games file to send to friends", Action = ExportFile, MenuSection = section };
-        }
+    public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+    {
+        var section = $"@{Name}";
+        yield return new MainMenuItem { Description = "Import mutual games from friend accounts", Action = ImportAccounts, MenuSection = section };
+        yield return new MainMenuItem { Description = "Import mutual games from friend's exported file", Action = ImportFile, MenuSection = section };
+        yield return new MainMenuItem { Description = "Export games file to send to friends", Action = ExportFile, MenuSection = section };
+    }
 
-        private void ImportAccounts(MainMenuItemActionArgs args)
-        {
-            var importer = new MutualGamesAccountImporter(PlayniteApi, Settings.Settings, GetClients());
-            importer.Import();
-        }
+    private void ImportAccounts(MainMenuItemActionArgs args)
+    {
+        var importer = new MutualGamesAccountImporter(PlayniteApi, Settings.Settings, GetClients());
+        importer.Import();
+    }
 
-        private void ImportFile(MainMenuItemActionArgs args)
-        {
-            var importer = new MutualGamesFileImporter(PlayniteApi, Settings.Settings, new PlatformUtility(PlayniteApi));
-            importer.Import();
-        }
+    private void ImportFile(MainMenuItemActionArgs args)
+    {
+        var importer = new MutualGamesFileImporter(PlayniteApi, Settings.Settings, new PlatformUtility(PlayniteApi));
+        importer.Import();
+    }
 
-        private void ExportFile(MainMenuItemActionArgs args)
-        {
-            var exporter = new MutualGamesFileExporter(PlayniteApi, Settings.Settings);
-            exporter.Export();
-        }
+    private void ExportFile(MainMenuItemActionArgs args)
+    {
+        var exporter = new MutualGamesFileExporter(PlayniteApi, Settings.Settings);
+        exporter.Export();
+    }
 
-        public override ISettings GetSettings(bool firstRunSettings) => Settings;
+    public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
-        public override UserControl GetSettingsView(bool firstRunSettings) => new MutualGamesSettingsView();
+    public override UserControl GetSettingsView(bool firstRunSettings) => new MutualGamesSettingsView();
 
-        public IEnumerable<IFriendsGamesClient> GetClients()
-        {
-            var webView = new OffScreenWebViewWrapper(PlayniteApi);
-            yield return new EaClient(webView, Downloader);
-            yield return new GogClient(webView);
-            yield return new SteamClient(webView);
-        }
+    public IEnumerable<IFriendsGamesClient> GetClients()
+    {
+        var webView = new OffScreenWebViewWrapper(PlayniteApi);
+        yield return new EaClient(webView, Downloader);
+        yield return new GogClient(webView);
+        yield return new SteamClient(webView);
     }
 }

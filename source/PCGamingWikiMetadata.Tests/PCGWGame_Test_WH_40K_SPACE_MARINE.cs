@@ -3,33 +3,32 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace PCGamingWikiMetadata.Tests
+namespace PCGamingWikiMetadata.Tests;
+
+public class PCGWGame_Test_WH_40K_SPACE_MARINE : IDisposable
 {
-    public class PCGWGame_Test_WH_40K_SPACE_MARINE : IDisposable
+    private PCGWGame testGame;
+    private LocalPCGWClient client;
+    private TestMetadataRequestOptions options;
+
+    public PCGWGame_Test_WH_40K_SPACE_MARINE()
     {
-        private PCGWGame testGame;
-        private LocalPCGWClient client;
-        private TestMetadataRequestOptions options;
+        this.options = new TestMetadataRequestOptions();
+        this.options.SetGameSourceBattleNet();
+        this.client = new LocalPCGWClient(this.options);
+        this.testGame = new PCGWGame(this.client.GetSettings(), "Warhammer 40,000: Space Marine", -1);
+        this.client.FetchGamePageContent(this.testGame);
+    }
 
-        public PCGWGame_Test_WH_40K_SPACE_MARINE()
-        {
-            this.options = new TestMetadataRequestOptions();
-            this.options.SetGameSourceBattleNet();
-            this.client = new LocalPCGWClient(this.options);
-            this.testGame = new PCGWGame(this.client.GetSettings(), "Warhammer 40,000: Space Marine", -1);
-            this.client.FetchGamePageContent(this.testGame);
-        }
+    [Fact]
+    public void TestParseSeries()
+    {
+        var arr = this.testGame.Series.Select(i => i.ToString()).ToArray();
+        arr.Should().Contain("Warhammer 40,000: Space Marine");
+    }
 
-        [Fact]
-        public void TestParseSeries()
-        {
-            var arr = this.testGame.Series.Select(i => i.ToString()).ToArray();
-            arr.Should().Contain("Warhammer 40,000: Space Marine");
-        }
+    public void Dispose()
+    {
 
-        public void Dispose()
-        {
-
-        }
     }
 }

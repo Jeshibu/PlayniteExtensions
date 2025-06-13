@@ -3,127 +3,126 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace GamersGateLibrary
+namespace GamersGateLibrary;
+
+public interface IWebViewWrapper : IDisposable
 {
-    public interface IWebViewWrapper : IDisposable
+    string DownloadPageSource(string targetUrl);
+}
+
+/// <summary>
+/// Intended for use for only one request
+/// </summary>
+public class WebViewWrapper : IWebViewWrapper
+{
+    public WebViewWrapper(IPlayniteAPI playniteAPI, int width = 675, int height = 600, bool offscreen = false, int timeoutSeconds = 60)
     {
-        string DownloadPageSource(string targetUrl);
+        Offscreen = offscreen;
+        TimeoutSeconds = timeoutSeconds;
+        view = System.Windows.Application.Current.Dispatcher.Invoke(() =>
+        {
+            IWebView v = offscreen
+                ? playniteAPI.WebViews.CreateOffscreenView()
+                : playniteAPI.WebViews.CreateView(width, height, Colors.Black);
+
+            if (!offscreen)
+                v.Open();
+
+            return v;
+        });
+        view.LoadingChanged += View_LoadingChanged;
     }
 
-    /// <summary>
-    /// Intended for use for only one request
-    /// </summary>
-    public class WebViewWrapper : IWebViewWrapper
+    private readonly IWebView view;
+    private readonly ILogger logger = LogManager.GetLogger();
+    private readonly object requestLifespanLock = new object();
+    public bool Offscreen { get; }
+    public int TimeoutSeconds { get; }
+    public string TargetUrl { get; private set; }
+    private TaskCompletionSource<string> DownloadCompletionSource { get; set; }
+
+    public string DownloadPageSource(string targetUrl)
     {
-        public WebViewWrapper(IPlayniteAPI playniteAPI, int width = 675, int height = 600, bool offscreen = false, int timeoutSeconds = 60)
+        lock (requestLifespanLock)
         {
-            Offscreen = offscreen;
-            TimeoutSeconds = timeoutSeconds;
-            view = System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            logger.Debug($"Getting {targetUrl}, timeout {TimeoutSeconds} seconds");
+            TargetUrl = targetUrl;
+
+            DownloadCompletionSource = new TaskCompletionSource<string>();
+
+            view.Navigate(targetUrl);
+
+            DownloadCompletionSource.Task.Wait(TimeoutSeconds * 1000);
+            if (DownloadCompletionSource.Task.IsCompleted)
             {
-                IWebView v = offscreen
-                    ? playniteAPI.WebViews.CreateOffscreenView()
-                    : playniteAPI.WebViews.CreateView(width, height, Colors.Black);
+                string source = DownloadCompletionSource.Task.Result;
+                DownloadCompletionSource = null;
 
-                if (!offscreen)
-                    v.Open();
-
-                return v;
-            });
-            view.LoadingChanged += View_LoadingChanged;
-        }
-
-        private readonly IWebView view;
-        private readonly ILogger logger = LogManager.GetLogger();
-        private readonly object requestLifespanLock = new object();
-        public bool Offscreen { get; }
-        public int TimeoutSeconds { get; }
-        public string TargetUrl { get; private set; }
-        private TaskCompletionSource<string> DownloadCompletionSource { get; set; }
-
-        public string DownloadPageSource(string targetUrl)
-        {
-            lock (requestLifespanLock)
+                return source;
+            }
+            else
             {
-                logger.Debug($"Getting {targetUrl}, timeout {TimeoutSeconds} seconds");
-                TargetUrl = targetUrl;
-
-                DownloadCompletionSource = new TaskCompletionSource<string>();
-
-                view.Navigate(targetUrl);
-
-                DownloadCompletionSource.Task.Wait(TimeoutSeconds * 1000);
-                if (DownloadCompletionSource.Task.IsCompleted)
-                {
-                    string source = DownloadCompletionSource.Task.Result;
-                    DownloadCompletionSource = null;
-
-                    return source;
-                }
-                else
-                {
-                    return null;
-                }
+                return null;
             }
         }
+    }
 
-        public static bool IsAuthenticated(string pageSource)
-        {
-            bool authenticated = pageSource.Contains(@"navigation-link--icon-user");
-            return authenticated;
-        }
+    public static bool IsAuthenticated(string pageSource)
+    {
+        bool authenticated = pageSource.Contains(@"navigation-link--icon-user");
+        return authenticated;
+    }
 
-        private bool IsTargetUrl()
-        {
-            var currentUri = new Uri(view.GetCurrentAddress());
-            return currentUri.GetLeftPart(UriPartial.Query) == TargetUrl;
-        }
+    private bool IsTargetUrl()
+    {
+        var currentUri = new Uri(view.GetCurrentAddress());
+        return currentUri.GetLeftPart(UriPartial.Query) == TargetUrl;
+    }
 
-        private async void View_LoadingChanged(object sender, Playnite.SDK.Events.WebViewLoadingChangedEventArgs e)
+    private async void View_LoadingChanged(object sender, Playnite.SDK.Events.WebViewLoadingChangedEventArgs e)
+    {
+        if (e.IsLoading)
+            return;
+
+        try
         {
-            if (e.IsLoading)
+            if (!IsTargetUrl())
+            {
+                logger.Debug($"Waiting for {TargetUrl}, got {view.GetCurrentAddress()}");
                 return;
-
-            try
-            {
-                if (!IsTargetUrl())
-                {
-                    logger.Debug($"Waiting for {TargetUrl}, got {view.GetCurrentAddress()}");
-                    return;
-                }
-
-                var source = await view.GetPageSourceAsync();
-                if (IsAuthenticated(source))
-                {
-                    DownloadCompletionSource?.TrySetResult(source);
-                    logger.Debug($"Completed request for {TargetUrl}");
-                }
-                else
-                {
-                    logger.Debug($"Source for {TargetUrl} is not authenticated");
-                    return;
-                }
             }
-            catch (Exception ex)
+
+            var source = await view.GetPageSourceAsync();
+            if (IsAuthenticated(source))
             {
-                logger.Error(ex, "Error trying to navigate to " + TargetUrl);
+                DownloadCompletionSource?.TrySetResult(source);
+                logger.Debug($"Completed request for {TargetUrl}");
+            }
+            else
+            {
+                logger.Debug($"Source for {TargetUrl} is not authenticated");
+                return;
             }
         }
-
-        public void Dispose()
+        catch (Exception ex)
         {
-            try
+            logger.Error(ex, "Error trying to navigate to " + TargetUrl);
+        }
+    }
+
+    public void Dispose()
+    {
+        try
+        {
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
             {
-                System.Windows.Application.Current.Dispatcher.Invoke(() =>
-                {
-                    view.Close();
-                    view.Dispose();
-                });
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "Error disposing WebViewWrapper");
-            }
+                view.Close();
+                view.Dispose();
+            });
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex, "Error disposing WebViewWrapper");
         }
     }
 }

@@ -5,30 +5,29 @@ using PlayniteExtensions.Metadata.Common;
 using System.Collections.ObjectModel;
 using Xunit;
 
-namespace PCGamingWikiMetadata.Tests
+namespace PCGamingWikiMetadata.Tests;
+
+public class MatchOnUrlEscapedSlugsTest
 {
-    public class MatchOnUrlEscapedSlugsTest
+    [Fact]
+    public void NormalSlugMatchesEscapedSlug()
     {
-        [Fact]
-        public void NormalSlugMatchesEscapedSlug()
+        var libraryGame = new Game("Vivisector")
         {
-            var libraryGame = new Game("Vivisector")
+            Links = new ObservableCollection<Link>
             {
-                Links = new ObservableCollection<Link>
-                {
-                    new Link("PCGamingWiki", "https://www.pcgamingwiki.com/wiki/Vivisector%20-%20Beast%20Within")
-                }
-            };
+                new Link("PCGamingWiki", "https://www.pcgamingwiki.com/wiki/Vivisector%20-%20Beast%20Within")
+            }
+        };
 
-            var matchHelper = new GameMatchingHelper(new PCGamingWikiIdUtility(), 1);
-            matchHelper.Prepare(new[] { libraryGame }, default);
+        var matchHelper = new GameMatchingHelper(new PCGamingWikiIdUtility(), 1);
+        matchHelper.Prepare(new[] { libraryGame }, default);
 
-            var slug = "Vivisector - Beast Within".TitleToSlug();
-            var expectedId = DbId.PCGW(PCGamingWikiIdUtility.SlugToId(slug));
+        var slug = "Vivisector - Beast Within".TitleToSlug();
+        var expectedId = DbId.PCGW(PCGamingWikiIdUtility.SlugToId(slug));
 
-            Assert.True(matchHelper.TryGetGamesById(expectedId, out var games));
+        Assert.True(matchHelper.TryGetGamesById(expectedId, out var games));
 
-            Assert.NotEmpty(games);
-        }
+        Assert.NotEmpty(games);
     }
 }

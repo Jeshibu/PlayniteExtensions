@@ -5,101 +5,100 @@ using PlayniteUtilitiesCommon;
 using System;
 using System.Collections.Generic;
 
-namespace GamesSizeCalculator
+namespace GamesSizeCalculator;
+
+public class InstallSizeProvider : OnDemandMetadataProvider
 {
-    public class InstallSizeProvider : OnDemandMetadataProvider
+    public InstallSizeProvider(Game game, IPlayniteAPI playniteAPI, ICollection<ISizeCalculator> sizeCalculators)
     {
-        public InstallSizeProvider(Game game, IPlayniteAPI playniteAPI, ICollection<ISizeCalculator> sizeCalculators)
-        {
-            Game = game;
-            PlayniteApi = playniteAPI;
-            SizeCalculators = sizeCalculators;
-        }
+        Game = game;
+        PlayniteApi = playniteAPI;
+        SizeCalculators = sizeCalculators;
+    }
 
-        public override List<MetadataField> AvailableFields { get; } = new List<MetadataField> { MetadataField.InstallSize };
-        public Game Game { get; }
-        public IPlayniteAPI PlayniteApi { get; }
-        public ICollection<ISizeCalculator> SizeCalculators { get; }
-        private readonly ILogger logger = LogManager.GetLogger();
+    public override List<MetadataField> AvailableFields { get; } = new List<MetadataField> { MetadataField.InstallSize };
+    public Game Game { get; }
+    public IPlayniteAPI PlayniteApi { get; }
+    public ICollection<ISizeCalculator> SizeCalculators { get; }
+    private readonly ILogger logger = LogManager.GetLogger();
 
-        public override ulong? GetInstallSize(GetMetadataFieldArgs args)
-        {
-            ulong size = GetInstallSize();
-            return size == 0 ? (ulong?)null : size;
-        }
+    public override ulong? GetInstallSize(GetMetadataFieldArgs args)
+    {
+        ulong size = GetInstallSize();
+        return size == 0 ? (ulong?)null : size;
+    }
 
-        private ulong GetInstallSize(ISizeCalculator sizeCalculator)
+    private ulong GetInstallSize(ISizeCalculator sizeCalculator)
+    {
+        try
         {
-            try
+            var sizeTask = sizeCalculator.GetInstallSizeAsync(Game);
+            if (sizeTask.Wait(7000))
             {
-                var sizeTask = sizeCalculator.GetInstallSizeAsync(Game);
-                if (sizeTask.Wait(7000))
-                {
-                    return sizeTask.Result ?? 0L;
-                }
-                else
-                {
-                    logger.Warn($"Timed out while getting {sizeCalculator.ServiceName} install size for {Game.Name}");
-                    return 0L;
-                }
+                return sizeTask.Result ?? 0L;
             }
-            catch (Exception e)
+            else
             {
-                logger.Error(e, $"Error while getting file size from {sizeCalculator?.ServiceName} for {Game?.Name}");
-                PlayniteApi.Notifications.Add(
-                    new NotificationMessage("GetOnlineSizeError" + Game.Id.ToString(),
-                        string.Format(ResourceProvider.GetString("LOCGame_Sizes_Calculator_NotificationMessageErrorGetOnlineSize"), sizeCalculator.ServiceName, Game.Name, e.Message),
-                        NotificationType.Error));
-                return 0;
+                logger.Warn($"Timed out while getting {sizeCalculator.ServiceName} install size for {Game.Name}");
+                return 0L;
             }
         }
-
-        private ulong GetInstallSize()
+        catch (Exception e)
         {
-            if (!(SizeCalculators?.Count > 0 && (Game.IsInstalled || PlayniteUtilities.IsGamePcGame(Game))))
+            logger.Error(e, $"Error while getting file size from {sizeCalculator?.ServiceName} for {Game?.Name}");
+            PlayniteApi.Notifications.Add(
+                new NotificationMessage("GetOnlineSizeError" + Game.Id.ToString(),
+                    string.Format(ResourceProvider.GetString("LOCGame_Sizes_Calculator_NotificationMessageErrorGetOnlineSize"), sizeCalculator.ServiceName, Game.Name, e.Message),
+                    NotificationType.Error));
+            return 0;
+        }
+    }
+
+    private ulong GetInstallSize()
+    {
+        if (!(SizeCalculators?.Count > 0 && (Game.IsInstalled || PlayniteUtilities.IsGamePcGame(Game))))
+        {
+            return 0;
+        }
+
+        ulong size = 0;
+
+        var alreadyRan = new List<ISizeCalculator>();
+        //check the preferred size calculators first (Steam for Steam games, GOG for GOG games, etc)
+        foreach (var sizeCalculator in SizeCalculators)
+        {
+            if (!sizeCalculator.IsPreferredInstallSizeCalculator(Game))
             {
-                return 0;
+                continue;
             }
 
-            ulong size = 0;
+            size = GetInstallSize(sizeCalculator);
+            alreadyRan.Add(sizeCalculator);
+            if (size != 0)
+            {
+                break;
+            }
+        }
 
-            var alreadyRan = new List<ISizeCalculator>();
-            //check the preferred size calculators first (Steam for Steam games, GOG for GOG games, etc)
+        //go through every size calculator as a fallback
+        if (size == 0)
+        {
             foreach (var sizeCalculator in SizeCalculators)
             {
-                if (!sizeCalculator.IsPreferredInstallSizeCalculator(Game))
+                if (alreadyRan.Contains(sizeCalculator))
                 {
                     continue;
                 }
 
                 size = GetInstallSize(sizeCalculator);
-                alreadyRan.Add(sizeCalculator);
                 if (size != 0)
                 {
                     break;
                 }
             }
-
-            //go through every size calculator as a fallback
-            if (size == 0)
-            {
-                foreach (var sizeCalculator in SizeCalculators)
-                {
-                    if (alreadyRan.Contains(sizeCalculator))
-                    {
-                        continue;
-                    }
-
-                    size = GetInstallSize(sizeCalculator);
-                    if (size != 0)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            return size;
         }
 
+        return size;
     }
+
 }

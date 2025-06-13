@@ -8,253 +8,252 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PluginsCommon.Web
+namespace PluginsCommon.Web;
+
+// Based on https://github.com/JosefNemec/Playnite
+public interface IDownloader
 {
-    // Based on https://github.com/JosefNemec/Playnite
-    public interface IDownloader
+    string DownloadString(IEnumerable<string> mirrors);
+
+    string DownloadString(string url);
+
+    string DownloadString(string url, Encoding encoding);
+
+    string DownloadString(string url, List<Cookie> cookies);
+
+    string DownloadString(string url, List<Cookie> cookies, Encoding encoding);
+
+    void DownloadString(string url, string path);
+
+    void DownloadString(string url, string path, Encoding encoding);
+
+    byte[] DownloadData(string url);
+
+    void DownloadFile(string url, string path);
+
+    void DownloadFile(IEnumerable<string> mirrors, string path);
+
+    Task DownloadFileAsync(string url, string path, Action<DownloadProgressChangedEventArgs> progressHandler);
+
+    Task DownloadFileAsync(IEnumerable<string> mirrors, string path, Action<DownloadProgressChangedEventArgs> progressHandler);
+}
+
+public class Downloader : IDownloader
+{
+    private static ILogger logger = LogManager.GetLogger();
+
+    public Downloader()
     {
-        string DownloadString(IEnumerable<string> mirrors);
-
-        string DownloadString(string url);
-
-        string DownloadString(string url, Encoding encoding);
-
-        string DownloadString(string url, List<Cookie> cookies);
-
-        string DownloadString(string url, List<Cookie> cookies, Encoding encoding);
-
-        void DownloadString(string url, string path);
-
-        void DownloadString(string url, string path, Encoding encoding);
-
-        byte[] DownloadData(string url);
-
-        void DownloadFile(string url, string path);
-
-        void DownloadFile(IEnumerable<string> mirrors, string path);
-
-        Task DownloadFileAsync(string url, string path, Action<DownloadProgressChangedEventArgs> progressHandler);
-
-        Task DownloadFileAsync(IEnumerable<string> mirrors, string path, Action<DownloadProgressChangedEventArgs> progressHandler);
     }
 
-    public class Downloader : IDownloader
+    public string DownloadString(IEnumerable<string> mirrors)
     {
-        private static ILogger logger = LogManager.GetLogger();
-
-        public Downloader()
+        logger.Debug($"Downloading string content from multiple mirrors.");
+        foreach (var mirror in mirrors)
         {
-        }
-
-        public string DownloadString(IEnumerable<string> mirrors)
-        {
-            logger.Debug($"Downloading string content from multiple mirrors.");
-            foreach (var mirror in mirrors)
-            {
-                try
-                {
-                    return DownloadString(mirror);
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, $"Failed to download {mirror} string.");
-                }
-            }
-
-            throw new Exception("Failed to download string from all mirrors.");
-        }
-
-        public string DownloadString(string url)
-        {
-            return DownloadString(url, Encoding.UTF8);
-        }
-
-        public string DownloadString(string url, CancellationToken cancelToken)
-        {
-            logger.Debug($"Downloading string content from {url} using UTF8 encoding.");
-
             try
             {
-                using (var webClient = new WebClient { Encoding = Encoding.UTF8 })
-                using (var registration = cancelToken.Register(() => webClient.CancelAsync()))
-                {
-                    return Task.Run(async () => await webClient.DownloadStringTaskAsync(url)).GetAwaiter().GetResult();
-                }
+                return DownloadString(mirror);
             }
-            catch (WebException ex) when (ex.Status == WebExceptionStatus.RequestCanceled)
+            catch (Exception e)
             {
-                logger.Warn("Download canceled.");
-                return null;
+                logger.Error(e, $"Failed to download {mirror} string.");
             }
         }
 
-        public string DownloadString(string url, Encoding encoding)
+        throw new Exception("Failed to download string from all mirrors.");
+    }
+
+    public string DownloadString(string url)
+    {
+        return DownloadString(url, Encoding.UTF8);
+    }
+
+    public string DownloadString(string url, CancellationToken cancelToken)
+    {
+        logger.Debug($"Downloading string content from {url} using UTF8 encoding.");
+
+        try
         {
-            logger.Debug($"Downloading string content from {url} using {encoding} encoding.");
-            using (var webClient = new WebClient { Encoding = encoding })
+            using (var webClient = new WebClient { Encoding = Encoding.UTF8 })
+            using (var registration = cancelToken.Register(() => webClient.CancelAsync()))
             {
-                return webClient.DownloadString(url);
+                return Task.Run(async () => await webClient.DownloadStringTaskAsync(url)).GetAwaiter().GetResult();
             }
         }
-
-        public string DownloadString(string url, List<Cookie> cookies)
+        catch (WebException ex) when (ex.Status == WebExceptionStatus.RequestCanceled)
         {
-            return DownloadString(url, cookies, Encoding.UTF8);
+            logger.Warn("Download canceled.");
+            return null;
         }
+    }
 
-        public string DownloadString(string url, List<Cookie> cookies, Encoding encoding)
+    public string DownloadString(string url, Encoding encoding)
+    {
+        logger.Debug($"Downloading string content from {url} using {encoding} encoding.");
+        using (var webClient = new WebClient { Encoding = encoding })
         {
-            logger.Debug($"Downloading string content from {url} using cookies and {encoding} encoding.");
-            using (var webClient = new WebClient { Encoding = encoding })
+            return webClient.DownloadString(url);
+        }
+    }
+
+    public string DownloadString(string url, List<Cookie> cookies)
+    {
+        return DownloadString(url, cookies, Encoding.UTF8);
+    }
+
+    public string DownloadString(string url, List<Cookie> cookies, Encoding encoding)
+    {
+        logger.Debug($"Downloading string content from {url} using cookies and {encoding} encoding.");
+        using (var webClient = new WebClient { Encoding = encoding })
+        {
+            if (cookies?.Any() == true)
             {
-                if (cookies?.Any() == true)
-                {
-                    var cookieString = string.Join(";", cookies.Select(a => $"{a.Name}={a.Value}"));
-                    webClient.Headers.Add(HttpRequestHeader.Cookie, cookieString);
-                }
-
-                return webClient.DownloadString(url);
+                var cookieString = string.Join(";", cookies.Select(a => $"{a.Name}={a.Value}"));
+                webClient.Headers.Add(HttpRequestHeader.Cookie, cookieString);
             }
-        }
 
-        public void DownloadString(string url, string path)
-        {
-            DownloadString(url, path, Encoding.UTF8);
+            return webClient.DownloadString(url);
         }
+    }
 
-        public void DownloadString(string url, string path, Encoding encoding)
+    public void DownloadString(string url, string path)
+    {
+        DownloadString(url, path, Encoding.UTF8);
+    }
+
+    public void DownloadString(string url, string path, Encoding encoding)
+    {
+        logger.Debug($"Downloading string content from {url} to {path} using {encoding} encoding.");
+        using (var webClient = new WebClient { Encoding = encoding })
         {
-            logger.Debug($"Downloading string content from {url} to {path} using {encoding} encoding.");
-            using (var webClient = new WebClient { Encoding = encoding })
+            var data = webClient.DownloadString(url);
+            File.WriteAllText(path, data);
+        }
+    }
+
+    public byte[] DownloadData(string url)
+    {
+        logger.Debug($"Downloading data from {url}.");
+        using (var webClient = new WebClient())
+        {
+            return webClient.DownloadData(url);
+        }
+    }
+
+    public void DownloadFile(string url, string path)
+    {
+        logger.Debug($"Downloading data from {url} to {path}.");
+        FileSystem.CreateDirectory(Path.GetDirectoryName(path));
+        using (var webClient = new WebClient())
+        {
+            webClient.DownloadFile(url, path);
+        }
+    }
+
+    public void DownloadFile(string url, string path, CancellationToken cancelToken)
+    {
+        logger.Debug($"Downloading data from {url} to {path}.");
+        FileSystem.CreateDirectory(Path.GetDirectoryName(path));
+
+        try
+        {
+            using (var webClient = new WebClient())
+            using (var registration = cancelToken.Register(() => webClient.CancelAsync()))
             {
-                var data = webClient.DownloadString(url);
-                File.WriteAllText(path, data);
+                webClient.DownloadFileTaskAsync(new Uri(url), path).GetAwaiter().GetResult();
             }
         }
-
-        public byte[] DownloadData(string url)
+        catch (WebException ex) when (ex.Status == WebExceptionStatus.RequestCanceled)
         {
-            logger.Debug($"Downloading data from {url}.");
+            logger.Warn("Download canceled.");
+        }
+    }
+
+    public bool DownloadFile(string url, string path, CancellationToken cancelToken, Action<DownloadProgressChangedEventArgs> progressHandler)
+    {
+        logger.Debug($"Downloading data from {url} to {path}.");
+        FileSystem.CreateDirectory(Path.GetDirectoryName(path));
+        var downloadCompleted = false;
+        try
+        {
             using (var webClient = new WebClient())
             {
-                return webClient.DownloadData(url);
-            }
-        }
+                webClient.DownloadProgressChanged += (s, e) => progressHandler(e);
+                webClient.DownloadFileCompleted += (s, e) =>
+                {
+                    // This event also triggers if the Cancellation Token cancels the download
+                    // so we have to check if it was not what stopped the download
+                    if (!cancelToken.IsCancellationRequested)
+                    {
+                        downloadCompleted = true;
+                    }
 
-        public void DownloadFile(string url, string path)
-        {
-            logger.Debug($"Downloading data from {url} to {path}.");
-            FileSystem.CreateDirectory(Path.GetDirectoryName(path));
-            using (var webClient = new WebClient())
-            {
-                webClient.DownloadFile(url, path);
-            }
-        }
+                    webClient.Dispose();
+                };
 
-        public void DownloadFile(string url, string path, CancellationToken cancelToken)
-        {
-            logger.Debug($"Downloading data from {url} to {path}.");
-            FileSystem.CreateDirectory(Path.GetDirectoryName(path));
-
-            try
-            {
-                using (var webClient = new WebClient())
                 using (var registration = cancelToken.Register(() => webClient.CancelAsync()))
                 {
                     webClient.DownloadFileTaskAsync(new Uri(url), path).GetAwaiter().GetResult();
                 }
             }
-            catch (WebException ex) when (ex.Status == WebExceptionStatus.RequestCanceled)
-            {
-                logger.Warn("Download canceled.");
-            }
+
+        }
+        catch (WebException ex) when (ex.Status == WebExceptionStatus.RequestCanceled)
+        {
+            logger.Warn("Download canceled.");
         }
 
-        public bool DownloadFile(string url, string path, CancellationToken cancelToken, Action<DownloadProgressChangedEventArgs> progressHandler)
+        return downloadCompleted;
+    }
+
+    public async Task DownloadFileAsync(string url, string path, Action<DownloadProgressChangedEventArgs> progressHandler)
+    {
+        logger.Debug($"Downloading data async from {url} to {path}.");
+        FileSystem.CreateDirectory(Path.GetDirectoryName(path));
+        using (var webClient = new WebClient())
         {
-            logger.Debug($"Downloading data from {url} to {path}.");
-            FileSystem.CreateDirectory(Path.GetDirectoryName(path));
-            var downloadCompleted = false;
+            webClient.DownloadProgressChanged += (s, e) => progressHandler(e);
+            webClient.DownloadFileCompleted += (s, e) => webClient.Dispose();
+            await webClient.DownloadFileTaskAsync(url, path);
+        }
+    }
+
+    public async Task DownloadFileAsync(IEnumerable<string> mirrors, string path, Action<DownloadProgressChangedEventArgs> progressHandler)
+    {
+        logger.Debug($"Downloading data async from multiple mirrors.");
+        foreach (var mirror in mirrors)
+        {
             try
             {
-                using (var webClient = new WebClient())
-                {
-                    webClient.DownloadProgressChanged += (s, e) => progressHandler(e);
-                    webClient.DownloadFileCompleted += (s, e) =>
-                    {
-                        // This event also triggers if the Cancellation Token cancels the download
-                        // so we have to check if it was not what stopped the download
-                        if (!cancelToken.IsCancellationRequested)
-                        {
-                            downloadCompleted = true;
-                        }
-
-                        webClient.Dispose();
-                    };
-
-                    using (var registration = cancelToken.Register(() => webClient.CancelAsync()))
-                    {
-                        webClient.DownloadFileTaskAsync(new Uri(url), path).GetAwaiter().GetResult();
-                    }
-                }
-
+                await DownloadFileAsync(mirror, path, progressHandler);
+                return;
             }
-            catch (WebException ex) when (ex.Status == WebExceptionStatus.RequestCanceled)
+            catch (Exception e)
             {
-                logger.Warn("Download canceled.");
+                logger.Error(e, $"Failed to download {mirror} file.");
             }
-
-            return downloadCompleted;
         }
 
-        public async Task DownloadFileAsync(string url, string path, Action<DownloadProgressChangedEventArgs> progressHandler)
+        throw new Exception("Failed to download file from all mirrors.");
+    }
+
+    public void DownloadFile(IEnumerable<string> mirrors, string path)
+    {
+        logger.Debug($"Downloading data from multiple mirrors.");
+        foreach (var mirror in mirrors)
         {
-            logger.Debug($"Downloading data async from {url} to {path}.");
-            FileSystem.CreateDirectory(Path.GetDirectoryName(path));
-            using (var webClient = new WebClient())
+            try
             {
-                webClient.DownloadProgressChanged += (s, e) => progressHandler(e);
-                webClient.DownloadFileCompleted += (s, e) => webClient.Dispose();
-                await webClient.DownloadFileTaskAsync(url, path);
+                DownloadFile(mirror, path);
+                return;
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Failed to download {mirror} file.");
             }
         }
 
-        public async Task DownloadFileAsync(IEnumerable<string> mirrors, string path, Action<DownloadProgressChangedEventArgs> progressHandler)
-        {
-            logger.Debug($"Downloading data async from multiple mirrors.");
-            foreach (var mirror in mirrors)
-            {
-                try
-                {
-                    await DownloadFileAsync(mirror, path, progressHandler);
-                    return;
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, $"Failed to download {mirror} file.");
-                }
-            }
-
-            throw new Exception("Failed to download file from all mirrors.");
-        }
-
-        public void DownloadFile(IEnumerable<string> mirrors, string path)
-        {
-            logger.Debug($"Downloading data from multiple mirrors.");
-            foreach (var mirror in mirrors)
-            {
-                try
-                {
-                    DownloadFile(mirror, path);
-                    return;
-                }
-                catch (Exception e)
-                {
-                    logger.Error(e, $"Failed to download {mirror} file.");
-                }
-            }
-
-            throw new Exception("Failed to download file from all mirrors.");
-        }
+        throw new Exception("Failed to download file from all mirrors.");
     }
 }

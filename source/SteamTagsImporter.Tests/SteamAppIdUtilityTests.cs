@@ -4,55 +4,54 @@ using System.IO;
 using System.Text;
 using Xunit;
 
-namespace SteamTagsImporter.Tests
+namespace SteamTagsImporter.Tests;
+
+public class SteamAppIdUtilityTests
 {
-    public class SteamAppIdUtilityTests
+    private class FakeCachedFile : ICachedFile
     {
-        private class FakeCachedFile : ICachedFile
+        public FakeCachedFile(string localFilePath, Encoding encoding)
         {
-            public FakeCachedFile(string localFilePath, Encoding encoding)
-            {
-                LocalFilePath = localFilePath;
-                Encoding = encoding;
-            }
-
-            public string LocalFilePath { get; }
-            public Encoding Encoding { get; }
-
-            public string GetFileContents()
-            {
-                return File.ReadAllText(LocalFilePath, Encoding);
-            }
-
-            public void RefreshCache()
-            {
-            }
+            LocalFilePath = localFilePath;
+            Encoding = encoding;
         }
 
-        private static SteamAppIdUtility Setup()
+        public string LocalFilePath { get; }
+        public Encoding Encoding { get; }
+
+        public string GetFileContents()
         {
-            var scraper = new SteamAppIdUtility(new FakeCachedFile("./applist.json", Encoding.UTF8));
-            return scraper;
+            return File.ReadAllText(LocalFilePath, Encoding);
         }
 
-        [Fact]
-        public void NullLinkCollectionDoesNotThrowException()
+        public void RefreshCache()
         {
-            var game = new Game("THOR.N");
-            var util = Setup();
-            var id = util.GetSteamGameId(game);
-            Assert.Null(id);
         }
+    }
 
-        [Theory]
-        [InlineData("Half-Life 2", "220")]
-        [InlineData("HalfLife 2", "220")]
-        public void GamesCanBeFoundByName(string name, string expectedId)
-        {
-            var game = new Game(name);
-            var util = Setup();
-            var id = util.GetSteamGameId(game);
-            Assert.Equal(expectedId, id);
-        }
+    private static SteamAppIdUtility Setup()
+    {
+        var scraper = new SteamAppIdUtility(new FakeCachedFile("./applist.json", Encoding.UTF8));
+        return scraper;
+    }
+
+    [Fact]
+    public void NullLinkCollectionDoesNotThrowException()
+    {
+        var game = new Game("THOR.N");
+        var util = Setup();
+        var id = util.GetSteamGameId(game);
+        Assert.Null(id);
+    }
+
+    [Theory]
+    [InlineData("Half-Life 2", "220")]
+    [InlineData("HalfLife 2", "220")]
+    public void GamesCanBeFoundByName(string name, string expectedId)
+    {
+        var game = new Game(name);
+        var util = Setup();
+        var id = util.GetSteamGameId(game);
+        Assert.Equal(expectedId, id);
     }
 }

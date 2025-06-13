@@ -2,59 +2,58 @@
 using System.Linq;
 using Xunit;
 
-namespace ViveportLibrary.Tests
+namespace ViveportLibrary.Tests;
+
+public class AppDataReaderTests
 {
-    public class AppDataReaderTests
+    [Fact]
+    public void GetInstalledApps_ReturnsInstalledApps()
     {
-        [Fact]
-        public void GetInstalledApps_ReturnsInstalledApps()
-        {
-            var appDataReader = new AppDataReader("installed_apps.json");
+        var appDataReader = new AppDataReader("installed_apps.json");
 
-            var installedApps = appDataReader.GetInstalledApps();
+        var installedApps = appDataReader.GetInstalledApps();
 
-            Assert.Equal(2, installedApps.Count());
-        }
+        Assert.Equal(2, installedApps.Count());
+    }
 
-        [Fact]
-        public void GetInstalledApps_IgnoresMalformedEntries_WhenMalformedEntriesExist()
-        {
-            var appDataReader = new AppDataReader("installed_apps_malformed.json");
+    [Fact]
+    public void GetInstalledApps_IgnoresMalformedEntries_WhenMalformedEntriesExist()
+    {
+        var appDataReader = new AppDataReader("installed_apps_malformed.json");
 
-            var installedApps = appDataReader.GetInstalledApps();
+        var installedApps = appDataReader.GetInstalledApps();
 
-            Assert.Equal(2, installedApps.Count());
-            Assert.DoesNotContain(installedApps, x => x.Title == "Malformed Game");
-        }
+        Assert.Equal(2, installedApps.Count());
+        Assert.DoesNotContain(installedApps, x => x.Title == "Malformed Game");
+    }
 
-        [Fact]
-        public void GetInstalledApps_ReturnsNull_WhenNoFileExists()
-        {
-            var appDataReader = new AppDataReader("non_existing_file.json");
+    [Fact]
+    public void GetInstalledApps_ReturnsNull_WhenNoFileExists()
+    {
+        var appDataReader = new AppDataReader("non_existing_file.json");
 
-            var installedApps = appDataReader.GetInstalledApps();
+        var installedApps = appDataReader.GetInstalledApps();
 
-            Assert.Null(installedApps);
-        }
+        Assert.Null(installedApps);
+    }
 
-        [Fact]
-        public void GetInstalledApps_ReturnsNull_WhenFileIsEmpty()
-        {
-            var appDataReader = new AppDataReader("empty.json");
+    [Fact]
+    public void GetInstalledApps_ReturnsNull_WhenFileIsEmpty()
+    {
+        var appDataReader = new AppDataReader("empty.json");
 
-            var installedApps = appDataReader.GetInstalledApps();
+        var installedApps = appDataReader.GetInstalledApps();
 
-            Assert.Null(installedApps);
-        }
+        Assert.Null(installedApps);
+    }
 
-        [Fact]
-        public void GetInstalledApps_Handles_Duplicate_Ids()
-        {
-            var appDataReader = new AppDataReader("installed_apps_duplicate.json");
+    [Fact]
+    public void GetInstalledApps_Handles_Duplicate_Ids()
+    {
+        var appDataReader = new AppDataReader("installed_apps_duplicate.json");
 
-            var installedApps = appDataReader.GetInstalledApps();
+        var installedApps = appDataReader.GetInstalledApps();
 
-            var dict = installedApps.ToDictionarySafe(a => a.AppId);
-        }
+        var dict = installedApps.ToDictionarySafe(a => a.AppId);
     }
 }

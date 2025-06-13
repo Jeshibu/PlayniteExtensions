@@ -5,82 +5,81 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
 
-namespace RawgMetadata
+namespace RawgMetadata;
+
+public class RawgMetadata : MetadataPlugin
 {
-    public class RawgMetadata : MetadataPlugin
+    private static readonly ILogger logger = LogManager.GetLogger();
+
+    private RawgMetadataSettingsViewModel settings { get; set; }
+
+    private RawgApiClient rawgApiClient;
+
+    public override Guid Id { get; } = Guid.Parse("07f4f852-bfc8-4937-b189-3a5a308569a6");
+
+    public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
+        MetadataField.Name,
+        MetadataField.ReleaseDate,
+        MetadataField.Description,
+        MetadataField.CriticScore,
+        MetadataField.CommunityScore,
+        MetadataField.Platform,
+        MetadataField.BackgroundImage,
+        MetadataField.Tags,
+        MetadataField.Genres,
+        MetadataField.Developers,
+        MetadataField.Publishers,
+        MetadataField.Links
+    };
 
-        private RawgMetadataSettingsViewModel settings { get; set; }
+    public override string Name => "RAWG";
 
-        private RawgApiClient rawgApiClient;
-
-        public override Guid Id { get; } = Guid.Parse("07f4f852-bfc8-4937-b189-3a5a308569a6");
-
-        public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
+    public RawgMetadata(IPlayniteAPI api) : base(api)
+    {
+        settings = new RawgMetadataSettingsViewModel(this);
+        Properties = new MetadataPluginProperties
         {
-            MetadataField.Name,
-            MetadataField.ReleaseDate,
-            MetadataField.Description,
-            MetadataField.CriticScore,
-            MetadataField.CommunityScore,
-            MetadataField.Platform,
-            MetadataField.BackgroundImage,
-            MetadataField.Tags,
-            MetadataField.Genres,
-            MetadataField.Developers,
-            MetadataField.Publishers,
-            MetadataField.Links
+            HasSettings = true
         };
+    }
 
-        public override string Name => "RAWG";
+    private RawgApiClient GetApiClient()
+    {
+        if (rawgApiClient != null)
+            return rawgApiClient;
 
-        public RawgMetadata(IPlayniteAPI api) : base(api)
+        if (string.IsNullOrWhiteSpace(settings.Settings.ApiKey))
         {
-            settings = new RawgMetadataSettingsViewModel(this);
-            Properties = new MetadataPluginProperties
-            {
-                HasSettings = true
-            };
+            PlayniteApi.Notifications.Add(new NotificationMessage("rawg-metadata-no-apikey", "No API key set. Please set it in the RAWG Metadata extension settings.", NotificationType.Error, OpenSettings));
+            return null;
         }
 
-        private RawgApiClient GetApiClient()
-        {
-            if (rawgApiClient != null)
-                return rawgApiClient;
+        return rawgApiClient ?? (rawgApiClient = new RawgApiClient(settings.Settings.ApiKey));
+    }
 
-            if (string.IsNullOrWhiteSpace(settings.Settings.ApiKey))
-            {
-                PlayniteApi.Notifications.Add(new NotificationMessage("rawg-metadata-no-apikey", "No API key set. Please set it in the RAWG Metadata extension settings.", NotificationType.Error, OpenSettings));
-                return null;
-            }
+    private void OpenSettings()
+    {
+        base.OpenSettingsView();
+    }
 
-            return rawgApiClient ?? (rawgApiClient = new RawgApiClient(settings.Settings.ApiKey));
-        }
+    public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
+    {
+        var apiClient = GetApiClient();
 
-        private void OpenSettings()
-        {
-            base.OpenSettingsView();
-        }
+        if (apiClient == null)
+            return null;
 
-        public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
-        {
-            var apiClient = GetApiClient();
+        return new RawgMetadataProvider(options, this, apiClient);
+    }
 
-            if (apiClient == null)
-                return null;
+    public override ISettings GetSettings(bool firstRunSettings)
+    {
+        return settings;
+    }
 
-            return new RawgMetadataProvider(options, this, apiClient);
-        }
-
-        public override ISettings GetSettings(bool firstRunSettings)
-        {
-            return settings;
-        }
-
-        public override UserControl GetSettingsView(bool firstRunSettings)
-        {
-            return new RawgMetadataSettingsView();
-        }
+    public override UserControl GetSettingsView(bool firstRunSettings)
+    {
+        return new RawgMetadataSettingsView();
     }
 }

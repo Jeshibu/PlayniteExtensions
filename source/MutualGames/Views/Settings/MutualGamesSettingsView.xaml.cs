@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace MutualGames.Views.Settings
+namespace MutualGames.Views.Settings;
+
+public partial class MutualGamesSettingsView : UserControl
 {
-    public partial class MutualGamesSettingsView : UserControl
+    public MutualGamesSettingsView()
     {
-        public MutualGamesSettingsView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -7,198 +7,197 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace TvTropesMetadata.Scraping
+namespace TvTropesMetadata.Scraping;
+
+public class TropeScraper : BaseScraper
 {
-    public class TropeScraper : BaseScraper
+    public List<string> SubcategoryWhitelist = new List<string> { "VideoGames", "VisualNovels" };
+    public List<string> FolderLabelWhitelist = new List<string> { "Video Game", "Videogame", "Visual Novel" };
+
+    public TropeScraper(IWebDownloader downloader) : base(downloader) { }
+
+    public override IEnumerable<TvTropesSearchResult> Search(string query) => Search(query, "trope");
+
+    public ParsedTropePage GetGamesForTrope(string url)
     {
-        public List<string> SubcategoryWhitelist = new List<string> { "VideoGames", "VisualNovels" };
-        public List<string> FolderLabelWhitelist = new List<string> { "Video Game", "Videogame", "Visual Novel" };
+        return GetGamesForTrope(url, pageIsSubsection: false);
+    }
 
-        public TropeScraper(IWebDownloader downloader) : base(downloader) { }
-
-        public override IEnumerable<TvTropesSearchResult> Search(string query) => Search(query, "trope");
-
-        public ParsedTropePage GetGamesForTrope(string url)
+    private ParsedTropePage GetGamesForTrope(string url, bool pageIsSubsection)
+    {
+        var doc = GetDocument(url);
+        var output = new ParsedTropePage { Title = GetTitle(doc) };
+        var articleContent = doc.QuerySelector(".article-content")?.InnerHtml;
+        output.Items.AddRange(GetTropePageListElements(articleContent, getAllUnfiltered: pageIsSubsection).Select(ParseTropePageListItem));
+        if (!pageIsSubsection)
         {
-            return GetGamesForTrope(url, pageIsSubsection: false);
-        }
-
-        private ParsedTropePage GetGamesForTrope(string url, bool pageIsSubsection)
-        {
-            var doc = GetDocument(url);
-            var output = new ParsedTropePage { Title = GetTitle(doc) };
-            var articleContent = doc.QuerySelector(".article-content")?.InnerHtml;
-            output.Items.AddRange(GetTropePageListElements(articleContent, getAllUnfiltered: pageIsSubsection).Select(ParseTropePageListItem));
-            if (!pageIsSubsection)
+            var subcategoryUrls = GetSubcategoryUrls(doc, url);
+            foreach (var subcategoryUrl in subcategoryUrls)
             {
-                var subcategoryUrls = GetSubcategoryUrls(doc, url);
-                foreach (var subcategoryUrl in subcategoryUrls)
-                {
-                    var subcategoryPage = GetGamesForTrope(subcategoryUrl, pageIsSubsection: true);
-                    output.Items.AddRange(subcategoryPage.Items);
-                }
-                output.Items.RemoveAll(i => i.Works.Count == 0 || BlacklistedWords.Any(w => i.Text.Contains(w)));
+                var subcategoryPage = GetGamesForTrope(subcategoryUrl, pageIsSubsection: true);
+                output.Items.AddRange(subcategoryPage.Items);
             }
-            return output;
+            output.Items.RemoveAll(i => i.Works.Count == 0 || BlacklistedWords.Any(w => i.Text.Contains(w)));
         }
+        return output;
+    }
 
-        private IEnumerable<string> GetSubcategoryUrls(IHtmlDocument doc, string pageUrl)
+    private IEnumerable<string> GetSubcategoryUrls(IHtmlDocument doc, string pageUrl)
+    {
+        var lastUrlSegment = GetWikiPathSegments(pageUrl).Last();
+        var links = doc.QuerySelectorAll(".article-content > ul > li > a.twikilink[href]");
+        foreach (var a in links)
         {
-            var lastUrlSegment = GetWikiPathSegments(pageUrl).Last();
-            var links = doc.QuerySelectorAll(".article-content > ul > li > a.twikilink[href]");
-            foreach (var a in links)
+            var linkUrl = a.GetAttribute("href");
+            var linkSegments = GetWikiPathSegments(linkUrl);
+            if (linkSegments.Length != 2)
+                continue;
+
+            foreach (var sub in SubcategoryWhitelist)
             {
-                var linkUrl = a.GetAttribute("href");
-                var linkSegments = GetWikiPathSegments(linkUrl);
-                if (linkSegments.Length != 2)
+                if (linkSegments[0].Equals(lastUrlSegment, StringComparison.InvariantCultureIgnoreCase) && linkSegments[1].Contains(sub, StringComparison.InvariantCultureIgnoreCase))
+                    yield return linkUrl.GetAbsoluteUrl(pageUrl);
+            }
+        }
+    }
+
+    private List<IElement> GetTropePageListElements(string content, bool getAllUnfiltered = false)
+    {
+        var htmlParser = new HtmlParser();
+        var headerSegments = GetHeaderSegments(content).ToList();
+        var output = new List<IElement>();
+
+        void AddListElementsFromSourceString(string source) => output.AddRange(htmlParser.Parse(source).QuerySelectorAll("ul > li:has(> em, > a.twikilink)"));
+        bool IsNonVideoGamesHeader(string header) => NonLettersAndNumbers.Replace(header, "").Contains("nonvideogame", StringComparison.InvariantCultureIgnoreCase);
+
+        if (!getAllUnfiltered)
+        {
+            foreach (var segment in headerSegments)
+            {
+                var segmentHeader = segment.Item1;
+                if (string.IsNullOrWhiteSpace(segmentHeader) || IsNonVideoGamesHeader(segmentHeader))
                     continue;
 
-                foreach (var sub in SubcategoryWhitelist)
+                var segmentContent = segment.Item2;
+                if (FolderLabelWhitelist.Any(l => segmentHeader.Contains(l, StringComparison.InvariantCultureIgnoreCase)))
+                    AddListElementsFromSourceString(segmentContent);
+
+                var segmentDoc = htmlParser.Parse(segmentContent);
+                var folderLabels = segmentDoc.QuerySelectorAll(".folderlabel[onclick^=\"togglefolder(\"]");
+                foreach (var folderLabel in folderLabels)
                 {
-                    if (linkSegments[0].Equals(lastUrlSegment, StringComparison.InvariantCultureIgnoreCase) && linkSegments[1].Contains(sub, StringComparison.InvariantCultureIgnoreCase))
-                        yield return linkUrl.GetAbsoluteUrl(pageUrl);
+                    var label = folderLabel.TextContent.HtmlDecode();
+                    if (FolderLabelWhitelist.Any(l => label.Contains(l, StringComparison.InvariantCultureIgnoreCase)))
+                        output.AddRange(folderLabel.NextElementSibling.QuerySelectorAll("ul > li:has(em)"));
                 }
             }
         }
 
-        private List<IElement> GetTropePageListElements(string content, bool getAllUnfiltered = false)
+        void AddAllListElementsFromSegments(IList<Tuple<string, string>> hss)
         {
-            var htmlParser = new HtmlParser();
-            var headerSegments = GetHeaderSegments(content).ToList();
-            var output = new List<IElement>();
+            if (hss.Count == 1)
+                AddListElementsFromSourceString(hss[0].Item2);
 
-            void AddListElementsFromSourceString(string source) => output.AddRange(htmlParser.Parse(source).QuerySelectorAll("ul > li:has(> em, > a.twikilink)"));
-            bool IsNonVideoGamesHeader(string header) => NonLettersAndNumbers.Replace(header, "").Contains("nonvideogame", StringComparison.InvariantCultureIgnoreCase);
+            if (hss.Count > 1)
+                foreach (var segment in hss)
+                    if (!string.IsNullOrWhiteSpace(segment.Item1))
+                        AddListElementsFromSourceString(segment.Item2);
+        }
 
-            if (!getAllUnfiltered)
-            {
-                foreach (var segment in headerSegments)
-                {
-                    var segmentHeader = segment.Item1;
-                    if (string.IsNullOrWhiteSpace(segmentHeader) || IsNonVideoGamesHeader(segmentHeader))
-                        continue;
-
-                    var segmentContent = segment.Item2;
-                    if (FolderLabelWhitelist.Any(l => segmentHeader.Contains(l, StringComparison.InvariantCultureIgnoreCase)))
-                        AddListElementsFromSourceString(segmentContent);
-
-                    var segmentDoc = htmlParser.Parse(segmentContent);
-                    var folderLabels = segmentDoc.QuerySelectorAll(".folderlabel[onclick^=\"togglefolder(\"]");
-                    foreach (var folderLabel in folderLabels)
-                    {
-                        var label = folderLabel.TextContent.HtmlDecode();
-                        if (FolderLabelWhitelist.Any(l => label.Contains(l, StringComparison.InvariantCultureIgnoreCase)))
-                            output.AddRange(folderLabel.NextElementSibling.QuerySelectorAll("ul > li:has(em)"));
-                    }
-                }
-            }
-
-            void AddAllListElementsFromSegments(IList<Tuple<string, string>> hss)
-            {
-                if (hss.Count == 1)
-                    AddListElementsFromSourceString(hss[0].Item2);
-
-                if (hss.Count > 1)
-                    foreach (var segment in hss)
-                        if (!string.IsNullOrWhiteSpace(segment.Item1))
-                            AddListElementsFromSourceString(segment.Item2);
-            }
-
+        if (output.Count == 0)
+        {
+            var filteredSegments = headerSegments.Where(hs => !string.IsNullOrWhiteSpace(hs.Item1) && !string.IsNullOrWhiteSpace(hs.Item2) && !IsNonVideoGamesHeader(hs.Item1)).ToList();
+            AddAllListElementsFromSegments(filteredSegments);
             if (output.Count == 0)
-            {
-                var filteredSegments = headerSegments.Where(hs => !string.IsNullOrWhiteSpace(hs.Item1) && !string.IsNullOrWhiteSpace(hs.Item2) && !IsNonVideoGamesHeader(hs.Item1)).ToList();
-                AddAllListElementsFromSegments(filteredSegments);
-                if (output.Count == 0)
-                    AddAllListElementsFromSegments(headerSegments);
-            }
+                AddAllListElementsFromSegments(headerSegments);
+        }
+        return output;
+    }
+
+    private TropePageListItem ParseTropePageListItem(IElement element)
+    {
+        var output = new TropePageListItem { Text = element.InnerHtml.Split(new[] { "<ul>" }, StringSplitOptions.RemoveEmptyEntries).First() };
+        var liChildren = element.Children.Where(c => c.TagName == "EM" || IsVideoGameLink(c));
+        if (liChildren == null)
             return output;
-        }
 
-        private TropePageListItem ParseTropePageListItem(IElement element)
+        var workNamesDeflated = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
+
+        void AddWork(TvTropesWork work)
         {
-            var output = new TropePageListItem { Text = element.InnerHtml.Split(new[] { "<ul>" }, StringSplitOptions.RemoveEmptyEntries).First() };
-            var liChildren = element.Children.Where(c => c.TagName == "EM" || IsVideoGameLink(c));
-            if (liChildren == null)
-                return output;
-
-            var workNamesDeflated = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-
-            void AddWork(TvTropesWork work)
-            {
-                var deflatedName = NonLettersAndNumbers.Replace(work.Title, string.Empty);
-                if (workNamesDeflated.Add(deflatedName))
-                    output.Works.Add(work);
-            }
-
-            foreach (var lic in liChildren)
-            {
-                var work = new TvTropesWork { Title = lic.TextContent.HtmlDecode() };
-                AddWork(work);
-                var links = lic.TagName == "A"
-                    ? new[] { lic }
-                    : lic.Children.Where(IsVideoGameLink);
-
-                foreach (var a in links)
-                {
-                    var url = GetAbsoluteUrl(a.GetAttribute("href"));
-                    work.Urls.Add(url);
-                    var gameUrlName = GetWikiPathSegments(url).Last();
-                    AddWork(new TvTropesWork { Title = ReverseEngineerGameNameFromUrlSegment(gameUrlName), Urls = new List<string> { url } });
-                }
-            }
-            return output;
+            var deflatedName = NonLettersAndNumbers.Replace(work.Title, string.Empty);
+            if (workNamesDeflated.Add(deflatedName))
+                output.Works.Add(work);
         }
 
-        private Regex NonLettersAndNumbers = new Regex(@"[^\p{L}0-9]", RegexOptions.CultureInvariant | RegexOptions.Compiled);
-
-        private bool IsVideoGameLink(IElement element)
+        foreach (var lic in liChildren)
         {
-            return element.TagName == "A" && UrlBelongsToWhitelistedWorkCategory(element.GetAttribute("href"));
-        }
+            var work = new TvTropesWork { Title = lic.TextContent.HtmlDecode() };
+            AddWork(work);
+            var links = lic.TagName == "A"
+                ? new[] { lic }
+                : lic.Children.Where(IsVideoGameLink);
 
-        private string ReverseEngineerGameNameFromUrlSegment(string urlSegment)
-        {
-            var str = urlSegment.ToList();
-            for (int i = 0; (i + 1) < str.Count; i++)
+            foreach (var a in links)
             {
-                char a = str[i];
-                char b = str[i + 1];
-                char? c = str.Count > i + 2 ? str[i + 2] : (char?)null;
-
-                bool upperAfterLower = char.IsUpper(b) && !char.IsUpper(a);
-                bool digitAfterNonDigit = char.IsDigit(b) && !char.IsDigit(a);
-                bool startOfWordAfterUpper = char.IsUpper(a) && char.IsUpper(b) && c.HasValue && char.IsLower(c.Value);
-
-                if (upperAfterLower || digitAfterNonDigit || startOfWordAfterUpper)
-                {
-                    str.Insert(i + 1, ' ');
-                    i++;
-                }
+                var url = GetAbsoluteUrl(a.GetAttribute("href"));
+                work.Urls.Add(url);
+                var gameUrlName = GetWikiPathSegments(url).Last();
+                AddWork(new TvTropesWork { Title = ReverseEngineerGameNameFromUrlSegment(gameUrlName), Urls = new List<string> { url } });
             }
-            return new string(str.ToArray());
         }
+        return output;
     }
 
-    public class ParsedTropePage
+    private Regex NonLettersAndNumbers = new Regex(@"[^\p{L}0-9]", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+
+    private bool IsVideoGameLink(IElement element)
     {
-        public string Title { get; set; }
-        public List<TropePageListItem> Items { get; set; } = new List<TropePageListItem>();
-        public override string ToString() => Title;
+        return element.TagName == "A" && UrlBelongsToWhitelistedWorkCategory(element.GetAttribute("href"));
     }
 
-    public class TropePageListItem
+    private string ReverseEngineerGameNameFromUrlSegment(string urlSegment)
     {
-        public string Text { get; set; }
+        var str = urlSegment.ToList();
+        for (int i = 0; (i + 1) < str.Count; i++)
+        {
+            char a = str[i];
+            char b = str[i + 1];
+            char? c = str.Count > i + 2 ? str[i + 2] : (char?)null;
 
-        public List<TvTropesWork> Works { get; set; } = new List<TvTropesWork>();
+            bool upperAfterLower = char.IsUpper(b) && !char.IsUpper(a);
+            bool digitAfterNonDigit = char.IsDigit(b) && !char.IsDigit(a);
+            bool startOfWordAfterUpper = char.IsUpper(a) && char.IsUpper(b) && c.HasValue && char.IsLower(c.Value);
 
-        public override string ToString() => Text;
+            if (upperAfterLower || digitAfterNonDigit || startOfWordAfterUpper)
+            {
+                str.Insert(i + 1, ' ');
+                i++;
+            }
+        }
+        return new string(str.ToArray());
     }
+}
 
-    public class TvTropesWork
-    {
-        public string Title { get; set; }
-        public List<string> Urls { set; get; } = new List<string>();
-        public override string ToString() => Title;
-    }
+public class ParsedTropePage
+{
+    public string Title { get; set; }
+    public List<TropePageListItem> Items { get; set; } = new List<TropePageListItem>();
+    public override string ToString() => Title;
+}
+
+public class TropePageListItem
+{
+    public string Text { get; set; }
+
+    public List<TvTropesWork> Works { get; set; } = new List<TvTropesWork>();
+
+    public override string ToString() => Text;
+}
+
+public class TvTropesWork
+{
+    public string Title { get; set; }
+    public List<string> Urls { set; get; } = new List<string>();
+    public override string ToString() => Title;
 }

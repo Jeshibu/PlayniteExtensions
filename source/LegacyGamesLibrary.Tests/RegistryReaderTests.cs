@@ -2,17 +2,16 @@
 using System.IO;
 using Xunit;
 
-namespace LegacyGamesLibrary.Tests
+namespace LegacyGamesLibrary.Tests;
+
+public class RegistryReaderTests
 {
-    public class RegistryReaderTests
+    //[Fact]
+    public void CanFindPath()
     {
-        //[Fact]
-        public void CanFindPath()
-        {
-            var reg = new LegacyGamesRegistryReader(new RegistryValueProvider());
-            string path = reg.GetLauncherPath();
-            Assert.NotNull(path);
-            Assert.True(File.Exists(path));
-        }
+        var reg = new LegacyGamesRegistryReader(new RegistryValueProvider());
+        string path = reg.GetLauncherPath();
+        Assert.NotNull(path);
+        Assert.True(File.Exists(path));
     }
 }

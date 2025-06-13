@@ -1,31 +1,30 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace PlayniteExtensions.Metadata.Common
+namespace PlayniteExtensions.Metadata.Common;
+
+/// <summary>
+/// Interaction logic for GamePropertyImportView.xaml
+/// </summary>
+public partial class GamePropertyImportView : UserControl
 {
-    /// <summary>
-    /// Interaction logic for GamePropertyImportView.xaml
-    /// </summary>
-    public partial class GamePropertyImportView : UserControl
+    public GamePropertyImportView(Window window)
     {
-        public GamePropertyImportView(Window window)
-        {
-            InitializeComponent();
-            Window = window;
-        }
+        InitializeComponent();
+        Window = window;
+    }
 
-        public Window Window { get; }
+    public Window Window { get; }
 
-        private void OK_Click(object sender, RoutedEventArgs e)
-        {
-            Window.DialogResult = true;
-            Window.Close();
-        }
+    private void OK_Click(object sender, RoutedEventArgs e)
+    {
+        Window.DialogResult = true;
+        Window.Close();
+    }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            Window.DialogResult = false;
-            Window.Close();
-        }
+    private void Cancel_Click(object sender, RoutedEventArgs e)
+    {
+        Window.DialogResult = false;
+        Window.Close();
     }
 }

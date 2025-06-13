@@ -1,24 +1,23 @@
-﻿namespace MutualGames.Models.Settings
+﻿namespace MutualGames.Models.Settings;
+
+public enum FriendSource
 {
-    public enum FriendSource
-    {
-        Steam,
-        EA,
-        GOG
-    }
+    Steam,
+    EA,
+    GOG
+}
 
-    public enum CrossLibraryImportMode
-    {
-        SameLibraryOnly,
-        ImportAll,
-        ImportAllWithFeature,
-    }
+public enum CrossLibraryImportMode
+{
+    SameLibraryOnly,
+    ImportAll,
+    ImportAllWithFeature,
+}
 
-    public enum AuthStatus
-    {
-        Ok,
-        Checking,
-        AuthRequired,
-        Failed
-    }
+public enum AuthStatus
+{
+    Ok,
+    Checking,
+    AuthRequired,
+    Failed
 }

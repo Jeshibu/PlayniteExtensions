@@ -10,175 +10,174 @@ using System.Windows.Controls;
 using System.Reflection;
 using BigFishMetadata;
 
-namespace BigFishLibrary
+namespace BigFishLibrary;
+
+public class BigFishLibrary : LibraryPlugin
 {
-    public class BigFishLibrary : LibraryPlugin
+    private static readonly string iconPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "icon.png");
+
+    private static readonly ILogger logger = LogManager.GetLogger();
+
+    private BigFishLibrarySettingsViewModel settings { get; set; }
+
+    public override Guid Id { get; } = Guid.Parse("37995df7-2ce2-4f7c-83a3-618138ae745d");
+
+    public static string PluginName = "Big Fish Games";
+
+    public override string Name => PluginName;
+
+    public override LibraryClient Client => new BigFishLibraryClient(RegistryReader, iconPath);
+
+    public override string LibraryIcon => iconPath;
+
+    private BigFishRegistryReader RegistryReader { get; }
+
+    private IWebDownloader Downloader { get; }
+
+    private BigFishMetadataProvider MetadataProvider
     {
-        private static readonly string iconPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "icon.png");
-
-        private static readonly ILogger logger = LogManager.GetLogger();
-
-        private BigFishLibrarySettingsViewModel settings { get; set; }
-
-        public override Guid Id { get; } = Guid.Parse("37995df7-2ce2-4f7c-83a3-618138ae745d");
-
-        public static string PluginName = "Big Fish Games";
-
-        public override string Name => PluginName;
-
-        public override LibraryClient Client => new BigFishLibraryClient(RegistryReader, iconPath);
-
-        public override string LibraryIcon => iconPath;
-
-        private BigFishRegistryReader RegistryReader { get; }
-
-        private IWebDownloader Downloader { get; }
-
-        private BigFishMetadataProvider MetadataProvider
+        get
         {
-            get
+            var searchProvider = new BigFishSearchProvider(Downloader, settings.Settings);
+            var scraper = new BigFishOnlineLibraryScraper(PlayniteApi, Downloader);
+            return new BigFishMetadataProvider(RegistryReader, searchProvider, settings.Settings, scraper);
+        }
+    }
+
+    public BigFishLibrary(IPlayniteAPI api) : base(api)
+    {
+        settings = new BigFishLibrarySettingsViewModel(this);
+        Properties = new LibraryPluginProperties
+        {
+            HasSettings = false
+        };
+        RegistryReader = new BigFishRegistryReader(new RegistryValueProvider());
+        Downloader = new WebDownloader { Accept = "*/*" };
+    }
+
+    public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
+    {
+        try
+        {
+            SetUninstalledStatus();
+
+            var metadataProvider = MetadataProvider;
+            var games = metadataProvider.GetOnlineGames().ToDictionary(g => g.GameId);
+            foreach (var offlineGame in metadataProvider.GetOfflineGames())
             {
-                var searchProvider = new BigFishSearchProvider(Downloader, settings.Settings);
-                var scraper = new BigFishOnlineLibraryScraper(PlayniteApi, Downloader);
-                return new BigFishMetadataProvider(RegistryReader, searchProvider, settings.Settings, scraper);
+                if (games.TryGetValue(offlineGame.GameId, out var onlineGame))
+                    games[offlineGame.GameId] = BigFishMetadataProvider.Merge(offlineGame, onlineGame);
+                else
+                    games[offlineGame.GameId] = offlineGame;
             }
+            return games.Values;
         }
-
-        public BigFishLibrary(IPlayniteAPI api) : base(api)
+        catch (NotAuthenticatedException)
         {
-            settings = new BigFishLibrarySettingsViewModel(this);
-            Properties = new LibraryPluginProperties
-            {
-                HasSettings = false
-            };
-            RegistryReader = new BigFishRegistryReader(new RegistryValueProvider());
-            Downloader = new WebDownloader { Accept = "*/*" };
+            logger.Error("Not authenticated");
+            PlayniteApi.Notifications.Add(new NotificationMessage("bigfish-notauthenticated", "Big Fish library isn't authenticated. Click here to authenticate.", NotificationType.Info, () => OpenSettingsView()));
+            return Enumerable.Empty<GameMetadata>();
         }
-
-        public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
+        catch (Exception ex)
         {
-            try
-            {
-                SetUninstalledStatus();
+            logger.Error(ex, "Error getting games");
+            PlayniteApi.Notifications.Add("bigfish-error", $"Big Fish library error: {ex.Message}", NotificationType.Error);
+            return Enumerable.Empty<GameMetadata>();
+        }
+    }
 
-                var metadataProvider = MetadataProvider;
-                var games = metadataProvider.GetOnlineGames().ToDictionary(g => g.GameId);
-                foreach (var offlineGame in metadataProvider.GetOfflineGames())
+    private void SetUninstalledStatus()
+    {
+        try
+        {
+            foreach (var game in PlayniteApi.Database.Games.Where(g => g.PluginId == Id && g.IsInstalled))
+            {
+                if (string.IsNullOrEmpty(game.InstallDirectory))
                 {
-                    if (games.TryGetValue(offlineGame.GameId, out var onlineGame))
-                        games[offlineGame.GameId] = BigFishMetadataProvider.Merge(offlineGame, onlineGame);
-                    else
-                        games[offlineGame.GameId] = offlineGame;
+                    game.IsInstalled = false;
+                    PlayniteApi.Database.Games.Update(game);
+                    continue;
                 }
-                return games.Values;
-            }
-            catch (NotAuthenticatedException)
-            {
-                logger.Error("Not authenticated");
-                PlayniteApi.Notifications.Add(new NotificationMessage("bigfish-notauthenticated", "Big Fish library isn't authenticated. Click here to authenticate.", NotificationType.Info, () => OpenSettingsView()));
-                return Enumerable.Empty<GameMetadata>();
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "Error getting games");
-                PlayniteApi.Notifications.Add("bigfish-error", $"Big Fish library error: {ex.Message}", NotificationType.Error);
-                return Enumerable.Empty<GameMetadata>();
-            }
-        }
 
-        private void SetUninstalledStatus()
-        {
-            try
-            {
-                foreach (var game in PlayniteApi.Database.Games.Where(g => g.PluginId == Id && g.IsInstalled))
+                var dir = new DirectoryInfo(game.InstallDirectory);
+                if (!dir.Exists || !dir.EnumerateFileSystemInfos().Any())
                 {
-                    if (string.IsNullOrEmpty(game.InstallDirectory))
-                    {
-                        game.IsInstalled = false;
-                        PlayniteApi.Database.Games.Update(game);
-                        continue;
-                    }
-
-                    var dir = new DirectoryInfo(game.InstallDirectory);
-                    if (!dir.Exists || !dir.EnumerateFileSystemInfos().Any())
-                    {
-                        game.IsInstalled = false;
-                        PlayniteApi.Database.Games.Update(game);
-                        continue;
-                    }
+                    game.IsInstalled = false;
+                    PlayniteApi.Database.Games.Update(game);
+                    continue;
                 }
             }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "Error setting uninstalled status");
-            }
         }
-
-        public override ISettings GetSettings(bool firstRunSettings)
+        catch (Exception ex)
         {
-            return settings;
+            logger.Error(ex, "Error setting uninstalled status");
         }
+    }
 
-        public override UserControl GetSettingsView(bool firstRunSettings)
+    public override ISettings GetSettings(bool firstRunSettings)
+    {
+        return settings;
+    }
+
+    public override UserControl GetSettingsView(bool firstRunSettings)
+    {
+        return new BigFishLibrarySettingsView();
+    }
+
+    public override LibraryMetadataProvider GetMetadataDownloader() => MetadataProvider;
+
+    public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)
+    {
+        if (args.Game.PluginId != Id)
+            yield break;
+
+        var installData = RegistryReader.GetGameDetails(args.Game.GameId);
+
+        if (installData == null || string.IsNullOrWhiteSpace(installData.ExecutablePath))
         {
-            return new BigFishLibrarySettingsView();
+            logger.Debug($"No install data found for {args.Game.Name}, ID: {args.Game.GameId}");
+            PlayniteApi.Dialogs.ShowErrorMessage("No install data found.", "Big Fish Games launch error");
         }
 
-        public override LibraryMetadataProvider GetMetadataDownloader() => MetadataProvider;
+        var directory = new FileInfo(installData.ExecutablePath).Directory;
+        var files = directory.GetFiles("*.exe")
+            .Where(f =>
+                !f.Name.Equals("uninstall.exe", StringComparison.InvariantCultureIgnoreCase)
+                && !f.FullName.Equals(installData.ExecutablePath, StringComparison.InvariantCultureIgnoreCase)
+            ).ToArray();
 
-        public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)
+        if (files.Length != 1)
+            yield break;
+
+        yield return new AutomaticPlayController(args.Game)
         {
-            if (args.Game.PluginId != Id)
-                yield break;
+            Path = files.Single().FullName,
+            TrackingMode = TrackingMode.Default
+        };
+    }
 
-            var installData = RegistryReader.GetGameDetails(args.Game.GameId);
+    public override IEnumerable<UninstallController> GetUninstallActions(GetUninstallActionsArgs args)
+    {
+        if (args.Game.PluginId != Id)
+            yield break;
 
-            if (installData == null || string.IsNullOrWhiteSpace(installData.ExecutablePath))
-            {
-                logger.Debug($"No install data found for {args.Game.Name}, ID: {args.Game.GameId}");
-                PlayniteApi.Dialogs.ShowErrorMessage("No install data found.", "Big Fish Games launch error");
-            }
+        var installData = RegistryReader.GetGameDetails(args.Game.GameId);
 
-            var directory = new FileInfo(installData.ExecutablePath).Directory;
-            var files = directory.GetFiles("*.exe")
-                .Where(f =>
-                    !f.Name.Equals("uninstall.exe", StringComparison.InvariantCultureIgnoreCase)
-                    && !f.FullName.Equals(installData.ExecutablePath, StringComparison.InvariantCultureIgnoreCase)
-                ).ToArray();
-
-            if (files.Length != 1)
-                yield break;
-
-            yield return new AutomaticPlayController(args.Game)
-            {
-                Path = files.Single().FullName,
-                TrackingMode = TrackingMode.Default
-            };
-        }
-
-        public override IEnumerable<UninstallController> GetUninstallActions(GetUninstallActionsArgs args)
+        if (installData == null || string.IsNullOrWhiteSpace(installData.ExecutablePath))
         {
-            if (args.Game.PluginId != Id)
-                yield break;
-
-            var installData = RegistryReader.GetGameDetails(args.Game.GameId);
-
-            if (installData == null || string.IsNullOrWhiteSpace(installData.ExecutablePath))
-            {
-                logger.Debug($"No install data found for {args.Game.Name}, ID: {args.Game.GameId}");
-                PlayniteApi.Dialogs.ShowErrorMessage("No install data found.", "Big Fish Games launch error");
-            }
-
-            var directory = new FileInfo(installData.ExecutablePath).Directory;
-            var files = directory.GetFiles("*.exe")
-                .Where(f => f.Name.Equals("uninstall.exe", StringComparison.InvariantCultureIgnoreCase)).ToArray();
-
-            if (files.Length != 1)
-            {
-                yield break;
-            }
-
-            yield return new BigFishUninstallController(args.Game, RegistryReader, files[0].FullName);
+            logger.Debug($"No install data found for {args.Game.Name}, ID: {args.Game.GameId}");
+            PlayniteApi.Dialogs.ShowErrorMessage("No install data found.", "Big Fish Games launch error");
         }
+
+        var directory = new FileInfo(installData.ExecutablePath).Directory;
+        var files = directory.GetFiles("*.exe")
+            .Where(f => f.Name.Equals("uninstall.exe", StringComparison.InvariantCultureIgnoreCase)).ToArray();
+
+        if (files.Length != 1)
+        {
+            yield break;
+        }
+
+        yield return new BigFishUninstallController(args.Game, RegistryReader, files[0].FullName);
     }
 }

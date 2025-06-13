@@ -2,51 +2,50 @@
 using System;
 using System.Collections.Generic;
 
-namespace MutualGames.Models.Settings
+namespace MutualGames.Models.Settings;
+
+public class FriendAccountInfo : IEquatable<FriendAccountInfo>
 {
-    public class FriendAccountInfo : IEquatable<FriendAccountInfo>
+    public string Id { get; set; }
+    public string Name { get; set; }
+    public FriendSource Source { get; set; }
+
+    [DontSerialize]
+    public string DisplayTextNoSource => $"{Name} ({Id})";
+
+    [DontSerialize]
+    public string DisplayText => $"{Name} ({Source} - {Id})";
+
+    public override bool Equals(object obj)
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public FriendSource Source { get; set; }
+        if (obj is FriendAccountInfo fi)
+            return Source == fi.Source && Id == fi.Id;
+        else
+            return false;
+    }
 
-        [DontSerialize]
-        public string DisplayTextNoSource => $"{Name} ({Id})";
+    public bool Equals(FriendAccountInfo other)
+    {
+        return other != null &&
+               Id == other.Id &&
+               Source == other.Source;
+    }
 
-        [DontSerialize]
-        public string DisplayText => $"{Name} ({Source} - {Id})";
+    public override int GetHashCode()
+    {
+        int hashCode = -543865608;
+        hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Id);
+        hashCode = hashCode * -1521134295 + EqualityComparer<FriendSource>.Default.GetHashCode(Source);
+        return hashCode;
+    }
 
-        public override bool Equals(object obj)
-        {
-            if (obj is FriendAccountInfo fi)
-                return Source == fi.Source && Id == fi.Id;
-            else
-                return false;
-        }
+    public static bool operator ==(FriendAccountInfo left, FriendAccountInfo right)
+    {
+        return EqualityComparer<FriendAccountInfo>.Default.Equals(left, right);
+    }
 
-        public bool Equals(FriendAccountInfo other)
-        {
-            return other != null &&
-                   Id == other.Id &&
-                   Source == other.Source;
-        }
-
-        public override int GetHashCode()
-        {
-            int hashCode = -543865608;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Id);
-            hashCode = hashCode * -1521134295 + EqualityComparer<FriendSource>.Default.GetHashCode(Source);
-            return hashCode;
-        }
-
-        public static bool operator ==(FriendAccountInfo left, FriendAccountInfo right)
-        {
-            return EqualityComparer<FriendAccountInfo>.Default.Equals(left, right);
-        }
-
-        public static bool operator !=(FriendAccountInfo left, FriendAccountInfo right)
-        {
-            return !(left == right);
-        }
+    public static bool operator !=(FriendAccountInfo left, FriendAccountInfo right)
+    {
+        return !(left == right);
     }
 }
