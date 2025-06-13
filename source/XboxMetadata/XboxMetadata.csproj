@@ -1,11 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{092F32E3-7FD4-470A-9658-9E8CDF123C99}</ProjectGuid>
-    <TargetFramework>net462</TargetFramework>
     <AssemblyTitle>XboxMetadata</AssemblyTitle>
     <Product>XboxMetadata</Product>
-    <Copyright>Copyright ©  2019</Copyright>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

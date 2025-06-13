@@ -80,12 +80,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Manifests", "Manifests", "{
 		..\manifests\Metadata_Xbox.yaml = ..\manifests\Metadata_Xbox.yaml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{33A063DF-59C8-4640-A785-630C71906CAC}"
-	ProjectSection(SolutionItems) = preProject
-		..\publish\Get-ReleaseData.ps1 = ..\publish\Get-ReleaseData.ps1
-		..\.github\workflows\release.yml = ..\.github\workflows\release.yml
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XboxMetadata", "XboxMetadata\XboxMetadata.csproj", "{092F32E3-7FD4-470A-9658-9E8CDF123C99}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XboxMetadata.Tests", "XboxMetadata.Tests\XboxMetadata.Tests.csproj", "{3A701B5F-255C-443E-A462-22CB8D463A9C}"
@@ -117,6 +111,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCriticMetadata", "OpenCriticMetadata\OpenCriticMetadata.csproj", "{0F1BDB81-CD1C-4DF0-867F-B733A9513CA8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtraEmulatorProfiles", "ExtraEmulatorProfiles\ExtraEmulatorProfiles.csproj", "{9E96D1DD-7223-4948-A297-D0F731CBE9B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.Props = Directory.Build.Props
+		..\publish\Get-ReleaseData.ps1 = ..\publish\Get-ReleaseData.ps1
+		..\.github\workflows\release.yml = ..\.github\workflows\release.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

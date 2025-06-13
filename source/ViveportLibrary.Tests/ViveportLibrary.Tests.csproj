@@ -1,11 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{DD635A7D-A7C0-4454-8C00-1E05F94E492D}</ProjectGuid>
-    <TargetFramework>net462</TargetFramework>
     <AssemblyTitle>ViveportLibrary.Tests</AssemblyTitle>
     <Product>ViveportLibrary.Tests</Product>
-    <Copyright>Copyright ©  2022</Copyright>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

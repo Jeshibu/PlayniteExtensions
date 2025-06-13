@@ -1,11 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{40EE28E8-2E62-4D62-8BE4-E7507893C414}</ProjectGuid>
-    <TargetFramework>net462</TargetFramework>
     <AssemblyTitle>TvTropesMetadata.Tests</AssemblyTitle>
     <Product>TvTropesMetadata.Tests</Product>
-    <Copyright>Copyright ©  2024</Copyright>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

@@ -1,11 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{3BB55E9F-8962-4DE2-AE1D-AEE6530034C8}</ProjectGuid>
-    <TargetFramework>net462</TargetFramework>
     <AssemblyTitle>GiantBombMetadata.Tests</AssemblyTitle>
     <Product>GiantBombMetadata.Tests</Product>
-    <Copyright>Copyright ©  2023</Copyright>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

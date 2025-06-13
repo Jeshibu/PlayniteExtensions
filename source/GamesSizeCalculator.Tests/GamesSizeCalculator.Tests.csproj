@@ -1,10 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{38E86445-58F1-493A-AD0E-A529B33EC396}</ProjectGuid>
-    <TargetFramework>net462</TargetFramework>
     <AssemblyTitle>GamesSizeCalculator.Tests</AssemblyTitle>
     <Product>GamesSizeCalculator.Tests</Product>
-    <Copyright>Copyright © 2022</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.10.0" />
