@@ -63,10 +63,18 @@ public class SteamPropertySearchProvider : ISearchableDataSourceWithDetails<Stea
 
     public IEnumerable<SteamProperty> Search(string query, CancellationToken cancellationToken = default)
     {
-        if (string.IsNullOrWhiteSpace(query))
+        if (string.IsNullOrEmpty(query))
             return SteamProperties;
 
-        return SteamProperties.Where(sp => sp.Name.Contains(query, StringComparison.InvariantCultureIgnoreCase) || sp.Category.Contains(query, StringComparison.InvariantCultureIgnoreCase));
+        return SteamProperties.Where(sp => StringContains(sp.Name, query) || StringContains(sp.Category, query));
+    }
+
+    private static bool StringContains(string str, string query)
+    {
+        if(str == null)
+            return false;
+
+        return str.Contains(query, StringComparison.InvariantCultureIgnoreCase);
     }
 
     public GenericItemOption<SteamProperty> ToGenericItemOption(SteamProperty item)
