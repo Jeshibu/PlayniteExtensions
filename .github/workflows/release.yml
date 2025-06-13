@@ -7,7 +7,7 @@ name: Release Build
 
 jobs:
   build:
-    runs-on: windows-2022
+    runs-on: windows-latest
     steps:
       - name: checkout
         uses: actions/checkout@v4
@@ -38,7 +38,7 @@ jobs:
 
       - name: Setup Playnite
         run: |
-           Invoke-WebRequest -Uri "https://github.com/JosefNemec/Playnite/releases/download/10.35/Playnite1035.zip" -OutFile "$Env:GITHUB_WORKSPACE\Playnite.zip"
+           Invoke-WebRequest -Uri "https://github.com/JosefNemec/Playnite/releases/download/10.36/Playnite1036.zip" -OutFile "$Env:GITHUB_WORKSPACE\Playnite.zip"
            Expand-Archive "$Env:GITHUB_WORKSPACE\Playnite.zip" -DestinationPath "$Env:GITHUB_WORKSPACE\Playnite"
 
       - name: Copy Playnite Emulation directory to ExtraEmulatorProfiles
