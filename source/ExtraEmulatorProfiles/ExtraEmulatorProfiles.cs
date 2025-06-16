@@ -66,6 +66,7 @@ public class ExtraEmulatorProfiles : GenericPlugin
     private static string GetFixedSpecId(Platform platform) => platform switch
     {
         { SpecificationId: "nintendo_pokemonmini" } => "pokemon_mini",
+        { SpecificationId: null, Name: "Arcade" } => "arcade",
         { SpecificationId: null, Name: "Nintendo Switch 2" } => "nintendo_switch2",
         _ => null,
     };
