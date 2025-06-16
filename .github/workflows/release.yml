@@ -7,25 +7,15 @@ name: Release Build
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2025
     steps:
-      - name: checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: checkout powershell-yaml
-        uses: actions/checkout@v4
-        with:
-          repository: cloudbase/powershell-yaml
-          path: powershell-yaml
-
-      - id: tagName
-        name: Get tag name
-        uses: olegtarasov/get-tag@v2.1.4
-        #puts the tag name in $env:GIT_TAG_NAME
+      - run: Install-Module powershell-yaml -force
 
       - id: projectselection
         name: Set build and test projects by tag
-        run: ./publish/Get-ReleaseData.ps1 $env:GIT_TAG_NAME
+        run: ./publish/Get-ReleaseData.ps1 $env:GITHUB_REF_NAME
         #outputs projects, testprojects, releasetitle, newrelease (boolean), releasetag
         #also writes release notes to ./publish/release_notes.txt
 
@@ -46,13 +36,10 @@ jobs:
            xcopy "$Env:GITHUB_WORKSPACE\Playnite\Emulation\*.yaml" "$Env:GITHUB_WORKSPACE\source\ExtraEmulatorProfiles\EmulationFiles\Original" /Y /I
            xcopy "$Env:GITHUB_WORKSPACE\Playnite\Emulation\Emulators" "$Env:GITHUB_WORKSPACE\source\ExtraEmulatorProfiles\EmulationFiles\Original\Emulators" /Y /I /E
 
-      - name: Nuget Restore
-        run: nuget restore .\source\PlayniteExtensions.sln
-
-      - name: Build entire solution (.NET Framework 4.6.2)
+      - name: Build entire solution
         run: |
            cd "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\"
-           .\MSBuild.exe $Env:GITHUB_WORKSPACE\source\PlayniteExtensions.sln -p:Configuration=Release -restore -clp:ErrorsOnly
+           .\MSBuild.exe "$Env:GITHUB_WORKSPACE\source\PlayniteExtensions.sln" -p:Configuration=Release -restore -clp:ErrorsOnly
 
       - name: Run unit tests
         run: |
