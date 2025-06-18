@@ -25,3 +25,9 @@ Packages:
     - "Retired Lime3DS and shadPS4 patches since these are fixed in Playnite 10.37"
     - "Added RAProject64 emulator profile"
     - "Fixed main menu items not being under the Extensions submenu"
+  - Version: 1.4
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2025-06-18
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/extraemulatorprofiles1.4/ExtraEmulatorProfiles_1_4.pext
+    Changelog:
+    - "Added Eden (Switch emulator) profile"

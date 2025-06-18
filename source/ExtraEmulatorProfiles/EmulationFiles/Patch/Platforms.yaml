@@ -305,7 +305,7 @@
 - Name: Nintendo Switch
   Id: nintendo_switch
   IgdbId: 130
-  Emulators: [suyu, sudachi, citron]
+  Emulators: [eden, suyu, sudachi, citron]
 
 - Name: Nintendo Switch 2
   Id: nintendo_switch2
