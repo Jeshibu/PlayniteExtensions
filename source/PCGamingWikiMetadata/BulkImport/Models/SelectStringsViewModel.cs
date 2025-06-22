@@ -1,24 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace PCGamingWikiBulkImport.Models
+namespace PCGamingWikiBulkImport.Models;
+
+public class SelectStringsViewModel
 {
-    public class SelectStringsViewModel
+    public SelectStringsViewModel(string propertyName, IEnumerable<SelectableStringViewModel> items)
     {
-        public SelectStringsViewModel(string propertyName, IEnumerable<SelectableStringViewModel> items)
-        {
-            PropertyName = propertyName;
-            Items = items.ToList();
-        }
-
-        public string PropertyName { get; }
-        public IList<SelectableStringViewModel> Items { get; }
+        PropertyName = propertyName;
+        Items = items.ToList();
     }
 
-    public class SelectableStringViewModel
-    {
-        public string Value { get; set; }
-        public string DisplayName { get; set; }
-        public bool IsSelected { get; set; }
-    }
+    public string PropertyName { get; }
+    public IList<SelectableStringViewModel> Items { get; }
+}
+
+public class SelectableStringViewModel
+{
+    public string Value { get; set; }
+    public string DisplayName { get; set; }
+    public bool IsSelected { get; set; }
 }

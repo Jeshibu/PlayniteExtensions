@@ -5,34 +5,33 @@ using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
 
-namespace MobyGamesMetadata
+namespace MobyGamesMetadata;
+
+public class MobyGamesBulkGroupAssigner : BulkGamePropertyAssigner<SearchResult, GamePropertyImportViewModel>
 {
-    public class MobyGamesBulkGroupAssigner : BulkGamePropertyAssigner<SearchResult, GamePropertyImportViewModel>
+    private readonly MobyGamesMetadataSettings settings;
+
+    public MobyGamesBulkGroupAssigner(IPlayniteAPI playniteAPI, MobyGamesMetadataSettings settings, ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
+        : base(playniteAPI, dataSource, platformUtility, new MobyGamesIdUtility(), ExternalDatabase.MobyGames, maxDegreeOfParallelism)
     {
-        private readonly MobyGamesMetadataSettings settings;
+        this.settings = settings;
+    }
 
-        public MobyGamesBulkGroupAssigner(IPlayniteAPI playniteAPI, MobyGamesMetadataSettings settings, ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
-            : base(playniteAPI, dataSource, platformUtility, new MobyGamesIdUtility(), ExternalDatabase.MobyGames, maxDegreeOfParallelism)
-        {
-            this.settings = settings;
-        }
+    public override string MetadataProviderName => "MobyGames";
 
-        public override string MetadataProviderName => "MobyGames";
+    protected override string GetGameIdFromUrl(string url)
+    {
+        var dbId = DatabaseIdUtility.GetIdFromUrl(url);
+        if (dbId.Database == ExternalDatabase.MobyGames)
+            return dbId.Id;
 
-        protected override string GetGameIdFromUrl(string url)
-        {
-            var dbId = DatabaseIdUtility.GetIdFromUrl(url);
-            if (dbId.Database == ExternalDatabase.MobyGames)
-                return dbId.Id;
+        return null;
+    }
 
-            return null;
-        }
+    protected override PropertyImportSetting GetPropertyImportSetting(SearchResult searchItem, out string propName)
+    {
+        var importTarget = MobyGamesHelper.GetGroupImportTarget(searchItem.Name, out propName);
 
-        protected override PropertyImportSetting GetPropertyImportSetting(SearchResult searchItem, out string propName)
-        {
-            var importTarget = MobyGamesHelper.GetGroupImportTarget(searchItem.Name, out propName);
-
-            return new PropertyImportSetting { ImportTarget = importTarget };
-        }
+        return new PropertyImportSetting { ImportTarget = importTarget };
     }
 }

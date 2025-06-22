@@ -2,39 +2,38 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using Playnite.SDK;
 
-namespace PCGamingWikiMetadata.Tests
+namespace PCGamingWikiMetadata.Tests;
+
+public class TestMetadataRequestOptions : MetadataRequestOptions
 {
-    public class TestMetadataRequestOptions : MetadataRequestOptions
+    public TestMetadataRequestOptions() : base(null, false)
     {
-        public TestMetadataRequestOptions() : base(null, false)
-        {
-            this.GameData = new Game();
-            SetGameSourceSteam();
-        }
+        this.GameData = new Game();
+        SetGameSourceSteam();
+    }
 
-        public void SetGameSourceSteam()
-        {
-            this.GameData.PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary);
-        }
+    public void SetGameSourceSteam()
+    {
+        this.GameData.PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary);
+    }
 
-        public void SetGameSourceEpic()
-        {
-            this.GameData.PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.EpicLibrary);
-        }
+    public void SetGameSourceEpic()
+    {
+        this.GameData.PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.EpicLibrary);
+    }
 
-        public void SetGameSourceXbox()
-        {
-            this.GameData.PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.XboxLibrary);
-        }
+    public void SetGameSourceXbox()
+    {
+        this.GameData.PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.XboxLibrary);
+    }
 
-        public void SetGameSourceBattleNet()
-        {
-            this.GameData.PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.BattleNetLibrary);
-        }
+    public void SetGameSourceBattleNet()
+    {
+        this.GameData.PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.BattleNetLibrary);
+    }
 
-        public void SetGameSourceOrigin()
-        {
-            this.GameData.PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.OriginLibrary);
-        }
+    public void SetGameSourceOrigin()
+    {
+        this.GameData.PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.OriginLibrary);
     }
 }

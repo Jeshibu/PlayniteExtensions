@@ -1,13 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{EA34F88D-0A3A-4238-B20E-43F12EA5908D}</ProjectGuid>
-    <TargetFramework>net462</TargetFramework>
     <AssemblyTitle>GOGMetadata</AssemblyTitle>
     <Product>GOGMetadata</Product>
-    <Copyright>Copyright ©  2019</Copyright>
     <AssemblyVersion>0.2.0.0</AssemblyVersion>
     <FileVersion>0.2.0.0</FileVersion>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

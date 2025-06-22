@@ -1,12 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{9E96D1DD-7223-4948-A297-D0F731CBE9B6}</ProjectGuid>
-    <TargetFramework>net462</TargetFramework>
     <AssemblyTitle>ExtraEmulatorProfiles</AssemblyTitle>
     <Product>ExtraEmulatorProfiles</Product>
-    <Copyright>Copyright © 2025</Copyright>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <Version>1.2</Version>
+    <Version>1.4</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

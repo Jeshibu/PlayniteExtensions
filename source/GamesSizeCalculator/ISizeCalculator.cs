@@ -1,12 +1,11 @@
 ﻿using Playnite.SDK.Models;
 using System.Threading.Tasks;
 
-namespace GamesSizeCalculator
+namespace GamesSizeCalculator;
+
+public interface ISizeCalculator
 {
-    public interface ISizeCalculator
-    {
-        string ServiceName { get; }
-        Task<ulong?> GetInstallSizeAsync(Game game);
-        bool IsPreferredInstallSizeCalculator(Game game);
-    }
+    string ServiceName { get; }
+    Task<ulong?> GetInstallSizeAsync(Game game);
+    bool IsPreferredInstallSizeCalculator(Game game);
 }

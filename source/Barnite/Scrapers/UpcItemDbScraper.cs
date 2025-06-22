@@ -7,85 +7,84 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace Barnite.Scrapers
+namespace Barnite.Scrapers;
+
+public class UpcItemDbScraper : MetadataScraper
 {
-    public class UpcItemDbScraper : MetadataScraper
+    public override string Name { get; } = "UPCitemdb";
+    public override string WebsiteUrl { get; } = "https://www.upcitemdb.com";
+
+    protected override string GetSearchUrlFromBarcode(string barcode)
     {
-        public override string Name { get; } = "UPCitemdb";
-        public override string WebsiteUrl { get; } = "https://www.upcitemdb.com";
+        return "https://api.upcitemdb.com/prod/trial/lookup?upc=" + HttpUtility.UrlEncode(barcode);
+    }
 
-        protected override string GetSearchUrlFromBarcode(string barcode)
+    protected override GameMetadata ScrapeGameDetailsHtml(string html)
+    {
+        var response = JsonConvert.DeserializeObject<ApiResponse>(html);
+        if (response.Items.Count != 1)
+            return null;
+
+
+        var item = response.Items[0];
+        GameMetadata data = new GameMetadata { Description = item.Description, Platforms = new HashSet<MetadataProperty>() };
+
+        data.Name = Regex.Replace(item.Title, @"(\s*(\((?<platform>[a-z 0-9]+)\)|\bsealed|\bused|\bnew)\.?)+$", (match) =>
         {
-            return "https://api.upcitemdb.com/prod/trial/lookup?upc=" + HttpUtility.UrlEncode(barcode);
-        }
+            string potentialPlatformName = match.Groups["platform"]?.Value;
+            if (string.IsNullOrEmpty(potentialPlatformName))
+                return string.Empty; //remove sealed,new,empty from the end of strings
 
-        protected override GameMetadata ScrapeGameDetailsHtml(string html)
+            var platforms = PlatformUtility.GetPlatforms(potentialPlatformName, strict: true).ToList();
+            if (platforms.Count == 0)
+            {
+                return match.Value;
+            }
+            else
+            {
+                foreach (var platform in platforms)
+                {
+                    data.Platforms.Add(platform);
+                }
+                return string.Empty; //remove platform name from game name
+            }
+        }, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+
+        foreach (var platformName in PlatformUtility.GetPlatformNames())
         {
-            var response = JsonConvert.DeserializeObject<ApiResponse>(html);
-            if (response.Items.Count != 1)
-                return null;
-
-
-            var item = response.Items[0];
-            GameMetadata data = new GameMetadata { Description = item.Description, Platforms = new HashSet<MetadataProperty>() };
-
-            data.Name = Regex.Replace(item.Title, @"(\s*(\((?<platform>[a-z 0-9]+)\)|\bsealed|\bused|\bnew)\.?)+$", (match) =>
+            if (data.Name.EndsWith(platformName, StringComparison.InvariantCultureIgnoreCase))
             {
-                string potentialPlatformName = match.Groups["platform"]?.Value;
-                if (string.IsNullOrEmpty(potentialPlatformName))
-                    return string.Empty; //remove sealed,new,empty from the end of strings
-
-                var platforms = PlatformUtility.GetPlatforms(potentialPlatformName, strict: true).ToList();
-                if (platforms.Count == 0)
+                data.Name = data.Name.TrimEnd(platformName).Trim();
+                foreach (var platform in PlatformUtility.GetPlatforms(platformName))
                 {
-                    return match.Value;
-                }
-                else
-                {
-                    foreach (var platform in platforms)
-                    {
-                        data.Platforms.Add(platform);
-                    }
-                    return string.Empty; //remove platform name from game name
-                }
-            }, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
-
-            foreach (var platformName in PlatformUtility.GetPlatformNames())
-            {
-                if (data.Name.EndsWith(platformName, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    data.Name = data.Name.TrimEnd(platformName).Trim();
-                    foreach (var platform in PlatformUtility.GetPlatforms(platformName))
-                    {
-                        data.Platforms.Add(platform);
-                    }
+                    data.Platforms.Add(platform);
                 }
             }
-
-            if (item.Images.Count != 0)
-                data.CoverImage = new MetadataFile(item.Images[0]);
-
-            return data;
         }
 
-        protected override IEnumerable<GameLink> ScrapeSearchResultHtml(string html)
-        {
-            yield break;
-        }
+        if (item.Images.Count != 0)
+            data.CoverImage = new MetadataFile(item.Images[0]);
 
-        private class ApiResponse
-        {
-            public string Code;
-            public int Total;
-            public int Offset;
-            public List<Item> Items = new List<Item>();
-        }
+        return data;
+    }
 
-        private class Item
-        {
-            public string Title;
-            public string Description;
-            public List<string> Images = new List<string>();
-        }
+    protected override IEnumerable<GameLink> ScrapeSearchResultHtml(string html)
+    {
+        yield break;
+    }
+
+    private class ApiResponse
+    {
+        public string Code;
+        public int Total;
+        public int Offset;
+        public List<Item> Items = new List<Item>();
+    }
+
+    private class Item
+    {
+        public string Title;
+        public string Description;
+        public List<string> Images = new List<string>();
     }
 }

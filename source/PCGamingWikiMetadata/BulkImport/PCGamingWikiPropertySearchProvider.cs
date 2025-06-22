@@ -9,144 +9,143 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 
-namespace PCGamingWikiBulkImport
+namespace PCGamingWikiBulkImport;
+
+public class PCGamingWikiPropertySearchProvider : ISearchableDataSourceWithDetails<PCGamingWikiSelectedValues, IEnumerable<GameDetails>>
 {
-    public class PCGamingWikiPropertySearchProvider : ISearchableDataSourceWithDetails<PCGamingWikiSelectedValues, IEnumerable<GameDetails>>
+    private readonly CargoTables Tables = new CargoTables();
+
+    public PCGamingWikiPropertySearchProvider(ICargoQuery cargoQuery, IPlatformUtility platformUtility)
     {
-        private readonly CargoTables Tables = new CargoTables();
+        CargoQuery = cargoQuery;
+        PlatformUtility = platformUtility;
+    }
 
-        public PCGamingWikiPropertySearchProvider(ICargoQuery cargoQuery, IPlatformUtility platformUtility)
+    private ICargoQuery CargoQuery { get; }
+    private IPlatformUtility PlatformUtility { get; }
+    private ILogger Logger { get; }
+
+    public IEnumerable<GameDetails> GetDetails(PCGamingWikiSelectedValues searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
+    {
+        var fetch = GetMatchingGamesFunction(searchResult);
+
+        var output = new List<GameDetails>();
+
+        try
         {
-            CargoQuery = cargoQuery;
-            PlatformUtility = platformUtility;
-        }
-
-        private ICargoQuery CargoQuery { get; }
-        private IPlatformUtility PlatformUtility { get; }
-        private ILogger Logger { get; }
-
-        public IEnumerable<GameDetails> GetDetails(PCGamingWikiSelectedValues searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
-        {
-            var fetch = GetMatchingGamesFunction(searchResult);
-
-            var output = new List<GameDetails>();
-
-            try
+            int offset = 0, resultCount, limit;
+            do
             {
-                int offset = 0, resultCount, limit;
-                do
-                {
-                    var result = fetch(offset);
-                    resultCount = result.CargoQuery.Count;
-                    limit = result.Limits.CargoQuery;
-                    offset += limit;
-                    output.AddRange(result.CargoQuery.Select(r => r.Title).Select(ToGameDetails));
-                }
-                while (resultCount > 0 && resultCount == limit);
+                var result = fetch(offset);
+                resultCount = result.CargoQuery.Count;
+                limit = result.Limits.CargoQuery;
+                offset += limit;
+                output.AddRange(result.CargoQuery.Select(r => r.Title).Select(ToGameDetails));
             }
-            catch (Exception ex)
-            {
-                Logger.Error(ex, "Error getting games");
-            }
-
-            return output;
+            while (resultCount > 0 && resultCount == limit);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, "Error getting games");
         }
 
-        private Func<int, CargoResultRoot<CargoResultGame>> GetMatchingGamesFunction(PCGamingWikiSelectedValues selected)
+        return output;
+    }
+
+    private Func<int, CargoResultRoot<CargoResultGame>> GetMatchingGamesFunction(PCGamingWikiSelectedValues selected)
+    {
+        switch (selected.FieldInfo.FieldType)
         {
-            switch (selected.FieldInfo.FieldType)
-            {
-                case CargoFieldType.ListOfString:
-                    var wa = selected.FieldInfo.ValueWorkaround(selected.SelectedValues.First());
-                    if (wa.UseLike)
-                        return offset => CargoQuery.GetGamesByHoldsLike(selected.FieldInfo.Table, selected.FieldInfo.Field, wa.Value, offset);
-                    else
-                        return offset => CargoQuery.GetGamesByHolds(selected.FieldInfo.Table, selected.FieldInfo.Field, wa.Value, offset);
-                case CargoFieldType.String:
-                    return offset => CargoQuery.GetGamesByExactValues(selected.FieldInfo.Table, selected.FieldInfo.Field, selected.SelectedValues, offset);
-                default:
-                    throw new ArgumentException($"Invalid selected value field info type: {selected.FieldInfo.FieldType}");
-            }
+            case CargoFieldType.ListOfString:
+                var wa = selected.FieldInfo.ValueWorkaround(selected.SelectedValues.First());
+                if (wa.UseLike)
+                    return offset => CargoQuery.GetGamesByHoldsLike(selected.FieldInfo.Table, selected.FieldInfo.Field, wa.Value, offset);
+                else
+                    return offset => CargoQuery.GetGamesByHolds(selected.FieldInfo.Table, selected.FieldInfo.Field, wa.Value, offset);
+            case CargoFieldType.String:
+                return offset => CargoQuery.GetGamesByExactValues(selected.FieldInfo.Table, selected.FieldInfo.Field, selected.SelectedValues, offset);
+            default:
+                throw new ArgumentException($"Invalid selected value field info type: {selected.FieldInfo.FieldType}");
         }
+    }
 
-        public IEnumerable<PCGamingWikiSelectedValues> Search(string query, CancellationToken cancellationToken = default)
+    public IEnumerable<PCGamingWikiSelectedValues> Search(string query, CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(query))
+            return ToSelectedValues(Tables.Fields);
+
+        var matching = Tables.Fields.Where(f => f.FieldDisplayName.Contains(query, StringComparison.InvariantCultureIgnoreCase));
+        return ToSelectedValues(matching);
+    }
+
+    private static IEnumerable<PCGamingWikiSelectedValues> ToSelectedValues(IEnumerable<CargoFieldInfo> fields)
+    {
+        return fields.Select(f => new PCGamingWikiSelectedValues { FieldInfo = f });
+    }
+
+    public GenericItemOption<PCGamingWikiSelectedValues> ToGenericItemOption(PCGamingWikiSelectedValues item)
+    {
+        return new GenericItemOption<PCGamingWikiSelectedValues>(item) { Name = item.FieldInfo.FieldDisplayName };
+    }
+
+    public IEnumerable<ItemCount> GetCounts(CargoFieldInfo field, string searchString)
+    {
+        var counts = CargoQuery.GetValueCounts(field.Table, field.Field, searchString).ToList();
+        foreach (var c in counts)
         {
-            if (string.IsNullOrWhiteSpace(query))
-                return ToSelectedValues(Tables.Fields);
-
-            var matching = Tables.Fields.Where(f => f.FieldDisplayName.Contains(query, StringComparison.InvariantCultureIgnoreCase));
-            return ToSelectedValues(matching);
+            c.Value = WebUtility.HtmlDecode(c.Value);
         }
+        return counts;
+    }
 
-        private static IEnumerable<PCGamingWikiSelectedValues> ToSelectedValues(IEnumerable<CargoFieldInfo> fields)
+    private GameDetails ToGameDetails(CargoResultGame g)
+    {
+        var name = WebUtility.HtmlDecode(g.Name);
+        var slug = name.TitleToSlug();
+        var game = new GameDetails
         {
-            return fields.Select(f => new PCGamingWikiSelectedValues { FieldInfo = f });
-        }
+            Id = PCGamingWikiIdUtility.SlugToId(slug),
+            Names = new List<string> { name },
+            Url = slug.SlugToUrl(),
+        };
 
-        public GenericItemOption<PCGamingWikiSelectedValues> ToGenericItemOption(PCGamingWikiSelectedValues item)
-        {
-            return new GenericItemOption<PCGamingWikiSelectedValues>(item) { Name = item.FieldInfo.FieldDisplayName };
-        }
+        game.Platforms = g.OS?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).SelectMany(PlatformUtility.GetPlatforms).ToList();
+        game.ReleaseDate = GetReleaseDate(g.Released);
 
-        public IEnumerable<ItemCount> GetCounts(CargoFieldInfo field, string searchString)
-        {
-            var counts = CargoQuery.GetValueCounts(field.Table, field.Field, searchString).ToList();
-            foreach (var c in counts)
-            {
-                c.Value = WebUtility.HtmlDecode(c.Value);
-            }
-            return counts;
-        }
+        if (!string.IsNullOrWhiteSpace(g.SteamID))
+            game.ExternalIds.AddRange(SplitIds(g.SteamID, ExternalDatabase.Steam));
 
-        private GameDetails ToGameDetails(CargoResultGame g)
-        {
-            var name = WebUtility.HtmlDecode(g.Name);
-            var slug = name.TitleToSlug();
-            var game = new GameDetails
-            {
-                Id = PCGamingWikiIdUtility.SlugToId(slug),
-                Names = new List<string> { name },
-                Url = slug.SlugToUrl(),
-            };
+        if (!string.IsNullOrWhiteSpace(g.GOGID))
+            game.ExternalIds.AddRange(SplitIds(g.GOGID, ExternalDatabase.GOG));
 
-            game.Platforms = g.OS?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).SelectMany(PlatformUtility.GetPlatforms).ToList();
-            game.ReleaseDate = GetReleaseDate(g.Released);
+        return game;
+    }
 
-            if (!string.IsNullOrWhiteSpace(g.SteamID))
-                game.ExternalIds.AddRange(SplitIds(g.SteamID, ExternalDatabase.Steam));
-
-            if (!string.IsNullOrWhiteSpace(g.GOGID))
-                game.ExternalIds.AddRange(SplitIds(g.GOGID, ExternalDatabase.GOG));
-
-            return game;
-        }
-
-        private ReleaseDate? GetReleaseDate(string releaseDateString)
-        {
-            var releaseDateStrings = releaseDateString?.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
-            if (releaseDateStrings == null || releaseDateStrings.Length == 0)
-                return null;
-
-            var releaseDates = releaseDateStrings.Select(StringExtensions.ParseReleaseDate).Where(d => d.HasValue).Select(d => d.Value).ToList();
-            if (releaseDates.Any())
-                return releaseDates.Min();
-
+    private ReleaseDate? GetReleaseDate(string releaseDateString)
+    {
+        var releaseDateStrings = releaseDateString?.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+        if (releaseDateStrings == null || releaseDateStrings.Length == 0)
             return null;
-        }
 
-        private static IEnumerable<DbId> SplitIds(string str, ExternalDatabase db)
+        var releaseDates = releaseDateStrings.Select(StringExtensions.ParseReleaseDate).Where(d => d.HasValue).Select(d => d.Value).ToList();
+        if (releaseDates.Any())
+            return releaseDates.Min();
+
+        return null;
+    }
+
+    private static IEnumerable<DbId> SplitIds(string str, ExternalDatabase db)
+    {
+        if (string.IsNullOrWhiteSpace(str))
+            yield break;
+
+        var ids = str.Split(',');
+        foreach (var id in ids)
         {
-            if (string.IsNullOrWhiteSpace(str))
-                yield break;
+            if (string.IsNullOrWhiteSpace(id))
+                continue;
 
-            var ids = str.Split(',');
-            foreach (var id in ids)
-            {
-                if (string.IsNullOrWhiteSpace(id))
-                    continue;
-
-                yield return new DbId(db, id.Trim());
-            }
+            yield return new DbId(db, id.Trim());
         }
     }
 }

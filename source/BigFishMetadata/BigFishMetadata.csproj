@@ -1,11 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{C50BE73E-18BE-4A21-BA86-908C6D5B6CA0}</ProjectGuid>
-    <TargetFramework>net462</TargetFramework>
     <AssemblyTitle>BigFishMetadata</AssemblyTitle>
     <Product>BigFishMetadata</Product>
-    <Copyright>Copyright ©  2019</Copyright>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

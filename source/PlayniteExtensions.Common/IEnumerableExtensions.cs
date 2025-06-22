@@ -5,65 +5,64 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace PlayniteExtensions.Common
+namespace PlayniteExtensions.Common;
+
+public static class IEnumerableExtensions
 {
-    public static class IEnumerableExtensions
+    private static ILogger logger;
+    private static ILogger Logger { get => logger ?? (logger = LogManager.GetLogger()); }
+
+    public static Dictionary<TKey, TIn> ToDictionarySafe<TIn, TKey>(this IEnumerable<TIn> input, Func<TIn, TKey> keySelector, IEqualityComparer<TKey> equalityComparer = null, bool favorBiggerObject = false)
     {
-        private static ILogger logger;
-        private static ILogger Logger { get => logger ?? (logger = LogManager.GetLogger()); }
+        return ToDictionarySafe(input, keySelector, item => item, equalityComparer, favorBiggerObject);
+    }
 
-        public static Dictionary<TKey, TIn> ToDictionarySafe<TIn, TKey>(this IEnumerable<TIn> input, Func<TIn, TKey> keySelector, IEqualityComparer<TKey> equalityComparer = null, bool favorBiggerObject = false)
+    public static Dictionary<TKey, TValue> ToDictionarySafe<TIn, TKey, TValue>(this IEnumerable<TIn> input, Func<TIn, TKey> keySelector, Func<TIn, TValue> valueSelector, IEqualityComparer<TKey> equalityComparer = null, bool favorBiggerObject = false)
+    {
+        Dictionary<TKey, TValue> output;
+        if (equalityComparer == null)
+            output = new Dictionary<TKey, TValue>();
+        else
+            output = new Dictionary<TKey, TValue>(equalityComparer);
+
+        foreach (var item in input)
         {
-            return ToDictionarySafe(input, keySelector, item => item, equalityComparer, favorBiggerObject);
-        }
-
-        public static Dictionary<TKey, TValue> ToDictionarySafe<TIn, TKey, TValue>(this IEnumerable<TIn> input, Func<TIn, TKey> keySelector, Func<TIn, TValue> valueSelector, IEqualityComparer<TKey> equalityComparer = null, bool favorBiggerObject = false)
-        {
-            Dictionary<TKey, TValue> output;
-            if (equalityComparer == null)
-                output = new Dictionary<TKey, TValue>();
-            else
-                output = new Dictionary<TKey, TValue>(equalityComparer);
-
-            foreach (var item in input)
+            var key = keySelector(item);
+            var value = valueSelector(item);
+            if (output.TryGetValue(key, out TValue existingValue))
             {
-                var key = keySelector(item);
-                var value = valueSelector(item);
-                if (output.TryGetValue(key, out TValue existingValue))
-                {
-                    var stackTrace = new StackTrace(true);
-                    var existingValueString = existingValue == null ? null : JsonConvert.SerializeObject(existingValue, new JsonSerializerSettings { MaxDepth = 5 });
-                    var newValueString = value == null ? null : JsonConvert.SerializeObject(value, new JsonSerializerSettings { MaxDepth = 5 });
-                    var stacktraceString = string.Join(string.Empty, stackTrace.GetFrames().Select(f => f.ToString()));
-                    var logString = $@"An item with the same key has already been added: {key}
+                var stackTrace = new StackTrace(true);
+                var existingValueString = existingValue == null ? null : JsonConvert.SerializeObject(existingValue, new JsonSerializerSettings { MaxDepth = 5 });
+                var newValueString = value == null ? null : JsonConvert.SerializeObject(value, new JsonSerializerSettings { MaxDepth = 5 });
+                var stacktraceString = string.Join(string.Empty, stackTrace.GetFrames().Select(f => f.ToString()));
+                var logString = $@"An item with the same key has already been added: {key}
 existing value: {existingValueString}
 new value: {newValueString}
 stacktrace: {stacktraceString}";
-                    Logger.Warn(logString);
-                    if (favorBiggerObject && (newValueString?.Length ?? 0) > (existingValueString?.Length ?? 0))
-                        output[key] = value;
-                    continue;
-                }
-                output.Add(key, value);
+                Logger.Warn(logString);
+                if (favorBiggerObject && (newValueString?.Length ?? 0) > (existingValueString?.Length ?? 0))
+                    output[key] = value;
+                continue;
             }
-
-            return output;
+            output.Add(key, value);
         }
 
-        public static ICollection<T> NullIfEmpty<T>(this ICollection<T> items)
-        {
-            if (items != null && items.Count > 0)
-                return items;
-            else
-                return null;
-        }
+        return output;
+    }
 
-        public static void Sort<TSource, TKey>(this ICollection<TSource> source, Func<TSource, TKey> keySelector)
-        {
-            List<TSource> sortedList = source.OrderBy(keySelector).ToList();
-            source.Clear();
-            foreach (var sortedItem in sortedList)
-                source.Add(sortedItem);
-        }
+    public static ICollection<T> NullIfEmpty<T>(this ICollection<T> items)
+    {
+        if (items != null && items.Count > 0)
+            return items;
+        else
+            return null;
+    }
+
+    public static void Sort<TSource, TKey>(this ICollection<TSource> source, Func<TSource, TKey> keySelector)
+    {
+        List<TSource> sortedList = source.OrderBy(keySelector).ToList();
+        source.Clear();
+        foreach (var sortedItem in sortedList)
+            source.Add(sortedItem);
     }
 }

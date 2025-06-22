@@ -4,44 +4,43 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace GamersGateLibrary
+namespace GamersGateLibrary;
+
+public static class EnumExtensions
 {
-    public static class EnumExtensions
+    public static int GetMax(this Enum source)
     {
-        public static int GetMax(this Enum source)
+        return Enum.GetValues(source.GetType()).Cast<int>().Max();
+    }
+    public static int GetMin(this Enum source)
+    {
+        return Enum.GetValues(source.GetType()).Cast<int>().Min();
+    }
+
+    public static string GetDescription(this Enum source)
+    {
+        FieldInfo field = source.GetType().GetField(source.ToString());
+        if (field == null)
         {
-            return Enum.GetValues(source.GetType()).Cast<int>().Max();
-        }
-        public static int GetMin(this Enum source)
-        {
-            return Enum.GetValues(source.GetType()).Cast<int>().Min();
+            return string.Empty;
         }
 
-        public static string GetDescription(this Enum source)
+        var attributes = (DescriptionAttribute[])field.GetCustomAttributes(typeof(DescriptionAttribute), false);
+        if (attributes != null && attributes.Length > 0)
         {
-            FieldInfo field = source.GetType().GetField(source.ToString());
-            if (field == null)
+            var desc = attributes[0].Description;
+            if (desc.StartsWith("LOC"))
             {
-                return string.Empty;
-            }
-
-            var attributes = (DescriptionAttribute[])field.GetCustomAttributes(typeof(DescriptionAttribute), false);
-            if (attributes != null && attributes.Length > 0)
-            {
-                var desc = attributes[0].Description;
-                if (desc.StartsWith("LOC"))
-                {
-                    return ResourceProvider.GetString(desc);
-                }
-                else
-                {
-                    return attributes[0].Description;
-                }
+                return ResourceProvider.GetString(desc);
             }
             else
             {
-                return source.ToString();
+                return attributes[0].Description;
             }
+        }
+        else
+        {
+            return source.ToString();
         }
     }
 }

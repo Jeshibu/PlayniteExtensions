@@ -8,187 +8,186 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MobyGamesMetadata.Api
+namespace MobyGamesMetadata.Api;
+
+public class MobyGamesScraper
 {
-    public class MobyGamesScraper
+    public MobyGamesScraper(IPlatformUtility platformUtility, IWebDownloader downloader)
     {
-        public MobyGamesScraper(IPlatformUtility platformUtility, IWebDownloader downloader)
+        PlatformUtility = platformUtility;
+        Downloader = downloader;
+    }
+
+    public IPlatformUtility PlatformUtility { get; }
+    public IWebDownloader Downloader { get; }
+
+    public static string GetSearchUrl(string query, string objectType)
+    {
+        query = Uri.EscapeDataString(query);
+        return $"https://www.mobygames.com/search/?q={query}&type={objectType}&adult=true";
+    }
+
+    public static string GetGameDetailsUrl(int id)
+    {
+        return $"https://www.mobygames.com/game/{id}";
+    }
+
+    public IEnumerable<GameSearchResult> GetGameSearchResults(string query)
+    {
+        var url = GetSearchUrl(query, "game");
+        var response = Downloader.DownloadString(url);
+        return ParseGameSearchResultHtml(response.ResponseContent);
+    }
+
+    public IEnumerable<GroupSearchResult> GetGroupSearchResults(string query)
+    {
+        var url = GetSearchUrl(query, "group");
+        var response = Downloader.DownloadString(url);
+        return ParseGroupSearchResultHtml(response.ResponseContent);
+    }
+
+    public GameDetails GetGameDetails(int id)
+    {
+        var url = GetGameDetailsUrl(id);
+        return GetGameDetails(url);
+    }
+
+    public GameDetails GetGameDetails(string url)
+    {
+        var response = Downloader.DownloadString(url);
+        return ParseGameDetailsHtml(response.ResponseContent);
+    }
+
+    private IEnumerable<GameSearchResult> ParseGameSearchResultHtml(string html)
+    {
+        var page = new HtmlDocument();
+        page.LoadHtml(html);
+
+        var cells = page.DocumentNode.SelectNodes("//table[@class='table mb']/tr/td[last()]");
+        if (cells == null)
+            yield break;
+
+        foreach (var td in cells)
         {
-            PlatformUtility = platformUtility;
-            Downloader = downloader;
-        }
+            var a = td.SelectSingleNode(".//a[@href]");
+            if (a == null)
+                continue;
 
-        public IPlatformUtility PlatformUtility { get; }
-        public IWebDownloader Downloader { get; }
+            var releaseDateString = td.SelectSingleNode(".//span[starts-with(text(), '(')]")?.InnerText.HtmlDecode().Trim('(', ')');
+            var platforms = td.SelectSingleNode(".//small[last()]")?.ChildNodes
+                            .Where(n => n.NodeType == HtmlNodeType.Text)
+                            .Select(n => n.InnerText.HtmlDecode())
+                            .Where(n => !string.IsNullOrWhiteSpace(n))
+                            .ToList();
 
-        public static string GetSearchUrl(string query, string objectType)
-        {
-            query = Uri.EscapeDataString(query);
-            return $"https://www.mobygames.com/search/?q={query}&type={objectType}&adult=true";
-        }
+            var alternateNames = td.ChildNodes.FirstOrDefault(n => n.InnerText.StartsWith("AKA: "))
+                ?.InnerText.TrimStart("AKA: ")
+                .Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => x.Trim());
 
-        public static string GetGameDetailsUrl(int id)
-        {
-            return $"https://www.mobygames.com/game/{id}";
-        }
-
-        public IEnumerable<GameSearchResult> GetGameSearchResults(string query)
-        {
-            var url = GetSearchUrl(query, "game");
-            var response = Downloader.DownloadString(url);
-            return ParseGameSearchResultHtml(response.ResponseContent);
-        }
-
-        public IEnumerable<GroupSearchResult> GetGroupSearchResults(string query)
-        {
-            var url = GetSearchUrl(query, "group");
-            var response = Downloader.DownloadString(url);
-            return ParseGroupSearchResultHtml(response.ResponseContent);
-        }
-
-        public GameDetails GetGameDetails(int id)
-        {
-            var url = GetGameDetailsUrl(id);
-            return GetGameDetails(url);
-        }
-
-        public GameDetails GetGameDetails(string url)
-        {
-            var response = Downloader.DownloadString(url);
-            return ParseGameDetailsHtml(response.ResponseContent);
-        }
-
-        private IEnumerable<GameSearchResult> ParseGameSearchResultHtml(string html)
-        {
-            var page = new HtmlDocument();
-            page.LoadHtml(html);
-
-            var cells = page.DocumentNode.SelectNodes("//table[@class='table mb']/tr/td[last()]");
-            if (cells == null)
-                yield break;
-
-            foreach (var td in cells)
+            var sr = new GameSearchResult
             {
-                var a = td.SelectSingleNode(".//a[@href]");
-                if (a == null)
-                    continue;
-
-                var releaseDateString = td.SelectSingleNode(".//span[starts-with(text(), '(')]")?.InnerText.HtmlDecode().Trim('(', ')');
-                var platforms = td.SelectSingleNode(".//small[last()]")?.ChildNodes
-                                .Where(n => n.NodeType == HtmlNodeType.Text)
-                                .Select(n => n.InnerText.HtmlDecode())
-                                .Where(n => !string.IsNullOrWhiteSpace(n))
-                                .ToList();
-
-                var alternateNames = td.ChildNodes.FirstOrDefault(n => n.InnerText.StartsWith("AKA: "))
-                    ?.InnerText.TrimStart("AKA: ")
-                    .Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries)
-                    .Select(x => x.Trim());
-
-                var sr = new GameSearchResult
-                {
-                    PlatformNames = platforms,
-                    ReleaseDate = MobyGamesHelper.ParseReleaseDate(releaseDateString),
-                };
-                sr.SetUrlAndId(a.Attributes["href"].Value);
-                sr.SetName(a.InnerText.HtmlDecode(), alternateNames);
-                sr.SetDescription(releaseDateString, platforms);
-                yield return sr;
-            }
-        }
-
-        private IEnumerable<GroupSearchResult> ParseGroupSearchResultHtml(string html)
-        {
-            var page = new HtmlDocument();
-            page.LoadHtml(html);
-
-            var cells = page.DocumentNode.SelectNodes("//table[@class='table mb']/tr/td[last()]");
-            if (cells == null)
-                yield break;
-
-            foreach (var td in cells)
-            {
-                var a = td.SelectSingleNode(".//a[@href]");
-                if (a == null)
-                    continue;
-
-                var description = td.SelectSingleNode("./span[last()]")?.InnerText.HtmlDecode();
-
-                var sr = new GroupSearchResult { Name = a.InnerText.HtmlDecode(), Description = description };
-                sr.SetUrlAndId(a.Attributes["href"].Value);
-                yield return sr;
-            }
-        }
-
-        private GameDetails ParseGameDetailsHtml(string html)
-        {
-            return new MobyGamesHelper(PlatformUtility).ParseGameDetailsHtml(html, parseGenres: false);
+                PlatformNames = platforms,
+                ReleaseDate = MobyGamesHelper.ParseReleaseDate(releaseDateString),
+            };
+            sr.SetUrlAndId(a.Attributes["href"].Value);
+            sr.SetName(a.InnerText.HtmlDecode(), alternateNames);
+            sr.SetDescription(releaseDateString, platforms);
+            yield return sr;
         }
     }
 
-    public class SearchResult : Playnite.SDK.GenericItemOption, IHasName
+    private IEnumerable<GroupSearchResult> ParseGroupSearchResultHtml(string html)
     {
-        public string Url { get; set; }
-        public int Id { get; set; }
+        var page = new HtmlDocument();
+        page.LoadHtml(html);
 
-        public void SetUrlAndId(string url)
+        var cells = page.DocumentNode.SelectNodes("//table[@class='table mb']/tr/td[last()]");
+        if (cells == null)
+            yield break;
+
+        foreach (var td in cells)
         {
-            Url = url;
-            if (url == null) return;
-            var urlSegment = url.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Where(x => x.All(char.IsNumber)).FirstOrDefault();
-            if (urlSegment != null)
-                Id = int.Parse(urlSegment);
+            var a = td.SelectSingleNode(".//a[@href]");
+            if (a == null)
+                continue;
+
+            var description = td.SelectSingleNode("./span[last()]")?.InnerText.HtmlDecode();
+
+            var sr = new GroupSearchResult { Name = a.InnerText.HtmlDecode(), Description = description };
+            sr.SetUrlAndId(a.Attributes["href"].Value);
+            yield return sr;
         }
     }
 
-    public class GroupSearchResult : SearchResult { }
-
-    public class GameSearchResult : SearchResult, IGameSearchResult
+    private GameDetails ParseGameDetailsHtml(string html)
     {
-        public List<string> PlatformNames { get; set; } = new List<string>();
-        public List<string> AlternateTitles { get; set; } = new List<string>();
-        public string Title { get; set; }
-        public ReleaseDate? ReleaseDate { get; set; }
+        return new MobyGamesHelper(PlatformUtility).ParseGameDetailsHtml(html, parseGenres: false);
+    }
+}
 
-        public MobyGame ApiGameResult { get; private set; }
+public class SearchResult : Playnite.SDK.GenericItemOption, IHasName
+{
+    public string Url { get; set; }
+    public int Id { get; set; }
 
-        public IEnumerable<string> AlternateNames => AlternateTitles;
+    public void SetUrlAndId(string url)
+    {
+        Url = url;
+        if (url == null) return;
+        var urlSegment = url.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Where(x => x.All(char.IsNumber)).FirstOrDefault();
+        if (urlSegment != null)
+            Id = int.Parse(urlSegment);
+    }
+}
 
-        IEnumerable<string> IGameSearchResult.Platforms => PlatformNames;
+public class GroupSearchResult : SearchResult { }
 
-        public void SetName(string title, IEnumerable<string> alternateTitles)
-        {
-            Title = title;
-            AlternateTitles = alternateTitles?.ToList() ?? new List<string>();
-            if (AlternateTitles.Any())
-                Name = $"{Title} (AKA {string.Join("/", AlternateTitles)})";
-            else
-                Name = Title;
-        }
+public class GameSearchResult : SearchResult, IGameSearchResult
+{
+    public List<string> PlatformNames { get; set; } = new List<string>();
+    public List<string> AlternateTitles { get; set; } = new List<string>();
+    public string Title { get; set; }
+    public ReleaseDate? ReleaseDate { get; set; }
 
-        public void SetDescription(string releaseDate, List<string> platforms)
-        {
-            var descriptionElements = new List<string>();
-            if (!string.IsNullOrWhiteSpace(releaseDate))
-                descriptionElements.Add(releaseDate);
+    public MobyGame ApiGameResult { get; private set; }
 
-            if (platforms != null && platforms.Any())
-                descriptionElements.Add(string.Join(", ", platforms));
+    public IEnumerable<string> AlternateNames => AlternateTitles;
 
-            Description = string.Join(" | ", descriptionElements);
-        }
+    IEnumerable<string> IGameSearchResult.Platforms => PlatformNames;
 
-        public GameSearchResult() { }
+    public void SetName(string title, IEnumerable<string> alternateTitles)
+    {
+        Title = title;
+        AlternateTitles = alternateTitles?.ToList() ?? new List<string>();
+        if (AlternateTitles.Any())
+            Name = $"{Title} (AKA {string.Join("/", AlternateTitles)})";
+        else
+            Name = Title;
+    }
 
-        public GameSearchResult(MobyGame game)
-        {
-            ApiGameResult = game;
-            Id = game.game_id;
-            Url = game.moby_url;
-            SetName(game.title, game.highlights);
-            PlatformNames.AddRange(game.platforms.Select(p => p.name));
-            ReleaseDate = game.release_date.ParseReleaseDate();
-            SetDescription(game.release_date, PlatformNames);
-        }
+    public void SetDescription(string releaseDate, List<string> platforms)
+    {
+        var descriptionElements = new List<string>();
+        if (!string.IsNullOrWhiteSpace(releaseDate))
+            descriptionElements.Add(releaseDate);
+
+        if (platforms != null && platforms.Any())
+            descriptionElements.Add(string.Join(", ", platforms));
+
+        Description = string.Join(" | ", descriptionElements);
+    }
+
+    public GameSearchResult() { }
+
+    public GameSearchResult(MobyGame game)
+    {
+        ApiGameResult = game;
+        Id = game.game_id;
+        Url = game.moby_url;
+        SetName(game.title, game.highlights);
+        PlatformNames.AddRange(game.platforms.Select(p => p.name));
+        ReleaseDate = game.release_date.ParseReleaseDate();
+        SetDescription(game.release_date, PlatformNames);
     }
 }

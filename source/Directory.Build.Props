@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
+    <Copyright>Copyright © 2025</Copyright>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <LangVersion>12</LangVersion>
+  </PropertyGroup>
+</Project>

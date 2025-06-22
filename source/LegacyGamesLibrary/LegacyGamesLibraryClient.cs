@@ -2,27 +2,26 @@
 using System.Diagnostics;
 using System.IO;
 
-namespace LegacyGamesLibrary
+namespace LegacyGamesLibrary;
+
+public class LegacyGamesLibraryClient : LibraryClient
 {
-    public class LegacyGamesLibraryClient : LibraryClient
+    public LegacyGamesLibraryClient(string exePath, string icon)
     {
-        public LegacyGamesLibraryClient(string exePath, string icon)
-        {
-            ExePath = exePath;
-            _icon = icon;
-        }
+        ExePath = exePath;
+        _icon = icon;
+    }
 
-        private string _icon;
+    private string _icon;
 
-        public override bool IsInstalled => !string.IsNullOrWhiteSpace(ExePath) && File.Exists(ExePath);
-        public override string Icon => _icon;
+    public override bool IsInstalled => !string.IsNullOrWhiteSpace(ExePath) && File.Exists(ExePath);
+    public override string Icon => _icon;
 
-        public string ExePath { get; }
+    public string ExePath { get; }
 
-        public override void Open()
-        {
-            if (IsInstalled)
-                try { Process.Start(ExePath); } catch { }
-        }
+    public override void Open()
+    {
+        if (IsInstalled)
+            try { Process.Start(ExePath); } catch { }
     }
 }

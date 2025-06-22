@@ -1,9 +1,8 @@
-﻿namespace MutualGames.Models.Export
+﻿namespace MutualGames.Models.Export;
+
+public enum ExportGamesMode
 {
-    public enum ExportGamesMode
-    {
-        AllIncludeHidden,
-        AllExcludeHidden,
-        Filtered,
-    }
+    AllIncludeHidden,
+    AllExcludeHidden,
+    Filtered,
 }

@@ -1,16 +1,15 @@
 ﻿using Xunit;
 
-namespace ViveportLibrary.Tests
+namespace ViveportLibrary.Tests;
+
+public class ViveportLibraryTests
 {
-    public class ViveportLibraryTests
+    [Theory]
+    [InlineData("HtcViveCosmosElite", "HTC Vive Cosmos Elite")]
+    [InlineData("OculusRiftS", "Oculus Rift S")]
+    public void SplitPascalCaseTest(string input, string expectedOutput)
     {
-        [Theory]
-        [InlineData("HtcViveCosmosElite", "HTC Vive Cosmos Elite")]
-        [InlineData("OculusRiftS", "Oculus Rift S")]
-        public void SplitPascalCaseTest(string input, string expectedOutput)
-        {
-            var output = ViveportLibrary.SplitPascalCase(input);
-            Assert.Equal(expectedOutput, output);
-        }
+        var output = ViveportLibrary.SplitPascalCase(input);
+        Assert.Equal(expectedOutput, output);
     }
 }

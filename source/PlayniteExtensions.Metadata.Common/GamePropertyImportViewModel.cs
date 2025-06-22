@@ -4,121 +4,120 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-namespace PlayniteExtensions.Metadata.Common
+namespace PlayniteExtensions.Metadata.Common;
+
+public class GamePropertyImportViewModel
 {
-    public class GamePropertyImportViewModel
+    public IPlayniteAPI PlayniteAPI { get; set; }
+
+    public GamePropertyImportTargetField[] TargetFieldOptions { get; set; } = new[]
     {
-        public IPlayniteAPI PlayniteAPI { get; set; }
+        GamePropertyImportTargetField.Category,
+        GamePropertyImportTargetField.Genre,
+        GamePropertyImportTargetField.Tag,
+        GamePropertyImportTargetField.Feature,
+        GamePropertyImportTargetField.Series,
+        GamePropertyImportTargetField.Developers,
+        GamePropertyImportTargetField.Publishers,
+    };
 
-        public GamePropertyImportTargetField[] TargetFieldOptions { get; set; } = new[]
-        {
-            GamePropertyImportTargetField.Category,
-            GamePropertyImportTargetField.Genre,
-            GamePropertyImportTargetField.Tag,
-            GamePropertyImportTargetField.Feature,
-            GamePropertyImportTargetField.Series,
-            GamePropertyImportTargetField.Developers,
-            GamePropertyImportTargetField.Publishers,
-        };
+    public GamePropertyImportTargetField TargetField { get; set; }
 
-        public GamePropertyImportTargetField TargetField { get; set; }
+    public string Name { get; set; }
 
-        public string Name { get; set; }
+    public List<PotentialLink> Links { get; set; } = new List<PotentialLink>();
 
-        public List<PotentialLink> Links { get; set; } = new List<PotentialLink>();
+    public List<CheckboxFilter> Filters { get; set; } = new List<CheckboxFilter>();
 
-        public List<CheckboxFilter> Filters { get; set; } = new List<CheckboxFilter>();
+    public ICollection<GameCheckboxViewModel> Games { get; set; }
+}
 
-        public ICollection<GameCheckboxViewModel> Games { get; set; }
+public class GameCheckboxViewModel : ObservableObject
+{
+    private bool isChecked;
+
+    public GameCheckboxViewModel(Game game, GameDetails gameDetails, bool isChecked = true)
+    {
+        Game = game;
+        GameDetails.Add(gameDetails);
+        IsChecked = isChecked;
     }
 
-    public class GameCheckboxViewModel : ObservableObject
+    public Game Game { get; set; }
+    public List<GameDetails> GameDetails { get; } = new List<GameDetails>();
+    public bool IsChecked { get => isChecked; set => SetValue(ref isChecked, value); }
+    public string DisplayName
     {
-        private bool isChecked;
-
-        public GameCheckboxViewModel(Game game, GameDetails gameDetails, bool isChecked = true)
+        get
         {
-            Game = game;
-            GameDetails.Add(gameDetails);
-            IsChecked = isChecked;
-        }
-
-        public Game Game { get; set; }
-        public List<GameDetails> GameDetails { get; } = new List<GameDetails>();
-        public bool IsChecked { get => isChecked; set => SetValue(ref isChecked, value); }
-        public string DisplayName
-        {
-            get
-            {
-                if (Game.ReleaseDate == null)
-                    return Game.Name;
-                else
-                    return $"{Game.Name} ({Game.ReleaseDate?.Year})";
-            }
+            if (Game.ReleaseDate == null)
+                return Game.Name;
+            else
+                return $"{Game.Name} ({Game.ReleaseDate?.Year})";
         }
     }
+}
 
-    public class PotentialLink
+public class PotentialLink
+{
+    private readonly Func<GameDetails, string> getUrlMethod;
+    private readonly Func<IEnumerable<Link>, string, bool> isAlreadyLinkedMethod;
+
+    public PotentialLink(string name, Func<GameDetails, string> getUrlMethod, Func<IEnumerable<Link>, string, bool> isAlreadyLinkedMethod = null)
     {
-        private readonly Func<GameDetails, string> getUrlMethod;
-        private readonly Func<IEnumerable<Link>, string, bool> isAlreadyLinkedMethod;
-
-        public PotentialLink(string name, Func<GameDetails, string> getUrlMethod, Func<IEnumerable<Link>, string, bool> isAlreadyLinkedMethod = null)
-        {
-            Name = name;
-            this.getUrlMethod = getUrlMethod;
-            this.isAlreadyLinkedMethod = isAlreadyLinkedMethod;
-        }
-
-        public string Name { get; }
-        public bool Checked { get; set; } = true;
-        public string GetUrl(GameDetails game) => getUrlMethod(game);
-        public virtual bool IsAlreadyLinked(IEnumerable<Link> links, string url)
-        {
-            if (links == null) return false;
-
-            if (isAlreadyLinkedMethod != null)
-                return isAlreadyLinkedMethod(links, url);
-
-            if (string.IsNullOrWhiteSpace(url)) return true;
-
-            return links != null && links.Any(l => url.Equals(l.Url, StringComparison.InvariantCultureIgnoreCase));
-        }
+        Name = name;
+        this.getUrlMethod = getUrlMethod;
+        this.isAlreadyLinkedMethod = isAlreadyLinkedMethod;
     }
 
-    public class CheckboxFilter
+    public string Name { get; }
+    public bool Checked { get; set; } = true;
+    public string GetUrl(GameDetails game) => getUrlMethod(game);
+    public virtual bool IsAlreadyLinked(IEnumerable<Link> links, string url)
     {
-        private GamePropertyImportViewModel ViewModel { get; }
-        private Func<GameCheckboxViewModel, bool> FilterFunc { get; }
+        if (links == null) return false;
 
-        public CheckboxFilter()
+        if (isAlreadyLinkedMethod != null)
+            return isAlreadyLinkedMethod(links, url);
+
+        if (string.IsNullOrWhiteSpace(url)) return true;
+
+        return links != null && links.Any(l => url.Equals(l.Url, StringComparison.InvariantCultureIgnoreCase));
+    }
+}
+
+public class CheckboxFilter
+{
+    private GamePropertyImportViewModel ViewModel { get; }
+    private Func<GameCheckboxViewModel, bool> FilterFunc { get; }
+
+    public CheckboxFilter()
+    {
+        Cmd = new RelayCommand<object>(_ =>
         {
-            Cmd = new RelayCommand<object>(_ =>
-            {
-                foreach (var c in ViewModel.Games)
-                    c.IsChecked = FilterFunc(c);
-            });
-        }
-
-        public CheckboxFilter(string text, GamePropertyImportViewModel viewModel, Func<GameCheckboxViewModel, bool> filterFunc) : this()
-        {
-            Text = text;
-            this.ViewModel = viewModel;
-            FilterFunc = filterFunc;
-        }
-
-        public string Text { get; }
-        public RelayCommand<object> Cmd { get; }
+            foreach (var c in ViewModel.Games)
+                c.IsChecked = FilterFunc(c);
+        });
     }
 
-    public enum GamePropertyImportTargetField
+    public CheckboxFilter(string text, GamePropertyImportViewModel viewModel, Func<GameCheckboxViewModel, bool> filterFunc) : this()
     {
-        Category,
-        Genre,
-        Tag,
-        Feature,
-        Series,
-        Developers,
-        Publishers,
+        Text = text;
+        this.ViewModel = viewModel;
+        FilterFunc = filterFunc;
     }
+
+    public string Text { get; }
+    public RelayCommand<object> Cmd { get; }
+}
+
+public enum GamePropertyImportTargetField
+{
+    Category,
+    Genre,
+    Tag,
+    Feature,
+    Series,
+    Developers,
+    Publishers,
 }

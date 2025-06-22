@@ -5,144 +5,143 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PlayniteExtensions.Common
+namespace PlayniteExtensions.Common;
+
+public interface IWebViewWrapper : IDisposable
 {
-    public interface IWebViewWrapper : IDisposable
+    WebViewResponse DownloadPageSource(string url);
+    WebViewResponse DownloadPageText(string url);
+    Task<WebViewResponse> DownloadPageSourceAsync(string url);
+    Task<WebViewResponse> DownloadPageTextAsync(string url);
+}
+
+public class WebViewResponse
+{
+    public string Url { get; set; }
+    public string Content { get; set; }
+}
+
+
+/// <summary>
+/// Intended for use for only one request
+/// </summary>
+public class OffScreenWebViewWrapper : IWebViewWrapper
+{
+    public OffScreenWebViewWrapper(IPlayniteAPI playniteAPI)
     {
-        WebViewResponse DownloadPageSource(string url);
-        WebViewResponse DownloadPageText(string url);
-        Task<WebViewResponse> DownloadPageSourceAsync(string url);
-        Task<WebViewResponse> DownloadPageTextAsync(string url);
+        view = System.Windows.Application.Current.Dispatcher.Invoke(() => playniteAPI.WebViews.CreateOffscreenView());
+        view.LoadingChanged += View_LoadingChanged;
     }
 
-    public class WebViewResponse
+    private void View_LoadingChanged(object sender, Playnite.SDK.Events.WebViewLoadingChangedEventArgs e)
     {
-        public string Url { get; set; }
-        public string Content { get; set; }
+        if (!e.IsLoading)
+            loadCompleteEvent.Set();
     }
 
+    private readonly IWebView view;
+    private readonly ILogger logger = LogManager.GetLogger();
+    private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
+    private AsyncAutoResetEvent loadCompleteEvent = new AsyncAutoResetEvent();
 
-    /// <summary>
-    /// Intended for use for only one request
-    /// </summary>
-    public class OffScreenWebViewWrapper : IWebViewWrapper
+    public WebViewResponse DownloadPageSource(string url) => DownloadPageSourceAsync(url).Result;
+    public WebViewResponse DownloadPageText(string url) => DownloadPageTextAsync(url).Result;
+
+    public async Task<WebViewResponse> DownloadPageSourceAsync(string url) => await DownloadPageContentAsync(url, v => v.GetPageSource());
+
+    public async Task<WebViewResponse> DownloadPageTextAsync(string url) => await DownloadPageContentAsync(url, v => v.GetPageText());
+
+    private async Task<WebViewResponse> DownloadPageContentAsync(string url, Func<IWebView, string> getContentMethod)
     {
-        public OffScreenWebViewWrapper(IPlayniteAPI playniteAPI)
+        await semaphore.WaitAsync();
+        try
         {
-            view = System.Windows.Application.Current.Dispatcher.Invoke(() => playniteAPI.WebViews.CreateOffscreenView());
-            view.LoadingChanged += View_LoadingChanged;
+            logger.Debug($"Getting {url}");
+
+            view.NavigateAndWait(url);
+
+            var output = new WebViewResponse { Url = view.GetCurrentAddress() };
+            output.Content = getContentMethod(view);
+
+            logger.Debug($@"Result for getting {url}: {JsonConvert.SerializeObject(output)}");
+
+            return output;
         }
-
-        private void View_LoadingChanged(object sender, Playnite.SDK.Events.WebViewLoadingChangedEventArgs e)
+        finally
         {
-            if (!e.IsLoading)
-                loadCompleteEvent.Set();
-        }
-
-        private readonly IWebView view;
-        private readonly ILogger logger = LogManager.GetLogger();
-        private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
-        private AsyncAutoResetEvent loadCompleteEvent = new AsyncAutoResetEvent();
-
-        public WebViewResponse DownloadPageSource(string url) => DownloadPageSourceAsync(url).Result;
-        public WebViewResponse DownloadPageText(string url) => DownloadPageTextAsync(url).Result;
-
-        public async Task<WebViewResponse> DownloadPageSourceAsync(string url) => await DownloadPageContentAsync(url, v => v.GetPageSource());
-
-        public async Task<WebViewResponse> DownloadPageTextAsync(string url) => await DownloadPageContentAsync(url, v => v.GetPageText());
-
-        private async Task<WebViewResponse> DownloadPageContentAsync(string url, Func<IWebView, string> getContentMethod)
-        {
-            await semaphore.WaitAsync();
-            try
-            {
-                logger.Debug($"Getting {url}");
-
-                view.NavigateAndWait(url);
-
-                var output = new WebViewResponse { Url = view.GetCurrentAddress() };
-                output.Content = getContentMethod(view);
-
-                logger.Debug($@"Result for getting {url}: {JsonConvert.SerializeObject(output)}");
-
-                return output;
-            }
-            finally
-            {
-                semaphore.Release();
-            }
-        }
-
-        private async Task<bool> NavigateAndWait(string url, int timeOutMilliseconds = 15000)
-        {
-            view.Navigate(url);
-            return await RunWithTimeout(loadCompleteEvent.WaitAsync(), timeOutMilliseconds);
-        }
-
-        private static async Task<bool> RunWithTimeout(Task t, int waitms)
-        {
-            return await Task.WhenAny(t, Task.Delay(waitms)) == t;
-        }
-
-        public void Dispose()
-        {
-            try
-            {
-                System.Windows.Application.Current.Dispatcher.Invoke(() =>
-                {
-                    view.LoadingChanged -= View_LoadingChanged;
-                    view.Close();
-                    view.Dispose();
-                });
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "Error disposing WebViewWrapper");
-            }
+            semaphore.Release();
         }
     }
 
-    internal sealed class AsyncAutoResetEvent
+    private async Task<bool> NavigateAndWait(string url, int timeOutMilliseconds = 15000)
     {
-        private static readonly Task s_completed = Task.FromResult(true);
-        private readonly Queue<TaskCompletionSource<bool>> _waits = new Queue<TaskCompletionSource<bool>>();
-        private bool _signaled;
+        view.Navigate(url);
+        return await RunWithTimeout(loadCompleteEvent.WaitAsync(), timeOutMilliseconds);
+    }
 
-        public Task WaitAsync()
+    private static async Task<bool> RunWithTimeout(Task t, int waitms)
+    {
+        return await Task.WhenAny(t, Task.Delay(waitms)) == t;
+    }
+
+    public void Dispose()
+    {
+        try
         {
-            lock (_waits)
+            System.Windows.Application.Current.Dispatcher.Invoke(() =>
             {
-                if (_signaled)
-                {
-                    _signaled = false;
-                    return s_completed;
-                }
-                else
-                {
-                    var tcs = new TaskCompletionSource<bool>();
-                    _waits.Enqueue(tcs);
-                    return tcs.Task;
-                }
+                view.LoadingChanged -= View_LoadingChanged;
+                view.Close();
+                view.Dispose();
+            });
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex, "Error disposing WebViewWrapper");
+        }
+    }
+}
+
+internal sealed class AsyncAutoResetEvent
+{
+    private static readonly Task s_completed = Task.FromResult(true);
+    private readonly Queue<TaskCompletionSource<bool>> _waits = new Queue<TaskCompletionSource<bool>>();
+    private bool _signaled;
+
+    public Task WaitAsync()
+    {
+        lock (_waits)
+        {
+            if (_signaled)
+            {
+                _signaled = false;
+                return s_completed;
+            }
+            else
+            {
+                var tcs = new TaskCompletionSource<bool>();
+                _waits.Enqueue(tcs);
+                return tcs.Task;
+            }
+        }
+    }
+
+    public void Set()
+    {
+        TaskCompletionSource<bool> toRelease = null;
+
+        lock (_waits)
+        {
+            if (_waits.Count > 0)
+            {
+                toRelease = _waits.Dequeue();
+            }
+            else if (!_signaled)
+            {
+                _signaled = true;
             }
         }
 
-        public void Set()
-        {
-            TaskCompletionSource<bool> toRelease = null;
-
-            lock (_waits)
-            {
-                if (_waits.Count > 0)
-                {
-                    toRelease = _waits.Dequeue();
-                }
-                else if (!_signaled)
-                {
-                    _signaled = true;
-                }
-            }
-
-            toRelease?.SetResult(true);
-        }
+        toRelease?.SetResult(true);
     }
 }

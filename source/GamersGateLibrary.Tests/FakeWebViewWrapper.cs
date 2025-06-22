@@ -1,29 +1,28 @@
 ﻿using PlayniteExtensions.Tests.Common;
 using System.Collections.Generic;
 
-namespace GamersGateLibrary.Tests
+namespace GamersGateLibrary.Tests;
+
+class FakeWebViewWrapper : FakeWebDownloader, IWebViewWrapper
 {
-    class FakeWebViewWrapper : FakeWebDownloader, IWebViewWrapper
+    public FakeWebViewWrapper()
     {
-        public FakeWebViewWrapper()
-        {
-        }
+    }
 
-        public FakeWebViewWrapper(Dictionary<string, string> filesByUrl) : base(filesByUrl)
-        {
-        }
+    public FakeWebViewWrapper(Dictionary<string, string> filesByUrl) : base(filesByUrl)
+    {
+    }
 
-        public FakeWebViewWrapper(string url, string localFile) : base(url, localFile)
-        {
-        }
+    public FakeWebViewWrapper(string url, string localFile) : base(url, localFile)
+    {
+    }
 
-        public void Dispose()
-        {
-        }
+    public void Dispose()
+    {
+    }
 
-        public string DownloadPageSource(string targetUrl)
-        {
-            return base.DownloadString(targetUrl).ResponseContent;
-        }
+    public string DownloadPageSource(string targetUrl)
+    {
+        return base.DownloadString(targetUrl).ResponseContent;
     }
 }

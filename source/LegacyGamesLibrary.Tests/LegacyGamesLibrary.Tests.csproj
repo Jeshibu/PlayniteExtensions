@@ -1,11 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{7AA53E27-454B-44B4-9795-02B72F42F573}</ProjectGuid>
-    <TargetFramework>net462</TargetFramework>
     <AssemblyTitle>LegacyGamesLibrary.Tests</AssemblyTitle>
     <Product>LegacyGamesLibrary.Tests</Product>
-    <Copyright>Copyright ©  2022</Copyright>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

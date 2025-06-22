@@ -1,26 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PlayniteExtensions.Metadata.Common
+namespace PlayniteExtensions.Metadata.Common;
+
+public class BulkImportPluginSettings : ObservableObject
 {
-    public class BulkImportPluginSettings : ObservableObject
+    public int MaxDegreeOfParallelism { get; set; } = GetDefaultMaxDegreeOfParallelism();
+
+    public int Version { get; set; } = 0;
+
+    public static int GetDefaultMaxDegreeOfParallelism()
     {
-        public int MaxDegreeOfParallelism { get; set; } = GetDefaultMaxDegreeOfParallelism();
+        var processorCount = Environment.ProcessorCount;
+        var parallelism = (int)Math.Round(processorCount * .75D, MidpointRounding.AwayFromZero);
 
-        public int Version { get; set; } = 0;
+        if (parallelism == processorCount)
+            parallelism--;
 
-        public static int GetDefaultMaxDegreeOfParallelism()
-        {
-            var processorCount = Environment.ProcessorCount;
-            var parallelism = (int)Math.Round(processorCount * .75D, MidpointRounding.AwayFromZero);
+        if (parallelism < 1)
+            parallelism = 1;
 
-            if (parallelism == processorCount)
-                parallelism--;
-
-            if (parallelism < 1)
-                parallelism = 1;
-
-            return parallelism;
-        }
+        return parallelism;
     }
 }

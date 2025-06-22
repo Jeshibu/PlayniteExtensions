@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace RawgLibrary
+namespace RawgLibrary;
+
+public partial class RawgLibrarySettingsView : UserControl
 {
-    public partial class RawgLibrarySettingsView : UserControl
+    public RawgLibrarySettingsView()
     {
-        public RawgLibrarySettingsView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

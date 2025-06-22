@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace SteamTagsImporter
+namespace SteamTagsImporter;
+
+public interface ISteamTagScraper
 {
-    public interface ISteamTagScraper
-    {
-        SteamTagScraper.Delistable<IEnumerable<SteamTag>> GetTags(string appId, string languageKey = null);
-    }
+    SteamTagScraper.Delistable<IEnumerable<SteamTag>> GetTags(string appId, string languageKey = null);
 }

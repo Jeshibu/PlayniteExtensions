@@ -5,158 +5,157 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace ViveportLibrary
+namespace ViveportLibrary;
+
+public interface IAppDataReader
 {
-    public interface IAppDataReader
+    IEnumerable<InstalledAppData> GetInstalledApps();
+
+    IEnumerable<AppMetadata> GetAppMetadata();
+
+    IEnumerable<LicenseData> GetLicenseData();
+}
+
+public class AppDataReader : IAppDataReader
+{
+    private static readonly string DefaultAppStatePath = Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\HTC\Viveport\installed_apps.json");
+    private static readonly string DefaultContentMetadataPath = Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\HTC\Viveport\content_metadata2.pref");
+    private static readonly string DefaultLicenseDataPath = Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\HTC\Viveport\content_licensing2.pref");
+    private ILogger logger = LogManager.GetLogger();
+
+    public string AppStatePath { get; }
+    public string ContentMetadataPath { get; }
+    public string LicenseDataPath { get; }
+
+    public AppDataReader(string appStatePath = null, string contentMetadataPath = null, string licenseDataPath = null)
     {
-        IEnumerable<InstalledAppData> GetInstalledApps();
-
-        IEnumerable<AppMetadata> GetAppMetadata();
-
-        IEnumerable<LicenseData> GetLicenseData();
+        AppStatePath = appStatePath ?? DefaultAppStatePath;
+        ContentMetadataPath = contentMetadataPath ?? DefaultContentMetadataPath;
+        LicenseDataPath = licenseDataPath ?? DefaultLicenseDataPath;
     }
 
-    public class AppDataReader : IAppDataReader
+    public IEnumerable<InstalledAppData> GetInstalledApps()
     {
-        private static readonly string DefaultAppStatePath = Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\HTC\Viveport\installed_apps.json");
-        private static readonly string DefaultContentMetadataPath = Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\HTC\Viveport\content_metadata2.pref");
-        private static readonly string DefaultLicenseDataPath = Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\HTC\Viveport\content_licensing2.pref");
-        private ILogger logger = LogManager.GetLogger();
-
-        public string AppStatePath { get; }
-        public string ContentMetadataPath { get; }
-        public string LicenseDataPath { get; }
-
-        public AppDataReader(string appStatePath = null, string contentMetadataPath = null, string licenseDataPath = null)
+        if (!File.Exists(AppStatePath))
         {
-            AppStatePath = appStatePath ?? DefaultAppStatePath;
-            ContentMetadataPath = contentMetadataPath ?? DefaultContentMetadataPath;
-            LicenseDataPath = licenseDataPath ?? DefaultLicenseDataPath;
+            logger.Error($"Viveport installed games file not found in {AppStatePath}");
+            return null;
         }
 
-        public IEnumerable<InstalledAppData> GetInstalledApps()
+        var fileContents = File.ReadAllText(AppStatePath);
+        var apps = JsonConvert.DeserializeObject<InstalledAppData[]>(fileContents)
+            ?.Where(x => x.AppId != null).ToArray();
+
+        return apps;
+    }
+
+    public IEnumerable<AppMetadata> GetAppMetadata()
+    {
+        if (!File.Exists(ContentMetadataPath))
         {
-            if (!File.Exists(AppStatePath))
-            {
-                logger.Error($"Viveport installed games file not found in {AppStatePath}");
-                return null;
-            }
-
-            var fileContents = File.ReadAllText(AppStatePath);
-            var apps = JsonConvert.DeserializeObject<InstalledAppData[]>(fileContents)
-                ?.Where(x => x.AppId != null).ToArray();
-
-            return apps;
+            logger.Error($"Viveport metadata file not found in {ContentMetadataPath}");
+            return null;
         }
 
-        public IEnumerable<AppMetadata> GetAppMetadata()
+        var fileContents = File.ReadAllText(ContentMetadataPath);
+        var items = JsonConvert.DeserializeObject<Dictionary<string, string>>(fileContents);
+        var output = new List<AppMetadata>();
+        foreach (var kvp in items)
         {
-            if (!File.Exists(ContentMetadataPath))
-            {
-                logger.Error($"Viveport metadata file not found in {ContentMetadataPath}");
-                return null;
-            }
+            if (!kvp.Key.EndsWith("_data"))
+                continue;
 
-            var fileContents = File.ReadAllText(ContentMetadataPath);
-            var items = JsonConvert.DeserializeObject<Dictionary<string, string>>(fileContents);
-            var output = new List<AppMetadata>();
-            foreach (var kvp in items)
-            {
-                if (!kvp.Key.EndsWith("_data"))
-                    continue;
-
-                var appData = JsonConvert.DeserializeObject<AppMetadata>(kvp.Value);
-                if (appData.Id != null)
-                    output.Add(appData);
-            }
-
-            return output;
+            var appData = JsonConvert.DeserializeObject<AppMetadata>(kvp.Value);
+            if (appData.Id != null)
+                output.Add(appData);
         }
 
-        public IEnumerable<LicenseData> GetLicenseData()
+        return output;
+    }
+
+    public IEnumerable<LicenseData> GetLicenseData()
+    {
+        if (!File.Exists(LicenseDataPath))
         {
-            if (!File.Exists(LicenseDataPath))
-            {
-                logger.Error($"Viveport licensed games file not found in {LicenseDataPath}");
-                return null;
-            }
-
-            var fileContents = File.ReadAllText(LicenseDataPath);
-            var items = JsonConvert.DeserializeObject<Dictionary<string, string>>(fileContents);
-            var output = new List<LicenseData>();
-            foreach (var kvp in items)
-            {
-                if (!kvp.Key.EndsWith("_data"))
-                    continue;
-
-                var licenseData = JsonConvert.DeserializeObject<LicenseData[]>(kvp.Value);
-                output.AddRange(licenseData.Where(l => l.AppId != null));
-            }
-
-            return output;
+            logger.Error($"Viveport licensed games file not found in {LicenseDataPath}");
+            return null;
         }
+
+        var fileContents = File.ReadAllText(LicenseDataPath);
+        var items = JsonConvert.DeserializeObject<Dictionary<string, string>>(fileContents);
+        var output = new List<LicenseData>();
+        foreach (var kvp in items)
+        {
+            if (!kvp.Key.EndsWith("_data"))
+                continue;
+
+            var licenseData = JsonConvert.DeserializeObject<LicenseData[]>(kvp.Value);
+            output.AddRange(licenseData.Where(l => l.AppId != null));
+        }
+
+        return output;
     }
+}
 
-    public class InstalledAppData
-    {
-        [JsonProperty("appId")]
-        public string AppId;
+public class InstalledAppData
+{
+    [JsonProperty("appId")]
+    public string AppId;
 
-        [JsonProperty("title")]
-        public string Title;
+    [JsonProperty("title")]
+    public string Title;
 
-        [JsonProperty("imageUri")]
-        public string ImageUri;
+    [JsonProperty("imageUri")]
+    public string ImageUri;
 
-        [JsonProperty("path")]
-        public string Path;
+    [JsonProperty("path")]
+    public string Path;
 
-        [JsonProperty("uri")]
-        public string StartupUri;
-    }
+    [JsonProperty("uri")]
+    public string StartupUri;
+}
 
-    public class AppMetadata
-    {
-        public string Id;
+public class AppMetadata
+{
+    public string Id;
 
-        [JsonProperty("at")]
-        public string Developer;
+    [JsonProperty("at")]
+    public string Developer;
 
-        [JsonProperty("lc")]
-        public string Locale;
+    [JsonProperty("lc")]
+    public string Locale;
 
-        [JsonProperty("sdl")]
-        public string[] SupportedDeviceList = new string[0];
+    [JsonProperty("sdl")]
+    public string[] SupportedDeviceList = new string[0];
 
-        [JsonProperty("srl")]
-        public string[] SupportedVrApis = new string[0];
+    [JsonProperty("srl")]
+    public string[] SupportedVrApis = new string[0];
 
-        [JsonProperty("tt")]
-        public string Title;
+    [JsonProperty("tt")]
+    public string Title;
 
-        [JsonProperty("tm")]
-        public Dictionary<string, ThumbnailData> Thumbnails = new Dictionary<string, ThumbnailData>();
-    }
+    [JsonProperty("tm")]
+    public Dictionary<string, ThumbnailData> Thumbnails = new Dictionary<string, ThumbnailData>();
+}
 
-    public class ThumbnailData
-    {
-        public string Url;
+public class ThumbnailData
+{
+    public string Url;
 
-        [JsonProperty("h")]
-        public int Height;
+    [JsonProperty("h")]
+    public int Height;
 
-        [JsonProperty("w")]
-        public int Width;
-    }
+    [JsonProperty("w")]
+    public int Width;
+}
 
-    public class LicenseData
-    {
-        public string AppId;
-        public ulong? CreatedTime;
-        public ulong? ExpiryTime;
-        public ulong? OwnershipEndTime;
-        public string Licensing;
+public class LicenseData
+{
+    public string AppId;
+    public ulong? CreatedTime;
+    public ulong? ExpiryTime;
+    public ulong? OwnershipEndTime;
+    public string Licensing;
 
-        public bool IsSubscription => Licensing == "rsu";
-    }
+    public bool IsSubscription => Licensing == "rsu";
 }

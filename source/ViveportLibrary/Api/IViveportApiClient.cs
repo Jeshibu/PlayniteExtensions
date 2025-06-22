@@ -1,11 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace ViveportLibrary.Api
+namespace ViveportLibrary.Api;
+
+public interface IViveportApiClient
 {
-    public interface IViveportApiClient
-    {
-        Task<GetCustomAttributeResponseRoot> GetAttributesAsync(CancellationToken cancellationToken = default);
-        Task<CmsAppDetailsResponse> GetGameDetailsAsync(string appId, CancellationToken cancellationToken = default);
-    }
+    Task<GetCustomAttributeResponseRoot> GetAttributesAsync(CancellationToken cancellationToken = default);
+    Task<CmsAppDetailsResponse> GetGameDetailsAsync(string appId, CancellationToken cancellationToken = default);
 }

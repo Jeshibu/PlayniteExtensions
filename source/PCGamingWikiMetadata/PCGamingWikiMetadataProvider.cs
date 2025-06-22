@@ -4,234 +4,233 @@ using Playnite.SDK.Models;
 using System.Collections.Generic;
 using System;
 
-namespace PCGamingWikiMetadata
+namespace PCGamingWikiMetadata;
+
+public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
 {
-    public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
+    private readonly MetadataRequestOptions options;
+    private readonly IPlayniteAPI playniteApi;
+    private readonly PCGamingWikiMetadataSettings settings;
+
+    private PCGWClient client;
+
+    private PCGWGameController gameController;
+    private static readonly ILogger logger = LogManager.GetLogger();
+
+    private List<MetadataField> availableFields;
+
+    public override List<MetadataField> AvailableFields
     {
-        private readonly MetadataRequestOptions options;
-        private readonly IPlayniteAPI playniteApi;
-        private readonly PCGamingWikiMetadataSettings settings;
-
-        private PCGWClient client;
-
-        private PCGWGameController gameController;
-        private static readonly ILogger logger = LogManager.GetLogger();
-
-        private List<MetadataField> availableFields;
-
-        public override List<MetadataField> AvailableFields
+        get
         {
-            get
+            if (availableFields == null)
             {
-                if (availableFields == null)
-                {
-                    availableFields = GetAvailableFields();
-                }
-
-                return availableFields;
+                availableFields = GetAvailableFields();
             }
+
+            return availableFields;
+        }
+    }
+
+    private List<MetadataField> GetAvailableFields()
+    {
+        if (this.gameController.Game == null)
+        {
+            GetPCGWMetadata();
         }
 
-        private List<MetadataField> GetAvailableFields()
+        var fields = new List<MetadataField>
         {
-            if (this.gameController.Game == null)
-            {
-                GetPCGWMetadata();
-            }
+            MetadataField.Name,
+            MetadataField.Links,
+            MetadataField.ReleaseDate,
+            MetadataField.Genres,
+            MetadataField.Series,
+            MetadataField.Features,
+            MetadataField.Developers,
+            MetadataField.Publishers,
+            MetadataField.CriticScore,
+            MetadataField.Tags
+        };
 
-            var fields = new List<MetadataField>
-            {
-                MetadataField.Name,
-                MetadataField.Links,
-                MetadataField.ReleaseDate,
-                MetadataField.Genres,
-                MetadataField.Series,
-                MetadataField.Features,
-                MetadataField.Developers,
-                MetadataField.Publishers,
-                MetadataField.CriticScore,
-                MetadataField.Tags
-            };
+        return fields;
+    }
 
-            return fields;
+    private void GetPCGWMetadata()
+    {
+        logger.Debug("GetPCGWMetadata");
+
+        if (this.gameController.Game != null)
+        {
+            return;
         }
 
-        private void GetPCGWMetadata()
+        if (!options.IsBackgroundDownload)
         {
-            logger.Debug("GetPCGWMetadata");
-
-            if (this.gameController.Game != null)
+            logger.Debug("not background");
+            var item = playniteApi.Dialogs.ChooseItemWithSearch(null, (a) =>
             {
-                return;
-            }
+                return client.SearchGames(a);
+            }, options.GameData.Name);
 
-            if (!options.IsBackgroundDownload)
+            if (item != null)
             {
-                logger.Debug("not background");
-                var item = playniteApi.Dialogs.ChooseItemWithSearch(null, (a) =>
-                {
-                    return client.SearchGames(a);
-                }, options.GameData.Name);
-
-                if (item != null)
-                {
-                    var searchItem = item as PCGWGame;
-                    this.gameController.Game = (PCGWGame)item;
-                    this.client.FetchGamePageContent(this.gameController.Game);
-                }
-                else
-                {
-                    this.gameController.Game = new PCGWGame(settings);
-                    logger.Warn($"Cancelled search");
-                }
+                var searchItem = item as PCGWGame;
+                this.gameController.Game = (PCGWGame)item;
+                this.client.FetchGamePageContent(this.gameController.Game);
             }
             else
             {
-                try
+                this.gameController.Game = new PCGWGame(settings);
+                logger.Warn($"Cancelled search");
+            }
+        }
+        else
+        {
+            try
+            {
+                List<GenericItemOption> results = client.SearchGames(options.GameData.Name);
+
+                if (results.Count == 0)
                 {
-                    List<GenericItemOption> results = client.SearchGames(options.GameData.Name);
-
-                    if (results.Count == 0)
-                    {
-                        this.gameController.Game = new PCGWGame(settings);
-                        return;
-                    }
-
-                    if (results.Count > 1)
-                    {
-                        logger.Warn($"More than one result for {options.GameData.Name}. Using first result.");
-                    }
-
-                    this.gameController.Game = (PCGWGame)results[0];
-                    this.client.FetchGamePageContent(this.gameController.Game);
+                    this.gameController.Game = new PCGWGame(settings);
+                    return;
                 }
-                catch (Exception e)
+
+                if (results.Count > 1)
                 {
-                    logger.Error(e, "Failed to get PCGW metadata.");
+                    logger.Warn($"More than one result for {options.GameData.Name}. Using first result.");
                 }
+
+                this.gameController.Game = (PCGWGame)results[0];
+                this.client.FetchGamePageContent(this.gameController.Game);
             }
-        }
-
-        public PCGamingWikiMetadataProvider(MetadataRequestOptions options, IPlayniteAPI playniteApi, PCGamingWikiMetadataSettings settings)
-        {
-            this.options = options;
-            this.playniteApi = playniteApi;
-            this.settings = settings;
-            this.gameController = new PCGWGameController(settings);
-            this.client = new PCGWClient(this.options, this.gameController);
-        }
-
-        public override string GetName(GetMetadataFieldArgs args)
-        {
-            if (AvailableFields.Contains(MetadataField.Name))
+            catch (Exception e)
             {
-                return this.gameController.Game.Name;
+                logger.Error(e, "Failed to get PCGW metadata.");
             }
-
-            return base.GetName(args);
         }
+    }
 
+    public PCGamingWikiMetadataProvider(MetadataRequestOptions options, IPlayniteAPI playniteApi, PCGamingWikiMetadataSettings settings)
+    {
+        this.options = options;
+        this.playniteApi = playniteApi;
+        this.settings = settings;
+        this.gameController = new PCGWGameController(settings);
+        this.client = new PCGWClient(this.options, this.gameController);
+    }
 
-        public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
+    public override string GetName(GetMetadataFieldArgs args)
+    {
+        if (AvailableFields.Contains(MetadataField.Name))
         {
-            if (AvailableFields.Contains(MetadataField.Links))
-            {
-                var links = new List<Link>();
-                if (this.gameController.Game.PageID != 0)
-                    links.Add(this.gameController.Game.PCGamingWikiLink());
-
-                links.AddRange(this.gameController.Game.Links);
-                return links;
-            }
-
-            return base.GetLinks(args);
+            return this.gameController.Game.Name;
         }
 
-        public override ReleaseDate? GetReleaseDate(GetMetadataFieldArgs args)
+        return base.GetName(args);
+    }
+
+
+    public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
+    {
+        if (AvailableFields.Contains(MetadataField.Links))
         {
-            if (AvailableFields.Contains(MetadataField.ReleaseDate))
-            {
-                return this.gameController.Game.WindowsReleaseDate();
-            }
+            var links = new List<Link>();
+            if (this.gameController.Game.PageID != 0)
+                links.Add(this.gameController.Game.PCGamingWikiLink());
 
-            return base.GetReleaseDate(args);
+            links.AddRange(this.gameController.Game.Links);
+            return links;
         }
 
-        public override IEnumerable<MetadataProperty> GetGenres(GetMetadataFieldArgs args)
+        return base.GetLinks(args);
+    }
+
+    public override ReleaseDate? GetReleaseDate(GetMetadataFieldArgs args)
+    {
+        if (AvailableFields.Contains(MetadataField.ReleaseDate))
         {
-
-            if (AvailableFields.Contains(MetadataField.Genres))
-            {
-                return this.gameController.Game.Genres;
-            }
-
-            return base.GetGenres(args);
+            return this.gameController.Game.WindowsReleaseDate();
         }
 
-        public override IEnumerable<MetadataProperty> GetFeatures(GetMetadataFieldArgs args)
+        return base.GetReleaseDate(args);
+    }
+
+    public override IEnumerable<MetadataProperty> GetGenres(GetMetadataFieldArgs args)
+    {
+
+        if (AvailableFields.Contains(MetadataField.Genres))
         {
-            if (AvailableFields.Contains(MetadataField.Features))
-            {
-                return this.gameController.Game.Features;
-            }
-
-            return base.GetFeatures(args);
+            return this.gameController.Game.Genres;
         }
 
-        public override IEnumerable<MetadataProperty> GetSeries(GetMetadataFieldArgs args)
+        return base.GetGenres(args);
+    }
+
+    public override IEnumerable<MetadataProperty> GetFeatures(GetMetadataFieldArgs args)
+    {
+        if (AvailableFields.Contains(MetadataField.Features))
         {
-            if (AvailableFields.Contains(MetadataField.Series))
-            {
-                return this.gameController.Game.Series;
-            }
-
-            return base.GetSeries(args);
+            return this.gameController.Game.Features;
         }
 
-        public override IEnumerable<MetadataProperty> GetDevelopers(GetMetadataFieldArgs args)
+        return base.GetFeatures(args);
+    }
+
+    public override IEnumerable<MetadataProperty> GetSeries(GetMetadataFieldArgs args)
+    {
+        if (AvailableFields.Contains(MetadataField.Series))
         {
-            if (AvailableFields.Contains(MetadataField.Developers))
-            {
-                return this.gameController.Game.Developers;
-            }
-
-            return base.GetDevelopers(args);
+            return this.gameController.Game.Series;
         }
 
-        public override int? GetCriticScore(GetMetadataFieldArgs args)
+        return base.GetSeries(args);
+    }
+
+    public override IEnumerable<MetadataProperty> GetDevelopers(GetMetadataFieldArgs args)
+    {
+        if (AvailableFields.Contains(MetadataField.Developers))
         {
-            int? score;
-
-            if (AvailableFields.Contains(MetadataField.CriticScore) &&
-                    (this.gameController.Game.GetOpenCriticReception(out score) ||
-                    this.gameController.Game.GetIGDBReception(out score) ||
-                    this.gameController.Game.GetMetacriticReception(out score))
-                )
-            {
-                return score;
-            }
-
-            return base.GetCriticScore(args);
+            return this.gameController.Game.Developers;
         }
 
-        public override IEnumerable<MetadataProperty> GetPublishers(GetMetadataFieldArgs args)
+        return base.GetDevelopers(args);
+    }
+
+    public override int? GetCriticScore(GetMetadataFieldArgs args)
+    {
+        int? score;
+
+        if (AvailableFields.Contains(MetadataField.CriticScore) &&
+                (this.gameController.Game.GetOpenCriticReception(out score) ||
+                this.gameController.Game.GetIGDBReception(out score) ||
+                this.gameController.Game.GetMetacriticReception(out score))
+            )
         {
-            if (AvailableFields.Contains(MetadataField.Publishers))
-            {
-                return this.gameController.Game.Publishers;
-            }
-
-            return base.GetPublishers(args);
+            return score;
         }
 
-        public override IEnumerable<MetadataProperty> GetTags(GetMetadataFieldArgs args)
+        return base.GetCriticScore(args);
+    }
+
+    public override IEnumerable<MetadataProperty> GetPublishers(GetMetadataFieldArgs args)
+    {
+        if (AvailableFields.Contains(MetadataField.Publishers))
         {
-            if (AvailableFields.Contains(MetadataField.Tags))
-            {
-                return this.gameController.Game.Tags;
-            }
-
-            return base.GetTags(args);
+            return this.gameController.Game.Publishers;
         }
+
+        return base.GetPublishers(args);
+    }
+
+    public override IEnumerable<MetadataProperty> GetTags(GetMetadataFieldArgs args)
+    {
+        if (AvailableFields.Contains(MetadataField.Tags))
+        {
+            return this.gameController.Game.Tags;
+        }
+
+        return base.GetTags(args);
     }
 }

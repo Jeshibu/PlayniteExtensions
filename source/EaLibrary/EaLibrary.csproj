@@ -1,16 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <ProjectGuid>{C8D3E73F-8236-4B04-8456-095FF702FABA}</ProjectGuid>
-    <TargetFramework>net462</TargetFramework>
     <AssemblyTitle>EaLibrary</AssemblyTitle>
     <Product>EaLibrary</Product>
     <Description>EA library support plugin for Playnite</Description>
-    <Copyright>Copyright © Jeshibu 2025</Copyright>
     <Deterministic>false</Deterministic>
     <AssemblyVersion>3.0</AssemblyVersion>
     <FileVersion>3.0</FileVersion>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <LangVersion>12.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -26,9 +22,6 @@
     <PackageReference Include="RestSharp" Version="108.0.2" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Playnite.SDK">
-      <HintPath>..\..\packages\PlayniteSDK.6.4.0\lib\net462\Playnite.SDK.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System.Management" />

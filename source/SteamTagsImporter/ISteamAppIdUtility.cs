@@ -1,9 +1,8 @@
 ﻿using Playnite.SDK.Models;
 
-namespace SteamTagsImporter
+namespace SteamTagsImporter;
+
+public interface ISteamAppIdUtility
 {
-    public interface ISteamAppIdUtility
-    {
-        string GetSteamGameId(Game game);
-    }
+    string GetSteamGameId(Game game);
 }

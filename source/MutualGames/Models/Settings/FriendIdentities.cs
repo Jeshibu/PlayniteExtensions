@@ -6,66 +6,65 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 
-namespace MutualGames.Models.Settings
+namespace MutualGames.Models.Settings;
+
+public class FriendIdentities : IDropTarget
 {
-    public class FriendIdentities : IDropTarget
+    public ObservableCollection<FriendIdentity> Items { get; set; } = new ObservableCollection<FriendIdentity>();
+
+    [DontSerialize]
+    public RelayCommand<FriendIdentity> RemoveCommand { get; }
+
+    public FriendIdentities()
     {
-        public ObservableCollection<FriendIdentity> Items { get; set; } = new ObservableCollection<FriendIdentity>();
+        RemoveCommand = new RelayCommand<FriendIdentity>(f => Items.Remove(f));
+    }
 
-        [DontSerialize]
-        public RelayCommand<FriendIdentity> RemoveCommand { get; }
-
-        public FriendIdentities()
+    void IDropTarget.DragOver(IDropInfo dropInfo)
+    {
+        var sourceItems = GetDragSourceItems(dropInfo);
+        if (sourceItems.Count == 0)
         {
-            RemoveCommand = new RelayCommand<FriendIdentity>(f => Items.Remove(f));
+            dropInfo.Effects = DragDropEffects.None;
+            dropInfo.DropTargetAdorner = null;
         }
-
-        void IDropTarget.DragOver(IDropInfo dropInfo)
+        else
         {
-            var sourceItems = GetDragSourceItems(dropInfo);
-            if (sourceItems.Count == 0)
-            {
-                dropInfo.Effects = DragDropEffects.None;
-                dropInfo.DropTargetAdorner = null;
-            }
-            else
-            {
-                dropInfo.Effects = DragDropEffects.Copy;
-                dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
-            }
+            dropInfo.Effects = DragDropEffects.Copy;
+            dropInfo.DropTargetAdorner = DropTargetAdorners.Highlight;
         }
+    }
 
-        void IDropTarget.Drop(IDropInfo dropInfo)
+    void IDropTarget.Drop(IDropInfo dropInfo)
+    {
+        var sourceItems = GetDragSourceItems(dropInfo);
+        if (sourceItems.Count == 0)
+            return;
+
+        if (dropInfo.TargetItem is FriendIdentity fi)
         {
-            var sourceItems = GetDragSourceItems(dropInfo);
-            if (sourceItems.Count == 0)
-                return;
-
-            if (dropInfo.TargetItem is FriendIdentity fi)
-            {
-                fi.Accounts.AddMissing(sourceItems);
-            }
-            else if (dropInfo.TargetCollection is IList<FriendAccountInfo> accounts)
-            {
-                accounts.AddMissing(sourceItems);
-            }
-            else if (dropInfo.TargetCollection is IList<FriendIdentity> friendIdentities)
-            {
-                var g = new FriendIdentity { FriendName = sourceItems[0].Name };
-                g.Accounts.AddMissing(sourceItems);
-                friendIdentities.Add(g);
-            }
+            fi.Accounts.AddMissing(sourceItems);
         }
-
-        private List<FriendAccountInfo> GetDragSourceItems(IDropInfo dropInfo)
+        else if (dropInfo.TargetCollection is IList<FriendAccountInfo> accounts)
         {
-            if (dropInfo.Data is IEnumerable<FriendAccountInfo> enumerable)
-                return enumerable.ToList();
-
-            if (dropInfo.Data is FriendAccountInfo fi)
-                return new List<FriendAccountInfo> { fi };
-
-            return new List<FriendAccountInfo>();
+            accounts.AddMissing(sourceItems);
         }
+        else if (dropInfo.TargetCollection is IList<FriendIdentity> friendIdentities)
+        {
+            var g = new FriendIdentity { FriendName = sourceItems[0].Name };
+            g.Accounts.AddMissing(sourceItems);
+            friendIdentities.Add(g);
+        }
+    }
+
+    private List<FriendAccountInfo> GetDragSourceItems(IDropInfo dropInfo)
+    {
+        if (dropInfo.Data is IEnumerable<FriendAccountInfo> enumerable)
+            return enumerable.ToList();
+
+        if (dropInfo.Data is FriendAccountInfo fi)
+            return new List<FriendAccountInfo> { fi };
+
+        return new List<FriendAccountInfo>();
     }
 }

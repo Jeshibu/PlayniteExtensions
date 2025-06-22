@@ -1,21 +1,18 @@
-﻿using System;
+﻿namespace PlayniteExtensions.Metadata.Common;
 
-namespace PlayniteExtensions.Metadata.Common
+public class PropertyImportSetting
 {
-    public class PropertyImportSetting
-    {
-        public string Prefix { get; set; }
-        public PropertyImportTarget ImportTarget { get; set; }
-    }
+    public string Prefix { get; set; }
+    public PropertyImportTarget ImportTarget { get; set; }
+}
 
-    public enum PropertyImportTarget
-    {
-        Ignore,
-        Genres,
-        Tags,
-        Series,
-        Features,
-        Developers,
-        Publishers,
-    }
+public enum PropertyImportTarget
+{
+    Ignore,
+    Genres,
+    Tags,
+    Series,
+    Features,
+    Developers,
+    Publishers,
 }

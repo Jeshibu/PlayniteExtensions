@@ -7,77 +7,76 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace GamesSizeCalculator.SteamSizeCalculation
+namespace GamesSizeCalculator.SteamSizeCalculation;
+
+public class SteamAppIdUtility : ISteamAppIdUtility
 {
-    public class SteamAppIdUtility : ISteamAppIdUtility
+    private static readonly Guid SteamLibraryPluginId = Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB");
+    private static readonly Regex SteamUrlRegex = new Regex(@"\bhttps?://st(ore\.steampowered|eamcommunity)\.com/app/(?<id>[0-9]+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+    private static readonly Regex NonLetterOrDigitCharacterRegex = new Regex(@"[^\p{L}\p{Nd}]", RegexOptions.Compiled);
+    private static readonly ILogger logger = LogManager.GetLogger();
+
+    private Dictionary<string, int> _steamIds;
+    private Dictionary<string, int> SteamIdsByTitle
     {
-        private static readonly Guid SteamLibraryPluginId = Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB");
-        private static readonly Regex SteamUrlRegex = new Regex(@"\bhttps?://st(ore\.steampowered|eamcommunity)\.com/app/(?<id>[0-9]+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
-        private static readonly Regex NonLetterOrDigitCharacterRegex = new Regex(@"[^\p{L}\p{Nd}]", RegexOptions.Compiled);
-        private static readonly ILogger logger = LogManager.GetLogger();
+        get { return _steamIds ?? (_steamIds = GetSteamIdsByTitle()); }
+    }
 
-        private Dictionary<string, int> _steamIds;
-        private Dictionary<string, int> SteamIdsByTitle
+    public ICachedFile SteamAppList { get; }
+
+    public SteamAppIdUtility(ICachedFile steamAppList)
+    {
+        SteamAppList = steamAppList;
+    }
+
+    private static string NormalizeTitle(string title)
+    {
+        return NonLetterOrDigitCharacterRegex.Replace(title, string.Empty).ToLower();
+    }
+
+    public string GetSteamGameId(Game game)
+    {
+        if (game.PluginId == SteamLibraryPluginId)
         {
-            get { return _steamIds ?? (_steamIds = GetSteamIdsByTitle()); }
+            return game.GameId;
         }
 
-        public ICachedFile SteamAppList { get; }
-
-        public SteamAppIdUtility(ICachedFile steamAppList)
+        if (game.Links != null)
         {
-            SteamAppList = steamAppList;
-        }
-
-        private static string NormalizeTitle(string title)
-        {
-            return NonLetterOrDigitCharacterRegex.Replace(title, string.Empty).ToLower();
-        }
-
-        public string GetSteamGameId(Game game)
-        {
-            if (game.PluginId == SteamLibraryPluginId)
+            foreach (var link in game.Links)
             {
-                return game.GameId;
-            }
-
-            if (game.Links != null)
-            {
-                foreach (var link in game.Links)
+                var match = SteamUrlRegex.Match(link.Url);
+                if (match.Success)
                 {
-                    var match = SteamUrlRegex.Match(link.Url);
-                    if (match.Success)
-                    {
-                        return match.Groups["id"].Value;
-                    }
+                    return match.Groups["id"].Value;
                 }
             }
-
-            if (SteamIdsByTitle.TryGetValue(NormalizeTitle(game.Name), out int appId))
-            {
-                return appId.ToString();
-            }
-
-            return SteamWeb.GetSteamIdFromSearch(game.Name);
         }
 
-        private Dictionary<string, int> GetSteamIdsByTitle()
+        if (SteamIdsByTitle.TryGetValue(NormalizeTitle(game.Name), out int appId))
         {
-            var jsonStr = SteamAppList.GetFileContents();
-            var jsonContent = Serialization.FromJson<SteamAppListRoot>(jsonStr);
-            Dictionary<string, int> output = new Dictionary<string, int>();
-            foreach (var app in jsonContent.Applist.Apps)
-            {
-                var normalizedTitle = NormalizeTitle(app.Name);
-                if (output.ContainsKey(normalizedTitle))
-                {
-                    continue;
-                }
+            return appId.ToString();
+        }
 
-                output.Add(normalizedTitle, app.Appid);
+        return SteamWeb.GetSteamIdFromSearch(game.Name);
+    }
+
+    private Dictionary<string, int> GetSteamIdsByTitle()
+    {
+        var jsonStr = SteamAppList.GetFileContents();
+        var jsonContent = Serialization.FromJson<SteamAppListRoot>(jsonStr);
+        Dictionary<string, int> output = new Dictionary<string, int>();
+        foreach (var app in jsonContent.Applist.Apps)
+        {
+            var normalizedTitle = NormalizeTitle(app.Name);
+            if (output.ContainsKey(normalizedTitle))
+            {
+                continue;
             }
 
-            return output;
+            output.Add(normalizedTitle, app.Appid);
         }
+
+        return output;
     }
 }

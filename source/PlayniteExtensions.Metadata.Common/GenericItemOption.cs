@@ -1,14 +1,13 @@
 ﻿using Playnite.SDK;
 
-namespace PlayniteExtensions.Metadata.Common
-{
-    public class GenericItemOption<T> : GenericItemOption
-    {
-        public GenericItemOption(T item)
-        {
-            Item = item;
-        }
+namespace PlayniteExtensions.Metadata.Common;
 
-        public T Item { get; }
+public class GenericItemOption<T> : GenericItemOption
+{
+    public GenericItemOption(T item)
+    {
+        Item = item;
     }
+
+    public T Item { get; }
 }
