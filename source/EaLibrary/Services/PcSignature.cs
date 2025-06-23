@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Management;
+using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -33,12 +34,12 @@ public class PcSignature
 public class HardwareInfo
 {
     public string av = "v1";
-    public string bsn;
-    public int gid;
-    public string hsn;
+    public string bsn; //BIOS
+    public int gid; //GPU
+    public string hsn; //HDD
     public string mac;
     public string mid;
-    public string msn;
+    public string msn; //Mobo
     public string sv = "v1";
     public string ts;
 
@@ -62,7 +63,7 @@ public class HardwareInfo
             gid: GetGpuId(),
             hsn: GetWmiProperty("Win32_DiskDrive", "SerialNumber").First(),
             msn: GetWmiProperty("Win32_BaseBoard", "SerialNumber").First().Trim(),
-            mac: GetPhysicalMacAddresses().FirstOrDefault()
+            mac: GetMacAddress()
         );
 
         return output;
@@ -106,25 +107,17 @@ public class HardwareInfo
         return 0;
     }
 
-    private static IEnumerable<string> GetPhysicalMacAddresses()
+    private static string GetMacAddress()
     {
-        var searcher = new ManagementObjectSearcher($"SELECT * FROM Win32_NetworkAdapter");
-        foreach (var obj in searcher.Get())
-        {
-            var name = obj.GetPropertyValue("Name");
-            if (!(bool)obj.GetPropertyValue("PhysicalAdapter"))
-                continue;
+        var m = NetworkInterface
+            .GetAllNetworkInterfaces()
+            .FirstOrDefault(nic => nic.OperationalStatus == OperationalStatus.Up &&
+                                   nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+            ?.GetPhysicalAddress().ToString();
+        if (m != null)
+            m = "$" + m;
 
-            object speed = obj.GetPropertyValue("Speed") as ulong?;
-            if (speed is null or 0)
-                continue;
-
-            var macAddress = obj.GetPropertyValue("MACAddress") as string;
-            if (macAddress is null)
-                continue;
-
-            yield return "$" + macAddress.Replace(":", "").ToLowerInvariant();
-        }
+        return m;
     }
 
     private static string GetTimeStampString() => DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss:fff");
