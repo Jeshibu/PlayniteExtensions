@@ -1,6 +1,7 @@
 ﻿using Barnite.Scrapers;
 using HtmlAgilityPack;
 using MobyGamesMetadata.Api.V2;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
@@ -10,16 +11,18 @@ using System.Linq;
 
 namespace MobyGamesMetadata.Api;
 
-public class MobyGamesScraper
+public class MobyGamesScraper : IDisposable
 {
-    public MobyGamesScraper(IPlatformUtility platformUtility, IWebDownloader downloader)
+    public MobyGamesScraper(IPlatformUtility platformUtility, IWebViewFactory webViewFactory)
     {
         PlatformUtility = platformUtility;
-        Downloader = downloader;
+        WebViewFactory = webViewFactory;
     }
 
-    public IPlatformUtility PlatformUtility { get; }
-    public IWebDownloader Downloader { get; }
+    private IPlatformUtility PlatformUtility { get; }
+    private IWebViewFactory WebViewFactory { get; }
+    private IWebView _webView;
+    private IWebView WebView => _webView ?? (_webView = WebViewFactory.CreateOffscreenView());
 
     public static string GetSearchUrl(string query, string objectType)
     {
@@ -35,15 +38,15 @@ public class MobyGamesScraper
     public IEnumerable<GameSearchResult> GetGameSearchResults(string query)
     {
         var url = GetSearchUrl(query, "game");
-        var response = Downloader.DownloadString(url);
-        return ParseGameSearchResultHtml(response.ResponseContent);
+        var pageSource = GetPageSource(url);
+        return ParseGameSearchResultHtml(pageSource);
     }
 
     public IEnumerable<GroupSearchResult> GetGroupSearchResults(string query)
     {
         var url = GetSearchUrl(query, "group");
-        var response = Downloader.DownloadString(url);
-        return ParseGroupSearchResultHtml(response.ResponseContent);
+        var pageSource = GetPageSource(url);
+        return ParseGroupSearchResultHtml(pageSource);
     }
 
     public GameDetails GetGameDetails(int id)
@@ -54,8 +57,14 @@ public class MobyGamesScraper
 
     public GameDetails GetGameDetails(string url)
     {
-        var response = Downloader.DownloadString(url);
-        return ParseGameDetailsHtml(response.ResponseContent);
+        var pageSource = GetPageSource(url);
+        return ParseGameDetailsHtml(pageSource);
+    }
+
+    private string GetPageSource(string url)
+    {
+        WebView.NavigateAndWait(url);
+        return WebView.GetPageSource();
     }
 
     private IEnumerable<GameSearchResult> ParseGameSearchResultHtml(string html)
@@ -63,7 +72,7 @@ public class MobyGamesScraper
         var page = new HtmlDocument();
         page.LoadHtml(html);
 
-        var cells = page.DocumentNode.SelectNodes("//table[@class='table mb']/tr/td[last()]");
+        var cells = page.DocumentNode.SelectNodes("//table[@class='table mb']/tbody/tr/td[last()]");
         if (cells == null)
             yield break;
 
@@ -82,7 +91,7 @@ public class MobyGamesScraper
 
             var alternateNames = td.ChildNodes.FirstOrDefault(n => n.InnerText.StartsWith("AKA: "))
                 ?.InnerText.TrimStart("AKA: ")
-                .Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries)
+                .Split([", "], StringSplitOptions.RemoveEmptyEntries)
                 .Select(x => x.Trim());
 
             var sr = new GameSearchResult
@@ -102,7 +111,7 @@ public class MobyGamesScraper
         var page = new HtmlDocument();
         page.LoadHtml(html);
 
-        var cells = page.DocumentNode.SelectNodes("//table[@class='table mb']/tr/td[last()]");
+        var cells = page.DocumentNode.SelectNodes("//table[@class='table mb']/tbody/tr/td[last()]");
         if (cells == null)
             yield break;
 
@@ -123,6 +132,20 @@ public class MobyGamesScraper
     private GameDetails ParseGameDetailsHtml(string html)
     {
         return new MobyGamesHelper(PlatformUtility).ParseGameDetailsHtml(html, parseGenres: false);
+    }
+
+    public void Dispose()
+    {
+        if (_webView == null)
+            return;
+
+        _webView.Dispose();
+        _webView = null;
+    }
+
+    ~MobyGamesScraper()
+    {
+        Dispose();
     }
 }
 

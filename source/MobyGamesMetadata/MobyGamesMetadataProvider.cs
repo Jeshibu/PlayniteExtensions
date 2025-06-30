@@ -3,6 +3,7 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
+using System;
 using System.Collections.Generic;
 
 namespace MobyGamesMetadata;
@@ -54,5 +55,13 @@ public class MobyGamesMetadataProvider : GenericMetadataProvider<GameSearchResul
             default:
                 return true;
         }
+    }
+
+    public override void Dispose()
+    {
+        if(dataSource is IDisposable disposableDataSource)
+            disposableDataSource.Dispose();
+        
+        base.Dispose();
     }
 }

@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Playnite.SDK, Version=6.9.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Runtime, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,5 +54,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MobyGamesMetadata\MobyGamesMetadata.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="GameSearch.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

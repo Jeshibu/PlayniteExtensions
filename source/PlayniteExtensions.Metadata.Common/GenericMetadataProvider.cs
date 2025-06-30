@@ -10,13 +10,13 @@ namespace PlayniteExtensions.Metadata.Common;
 
 public abstract class GenericMetadataProvider<TSearchResult> : OnDemandMetadataProvider where TSearchResult : IGameSearchResult
 {
-    private readonly IGameSearchProvider<TSearchResult> dataSource;
-    private readonly MetadataRequestOptions options;
-    private readonly List<Platform> requestPlatforms;
-    private readonly IPlayniteAPI playniteApi;
-    private readonly IPlatformUtility platformUtility;
-    private ILogger logger = LogManager.GetLogger();
-    private GameDetails foundGame = null;
+    protected readonly IGameSearchProvider<TSearchResult> dataSource;
+    protected readonly MetadataRequestOptions options;
+    protected readonly List<Platform> requestPlatforms;
+    protected readonly IPlayniteAPI playniteApi;
+    protected readonly IPlatformUtility platformUtility;
+    protected ILogger logger = LogManager.GetLogger();
+    protected GameDetails foundGame = null;
     protected abstract string ProviderName { get; }
 
     protected GenericMetadataProvider(IGameSearchProvider<TSearchResult> dataSource, MetadataRequestOptions options, IPlayniteAPI playniteApi, IPlatformUtility platformUtility)

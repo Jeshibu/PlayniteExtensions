@@ -107,7 +107,7 @@ public abstract class BaseAggregateMobyGamesDataCollector
     private IEnumerable<T> MatchPlatforms<T>(Game searchGame, IEnumerable<T> objects, bool onlyMatchingPlatforms) where T : IHasPlatforms
     {
         if (objects == null)
-            return new T[0];
+            return [];
 
         if (!onlyMatchingPlatforms || searchGame?.Platforms == null)
             return objects;
@@ -131,30 +131,22 @@ public abstract class BaseAggregateMobyGamesDataCollector
             gameDetails.Tags.Add(g.name);
             return;
         }
-        List<string> list;
-        switch (genreSettings.ImportTarget)
-        {
-            case PropertyImportTarget.Genres:
-                list = gameDetails.Genres;
-                break;
-            case PropertyImportTarget.Tags:
-                list = gameDetails.Tags;
-                break;
-            case PropertyImportTarget.Series:
-                list = gameDetails.Series;
-                break;
-            case PropertyImportTarget.Features:
-                list = gameDetails.Features;
-                break;
-            case PropertyImportTarget.Ignore:
-            default:
-                return;
-        }
+        var list = GetGenreImportTarget(genreSettings, gameDetails);
+
         if (string.IsNullOrWhiteSpace(genreSettings.NameOverride))
-            list.Add(g.name);
+            list?.Add(g.name);
         else
-            list.Add(genreSettings.NameOverride);
+            list?.Add(genreSettings.NameOverride);
     }
+
+    private static List<string> GetGenreImportTarget(MobyGamesGenreSetting genreSetting, GameDetails gameDetails) => genreSetting?.ImportTarget switch
+    {
+        PropertyImportTarget.Genres => gameDetails.Genres,
+        PropertyImportTarget.Tags => gameDetails.Tags,
+        PropertyImportTarget.Series => gameDetails.Series,
+        PropertyImportTarget.Features => gameDetails.Features,
+        _ => null,
+    };
 
     protected static BasicImage ToIImageData(MobyImage image)
     {

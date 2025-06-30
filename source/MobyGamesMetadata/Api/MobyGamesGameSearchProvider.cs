@@ -4,14 +4,14 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
 namespace MobyGamesMetadata.Api;
 
-
-public class MobyGamesGameSearchProvider : BaseAggregateMobyGamesDataCollector, IGameSearchProvider<GameSearchResult>
+public class MobyGamesGameSearchProvider : BaseAggregateMobyGamesDataCollector, IGameSearchProvider<GameSearchResult>, IDisposable
 {
     private readonly MobyGamesHelper helper;
 
@@ -53,13 +53,11 @@ public class MobyGamesGameSearchProvider : BaseAggregateMobyGamesDataCollector, 
     public IEnumerable<GameSearchResult> Search(string query, CancellationToken cancellationToken = default)
     {
         if (settings.DataSource.HasFlag(DataSource.Scraping))
-        {
             return scraper.GetGameSearchResults(query);
-        }
-        else if (settings.DataSource.HasFlag(DataSource.Api))
-        {
-            return apiClient.SearchGames(query, cancellationToken).Select(x => ToSearchResult(x));
-        }
+
+        if (settings.DataSource.HasFlag(DataSource.Api))
+            return apiClient.SearchGames(query, cancellationToken).Select(ToSearchResult);
+
         return new List<GameSearchResult>();
     }
 
@@ -90,5 +88,10 @@ public class MobyGamesGameSearchProvider : BaseAggregateMobyGamesDataCollector, 
             Description = item.Description,
         };
         return output;
+    }
+
+    public void Dispose()
+    {
+        scraper.Dispose();
     }
 }
