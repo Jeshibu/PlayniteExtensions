@@ -13,7 +13,7 @@ Profiles:
     ImageExtensions: [iso, bin, mdf, nrg, img, gz, cso, chd, m3u]
     StartupExecutable: ^pcsx2x64\.exe$
   - Name: Default QT
-    StartupArguments: '-fullscreen -slowboot -- {ImagePath}'
+    StartupArguments: '-fullscreen -nogui -slowboot -- {ImagePath}'
     Platforms: [sony_playstation2]
     ImageExtensions: [iso, bin, mdf, nrg, img, gz, cso, chd, m3u]
     StartupExecutable: ^pcsx2-qt\.exe$
