@@ -484,7 +484,7 @@
 - Name: Texas Instruments TI-83
   Id: ti_83
   Databases: [TIC-80]
-  Emulators: [bizhawk]
+  Emulators: [bizhawk, retroarch]
   
 - Name: Thomson MO5
   Id: thomson_mo5
