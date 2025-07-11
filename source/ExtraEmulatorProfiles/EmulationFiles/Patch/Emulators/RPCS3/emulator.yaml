@@ -6,7 +6,7 @@ Profiles:
     Platforms: [sony_playstation3]
     ProfileFiles: ['qt\plugins\platforms\qwindows.dll']
     StartupExecutable: ^rpcs3.*\.exe$
-    StartupArguments: '"{ImagePath}"'
+    StartupArguments: '"{ImagePath}" --no-gui'
     ScriptGameImport: true
   - Name: Default QT6
     Platforms: [sony_playstation3]
