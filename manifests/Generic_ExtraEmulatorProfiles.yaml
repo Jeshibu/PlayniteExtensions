@@ -31,3 +31,15 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/extraemulatorprofiles1.4/ExtraEmulatorProfiles_1_4.pext
     Changelog:
     - "Added Eden (Switch emulator) profile"
+  - Version: 1.5
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2025-07-12
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/extraemulatorprofiles1.5/ExtraEmulatorProfiles_1_5.pext
+    Changelog:
+    - "Added no-gui arguments to PCSX2 and RPCS3 profiles (contributed by reset77)"
+    - "Added RetroArch profiles for:"
+    - "Arden (Arduboy)"
+    - "Arduous (Arduboy)"
+    - "Geolith (NeoGeo/Arcade)"
+    - "Numero (TI-83)"
+    - "ScummVM (PC)"
