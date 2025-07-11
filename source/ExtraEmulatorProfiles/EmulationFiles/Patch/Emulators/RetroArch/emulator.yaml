@@ -16,7 +16,19 @@ Profiles:
     ProfileFiles: ['cores\a5200_libretro.dll']
     StartupExecutable: ^retroarch\.exe$
 
-  #TODO: Ardens
+  - Name: Ardens
+    StartupArguments: '-L ".\cores\ardens_libretro.dll" "{ImagePath}"'
+    Platforms: [arduboy]
+    ImageExtensions: [hex, arduboy]
+    ProfileFiles: ['cores\ardens_libretro.dll']
+    StartupExecutable: ^retroarch\.exe$
+
+  - Name: Arduous
+    StartupArguments: '-L ".\cores\arduous_libretro.dll" "{ImagePath}"'
+    Platforms: [arduboy]
+    ImageExtensions: [hex]
+    ProfileFiles: ['cores\arduous_libretro.dll']
+    StartupExecutable: ^retroarch\.exe$
 
   - Name: Atari800
     StartupArguments: '-L ".\cores\atari800_libretro.dll" "{ImagePath}"'

@@ -26,7 +26,7 @@
 
 - Name: Arduboy
   Id: arduboy
-  Emulators: [ralibretro]
+  Emulators: [ralibretro, retroarch]
   
 - Name: Atari 2600
   Id: atari_2600
