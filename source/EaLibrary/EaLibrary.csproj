@@ -17,9 +17,9 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" NoWarn="NU1903" />
     <PackageReference Include="PlayniteSDK" Version="6.4.0" />
-    <PackageReference Include="RestSharp" Version="108.0.2" />
+    <PackageReference Include="RestSharp" Version="108.0.2" NoWarn="NU1902" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
