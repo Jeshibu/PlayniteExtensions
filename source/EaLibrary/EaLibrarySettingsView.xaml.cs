@@ -5,9 +5,9 @@ namespace EaLibrary;
 /// <summary>
 /// Interaction logic for OriginLibrarySettingsView.xaml
 /// </summary>
-public partial class OriginLibrarySettingsView : UserControl
+public partial class EaLibrarySettingsView : UserControl
 {
-    public OriginLibrarySettingsView()
+    public EaLibrarySettingsView()
     {
         InitializeComponent();
     }

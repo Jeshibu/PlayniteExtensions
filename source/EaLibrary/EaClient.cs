@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace EaLibrary;
 
-public class OriginClient : LibraryClient
+public class EaClient : LibraryClient
 {
     private static readonly ILogger logger = LogManager.GetLogger();
 

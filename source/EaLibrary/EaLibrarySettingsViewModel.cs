@@ -4,7 +4,7 @@ using System;
 
 namespace EaLibrary;
 
-public class OriginLibrarySettings
+public class EaLibrarySettings
 {
     public int Version { get; set; }
     public bool ImportInstalledGames { get; set; } = true;
@@ -12,7 +12,7 @@ public class OriginLibrarySettings
     public bool ImportUninstalledGames { get; set; } = false;
 }
 
-public class OriginLibrarySettingsViewModel : PluginSettingsViewModel<OriginLibrarySettings, OriginLibrary>
+public class EaLibrarySettingsViewModel : PluginSettingsViewModel<EaLibrarySettings, EaLibrary>
 {
     public bool IsUserLoggedIn
     {
@@ -34,7 +34,7 @@ public class OriginLibrarySettingsViewModel : PluginSettingsViewModel<OriginLibr
         });
     }
 
-    public OriginLibrarySettingsViewModel(OriginLibrary library, IPlayniteAPI api) : base(library, api)
+    public EaLibrarySettingsViewModel(EaLibrary library, IPlayniteAPI api) : base(library, api)
     {
         var savedSettings = LoadSavedSettings();
         if (savedSettings != null)
@@ -53,7 +53,7 @@ public class OriginLibrarySettingsViewModel : PluginSettingsViewModel<OriginLibr
         }
         else
         {
-            Settings = new OriginLibrarySettings { Version = 1 };
+            Settings = new EaLibrarySettings { Version = 1 };
         }
     }
 

@@ -34,8 +34,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="OriginLibrarySettingsView.xaml.cs">
-      <DependentUpon>OriginLibrarySettingsView.xaml</DependentUpon>
+    <Compile Update="EaLibrarySettingsView.xaml.cs">
+      <DependentUpon>EaLibrarySettingsView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -53,7 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="OriginLibrarySettingsView.xaml">
+    <Page Include="EaLibrarySettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

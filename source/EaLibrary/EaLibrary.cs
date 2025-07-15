@@ -20,7 +20,7 @@ using System.Xml.Serialization;
 namespace EaLibrary;
 
 [LoadPlugin]
-public class OriginLibrary : LibraryPluginBase<OriginLibrarySettingsViewModel>
+public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
 {
     private static readonly ILogger logger = LogManager.GetLogger();
     private readonly string installManifestCacheDir;
@@ -52,16 +52,16 @@ public class OriginLibrary : LibraryPluginBase<OriginLibrarySettingsViewModel>
         }
     }
 
-    public OriginLibrary(IPlayniteAPI api) : base(
+    public EaLibrary(IPlayniteAPI api) : base(
         "EA app",
         Guid.Parse("85DD7072-2F20-4E76-A007-41035E390724"),
         new LibraryPluginProperties { CanShutdownClient = true, HasSettings = true },
-        new OriginClient(),
+        new EaClient(),
         Origin.Icon,
-        (_) => new OriginLibrarySettingsView(),
+        (_) => new EaLibrarySettingsView(),
         api)
     {
-        SettingsViewModel = new OriginLibrarySettingsViewModel(this, PlayniteApi);
+        SettingsViewModel = new EaLibrarySettingsViewModel(this, PlayniteApi);
         installManifestCacheDir = Path.Combine(GetPluginUserDataPath(), "installmanifests");
     }
 
@@ -376,7 +376,7 @@ public class OriginLibrary : LibraryPluginBase<OriginLibrarySettingsViewModel>
                     Source = new MetadataNameProperty("EA app"),
                     GameId = userGame.GameId,
                     IsInstalled = true,
-                    Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") }
+                    Platforms = [new MetadataSpecProperty("pc_windows")]
                 };
 
                 var localData = GetLocalInstallerManifest(userGame.GameId);
@@ -566,7 +566,7 @@ public class OriginLibrary : LibraryPluginBase<OriginLibrarySettingsViewModel>
             yield break;
         }
 
-        yield return new OriginInstallController(args.Game, this);
+        yield return new EaInstallController(args.Game, this);
     }
 
     public override IEnumerable<UninstallController> GetUninstallActions(GetUninstallActionsArgs args)
@@ -576,7 +576,7 @@ public class OriginLibrary : LibraryPluginBase<OriginLibrarySettingsViewModel>
             yield break;
         }
 
-        yield return new OriginUninstallController(args.Game, this);
+        yield return new EaUninstallController(args.Game, this);
     }
 
     public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)
@@ -586,7 +586,7 @@ public class OriginLibrary : LibraryPluginBase<OriginLibrarySettingsViewModel>
             yield break;
         }
 
-        yield return new OriginPlayController(args.Game, this);
+        yield return new EaPlayController(args.Game, this);
     }
 
     public override LibraryMetadataProvider GetMetadataDownloader()

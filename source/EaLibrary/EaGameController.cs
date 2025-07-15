@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace EaLibrary;
 
-public class OriginInstallController : InstallController
+public class EaInstallController : InstallController
 {
     private static readonly ILogger logger = LogManager.GetLogger();
     private CancellationTokenSource watcherToken;
-    private OriginLibrary origin;
+    private EaLibrary origin;
 
-    public OriginInstallController(Game game, OriginLibrary library) : base(game)
+    public EaInstallController(Game game, EaLibrary library) : base(game)
     {
         origin = library;
         Name = "Install using EA app";
@@ -76,13 +76,13 @@ public class OriginInstallController : InstallController
     }
 }
 
-public class OriginUninstallController : UninstallController
+public class EaUninstallController : UninstallController
 {
     private static readonly ILogger logger = LogManager.GetLogger();
     private CancellationTokenSource watcherToken;
-    private OriginLibrary origin;
+    private EaLibrary origin;
 
-    public OriginUninstallController(Game game, OriginLibrary library) : base(game)
+    public EaUninstallController(Game game, EaLibrary library) : base(game)
     {
         origin = library;
         Name = "Uninstall using EA app";
@@ -140,17 +140,17 @@ public class OriginUninstallController : UninstallController
     }
 }
 
-public class OriginPlayController : PlayController
+public class EaPlayController : PlayController
 {
     private static ILogger logger = LogManager.GetLogger();
     private ProcessMonitor procMon;
     private Stopwatch stopWatch;
-    private readonly OriginLibrary originLibrary;
+    private readonly EaLibrary eaLibrary;
 
-    public OriginPlayController(Game game, OriginLibrary library) : base(game)
+    public EaPlayController(Game game, EaLibrary library) : base(game)
     {
         Name = string.Format(ResourceProvider.GetString(LOC.OriginStartUsingClient), "EA app");
-        originLibrary = library;
+        eaLibrary = library;
     }
 
     public override void Dispose()
@@ -166,7 +166,7 @@ public class OriginPlayController : PlayController
             procMon = new ProcessMonitor();
             procMon.TreeDestroyed += ProcMon_TreeDestroyed;
             procMon.TreeStarted += ProcMon_TreeStarted;
-            var startAction = originLibrary.GetGamePlayTaskForGameId(Game.GameId);
+            var startAction = eaLibrary.GetGamePlayTaskForGameId(Game.GameId);
             if (Origin.GetGameUsesEasyAntiCheat(Game.InstallDirectory))
             {
                 var eac = EasyAntiCheat.GetLauncherSettings(Game.InstallDirectory);
