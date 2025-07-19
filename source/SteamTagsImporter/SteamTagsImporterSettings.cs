@@ -68,7 +68,7 @@ public class SteamTagsImporterSettingsViewModel : PluginSettingsViewModel<SteamT
         Settings.BlacklistedTags = new ObservableCollection<string>(Settings.BlacklistedTags.OrderBy(a => a));
     }
 
-    private Dictionary<string, string> _languages = new Dictionary<string, string>
+    private Dictionary<string, string> _languages = new()
     {
         {string.Empty,"Don't specify (results are region dependent)"},
         {"schinese","简体中文 (Simplified Chinese)"},
@@ -111,7 +111,7 @@ public class SteamTagsImporterSettingsViewModel : PluginSettingsViewModel<SteamT
     [DontSerialize]
     public RelayCommand<IList<object>> WhitelistCommand
     {
-        get => new RelayCommand<IList<object>>((selectedItems) =>
+        get => new((selectedItems) =>
         {
             var selectedStrings = selectedItems.Cast<string>().ToList();
             foreach (string str in selectedStrings)
@@ -125,7 +125,7 @@ public class SteamTagsImporterSettingsViewModel : PluginSettingsViewModel<SteamT
     [DontSerialize]
     public RelayCommand<IList<object>> BlacklistCommand
     {
-        get => new RelayCommand<IList<object>>((selectedItems) =>
+        get => new((selectedItems) =>
         {
             var selectedStrings = selectedItems.Cast<string>().ToList();
             foreach (string str in selectedStrings)

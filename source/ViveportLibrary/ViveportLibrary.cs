@@ -99,7 +99,7 @@ public class ViveportLibrary : LibraryPlugin
 
     public static string SplitPascalCase(string pascalCaseStr)
     {
-        StringBuilder output = new StringBuilder();
+        StringBuilder output = new();
         for (int i = 0; i < pascalCaseStr.Length; i++)
         {
             char a = pascalCaseStr[i];

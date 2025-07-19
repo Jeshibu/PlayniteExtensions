@@ -12,7 +12,7 @@ public static class GlobalCommands
 
     public static RelayCommand<object> NavigateUrlCommand
     {
-        get => new RelayCommand<object>((url) =>
+        get => new((url) =>
         {
             try
             {
@@ -27,7 +27,7 @@ public static class GlobalCommands
 
     public static RelayCommand<string> NavigateDirectoryCommand
     {
-        get => new RelayCommand<string>((path) =>
+        get => new((path) =>
         {
             try
             {

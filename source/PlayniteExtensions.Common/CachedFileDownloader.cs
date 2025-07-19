@@ -24,7 +24,7 @@ public class CachedFileDownloader(string onlinePath, string localPath, TimeSpan 
         if (string.IsNullOrWhiteSpace(PackagedFallbackPath))
             return false;
 
-        FileInfo packagedFallbackFile = new FileInfo(PackagedFallbackPath);
+        FileInfo packagedFallbackFile = new(PackagedFallbackPath);
 
         if (!packagedFallbackFile.Exists)
             return false;
@@ -38,7 +38,7 @@ public class CachedFileDownloader(string onlinePath, string localPath, TimeSpan 
         if (string.IsNullOrWhiteSpace(PackagedFallbackPath))
             return false;
 
-        FileInfo packagedFallbackFile = new FileInfo(PackagedFallbackPath);
+        FileInfo packagedFallbackFile = new(PackagedFallbackPath);
 
         if (!packagedFallbackFile.Exists || !f.Exists)
             return false;

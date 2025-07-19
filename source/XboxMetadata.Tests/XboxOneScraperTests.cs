@@ -70,7 +70,7 @@ public class XboxOneScraperTests
     public async Task MicrosoftStorePageParses()
     {
         var content = System.IO.File.ReadAllText("microsoft minesweeper 2019 details.html");
-        XboxOneScraper scraper = new XboxOneScraper(null, new PlatformUtility((string)null));
+        XboxOneScraper scraper = new(null, new PlatformUtility((string)null));
         var settings = new XboxMetadataSettings
         {
             Market = "en-us",

@@ -12,9 +12,9 @@ namespace SteamTagsImporter;
 
 public class SteamAppIdUtility(ICachedFile steamAppList) : ISteamAppIdUtility
 {
-    private readonly SteamIdUtility steamIdUtility = new SteamIdUtility();
+    private readonly SteamIdUtility steamIdUtility = new();
 
-    private static readonly Regex NonLetterOrDigitCharacterRegex = new Regex(@"[^\p{L}\p{Nd}]", RegexOptions.Compiled);
+    private static readonly Regex NonLetterOrDigitCharacterRegex = new(@"[^\p{L}\p{Nd}]", RegexOptions.Compiled);
 
     private Dictionary<string, int> _steamIds;
     private Dictionary<string, int> SteamIdsByTitle
@@ -55,7 +55,7 @@ public class SteamAppIdUtility(ICachedFile steamAppList) : ISteamAppIdUtility
         var jsonStr = File.ReadAllText(tempPath, Encoding.UTF8);
         var jsonContent = Newtonsoft.Json.JsonConvert.DeserializeObject<AppListRoot>(jsonStr);
 
-        Dictionary<string, int> output = new Dictionary<string, int>(StringComparer.InvariantCultureIgnoreCase);
+        Dictionary<string, int> output = new(StringComparer.InvariantCultureIgnoreCase);
         foreach (var app in jsonContent.Applist.Apps)
         {
             var normalizedTitle = NormalizeTitle(app.Name);

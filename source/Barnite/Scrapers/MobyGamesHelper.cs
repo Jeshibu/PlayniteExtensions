@@ -132,7 +132,7 @@ public class MobyGamesHelper(IPlatformUtility platformUtility) : MobyGamesIdUtil
         return data;
     }
 
-    private Regex WhiteSpaceRegex = new Regex(@"\s+", RegexOptions.Compiled);
+    private Regex WhiteSpaceRegex = new(@"\s+", RegexOptions.Compiled);
 
     private string NormalizeHtmlWhitespace(string input) => WhiteSpaceRegex.Replace(input, " ");
 

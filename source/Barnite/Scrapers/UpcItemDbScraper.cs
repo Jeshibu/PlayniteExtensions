@@ -27,7 +27,7 @@ public class UpcItemDbScraper : MetadataScraper
 
 
         var item = response.Items[0];
-        GameMetadata data = new GameMetadata { Description = item.Description, Platforms = [] };
+        GameMetadata data = new() { Description = item.Description, Platforms = [] };
 
         data.Name = Regex.Replace(item.Title, @"(\s*(\((?<platform>[a-z 0-9]+)\)|\bsealed|\bused|\bnew)\.?)+$", (match) =>
         {

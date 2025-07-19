@@ -13,7 +13,7 @@ namespace SteamTagsImporter.BulkImport;
 
 public class SteamSearch(IWebDownloader downloader, SteamTagsImporterSettings settings)
 {
-    private readonly HtmlParser htmlParser = new HtmlParser();
+    private readonly HtmlParser htmlParser = new();
     private readonly string[] NotUserSelectableParams = ["specials", "hidef2p", "category1", "supportedlang", "os"];
 
     private static string GetCategory(string param) => param switch
@@ -127,5 +127,5 @@ public class SteamSearch(IWebDownloader downloader, SteamTagsImporterSettings se
         return null;
     }
 
-    private static Regex QuarterReleaseDate = new Regex(@"^(Q(?<quarter>[1-4]) )?(?<year>[0-9]{4})$", RegexOptions.Compiled);
+    private static Regex QuarterReleaseDate = new(@"^(Q(?<quarter>[1-4]) )?(?<year>[0-9]{4})$", RegexOptions.Compiled);
 }

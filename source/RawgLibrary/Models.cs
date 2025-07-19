@@ -70,10 +70,10 @@ public class PlayniteToRawgRating(int id, string description, Range range)
 public static class RawgMapping
 {
     private static ILogger logger = LogManager.GetLogger();
-    public static Guid DoNotImportId = new Guid("6e18323f-8798-455c-851c-79bf34d83466");
+    public static Guid DoNotImportId = new("6e18323f-8798-455c-851c-79bf34d83466");
 
     //"Not Played", "Played", "Beaten", "Completed", "Playing", "Abandoned", "On Hold", "Plan to Play"
-    public static Dictionary<string, string> RawgCompletionStatuses = new Dictionary<string, string>
+    public static Dictionary<string, string> RawgCompletionStatuses = new()
     {
         { "owned", "Uncategorized" },
         { "playing", "Currently Playing" },
@@ -83,7 +83,7 @@ public static class RawgMapping
         { "toplay", "Wishlist" },
     };
 
-    private static Dictionary<string, string> RawgToPlayniteStatusDefaults = new Dictionary<string, string>
+    private static Dictionary<string, string> RawgToPlayniteStatusDefaults = new()
     {
         { "owned", "Not Played" },
         { "playing", "Playing" },
@@ -93,7 +93,7 @@ public static class RawgMapping
         { "toplay", "Wishlist" }, //there's no default completion status for this, just try and see if Wishlist exists
     };
 
-    public static Dictionary<int, string> RawgRatings = new Dictionary<int, string>
+    public static Dictionary<int, string> RawgRatings = new()
     {
         { 1, "skip" },
         { 3, "meh" },
@@ -101,7 +101,7 @@ public static class RawgMapping
         { 5, "excellent" },
     };
 
-    private static Dictionary<string, string> PlayniteToRawgStatusDefaults = new Dictionary<string, string>
+    private static Dictionary<string, string> PlayniteToRawgStatusDefaults = new()
     {
         { "Not Played", "yet" },
         { "Played", "owned" },

@@ -12,13 +12,13 @@ namespace PlayniteExtensions.Metadata.Common;
 
 public class GameMatchingHelper(IExternalDatabaseIdUtility externalDatabaseIdUtility, int maxDegreeOfParallelism)
 {
-    private ConcurrentDictionary<DbId, IList<Game>> GamesById { get; } = new ConcurrentDictionary<DbId, IList<Game>>();
+    private ConcurrentDictionary<DbId, IList<Game>> GamesById { get; } = new();
 
-    public ConcurrentDictionary<string, string> DeflatedNames { get; } = new ConcurrentDictionary<string, string>();
+    public ConcurrentDictionary<string, string> DeflatedNames { get; } = new();
     public IExternalDatabaseIdUtility ExternalDatabaseIdUtility { get; } = externalDatabaseIdUtility;
     public int MaxDegreeOfParallelism { get; } = maxDegreeOfParallelism;
 
-    private SortableNameConverter sortableNameConverter = new SortableNameConverter(numberLength: 1, removeEditions: true);
+    private SortableNameConverter sortableNameConverter = new(numberLength: 1, removeEditions: true);
 
     public HashSet<string> GetDeflatedNames(IEnumerable<string> names)
     {

@@ -123,7 +123,7 @@ public class SteamTagsImporter : MetadataPlugin
 
                     try
                     {
-                        SteamTagsGetter tagsGetter = new SteamTagsGetter(settings.Settings, appIdUtility, tagScraper);
+                        SteamTagsGetter tagsGetter = new(settings.Settings, appIdUtility, tagScraper);
                         var steamTags = tagsGetter.GetSteamTags(game, out bool newTagsAdded);
                         var tagNames = steamTags.Select(t => tagsGetter.GetFinalTagName(t.Name));
 

@@ -121,9 +121,9 @@ public class GamersGateLibrarySettingsViewModel : PluginSettingsViewModel<Gamers
         UpgradeSettings();
     }
 
-    public RelayCommand<object> LoginCommand => new RelayCommand<object>(a => Login());
+    public RelayCommand<object> LoginCommand => new(a => Login());
 
-    public RelayCommand<object> ClearKnownOrderIdsCommand => new RelayCommand<object>(a => Settings.ClearKnownOrderIds());
+    public RelayCommand<object> ClearKnownOrderIdsCommand => new(a => Settings.ClearKnownOrderIds());
 
     private void Login()
     {

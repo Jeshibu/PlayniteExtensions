@@ -187,7 +187,7 @@ public class PCGamingWikiHTMLParser
     {
         List<string> multiplayerTypes = [];
 
-        Regex pattern = new Regex(@"class=""table-network-multiplayer-body-notes"">(?<mode1>(Co-op|Versus))?(,)?(&#32;)?(?<mode2>(Co-op|Versus))?<br>");
+        Regex pattern = new(@"class=""table-network-multiplayer-body-notes"">(?<mode1>(Co-op|Versus))?(,)?(&#32;)?(?<mode2>(Co-op|Versus))?<br>");
         Match match = pattern.Match(notes.OuterHtml);
 
         if (match.Groups["mode1"].Success)

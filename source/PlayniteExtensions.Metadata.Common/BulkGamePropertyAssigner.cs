@@ -158,7 +158,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
             matchHelper.Prepare(playniteApi.Database.Games, a.CancelToken);
             a.CurrentProgressValue += 10;
 
-            ParallelOptions parallelOptions = new ParallelOptions() { CancellationToken = a.CancelToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
+            ParallelOptions parallelOptions = new() { CancellationToken = a.CancelToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
             var loopResult = Parallel.ForEach(gamesToMatch, parallelOptions, externalGameInfo =>
             {
                 try

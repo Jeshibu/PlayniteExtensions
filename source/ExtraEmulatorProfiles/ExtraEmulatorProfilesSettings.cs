@@ -10,7 +10,7 @@ namespace ExtraEmulatorProfiles;
 
 public class ExtraEmulatorProfilesSettings : ObservableObject
 {
-    private Version installedPatchVersion = new Version(0, 0);
+    private Version installedPatchVersion = new(0, 0);
 
     [DontSerialize]
     public Version InstalledPatchVersion { get => installedPatchVersion; set => SetValue(ref installedPatchVersion, value); }
@@ -52,8 +52,8 @@ public class ExtraEmulatorProfilesSettingsViewModel : PluginSettingsViewModel<Ex
         CopyFiles(OriginalsDirectory, new Version(0, 0));
     }
 
-    public RelayCommand PatchCommand => new RelayCommand(ExecutePatch);
-    public RelayCommand ResetCommand => new RelayCommand(Reset);
+    public RelayCommand PatchCommand => new(ExecutePatch);
+    public RelayCommand ResetCommand => new(Reset);
 
     private void CopyFiles(string baseDirectory, Version version)
     {

@@ -15,7 +15,7 @@ namespace MutualGames.Clients;
 
 public class SteamClient(IWebViewWrapper webView) : IFriendsGamesClient
 {
-    private readonly HtmlParser htmlParser = new HtmlParser();
+    private readonly HtmlParser htmlParser = new();
     private readonly ILogger logger = LogManager.GetLogger();
 
     public string Name { get; } = "Steam";

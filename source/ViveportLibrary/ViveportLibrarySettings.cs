@@ -35,14 +35,14 @@ public class ViveportLibrarySettingsViewModel : PluginSettingsViewModel<Viveport
 
     public RelayCommand<object> SetSubscriptionTagsCommand
     {
-        get => new RelayCommand<object>(a =>
+        get => new(a =>
         {
             Plugin.SetSubscriptionTags();
         });
     }
 
     public Dictionary<CoverPreference, string> CoverPreferenceOptions
-    => new Dictionary<CoverPreference, string>
+    => new()
     {
         { CoverPreference.None, "None" },
         { CoverPreference.VerticalOrSquare, "Vertical (fallback to square)" },

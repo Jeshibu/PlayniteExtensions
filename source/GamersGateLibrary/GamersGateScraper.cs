@@ -10,7 +10,7 @@ namespace GamersGateLibrary;
 
 public class GamersGateScraper
 {
-    private Random random = new Random();
+    private Random random = new();
     private ILogger logger = LogManager.GetLogger();
     public int MinDelay { get; set; }
     public int MaxDelay { get; set; }
@@ -70,7 +70,7 @@ public class GamersGateScraper
             return new List<string>();
         }
 
-        HtmlDocument doc = new HtmlDocument();
+        HtmlDocument doc = new();
         doc.LoadHtml(response);
 
         var pageLinks = doc.DocumentNode.SelectNodes("//div[@class='paginator']//a[@href]");
@@ -111,7 +111,7 @@ public class GamersGateScraper
             return output;
         }
 
-        HtmlDocument doc = new HtmlDocument();
+        HtmlDocument doc = new();
         doc.LoadHtml(response);
 
         var gameNodes = doc.DocumentNode.SelectNodes("//div[@class='content-sub-container order-item-container']");

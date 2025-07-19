@@ -13,7 +13,7 @@ namespace MutualGames;
 
 public sealed class MutualGamesFileImporter(IPlayniteAPI playniteAPI, MutualGamesSettings settings, IPlatformUtility platformUtility) : MutualGamesBaseImporter(playniteAPI, settings)
 {
-    private readonly TitleComparer titleComparer = new TitleComparer();
+    private readonly TitleComparer titleComparer = new();
 
     public void Import()
     {

@@ -5,14 +5,14 @@ public class LocalPCGWClient : PCGWClient
     public LocalPCGWClient() : base(null, null)
     {
         this.options = new TestMetadataRequestOptions();
-        PCGamingWikiMetadataSettings settings = new PCGamingWikiMetadataSettings();
+        PCGamingWikiMetadataSettings settings = new();
         this.gameController = new PCGWGameController(settings);
     }
 
     public LocalPCGWClient(TestMetadataRequestOptions options) : base(null, null)
     {
         this.options = options;
-        PCGamingWikiMetadataSettings settings = new PCGamingWikiMetadataSettings();
+        PCGamingWikiMetadataSettings settings = new();
         this.gameController = new PCGWGameController(settings);
     }
 

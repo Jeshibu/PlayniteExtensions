@@ -159,7 +159,7 @@ public class WebDownloader : IWebDownloader
         }
     }
 
-    private object cookieLock = new object();
+    private object cookieLock = new();
 }
 
 public static class HttpRequestHeaderExtensionMethods

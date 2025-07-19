@@ -11,7 +11,8 @@ public class BigFishMetadataSettings : ObservableObject
     public CommunityScoreType CommunityScoreType { get; set; } = CommunityScoreType.StarRating;
 
     [DontSerialize]
-    public Dictionary<CommunityScoreType, string> CommunityScoreTypes => new Dictionary<CommunityScoreType, string> {
+    public Dictionary<CommunityScoreType, string> CommunityScoreTypes => new()
+    {
         { CommunityScoreType.StarRating, "Average star rating"},
         { CommunityScoreType.PercentageRecommended, "Percentage of recommendations" },
     };

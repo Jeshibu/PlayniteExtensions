@@ -235,7 +235,7 @@ public class itchioBundleTagger : GenericPlugin
         }, new GlobalProgressOptions(Translator.ProgressStart) { Cancelable = true, IsIndeterminate = false });
     }
 
-    private Regex SteamUrlRegex = new Regex(@"https://store\.steampowered\.com/app/(?<id>[0-9]+)", RegexOptions.Compiled);
+    private Regex SteamUrlRegex = new(@"https://store\.steampowered\.com/app/(?<id>[0-9]+)", RegexOptions.Compiled);
     private string GetSteamStoreUrlId(string url)
     {
         if (string.IsNullOrWhiteSpace(url))

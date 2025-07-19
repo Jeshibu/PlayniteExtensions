@@ -44,7 +44,7 @@ public abstract class BaseAggregateMobyGamesDataCollector(MobyGamesApiClient api
 
     protected static string FixCompanyName(string companyName) => companyName.TrimEnd(", the").TrimCompanyForms();
 
-    protected GameSearchResult ToSearchResult(MobyGame mobyGame) => new GameSearchResult(mobyGame);
+    protected GameSearchResult ToSearchResult(MobyGame mobyGame) => new(mobyGame);
 
     protected GameDetails ToGameDetails(MobyGame mobyGame, Game searchGame = null)
     {

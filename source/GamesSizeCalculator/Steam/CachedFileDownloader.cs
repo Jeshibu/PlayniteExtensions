@@ -27,7 +27,7 @@ public class CachedFileDownloader(string onlinePath, string localPath, TimeSpan 
             return false;
         }
 
-        FileInfo packagedFallbackFile = new FileInfo(PackagedFallbackPath);
+        FileInfo packagedFallbackFile = new(PackagedFallbackPath);
 
         if (!packagedFallbackFile.Exists)
         {
@@ -45,7 +45,7 @@ public class CachedFileDownloader(string onlinePath, string localPath, TimeSpan 
             return false;
         }
 
-        FileInfo packagedFallbackFile = new FileInfo(PackagedFallbackPath);
+        FileInfo packagedFallbackFile = new(PackagedFallbackPath);
         if (!packagedFallbackFile.Exists || !f.Exists)
         {
             return false;

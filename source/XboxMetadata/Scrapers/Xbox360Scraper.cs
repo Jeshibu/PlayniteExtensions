@@ -21,7 +21,7 @@ public class Xbox360Scraper(IWebDownloader downloader, IPlatformUtility platform
         //var url = $"https://marketplace.xbox.com/{settings.Market}/Product/-/{id}";
         var response = await downloader.DownloadStringAsync(url, throwExceptionOnErrorResponse: true);
 
-        HtmlParser parser = new HtmlParser();
+        HtmlParser parser = new();
         var doc = await parser.ParseAsync(response.ResponseContent);
 
         var output = new XboxGameDetails() { Url = url };
@@ -78,7 +78,7 @@ public class Xbox360Scraper(IWebDownloader downloader, IPlatformUtility platform
         var url = $"https://marketplace.xbox.com/{settings.Market}/Search?query={escapedQuery}&DownloadType=Game";
         var response = await downloader.DownloadStringAsync(url, throwExceptionOnErrorResponse: true);
 
-        HtmlParser parser = new HtmlParser();
+        HtmlParser parser = new();
         var doc = await parser.ParseAsync(response.ResponseContent);
 
         var output = new List<XboxGameSearchResultItem>();

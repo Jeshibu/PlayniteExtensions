@@ -130,7 +130,7 @@ public class BigFishSearchProvider(IWebDownloader downloader, BigFishMetadataSet
     }
 
     public GenericItemOption<BigFishSearchResultGame> ToGenericItemOption(BigFishSearchResultGame item) =>
-        new GenericItemOption<BigFishSearchResultGame>(item) { Name = item.Name, Description = item.Platform };
+        new(item) { Name = item.Name, Description = item.Platform };
 
     public bool TryGetDetails(Game game, out GameDetails gameDetails, CancellationToken cancellationToken)
     {

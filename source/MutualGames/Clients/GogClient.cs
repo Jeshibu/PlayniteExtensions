@@ -13,7 +13,7 @@ namespace MutualGames.Clients;
 
 public class GogClient(IWebViewWrapper webView) : IFriendsGamesClient
 {
-    private readonly HtmlParser htmlParser = new HtmlParser();
+    private readonly HtmlParser htmlParser = new();
     private readonly ILogger logger = LogManager.GetLogger();
     private AccountInfo accountInfo = null;
 

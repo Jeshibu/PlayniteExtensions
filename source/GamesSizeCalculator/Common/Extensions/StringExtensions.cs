@@ -7,7 +7,7 @@ namespace System;
 
 public static class StringExtensions
 {
-    private static readonly CultureInfo enUSCultInfo = new CultureInfo("en-US", false);
+    private static readonly CultureInfo enUSCultInfo = new("en-US", false);
 
     public static string MD5(this string s)
     {
@@ -250,7 +250,7 @@ public static class StringExtensions
 
         // Prepare string builder for storing the processed string.
         // Note: StringBuilder has a better performance than String by 30-40%.
-        StringBuilder resultStringBuilder = new StringBuilder(str.Length);
+        StringBuilder resultStringBuilder = new(str.Length);
 
         // Analyze the replacement: replace or remove.
         bool isReplacementNullOrEmpty = string.IsNullOrEmpty(@newValue);

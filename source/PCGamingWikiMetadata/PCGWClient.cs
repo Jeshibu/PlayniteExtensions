@@ -66,7 +66,7 @@ public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameC
 
             foreach (dynamic game in searchResults["query"]["search"])
             {
-                PCGWGame g = new PCGWGame(gameController.Settings, (string)game.title, (int)game.pageid);
+                PCGWGame g = new(gameController.Settings, (string)game.title, (int)game.pageid);
                 gameResults.Add(g);
             }
         }
@@ -95,8 +95,8 @@ public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameC
                 logger.Error($"Encountered API error: {error.ToString()}");
             }
 
-            PCGamingWikiJSONParser jsonParser = new PCGamingWikiJSONParser(content, this.gameController);
-            PCGamingWikiHTMLParser parser = new PCGamingWikiHTMLParser(jsonParser.PageHTMLText(), this.gameController);
+            PCGamingWikiJSONParser jsonParser = new(content, this.gameController);
+            PCGamingWikiHTMLParser parser = new(jsonParser.PageHTMLText(), this.gameController);
 
 
             if (parser.CheckPageRedirect(out string redirectPage))

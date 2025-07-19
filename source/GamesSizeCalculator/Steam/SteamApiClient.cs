@@ -33,7 +33,7 @@ public class SteamApiClient : IDisposable, ISteamApiClient
         manager.Subscribe<SteamUser.LoggedOffCallback>(onLoggedOff);
     }
 
-    private AutoResetEvent onConnectedEvent = new AutoResetEvent(false);
+    private AutoResetEvent onConnectedEvent = new(false);
     private EResult onConnectedResult;
     private void onConnected(SteamClient.ConnectedCallback callback)
     {
@@ -41,14 +41,14 @@ public class SteamApiClient : IDisposable, ISteamApiClient
         onConnectedEvent.Set();
     }
 
-    private AutoResetEvent onDisconnectedEvent = new AutoResetEvent(false);
+    private AutoResetEvent onDisconnectedEvent = new(false);
     private void onDisconnected(SteamClient.DisconnectedCallback callback)
     {
         isRunning = false;
         onDisconnectedEvent.Set();
     }
 
-    private AutoResetEvent onLoggedOnEvent = new AutoResetEvent(false);
+    private AutoResetEvent onLoggedOnEvent = new(false);
     private EResult onLoggedOnResult;
 #pragma warning disable CS1998
     private async void onLoggedOn(SteamUser.LoggedOnCallback callback)
@@ -58,7 +58,7 @@ public class SteamApiClient : IDisposable, ISteamApiClient
         onLoggedOnEvent.Set();
     }
 
-    private AutoResetEvent onLoggedOffEvent = new AutoResetEvent(false);
+    private AutoResetEvent onLoggedOffEvent = new(false);
     private void onLoggedOff(SteamUser.LoggedOffCallback callback)
     {
         onLoggedOffEvent.Set();

@@ -35,7 +35,7 @@ public class WebViewWrapper : IWebViewWrapper
 
     private readonly IWebView view;
     private readonly ILogger logger = LogManager.GetLogger();
-    private readonly object requestLifespanLock = new object();
+    private readonly object requestLifespanLock = new();
     public bool Offscreen { get; }
     public int TimeoutSeconds { get; }
     public string TargetUrl { get; private set; }

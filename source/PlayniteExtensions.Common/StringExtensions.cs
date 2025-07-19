@@ -82,7 +82,7 @@ public static class StringExtensions
         return s;
     }
 
-    private static Regex CompanyFormRegex = new Regex(@",?\s+((co[,.\s]+)?ltd|(l\.)?inc|s\.?l|a[./]?s|limited|l\.?l\.?(c|p)|s\.?a(\.?r\.?l)?|s\.?r\.?o|gmbh|ab)\.?\s*$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    private static Regex CompanyFormRegex = new(@",?\s+((co[,.\s]+)?ltd|(l\.)?inc|s\.?l|a[./]?s|limited|l\.?l\.?(c|p)|s\.?a(\.?r\.?l)?|s\.?r\.?o|gmbh|ab)\.?\s*$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
     public static string TrimCompanyForms(this string s)
     {
@@ -95,7 +95,7 @@ public static class StringExtensions
         return splitRegex.Split(s.TrimCompanyForms()).Select(TrimCompanyForms);
     }
 
-    private static Regex deflateRegex = new Regex(@"[^\p{L}\p{N}]+", RegexOptions.Compiled);
+    private static Regex deflateRegex = new(@"[^\p{L}\p{N}]+", RegexOptions.Compiled);
 
     /// <summary>
     /// Remove all characters except letters and numbers. Useful to compare game titles like "S.T.A.L.K.E.R. - Call of Pripyat" and "STALKER: Call of Pripyat"
@@ -159,7 +159,7 @@ public static class StringExtensions
         return str?.IndexOf(value, 0, comparisonType) != -1;
     }
 
-    private static Regex installSizeRegex = new Regex(@"\b(?<number>[0-9.]+)\s+(?<scale>[KMGT]B)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    private static Regex installSizeRegex = new(@"\b(?<number>[0-9.]+)\s+(?<scale>[KMGT]B)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
     public static ulong? ParseInstallSize(this string str, CultureInfo culture = null)
     {
         var match = installSizeRegex.Match(str);

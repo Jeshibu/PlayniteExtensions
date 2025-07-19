@@ -56,7 +56,7 @@ public class BigFishLibrarySettingsViewModel : PluginSettingsViewModel<BigFishLi
         }
     }
 
-    public RelayCommand<object> LoginCommand => new RelayCommand<object>(a => Login());
+    public RelayCommand<object> LoginCommand => new(a => Login());
 
     private void Login()
     {

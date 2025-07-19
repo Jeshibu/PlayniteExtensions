@@ -185,13 +185,13 @@ public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platform
             features.AddRange(summary.AccessibilityCapabilities?.Visual.Select(c => "Accessibility: Visual: " + c));
         }
 
-        Regex multiSpace = new Regex(@"\s{2,}");
+        Regex multiSpace = new(@"\s{2,}");
 
         if (summary.Capabilities != null)
             features.AddRange(summary.Capabilities.Values.Select(c => multiSpace.Replace(c, " ")));
 
         features.Sort();
-        var links = new List<Link> { new Link("Xbox Store", response.ResponseUrl) };
+        var links = new List<Link> { new("Xbox Store", response.ResponseUrl) };
         if (settings.ImportAccessibilityFeatures && summary.AccessibilityCapabilities?.PublisherInformationUri != null)
             links.Add(new Link("Accessibility information", summary.AccessibilityCapabilities.PublisherInformationUri));
 

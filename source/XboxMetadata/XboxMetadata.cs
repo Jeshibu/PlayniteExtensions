@@ -11,7 +11,7 @@ namespace XboxMetadata;
 public class XboxMetadata : MetadataPlugin
 {
     //So for anyone using GongSolutions.Wpf.DragDrop - be aware you have to instantiate something from it before referencing the package in your XAML
-    private GongSolutions.Wpf.DragDrop.DefaultDragHandler dropInfo = new GongSolutions.Wpf.DragDrop.DefaultDragHandler();
+    private GongSolutions.Wpf.DragDrop.DefaultDragHandler dropInfo = new();
     private static readonly ILogger logger = LogManager.GetLogger();
     private readonly IWebDownloader downloader = new WebDownloader();
     private readonly IPlatformUtility platformUtility;

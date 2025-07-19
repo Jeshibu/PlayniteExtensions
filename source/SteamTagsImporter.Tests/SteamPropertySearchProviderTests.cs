@@ -7,8 +7,8 @@ namespace SteamTagsImporter.Tests;
 
 public class SteamPropertySearchProviderTests
 {
-    private FakeWebDownloader downloader = new FakeWebDownloader("https://store.steampowered.com/search/?category2=35&l=english", "search.html");
-    private SteamTagsImporterSettings settings = new SteamTagsImporterSettings { LanguageKey = "english" };
+    private FakeWebDownloader downloader = new("https://store.steampowered.com/search/?category2=35&l=english", "search.html");
+    private SteamTagsImporterSettings settings = new() { LanguageKey = "english" };
     private SteamSearch steamSearch;
     private SteamPropertySearchProvider searchProvider;
 

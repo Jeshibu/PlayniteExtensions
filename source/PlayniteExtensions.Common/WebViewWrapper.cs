@@ -41,8 +41,8 @@ public class OffScreenWebViewWrapper : IWebViewWrapper
 
     private readonly IWebView view;
     private readonly ILogger logger = LogManager.GetLogger();
-    private readonly SemaphoreSlim semaphore = new SemaphoreSlim(1, 1);
-    private AsyncAutoResetEvent loadCompleteEvent = new AsyncAutoResetEvent();
+    private readonly SemaphoreSlim semaphore = new(1, 1);
+    private AsyncAutoResetEvent loadCompleteEvent = new();
 
     public WebViewResponse DownloadPageSource(string url) => DownloadPageSourceAsync(url).Result;
     public WebViewResponse DownloadPageText(string url) => DownloadPageTextAsync(url).Result;
@@ -105,7 +105,7 @@ public class OffScreenWebViewWrapper : IWebViewWrapper
 internal sealed class AsyncAutoResetEvent
 {
     private static readonly Task s_completed = Task.FromResult(true);
-    private readonly Queue<TaskCompletionSource<bool>> _waits = new Queue<TaskCompletionSource<bool>>();
+    private readonly Queue<TaskCompletionSource<bool>> _waits = new();
     private bool _signaled;
 
     public Task WaitAsync()

@@ -66,10 +66,10 @@ public class FriendSourceSettings : ObservableObject
     }
 
     [DontSerialize]
-    public RelayCommand RefreshCommand => new RelayCommand(SetFriends);
+    public RelayCommand RefreshCommand => new(SetFriends);
 
     [DontSerialize]
-    public RelayCommand AuthenticateCommand => new RelayCommand(BackgroundAction(Login));
+    public RelayCommand AuthenticateCommand => new(BackgroundAction(Login));
 
     [DontSerialize]
     public IFriendsGamesClient Client { get; set; }

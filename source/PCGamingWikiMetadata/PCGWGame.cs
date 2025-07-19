@@ -295,7 +295,7 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
 
     public string[] SplitCSVString(string csv)
     {
-        TextFieldParser parser = new TextFieldParser(new StringReader(csv));
+        TextFieldParser parser = new(new StringReader(csv));
         parser.SetDelimiters(",");
         return parser.ReadFields();
     }

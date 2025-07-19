@@ -134,7 +134,7 @@ public class MobyGamesMetadataSettingsViewModel : PluginSettingsViewModel<MobyGa
 
     public RelayCommand<object> GetApiKeyCommand
     {
-        get => new RelayCommand<object>((a) =>
+        get => new((a) =>
         {
             Process.Start(@"https://www.mobygames.com/info/api/");
         });

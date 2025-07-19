@@ -164,7 +164,7 @@ public static partial class FileSystem
             return;
         }
 
-        DirectoryInfo dir = new DirectoryInfo(path);
+        DirectoryInfo dir = new(path);
 
         foreach (FileInfo file in dir.GetFiles())
         {

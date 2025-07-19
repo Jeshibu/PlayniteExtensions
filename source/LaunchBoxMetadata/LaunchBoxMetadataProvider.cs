@@ -19,7 +19,7 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
     private LaunchBoxGame foundGame;
     private string foundGameUrl;
     private List<LaunchBoxImageDetails> foundImages;
-    private TitleComparer titleComparer = new TitleComparer();
+    private TitleComparer titleComparer = new();
 
     public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 
@@ -329,7 +329,7 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
         if (!scaleDown && !resizeToSquare)
             return new MetadataFile(imgDetails.Url);
 
-        using (HttpClient client = new HttpClient())
+        using (HttpClient client = new())
         using (var stream = await client.GetStreamAsync(imgDetails.Url))
         {
             int maxWidth = imgSettings.MaxWidth;
@@ -339,7 +339,7 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
             if (imgSettings.AspectRatio == AspectRatio.AnyExtendToSquare)
                 maxWidth = maxHeight = minSize;
 
-            MagickImage img = new MagickImage(stream);
+            MagickImage img = new(stream);
             if (scaleDown)
             {
                 logger.Info($"Scaling {imgDetails.Url} ({imgDetails.Width}x{imgDetails.Height}) to make it fit {maxWidth}x{maxHeight}");

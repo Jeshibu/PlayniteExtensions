@@ -60,7 +60,7 @@ public sealed class MutualGamesFileExporter(IPlayniteAPI playniteAPI, MutualGame
         var myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         var fileName = Environment.UserName + ".mutualgames";
 
-        SaveFileDialog saveFileDialog1 = new SaveFileDialog
+        SaveFileDialog saveFileDialog1 = new()
         {
             Filter = MutualGamesHelper.ExportFileFilter,
             Title = "Save Mutual Games export file",

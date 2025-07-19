@@ -21,7 +21,7 @@ public class MutualGamesSettingsViewModel : PluginSettingsViewModel<MutualGamesS
             if (gameFeatures != null)
                 return gameFeatures;
 
-            var output = new List<GameFeature> { new GameFeature { Id = Guid.Empty, Name = "None" } };
+            var output = new List<GameFeature> { new() { Id = Guid.Empty, Name = "None" } };
             output.AddRange(PlayniteApi.Database.Features.OrderBy(f => f.Name));
             return gameFeatures = output;
         }

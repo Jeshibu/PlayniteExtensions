@@ -8,7 +8,7 @@ namespace SteamTagsImporter;
 
 public class SteamTagScraper(Func<string, string, SteamTagScraper.Delistable<string>> getSteamStorePageHtmlMethod) : ISteamTagScraper
 {
-    private static readonly Regex TagJsonRegex = new Regex(@"InitAppTagModal\(\s*\d+,\s*(?<json>\[[^\]]+\])", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
+    private static readonly Regex TagJsonRegex = new(@"InitAppTagModal\(\s*\d+,\s*(?<json>\[[^\]]+\])", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
     public Func<string, string, Delistable<string>> GetSteamStorePageHtmlMethod { get; } = getSteamStorePageHtmlMethod;
 

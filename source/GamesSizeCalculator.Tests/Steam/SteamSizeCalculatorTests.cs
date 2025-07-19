@@ -147,7 +147,7 @@ public class SteamSizeCalculatorTests
     //[InlineData(24999u)] //Mass Effect 2 - guide, but only registered as Mass Effect 2 for some reason
     public async Task Serialize(uint appId)
     {
-        SteamApiClient client = new SteamApiClient();
+        SteamApiClient client = new();
         var productInfo = await client.GetProductInfo(appId);
         File.WriteAllText($@"D:\code\{appId}.json", Newtonsoft.Json.JsonConvert.SerializeObject(productInfo));
     }

@@ -10,7 +10,7 @@ namespace Rawg.Common;
 
 public static class RawgMetadataHelper
 {
-    private static Regex yearRegex = new Regex(@" \([0-9]{4}\)$", RegexOptions.Compiled);
+    private static Regex yearRegex = new(@" \([0-9]{4}\)$", RegexOptions.Compiled);
 
     public static string StripYear(string gameName)
     {
@@ -247,7 +247,7 @@ public static class RawgMetadataHelper
         playniteApi.Database.Games.Update(game);
     }
 
-    private static RawgIdUtility IdUtility = new RawgIdUtility();
+    private static RawgIdUtility IdUtility = new();
 
     public static int? GetRawgIdFromGame(Game game)
     {

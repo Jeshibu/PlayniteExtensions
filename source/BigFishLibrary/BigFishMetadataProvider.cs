@@ -64,7 +64,7 @@ public class BigFishMetadataProvider(BigFishRegistryReader registryReader, IGame
             if (File.Exists(registryDetails.Thumbnail))
                 output.Icon = new MetadataFile(registryDetails.Thumbnail);
 
-            string id = new string(registryDetails.Sku.SkipWhile(char.IsLetter).TakeWhile(char.IsNumber).ToArray());
+            string id = new(registryDetails.Sku.SkipWhile(char.IsLetter).TakeWhile(char.IsNumber).ToArray());
             output.Links = [new Link("Big Fish Store Page", $"https://www.bigfishgames.com/games/{id}/")];
         }
         return output;

@@ -64,8 +64,8 @@ public class LaunchBoxWebscraper(IWebDownloader downloader)
         return type;
     }
 
-    private static Regex ImageSizeRegex = new Regex(@"(?<width>\d+) x (?<height>\d+) (?<filetype>[A-Z0-9]+)", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
-    private static Regex RegionRegex = new Regex(@"(\s+(Image|\((?<region>[\w\s]+)\))){1,2}$", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
+    private static Regex ImageSizeRegex = new(@"(?<width>\d+) x (?<height>\d+) (?<filetype>[A-Z0-9]+)", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
+    private static Regex RegionRegex = new(@"(\s+(Image|\((?<region>[\w\s]+)\))){1,2}$", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 }
 
 public class LaunchBoxImageDetails

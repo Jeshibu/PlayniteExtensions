@@ -56,7 +56,7 @@ public class GiantBombMetadataSettingsViewModel : PluginSettingsViewModel<GiantB
 
     public RelayCommand<object> GetApiKeyCommand
     {
-        get => new RelayCommand<object>((a) =>
+        get => new((a) =>
         {
             Process.Start(@"https://www.giantbomb.com/api/");
         });
@@ -69,7 +69,7 @@ public class GiantBombMetadataSettingsViewModel : PluginSettingsViewModel<GiantB
         PropertyImportTarget.Tags,
     };
 
-    public Dictionary<MultiValuedPropertySelectionMode, string> PropertySelectionModes { get; } = new Dictionary<MultiValuedPropertySelectionMode, string>
+    public Dictionary<MultiValuedPropertySelectionMode, string> PropertySelectionModes { get; } = new()
     {
         { MultiValuedPropertySelectionMode.All, "All" },
         { MultiValuedPropertySelectionMode.OnlyShortest, "Only the shortest one" },

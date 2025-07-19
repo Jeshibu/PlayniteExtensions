@@ -88,7 +88,7 @@ public class RawgLibrarySettingsViewModel : PluginSettingsViewModel<RawgLibraryS
 
     public RelayCommand<object> GetApiKeyCommand
     {
-        get => new RelayCommand<object>(a =>
+        get => new(a =>
         {
             Process.Start(@"https://rawg.io/login?forward=developer");
         });
@@ -96,7 +96,7 @@ public class RawgLibrarySettingsViewModel : PluginSettingsViewModel<RawgLibraryS
 
     public RelayCommand<object> LanguageCodesReferenceCommand
     {
-        get => new RelayCommand<object>(a =>
+        get => new(a =>
         {
             Process.Start(@"https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes");
         });
@@ -104,7 +104,7 @@ public class RawgLibrarySettingsViewModel : PluginSettingsViewModel<RawgLibraryS
 
     public RelayCommand<object> LoginCommand
     {
-        get => new RelayCommand<object>(a =>
+        get => new(a =>
         {
             Settings.User = null;
             Settings.UserToken = null;
@@ -164,7 +164,7 @@ public class RawgLibrarySettingsViewModel : PluginSettingsViewModel<RawgLibraryS
 
     public RelayCommand<object> RefreshCollectionsCommand
     {
-        get => new RelayCommand<object>(a =>
+        get => new(a =>
         {
             RefreshCollections();
         });

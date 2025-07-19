@@ -21,10 +21,10 @@ public class PlayAsiaScraper : MetadataScraper
         return "https://www.play-asia.com/search/" + HttpUtility.UrlEncode(barcode);
     }
 
-    private Regex EndBracesTextRegex = new Regex(@"(\s+(\([^)]+\)|\[[^]]+\]))+\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
-    private Regex SetCookieRegex = new Regex(@"\bsetCookie\('(?<c_name>\w+)', '(?<value>[.0-9]+)', (?<expiredays>[0-9]+)\);", RegexOptions.Compiled | RegexOptions.Multiline);
-    private Regex JsRedirectRegex = new Regex(@"^\s*window\.location\s*=\s*'(?<url>.+?)'\s*;\s*$", RegexOptions.Compiled | RegexOptions.Multiline);
-    private Regex JsReloadRegex = new Regex(@"^\s*location\.reload\((true)?\)\s*;\s*$", RegexOptions.Compiled | RegexOptions.Multiline);
+    private Regex EndBracesTextRegex = new(@"(\s+(\([^)]+\)|\[[^]]+\]))+\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+    private Regex SetCookieRegex = new(@"\bsetCookie\('(?<c_name>\w+)', '(?<value>[.0-9]+)', (?<expiredays>[0-9]+)\);", RegexOptions.Compiled | RegexOptions.Multiline);
+    private Regex JsRedirectRegex = new(@"^\s*window\.location\s*=\s*'(?<url>.+?)'\s*;\s*$", RegexOptions.Compiled | RegexOptions.Multiline);
+    private Regex JsReloadRegex = new(@"^\s*location\.reload\((true)?\)\s*;\s*$", RegexOptions.Compiled | RegexOptions.Multiline);
 
     protected override CookieCollection ScrapeJsCookies(string html)
     {

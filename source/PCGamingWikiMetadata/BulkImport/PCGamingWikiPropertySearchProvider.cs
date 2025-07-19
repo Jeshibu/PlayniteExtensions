@@ -13,7 +13,7 @@ namespace PCGamingWikiBulkImport;
 
 public class PCGamingWikiPropertySearchProvider(ICargoQuery cargoQuery, IPlatformUtility platformUtility) : ISearchableDataSourceWithDetails<PCGamingWikiSelectedValues, IEnumerable<GameDetails>>
 {
-    private readonly CargoTables Tables = new CargoTables();
+    private readonly CargoTables Tables = new();
 
     private ILogger Logger { get; }
 

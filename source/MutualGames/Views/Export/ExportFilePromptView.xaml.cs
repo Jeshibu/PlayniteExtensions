@@ -30,7 +30,7 @@ public partial class ExportFilePromptView : UserControl
         Window.Close();
     }
 
-    public Dictionary<ExportGamesMode, string> Modes { get; } = new Dictionary<ExportGamesMode, string>()
+    public Dictionary<ExportGamesMode, string> Modes { get; } = new()
     {
         { ExportGamesMode.Filtered, "Only currently visible (filtered)" },
         { ExportGamesMode.AllExcludeHidden, "All (exclude hidden)" },

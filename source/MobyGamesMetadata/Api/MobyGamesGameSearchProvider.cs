@@ -13,7 +13,7 @@ namespace MobyGamesMetadata.Api;
 
 public class MobyGamesGameSearchProvider(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility) : BaseAggregateMobyGamesDataCollector(apiClient, scraper, settings, platformUtility), IGameSearchProvider<GameSearchResult>, IDisposable
 {
-    private readonly MobyGamesHelper helper = new MobyGamesHelper(platformUtility);
+    private readonly MobyGamesHelper helper = new(platformUtility);
 
     public GameDetails GetDetails(GameSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {

@@ -87,7 +87,7 @@ public class SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtil
             if (orderedDepots.Count == 1 || string.IsNullOrWhiteSpace(key))
                 continue;
 
-            StringBuilder logStringBuilder = new StringBuilder($"Depot group {key}, {orderedDepots.Count} depots: ");
+            StringBuilder logStringBuilder = new($"Depot group {key}, {orderedDepots.Count} depots: ");
             logStringBuilder.AppendLine();
 
             for (int i = 0; i < orderedDepots.Count; i++)
