@@ -111,13 +111,13 @@ public class LaunchBoxMetadataProvider : OnDemandMetadataProvider
         var game = FindGame();
         var id = game.DatabaseID;
         if (id == null)
-            return foundImages = new List<LaunchBoxImageDetails>();
+            return foundImages = [];
 
         var detailsUrl = GetLaunchBoxGamesDatabaseUrl(game);
         if (string.IsNullOrWhiteSpace(detailsUrl))
         {
             logger.Error($"Could not retrieve website ID for database ID {id}");
-            return foundImages = new List<LaunchBoxImageDetails>();
+            return foundImages = [];
         }
 
         return foundImages = scraper.GetGameImageDetails(detailsUrl).ToList();

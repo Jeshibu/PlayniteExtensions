@@ -17,8 +17,8 @@ public class BigFishMetadata : MetadataPlugin
 
     public override Guid Id { get; } = Guid.Parse("dd66a036-f197-4db0-b274-20b253f7ae08");
 
-    public override List<MetadataField> SupportedFields => new List<MetadataField>
-    {
+    public override List<MetadataField> SupportedFields =>
+    [
         MetadataField.Name,
         MetadataField.Description,
         MetadataField.Genres,
@@ -27,7 +27,7 @@ public class BigFishMetadata : MetadataPlugin
         MetadataField.BackgroundImage,
         MetadataField.CommunityScore,
         MetadataField.Links,
-    };
+    ];
 
     public override string Name { get; } = "Big Fish";
 

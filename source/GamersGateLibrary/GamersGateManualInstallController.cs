@@ -32,7 +32,7 @@ public class GamersGateManualInstallController : InstallController
                 "No install/download data found for this game. Please re-run the game import after checking your orders page.",
                 "Install data missing",
                 System.Windows.MessageBoxImage.Error,
-                new List<MessageBoxOption> { openPurchasesOption, new MessageBoxOption("Ok") });
+                [openPurchasesOption, new MessageBoxOption("Ok")]);
 
             if (result == openPurchasesOption)
                 System.Diagnostics.Process.Start("https://www.gamersgate.com/account/orders/");
@@ -45,7 +45,7 @@ public class GamersGateManualInstallController : InstallController
             "Installation for GamersGate games is manual. Downloading is done through your browser and requires being logged in to gamersgate.com. Once you have installed the game, select the install folder here.",
             $"Install {Game.Name}",
             System.Windows.MessageBoxImage.Question,
-            new List<MessageBoxOption> { downloadOption, selectInstallFolderOption, new MessageBoxOption("Cancel", isCancel: true) });
+            [downloadOption, selectInstallFolderOption, new MessageBoxOption("Cancel", isCancel: true)]);
 
         var downloadUrl = $"https://www.gamersgate.com/account/orders/{installData.OrderId}/#{installData.Id}";
 

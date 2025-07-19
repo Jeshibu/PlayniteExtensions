@@ -168,8 +168,8 @@ public class GroupSearchResult : SearchResult { }
 
 public class GameSearchResult : SearchResult, IGameSearchResult
 {
-    public List<string> PlatformNames { get; set; } = new List<string>();
-    public List<string> AlternateTitles { get; set; } = new List<string>();
+    public List<string> PlatformNames { get; set; } = [];
+    public List<string> AlternateTitles { get; set; } = [];
     public string Title { get; set; }
     public ReleaseDate? ReleaseDate { get; set; }
 
@@ -182,7 +182,7 @@ public class GameSearchResult : SearchResult, IGameSearchResult
     public void SetName(string title, IEnumerable<string> alternateTitles)
     {
         Title = title;
-        AlternateTitles = alternateTitles?.ToList() ?? new List<string>();
+        AlternateTitles = alternateTitles?.ToList() ?? [];
         if (AlternateTitles.Any())
             Name = $"{Title} (AKA {string.Join("/", AlternateTitles)})";
         else

@@ -288,7 +288,7 @@ public class PlatformUtility : IPlatformUtility
     public IEnumerable<MetadataProperty> GetPlatforms(string platformName, bool strict)
     {
         if (string.IsNullOrWhiteSpace(platformName))
-            return new List<MetadataProperty>();
+            return [];
 
         string sanitizedPlatformName = TrimInput.Replace(platformName, string.Empty);
         string companyTrimmedPlatformName = TrimCompanyName.Replace(sanitizedPlatformName, string.Empty);
@@ -304,9 +304,9 @@ public class PlatformUtility : IPlatformUtility
             return [new MetadataSpecProperty(platformName)];
 
         if (strict)
-            return new List<MetadataProperty>();
+            return [];
         else
-            return new List<MetadataProperty> { new MetadataNameProperty(sanitizedPlatformName) };
+            return [new MetadataNameProperty(sanitizedPlatformName)];
     }
 
     public IEnumerable<string> GetPlatformNames()

@@ -37,7 +37,7 @@ public static class PlayniteUtilities
     {
         if (game.Features == null)
         {
-            game.FeatureIds = new List<Guid> { feature.Id };
+            game.FeatureIds = [feature.Id];
             PlayniteApi.Database.Games.Update(game);
             return true;
         }
@@ -133,7 +133,7 @@ public static class PlayniteUtilities
     {
         if (game.Tags == null)
         {
-            game.TagIds = new List<Guid> { tag.Id };
+            game.TagIds = [tag.Id];
             PlayniteApi.Database.Games.Update(game);
             return true;
         }

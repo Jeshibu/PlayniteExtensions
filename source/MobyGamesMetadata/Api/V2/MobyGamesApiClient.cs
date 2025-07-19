@@ -150,7 +150,7 @@ public class MobyGamesApiClient
         var result = Execute<MobyGamesResult>(request, cancellationToken);
 
         if (cancellationToken.IsCancellationRequested)
-            return new List<MobyGame>();
+            return [];
 
         return result.games;
     }

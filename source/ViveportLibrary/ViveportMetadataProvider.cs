@@ -51,7 +51,7 @@ public class ViveportMetadataProvider : LibraryMetadataProvider
             AgeRatings = GetCustomAttributeMetadataProperties(new[] { appDetails.ContentRating.ToString() }, customAttributes, "content_rating", opt => opt.AdminLabel),
             ReleaseDate = new ReleaseDate(GetDateFromMilliseconds(appDetails.ReleaseTimeMilliseconds)),
             Version = appDetails.VersionName,
-            Links = new List<Link> { new Link("Viveport Store Page", $"https://www.viveport.com/apps/{game.GameId}") },
+            Links = [new Link("Viveport Store Page", $"https://www.viveport.com/apps/{game.GameId}")],
         };
 
         var coverUrl = GetCoverUrl(appDetails);
@@ -60,17 +60,17 @@ public class ViveportMetadataProvider : LibraryMetadataProvider
 
         var developer = appDetails.DeveloperDisplayName?.TrimCompanyForms();
         if (!string.IsNullOrWhiteSpace(developer))
-            metadata.Developers = new HashSet<MetadataProperty> { new MetadataNameProperty(developer.TrimCompanyForms()) };
+            metadata.Developers = [new MetadataNameProperty(developer.TrimCompanyForms())];
 
         var publisher = appDetails.Publisher?.TrimCompanyForms();
         if (!string.IsNullOrWhiteSpace(publisher))
-            metadata.Publishers = new HashSet<MetadataProperty> { new MetadataNameProperty(publisher.TrimCompanyForms()) };
+            metadata.Publishers = [new MetadataNameProperty(publisher.TrimCompanyForms())];
 
         #region platforms
         if (settings.ImportHeadsetsAsPlatforms)
             metadata.Platforms = GetCustomAttributeMetadataProperties(appDetails.HardwareMatrix?.Headsets, customAttributes, "headsets", opt => opt.AdminLabel);
         else
-            metadata.Platforms = new HashSet<MetadataProperty>();
+            metadata.Platforms = [];
 
         if (appDetails.SystemRequirements?.OS != null)
         {

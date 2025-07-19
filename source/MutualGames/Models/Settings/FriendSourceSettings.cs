@@ -15,7 +15,7 @@ public class FriendSourceSettings : ObservableObject
 
     public FriendSource Source { get; set; }
 
-    public ObservableCollection<FriendAccountInfo> Friends { get; set; } = new ObservableCollection<FriendAccountInfo>();
+    public ObservableCollection<FriendAccountInfo> Friends { get; set; } = [];
 
     private Action BackgroundAction(Action action)
     {

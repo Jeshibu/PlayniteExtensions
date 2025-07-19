@@ -46,14 +46,14 @@ public class RFGenerationScraper : DuckDuckGoScraper
                         data.Platforms = PlatformUtility.GetPlatforms(value).ToHashSet();
                         break;
                     case "Region:":
-                        string[] regions = value.Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                        string[] regions = value.Split(['\n'], StringSplitOptions.RemoveEmptyEntries);
                         data.Regions = regions.Select(r => new MetadataNameProperty(r.Trim())).ToHashSet<MetadataProperty>();
                         break;
                     case "Developer:":
-                        data.Developers = new HashSet<MetadataProperty> { new MetadataNameProperty(value) };
+                        data.Developers = [new MetadataNameProperty(value)];
                         break;
                     case "Publisher:":
-                        data.Publishers = new HashSet<MetadataProperty> { new MetadataNameProperty(value) };
+                        data.Publishers = [new MetadataNameProperty(value)];
                         break;
                     case "Year:":
                         if (int.TryParse(value, out int year))

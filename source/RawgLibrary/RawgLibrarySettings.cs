@@ -14,7 +14,7 @@ public class RawgLibrarySettings : RawgBaseSettings
 {
     private string userToken;
     private bool importUserLibrary = true;
-    private List<RawgCollectionSetting> collections = new List<RawgCollectionSetting>();
+    private List<RawgCollectionSetting> collections = [];
     private Dictionary<string, Guid?> rawgToPlayniteStatuses;
     private Dictionary<int, int> rawgToPlayniteRatings;
     private Dictionary<Guid, string> playniteToRawgStatuses;

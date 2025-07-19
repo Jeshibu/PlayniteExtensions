@@ -11,8 +11,8 @@ namespace TvTropesMetadata.Scraping;
 
 public class TropeScraper : BaseScraper
 {
-    public List<string> SubcategoryWhitelist = new List<string> { "VideoGames", "VisualNovels" };
-    public List<string> FolderLabelWhitelist = new List<string> { "Video Game", "Videogame", "Visual Novel" };
+    public List<string> SubcategoryWhitelist = ["VideoGames", "VisualNovels"];
+    public List<string> FolderLabelWhitelist = ["Video Game", "Videogame", "Visual Novel"];
 
     public TropeScraper(IWebDownloader downloader) : base(downloader) { }
 
@@ -143,7 +143,7 @@ public class TropeScraper : BaseScraper
                 var url = GetAbsoluteUrl(a.GetAttribute("href"));
                 work.Urls.Add(url);
                 var gameUrlName = GetWikiPathSegments(url).Last();
-                AddWork(new TvTropesWork { Title = ReverseEngineerGameNameFromUrlSegment(gameUrlName), Urls = new List<string> { url } });
+                AddWork(new TvTropesWork { Title = ReverseEngineerGameNameFromUrlSegment(gameUrlName), Urls = [url] });
             }
         }
         return output;
@@ -182,7 +182,7 @@ public class TropeScraper : BaseScraper
 public class ParsedTropePage
 {
     public string Title { get; set; }
-    public List<TropePageListItem> Items { get; set; } = new List<TropePageListItem>();
+    public List<TropePageListItem> Items { get; set; } = [];
     public override string ToString() => Title;
 }
 
@@ -190,7 +190,7 @@ public class TropePageListItem
 {
     public string Text { get; set; }
 
-    public List<TvTropesWork> Works { get; set; } = new List<TvTropesWork>();
+    public List<TvTropesWork> Works { get; set; } = [];
 
     public override string ToString() => Text;
 }
@@ -198,6 +198,6 @@ public class TropePageListItem
 public class TvTropesWork
 {
     public string Title { get; set; }
-    public List<string> Urls { set; get; } = new List<string>();
+    public List<string> Urls { set; get; } = [];
     public override string ToString() => Title;
 }

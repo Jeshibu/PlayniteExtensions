@@ -89,7 +89,7 @@ public class SteamSearch
         {
             var gd = new GameDetails
             {
-                Names = new List<string> { a.QuerySelector(".title").TextContent.HtmlDecode() },
+                Names = [a.QuerySelector(".title").TextContent.HtmlDecode()],
                 Url = a.GetAttribute("href").Split('?').First(),
                 ReleaseDate = ParseReleaseDate(a.QuerySelector("search_released")?.TextContent.HtmlDecode())
             };

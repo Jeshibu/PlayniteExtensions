@@ -22,7 +22,7 @@ public class MobyGamesMetadataSettings : BulkImportPluginSettings
     }
     public bool ShowTopPanelButton { get; set; } = true;
 
-    public ObservableCollection<MobyGamesGenreSetting> Genres { get; set; } = new ObservableCollection<MobyGamesGenreSetting>();
+    public ObservableCollection<MobyGamesGenreSetting> Genres { get; set; } = [];
 
     public MobyGamesImageSourceSettings Cover { get; set; } = new MobyGamesImageSourceSettings
     {

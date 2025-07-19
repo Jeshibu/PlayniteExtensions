@@ -43,7 +43,7 @@ public class XboxOneScraper : BaseXboxScraper
     {
         //turns out the Detail-[number]-toggle-target IDs vary, so can't be used
 
-        HtmlParser parser = new HtmlParser();
+        var parser = new HtmlParser();
         var doc = await parser.ParseAsync(response.ResponseContent);
 
         var output = new XboxGameDetails() { Url = response.ResponseUrl };
@@ -303,7 +303,7 @@ public class XboxOneScraper : BaseXboxScraper
     private List<ImageData> GetImages(XboxGameDetailsProductSummary summary, XboxImageSourceSettings imgSettings)
     {
         if (summary.Images == null)
-            return new List<ImageData>(); ;
+            return [];
 
         var potentialImages = new List<XboxImageDetails>();
         foreach (var fieldSetting in imgSettings.Fields)

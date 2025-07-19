@@ -242,9 +242,9 @@ public class GamersGateScraper
 
 public class LibraryScrapeResults
 {
-    public HashSet<int> OrderIds { get; } = new HashSet<int>();
+    public HashSet<int> OrderIds { get; } = [];
 
-    public List<GameDetails> Games { get; } = new List<GameDetails>();
+    public List<GameDetails> Games { get; } = [];
 }
 
 public class GameDetails
@@ -256,5 +256,5 @@ public class GameDetails
     public string DRM { get; set; }
     public string Key { get; set; }
     public bool UnrevealedKey { get; set; }
-    public List<DownloadUrl> DownloadUrls { get; set; } = new List<DownloadUrl>();
+    public List<DownloadUrl> DownloadUrls { get; set; } = [];
 }

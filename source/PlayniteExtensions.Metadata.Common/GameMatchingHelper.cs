@@ -65,7 +65,7 @@ public class GameMatchingHelper
 
     private IList<Game> AddGameById(DbId key, Game game)
     {
-        return GamesById.AddOrUpdate(key, new List<Game> { game }, (DbId _, IList<Game> existing) =>
+        return GamesById.AddOrUpdate(key, [game], (DbId _, IList<Game> existing) =>
         {
             if (!existing.Contains(game))
                 existing.Add(game);
@@ -80,7 +80,7 @@ public class GameMatchingHelper
     {
         if (string.IsNullOrWhiteSpace(key.Id))
         {
-            games = new List<Game>();
+            games = [];
             return false;
         }
 
@@ -91,7 +91,7 @@ public class GameMatchingHelper
     {
         if (string.IsNullOrWhiteSpace(name))
         {
-            games = new List<Game>();
+            games = [];
             return false;
         }
 

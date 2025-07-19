@@ -14,10 +14,10 @@ public class MatchOnUrlEscapedSlugsTest
     {
         var libraryGame = new Game("Vivisector")
         {
-            Links = new ObservableCollection<Link>
-            {
+            Links =
+            [
                 new Link("PCGamingWiki", "https://www.pcgamingwiki.com/wiki/Vivisector%20-%20Beast%20Within")
-            }
+            ]
         };
 
         var matchHelper = new GameMatchingHelper(new PCGamingWikiIdUtility(), 1);

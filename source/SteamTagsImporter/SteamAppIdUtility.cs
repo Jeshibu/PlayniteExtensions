@@ -80,7 +80,7 @@ public class SteamAppIdUtility : ISteamAppIdUtility
 
     private class AppList
     {
-        public List<SteamApp> Apps { get; set; } = new List<SteamApp>();
+        public List<SteamApp> Apps { get; set; } = [];
     }
 
     private class SteamApp

@@ -26,7 +26,7 @@ public class SearchResultTests
     {
         string html = File.ReadAllText("GameSearch.html");
         var webViewFactory = new FakeWebViewFactory(html);
-        MobyGamesScraper scraper = new(new PlatformUtility(new Dictionary<string, string[]>()), webViewFactory);
+        MobyGamesScraper scraper = new(new PlatformUtility([]), webViewFactory);
         var searchResults = scraper.GetGameSearchResults("Phantom Breaker Omnia").ToList();
         Assert.NotEmpty(searchResults);
     }

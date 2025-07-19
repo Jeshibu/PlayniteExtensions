@@ -29,23 +29,23 @@ public class XboxGameSearchResultItem
     public string Id { get; set; }
     public string Title { get; set; }
     public DateTime? ReleaseDate { get; set; }
-    public List<MetadataProperty> Platforms { get; set; } = new List<MetadataProperty>();
+    public List<MetadataProperty> Platforms { get; set; } = [];
     public string Url { get; set; }
 }
 
 public class XboxGameDetails : XboxGameSearchResultItem
 {
     public string Description { get; set; }
-    public List<string> Developers { get; set; } = new List<string>();
-    public List<string> Publishers { get; set; } = new List<string>();
+    public List<string> Developers { get; set; } = [];
+    public List<string> Publishers { get; set; } = [];
     public int? CommunityScore { get; set; }
     public ulong? InstallSize { get; set; }
-    public List<string> Genres { get; set; } = new List<string>();
-    public List<string> Features { get; set; } = new List<string>();
-    public List<ImageData> Covers { get; set; } = new List<ImageData>();
-    public List<ImageData> Backgrounds { get; set; } = new List<ImageData>();
+    public List<string> Genres { get; set; } = [];
+    public List<string> Features { get; set; } = [];
+    public List<ImageData> Covers { get; set; } = [];
+    public List<ImageData> Backgrounds { get; set; } = [];
     public string AgeRating { get; set; }
-    public List<Link> Links { get; set; } = new List<Link>();
+    public List<Link> Links { get; set; } = [];
 }
 
 public class ImageData

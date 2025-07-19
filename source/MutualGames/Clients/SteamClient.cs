@@ -118,7 +118,7 @@ public class SteamClient : IFriendsGamesClient
 
     private class ProfileDataRoot
     {
-        public List<SteamGame> rgGames { get; set; } = new List<SteamGame>();
+        public List<SteamGame> rgGames { get; set; } = [];
     }
 
     private class SteamGame

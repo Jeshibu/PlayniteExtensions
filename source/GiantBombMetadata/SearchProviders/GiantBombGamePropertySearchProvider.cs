@@ -35,7 +35,7 @@ public class GiantBombGamePropertySearchProvider : ISearchableDataSourceWithDeta
                 $"{searchResult.ResourceType}/{searchResult.Guid}",
                 progressArgs?.CancelToken ?? new CancellationToken());
 
-            return result?.Games.Select(g => new GameDetails { Names = new List<string> { g.Name }, Url = g.SiteDetailUrl }) ?? new GameDetails[0];
+            return result?.Games.Select(g => new GameDetails { Names = [g.Name], Url = g.SiteDetailUrl }) ?? new GameDetails[0];
         }
     }
 

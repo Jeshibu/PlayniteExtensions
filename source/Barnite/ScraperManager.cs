@@ -16,7 +16,7 @@ public class ScraperManager
 
     public IPlatformUtility PlatformUtility { get; }
     public IWebDownloader Downloader { get; }
-    public List<MetadataScraper> Scrapers { get; } = new List<MetadataScraper>();
+    public List<MetadataScraper> Scrapers { get; } = [];
 
     public void Add<T>() where T : MetadataScraper, new()
     {

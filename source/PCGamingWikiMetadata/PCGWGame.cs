@@ -32,13 +32,13 @@ public class PCGWGame : GenericItemOption
     public PCGWGame(PCGamingWikiMetadataSettings settings)
     {
         this.settings = settings;
-        this.Links = new List<Link>();
-        this.Genres = new List<MetadataProperty>();
-        this.Features = new List<MetadataProperty>();
-        this.Series = new List<MetadataProperty>();
-        this.Developers = new List<MetadataProperty>();
-        this.Publishers = new List<MetadataProperty>();
-        this.Tags = new List<MetadataProperty>();
+        this.Links = [];
+        this.Genres = [];
+        this.Features = [];
+        this.Series = [];
+        this.Developers = [];
+        this.Publishers = [];
+        this.Tags = [];
         this.ReleaseDates = new Dictionary<string, ReleaseDate?>();
         this.reception = new Dictionary<string, int?>();
     }

@@ -65,7 +65,7 @@ public class SteamAppIdUtility : ISteamAppIdUtility
     {
         var jsonStr = SteamAppList.GetFileContents();
         var jsonContent = Serialization.FromJson<SteamAppListRoot>(jsonStr);
-        Dictionary<string, int> output = new Dictionary<string, int>();
+        Dictionary<string, int> output = [];
         foreach (var app in jsonContent.Applist.Apps)
         {
             var normalizedTitle = NormalizeTitle(app.Name);

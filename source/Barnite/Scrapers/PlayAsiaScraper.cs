@@ -66,7 +66,7 @@ public class PlayAsiaScraper : MetadataScraper
             if (match.Success)
             {
                 string platformMatch = match.Groups["platform"].Value;
-                var platformNames = platformMatch.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).Select(StringExtensions.HtmlDecode);
+                var platformNames = platformMatch.Split([", "], StringSplitOptions.RemoveEmptyEntries).Select(StringExtensions.HtmlDecode);
                 game.Platforms = new HashSet<MetadataProperty>(platformNames.SelectMany(PlatformUtility.GetPlatforms));
             }
         }

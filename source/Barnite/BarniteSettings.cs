@@ -15,7 +15,7 @@ public class BarniteSettings : ObservableObject
 
     public BarniteSettings()
     {
-        scrapers = new ObservableCollection<ScraperSettings>();
+        scrapers = [];
     }
 }
 

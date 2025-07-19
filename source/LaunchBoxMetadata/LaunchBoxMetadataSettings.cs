@@ -18,7 +18,7 @@ public class LaunchBoxMetadataSettings : ObservableObject
     public LaunchBoxImageSourceSettings Icon { get; set; }
     public LaunchBoxImageSourceSettings Cover { get; set; }
     public LaunchBoxImageSourceSettings Background { get; set; }
-    public ObservableCollection<RegionSetting> Regions { get; set; } = new ObservableCollection<RegionSetting>();
+    public ObservableCollection<RegionSetting> Regions { get; set; } = [];
     public bool PreferGameRegion { get; set; } = true;
 
     public LaunchBoxMetadataSettings()
@@ -52,7 +52,7 @@ public class LaunchBoxMetadataSettings : ObservableObject
 
 public class LaunchBoxImageSourceSettings
 {
-    public ObservableCollection<CheckboxSetting> ImageTypes { get; set; } = new ObservableCollection<CheckboxSetting>();
+    public ObservableCollection<CheckboxSetting> ImageTypes { get; set; } = [];
     public int MaxHeight { get; set; }
     public int MaxWidth { get; set; }
     public int MinHeight { get; set; }
@@ -142,7 +142,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
         catch (Exception ex)
         {
             Logger.Error(ex, "Error initializing database lists");
-            InitializeRegionList(new List<string> { null });
+            InitializeRegionList([null]);
         }
     }
 

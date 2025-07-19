@@ -10,11 +10,11 @@ public class PathReplacerTests
         return new Game("Test Game")
         {
             InstallDirectory = @"D:\Emulation\ROMs\PS2\",
-            Roms = new System.Collections.ObjectModel.ObservableCollection<GameRom>
-            {
+            Roms =
+            [
                 new GameRom("1", @"D:\Emulation\ROMs\PS2\disc1.bin"),
                 new GameRom("2", @"D:/Emulation/ROMs/PS2/disc2.bin"),
-            }
+            ]
         };
     }
 

@@ -17,8 +17,8 @@ public class IgnMetadata : MetadataPlugin
 
     public override List<MetadataField> SupportedFields => Fields;
 
-    internal static List<MetadataField> Fields = new List<MetadataField>
-    {
+    internal static List<MetadataField> Fields =
+    [
         MetadataField.CoverImage,
         MetadataField.Name,
         MetadataField.Developers,
@@ -31,7 +31,7 @@ public class IgnMetadata : MetadataPlugin
         MetadataField.ReleaseDate,
         MetadataField.Platform,
         MetadataField.Links,
-    };
+    ];
 
     public override string Name => "IGN";
 

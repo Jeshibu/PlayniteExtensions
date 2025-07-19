@@ -132,7 +132,7 @@ public class MobyGamesMetadata : MetadataPlugin
                 break;
             case DataSource.ApiAndScraping:
                 chosenOption = PlayniteApi.Dialogs.ShowMessage("Assign one of the following to all your matching games:", "Bulk property import",
-                    System.Windows.MessageBoxImage.Question, new List<MessageBoxOption> { genreOption, groupOption, cancelOption });
+                    System.Windows.MessageBoxImage.Question, [genreOption, groupOption, cancelOption]);
                 break;
             default:
                 return;

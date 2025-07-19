@@ -5,7 +5,7 @@ namespace PCGamingWikiBulkImport.DataCollection;
 public class CargoResultRoot<T>
 {
     public ResultLimits Limits { get; set; }
-    public List<CargoTitle<T>> CargoQuery { get; set; } = new List<CargoTitle<T>>();
+    public List<CargoTitle<T>> CargoQuery { get; set; } = [];
 }
 
 public class ResultLimits

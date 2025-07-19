@@ -10,7 +10,7 @@ namespace MutualGames.Models.Settings;
 
 public class FriendIdentities : IDropTarget
 {
-    public ObservableCollection<FriendIdentity> Items { get; set; } = new ObservableCollection<FriendIdentity>();
+    public ObservableCollection<FriendIdentity> Items { get; set; } = [];
 
     [DontSerialize]
     public RelayCommand<FriendIdentity> RemoveCommand { get; }
@@ -63,8 +63,8 @@ public class FriendIdentities : IDropTarget
             return enumerable.ToList();
 
         if (dropInfo.Data is FriendAccountInfo fi)
-            return new List<FriendAccountInfo> { fi };
+            return [fi];
 
-        return new List<FriendAccountInfo>();
+        return [];
     }
 }

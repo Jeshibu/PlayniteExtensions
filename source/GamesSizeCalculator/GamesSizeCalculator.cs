@@ -21,7 +21,7 @@ public class GamesSizeCalculator : MetadataPlugin
 
     public override string Name { get; } = "Games Size Calculator";
 
-    public override List<MetadataField> SupportedFields { get; } = new List<MetadataField> { MetadataField.InstallSize };
+    public override List<MetadataField> SupportedFields { get; } = [MetadataField.InstallSize];
 
     public GamesSizeCalculator(IPlayniteAPI api) : base(api)
     {
@@ -53,7 +53,7 @@ public class GamesSizeCalculator : MetadataPlugin
         return new SteamAppIdUtility(appListCache);
     }
 
-    private List<ISizeCalculator> sizeCalculators { get; } = new List<ISizeCalculator>();
+    private List<ISizeCalculator> sizeCalculators { get; } = [];
     private SteamApiClient steamApiClient;
 
     private SteamApiClient SteamApiClient

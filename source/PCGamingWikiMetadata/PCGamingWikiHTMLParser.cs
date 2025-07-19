@@ -76,7 +76,7 @@ public class PCGamingWikiHTMLParser
             return table.SelectNodes($"//tr[@class='{rowClass}']");
         }
 
-        return new List<HtmlNode>();
+        return [];
     }
 
     public bool CheckPageRedirect(out string redirectPage)
@@ -185,7 +185,7 @@ public class PCGamingWikiHTMLParser
 
     private IList<string> ParseMultiplayerNotes(HtmlNode notes)
     {
-        List<string> multiplayerTypes = new List<string>();
+        List<string> multiplayerTypes = [];
 
         Regex pattern = new Regex(@"class=""table-network-multiplayer-body-notes"">(?<mode1>(Co-op|Versus))?(,)?(&#32;)?(?<mode2>(Co-op|Versus))?<br>");
         Match match = pattern.Match(notes.OuterHtml);

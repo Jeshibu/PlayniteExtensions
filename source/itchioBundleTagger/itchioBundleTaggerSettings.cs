@@ -22,9 +22,9 @@ public class itchioBundleTaggerSettings
 
     public bool ShowInContextMenu { get; set; } = false;
 
-    public Dictionary<string, Guid> TagIds { get; set; } = new Dictionary<string, Guid>();
+    public Dictionary<string, Guid> TagIds { get; set; } = [];
 
-    public List<BundleCheckbox> BundleSettings { get; set; } = new List<BundleCheckbox>();
+    public List<BundleCheckbox> BundleSettings { get; set; } = [];
 
     public int SettingsVersion = 0;
 }

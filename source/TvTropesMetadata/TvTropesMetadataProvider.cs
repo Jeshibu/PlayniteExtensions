@@ -9,14 +9,14 @@ namespace TvTropesMetadata;
 
 public class TvTropesMetadataProvider : GenericMetadataProvider<TvTropesSearchResult>
 {
-    public static List<MetadataField> Fields = new List<MetadataField>
-    {
+    public static List<MetadataField> Fields =
+    [
         MetadataField.Name,
         MetadataField.Description,
         MetadataField.CoverImage,
         MetadataField.Tags,
         MetadataField.Series,
-    };
+    ];
 
     public TvTropesMetadataProvider(IGameSearchProvider<TvTropesSearchResult> dataSource, MetadataRequestOptions options, IPlayniteAPI playniteApi, IPlatformUtility platformUtility)
         : base(dataSource, options, playniteApi, platformUtility)

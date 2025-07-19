@@ -15,13 +15,13 @@ public class GamesSizeCalculatorSettings : ObservableObject
     public bool IncludeDlcInSteamCalculation { get; set; }
     public bool IncludeOptionalInSteamCalculation { get; set; }
 
-    private ObservableCollection<string> depotRegionWords = new ObservableCollection<string> { "eu", "europe", "row", "en", "english", "ww" };
+    private ObservableCollection<string> depotRegionWords = ["eu", "europe", "row", "en", "english", "ww"];
 
     [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public ObservableCollection<string> DepotRegionWords { get => depotRegionWords; set => SetValue(ref depotRegionWords, DeduplicateStrings(value)); }
 
-    private ObservableCollection<string> depotRegionWordsBlacklist = new ObservableCollection<string>
-    {
+    private ObservableCollection<string> depotRegionWordsBlacklist =
+    [
         "asia",
         "aus",
         "australia",
@@ -47,7 +47,7 @@ public class GamesSizeCalculatorSettings : ObservableObject
         "tr/mena",
         "sea",
         "tw"
-    };
+    ];
 
     [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public ObservableCollection<string> DepotRegionWordsBlacklist { get => depotRegionWordsBlacklist; set => SetValue(ref depotRegionWordsBlacklist, DeduplicateStrings(value)); }

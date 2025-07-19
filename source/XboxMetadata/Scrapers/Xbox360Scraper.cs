@@ -104,7 +104,7 @@ public class Xbox360Scraper : BaseXboxScraper
                 Id = id,
                 Url = detailsUrl,
                 Title = titleLink.TextContent,
-                Platforms = new List<MetadataProperty> { new MetadataSpecProperty("xbox360") }
+                Platforms = [new MetadataSpecProperty("xbox360")]
             };
 
             output.Add(item);

@@ -64,8 +64,8 @@ public class AggregateMetadataGatherer : LibraryMetadataProvider
                     Source = new MetadataNameProperty("Legacy Games"),
 
                     //the following are probably safe assumptions
-                    Features = new HashSet<MetadataProperty> { new MetadataNameProperty("Single-player") },
-                    Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
+                    Features = [new MetadataNameProperty("Single-player")],
+                    Platforms = [new MetadataSpecProperty("pc_windows")],
                 };
 
                 if (Settings.UseCovers)

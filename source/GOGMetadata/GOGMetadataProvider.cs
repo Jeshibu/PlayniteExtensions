@@ -14,7 +14,7 @@ public class GOGMetadataProvider : GenericMetadataProvider<GogSearchResponse.Pro
 
     public override List<MetadataField> AvailableFields => Fields;
 
-    public static List<MetadataField> Fields = new List<MetadataField> {
+    public static List<MetadataField> Fields = [
         MetadataField.Name,
         MetadataField.Description,
         MetadataField.Features,
@@ -30,7 +30,7 @@ public class GOGMetadataProvider : GenericMetadataProvider<GogSearchResponse.Pro
         MetadataField.Icon,
         MetadataField.Links,
         MetadataField.CommunityScore,
-    };
+    ];
 
     protected override string ProviderName { get; } = "GOG";
 }

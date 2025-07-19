@@ -19,7 +19,7 @@ public class SteamTagsMetadataProvider : OnDemandMetadataProvider
         this.plugin = plugin;
     }
 
-    public override List<MetadataField> AvailableFields { get; } = new List<MetadataField> { MetadataField.Tags };
+    public override List<MetadataField> AvailableFields { get; } = [MetadataField.Tags];
 
     public override IEnumerable<MetadataProperty> GetTags(GetMetadataFieldArgs args)
     {

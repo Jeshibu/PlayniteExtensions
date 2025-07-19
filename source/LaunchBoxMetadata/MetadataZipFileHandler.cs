@@ -15,7 +15,7 @@ public class MetadataZipFileHandler : IDisposable
     private readonly LaunchBoxMetadataSettings settings;
     private readonly string oldEtag;
     private readonly DateTimeOffset? oldLastModified;
-    private readonly List<string> tempPaths = new List<string>();
+    private readonly List<string> tempPaths = [];
 
     public MetadataZipFileHandler(IPlayniteAPI playniteAPI, LaunchBoxMetadataSettings settings)
     {

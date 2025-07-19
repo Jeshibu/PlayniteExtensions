@@ -24,7 +24,7 @@ public class IgnClient
     public ICollection<IgnGame> Search(string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString))
-            return new List<IgnGame>();
+            return [];
 
         var variables = new { term = searchString, count = 20, objectType = "Game" };
         var data = Call<IgnSearchResultData>("SearchObjectsByName", variables, "664276ed5455a5a05182a25250b11cbe0601a6ecf2e91247d90d34617335d5da");

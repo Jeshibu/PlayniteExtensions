@@ -56,7 +56,7 @@ public class RawgLibrary : LibraryPlugin
 
         PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
         {
-            var removedItems = e.RemovedItems ?? new List<Game>();
+            var removedItems = e.RemovedItems ?? [];
             a.ProgressMaxValue = removedItems.Count;
             try
             {
@@ -212,7 +212,7 @@ public class RawgLibrary : LibraryPlugin
 
     public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
     {
-        List<GameMetadata> output = new List<GameMetadata>();
+        List<GameMetadata> output = [];
 
         try
         {

@@ -135,7 +135,7 @@ public class AppMetadata
     public string Title;
 
     [JsonProperty("tm")]
-    public Dictionary<string, ThumbnailData> Thumbnails = new Dictionary<string, ThumbnailData>();
+    public Dictionary<string, ThumbnailData> Thumbnails = [];
 }
 
 public class ThumbnailData

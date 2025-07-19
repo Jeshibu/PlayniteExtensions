@@ -135,8 +135,7 @@ public static class RawgMetadataHelper
 
     public static List<Link> GetLinks(RawgGameDetails data)
     {
-        var links = new List<Link>();
-        links.Add(GetRawgLink(data));
+        List<Link> links = [GetRawgLink(data)];
 
         if (!string.IsNullOrWhiteSpace(data.Website))
             links.Add(new Link("Website", data.Website));
@@ -239,7 +238,7 @@ public static class RawgMetadataHelper
 
         System.Collections.ObjectModel.ObservableCollection<Link> links;
         if (game.Links == null)
-            links = new System.Collections.ObjectModel.ObservableCollection<Link>();
+            links = [];
         else
             links = new System.Collections.ObjectModel.ObservableCollection<Link>(game.Links);
 
@@ -252,7 +251,7 @@ public static class RawgMetadataHelper
 
     public static int? GetRawgIdFromGame(Game game)
     {
-        var stringId = IdUtility.GetIdsFromGame(game).FirstOrDefault(i=>i.Database == ExternalDatabase.RAWG).Id;
+        var stringId = IdUtility.GetIdsFromGame(game).FirstOrDefault(i => i.Database == ExternalDatabase.RAWG).Id;
         if (int.TryParse(stringId, out int id))
             return id;
 

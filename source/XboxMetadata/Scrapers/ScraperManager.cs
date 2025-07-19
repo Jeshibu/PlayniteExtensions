@@ -10,7 +10,7 @@ namespace XboxMetadata.Scrapers;
 
 public class ScraperManager
 {
-    public Dictionary<string, BaseXboxScraper> Scrapers { get; set; } = new Dictionary<string, BaseXboxScraper>();
+    public Dictionary<string, BaseXboxScraper> Scrapers { get; set; } = [];
 
     public ScraperManager(IEnumerable<BaseXboxScraper> scrapers)
     {

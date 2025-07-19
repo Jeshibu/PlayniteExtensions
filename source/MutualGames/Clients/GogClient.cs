@@ -147,7 +147,7 @@ public class GogClient : IFriendsGamesClient
 
     private class EmbeddedGames
     {
-        public List<GameAndStats> Items { get; set; } = new List<GameAndStats>();
+        public List<GameAndStats> Items { get; set; } = [];
     }
 
     private class GameAndStats

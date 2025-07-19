@@ -42,7 +42,7 @@ public class VGCollectScraper : DuckDuckGoScraper
                 var platforms = PlatformUtility.GetPlatforms(platformMatch.Groups["platform"].Value);
                 var region = platformMatch.Groups["region"].Value;
                 data.Platforms = platforms.ToHashSet();
-                data.Regions = new HashSet<MetadataProperty> { new MetadataNameProperty(region) };
+                data.Regions = [new MetadataNameProperty(region)];
             }
             else
             {

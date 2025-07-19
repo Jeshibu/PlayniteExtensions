@@ -11,12 +11,12 @@ namespace GamersGateLibrary;
 
 public class GamersGateLibrarySettings : ObservableObject
 {
-    private Dictionary<string, GameInstallInfo> installData = new Dictionary<string, GameInstallInfo>();
+    private Dictionary<string, GameInstallInfo> installData = [];
     private bool useCoverImages = true;
     private int minimumDelay = 2000;
     private int maximumDelay = 4000;
     private OnImportAction importAction = OnImportAction.ImportOffscreen;
-    private HashSet<int> knownOrderIds = new HashSet<int>();
+    private HashSet<int> knownOrderIds = [];
 
     public Dictionary<string, GameInstallInfo> InstallData { get => installData; set => SetValue(ref installData, value); }
 
@@ -42,7 +42,7 @@ public class GameInstallInfo
     public string Id { get; set; }
     public int OrderId { get; set; }
     public string Name { get; set; }
-    public List<DownloadUrl> DownloadUrls { get; set; } = new List<DownloadUrl>();
+    public List<DownloadUrl> DownloadUrls { get; set; } = [];
     public string InstallLocation { get; set; }
     public string RelativeExecutablePath { get; set; }
     public bool UnrevealedKey { get; set; }
@@ -173,7 +173,7 @@ public class GamersGateLibrarySettingsViewModel : PluginSettingsViewModel<Gamers
 
     public override bool VerifySettings(out List<string> errors)
     {
-        errors = new List<string>();
+        errors = [];
         if (Settings.MinimumWebRequestDelay < 0)
             errors.Add("Minimum web request delay can't be less than 0");
 

@@ -22,5 +22,5 @@ public class BasicImage : IImageData
     public string ThumbnailUrl { get; set; }
     public int Width { get; set; }
     public int Height { get; set; }
-    public IEnumerable<string> Platforms { get; set; } = new List<string>();
+    public IEnumerable<string> Platforms { get; set; } = [];
 }

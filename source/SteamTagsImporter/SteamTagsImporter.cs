@@ -32,7 +32,7 @@ public class SteamTagsImporter : MetadataPlugin
 
     public override string Name { get; } = "Steam Tags";
 
-    public override List<MetadataField> SupportedFields { get; } = new List<MetadataField> { MetadataField.Tags };
+    public override List<MetadataField> SupportedFields { get; } = [MetadataField.Tags];
 
     public SteamTagsImporter(IPlayniteAPI api)
         : this(api, null, null)
@@ -76,7 +76,7 @@ public class SteamTagsImporter : MetadataPlugin
 
         List<Game> games;
         if (Settings.Settings.LastAutomaticTagUpdate == DateTime.MinValue)
-            games = new List<Game>();
+            games = [];
         else
             games = PlayniteApi.Database.Games.Where(g => g.Added > Settings.Settings.LastAutomaticTagUpdate).ToList();
 
@@ -179,7 +179,7 @@ public class SteamTagsImporter : MetadataPlugin
             PlayniteApi.Database.Tags.Add(tag);
         }
 
-        var tagIds = game.TagIds ?? (game.TagIds = new List<Guid>());
+        var tagIds = game.TagIds ?? (game.TagIds = []);
 
         if (!tagIds.Contains(tag.Id))
         {

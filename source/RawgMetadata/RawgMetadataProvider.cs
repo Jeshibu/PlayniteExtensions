@@ -28,8 +28,8 @@ public class RawgMetadataProvider : OnDemandMetadataProvider
     }
     private RawgGameBase FoundSearchResult { get; set; }
 
-    public override List<MetadataField> AvailableFields { get; } = new List<MetadataField>
-    {
+    public override List<MetadataField> AvailableFields { get; } =
+    [
         MetadataField.Name,
         MetadataField.Description,
         MetadataField.ReleaseDate,
@@ -42,7 +42,7 @@ public class RawgMetadataProvider : OnDemandMetadataProvider
         MetadataField.Developers,
         MetadataField.Publishers,
         MetadataField.Links
-    };
+    ];
 
     public RawgMetadataProvider(MetadataRequestOptions options, RawgMetadata plugin, RawgApiClient client, string languageCode = "eng")
     {
@@ -187,8 +187,7 @@ public class RawgMetadataProvider : OnDemandMetadataProvider
         if (IsEmpty(data))
             return base.GetLinks(args);
 
-        var links = new List<Link>();
-        links.Add(new Link("RAWG", $"https://rawg.io/games/{data.Id}"));
+        List<Link> links = [new Link("RAWG", $"https://rawg.io/games/{data.Id}")];
 
         if (!string.IsNullOrWhiteSpace(data.Website))
             links.Add(new Link("Website", data.Website));
@@ -230,7 +229,7 @@ public class RawgMetadataProvider : OnDemandMetadataProvider
                 catch (Exception e)
                 {
                     logger.Error(e, $"Failed to get RAWG search data for <{a}>");
-                    return new List<GenericItemOption>();
+                    return [];
                 }
             }, options.GameData.Name, string.Empty);
 

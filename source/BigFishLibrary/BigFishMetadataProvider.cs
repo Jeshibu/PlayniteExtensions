@@ -56,7 +56,7 @@ public class BigFishMetadataProvider : LibraryMetadataProvider
         {
             GameId = registryDetails.Sku,
             Name = registryDetails.Name,
-            Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
+            Platforms = [new MetadataSpecProperty("pc_windows")],
             Source = new MetadataNameProperty("Big Fish Games"),
         };
 
@@ -77,7 +77,7 @@ public class BigFishMetadataProvider : LibraryMetadataProvider
                 output.Icon = new MetadataFile(registryDetails.Thumbnail);
 
             string id = new string(registryDetails.Sku.SkipWhile(char.IsLetter).TakeWhile(char.IsNumber).ToArray());
-            output.Links = new List<Link> { new Link("Big Fish Store Page", $"https://www.bigfishgames.com/games/{id}/") };
+            output.Links = [new Link("Big Fish Store Page", $"https://www.bigfishgames.com/games/{id}/")];
         }
         return output;
     }

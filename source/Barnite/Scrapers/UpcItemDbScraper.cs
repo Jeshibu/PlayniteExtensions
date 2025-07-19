@@ -27,7 +27,7 @@ public class UpcItemDbScraper : MetadataScraper
 
 
         var item = response.Items[0];
-        GameMetadata data = new GameMetadata { Description = item.Description, Platforms = new HashSet<MetadataProperty>() };
+        GameMetadata data = new GameMetadata { Description = item.Description, Platforms = [] };
 
         data.Name = Regex.Replace(item.Title, @"(\s*(\((?<platform>[a-z 0-9]+)\)|\bsealed|\bused|\bnew)\.?)+$", (match) =>
         {
@@ -78,13 +78,13 @@ public class UpcItemDbScraper : MetadataScraper
         public string Code;
         public int Total;
         public int Offset;
-        public List<Item> Items = new List<Item>();
+        public List<Item> Items = [];
     }
 
     private class Item
     {
         public string Title;
         public string Description;
-        public List<string> Images = new List<string>();
+        public List<string> Images = [];
     }
 }

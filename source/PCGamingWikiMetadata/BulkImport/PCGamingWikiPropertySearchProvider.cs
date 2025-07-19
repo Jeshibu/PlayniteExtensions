@@ -105,7 +105,7 @@ public class PCGamingWikiPropertySearchProvider : ISearchableDataSourceWithDetai
         var game = new GameDetails
         {
             Id = PCGamingWikiIdUtility.SlugToId(slug),
-            Names = new List<string> { name },
+            Names = [name],
             Url = slug.SlugToUrl(),
         };
 

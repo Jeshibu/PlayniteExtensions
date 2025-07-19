@@ -90,7 +90,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
             catch (Exception e)
             {
                 logger.Error(e, $"Failed to get search data for <{a}>");
-                return new List<GenericItemOption>();
+                return [];
             }
 
             return output;
@@ -265,7 +265,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
                         continue;
 
                     if (g.Game.Links == null)
-                        g.Game.Links = new ObservableCollection<Link>();
+                        g.Game.Links = [];
 
                     foreach (var gd in g.GameDetails)
                     {
@@ -337,7 +337,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
         var collection = collectionSelector.Compile()(g);
         if (collection == null)
         {
-            collection = new List<Guid>();
+            collection = [];
             var prop = (PropertyInfo)((MemberExpression)collectionSelector.Body).Member;
             prop.SetValue(g, collection, null);
         }

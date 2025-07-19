@@ -43,7 +43,7 @@ public class TropeSearchProvider : ISearchableDataSourceWithDetails<TvTropesSear
         }
 
         foreach (var kvp in worksByName)
-            yield return new GameDetails { Names = new List<string> { kvp.Key }, Url = kvp.Value.FirstOrDefault() };
+            yield return new GameDetails { Names = [kvp.Key], Url = kvp.Value.FirstOrDefault() };
     }
 
     public IEnumerable<TvTropesSearchResult> Search(string query, CancellationToken cancellationToken = default)

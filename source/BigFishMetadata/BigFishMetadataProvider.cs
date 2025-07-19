@@ -7,8 +7,8 @@ namespace BigFishMetadata;
 
 public class BigFishMetadataProvider : GenericMetadataProvider<BigFishSearchResultGame>
 {
-    public static List<MetadataField> Fields = new List<MetadataField>
-    {
+    public static List<MetadataField> Fields =
+    [
         MetadataField.Name,
         MetadataField.Description,
         MetadataField.Genres,
@@ -16,7 +16,7 @@ public class BigFishMetadataProvider : GenericMetadataProvider<BigFishSearchResu
         MetadataField.CoverImage,
         MetadataField.BackgroundImage,
         MetadataField.CommunityScore,
-    };
+    ];
 
     private readonly BigFishMetadata plugin;
 

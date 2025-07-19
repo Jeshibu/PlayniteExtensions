@@ -74,11 +74,11 @@ public class OgdbScraper : MetadataScraper
                         break;
                     case "betriebsystem":
                         if (value.StartsWith("Windows"))
-                            game.Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") };
+                            game.Platforms = [new MetadataSpecProperty("pc_windows")];
                         else if (value == "MS-DOS")
-                            game.Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_dos") };
+                            game.Platforms = [new MetadataSpecProperty("pc_dos")];
                         else if (value.Contains("Linux"))
-                            game.Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_linux") };
+                            game.Platforms = [new MetadataSpecProperty("pc_linux")];
                         break;
                     case "erschienen":
                             game.ReleaseDate = ParseReleaseDate(value);

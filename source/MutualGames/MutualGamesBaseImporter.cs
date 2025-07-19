@@ -69,8 +69,8 @@ public abstract class MutualGamesBaseImporter
     {
         return settings.ImportTo switch
         {
-            GameField.Categories => game.CategoryIds ?? (game.CategoryIds = new List<Guid>()),
-            GameField.Tags => game.TagIds ?? (game.TagIds = new List<Guid>()),
+            GameField.Categories => game.CategoryIds ?? (game.CategoryIds = []),
+            GameField.Tags => game.TagIds ?? (game.TagIds = []),
             _ => throw new NotImplementedException(),
         };
     }
@@ -111,7 +111,7 @@ public abstract class MutualGamesBaseImporter
     private List<Game> GetSameLibraryGames(Guid libraryPluginId, out List<Game> otherLibraryGames)
     {
         var sameLibrary = new List<Game>();
-        otherLibraryGames = new List<Game>();
+        otherLibraryGames = [];
 
         foreach (var game in playniteAPI.Database.Games)
         {

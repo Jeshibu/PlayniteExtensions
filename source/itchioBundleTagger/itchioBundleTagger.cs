@@ -84,7 +84,7 @@ public class itchioBundleTagger : GenericPlugin
         return Playnite.SDK.Data.Serialization.FromJson<Dictionary<string, ItchIoGame>>(DatabaseFile.GetFileContents());
     }
 
-    private Dictionary<string, Tag> TagsCache = new Dictionary<string, Tag>();
+    private Dictionary<string, Tag> TagsCache = [];
 
     private Tag GetTag(string key)
     {
@@ -122,7 +122,7 @@ public class itchioBundleTagger : GenericPlugin
 
     private bool AddTagToGame(Game game, Tag tag)
     {
-        var tagIds = game.TagIds ?? (game.TagIds = new List<Guid>());
+        var tagIds = game.TagIds ?? (game.TagIds = []);
 
         if (!tagIds.Contains(tag.Id))
         {
@@ -197,7 +197,7 @@ public class itchioBundleTagger : GenericPlugin
 
                             if (Settings.Settings.AddSteamLink && !GameHasSteamStoreLink(game, steamId))
                             {
-                                var links = game.Links != null ? new ObservableCollection<Link>(game.Links) : new ObservableCollection<Link>();
+                                var links = game.Links != null ? new ObservableCollection<Link>(game.Links) : [];
                                 links.Add(new Link("Steam", data.Steam));
                                 game.Links = links; //adding to observablecollections on another thread throws exceptions, so just replace them
                                 gameUpdated = true;

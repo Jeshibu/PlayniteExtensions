@@ -44,9 +44,9 @@ public class SteamTagsImporterSettings : BulkImportPluginSettings
 
     public string LanguageKey { get { return _languageKey; } set { SetValue(ref _languageKey, value); } }
 
-    public ObservableCollection<string> OkayTags { get; set; } = new ObservableCollection<string>();
+    public ObservableCollection<string> OkayTags { get; set; } = [];
 
-    public ObservableCollection<string> BlacklistedTags { get; set; } = new ObservableCollection<string>();
+    public ObservableCollection<string> BlacklistedTags { get; set; } = [];
 
     public bool OnlyImportGamesWithThisLanguageSupport { get; set; } = false;
 

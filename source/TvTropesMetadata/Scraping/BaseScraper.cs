@@ -17,12 +17,12 @@ public abstract class BaseScraper
 {
     protected readonly IWebDownloader downloader;
     protected readonly ILogger logger = LogManager.GetLogger();
-    public List<string> CategoryWhitelist = new List<string> { "VideoGame", "VisualNovel" };
-    public List<string> BlacklistedWords = new List<string>
-    {
+    public List<string> CategoryWhitelist = ["VideoGame", "VisualNovel"];
+    public List<string> BlacklistedWords =
+    [
         "deconstructed", "averted", "inverted", "subverted",
         "deconstructs", "averts", "inverts", "subverts"
-    };
+    ];
 
     public abstract IEnumerable<TvTropesSearchResult> Search(string query);
 

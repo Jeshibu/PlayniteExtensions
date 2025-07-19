@@ -49,7 +49,7 @@ public class PCGWClient
 
     public List<GenericItemOption> SearchGames(string searchName)
     {
-        List<GenericItemOption> gameResults = new List<GenericItemOption>();
+        List<GenericItemOption> gameResults = [];
         logger.Info(searchName);
 
         var request = new RestRequest();

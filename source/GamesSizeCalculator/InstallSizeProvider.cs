@@ -16,7 +16,7 @@ public class InstallSizeProvider : OnDemandMetadataProvider
         SizeCalculators = sizeCalculators;
     }
 
-    public override List<MetadataField> AvailableFields { get; } = new List<MetadataField> { MetadataField.InstallSize };
+    public override List<MetadataField> AvailableFields { get; } = [MetadataField.InstallSize];
     public Game Game { get; }
     public IPlayniteAPI PlayniteApi { get; }
     public ICollection<ISizeCalculator> SizeCalculators { get; }

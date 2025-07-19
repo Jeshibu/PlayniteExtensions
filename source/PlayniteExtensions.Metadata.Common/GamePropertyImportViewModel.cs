@@ -25,9 +25,9 @@ public class GamePropertyImportViewModel
 
     public string Name { get; set; }
 
-    public List<PotentialLink> Links { get; set; } = new List<PotentialLink>();
+    public List<PotentialLink> Links { get; set; } = [];
 
-    public List<CheckboxFilter> Filters { get; set; } = new List<CheckboxFilter>();
+    public List<CheckboxFilter> Filters { get; set; } = [];
 
     public ICollection<GameCheckboxViewModel> Games { get; set; }
 }
@@ -44,7 +44,7 @@ public class GameCheckboxViewModel : ObservableObject
     }
 
     public Game Game { get; set; }
-    public List<GameDetails> GameDetails { get; } = new List<GameDetails>();
+    public List<GameDetails> GameDetails { get; } = [];
     public bool IsChecked { get => isChecked; set => SetValue(ref isChecked, value); }
     public string DisplayName
     {

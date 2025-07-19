@@ -175,5 +175,5 @@ public class PCGamingWikiSelectedValues : IHasName
 {
     public string Name => FieldInfo.FieldDisplayName;
     public CargoFieldInfo FieldInfo { get; set; }
-    public List<string> SelectedValues { get; set; } = new List<string>();
+    public List<string> SelectedValues { get; set; } = [];
 }

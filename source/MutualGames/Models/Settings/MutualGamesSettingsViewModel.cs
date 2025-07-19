@@ -97,7 +97,7 @@ public class MutualGamesSettingsViewModel : PluginSettingsViewModel<MutualGamesS
 
     public override bool VerifySettings(out List<string> errors)
     {
-        errors = new List<string>();
+        errors = [];
         try
         {
             var exampleFriend = new FriendAccountInfo { Id = "42069", Name = "xXx_1337Slayer_xXx", Source = FriendSource.Steam };

@@ -19,8 +19,8 @@ public class XboxMetadataProvider : OnDemandMetadataProvider
     private readonly ScraperManager scraperManager;
     private XboxGameDetails foundGame;
 
-    public static List<MetadataField> Fields { get; } = new List<MetadataField>
-    {
+    public static List<MetadataField> Fields { get; } =
+    [
         MetadataField.Name,
         MetadataField.Description,
         MetadataField.Developers,
@@ -35,7 +35,7 @@ public class XboxMetadataProvider : OnDemandMetadataProvider
         MetadataField.ReleaseDate,
         MetadataField.AgeRating,
         MetadataField.Links,
-    };
+    ];
 
     public override List<MetadataField> AvailableFields => Fields;
 
@@ -219,7 +219,7 @@ public class XboxMetadataProvider : OnDemandMetadataProvider
                 var selected = playniteApi.Dialogs.ChooseItemWithSearch(null, a =>
                 {
                     var searchResults = scraperManager.Search(settings, options.GameData, a);
-                    return searchResults.Select(XboxGameSearchItemOption.FromSearchResult)?.ToList<GenericItemOption>() ?? new List<GenericItemOption>();
+                    return searchResults.Select(XboxGameSearchItemOption.FromSearchResult)?.ToList<GenericItemOption>() ?? [];
                 }, options.GameData.Name, "Select Xbox game");
 
                 if (selected != null)
