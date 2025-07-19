@@ -176,13 +176,13 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
 
     private string GetDefaultRegionAliases(string region)
     {
-        switch (region)
+        return region switch
         {
-            case "United States": return "US, USA";
-            case "United Kingdom": return "UK, GB, Great Britain";
-            case "Japan": return "JP, JA";
-            default: return null;
-        }
+            "United States" => "US, USA",
+            "United Kingdom" => "UK, GB, Great Britain",
+            "Japan" => "JP, JA",
+            _ => null,
+        };
     }
 
     private void DownloadMetadata()
@@ -209,7 +209,11 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
                 {
                     database.CreateDatabase(xmlParser, a);
                 }
-                catch (Exception ex) { exception = ex; }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex, "Error creating database");
+                    exception = ex;
+                }
             }, new GlobalProgressOptions("Initializing database...", false));
 
             OnPropertyChanged(nameof(StatusText));

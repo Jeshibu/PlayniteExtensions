@@ -104,21 +104,15 @@ public class ViveportMetadataProvider : LibraryMetadataProvider
     private string GetCoverUrl(ViveportApp appDetails)
     {
         var verticalCover = appDetails.Cloud?.Objs.FirstOrDefault(o => o.Type == "portrait_image");
-        switch (settings.CoverPreference)
+        return settings.CoverPreference switch
         {
-            case CoverPreference.None:
-                return null;
-            case CoverPreference.VerticalOrSquare:
-                return verticalCover?.Url ?? appDetails.Thumbnails?.Square?.Url;
-            case CoverPreference.VerticalOrBust:
-                return verticalCover?.Url;
-            case CoverPreference.Square:
-                return appDetails.Thumbnails?.Square?.Url;
-            case CoverPreference.Horizontal:
-                return appDetails.Thumbnails?.Medium?.Url;
-            default:
-                return null;
-        }
+            CoverPreference.None => null,
+            CoverPreference.VerticalOrSquare => verticalCover?.Url ?? appDetails.Thumbnails?.Square?.Url,
+            CoverPreference.VerticalOrBust => verticalCover?.Url,
+            CoverPreference.Square => appDetails.Thumbnails?.Square?.Url,
+            CoverPreference.Horizontal => appDetails.Thumbnails?.Medium?.Url,
+            _ => null,
+        };
     }
 
     private IEnumerable<string> GetCustomAttributeLabels<T>(IEnumerable<T> values, CustomAttributeMetadataItem[] items, string attributeCodeName, Func<AttributeOption, T> matchSelector)
@@ -165,15 +159,15 @@ public class ViveportMetadataProvider : LibraryMetadataProvider
 
     private int GetPowerOf1024FromUnit(string unit)
     {
-        switch (unit)
+        return unit switch
         {
-            case "B": return 0;
-            case "KB": return 1;
-            case "MB": return 2;
-            case "GB": return 3;
-            case "TB": return 4;
-            default: return 0;
-        }
+            "B" => 0,
+            "KB" => 1,
+            "MB" => 2,
+            "GB" => 3,
+            "TB" => 4,
+            _ => 0,
+        };
     }
 
     private static DateTime GetDateFromMilliseconds(long milliseconds)

@@ -86,12 +86,12 @@ public class BolScraper : MetadataScraper
 
     private static string TranslateGenre(string genre)
     {
-        switch (genre)
+        return genre switch
         {
-            case "Actie": return "Action";
-            case "Avontuur": return "Adventure";
-            default: return genre;
-        }
+            "Actie" => "Action",
+            "Avontuur" => "Adventure",
+            _ => genre,
+        };
     }
 
     private string TrimTitle(string title)

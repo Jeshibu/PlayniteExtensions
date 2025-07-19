@@ -84,16 +84,12 @@ public sealed class MutualGamesFileExporter
 
     private IEnumerable<Game> GetGames(ExportGamesMode mode)
     {
-        switch (mode)
+        return mode switch
         {
-            case ExportGamesMode.AllIncludeHidden:
-                return PlayniteAPI.Database.Games;
-            case ExportGamesMode.AllExcludeHidden:
-                return PlayniteAPI.Database.Games.Where(g => !g.Hidden);
-            case ExportGamesMode.Filtered:
-                return PlayniteAPI.MainView.FilteredGames;
-            default:
-                throw new ArgumentException(nameof(mode));
-        }
+            ExportGamesMode.AllIncludeHidden => PlayniteAPI.Database.Games,
+            ExportGamesMode.AllExcludeHidden => PlayniteAPI.Database.Games.Where(g => !g.Hidden),
+            ExportGamesMode.Filtered => PlayniteAPI.MainView.FilteredGames,
+            _ => throw new ArgumentException(nameof(mode)),
+        };
     }
 }

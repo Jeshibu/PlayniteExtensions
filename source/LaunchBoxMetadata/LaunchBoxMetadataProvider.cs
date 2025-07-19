@@ -259,19 +259,13 @@ public class LaunchBoxMetadataProvider : OnDemandMetadataProvider
         if (imgDetails.Width < imgSetting.MinWidth || imgDetails.Height < imgSetting.MinHeight)
             return false;
 
-        switch (imgSetting.AspectRatio)
+        return imgSetting.AspectRatio switch
         {
-            case AspectRatio.Vertical:
-                return imgDetails.Width < imgDetails.Height;
-            case AspectRatio.Horizontal:
-                return imgDetails.Width > imgDetails.Height;
-            case AspectRatio.Square:
-                return imgDetails.Width == imgDetails.Height;
-            case AspectRatio.Any:
-            case AspectRatio.AnyExtendToSquare:
-            default:
-                return true;
-        }
+            AspectRatio.Vertical => imgDetails.Width < imgDetails.Height,
+            AspectRatio.Horizontal => imgDetails.Width > imgDetails.Height,
+            AspectRatio.Square => imgDetails.Width == imgDetails.Height,
+            _ => true,
+        };
     }
 
     private MetadataFile PickImage(string caption, LaunchBoxImageSourceSettings imgSettings)

@@ -124,30 +124,15 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
         var viewModel = new TApprovalPromptViewModel() { Name = $"{importSetting.Prefix}{propName}", Games = proposedMatches, PlayniteAPI = playniteApi };
         viewModel.Links.AddRange(GetPotentialLinks(selectedItem));
         viewModel.Filters.AddRange(GetCheckboxFilters(viewModel));
-        switch (importSetting.ImportTarget)
+        viewModel.TargetField = importSetting.ImportTarget switch
         {
-            case PropertyImportTarget.Genres:
-                viewModel.TargetField = GamePropertyImportTargetField.Genre;
-                break;
-            case PropertyImportTarget.Series:
-                viewModel.TargetField = GamePropertyImportTargetField.Series;
-                break;
-            case PropertyImportTarget.Features:
-                viewModel.TargetField = GamePropertyImportTargetField.Feature;
-                break;
-            case PropertyImportTarget.Developers:
-                viewModel.TargetField = GamePropertyImportTargetField.Developers;
-                break;
-            case PropertyImportTarget.Publishers:
-                viewModel.TargetField = GamePropertyImportTargetField.Publishers;
-                break;
-            case PropertyImportTarget.Ignore:
-            case PropertyImportTarget.Tags:
-            default:
-                viewModel.TargetField = GamePropertyImportTargetField.Tag;
-                break;
-        }
-
+            PropertyImportTarget.Genres => GamePropertyImportTargetField.Genre,
+            PropertyImportTarget.Series => GamePropertyImportTargetField.Series,
+            PropertyImportTarget.Features => GamePropertyImportTargetField.Feature,
+            PropertyImportTarget.Developers => GamePropertyImportTargetField.Developers,
+            PropertyImportTarget.Publishers => GamePropertyImportTargetField.Publishers,
+            _ => GamePropertyImportTargetField.Tag,
+        };
         var window = playniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
         var view = GetBulkPropertyImportView(window, viewModel);
         window.Content = view;
@@ -306,24 +291,16 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
     private static DatabaseObject GetDatabaseObject(GamePropertyImportViewModel viewModel)
     {
         var db = viewModel.PlayniteAPI.Database;
-        switch (viewModel.TargetField)
+        return viewModel.TargetField switch
         {
-            case GamePropertyImportTargetField.Category:
-                return GetDatabaseObjectByName(db.Categories, viewModel.Name);
-            case GamePropertyImportTargetField.Genre:
-                return GetDatabaseObjectByName(db.Genres, viewModel.Name);
-            case GamePropertyImportTargetField.Tag:
-                return GetDatabaseObjectByName(db.Tags, viewModel.Name);
-            case GamePropertyImportTargetField.Feature:
-                return GetDatabaseObjectByName(db.Features, viewModel.Name);
-            case GamePropertyImportTargetField.Series:
-                return GetDatabaseObjectByName(db.Series, viewModel.Name);
-            case GamePropertyImportTargetField.Developers:
-            case GamePropertyImportTargetField.Publishers:
-                return GetDatabaseObjectByName(db.Companies, viewModel.Name);
-            default:
-                throw new ArgumentException();
-        }
+            GamePropertyImportTargetField.Category => GetDatabaseObjectByName(db.Categories, viewModel.Name),
+            GamePropertyImportTargetField.Genre => GetDatabaseObjectByName(db.Genres, viewModel.Name),
+            GamePropertyImportTargetField.Tag => GetDatabaseObjectByName(db.Tags, viewModel.Name),
+            GamePropertyImportTargetField.Feature => GetDatabaseObjectByName(db.Features, viewModel.Name),
+            GamePropertyImportTargetField.Series => GetDatabaseObjectByName(db.Series, viewModel.Name),
+            GamePropertyImportTargetField.Developers or GamePropertyImportTargetField.Publishers => GetDatabaseObjectByName(db.Companies, viewModel.Name),
+            _ => throw new ArgumentException(),
+        };
     }
 
     private static DatabaseObject GetDatabaseObjectByName<T>(IItemCollection<T> collection, string name) where T : DatabaseObject
@@ -374,25 +351,17 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
 
     private static Expression<Func<Game, List<Guid>>> GetCollectionSelector(GamePropertyImportTargetField targetField)
     {
-        switch (targetField)
+        return targetField switch
         {
-            case GamePropertyImportTargetField.Category:
-                return x => x.CategoryIds;
-            case GamePropertyImportTargetField.Genre:
-                return x => x.GenreIds;
-            case GamePropertyImportTargetField.Tag:
-                return x => x.TagIds;
-            case GamePropertyImportTargetField.Feature:
-                return x => x.FeatureIds;
-            case GamePropertyImportTargetField.Series:
-                return x => x.SeriesIds;
-            case GamePropertyImportTargetField.Developers:
-                return x => x.DeveloperIds;
-            case GamePropertyImportTargetField.Publishers:
-                return x => x.PublisherIds;
-            default:
-                throw new ArgumentException($"Unknown target field: {targetField}");
-        }
+            GamePropertyImportTargetField.Category => x => x.CategoryIds,
+            GamePropertyImportTargetField.Genre => x => x.GenreIds,
+            GamePropertyImportTargetField.Tag => x => x.TagIds,
+            GamePropertyImportTargetField.Feature => x => x.FeatureIds,
+            GamePropertyImportTargetField.Series => x => x.SeriesIds,
+            GamePropertyImportTargetField.Developers => x => x.DeveloperIds,
+            GamePropertyImportTargetField.Publishers => x => x.PublisherIds,
+            _ => throw new ArgumentException($"Unknown target field: {targetField}"),
+        };
     }
 
     private static bool AddItem(Game g, GamePropertyImportTargetField targetField, Guid idToAdd) => AddItem(g, GetCollectionSelector(targetField), idToAdd);

@@ -45,15 +45,12 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
         if (selectedProperty == null)
             return null;
 
-        switch (selectedProperty.FieldInfo.FieldType)
+        return selectedProperty.FieldInfo.FieldType switch
         {
-            case CargoFieldType.ListOfString:
-                return SelectStringListProperty(selectedProperty);
-            case CargoFieldType.String:
-                return SelectStringProperty(selectedProperty);
-            default:
-                return null;
-        }
+            CargoFieldType.ListOfString => SelectStringListProperty(selectedProperty),
+            CargoFieldType.String => SelectStringProperty(selectedProperty),
+            _ => null,
+        };
     }
 
     private PCGamingWikiSelectedValues SelectStringListProperty(PCGamingWikiSelectedValues selectedPropertyCategory)
@@ -158,29 +155,19 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
         if (fieldInfo.Table != CargoTables.GameInfoBoxTableName)
             return null;
 
-        switch (fieldInfo.Field)
+        return fieldInfo.Field switch
         {
-            case "Monetization":
-                return settings.TagPrefixMonetization;
-            case "Microtransactions":
-                return settings.TagPrefixMicrotransactions;
-            case "Pacing":
-                return settings.TagPrefixPacing;
-            case "Perspectives":
-                return settings.TagPrefixPerspectives;
-            case "Controls":
-                return settings.TagPrefixControls;
-            case "Vehicles":
-                return settings.TagPrefixVehicles;
-            case "Themes":
-                return settings.TagPrefixThemes;
-            case "Engines":
-                return settings.TagPrefixEngines;
-            case "Art_styles":
-                return settings.TagPrefixArtStyles;
-            default:
-                return null;
-        }
+            "Monetization" => settings.TagPrefixMonetization,
+            "Microtransactions" => settings.TagPrefixMicrotransactions,
+            "Pacing" => settings.TagPrefixPacing,
+            "Perspectives" => settings.TagPrefixPerspectives,
+            "Controls" => settings.TagPrefixControls,
+            "Vehicles" => settings.TagPrefixVehicles,
+            "Themes" => settings.TagPrefixThemes,
+            "Engines" => settings.TagPrefixEngines,
+            "Art_styles" => settings.TagPrefixArtStyles,
+            _ => null,
+        };
     }
 }
 

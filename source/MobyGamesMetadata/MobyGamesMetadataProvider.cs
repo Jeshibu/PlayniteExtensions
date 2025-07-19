@@ -43,18 +43,13 @@ public class MobyGamesMetadataProvider : GenericMetadataProvider<GameSearchResul
         if (imageData.Width < imgSettings.MinWidth || imageData.Height < imgSettings.MinHeight)
             return false;
 
-        switch (imgSettings.AspectRatio)
+        return imgSettings.AspectRatio switch
         {
-            case AspectRatio.Vertical:
-                return imageData.Width < imageData.Height;
-            case AspectRatio.Horizontal:
-                return imageData.Width > imageData.Height;
-            case AspectRatio.Square:
-                return imageData.Width == imageData.Height;
-            case AspectRatio.Any:
-            default:
-                return true;
-        }
+            AspectRatio.Vertical => imageData.Width < imageData.Height,
+            AspectRatio.Horizontal => imageData.Width > imageData.Height,
+            AspectRatio.Square => imageData.Width == imageData.Height,
+            _ => true,
+        };
     }
 
     public override void Dispose()

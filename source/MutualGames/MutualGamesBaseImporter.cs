@@ -35,22 +35,22 @@ public abstract class MutualGamesBaseImporter
 
     private IEnumerable<DatabaseObject> GetDatabaseCollectionToImportTo()
     {
-        switch (settings.ImportTo)
+        return settings.ImportTo switch
         {
-            case GameField.Categories: return playniteAPI.Database.Categories;
-            case GameField.Tags: return playniteAPI.Database.Tags;
-            default: throw new NotImplementedException();
-        }
+            GameField.Categories => playniteAPI.Database.Categories,
+            GameField.Tags => playniteAPI.Database.Tags,
+            _ => throw new NotImplementedException(),
+        };
     }
 
     private DatabaseObject CreateProperty(string propName)
     {
-        switch (settings.ImportTo)
+        return settings.ImportTo switch
         {
-            case GameField.Categories: return playniteAPI.Database.Categories.Add(propName);
-            case GameField.Tags: return playniteAPI.Database.Tags.Add(propName);
-            default: throw new NotImplementedException();
-        }
+            GameField.Categories => playniteAPI.Database.Categories.Add(propName),
+            GameField.Tags => playniteAPI.Database.Tags.Add(propName),
+            _ => throw new NotImplementedException(),
+        };
     }
 
     protected bool AddPropertyToGame(Game game, DatabaseObject databaseObject)
@@ -67,12 +67,12 @@ public abstract class MutualGamesBaseImporter
 
     private IList<Guid> GetIdList(Game game)
     {
-        switch (settings.ImportTo)
+        return settings.ImportTo switch
         {
-            case GameField.Categories: return game.CategoryIds ?? (game.CategoryIds = new List<Guid>());
-            case GameField.Tags: return game.TagIds ?? (game.TagIds = new List<Guid>());
-            default: throw new NotImplementedException();
-        }
+            GameField.Categories => game.CategoryIds ?? (game.CategoryIds = new List<Guid>()),
+            GameField.Tags => game.TagIds ?? (game.TagIds = new List<Guid>()),
+            _ => throw new NotImplementedException(),
+        };
     }
 
     #endregion property getting and assigning

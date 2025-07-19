@@ -146,16 +146,12 @@ public sealed class MutualGamesFileImporter : MutualGamesBaseImporter
     private IEnumerable<Game> GetPlayniteLibraryPotentialMatches()
     {
         var games = playniteAPI.Database.Games;
-        switch (settings.CrossLibraryImportMode)
+        return settings.CrossLibraryImportMode switch
         {
-            case CrossLibraryImportMode.SameLibraryOnly:
-                return games.Where(g => g.PluginId == default);
-            case CrossLibraryImportMode.ImportAllWithFeature:
-                return games.Where(g => g.PluginId == default || HasRelevantFeature(g));
-            case CrossLibraryImportMode.ImportAll:
-            default:
-                return games;
-        }
+            CrossLibraryImportMode.SameLibraryOnly => games.Where(g => g.PluginId == default),
+            CrossLibraryImportMode.ImportAllWithFeature => games.Where(g => g.PluginId == default || HasRelevantFeature(g)),
+            _ => games,
+        };
     }
 
     private bool HasRelevantFeature(Game game)

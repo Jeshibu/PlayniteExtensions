@@ -87,15 +87,12 @@ public class BigFishSearchProvider : IGameSearchProvider<BigFishSearchResultGame
         if (attributes == null)
             return null;
 
-        switch (settings.CommunityScoreType)
+        return settings.CommunityScoreType switch
         {
-            case CommunityScoreType.StarRating:
-                return (int)Math.Round(attributes.AvgRating * 20);
-            case CommunityScoreType.PercentageRecommended:
-                return attributes.PercentRecommend;
-            default:
-                return null;
-        }
+            CommunityScoreType.StarRating => (int)Math.Round(attributes.AvgRating * 20),
+            CommunityScoreType.PercentageRecommended => attributes.PercentRecommend,
+            _ => null,
+        };
     }
 
     private class ReviewJsonRoot

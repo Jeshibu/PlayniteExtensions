@@ -129,12 +129,12 @@ public class OgdbScraper : MetadataScraper
             return new ReleaseDate();
 
         var segmentNumbers = segments.Select(int.Parse).ToList();
-        switch (segmentNumbers.Count)
+        return segmentNumbers.Count switch
         {
-            case 1: return new ReleaseDate(segmentNumbers[0]);
-            case 2: return new ReleaseDate(segmentNumbers[1], segmentNumbers[0]);
-            case 3: return new ReleaseDate(segmentNumbers[2], segmentNumbers[1], segmentNumbers[0]);
-            default: return new ReleaseDate();
-        }
+            1 => new ReleaseDate(segmentNumbers[0]),
+            2 => new ReleaseDate(segmentNumbers[1], segmentNumbers[0]),
+            3 => new ReleaseDate(segmentNumbers[2], segmentNumbers[1], segmentNumbers[0]),
+            _ => new ReleaseDate(),
+        };
     }
 }

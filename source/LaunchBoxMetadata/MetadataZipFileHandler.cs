@@ -51,58 +51,55 @@ public class MetadataZipFileHandler : IDisposable
             var bytesDownloaded = 0;
             try
             {
-                using (var httpClient = new HttpClient() { Timeout = TimeSpan.FromHours(1) })
-                using (var response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, url), HttpCompletionOption.ResponseHeadersRead, a.CancelToken))
+                using var httpClient = new HttpClient() { Timeout = TimeSpan.FromHours(1) };
+                using var response = await httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, url), HttpCompletionOption.ResponseHeadersRead, a.CancelToken);
+
+                var etag = response.Headers.ETag?.Tag;
+                var lastModified = response.Content.Headers.LastModified;
+                var contentLength = response.Content.Headers.ContentLength;
+
+                if (etag != null && oldEtag == etag)
                 {
-                    var etag = response.Headers.ETag?.Tag;
-                    var lastModified = response.Content.Headers.LastModified;
-                    var contentLength = response.Content.Headers.ContentLength;
-
-                    if (etag != null && oldEtag == etag)
+                    string lastUpdatedString = lastModified.HasValue ? $" (last updated {lastModified.Value:g})" : "";
+                    var dialogResult = playniteAPI.Dialogs.ShowMessage($"Downloadable LaunchBox metadata{lastUpdatedString} has not changed since you last updated your local LaunchBox metadata database. Update anyway?", "Force update?", System.Windows.MessageBoxButton.YesNo);
+                    if (dialogResult != System.Windows.MessageBoxResult.Yes)
                     {
-                        string lastUpdatedString = lastModified.HasValue ? $" (last updated {lastModified.Value:g})" : "";
-                        var dialogResult = playniteAPI.Dialogs.ShowMessage($"Downloadable LaunchBox metadata{lastUpdatedString} has not changed since you last updated your local LaunchBox metadata database. Update anyway?", "Force update?", System.Windows.MessageBoxButton.YesNo);
-                        if (dialogResult != System.Windows.MessageBoxResult.Yes)
-                        {
-                            return;
-                        }
+                        return;
+                    }
+                }
+
+                if (contentLength.HasValue)
+                {
+                    a.IsIndeterminate = false;
+                    a.ProgressMaxValue = contentLength.Value;
+                }
+
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                using var targetFile = File.Create(zipPath);
+
+                while (true)
+                {
+                    if (a.CancelToken.IsCancellationRequested)
+                    {
+                        targetFile.Dispose();
+                        File.Delete(zipPath);
+                        return;
                     }
 
-                    if (contentLength.HasValue)
+                    int bufferContentLength = responseStream.Read(buffer, 0, buffer.Length);
+                    if (bufferContentLength == 0)
                     {
-                        a.IsIndeterminate = false;
-                        a.ProgressMaxValue = contentLength.Value;
+                        targetFile.Flush();
+                        tempPaths.Add(zipPath);
+                        settings.MetadataZipEtag = etag;
+                        settings.MetadataZipLastModified = lastModified;
+                        return;
                     }
 
-                    using (var responseStream = await response.Content.ReadAsStreamAsync())
-                    using (var targetFile = File.Create(zipPath))
-                    {
-                        while (true)
-                        {
-                            if (a.CancelToken.IsCancellationRequested)
-                            {
-                                targetFile.Dispose();
-                                File.Delete(zipPath);
-                                return;
-                            }
+                    targetFile.Write(buffer, 0, bufferContentLength);
 
-                            int bufferContentLength = responseStream.Read(buffer, 0, buffer.Length);
-                            if (bufferContentLength == 0)
-                            {
-                                targetFile.Flush();
-                                tempPaths.Add(zipPath);
-                                settings.MetadataZipEtag = etag;
-                                settings.MetadataZipLastModified = lastModified;
-                                return;
-                            }
-
-                            targetFile.Write(buffer, 0, bufferContentLength);
-
-                            bytesDownloaded += bufferContentLength;
-                            a.CurrentProgressValue = bytesDownloaded;
-                        }
-                    }
-
+                    bytesDownloaded += bufferContentLength;
+                    a.CurrentProgressValue = bytesDownloaded;
                 }
             }
             catch (Exception ex)

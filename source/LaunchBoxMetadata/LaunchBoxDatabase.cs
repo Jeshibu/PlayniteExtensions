@@ -82,7 +82,7 @@ public class LaunchBoxDatabase
     public IEnumerable<LaunchboxGameSearchResult> SearchGames(string search, int? limit = null)
     {
         if (string.IsNullOrWhiteSpace(search))
-            return new LaunchboxGameSearchResult[0];
+            return [];
 
         var matchStr = GetMatchStringFromSearchString(search);
 
