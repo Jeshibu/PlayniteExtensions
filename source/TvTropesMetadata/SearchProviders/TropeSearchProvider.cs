@@ -29,8 +29,7 @@ public class TropeSearchProvider : ISearchableDataSourceWithDetails<TvTropesSear
             var works = settings.OnlyFirstGamePerTropeListItem ? item.Works.Take(1) : item.Works;
             foreach (var work in item.Works)
             {
-                HashSet<string> urls;
-                if (!worksByName.TryGetValue(work.Title, out urls))
+                if (!worksByName.TryGetValue(work.Title, out HashSet<string> urls))
                 {
                     urls = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
                     worksByName.Add(work.Title, urls);

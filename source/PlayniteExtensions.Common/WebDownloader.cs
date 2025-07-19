@@ -223,8 +223,7 @@ public static class CookieContainerExtensions
         if (response is null)
             throw new ArgumentNullException(nameof(response));
 
-        IEnumerable<string> cookieHeaders;
-        if (response.Headers.TryGetValues("Set-Cookie", out cookieHeaders))
+        if (response.Headers.TryGetValues("Set-Cookie", out IEnumerable<string> cookieHeaders))
         {
             foreach (string cookie in cookieHeaders)
             {

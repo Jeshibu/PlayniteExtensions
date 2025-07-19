@@ -168,8 +168,7 @@ public static class RawgMapping
     {
         foreach (var r in RawgRatings)
         {
-            int rating;
-            if (settings?.RawgToPlayniteRatings == null || !settings.RawgToPlayniteRatings.TryGetValue(r.Key, out rating))
+            if (settings?.RawgToPlayniteRatings == null || !settings.RawgToPlayniteRatings.TryGetValue(r.Key, out int rating))
                 rating = r.Key * 20;
 
             yield return new RawgToPlayniteRating(r.Key, r.Value, rating);

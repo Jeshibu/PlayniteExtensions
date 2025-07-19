@@ -197,10 +197,9 @@ public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
 
     public override int? GetCriticScore(GetMetadataFieldArgs args)
     {
-        int? score;
 
         if (AvailableFields.Contains(MetadataField.CriticScore) &&
-                (this.gameController.Game.GetOpenCriticReception(out score) ||
+                (this.gameController.Game.GetOpenCriticReception(out int? score) ||
                 this.gameController.Game.GetIGDBReception(out score) ||
                 this.gameController.Game.GetMetacriticReception(out score))
             )

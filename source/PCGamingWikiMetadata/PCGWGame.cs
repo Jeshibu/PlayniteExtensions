@@ -293,9 +293,8 @@ public class PCGWGame : GenericItemOption
 
     public ReleaseDate? WindowsReleaseDate()
     {
-        ReleaseDate? date;
 
-        if (this.ReleaseDates.TryGetValue("Windows", out date))
+        if (this.ReleaseDates.TryGetValue("Windows", out ReleaseDate? date))
         {
             return date;
         }

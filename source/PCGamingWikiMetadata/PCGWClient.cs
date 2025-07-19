@@ -62,9 +62,8 @@ public class PCGWClient
         try
         {
             JObject searchResults = ExecuteRequest(request);
-            JToken error;
 
-            if (searchResults.TryGetValue("error", out error))
+            if (searchResults.TryGetValue("error", out JToken error))
             {
                 logger.Error($"Encountered API error: {error.ToString()}");
                 return gameResults;
@@ -97,9 +96,8 @@ public class PCGWClient
         try
         {
             JObject content = ExecuteRequest(request);
-            JToken error;
 
-            if (content.TryGetValue("error", out error))
+            if (content.TryGetValue("error", out JToken error))
             {
                 logger.Error($"Encountered API error: {error.ToString()}");
             }
@@ -107,9 +105,8 @@ public class PCGWClient
             PCGamingWikiJSONParser jsonParser = new PCGamingWikiJSONParser(content, this.gameController);
             PCGamingWikiHTMLParser parser = new PCGamingWikiHTMLParser(jsonParser.PageHTMLText(), this.gameController);
 
-            string redirectPage;
 
-            if (parser.CheckPageRedirect(out redirectPage))
+            if (parser.CheckPageRedirect(out string redirectPage))
             {
                 logger.Debug($"redirect link: {redirectPage}");
                 game.Name = redirectPage;

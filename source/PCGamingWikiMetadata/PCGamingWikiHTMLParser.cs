@@ -359,9 +359,8 @@ public class PCGamingWikiHTMLParser
 
     private void AddReception(string aggregator, HtmlNode node)
     {
-        int score;
 
-        if (int.TryParse(node.SelectNodes(".//a")[0].InnerText.HtmlDecode(), out score))
+        if (int.TryParse(node.SelectNodes(".//a")[0].InnerText.HtmlDecode(), out int score))
         {
             this.gameController.Game.AddReception(aggregator, score);
         }
