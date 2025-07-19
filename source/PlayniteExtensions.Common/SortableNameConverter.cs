@@ -16,7 +16,7 @@ public class SortableNameConverter
     /// <summary>
     /// These are valid roman numerals that are regularly used in game titles as not-numerals.
     /// </summary>
-    private static string[] excludedRomanNumerals = new[] { "XL", "XD", "DX", "XXX", "L", "C", "D", "M", "MII", "MIX", "MX", "MC", "DC" };
+    private static string[] excludedRomanNumerals = ["XL", "XD", "DX", "XXX", "L", "C", "D", "M", "MII", "MIX", "MX", "MC", "DC"];
 
     //Haven't observed game titles with zero, or four and above that would benefit from making those words sortable numbers. If you change this, be sure to change the regex too.
     private static Dictionary<string, int> numberWordValues = new Dictionary<string, int>(StringComparer.InvariantCultureIgnoreCase) { { "one", 1 }, { "two", 2 }, { "three", 3 } };
@@ -55,7 +55,7 @@ public class SortableNameConverter
     public SortableNameConverter(IEnumerable<string> articles = null, int numberLength = 2, bool removeEditions = false)
     {
         if (articles == null)
-            articles = new[] { "the", "a", "an" };
+            articles = ["the", "a", "an"];
 
         this.articles = articles.ToArray();
         this.removeFromStart = this.articles.Select(a => a + " ").ToArray();

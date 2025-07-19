@@ -21,7 +21,7 @@ public static class IEnumerableExtensions
     {
         Dictionary<TKey, TValue> output;
         if (equalityComparer == null)
-            output = new Dictionary<TKey, TValue>();
+            output = [];
         else
             output = new Dictionary<TKey, TValue>(equalityComparer);
 

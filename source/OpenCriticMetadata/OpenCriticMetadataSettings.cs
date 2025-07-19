@@ -1,33 +1,48 @@
-﻿using Playnite.SDK;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace OpenCriticMetadata;
 
 public class OpenCriticMetadataSettings : ObservableObject
 {
+    public OpenCriticSource CriticScoreSource { get; set; } = OpenCriticSource.TopCritics;
+    public int MinimumCriticReviewCount { get; set; } = 1;
+    public int MinimumCommunityReviewCount { get; set; } = 20;
+    public ObservableCollection<CheckboxSetting> CoverSources { get; set; } = [];
+    public ObservableCollection<CheckboxSetting> BackgroundSources { get; set; } = [];
 }
 
-public class OpenCriticMetadataSettingsViewModel : PluginSettingsViewModel<OpenCriticMetadataSettings, OpenCriticMetadata>
+public enum OpenCriticSource
 {
-    private readonly OpenCriticMetadata plugin;
-    private OpenCriticMetadataSettings editingClone { get; set; }
+    TopCritics,
+    Median
+}
 
-    public OpenCriticMetadataSettingsViewModel(OpenCriticMetadata plugin) : base(plugin, plugin.PlayniteApi)
+public class CheckboxSetting
+{
+    public bool Checked { get; set; }
+    public string Name { get; set; }
+
+    public CheckboxSetting()    {            }
+
+    public CheckboxSetting(string name, bool isChecked = false)
     {
-        // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
-        this.plugin = plugin;
-
-        // Load saved settings.
-        var savedSettings = plugin.LoadPluginSettings<OpenCriticMetadataSettings>();
-
-        // LoadPluginSettings returns null if no saved data is available.
-        if (savedSettings != null)
-        {
-            Settings = savedSettings;
-        }
-        else
-        {
-            Settings = new OpenCriticMetadataSettings();
-        }
+        Name = name;
+        Checked = isChecked;
     }
+
+    public override string ToString()
+    {
+        var symbol = Checked ? '✔' : '❌';
+        return $"{symbol} {Name}";
+    }
+}
+
+internal static class ImageTypeNames
+{
+    internal const string Box = "Cover (vertical)";
+    internal const string Square = "Cover (square)";
+    internal const string Masthead = "Masthead";
+    internal const string Banner = "Banner";
+    internal const string Screenshots = "Screenshots";
 }

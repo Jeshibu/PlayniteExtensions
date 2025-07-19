@@ -53,7 +53,7 @@ public class PluginSettingsViewModel<TSettings, TPlugin> : ObservableObject, ISe
 
     public virtual bool VerifySettings(out List<string> errors)
     {
-        errors = new List<string>();
+        errors = [];
         return true;
     }
 }

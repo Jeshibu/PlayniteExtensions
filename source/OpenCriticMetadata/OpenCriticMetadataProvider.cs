@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using static OpenCriticMetadata.ImageTypeNames;
 
 namespace OpenCriticMetadata;
 
@@ -32,19 +33,23 @@ public class OpenCriticSearchProvider : IGameSearchProvider<OpenCriticSearchResu
 {
     private readonly ILogger logger = LogManager.GetLogger();
     private readonly IPlatformUtility platformUtility;
+    private readonly OpenCriticMetadataSettings settings;
     private readonly RestClient restClient = new RestClient("https://api.opencritic.com/api/")
         .AddDefaultHeader("Referer", "https://opencritic.com/");
 
-    public OpenCriticSearchProvider(IPlatformUtility platformUtility)
+    public OpenCriticSearchProvider(IPlatformUtility platformUtility, OpenCriticMetadataSettings settings)
     {
         this.platformUtility = platformUtility;
+        this.settings = settings;
     }
 
-    public GameDetails GetDetails(OpenCriticSearchResultItem searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
+    public GameDetails GetDetails(OpenCriticSearchResultItem searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null) => GetDetails(searchResult.Id);
+
+    private GameDetails GetDetails(int id)
     {
-        var request = new RestRequest("game/{id}").AddUrlSegment("id", searchResult.Id);
-        var result = Execute<OpenCriticGame>(request);
-        return ToGameDetails(result);
+        var gameResult = Execute<OpenCriticGame>(new RestRequest($"game/{id}"));
+        var communityResult = Execute<OpenCriticUserRatings>(new RestRequest($"ratings/game/{id}"));
+        return ToGameDetails(gameResult, communityResult);
     }
 
     public IEnumerable<OpenCriticSearchResultItem> Search(string query, CancellationToken cancellationToken = default)
@@ -65,7 +70,7 @@ public class OpenCriticSearchProvider : IGameSearchProvider<OpenCriticSearchResu
         return false;
     }
 
-    private GameDetails ToGameDetails(OpenCriticGame game)
+    private GameDetails ToGameDetails(OpenCriticGame game, OpenCriticUserRatings userRatings)
     {
         if (game == null)
             return null;
@@ -74,35 +79,29 @@ public class OpenCriticSearchProvider : IGameSearchProvider<OpenCriticSearchResu
         {
             Platforms = game.Platforms.SelectMany(p => this.platformUtility.GetPlatforms(p.Name)).ToList(),
             Id = game.Id.ToString(),
+            Names = [game.Name],
             Url = game.Url,
-            CommunityScore = (int)Math.Round(game.MedianScore),
-            CriticScore = (int)Math.Round(game.TopCriticScore),
         };
+
+        output.CriticScore = settings.CriticScoreSource switch
+        {
+            OpenCriticSource.TopCritics => GetScore(game.TopCriticScore, game.NumTopCriticReviews, settings.MinimumCriticReviewCount),
+            OpenCriticSource.Median => GetScore(game.MedianScore, game.NumReviews, settings.MinimumCriticReviewCount),
+            _ => null,
+        };
+        output.CommunityScore = GetScore(userRatings.Median, userRatings.Count, settings.MinimumCommunityReviewCount);
 
         if (!string.IsNullOrWhiteSpace(game.Description))
             output.Description = Regex.Replace(game.Description, @"\r?\n", "<br>$0");
 
-        if (output.CommunityScore < 1) output.CommunityScore = null;
-        if (output.CriticScore < 1) output.CriticScore = null;
-
-        output.Names.Add(game.Name);
         output.Developers.AddRange(GetCompanies(game, "DEVELOPER"));
         output.Publishers.AddRange(GetCompanies(game, "PUBLISHER"));
 
         if (game.Genres != null)
             output.Genres.AddRange(game.Genres.Select(g => g.Name));
 
-        if (game.Images?.Box?.OG != null)
-            output.CoverOptions.Add(game.Images.Box);
-
-        if (game.Images?.Square?.OG != null)
-            output.CoverOptions.Add(game.Images.Square);
-
-        if (game.Images?.Masthead?.OG != null)
-            output.BackgroundOptions.Add(game.Images.Masthead);
-
-        if (game.Images?.Screenshots.Count > 0)
-            output.BackgroundOptions.AddRange(game.Images.Screenshots);
+        output.CoverOptions = GetImageOptions(game.Images, settings.CoverSources);
+        output.BackgroundOptions = GetImageOptions(game.Images, settings.BackgroundSources);
 
         if (game.FirstReleaseDate.HasValue)
             output.ReleaseDate = new ReleaseDate(game.FirstReleaseDate.Value.LocalDateTime);
@@ -110,10 +109,50 @@ public class OpenCriticSearchProvider : IGameSearchProvider<OpenCriticSearchResu
         return output;
     }
 
+    private static List<IImageData> GetImageOptions(OpenCriticImageCollection images, IEnumerable<CheckboxSetting> settings)
+    {
+        var output = new List<IImageData>();
+
+        if (images == null)
+            return output;
+
+        IEnumerable<IImageData> getSingleImage(OpenCriticImage i)
+        {
+            if (i?.OG == null)
+                yield break;
+
+            yield return i;
+        }
+
+        foreach (var option in settings)
+            if (option.Checked)
+                output.AddRange(option.Name switch
+                {
+                    Box => getSingleImage(images.Box),
+                    Square => getSingleImage(images.Square),
+                    Masthead => getSingleImage(images.Masthead),
+                    Banner => getSingleImage(images.Banner),
+                    Screenshots => images.Screenshots ?? [],
+                    _ => [],
+                });
+
+        return output;
+    }
+
+    private static int? GetScore(double? score, int reviewCount, int minimumReviewCount)
+    {
+        if (score == null || score < 1 || reviewCount < minimumReviewCount)
+            return null;
+
+        var output = (int)Math.Round(score.Value);
+
+        return output;
+    }
+
     private static IEnumerable<string> GetCompanies(OpenCriticGame game, string type)
     {
         if (game?.Companies == null)
-            return new string[0];
+            return [];
 
         return game.Companies.Where(c => string.Equals(c.Type, type, StringComparison.InvariantCultureIgnoreCase)).Select(c => c.Name);
     }
@@ -150,9 +189,9 @@ public class OpenCriticSearchResultItem : OpenCriticBaseModel, IGameSearchResult
 
     string IGameSearchResult.Title => Name;
 
-    IEnumerable<string> IGameSearchResult.AlternateNames => new string[0];
+    IEnumerable<string> IGameSearchResult.AlternateNames => [];
 
-    IEnumerable<string> IGameSearchResult.Platforms => new string[0];
+    IEnumerable<string> IGameSearchResult.Platforms => [];
 
     ReleaseDate? IGameSearchResult.ReleaseDate => null;
 }
@@ -170,9 +209,9 @@ public class OpenCriticGame : OpenCriticBaseModel
     public double PercentRecommended { get; set; }
     public string Description { get; set; }
     public DateTimeOffset? FirstReleaseDate { get; set; }
-    public List<OpenCriticCompany> Companies { get; set; } = new List<OpenCriticCompany>();
-    public List<OpenCriticBaseModel> Genres { get; set; } = new List<OpenCriticBaseModel>();
-    public List<OpenCriticPlatform> Platforms { get; set; } = new List<OpenCriticPlatform>();
+    public List<OpenCriticCompany> Companies { get; set; } = [];
+    public List<OpenCriticBaseModel> Genres { get; set; } = [];
+    public List<OpenCriticPlatform> Platforms { get; set; } = [];
     public string Url { get; set; }
 }
 
@@ -181,7 +220,8 @@ public class OpenCriticImageCollection
     public OpenCriticImage Box { get; set; }
     public OpenCriticImage Square { get; set; }
     public OpenCriticImage Masthead { get; set; }
-    public List<OpenCriticImage> Screenshots { get; set; } = new List<OpenCriticImage>();
+    public OpenCriticImage Banner { get; set; }
+    public List<OpenCriticImage> Screenshots { get; set; } = [];
 }
 
 public class OpenCriticImage : IImageData
@@ -197,7 +237,7 @@ public class OpenCriticImage : IImageData
 
     int IImageData.Height => 0;
 
-    IEnumerable<string> IImageData.Platforms => new string[0];
+    IEnumerable<string> IImageData.Platforms => [];
 
     private static string AddDomain(string path) => path == null ? null : $"https://img.opencritic.com/{path}";
 }
@@ -212,4 +252,10 @@ public class OpenCriticPlatform : OpenCriticBaseModel
 {
     public string ShortName { get; set; }
     public DateTimeOffset ReleaseDate { get; set; }
+}
+
+public class OpenCriticUserRatings
+{
+    public double? Median { get; set; }
+    public int Count { get; set; }
 }

@@ -42,7 +42,7 @@ public class WebDownloader : IWebDownloader
     private DangerouslySimpleCookieContainer cookieContainer;
     private HttpClient httpClient;
     private ILogger logger = LogManager.GetLogger();
-    public static HttpStatusCode[] HttpRedirectStatusCodes = new[] { HttpStatusCode.Redirect, HttpStatusCode.Moved, HttpStatusCode.TemporaryRedirect, (HttpStatusCode)308 };
+    public static HttpStatusCode[] HttpRedirectStatusCodes = [HttpStatusCode.Redirect, HttpStatusCode.Moved, HttpStatusCode.TemporaryRedirect, (HttpStatusCode)308];
 
     public CookieContainer Cookies => cookieContainer.Container;
     public string UserAgent { get; set; } = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0";

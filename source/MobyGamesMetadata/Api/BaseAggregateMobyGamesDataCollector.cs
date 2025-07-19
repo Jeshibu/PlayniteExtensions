@@ -73,7 +73,7 @@ public abstract class BaseAggregateMobyGamesDataCollector
         foreach (var platform in mobyGame.platforms)
         {
             gameDetails.Platforms.AddRange(platformUtility.GetPlatforms(platform.name));
-            if (settings.MatchPlatformsForReleaseDate && platformUtility.PlatformsOverlap(searchGame.Platforms, new[] { platform.name }))
+            if (settings.MatchPlatformsForReleaseDate && platformUtility.PlatformsOverlap(searchGame.Platforms, [platform.name]))
                 gameDetails.ReleaseDate = GetEarliestReleaseDate(gameDetails.ReleaseDate, platform.release_date.ParseReleaseDate());
         }
 

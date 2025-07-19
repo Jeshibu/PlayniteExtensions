@@ -68,7 +68,7 @@ public interface ISingleExternalDatabaseIdUtility : IExternalDatabaseIdUtility
 
 public abstract class SingleExternalDatabaseIdUtility : ISingleExternalDatabaseIdUtility
 {
-    public IEnumerable<ExternalDatabase> Databases => new[] { Database };
+    public IEnumerable<ExternalDatabase> Databases => [Database];
 
     public abstract ExternalDatabase Database { get; }
 
@@ -104,7 +104,7 @@ public class SteamIdUtility : SingleExternalDatabaseIdUtility
 
     public override ExternalDatabase Database { get; } = ExternalDatabase.Steam;
 
-    public override IEnumerable<Guid> LibraryIds { get; } = new[] { Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB") };
+    public override IEnumerable<Guid> LibraryIds { get; } = [Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB")];
 
     public override DbId GetIdFromUrl(string url)
     {
@@ -125,10 +125,10 @@ public class GOGIdUtility : SingleExternalDatabaseIdUtility
 
     public override ExternalDatabase Database { get; } = ExternalDatabase.GOG;
 
-    public override IEnumerable<Guid> LibraryIds => new[] {
+    public override IEnumerable<Guid> LibraryIds => [
         Guid.Parse("AEBE8B7C-6DC3-4A66-AF31-E7375C6B5E9E"), // GOG
         Guid.Parse("03689811-3F33-4DFB-A121-2EE168FB9A5C"), // GOG OSS
-    };
+    ];
 
     public override DbId GetIdFromUrl(string url)
     {
@@ -149,7 +149,7 @@ public class MobyGamesIdUtility : SingleExternalDatabaseIdUtility
 
     public override ExternalDatabase Database { get; } = ExternalDatabase.MobyGames;
 
-    public override IEnumerable<Guid> LibraryIds { get; } = new Guid[0];
+    public override IEnumerable<Guid> LibraryIds { get; } = [];
 
     public override DbId GetIdFromUrl(string url)
     {
@@ -164,7 +164,7 @@ public class MobyGamesIdUtility : SingleExternalDatabaseIdUtility
 
 public class AggregateExternalDatabaseUtility : IExternalDatabaseIdUtility
 {
-    private List<ISingleExternalDatabaseIdUtility> databaseIdUtilities = new List<ISingleExternalDatabaseIdUtility>();
+    private List<ISingleExternalDatabaseIdUtility> databaseIdUtilities = [];
 
     public IEnumerable<ExternalDatabase> Databases => databaseIdUtilities.SelectMany(x => x.Databases).Distinct();
 

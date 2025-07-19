@@ -16,8 +16,8 @@ public class OpenCriticMetadata : MetadataPlugin
 
     public override Guid Id { get; } = Guid.Parse("f6da90b0-3042-4fe4-8d1e-7cdcf44389f7");
 
-    public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
-    {
+    public override List<MetadataField> SupportedFields { get; } =
+    [
         MetadataField.Name,
         MetadataField.Description,
         MetadataField.Genres,
@@ -29,7 +29,7 @@ public class OpenCriticMetadata : MetadataPlugin
         MetadataField.Publishers,
         MetadataField.Links,
         MetadataField.ReleaseDate,
-    };
+    ];
 
     public override string Name => "OpenCritic";
 
@@ -45,7 +45,7 @@ public class OpenCriticMetadata : MetadataPlugin
 
     public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
     {
-        return new OpenCriticMetadataProvider(options, this, new OpenCriticSearchProvider(platformUtility), platformUtility);
+        return new OpenCriticMetadataProvider(options, this, new OpenCriticSearchProvider(platformUtility, settings.Settings), platformUtility);
     }
 
     public override ISettings GetSettings(bool firstRunSettings)

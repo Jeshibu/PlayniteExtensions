@@ -48,7 +48,7 @@ public static class StringExtensions
 
     public static string TrimStart(this string s, string remove, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
     {
-        return TrimStart(s, new[] { remove }, stringComparison);
+        return TrimStart(s, [remove], stringComparison);
     }
 
     public static string TrimStart(this string s, IEnumerable<string> remove, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
@@ -66,7 +66,7 @@ public static class StringExtensions
 
     public static string TrimEnd(this string s, string remove, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)
     {
-        return TrimEnd(s, new[] { remove }, stringComparison);
+        return TrimEnd(s, [remove], stringComparison);
     }
 
     public static string TrimEnd(this string s, IEnumerable<string> remove, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase)

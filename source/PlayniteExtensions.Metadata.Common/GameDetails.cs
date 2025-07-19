@@ -10,41 +10,41 @@ public class GameDetails
 {
     public string Id { get; set; }
 
-    public List<string> Names { get; set; } = new List<string>();
+    public List<string> Names { get; set; } = [];
 
     public string Description { get; set; }
 
     public ReleaseDate? ReleaseDate { get; set; }
 
-    public List<Link> Links { get; set; } = new List<Link>();
+    public List<Link> Links { get; set; } = [];
 
     public int? CriticScore { get; set; }
 
     public int? CommunityScore { get; set; }
 
-    public List<IImageData> IconOptions { get; set; } = new List<IImageData>();
+    public List<IImageData> IconOptions { get; set; } = [];
 
-    public List<IImageData> CoverOptions { get; set; } = new List<IImageData>();
+    public List<IImageData> CoverOptions { get; set; } = [];
 
-    public List<IImageData> BackgroundOptions { get; set; } = new List<IImageData>();
+    public List<IImageData> BackgroundOptions { get; set; } = [];
 
-    public List<string> Series { get; set; } = new List<string>();
+    public List<string> Series { get; set; } = [];
 
-    public List<string> AgeRatings { get; set; } = new List<string>();
+    public List<string> AgeRatings { get; set; } = [];
 
-    public List<MetadataProperty> Platforms { get; set; } = new List<MetadataProperty>();
+    public List<MetadataProperty> Platforms { get; set; } = [];
 
-    public List<string> Developers { get; set; } = new List<string>();
+    public List<string> Developers { get; set; } = [];
 
-    public List<string> Publishers { get; set; } = new List<string>();
+    public List<string> Publishers { get; set; } = [];
 
-    public List<string> Genres { get; set; } = new List<string>();
+    public List<string> Genres { get; set; } = [];
 
-    public List<string> Tags { get; set; } = new List<string>();
+    public List<string> Tags { get; set; } = [];
 
-    public List<string> Features { get; set; } = new List<string>();
+    public List<string> Features { get; set; } = [];
 
-    public List<DbId> ExternalIds { get; set; } = new List<DbId>();
+    public List<DbId> ExternalIds { get; set; } = [];
 
     public ulong? InstallSize { get; set; }
 
