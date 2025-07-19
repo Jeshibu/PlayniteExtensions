@@ -36,8 +36,7 @@ public abstract class BaseAggregateMobyGamesDataCollector
         apiDetails.Series.AddMissing(scraperDetails.Series);
         AddCompanies(apiDetails.Developers, scraperDetails.Developers);
         AddCompanies(apiDetails.Publishers, scraperDetails.Publishers);
-        if (apiDetails.Description == null)
-            apiDetails.Description = scraperDetails.Description;
+        apiDetails.Description ??= scraperDetails.Description;
 
         return apiDetails;
     }

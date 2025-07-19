@@ -101,7 +101,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
     {
         get
         {
-            return initializeDatabaseCommand ?? (initializeDatabaseCommand = new RelayCommand(InitializeDatabase));
+            return initializeDatabaseCommand ??= new RelayCommand(InitializeDatabase);
         }
     }
 
@@ -109,7 +109,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
     {
         get
         {
-            return downloadMetadataCommand ?? (downloadMetadataCommand = new RelayCommand(DownloadMetadata));
+            return downloadMetadataCommand ??= new RelayCommand(DownloadMetadata);
         }
     }
 
@@ -278,7 +278,8 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
         }
     }
 
-    public Dictionary<AspectRatio, string> AspectRatios { get; } = new Dictionary<AspectRatio, string> {
+    public Dictionary<AspectRatio, string> AspectRatios { get; } = new()
+    {
         { AspectRatio.Any, "Any" },
         { AspectRatio.Vertical, "Vertical" },
         { AspectRatio.Horizontal, "Horizontal" },

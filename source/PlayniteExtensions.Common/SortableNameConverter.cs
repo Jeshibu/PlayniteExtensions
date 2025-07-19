@@ -54,8 +54,7 @@ public class SortableNameConverter
     /// <param name="removeEditions">If true, remove editions from the end of titles</param>
     public SortableNameConverter(IEnumerable<string> articles = null, int numberLength = 2, bool removeEditions = false)
     {
-        if (articles == null)
-            articles = ["the", "a", "an"];
+        articles ??= ["the", "a", "an"];
 
         this.articles = articles.ToArray();
         this.removeFromStart = this.articles.Select(a => a + " ").ToArray();

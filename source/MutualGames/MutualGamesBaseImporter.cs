@@ -69,8 +69,8 @@ public abstract class MutualGamesBaseImporter
     {
         return settings.ImportTo switch
         {
-            GameField.Categories => game.CategoryIds ?? (game.CategoryIds = []),
-            GameField.Tags => game.TagIds ?? (game.TagIds = []),
+            GameField.Categories => game.CategoryIds ??= [],
+            GameField.Tags => game.TagIds ??= [],
             _ => throw new NotImplementedException(),
         };
     }

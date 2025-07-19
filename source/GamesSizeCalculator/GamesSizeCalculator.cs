@@ -77,7 +77,7 @@ public class GamesSizeCalculator : MetadataPlugin
                 }
             }
 
-            return steamApiClient ?? (steamApiClient = new SteamApiClient());
+            return steamApiClient ??= new SteamApiClient();
         }
     }
 

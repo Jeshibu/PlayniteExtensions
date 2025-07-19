@@ -22,7 +22,7 @@ public class MobyGamesScraper : IDisposable
     private IPlatformUtility PlatformUtility { get; }
     private IWebViewFactory WebViewFactory { get; }
     private IWebView _webView;
-    private IWebView WebView => _webView ?? (_webView = WebViewFactory.CreateOffscreenView());
+    private IWebView WebView => _webView ??= WebViewFactory.CreateOffscreenView();
 
     public static string GetSearchUrl(string query, string objectType)
     {

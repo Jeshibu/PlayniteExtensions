@@ -15,15 +15,12 @@ public class TvTropesMetadataSettingsViewModel : PluginSettingsViewModel<TvTrope
     public TvTropesMetadataSettingsViewModel(TvTropesMetadata plugin) : base(plugin, plugin.PlayniteApi)
     {
         Settings = plugin.LoadPluginSettings<TvTropesMetadataSettings>();
-        if (Settings == null)
+        Settings ??= new TvTropesMetadataSettings()
         {
-            Settings = new TvTropesMetadataSettings()
-            {
-                MaxDegreeOfParallelism = BulkImportPluginSettings.GetDefaultMaxDegreeOfParallelism(),
-                TropePrefix = "Trope: ",
-                ShowTopPanelButton = true,
-                OnlyFirstGamePerTropeListItem = true,
-            };
-        }
+            MaxDegreeOfParallelism = BulkImportPluginSettings.GetDefaultMaxDegreeOfParallelism(),
+            TropePrefix = "Trope: ",
+            ShowTopPanelButton = true,
+            OnlyFirstGamePerTropeListItem = true,
+        };
     }
 }

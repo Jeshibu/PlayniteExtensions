@@ -24,7 +24,7 @@ public class SteamTagsImporter : MetadataPlugin
     private SteamTagsImporterSettingsViewModel _settings;
     public SteamTagsImporterSettingsViewModel Settings
     {
-        get { return _settings ?? (_settings = new SteamTagsImporterSettingsViewModel(this)); }
+        get { return _settings ??= new SteamTagsImporterSettingsViewModel(this); }
         set { _settings = value; }
     }
 
@@ -179,7 +179,7 @@ public class SteamTagsImporter : MetadataPlugin
             PlayniteApi.Database.Tags.Add(tag);
         }
 
-        var tagIds = game.TagIds ?? (game.TagIds = []);
+        var tagIds = game.TagIds ??= [];
 
         if (!tagIds.Contains(tag.Id))
         {

@@ -55,7 +55,7 @@ public class RawgMetadata : MetadataPlugin
             return null;
         }
 
-        return rawgApiClient ?? (rawgApiClient = new RawgApiClient(settings.Settings.ApiKey));
+        return rawgApiClient ??= new RawgApiClient(settings.Settings.ApiKey);
     }
 
     private void OpenSettings()

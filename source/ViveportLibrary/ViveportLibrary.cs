@@ -186,8 +186,7 @@ public class ViveportLibrary : LibraryPlugin
 
             if (subscription && !gameHasTag)
             {
-                if (game.TagIds == null)
-                    game.TagIds = [];
+                game.TagIds ??= [];
 
                 game.TagIds.Add(subscriptionTag.Id);
                 return true;

@@ -19,8 +19,8 @@ public class MutualGames : GenericPlugin
     private MutualGamesSettingsViewModel _settings;
     private IWebDownloader _downloader;
 
-    private MutualGamesSettingsViewModel Settings { get => _settings ?? (_settings = new MutualGamesSettingsViewModel(this)); set => _settings = value; }
-    private IWebDownloader Downloader => _downloader ?? (_downloader = new WebDownloader());
+    private MutualGamesSettingsViewModel Settings { get => _settings ??= new MutualGamesSettingsViewModel(this); set => _settings = value; }
+    private IWebDownloader Downloader => _downloader ??= new WebDownloader();
 
     public override Guid Id { get; } = Guid.Parse("c615a8d1-c262-430a-b74b-6302d3328466");
 

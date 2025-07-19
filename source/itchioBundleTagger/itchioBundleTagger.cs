@@ -109,8 +109,7 @@ public class itchioBundleTagger : GenericPlugin
         if (tag != null)
             tag.Name = computedTagName; //rename in case of switched localization-name or prefix
 
-        if (tag == null)
-            tag = PlayniteApi.Database.Tags.FirstOrDefault(t => t.Name == computedTagName);
+        tag ??= PlayniteApi.Database.Tags.FirstOrDefault(t => t.Name == computedTagName);
 
         if (tag == null)
             PlayniteApi.Database.Tags.Add(tag = new Tag(computedTagName));
@@ -122,7 +121,7 @@ public class itchioBundleTagger : GenericPlugin
 
     private bool AddTagToGame(Game game, Tag tag)
     {
-        var tagIds = game.TagIds ?? (game.TagIds = []);
+        var tagIds = game.TagIds ??= [];
 
         if (!tagIds.Contains(tag.Id))
         {

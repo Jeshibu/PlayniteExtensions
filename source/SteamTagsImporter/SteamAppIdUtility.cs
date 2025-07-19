@@ -19,7 +19,7 @@ public class SteamAppIdUtility : ISteamAppIdUtility
     private Dictionary<string, int> _steamIds;
     private Dictionary<string, int> SteamIdsByTitle
     {
-        get { return _steamIds ?? (_steamIds = GetSteamIdsByTitle()); }
+        get { return _steamIds ??= GetSteamIdsByTitle(); }
     }
 
     public ICachedFile SteamAppList { get; }

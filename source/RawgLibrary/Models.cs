@@ -154,11 +154,9 @@ public static class RawgMapping
             if (playniteStatus == null && RawgToPlayniteStatusDefaults.TryGetValue(cs.Key, out string playniteStatusName))
                 playniteStatus = playniteStatuses.FirstOrDefault(s => s.Name.Equals(playniteStatusName, StringComparison.InvariantCultureIgnoreCase));
 
-            if (playniteStatus == null)
-                playniteStatus = playniteStatuses[playniteAPI.ApplicationSettings.CompletionStatus.DefaultStatus];
+            playniteStatus ??= playniteStatuses[playniteAPI.ApplicationSettings.CompletionStatus.DefaultStatus];
 
-            if (playniteStatus == null)
-                playniteStatus = playniteStatuses.FirstOrDefault();
+            playniteStatus ??= playniteStatuses.FirstOrDefault();
 
             logger.Trace($"Completion statuses: {playniteStatuses?.Count}, selected completion status: {playniteStatus?.Name}");
 

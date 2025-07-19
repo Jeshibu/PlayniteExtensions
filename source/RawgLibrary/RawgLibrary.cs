@@ -207,7 +207,7 @@ public class RawgLibrary : LibraryPlugin
             return null;
         }
 
-        return rawgApiClient ?? (rawgApiClient = new RawgApiClient(settings.Settings.User?.ApiKey));
+        return rawgApiClient ??= new RawgApiClient(settings.Settings.User?.ApiKey);
     }
 
     public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)

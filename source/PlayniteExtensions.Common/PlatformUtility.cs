@@ -13,9 +13,9 @@ public class PlatformUtility : IPlatformUtility
     private Dictionary<string, string[]> platformSpecNameByNormalName;
     private HashSet<string> platformSpecNames;
 
-    private Dictionary<string, string[]> PlatformSpecNameByNormalName => platformSpecNameByNormalName ?? (platformSpecNameByNormalName = GetPlatformSpecsByNormalName(api));
+    private Dictionary<string, string[]> PlatformSpecNameByNormalName => platformSpecNameByNormalName ??= GetPlatformSpecsByNormalName(api);
 
-    private HashSet<string> PlatformSpecNames => platformSpecNames ?? (platformSpecNames = api?.Database?.Platforms?.Select(p => p.SpecificationId).Where(x => x != null).ToHashSet());
+    private HashSet<string> PlatformSpecNames => platformSpecNames ??= api?.Database?.Platforms?.Select(p => p.SpecificationId).Where(x => x != null).ToHashSet();
 
     public PlatformUtility(IPlayniteAPI api)
     {

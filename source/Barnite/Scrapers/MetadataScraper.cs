@@ -89,7 +89,7 @@ public abstract class MetadataScraper
         if (data == null || response == null)
             return;
 
-        var links = data.Links ?? (data.Links = []);
+        var links = data.Links ??= [];
         links.Add(new Link(this.Name, response.ResponseUrl));
     }
 }

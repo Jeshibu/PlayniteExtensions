@@ -23,10 +23,7 @@ public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
     {
         get
         {
-            if (availableFields == null)
-            {
-                availableFields = GetAvailableFields();
-            }
+            availableFields ??= GetAvailableFields();
 
             return availableFields;
         }

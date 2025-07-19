@@ -254,8 +254,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
                     continue;
 
                 foreach (var gd in g.GameDetails)
-                    if (gd.Id == null)
-                        gd.Id = GetGameIdFromUrl(gd.Url);
+                    gd.Id ??= GetGameIdFromUrl(gd.Url);
 
                 bool update = AddItem(g.Game, viewModel.TargetField, dbItem.Id);
 

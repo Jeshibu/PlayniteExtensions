@@ -20,7 +20,7 @@ public class EaClient : IFriendsGamesClient
     private readonly ILogger logger = LogManager.GetLogger();
     private AuthTokenResponse _authToken;
     private long _userId;
-    private AuthTokenResponse AuthToken => _authToken ?? (_authToken = GetAccessTokenAsync().Result);
+    private AuthTokenResponse AuthToken => _authToken ??= GetAccessTokenAsync().Result;
     private long UserId => _userId != default ? _userId : (_userId = GetUserId(AuthToken));
 
     public string Name { get; } = "EA";

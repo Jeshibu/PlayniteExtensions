@@ -14,7 +14,7 @@ public class SteamPropertySearchProvider : ISearchableDataSourceWithDetails<Stea
     private readonly ILogger logger = LogManager.GetLogger();
     private readonly SteamSearch steamSearch;
     private SteamProperty[] steamProperties;
-    private SteamProperty[] SteamProperties => steamProperties ?? (steamProperties = steamSearch.GetProperties().ToArray());
+    private SteamProperty[] SteamProperties => steamProperties ??= steamSearch.GetProperties().ToArray();
 
     public SteamPropertySearchProvider(SteamSearch steamSearch)
     {
