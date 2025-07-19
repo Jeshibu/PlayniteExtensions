@@ -22,18 +22,11 @@ public class Range
     public string MaxString { get => Max.ToString(); set => int.TryParse(value, out max); }
 }
 
-public class RawgToPlayniteStatus
+public class RawgToPlayniteStatus(string id, string description, Guid playniteCompletionStatusId)
 {
-    public string Id { get; set; }
-    public string Description { get; set; }
-    public Guid PlayniteCompletionStatusId { get; set; }
-
-    public RawgToPlayniteStatus(string id, string description, Guid playniteCompletionStatusId)
-    {
-        Id = id;
-        Description = description;
-        PlayniteCompletionStatusId = playniteCompletionStatusId;
-    }
+    public string Id { get; set; } = id;
+    public string Description { get; set; } = description;
+    public Guid PlayniteCompletionStatusId { get; set; } = playniteCompletionStatusId;
 }
 
 public class RawgToPlayniteRating
@@ -61,29 +54,17 @@ public class RawgToPlayniteRating
     }
 }
 
-public class PlayniteToRawgStatus
+public class PlayniteToRawgStatus(CompletionStatus playniteCompletionStatus, string rawgStatusId)
 {
-    public PlayniteToRawgStatus(CompletionStatus playniteCompletionStatus, string rawgStatusId)
-    {
-        PlayniteCompletionStatus = playniteCompletionStatus;
-        RawgStatusId = rawgStatusId;
-    }
-
-    public CompletionStatus PlayniteCompletionStatus { get; set; }
-    public string RawgStatusId { get; set; }
+    public CompletionStatus PlayniteCompletionStatus { get; set; } = playniteCompletionStatus;
+    public string RawgStatusId { get; set; } = rawgStatusId;
 }
 
-public class PlayniteToRawgRating
+public class PlayniteToRawgRating(int id, string description, Range range)
 {
-    public PlayniteToRawgRating(int id, string description, Range range)
-    {
-        Id = id;
-        Description = description;
-        Range = range;
-    }
-    public int Id { get; set; }
-    public string Description { get; set; }
-    public Range Range { get; set; }
+    public int Id { get; set; } = id;
+    public string Description { get; set; } = description;
+    public Range Range { get; set; } = range;
 }
 
 public static class RawgMapping

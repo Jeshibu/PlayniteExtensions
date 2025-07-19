@@ -10,20 +10,13 @@ using System.Threading.Tasks;
 
 namespace GamesSizeCalculator.SteamSizeCalculation;
 
-public class SteamSizeCalculator : ISizeCalculator
+public class SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtility steamAppIdUtility, GamesSizeCalculatorSettings settings) : ISizeCalculator
 {
     private ILogger logger = LogManager.GetLogger();
-    public ISteamApiClient SteamApiClient { get; }
-    public ISteamAppIdUtility SteamAppIdUtility { get; }
-    public GamesSizeCalculatorSettings Settings { get; }
+    public ISteamApiClient SteamApiClient { get; } = steamApiClient;
+    public ISteamAppIdUtility SteamAppIdUtility { get; } = steamAppIdUtility;
+    public GamesSizeCalculatorSettings Settings { get; } = settings;
     public string ServiceName { get; } = "Steam";
-
-    public SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtility steamAppIdUtility, GamesSizeCalculatorSettings settings)
-    {
-        SteamApiClient = steamApiClient;
-        SteamAppIdUtility = steamAppIdUtility;
-        Settings = settings;
-    }
 
     public async Task<ulong?> GetInstallSizeAsync(Game game)
     {

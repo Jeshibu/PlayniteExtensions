@@ -31,14 +31,9 @@ public class SearchResultTests
         Assert.NotEmpty(searchResults);
     }
 
-    private class FakeWebViewFactory : IWebViewFactory
+    private class FakeWebViewFactory(string pageSource) : IWebViewFactory
     {
-        public FakeWebViewFactory(string pageSource)
-        {
-            PageSource = pageSource;
-        }
-
-        public string PageSource { get; }
+        public string PageSource { get; } = pageSource;
 
         public IWebView CreateOffscreenView() => new FakeWebView(PageSource);
 
@@ -51,18 +46,13 @@ public class SearchResultTests
         public IWebView CreateView(WebViewSettings settings) => throw new NotImplementedException();
     }
 
-    private class FakeWebView : IWebView
+    private class FakeWebView(string pageSource) : IWebView
     {
-        public FakeWebView(string pageSource)
-        {
-            PageSource = pageSource;
-        }
-
         public bool CanExecuteJavascriptInMainFrame { get; set; } = true;
 
         public System.Windows.Window WindowHost => throw new NotImplementedException();
 
-        public string PageSource { get; }
+        public string PageSource { get; } = pageSource;
 
         public event EventHandler<WebViewLoadingChangedEventArgs> LoadingChanged;
 

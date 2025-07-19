@@ -4,20 +4,12 @@ using System.IO;
 
 namespace LegacyGamesLibrary;
 
-public class LegacyGamesLibraryClient : LibraryClient
+public class LegacyGamesLibraryClient(string exePath, string icon) : LibraryClient
 {
-    public LegacyGamesLibraryClient(string exePath, string icon)
-    {
-        ExePath = exePath;
-        _icon = icon;
-    }
-
-    private string _icon;
-
     public override bool IsInstalled => !string.IsNullOrWhiteSpace(ExePath) && File.Exists(ExePath);
-    public override string Icon => _icon;
+    public override string Icon => icon;
 
-    public string ExePath { get; }
+    public string ExePath { get; } = exePath;
 
     public override void Open()
     {

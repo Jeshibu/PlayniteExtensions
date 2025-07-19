@@ -13,12 +13,8 @@ using System.Threading.Tasks;
 
 namespace XboxMetadata.Scrapers;
 
-public class XboxOneScraper : BaseXboxScraper
+public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platformUtility) : BaseXboxScraper(downloader, platformUtility)
 {
-    public XboxOneScraper(IWebDownloader downloader, IPlatformUtility platformUtility) : base(downloader, platformUtility)
-    {
-    }
-
     public override string Key { get; } = "XboxOne";
     public override int ExecutionOrder { get; } = 1;
     private ILogger logger = LogManager.GetLogger();

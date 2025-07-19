@@ -23,18 +23,11 @@ public interface IWebDownloader
     Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null, bool getContent = true);
 }
 
-public class DownloadStringResponse
+public class DownloadStringResponse(string responseUrl, string responseContent, HttpStatusCode statusCode)
 {
-    public DownloadStringResponse(string responseUrl, string responseContent, HttpStatusCode statusCode)
-    {
-        ResponseUrl = responseUrl;
-        ResponseContent = responseContent;
-        StatusCode = statusCode;
-    }
-
-    public string ResponseUrl { get; set; }
-    public string ResponseContent { get; set; }
-    public HttpStatusCode StatusCode { get; set; }
+    public string ResponseUrl { get; set; } = responseUrl;
+    public string ResponseContent { get; set; } = responseContent;
+    public HttpStatusCode StatusCode { get; set; } = statusCode;
 }
 
 public class WebDownloader : IWebDownloader

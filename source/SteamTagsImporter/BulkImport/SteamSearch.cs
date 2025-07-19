@@ -11,11 +11,9 @@ using System.Text.RegularExpressions;
 
 namespace SteamTagsImporter.BulkImport;
 
-public class SteamSearch
+public class SteamSearch(IWebDownloader downloader, SteamTagsImporterSettings settings)
 {
     private readonly HtmlParser htmlParser = new HtmlParser();
-    private readonly IWebDownloader downloader;
-    private readonly SteamTagsImporterSettings settings;
     private readonly string[] NotUserSelectableParams = ["specials", "hidef2p", "category1", "supportedlang", "os"];
 
     private static string GetCategory(string param) => param switch
@@ -34,12 +32,6 @@ public class SteamSearch
         "accessibility" => "Accessibility",
         _ => param,
     };
-
-    public SteamSearch(IWebDownloader downloader, SteamTagsImporterSettings settings)
-    {
-        this.downloader = downloader;
-        this.settings = settings;
-    }
 
     public IEnumerable<SteamProperty> GetProperties()
     {

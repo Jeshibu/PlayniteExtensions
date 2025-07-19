@@ -11,18 +11,10 @@ using System.Linq;
 
 namespace MobyGamesMetadata.Api;
 
-public class MobyGamesScraper : IDisposable
+public class MobyGamesScraper(IPlatformUtility platformUtility, IWebViewFactory webViewFactory) : IDisposable
 {
-    public MobyGamesScraper(IPlatformUtility platformUtility, IWebViewFactory webViewFactory)
-    {
-        PlatformUtility = platformUtility;
-        WebViewFactory = webViewFactory;
-    }
-
-    private IPlatformUtility PlatformUtility { get; }
-    private IWebViewFactory WebViewFactory { get; }
     private IWebView _webView;
-    private IWebView WebView => _webView ??= WebViewFactory.CreateOffscreenView();
+    private IWebView WebView => _webView ??= webViewFactory.CreateOffscreenView();
 
     public static string GetSearchUrl(string query, string objectType)
     {
@@ -131,7 +123,7 @@ public class MobyGamesScraper : IDisposable
 
     private GameDetails ParseGameDetailsHtml(string html)
     {
-        return new MobyGamesHelper(PlatformUtility).ParseGameDetailsHtml(html, parseGenres: false);
+        return new MobyGamesHelper(platformUtility).ParseGameDetailsHtml(html, parseGenres: false);
     }
 
     public void Dispose()

@@ -11,16 +11,10 @@ namespace PlayniteExtensions.Tests.Common;
 
 public class FakeWebDownloader : IWebDownloader
 {
-    public class Redirect
+    public class Redirect(string url, int depth = 0)
     {
-        public string RedirectUrl { get; set; }
-        public int Depth { get; set; }
-
-        public Redirect(string url, int depth = 0)
-        {
-            RedirectUrl = url;
-            Depth = depth;
-        }
+        public string RedirectUrl { get; set; } = url;
+        public int Depth { get; set; } = depth;
     }
 
     public Dictionary<string, string> FilesByUrl { get; } = new Dictionary<string, string>(StringComparer.Ordinal);

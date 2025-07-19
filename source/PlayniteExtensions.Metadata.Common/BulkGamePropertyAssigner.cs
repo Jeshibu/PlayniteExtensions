@@ -20,29 +20,18 @@ public interface IHasName
     string Name { get; }
 }
 
-public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewModel>
+public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewModel>(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, IExternalDatabaseIdUtility databaseIdUtility, ExternalDatabase databaseType, int maxDegreeOfParallelism = 8)
     where TSearchItem : IHasName
     where TApprovalPromptViewModel : GamePropertyImportViewModel, new()
 {
-    public BulkGamePropertyAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, IExternalDatabaseIdUtility databaseIdUtility, ExternalDatabase databaseType, int maxDegreeOfParallelism = 8)
-    {
-        playniteApi = playniteAPI;
-        this.dataSource = dataSource;
-        this.platformUtility = platformUtility;
-        DatabaseIdUtility = databaseIdUtility;
-        DatabaseType = databaseType;
-        MaxDegreeOfParallelism = maxDegreeOfParallelism;
-    }
-
     protected readonly ILogger logger = LogManager.GetLogger();
-    protected readonly ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource;
-    private readonly IPlatformUtility platformUtility;
-    protected readonly IPlayniteAPI playniteApi;
+    protected readonly ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource = dataSource;
+    protected readonly IPlayniteAPI playniteApi = playniteAPI;
     public abstract string MetadataProviderName { get; }
     protected bool AllowEmptySearchQuery { get; set; } = false;
-    public IExternalDatabaseIdUtility DatabaseIdUtility { get; }
-    public ExternalDatabase DatabaseType { get; }
-    public int MaxDegreeOfParallelism { get; }
+    public IExternalDatabaseIdUtility DatabaseIdUtility { get; } = databaseIdUtility;
+    public ExternalDatabase DatabaseType { get; } = databaseType;
+    public int MaxDegreeOfParallelism { get; } = maxDegreeOfParallelism;
 
     protected virtual GlobalProgressOptions GetGameDownloadProgressOptions(TSearchItem selectedItem)
     {

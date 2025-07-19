@@ -9,13 +9,9 @@ using System.Linq;
 
 namespace RawgMetadata;
 
-public class RawgMetadataProvider : OnDemandMetadataProvider
+public class RawgMetadataProvider(MetadataRequestOptions options, RawgMetadata plugin, RawgApiClient client, string languageCode = "eng") : OnDemandMetadataProvider
 {
     private RawgGameDetails foundGameData;
-    private readonly MetadataRequestOptions options;
-    private readonly RawgMetadata plugin;
-    private readonly RawgApiClient client;
-    private readonly string languageCode;
     private readonly ILogger logger = LogManager.GetLogger();
     private RawgGameDetails FoundGameData
     {
@@ -43,14 +39,6 @@ public class RawgMetadataProvider : OnDemandMetadataProvider
         MetadataField.Publishers,
         MetadataField.Links
     ];
-
-    public RawgMetadataProvider(MetadataRequestOptions options, RawgMetadata plugin, RawgApiClient client, string languageCode = "eng")
-    {
-        this.options = options;
-        this.plugin = plugin;
-        this.client = client;
-        this.languageCode = languageCode;
-    }
 
     public override string GetName(GetMetadataFieldArgs args)
     {
@@ -251,14 +239,9 @@ public class RawgMetadataProvider : OnDemandMetadataProvider
         return FoundGameData;
     }
 
-    private class GenericSearchResultGame : GenericItemOption
+    private class GenericSearchResultGame(RawgGameBase g) : GenericItemOption(g.Name, g.Released)
     {
-        public GenericSearchResultGame(RawgGameBase g) : base(g.Name, g.Released)
-        {
-            Game = g;
-        }
-
-        public RawgGameBase Game { get; set; }
+        public RawgGameBase Game { get; set; } = g;
     }
 
     private bool IsEmpty(RawgGameBase rawgGame)

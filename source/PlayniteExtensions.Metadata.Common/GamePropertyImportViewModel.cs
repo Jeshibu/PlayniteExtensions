@@ -58,19 +58,9 @@ public class GameCheckboxViewModel : ObservableObject
     }
 }
 
-public class PotentialLink
+public class PotentialLink(string name, Func<GameDetails, string> getUrlMethod, Func<IEnumerable<Link>, string, bool> isAlreadyLinkedMethod = null)
 {
-    private readonly Func<GameDetails, string> getUrlMethod;
-    private readonly Func<IEnumerable<Link>, string, bool> isAlreadyLinkedMethod;
-
-    public PotentialLink(string name, Func<GameDetails, string> getUrlMethod, Func<IEnumerable<Link>, string, bool> isAlreadyLinkedMethod = null)
-    {
-        Name = name;
-        this.getUrlMethod = getUrlMethod;
-        this.isAlreadyLinkedMethod = isAlreadyLinkedMethod;
-    }
-
-    public string Name { get; }
+    public string Name { get; } = name;
     public bool Checked { get; set; } = true;
     public string GetUrl(GameDetails game) => getUrlMethod(game);
     public virtual bool IsAlreadyLinked(IEnumerable<Link> links, string url)

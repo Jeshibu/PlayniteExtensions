@@ -11,19 +11,10 @@ using System.Threading.Tasks;
 
 namespace BigFishLibrary;
 
-public class BigFishOnlineLibraryScraper
+public class BigFishOnlineLibraryScraper(IPlayniteAPI playniteApi, IWebDownloader downloader)
 {
-    private readonly IPlayniteAPI playniteApi;
-    private readonly IWebDownloader downloader;
     private readonly ILogger logger = LogManager.GetLogger();
     public const string OrderHistoryUrl = "https://www.bigfishgames.com/us/en/store/my-orders-history.html";
-
-
-    public BigFishOnlineLibraryScraper(IPlayniteAPI playniteApi, IWebDownloader downloader)
-    {
-        this.playniteApi = playniteApi;
-        this.downloader = downloader;
-    }
 
     public IEnumerable<GameMetadata> GetGames()
     {

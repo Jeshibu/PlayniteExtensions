@@ -10,20 +10,13 @@ using System.Threading.Tasks;
 
 namespace PlayniteExtensions.Metadata.Common;
 
-public class GameMatchingHelper
+public class GameMatchingHelper(IExternalDatabaseIdUtility externalDatabaseIdUtility, int maxDegreeOfParallelism)
 {
-    public GameMatchingHelper(IExternalDatabaseIdUtility externalDatabaseIdUtility, int maxDegreeOfParallelism)
-    {
-        ExternalDatabaseIdUtility = externalDatabaseIdUtility;
-        MaxDegreeOfParallelism = maxDegreeOfParallelism;
-        GamesById = new ConcurrentDictionary<DbId, IList<Game>>();
-    }
-
-    private ConcurrentDictionary<DbId, IList<Game>> GamesById { get; }
+    private ConcurrentDictionary<DbId, IList<Game>> GamesById { get; } = new ConcurrentDictionary<DbId, IList<Game>>();
 
     public ConcurrentDictionary<string, string> DeflatedNames { get; } = new ConcurrentDictionary<string, string>();
-    public IExternalDatabaseIdUtility ExternalDatabaseIdUtility { get; }
-    public int MaxDegreeOfParallelism { get; }
+    public IExternalDatabaseIdUtility ExternalDatabaseIdUtility { get; } = externalDatabaseIdUtility;
+    public int MaxDegreeOfParallelism { get; } = maxDegreeOfParallelism;
 
     private SortableNameConverter sortableNameConverter = new SortableNameConverter(numberLength: 1, removeEditions: true);
 

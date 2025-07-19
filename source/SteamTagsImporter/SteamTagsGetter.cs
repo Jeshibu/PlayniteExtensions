@@ -5,18 +5,10 @@ using System.Linq;
 
 namespace SteamTagsImporter;
 
-public class SteamTagsGetter
+public class SteamTagsGetter(SteamTagsImporterSettings settings, ISteamAppIdUtility appIdUtility, ISteamTagScraper tagScraper)
 {
-    public SteamTagsGetter(SteamTagsImporterSettings settings, ISteamAppIdUtility appIdUtility, ISteamTagScraper tagScraper)
-    {
-        this.Settings = settings;
-        this.appIdUtility = appIdUtility;
-        this.tagScraper = tagScraper;
-    }
+    public SteamTagsImporterSettings Settings { get; } = settings;
 
-    public SteamTagsImporterSettings Settings { get; }
-    private ISteamAppIdUtility appIdUtility { get; }
-    private ISteamTagScraper tagScraper { get; }
     private ILogger logger = LogManager.GetLogger();
 
     public IEnumerable<SteamTag> GetSteamTags(Game game, out bool newTagsAddedToSettings)

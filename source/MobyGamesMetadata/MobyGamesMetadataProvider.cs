@@ -8,21 +8,11 @@ using System.Collections.Generic;
 
 namespace MobyGamesMetadata;
 
-public class MobyGamesMetadataProvider : GenericMetadataProvider<GameSearchResult>
+public class MobyGamesMetadataProvider(MetadataRequestOptions options, MobyGamesMetadata plugin, IGameSearchProvider<GameSearchResult> dataSource, IPlatformUtility platformUtility, MobyGamesMetadataSettings settings) : GenericMetadataProvider<GameSearchResult>(dataSource, options, plugin.PlayniteApi, platformUtility)
 {
-    private readonly MobyGamesMetadata plugin;
-    private readonly MobyGamesMetadataSettings settings;
-
     public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 
     protected override string ProviderName { get; } = "MobyGames";
-
-    public MobyGamesMetadataProvider(MetadataRequestOptions options, MobyGamesMetadata plugin, IGameSearchProvider<GameSearchResult> dataSource, IPlatformUtility platformUtility, MobyGamesMetadataSettings settings)
-        :base(dataSource, options, plugin.PlayniteApi, platformUtility)
-    {
-        this.plugin = plugin;
-        this.settings = settings;
-    }
 
     protected override bool FilterImage(GameField field, IImageData imageData)
     {

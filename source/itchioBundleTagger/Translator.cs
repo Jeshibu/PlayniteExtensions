@@ -73,12 +73,8 @@ public abstract class Translator
     public IEnumerable<string> GetKeys() => bundle.GetMessageEnumerable();
 }
 
-public class itchIoTranslator : Translator
+public class itchIoTranslator(string language) : Translator(language)
 {
-    public itchIoTranslator(string language) : base(language)
-    {
-    }
-
     public string ExtensionName => Translate("extension-name");
 
     public string TagPrefixSetting => Translate("setting-tag-prefix");

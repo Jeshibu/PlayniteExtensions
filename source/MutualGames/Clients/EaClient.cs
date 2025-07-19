@@ -13,10 +13,8 @@ using System.Threading.Tasks;
 
 namespace MutualGames.Clients;
 
-public class EaClient : IFriendsGamesClient
+public class EaClient(IWebViewWrapper webView, IWebDownloader downloader) : IFriendsGamesClient
 {
-    private readonly IWebViewWrapper webView;
-    private readonly IWebDownloader downloader;
     private readonly ILogger logger = LogManager.GetLogger();
     private AuthTokenResponse _authToken;
     private long _userId;
@@ -32,12 +30,6 @@ public class EaClient : IFriendsGamesClient
     public IEnumerable<string> CookieDomains => new[] { ".ea.com", "myaccount.ea.com" };
 
     public string LoginUrl => "https://myaccount.ea.com/cp-ui/aboutme/index";
-
-    public EaClient(IWebViewWrapper webView, IWebDownloader downloader)
-    {
-        this.webView = webView;
-        this.downloader = downloader;
-    }
 
     public IEnumerable<ExternalGameData> GetFriendGames(FriendAccountInfo friend, CancellationToken cancellationToken)
     {

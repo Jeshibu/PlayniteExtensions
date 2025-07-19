@@ -5,15 +5,8 @@ using PlayniteExtensions.Common;
 
 namespace LaunchBoxMetadata;
 
-public class LaunchBoxWebscraper
+public class LaunchBoxWebscraper(IWebDownloader downloader)
 {
-    private readonly IWebDownloader downloader;
-
-    public LaunchBoxWebscraper(IWebDownloader downloader)
-    {
-        this.downloader = downloader;
-    }
-
     public string GetLaunchBoxGamesDatabaseUrl(string databaseId)
     {
         var redirectRequestUrl = $"https://gamesdb.launchbox-app.com/games/dbid/{databaseId}/";

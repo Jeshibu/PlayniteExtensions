@@ -10,17 +10,9 @@ using System.Threading;
 
 namespace GiantBombMetadata.SearchProviders;
 
-public class GiantBombGamePropertySearchProvider : ISearchableDataSourceWithDetails<GiantBombSearchResultItem, IEnumerable<GameDetails>>
+public class GiantBombGamePropertySearchProvider(IGiantBombApiClient apiClient, GiantBombScraper scraper) : ISearchableDataSourceWithDetails<GiantBombSearchResultItem, IEnumerable<GameDetails>>
 {
-    private readonly IGiantBombApiClient apiClient;
-    private readonly GiantBombScraper scraper;
     private readonly ILogger logger = LogManager.GetLogger();
-
-    public GiantBombGamePropertySearchProvider(IGiantBombApiClient apiClient, GiantBombScraper scraper)
-    {
-        this.apiClient = apiClient;
-        this.scraper = scraper;
-    }
 
     public IEnumerable<GameDetails> GetDetails(GiantBombSearchResultItem searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {

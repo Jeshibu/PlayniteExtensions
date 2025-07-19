@@ -19,16 +19,10 @@ public enum ExternalDatabase
     // if you add an 8 value here, update the bit shift in DbId.GetHashCode() to 4 instead of 3
 }
 
-public struct DbId
+public struct DbId(ExternalDatabase database, string id)
 {
-    public readonly ExternalDatabase Database;
-    public readonly string Id;
-
-    public DbId(ExternalDatabase database, string id)
-    {
-        Database = database;
-        Id = id?.ToLowerInvariant();
-    }
+    public readonly ExternalDatabase Database = database;
+    public readonly string Id = id?.ToLowerInvariant();
 
     public override bool Equals(object obj)
     {

@@ -14,34 +14,18 @@ using static OpenCriticMetadata.ImageTypeNames;
 
 namespace OpenCriticMetadata;
 
-public class OpenCriticMetadataProvider : GenericMetadataProvider<OpenCriticSearchResultItem>
+public class OpenCriticMetadataProvider(MetadataRequestOptions options, OpenCriticMetadata plugin, IGameSearchProvider<OpenCriticSearchResultItem> gameSearchProvider, IPlatformUtility platformUtility) : GenericMetadataProvider<OpenCriticSearchResultItem>(gameSearchProvider, options, plugin.PlayniteApi, platformUtility)
 {
-    private readonly OpenCriticMetadata plugin;
-
     public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 
     protected override string ProviderName { get; } = "OpenCritic";
-
-    public OpenCriticMetadataProvider(MetadataRequestOptions options, OpenCriticMetadata plugin, IGameSearchProvider<OpenCriticSearchResultItem> gameSearchProvider, IPlatformUtility platformUtility)
-        : base(gameSearchProvider, options, plugin.PlayniteApi, platformUtility)
-    {
-        this.plugin = plugin;
-    }
 }
 
-public class OpenCriticSearchProvider : IGameSearchProvider<OpenCriticSearchResultItem>
+public class OpenCriticSearchProvider(IPlatformUtility platformUtility, OpenCriticMetadataSettings settings) : IGameSearchProvider<OpenCriticSearchResultItem>
 {
     private readonly ILogger logger = LogManager.GetLogger();
-    private readonly IPlatformUtility platformUtility;
-    private readonly OpenCriticMetadataSettings settings;
     private readonly RestClient restClient = new RestClient("https://api.opencritic.com/api/")
         .AddDefaultHeader("Referer", "https://opencritic.com/");
-
-    public OpenCriticSearchProvider(IPlatformUtility platformUtility, OpenCriticMetadataSettings settings)
-    {
-        this.platformUtility = platformUtility;
-        this.settings = settings;
-    }
 
     public GameDetails GetDetails(OpenCriticSearchResultItem searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null) => GetDetails(searchResult.Id);
 
@@ -77,7 +61,7 @@ public class OpenCriticSearchProvider : IGameSearchProvider<OpenCriticSearchResu
 
         var output = new GameDetails
         {
-            Platforms = game.Platforms.SelectMany(p => this.platformUtility.GetPlatforms(p.Name)).ToList(),
+            Platforms = game.Platforms.SelectMany(p => platformUtility.GetPlatforms(p.Name)).ToList(),
             Id = game.Id.ToString(),
             Names = [game.Name],
             Url = game.Url,

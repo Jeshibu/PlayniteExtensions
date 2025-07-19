@@ -11,14 +11,9 @@ using System.Text.RegularExpressions;
 
 namespace Barnite.Scrapers;
 
-public class MobyGamesHelper : MobyGamesIdUtility
+public class MobyGamesHelper(IPlatformUtility platformUtility) : MobyGamesIdUtility
 {
-    public MobyGamesHelper(IPlatformUtility platformUtility)
-    {
-        PlatformUtility = platformUtility;
-    }
-
-    public IPlatformUtility PlatformUtility { get; }
+    public IPlatformUtility PlatformUtility { get; } = platformUtility;
 
     public string GetMobyGameIdStringFromUrl(string url)
     {

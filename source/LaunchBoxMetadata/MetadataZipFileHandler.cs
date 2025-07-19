@@ -8,22 +8,12 @@ using System.Text.RegularExpressions;
 
 namespace LaunchBoxMetadata;
 
-public class MetadataZipFileHandler : IDisposable
+public class MetadataZipFileHandler(IPlayniteAPI playniteAPI, LaunchBoxMetadataSettings settings) : IDisposable
 {
     private readonly ILogger logger = LogManager.GetLogger();
-    private readonly IPlayniteAPI playniteAPI;
-    private readonly LaunchBoxMetadataSettings settings;
-    private readonly string oldEtag;
-    private readonly DateTimeOffset? oldLastModified;
+    private readonly string oldEtag = settings?.MetadataZipEtag;
+    private readonly DateTimeOffset? oldLastModified = settings?.MetadataZipLastModified;
     private readonly List<string> tempPaths = [];
-
-    public MetadataZipFileHandler(IPlayniteAPI playniteAPI, LaunchBoxMetadataSettings settings)
-    {
-        this.playniteAPI = playniteAPI;
-        this.settings = settings;
-        oldEtag = settings?.MetadataZipEtag;
-        oldLastModified = settings?.MetadataZipLastModified;
-    }
 
     public void Dispose()
     {

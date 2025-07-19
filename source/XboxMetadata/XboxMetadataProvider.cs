@@ -10,13 +10,9 @@ using XboxMetadata.Scrapers;
 
 namespace XboxMetadata;
 
-public class XboxMetadataProvider : OnDemandMetadataProvider
+public class XboxMetadataProvider(MetadataRequestOptions options, XboxMetadataSettings settings, IPlayniteAPI playniteApi, ScraperManager scraperManager) : OnDemandMetadataProvider
 {
     private readonly ILogger logger = LogManager.GetLogger();
-    private readonly MetadataRequestOptions options;
-    private readonly XboxMetadataSettings settings;
-    private readonly IPlayniteAPI playniteApi;
-    private readonly ScraperManager scraperManager;
     private XboxGameDetails foundGame;
 
     public static List<MetadataField> Fields { get; } =
@@ -38,14 +34,6 @@ public class XboxMetadataProvider : OnDemandMetadataProvider
     ];
 
     public override List<MetadataField> AvailableFields => Fields;
-
-    public XboxMetadataProvider(MetadataRequestOptions options, XboxMetadataSettings settings, IPlayniteAPI playniteApi, ScraperManager scraperManager)
-    {
-        this.options = options;
-        this.settings = settings;
-        this.playniteApi = playniteApi;
-        this.scraperManager = scraperManager;
-    }
 
     public override string GetName(GetMetadataFieldArgs args)
     {

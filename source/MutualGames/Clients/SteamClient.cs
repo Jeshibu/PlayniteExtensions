@@ -13,16 +13,10 @@ using System.Threading.Tasks;
 
 namespace MutualGames.Clients;
 
-public class SteamClient : IFriendsGamesClient
+public class SteamClient(IWebViewWrapper webView) : IFriendsGamesClient
 {
-    private readonly IWebViewWrapper webView;
     private readonly HtmlParser htmlParser = new HtmlParser();
     private readonly ILogger logger = LogManager.GetLogger();
-
-    public SteamClient(IWebViewWrapper webView)
-    {
-        this.webView = webView;
-    }
 
     public string Name { get; } = "Steam";
     public FriendSource Source { get; } = FriendSource.Steam;

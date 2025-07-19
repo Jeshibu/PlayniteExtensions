@@ -11,15 +11,9 @@ using System.Linq;
 
 namespace MutualGames;
 
-public sealed class MutualGamesFileImporter : MutualGamesBaseImporter
+public sealed class MutualGamesFileImporter(IPlayniteAPI playniteAPI, MutualGamesSettings settings, IPlatformUtility platformUtility) : MutualGamesBaseImporter(playniteAPI, settings)
 {
-    private readonly IPlatformUtility platformUtility;
     private readonly TitleComparer titleComparer = new TitleComparer();
-
-    public MutualGamesFileImporter(IPlayniteAPI playniteAPI, MutualGamesSettings settings, IPlatformUtility platformUtility) : base(playniteAPI, settings)
-    {
-        this.platformUtility = platformUtility;
-    }
 
     public void Import()
     {

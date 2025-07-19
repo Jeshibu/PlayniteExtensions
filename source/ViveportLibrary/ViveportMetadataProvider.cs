@@ -10,17 +10,9 @@ using ViveportLibrary.Api;
 
 namespace ViveportLibrary;
 
-public class ViveportMetadataProvider : LibraryMetadataProvider
+public class ViveportMetadataProvider(IViveportApiClient viveportApiClient, ViveportLibrarySettings settings) : LibraryMetadataProvider
 {
-    private readonly IViveportApiClient viveportApiClient;
-    private readonly ViveportLibrarySettings settings;
     private readonly ILogger logger = LogManager.GetLogger();
-
-    public ViveportMetadataProvider(IViveportApiClient viveportApiClient, ViveportLibrarySettings settings)
-    {
-        this.viveportApiClient = viveportApiClient;
-        this.settings = settings;
-    }
 
     public override GameMetadata GetMetadata(Game game)
     {

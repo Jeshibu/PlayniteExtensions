@@ -7,15 +7,9 @@ using System.Xml.Linq;
 
 namespace LaunchBoxMetadata;
 
-public class LaunchBoxXmlParser
+public class LaunchBoxXmlParser(string xmlPath)
 {
-    private readonly string xmlPath;
     private readonly ILogger logger = LogManager.GetLogger();
-
-    public LaunchBoxXmlParser(string xmlPath)
-    {
-        this.xmlPath = xmlPath;
-    }
 
     public XmlData GetData()
     {

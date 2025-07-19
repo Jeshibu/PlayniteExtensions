@@ -9,12 +9,10 @@ using System.Text.RegularExpressions;
 
 namespace TvTropesMetadata.Scraping;
 
-public class TropeScraper : BaseScraper
+public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
 {
     public List<string> SubcategoryWhitelist = ["VideoGames", "VisualNovels"];
     public List<string> FolderLabelWhitelist = ["Video Game", "Videogame", "Visual Novel"];
-
-    public TropeScraper(IWebDownloader downloader) : base(downloader) { }
 
     public override IEnumerable<TvTropesSearchResult> Search(string query) => Search(query, "trope");
 

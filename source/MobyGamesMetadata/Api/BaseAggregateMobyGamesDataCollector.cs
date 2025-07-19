@@ -9,21 +9,13 @@ using MobyGamesMetadata.Api.V2;
 
 namespace MobyGamesMetadata.Api;
 
-public abstract class BaseAggregateMobyGamesDataCollector
+public abstract class BaseAggregateMobyGamesDataCollector(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility)
 {
-    protected MobyGamesApiClient apiClient;
-    protected MobyGamesScraper scraper;
-    protected MobyGamesMetadataSettings settings;
-    protected IPlatformUtility platformUtility;
+    protected MobyGamesApiClient apiClient = apiClient;
+    protected MobyGamesScraper scraper = scraper;
+    protected MobyGamesMetadataSettings settings = settings;
+    protected IPlatformUtility platformUtility = platformUtility;
     protected ILogger logger = LogManager.GetLogger();
-
-    public BaseAggregateMobyGamesDataCollector(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility)
-    {
-        this.apiClient = apiClient;
-        this.scraper = scraper;
-        this.settings = settings;
-        this.platformUtility = platformUtility;
-    }
 
     protected GameDetails Merge(GameDetails scraperDetails, GameDetails apiDetails)
     {

@@ -6,18 +6,11 @@ using System.IO;
 
 namespace GamersGateLibrary;
 
-public class GamersGateManualUninstallController : UninstallController
+public class GamersGateManualUninstallController(Game game, GamersGateLibrarySettings settings, IPlayniteAPI playniteApi, Plugin plugin) : UninstallController(game)
 {
-    public GamersGateManualUninstallController(Game game, GamersGateLibrarySettings settings, IPlayniteAPI playniteApi, Plugin plugin) : base(game)
-    {
-        Settings = settings;
-        PlayniteApi = playniteApi;
-        Plugin = plugin;
-    }
-
-    public GamersGateLibrarySettings Settings { get; }
-    public IPlayniteAPI PlayniteApi { get; }
-    public Plugin Plugin { get; }
+    public GamersGateLibrarySettings Settings { get; } = settings;
+    public IPlayniteAPI PlayniteApi { get; } = playniteApi;
+    public Plugin Plugin { get; } = plugin;
     private ILogger logger = LogManager.GetLogger();
 
     public override void Uninstall(UninstallActionArgs args)

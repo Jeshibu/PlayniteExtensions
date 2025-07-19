@@ -9,14 +9,9 @@ using MutualGames.Models.Settings;
 
 namespace MutualGames;
 
-public sealed class MutualGamesAccountImporter : MutualGamesBaseImporter
+public sealed class MutualGamesAccountImporter(IPlayniteAPI playniteAPI, MutualGamesSettings settings, IEnumerable<IFriendsGamesClient> clients) : MutualGamesBaseImporter(playniteAPI, settings)
 {
-    private readonly IFriendsGamesClient[] clients;
-
-    public MutualGamesAccountImporter(IPlayniteAPI playniteAPI, MutualGamesSettings settings, IEnumerable<IFriendsGamesClient> clients) : base(playniteAPI, settings)
-    {
-        this.clients = clients.ToArray();
-    }
+    private readonly IFriendsGamesClient[] clients = clients.ToArray();
 
     public void Import()
     {

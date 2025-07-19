@@ -14,19 +14,9 @@ using System.Threading;
 
 namespace GOGMetadata;
 
-public class GogApiClient : IGameSearchProvider<GogSearchResponse.Product>
+public class GogApiClient(IWebDownloader downloader, GOGMetadataSettings settings, IPlatformUtility platformUtility) : IGameSearchProvider<GogSearchResponse.Product>
 {
     private ILogger logger = LogManager.GetLogger();
-    private readonly IWebDownloader downloader;
-    private readonly GOGMetadataSettings settings;
-    private readonly IPlatformUtility platformUtility;
-
-    public GogApiClient(IWebDownloader downloader, GOGMetadataSettings settings, IPlatformUtility platformUtility)
-    {
-        this.downloader = downloader;
-        this.settings = settings;
-        this.platformUtility = platformUtility;
-    }
 
     public StorePageResult.ProductDetails GetGameStoreData(GogSearchResponse.Product product)
     {

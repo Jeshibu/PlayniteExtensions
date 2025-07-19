@@ -11,15 +11,9 @@ using System.Threading;
 
 namespace MobyGamesMetadata.Api;
 
-public class MobyGamesGameSearchProvider : BaseAggregateMobyGamesDataCollector, IGameSearchProvider<GameSearchResult>, IDisposable
+public class MobyGamesGameSearchProvider(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility) : BaseAggregateMobyGamesDataCollector(apiClient, scraper, settings, platformUtility), IGameSearchProvider<GameSearchResult>, IDisposable
 {
-    private readonly MobyGamesHelper helper;
-
-    public MobyGamesGameSearchProvider(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility)
-        : base(apiClient, scraper, settings, platformUtility)
-    {
-        helper = new MobyGamesHelper(platformUtility);
-    }
+    private readonly MobyGamesHelper helper = new MobyGamesHelper(platformUtility);
 
     public GameDetails GetDetails(GameSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {

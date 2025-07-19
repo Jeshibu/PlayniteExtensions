@@ -15,18 +15,10 @@ using System.Web;
 
 namespace BigFishMetadata;
 
-public class BigFishSearchProvider : IGameSearchProvider<BigFishSearchResultGame>
+public class BigFishSearchProvider(IWebDownloader downloader, BigFishMetadataSettings settings) : IGameSearchProvider<BigFishSearchResultGame>
 {
-    private readonly IWebDownloader downloader;
-    private readonly BigFishMetadataSettings settings;
     private readonly ILogger logger = LogManager.GetLogger();
     private readonly Guid BigFishLibraryId = Guid.Parse("37995df7-2ce2-4f7c-83a3-618138ae745d");
-
-    public BigFishSearchProvider(IWebDownloader downloader, BigFishMetadataSettings settings)
-    {
-        this.downloader = downloader;
-        this.settings = settings;
-    }
 
     public GameDetails GetDetails(BigFishSearchResultGame searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {

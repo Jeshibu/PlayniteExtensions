@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace SteamTagsImporter;
 
-public class SteamAppIdUtility : ISteamAppIdUtility
+public class SteamAppIdUtility(ICachedFile steamAppList) : ISteamAppIdUtility
 {
     private readonly SteamIdUtility steamIdUtility = new SteamIdUtility();
 
@@ -22,12 +22,7 @@ public class SteamAppIdUtility : ISteamAppIdUtility
         get { return _steamIds ??= GetSteamIdsByTitle(); }
     }
 
-    public ICachedFile SteamAppList { get; }
-
-    public SteamAppIdUtility(ICachedFile steamAppList)
-    {
-        SteamAppList = steamAppList;
-    }
+    public ICachedFile SteamAppList { get; } = steamAppList;
 
     private static string NormalizeTitle(string title)
     {

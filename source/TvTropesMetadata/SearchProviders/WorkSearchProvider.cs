@@ -8,17 +8,8 @@ using System.Linq;
 
 namespace TvTropesMetadata.SearchProviders;
 
-public class WorkSearchProvider : IGameSearchProvider<TvTropesSearchResult>
+public class WorkSearchProvider(WorkScraper scraper, TvTropesMetadataSettings settings) : IGameSearchProvider<TvTropesSearchResult>
 {
-    private readonly WorkScraper scraper;
-    private readonly TvTropesMetadataSettings settings;
-
-    public WorkSearchProvider(WorkScraper scraper, TvTropesMetadataSettings settings)
-    {
-        this.scraper = scraper;
-        this.settings = settings;
-    }
-
     public GameDetails GetDetails(TvTropesSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
         var result = scraper.GetTropesForGame(searchResult.Url);

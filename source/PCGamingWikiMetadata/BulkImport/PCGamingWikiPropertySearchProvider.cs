@@ -11,18 +11,10 @@ using System.Threading;
 
 namespace PCGamingWikiBulkImport;
 
-public class PCGamingWikiPropertySearchProvider : ISearchableDataSourceWithDetails<PCGamingWikiSelectedValues, IEnumerable<GameDetails>>
+public class PCGamingWikiPropertySearchProvider(ICargoQuery cargoQuery, IPlatformUtility platformUtility) : ISearchableDataSourceWithDetails<PCGamingWikiSelectedValues, IEnumerable<GameDetails>>
 {
     private readonly CargoTables Tables = new CargoTables();
 
-    public PCGamingWikiPropertySearchProvider(ICargoQuery cargoQuery, IPlatformUtility platformUtility)
-    {
-        CargoQuery = cargoQuery;
-        PlatformUtility = platformUtility;
-    }
-
-    private ICargoQuery CargoQuery { get; }
-    private IPlatformUtility PlatformUtility { get; }
     private ILogger Logger { get; }
 
     public IEnumerable<GameDetails> GetDetails(PCGamingWikiSelectedValues searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
@@ -59,11 +51,11 @@ public class PCGamingWikiPropertySearchProvider : ISearchableDataSourceWithDetai
             case CargoFieldType.ListOfString:
                 var wa = selected.FieldInfo.ValueWorkaround(selected.SelectedValues.First());
                 if (wa.UseLike)
-                    return offset => CargoQuery.GetGamesByHoldsLike(selected.FieldInfo.Table, selected.FieldInfo.Field, wa.Value, offset);
+                    return offset => cargoQuery.GetGamesByHoldsLike(selected.FieldInfo.Table, selected.FieldInfo.Field, wa.Value, offset);
                 else
-                    return offset => CargoQuery.GetGamesByHolds(selected.FieldInfo.Table, selected.FieldInfo.Field, wa.Value, offset);
+                    return offset => cargoQuery.GetGamesByHolds(selected.FieldInfo.Table, selected.FieldInfo.Field, wa.Value, offset);
             case CargoFieldType.String:
-                return offset => CargoQuery.GetGamesByExactValues(selected.FieldInfo.Table, selected.FieldInfo.Field, selected.SelectedValues, offset);
+                return offset => cargoQuery.GetGamesByExactValues(selected.FieldInfo.Table, selected.FieldInfo.Field, selected.SelectedValues, offset);
             default:
                 throw new ArgumentException($"Invalid selected value field info type: {selected.FieldInfo.FieldType}");
         }
@@ -90,7 +82,7 @@ public class PCGamingWikiPropertySearchProvider : ISearchableDataSourceWithDetai
 
     public IEnumerable<ItemCount> GetCounts(CargoFieldInfo field, string searchString)
     {
-        var counts = CargoQuery.GetValueCounts(field.Table, field.Field, searchString).ToList();
+        var counts = cargoQuery.GetValueCounts(field.Table, field.Field, searchString).ToList();
         foreach (var c in counts)
         {
             c.Value = WebUtility.HtmlDecode(c.Value);
@@ -109,7 +101,7 @@ public class PCGamingWikiPropertySearchProvider : ISearchableDataSourceWithDetai
             Url = slug.SlugToUrl(),
         };
 
-        game.Platforms = g.OS?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).SelectMany(PlatformUtility.GetPlatforms).ToList();
+        game.Platforms = g.OS?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).SelectMany(platformUtility.GetPlatforms).ToList();
         game.ReleaseDate = GetReleaseDate(g.Released);
 
         if (!string.IsNullOrWhiteSpace(g.SteamID))

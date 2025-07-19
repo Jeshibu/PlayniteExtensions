@@ -7,18 +7,11 @@ using System.Linq;
 
 namespace GamersGateLibrary;
 
-public class GamersGateManualInstallController : InstallController
+public class GamersGateManualInstallController(Game game, GamersGateLibrarySettings settings, IPlayniteAPI playniteAPI, Plugin plugin) : InstallController(game)
 {
-    public GamersGateManualInstallController(Game game, GamersGateLibrarySettings settings, IPlayniteAPI playniteAPI, Plugin plugin) : base(game)
-    {
-        Settings = settings;
-        PlayniteAPI = playniteAPI;
-        Plugin = plugin;
-    }
-
-    public GamersGateLibrarySettings Settings { get; }
-    public IPlayniteAPI PlayniteAPI { get; }
-    public Plugin Plugin { get; }
+    public GamersGateLibrarySettings Settings { get; } = settings;
+    public IPlayniteAPI PlayniteAPI { get; } = playniteAPI;
+    public Plugin Plugin { get; } = plugin;
 
     private ILogger logger = LogManager.GetLogger();
 

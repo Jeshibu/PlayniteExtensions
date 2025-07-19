@@ -9,12 +9,8 @@ using System.Threading.Tasks;
 
 namespace XboxMetadata.Scrapers;
 
-public class Xbox360Scraper : BaseXboxScraper
+public class Xbox360Scraper(IWebDownloader downloader, IPlatformUtility platformUtility) : BaseXboxScraper(downloader, platformUtility)
 {
-    public Xbox360Scraper(IWebDownloader downloader, IPlatformUtility platformUtility) : base(downloader, platformUtility)
-    {
-    }
-
     public override string Key { get; } = "Xbox360";
 
     public override int ExecutionOrder { get; } = 10;

@@ -8,16 +8,10 @@ namespace SteamTagsImporter.Tests;
 
 public class SteamAppIdUtilityTests
 {
-    private class FakeCachedFile : ICachedFile
+    private class FakeCachedFile(string localFilePath, Encoding encoding) : ICachedFile
     {
-        public FakeCachedFile(string localFilePath, Encoding encoding)
-        {
-            LocalFilePath = localFilePath;
-            Encoding = encoding;
-        }
-
-        public string LocalFilePath { get; }
-        public Encoding Encoding { get; }
+        public string LocalFilePath { get; } = localFilePath;
+        public Encoding Encoding { get; } = encoding;
 
         public string GetFileContents()
         {

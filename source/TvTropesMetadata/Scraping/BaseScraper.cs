@@ -13,9 +13,9 @@ using System.Web;
 
 namespace TvTropesMetadata.Scraping;
 
-public abstract class BaseScraper
+public abstract class BaseScraper(IWebDownloader downloader)
 {
-    protected readonly IWebDownloader downloader;
+    protected readonly IWebDownloader downloader = downloader;
     protected readonly ILogger logger = LogManager.GetLogger();
     public List<string> CategoryWhitelist = ["VideoGame", "VisualNovel"];
     public List<string> BlacklistedWords =
@@ -25,11 +25,6 @@ public abstract class BaseScraper
     ];
 
     public abstract IEnumerable<TvTropesSearchResult> Search(string query);
-
-    protected BaseScraper(IWebDownloader downloader)
-    {
-        this.downloader = downloader;
-    }
 
     protected IEnumerable<TvTropesSearchResult> Search(string query, string type)
     {

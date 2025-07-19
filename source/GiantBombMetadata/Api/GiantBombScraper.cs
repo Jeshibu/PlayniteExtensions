@@ -11,17 +11,8 @@ using System.Web;
 
 namespace GiantBombMetadata.Api;
 
-public class GiantBombScraper
+public class GiantBombScraper(IWebDownloader downloader, IPlatformUtility platformUtility)
 {
-    private readonly IWebDownloader downloader;
-    private readonly IPlatformUtility platformUtility;
-
-    public GiantBombScraper(IWebDownloader downloader, IPlatformUtility platformUtility)
-    {
-        this.downloader = downloader;
-        this.platformUtility = platformUtility;
-    }
-
     private static string GetFirstGamePageUrl(string entityUrl)
     {
         return entityUrl + "games/";

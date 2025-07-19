@@ -6,18 +6,13 @@ using System.Threading.Tasks;
 
 namespace XboxMetadata.Scrapers;
 
-public abstract class BaseXboxScraper
+public abstract class BaseXboxScraper(IWebDownloader downloader, IPlatformUtility platformUtility)
 {
     public abstract string Key { get; }
     public abstract int ExecutionOrder { get; }
-    protected IWebDownloader downloader;
-    protected IPlatformUtility platformUtility;
+    protected IWebDownloader downloader = downloader;
+    protected IPlatformUtility platformUtility = platformUtility;
 
-    public BaseXboxScraper(IWebDownloader downloader, IPlatformUtility platformUtility)
-    {
-        this.downloader = downloader;
-        this.platformUtility = platformUtility;
-    }
     public abstract Task<List<XboxGameSearchResultItem>> SearchAsync(XboxMetadataSettings settings, string query);
     public abstract Task<XboxGameDetails> GetDetailsAsync(XboxMetadataSettings settings, string id, string url);
     public abstract string FixUrl(string url);

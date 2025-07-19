@@ -1,19 +1,10 @@
 ﻿namespace GamesSizeCalculator.Models;
 
-public class DepotInfo
+public class DepotInfo(string id, string name, ulong fileSize, bool isDlc, bool optional)
 {
-    public string Id { get; set; }
-    public string Name { get; set; }
-    public ulong FileSize { get; set; }
-    public bool IsDLC { get; }
-    public bool Optional { get; }
-
-    public DepotInfo(string id, string name, ulong fileSize, bool isDlc, bool optional)
-    {
-        Id = id;
-        Name = name;
-        FileSize = fileSize;
-        IsDLC = isDlc;
-        Optional = optional;
-    }
+    public string Id { get; set; } = id;
+    public string Name { get; set; } = name;
+    public ulong FileSize { get; set; } = fileSize;
+    public bool IsDLC { get; } = isDlc;
+    public bool Optional { get; } = optional;
 }

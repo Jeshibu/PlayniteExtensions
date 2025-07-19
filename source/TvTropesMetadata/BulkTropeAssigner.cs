@@ -6,16 +6,8 @@ using TvTropesMetadata.Scraping;
 
 namespace TvTropesMetadata;
 
-public class BulkTropeAssigner : BulkGamePropertyAssigner<TvTropesSearchResult, GamePropertyImportViewModel>
+public class BulkTropeAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TvTropesSearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, TvTropesMetadataSettings settings) : BulkGamePropertyAssigner<TvTropesSearchResult, GamePropertyImportViewModel>(playniteAPI, dataSource, platformUtility, new TvTropesIdUtility(), ExternalDatabase.TvTropes, settings.MaxDegreeOfParallelism)
 {
-    private readonly TvTropesMetadataSettings settings;
-
-    public BulkTropeAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TvTropesSearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, TvTropesMetadataSettings settings)
-        : base(playniteAPI, dataSource, platformUtility, new TvTropesIdUtility(), ExternalDatabase.TvTropes, settings.MaxDegreeOfParallelism)
-    {
-        this.settings = settings;
-    }
-
     public override string MetadataProviderName { get; } = "TV Tropes";
 
     protected override string GetGameIdFromUrl(string url)

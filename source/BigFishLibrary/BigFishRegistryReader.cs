@@ -3,15 +3,9 @@ using PlayniteExtensions.Common;
 
 namespace BigFishLibrary;
 
-public class BigFishRegistryReader
+public class BigFishRegistryReader(IRegistryValueProvider registryValueProvider)
 {
-    private readonly IRegistryValueProvider registryValueProvider;
     private const string baseRegistryPath = @"SOFTWARE\WOW6432Node\Big Fish Games";
-
-    public BigFishRegistryReader(IRegistryValueProvider registryValueProvider)
-    {
-        this.registryValueProvider = registryValueProvider;
-    }
 
     public string GetClientInstallDirectory()
     {

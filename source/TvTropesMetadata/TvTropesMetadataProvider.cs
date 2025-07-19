@@ -7,7 +7,7 @@ using TvTropesMetadata.Scraping;
 
 namespace TvTropesMetadata;
 
-public class TvTropesMetadataProvider : GenericMetadataProvider<TvTropesSearchResult>
+public class TvTropesMetadataProvider(IGameSearchProvider<TvTropesSearchResult> dataSource, MetadataRequestOptions options, IPlayniteAPI playniteApi, IPlatformUtility platformUtility) : GenericMetadataProvider<TvTropesSearchResult>(dataSource, options, playniteApi, platformUtility)
 {
     public static List<MetadataField> Fields =
     [
@@ -17,11 +17,6 @@ public class TvTropesMetadataProvider : GenericMetadataProvider<TvTropesSearchRe
         MetadataField.Tags,
         MetadataField.Series,
     ];
-
-    public TvTropesMetadataProvider(IGameSearchProvider<TvTropesSearchResult> dataSource, MetadataRequestOptions options, IPlayniteAPI playniteApi, IPlatformUtility platformUtility)
-        : base(dataSource, options, playniteApi, platformUtility)
-    {
-    }
 
     public override List<MetadataField> AvailableFields => Fields;
 

@@ -3,16 +3,10 @@ using System.Linq;
 
 namespace PCGamingWikiBulkImport.Models;
 
-public class SelectStringsViewModel
+public class SelectStringsViewModel(string propertyName, IEnumerable<SelectableStringViewModel> items)
 {
-    public SelectStringsViewModel(string propertyName, IEnumerable<SelectableStringViewModel> items)
-    {
-        PropertyName = propertyName;
-        Items = items.ToList();
-    }
-
-    public string PropertyName { get; }
-    public IList<SelectableStringViewModel> Items { get; }
+    public string PropertyName { get; } = propertyName;
+    public IList<SelectableStringViewModel> Items { get; } = items.ToList();
 }
 
 public class SelectableStringViewModel

@@ -13,31 +13,15 @@ using System.Threading.Tasks;
 
 namespace LaunchBoxMetadata;
 
-public class LaunchBoxMetadataProvider : OnDemandMetadataProvider
+public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBoxMetadata plugin, LaunchBoxMetadataSettings settings, LaunchBoxDatabase database, IPlatformUtility platformUtility, LaunchBoxWebscraper scraper) : OnDemandMetadataProvider
 {
     private readonly ILogger logger = LogManager.GetLogger();
-    private readonly MetadataRequestOptions options;
-    private readonly LaunchBoxMetadata plugin;
-    private readonly LaunchBoxMetadataSettings settings;
-    private readonly LaunchBoxDatabase database;
-    private readonly IPlatformUtility platformUtility;
-    private readonly LaunchBoxWebscraper scraper;
     private LaunchBoxGame foundGame;
     private string foundGameUrl;
     private List<LaunchBoxImageDetails> foundImages;
     private TitleComparer titleComparer = new TitleComparer();
 
     public override List<MetadataField> AvailableFields => plugin.SupportedFields;
-
-    public LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBoxMetadata plugin, LaunchBoxMetadataSettings settings, LaunchBoxDatabase database, IPlatformUtility platformUtility, LaunchBoxWebscraper scraper)
-    {
-        this.options = options;
-        this.plugin = plugin;
-        this.settings = settings;
-        this.database = database;
-        this.platformUtility = platformUtility;
-        this.scraper = scraper;
-    }
 
     private LaunchBoxGame FindGame()
     {

@@ -9,19 +9,12 @@ using System.Linq;
 
 namespace PCGamingWikiMetadata;
 
-public class PCGWClient
+public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameController)
 {
     private readonly ILogger logger = LogManager.GetLogger();
-    private RestClient client;
-    protected MetadataRequestOptions options;
-    protected PCGWGameController gameController;
-
-    public PCGWClient(MetadataRequestOptions options, PCGWGameController gameController)
-    {
-        client = new RestClient("https://www.pcgamingwiki.com/w/api.php").AddDefaultQueryParameter("format", "json");
-        this.options = options;
-        this.gameController = gameController;
-    }
+    private RestClient client = new RestClient("https://www.pcgamingwiki.com/w/api.php").AddDefaultQueryParameter("format", "json");
+    protected MetadataRequestOptions options = options;
+    protected PCGWGameController gameController = gameController;
 
     public JObject ExecuteRequest(RestRequest request)
     {

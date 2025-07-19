@@ -11,15 +11,9 @@ using System.Net.Http.Headers;
 
 namespace IgnMetadata;
 
-public class IgnClient
+public class IgnClient(IWebDownloader downloader)
 {
-    private readonly IWebDownloader downloader;
     private ILogger logger = LogManager.GetLogger();
-
-    public IgnClient(IWebDownloader downloader)
-    {
-        this.downloader = downloader;
-    }
 
     public ICollection<IgnGame> Search(string searchString)
     {

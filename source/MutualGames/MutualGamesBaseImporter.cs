@@ -10,19 +10,13 @@ using System.Linq;
 
 namespace MutualGames;
 
-public abstract class MutualGamesBaseImporter
+public abstract class MutualGamesBaseImporter(IPlayniteAPI playniteAPI, MutualGamesSettings settings)
 {
-    protected readonly IPlayniteAPI playniteAPI;
-    protected readonly MutualGamesSettings settings;
+    protected readonly IPlayniteAPI playniteAPI = playniteAPI;
+    protected readonly MutualGamesSettings settings = settings;
     protected readonly GameMatchingHelper matchingHelper = new GameMatchingHelper(new SteamIdUtility(), 2); //not going to use these args, but no other constructor for now
     protected readonly ILogger logger = LogManager.GetLogger();
     protected int updatedCount = 0;
-
-    public MutualGamesBaseImporter(IPlayniteAPI playniteAPI, MutualGamesSettings settings)
-    {
-        this.playniteAPI = playniteAPI;
-        this.settings = settings;
-    }
 
     #region property getting and assigning
 
