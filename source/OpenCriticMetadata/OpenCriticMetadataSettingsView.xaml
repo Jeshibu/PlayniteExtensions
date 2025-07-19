@@ -36,7 +36,7 @@
                     <pec:IntegerFormatConverter x:Key="intConverter"/>
                 </Grid.Resources>
 
-                <TextBlock>Critic review source:</TextBlock>
+                <TextBlock>Critic score average:</TextBlock>
                 <ComboBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" IsEditable="False" SelectedValuePath="Key" DisplayMemberPath="Value" Width="auto"
                           ItemsSource="{Binding CriticSources}" SelectedValue="{Binding Settings.CriticScoreSource}"/>
                 <TextBlock Grid.Row="1" Grid.Column="0">Minimum critic review count:</TextBlock>
