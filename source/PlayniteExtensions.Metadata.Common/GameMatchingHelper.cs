@@ -18,7 +18,7 @@ public class GameMatchingHelper(IExternalDatabaseIdUtility externalDatabaseIdUti
     public IExternalDatabaseIdUtility ExternalDatabaseIdUtility { get; } = externalDatabaseIdUtility;
     public int MaxDegreeOfParallelism { get; } = maxDegreeOfParallelism;
 
-    private SortableNameConverter sortableNameConverter = new(numberLength: 1, removeEditions: true);
+    private readonly SortableNameConverter sortableNameConverter = new(numberLength: 1, removeEditions: true);
 
     public HashSet<string> GetDeflatedNames(IEnumerable<string> names)
     {

@@ -133,7 +133,7 @@ public abstract class BaseScraper(IWebDownloader downloader)
         return segments;
     }
 
-    private Regex PathSplitter = new(@"pmwiki\.php(/(?<segment>\w+))+", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+    private readonly Regex PathSplitter = new(@"pmwiki\.php(/(?<segment>\w+))+", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
     protected IHtmlDocument GetDocument(string url)
     {

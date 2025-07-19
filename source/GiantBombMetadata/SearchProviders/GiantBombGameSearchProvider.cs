@@ -169,7 +169,7 @@ public class GiantBombGameSearchProvider(IGiantBombApiClient apiClient, GiantBom
         return output;
     }
 
-    private static Regex pressEventOrCoverRegex = new(@"\b(e3|pax|blizzcon|box art)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    private static readonly Regex pressEventOrCoverRegex = new(@"\b(e3|pax|blizzcon|box art)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
     private static bool ImageCanBeUsedAsBackground(GiantBombImage img)
     {

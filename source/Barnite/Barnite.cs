@@ -15,7 +15,7 @@ namespace Barnite;
 public class Barnite : GenericPlugin
 {
     private static readonly ILogger logger = LogManager.GetLogger();
-    private ScraperManager _scraperManager;
+    private readonly ScraperManager _scraperManager;
 
     private BarniteSettingsViewModel settings { get; set; }
 

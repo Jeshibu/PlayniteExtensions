@@ -147,7 +147,7 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
         return output;
     }
 
-    private Regex NonLettersAndNumbers = new(@"[^\p{L}0-9]", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private readonly Regex NonLettersAndNumbers = new(@"[^\p{L}0-9]", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     private bool IsVideoGameLink(IElement element)
     {

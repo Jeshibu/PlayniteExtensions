@@ -72,7 +72,7 @@ public class GiantBombScraper(IWebDownloader downloader, IPlatformUtility platfo
         }
     }
 
-    private Regex giantBombItemIdRegex = new("3[0-9]{3}-[0-9]+", RegexOptions.Compiled);
+    private readonly Regex giantBombItemIdRegex = new("3[0-9]{3}-[0-9]+", RegexOptions.Compiled);
 
     private PaginationInfo GetPaginationInfo(string url, IHtmlDocument htmlDocument)
     {

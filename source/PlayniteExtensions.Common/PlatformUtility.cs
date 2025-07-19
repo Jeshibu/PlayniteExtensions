@@ -43,9 +43,9 @@ public class PlatformUtility : IPlatformUtility
             TryAddPlatformByName(platformSpecNameByNormalName, platformName, specIds);
     }
 
-    private static Regex TrimCompanyName = new(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
-    private static Regex TrimInput = new(@"^(pal|jpn?|usa?|ntsc)\s+|[™®©]| version$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
-    private static Regex TrimPlatformName = new(@"\s*(\((?<platform>[^()]+)\)|\[(?<platform>[^\[\]]+)\]|-\s+(?<platform>[a-z0-9 ]+))$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex TrimCompanyName = new(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex TrimInput = new(@"^(pal|jpn?|usa?|ntsc)\s+|[™®©]| version$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex TrimPlatformName = new(@"\s*(\((?<platform>[^()]+)\)|\[(?<platform>[^\[\]]+)\]|-\s+(?<platform>[a-z0-9 ]+))$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     private static Dictionary<string, string[]> GetPlatformSpecsByNormalName(IPlayniteAPI api)
     {
@@ -137,7 +137,7 @@ public class PlatformUtility : IPlatformUtility
         return output;
     }
 
-    private static Dictionary<string, string> nameAbbreviations = new(StringComparer.InvariantCulture)
+    private static readonly Dictionary<string, string> nameAbbreviations = new(StringComparer.InvariantCulture)
     {
         { "CDI", "Philips CD-i" },
         { "NGE", "Nokia N-Gage" },

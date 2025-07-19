@@ -9,7 +9,7 @@ public class SteamTagsGetter(SteamTagsImporterSettings settings, ISteamAppIdUtil
 {
     public SteamTagsImporterSettings Settings { get; } = settings;
 
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public IEnumerable<SteamTag> GetSteamTags(Game game, out bool newTagsAddedToSettings)
     {

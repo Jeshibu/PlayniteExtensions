@@ -8,8 +8,8 @@ namespace PCGamingWikiMetadata.Tests;
 
 public class PCGWGame_Test_DL : IDisposable
 {
-    private PCGWGame testGame;
-    private LocalPCGWClient client;
+    private readonly PCGWGame testGame;
+    private readonly LocalPCGWClient client;
 
     public PCGWGame_Test_DL()
     {

@@ -12,9 +12,9 @@ public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
     private readonly IPlayniteAPI playniteApi;
     private readonly PCGamingWikiMetadataSettings settings;
 
-    private PCGWClient client;
+    private readonly PCGWClient client;
 
-    private PCGWGameController gameController;
+    private readonly PCGWGameController gameController;
     private static readonly ILogger logger = LogManager.GetLogger();
 
     private List<MetadataField> availableFields;

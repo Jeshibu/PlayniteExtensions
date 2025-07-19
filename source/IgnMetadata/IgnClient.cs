@@ -13,7 +13,7 @@ namespace IgnMetadata;
 
 public class IgnClient(IWebDownloader downloader)
 {
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public ICollection<IgnGame> Search(string searchString)
     {

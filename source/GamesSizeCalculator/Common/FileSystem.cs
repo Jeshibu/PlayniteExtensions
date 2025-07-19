@@ -27,7 +27,7 @@ public static partial class FileSystem
     out uint lpSectorsPerCluster, out uint lpBytesPerSector, out uint lpNumberOfFreeClusters,
     out uint lpTotalNumberOfClusters);
 
-    private static ILogger logger = LogManager.GetLogger();
+    private static readonly ILogger logger = LogManager.GetLogger();
     private const string longPathPrefix = @"\\?\";
     private const string longPathUncPrefix = @"\\?\UNC\";
 

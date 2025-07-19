@@ -15,7 +15,7 @@ public class AggregateMetadataGatherer(ILegacyGamesRegistryReader registryReader
     public ILegacyGamesRegistryReader RegistryReader { get; } = registryReader;
     public IAppStateReader AppStateReader { get; } = appStateReader;
 
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public IEnumerable<GameMetadata> GetGames(CancellationToken cancellationToken)
     {

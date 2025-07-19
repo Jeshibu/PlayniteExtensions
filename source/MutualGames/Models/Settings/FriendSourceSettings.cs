@@ -84,7 +84,7 @@ public class FriendSourceSettings : ObservableObject
     internal IPlayniteAPI PlayniteApi { get; set; }
 
     [DontSerialize]
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
     [DontSerialize]
     public AuthStatus AuthStatus

@@ -11,7 +11,7 @@ public class GamersGateManualUninstallController(Game game, GamersGateLibrarySet
     public GamersGateLibrarySettings Settings { get; } = settings;
     public IPlayniteAPI PlayniteApi { get; } = playniteApi;
     public Plugin Plugin { get; } = plugin;
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public override void Uninstall(UninstallActionArgs args)
     {

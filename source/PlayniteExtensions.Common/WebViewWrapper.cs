@@ -42,7 +42,7 @@ public class OffScreenWebViewWrapper : IWebViewWrapper
     private readonly IWebView view;
     private readonly ILogger logger = LogManager.GetLogger();
     private readonly SemaphoreSlim semaphore = new(1, 1);
-    private AsyncAutoResetEvent loadCompleteEvent = new();
+    private readonly AsyncAutoResetEvent loadCompleteEvent = new();
 
     public WebViewResponse DownloadPageSource(string url) => DownloadPageSourceAsync(url).Result;
     public WebViewResponse DownloadPageText(string url) => DownloadPageTextAsync(url).Result;

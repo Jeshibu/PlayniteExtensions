@@ -7,7 +7,7 @@ namespace TvTropesMetadata.Tests;
 
 public class WorkScraperTests
 {
-    private FakeWebDownloader downloader = new(new Dictionary<string, string>
+    private readonly FakeWebDownloader downloader = new(new Dictionary<string, string>
     {
         { "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/KingdomHeartsII", "html/KingdomHeartsII.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/KingdomHeartsII/TropesAToL", "html/KingdomHeartsII-TropesAToL.html" },

@@ -32,9 +32,9 @@ public class DownloadStringResponse(string responseUrl, string responseContent, 
 
 public class WebDownloader : IWebDownloader
 {
-    private DangerouslySimpleCookieContainer cookieContainer;
-    private HttpClient httpClient;
-    private ILogger logger = LogManager.GetLogger();
+    private readonly DangerouslySimpleCookieContainer cookieContainer;
+    private readonly HttpClient httpClient;
+    private readonly ILogger logger = LogManager.GetLogger();
     public static HttpStatusCode[] HttpRedirectStatusCodes = [HttpStatusCode.Redirect, HttpStatusCode.Moved, HttpStatusCode.TemporaryRedirect, (HttpStatusCode)308];
 
     public CookieContainer Cookies => cookieContainer.Container;
@@ -159,7 +159,7 @@ public class WebDownloader : IWebDownloader
         }
     }
 
-    private object cookieLock = new();
+    private readonly object cookieLock = new();
 }
 
 public static class HttpRequestHeaderExtensionMethods

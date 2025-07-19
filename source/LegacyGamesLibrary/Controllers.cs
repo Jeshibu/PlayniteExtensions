@@ -15,7 +15,7 @@ public class LegacyGamesUninstallController : UninstallController
 {
     private static readonly ILogger logger = LogManager.GetLogger();
     private CancellationTokenSource watcherToken;
-    private LegacyGamesRegistryReader registryReader;
+    private readonly LegacyGamesRegistryReader registryReader;
 
     public LegacyGamesUninstallController(Game game, LegacyGamesRegistryReader registryReader) : base(game)
     {
@@ -80,7 +80,7 @@ public class LegacyGamesInstallController : InstallController
 {
     private static readonly ILogger logger = LogManager.GetLogger();
     private CancellationTokenSource watcherToken;
-    private LegacyGamesRegistryReader registryReader;
+    private readonly LegacyGamesRegistryReader registryReader;
     private readonly IPlayniteAPI playniteAPI;
 
     public LegacyGamesInstallController(Game game, LegacyGamesRegistryReader registryReader, IPlayniteAPI playniteAPI) : base(game)

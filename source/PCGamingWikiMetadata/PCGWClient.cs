@@ -12,7 +12,7 @@ namespace PCGamingWikiMetadata;
 public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameController)
 {
     private readonly ILogger logger = LogManager.GetLogger();
-    private RestClient client = new RestClient("https://www.pcgamingwiki.com/w/api.php").AddDefaultQueryParameter("format", "json");
+    private readonly RestClient client = new RestClient("https://www.pcgamingwiki.com/w/api.php").AddDefaultQueryParameter("format", "json");
     protected MetadataRequestOptions options = options;
     protected PCGWGameController gameController = gameController;
 

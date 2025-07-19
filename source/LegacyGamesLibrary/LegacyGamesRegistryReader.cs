@@ -13,7 +13,7 @@ public interface ILegacyGamesRegistryReader
 
 public class LegacyGamesRegistryReader(IRegistryValueProvider registryValueProvider) : ILegacyGamesRegistryReader
 {
-    ILogger logger = LogManager.GetLogger();
+    readonly ILogger logger = LogManager.GetLogger();
 
     public IEnumerable<RegistryGameData> GetGameData(RegistryView registryView)
     {

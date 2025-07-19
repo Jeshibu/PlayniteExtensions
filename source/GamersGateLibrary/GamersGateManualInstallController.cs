@@ -13,7 +13,7 @@ public class GamersGateManualInstallController(Game game, GamersGateLibrarySetti
     public IPlayniteAPI PlayniteAPI { get; } = playniteAPI;
     public Plugin Plugin { get; } = plugin;
 
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public override void Install(InstallActionArgs args)
     {

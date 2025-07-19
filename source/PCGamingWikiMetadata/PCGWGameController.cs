@@ -9,7 +9,7 @@ public class PCGWGameController
 {
     private readonly ILogger logger = LogManager.GetLogger();
     public PCGWGame Game;
-    private PCGamingWikiMetadataSettings settings;
+    private readonly PCGamingWikiMetadataSettings settings;
     public PCGamingWikiMetadataSettings Settings { get { return settings; } }
 
     private Dictionary<string, Func<bool>> settingsMap;

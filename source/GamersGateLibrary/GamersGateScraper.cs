@@ -10,8 +10,8 @@ namespace GamersGateLibrary;
 
 public class GamersGateScraper
 {
-    private Random random = new();
-    private ILogger logger = LogManager.GetLogger();
+    private readonly Random random = new();
+    private readonly ILogger logger = LogManager.GetLogger();
     public int MinDelay { get; set; }
     public int MaxDelay { get; set; }
 

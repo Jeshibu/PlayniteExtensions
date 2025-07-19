@@ -17,7 +17,7 @@ public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platform
 {
     public override string Key { get; } = "XboxOne";
     public override int ExecutionOrder { get; } = 1;
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public override async Task<XboxGameDetails> GetDetailsAsync(XboxMetadataSettings settings, string id, string url)
     {

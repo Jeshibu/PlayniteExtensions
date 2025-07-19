@@ -12,7 +12,7 @@ public class OgdbScraper : MetadataScraper
 {
     public override string Name { get; } = "OGDB";
     public override string WebsiteUrl { get; } = "https://ogdb.eu/";
-    private Regex EndBracesTextRegex = new(@"(\s+(\([^)]+\)|\[[^]]+\]))+\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+    private readonly Regex EndBracesTextRegex = new(@"(\s+(\([^)]+\)|\[[^]]+\]))+\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
     protected override string GetSearchUrlFromBarcode(string barcode)
     {

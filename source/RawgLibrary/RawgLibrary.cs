@@ -26,7 +26,7 @@ public class RawgLibrary : LibraryPlugin
 
     public override string Name { get; } = "RAWG";
 
-    private TitleComparer TitleComparer = new();
+    private readonly TitleComparer TitleComparer = new();
 
     public RawgLibrary(IPlayniteAPI api) : base(api)
     {

@@ -19,7 +19,7 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
     private LaunchBoxGame foundGame;
     private string foundGameUrl;
     private List<LaunchBoxImageDetails> foundImages;
-    private TitleComparer titleComparer = new();
+    private readonly TitleComparer titleComparer = new();
 
     public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 

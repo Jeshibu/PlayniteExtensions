@@ -84,7 +84,7 @@ public class itchioBundleTagger : GenericPlugin
         return Playnite.SDK.Data.Serialization.FromJson<Dictionary<string, ItchIoGame>>(DatabaseFile.GetFileContents());
     }
 
-    private Dictionary<string, Tag> TagsCache = [];
+    private readonly Dictionary<string, Tag> TagsCache = [];
 
     private Tag GetTag(string key)
     {
@@ -235,7 +235,7 @@ public class itchioBundleTagger : GenericPlugin
         }, new GlobalProgressOptions(Translator.ProgressStart) { Cancelable = true, IsIndeterminate = false });
     }
 
-    private Regex SteamUrlRegex = new(@"https://store\.steampowered\.com/app/(?<id>[0-9]+)", RegexOptions.Compiled);
+    private readonly Regex SteamUrlRegex = new(@"https://store\.steampowered\.com/app/(?<id>[0-9]+)", RegexOptions.Compiled);
     private string GetSteamStoreUrlId(string url)
     {
         if (string.IsNullOrWhiteSpace(url))

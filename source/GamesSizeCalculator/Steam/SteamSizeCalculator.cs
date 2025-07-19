@@ -12,7 +12,7 @@ namespace GamesSizeCalculator.SteamSizeCalculation;
 
 public class SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtility steamAppIdUtility, GamesSizeCalculatorSettings settings) : ISizeCalculator
 {
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
     public ISteamApiClient SteamApiClient { get; } = steamApiClient;
     public ISteamAppIdUtility SteamAppIdUtility { get; } = steamAppIdUtility;
     public GamesSizeCalculatorSettings Settings { get; } = settings;

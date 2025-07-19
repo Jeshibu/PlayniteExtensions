@@ -69,7 +69,7 @@ public class PlayniteToRawgRating(int id, string description, Range range)
 
 public static class RawgMapping
 {
-    private static ILogger logger = LogManager.GetLogger();
+    private static readonly ILogger logger = LogManager.GetLogger();
     public static Guid DoNotImportId = new("6e18323f-8798-455c-851c-79bf34d83466");
 
     //"Not Played", "Played", "Beaten", "Completed", "Playing", "Abandoned", "On Hold", "Plan to Play"
@@ -83,7 +83,7 @@ public static class RawgMapping
         { "toplay", "Wishlist" },
     };
 
-    private static Dictionary<string, string> RawgToPlayniteStatusDefaults = new()
+    private static readonly Dictionary<string, string> RawgToPlayniteStatusDefaults = new()
     {
         { "owned", "Not Played" },
         { "playing", "Playing" },
@@ -101,7 +101,7 @@ public static class RawgMapping
         { 5, "excellent" },
     };
 
-    private static Dictionary<string, string> PlayniteToRawgStatusDefaults = new()
+    private static readonly Dictionary<string, string> PlayniteToRawgStatusDefaults = new()
     {
         { "Not Played", "yet" },
         { "Played", "owned" },

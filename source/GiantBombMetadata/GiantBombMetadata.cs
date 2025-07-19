@@ -14,7 +14,7 @@ namespace GiantBombMetadata;
 public class GiantBombMetadata : MetadataPlugin
 {
     private static readonly ILogger logger = LogManager.GetLogger();
-    private IWebDownloader downloader = new WebDownloader();
+    private readonly IWebDownloader downloader = new WebDownloader();
 
     public GiantBombMetadataSettingsViewModel Settings { get; set; }
 

@@ -8,7 +8,7 @@ namespace PlayniteExtensions.Common;
 
 public static class GlobalCommands
 {
-    private static ILogger logger = LogManager.GetLogger();
+    private static readonly ILogger logger = LogManager.GetLogger();
 
     public static RelayCommand<object> NavigateUrlCommand
     {

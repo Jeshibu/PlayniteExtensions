@@ -45,7 +45,7 @@ public static class Programs
         @"^zsyncmake\.exe$"
     };
 
-    private static ILogger logger = LogManager.GetLogger();
+    private static readonly ILogger logger = LogManager.GetLogger();
 
     public static bool IsFileScanExcluded(string path)
     {

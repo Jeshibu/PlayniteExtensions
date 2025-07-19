@@ -22,8 +22,8 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
     public List<Link> Links { get; } = [];
     public List<MetadataProperty> Tags { get; } = [];
 
-    private IDictionary<string, int?> reception = new Dictionary<string, int?>();
-    private IDictionary<string, ReleaseDate?> ReleaseDates = new Dictionary<string, ReleaseDate?>();
+    private readonly IDictionary<string, int?> reception = new Dictionary<string, int?>();
+    private readonly IDictionary<string, ReleaseDate?> ReleaseDates = new Dictionary<string, ReleaseDate?>();
 
     public Game LibraryGame;
 

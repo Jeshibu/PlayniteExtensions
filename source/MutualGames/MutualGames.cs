@@ -13,7 +13,7 @@ namespace MutualGames;
 public class MutualGames : GenericPlugin
 {
     //So for anyone using GongSolutions.Wpf.DragDrop - be aware you have to instantiate something from it before referencing the package in your XAML
-    private GongSolutions.Wpf.DragDrop.DefaultDragHandler dropInfo = new();
+    private readonly GongSolutions.Wpf.DragDrop.DefaultDragHandler dropInfo = new();
     private static readonly ILogger logger = LogManager.GetLogger();
 
     private MutualGamesSettingsViewModel _settings;

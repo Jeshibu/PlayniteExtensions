@@ -21,7 +21,7 @@ public abstract class Translator
     }
 
     private FluentBundle bundle;
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public string LocalizationFolder { get; }
 

@@ -8,7 +8,7 @@ namespace TvTropesMetadata.Tests;
 
 public class TropeScraperTests
 {
-    private FakeWebDownloader downloader = new(new Dictionary<string, string>
+    private readonly FakeWebDownloader downloader = new(new Dictionary<string, string>
     {
         { "https://tvtropes.org/pmwiki/pmwiki.php/Main/TheAtoner", "html/TheAtoner.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/TheAtoner/VideoGames", "html/TheAtoner-VideoGames.html" },

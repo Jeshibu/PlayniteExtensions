@@ -11,8 +11,8 @@ namespace PCGamingWikiMetadata;
 public class PCGamingWikiHTMLParser
 {
     private readonly ILogger logger = LogManager.GetLogger();
-    private HtmlDocument doc;
-    private PCGWGameController gameController;
+    private readonly HtmlDocument doc;
+    private readonly PCGWGameController gameController;
 
     public const short UndefinedPlayerCount = -1;
 

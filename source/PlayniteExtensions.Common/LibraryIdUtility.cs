@@ -139,7 +139,7 @@ public class GOGIdUtility : SingleExternalDatabaseIdUtility
 
 public class MobyGamesIdUtility : SingleExternalDatabaseIdUtility
 {
-    private Regex UrlIdRegex = new(@"\bmobygames\.com/game/(?<id>[0-9]+)(/|$)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+    private readonly Regex UrlIdRegex = new(@"\bmobygames\.com/game/(?<id>[0-9]+)(/|$)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
     public override ExternalDatabase Database { get; } = ExternalDatabase.MobyGames;
 
@@ -158,7 +158,7 @@ public class MobyGamesIdUtility : SingleExternalDatabaseIdUtility
 
 public class AggregateExternalDatabaseUtility : IExternalDatabaseIdUtility
 {
-    private List<ISingleExternalDatabaseIdUtility> databaseIdUtilities = [];
+    private readonly List<ISingleExternalDatabaseIdUtility> databaseIdUtilities = [];
 
     public IEnumerable<ExternalDatabase> Databases => databaseIdUtilities.SelectMany(x => x.Databases).Distinct();
 

@@ -15,7 +15,7 @@ public interface IAppStateReader
 public class AppStateReader(string appStatePath = null) : IAppStateReader
 {
     private static readonly string DefaultAppStatePath = Environment.ExpandEnvironmentVariables(@"%APPDATA%\legacy-games-launcher\app-state.json");
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public string AppStatePath { get; } = appStatePath ?? DefaultAppStatePath;
 

@@ -14,7 +14,7 @@ namespace PluginsCommon.Web;
 // Based on https://github.com/JosefNemec/Playnite
 public class HttpDownloader
 {
-    private static ILogger logger = LogManager.GetLogger();
+    private static readonly ILogger logger = LogManager.GetLogger();
     private static readonly HttpClient httpClient = new();
     private static readonly HttpClient httpClientJson = new();
     private static readonly Downloader downloader = new();

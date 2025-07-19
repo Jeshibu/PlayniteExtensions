@@ -186,7 +186,7 @@ public class GamersGateLibrarySettingsViewModel : PluginSettingsViewModel<Gamers
         return errors.Count == 0;
     }
 
-    private int CurrentVersion = 2;
+    private readonly int CurrentVersion = 2;
 
     private void UpgradeSettings()
     {

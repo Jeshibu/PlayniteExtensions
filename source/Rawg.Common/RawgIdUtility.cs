@@ -7,7 +7,7 @@ namespace Rawg.Common;
 
 public class RawgIdUtility : SingleExternalDatabaseIdUtility
 {
-    private static Regex rawgGameUrlRegex = new(@"^https://rawg\.io/games/(?<id>[0-9]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex rawgGameUrlRegex = new(@"^https://rawg\.io/games/(?<id>[0-9]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
     public override ExternalDatabase Database { get; } = ExternalDatabase.RAWG;
 

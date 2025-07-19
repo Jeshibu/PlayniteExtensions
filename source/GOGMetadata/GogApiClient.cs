@@ -16,7 +16,7 @@ namespace GOGMetadata;
 
 public class GogApiClient(IWebDownloader downloader, GOGMetadataSettings settings, IPlatformUtility platformUtility) : IGameSearchProvider<GogSearchResponse.Product>
 {
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public StorePageResult.ProductDetails GetGameStoreData(GogSearchResponse.Product product)
     {
