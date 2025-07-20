@@ -24,6 +24,6 @@ Packages:
   - Version: 0.2.1
     RequiredApiVersion: 6.2.0
     ReleaseDate: 2025-07-20
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/opencritic0.2.1/OpenCriticMetadata_0_2.pext
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/opencritic0.2.1/OpenCriticMetadata_0_2_1.pext
     Changelog:
     - Fixed drag-drop control in settings not initializing if no other extension does it
