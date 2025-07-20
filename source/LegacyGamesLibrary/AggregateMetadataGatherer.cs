@@ -79,7 +79,7 @@ public class AggregateMetadataGatherer(ILegacyGamesRegistryReader registryReader
         {
             logger.Error(ex, "Failed to gather metadata");
             playniteAPI.Notifications.Add(new NotificationMessage("legacy-games-error", $"Failed to get Legacy Games games: {ex.Message}", NotificationType.Error));
-            return new GameMetadata[0];
+            return [];
         }
     }
 

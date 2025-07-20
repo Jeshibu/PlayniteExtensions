@@ -193,7 +193,7 @@ public class GiantBombGameSearchProvider(IGiantBombApiClient apiClient, GiantBom
     private IEnumerable<string> GetValues(PropertyImportSetting importSetting, PropertyImportTarget target, GiantBombObject[] data)
     {
         if (importSetting.ImportTarget != target || data == null || data.Length == 0)
-            return new string[0];
+            return [];
 
         return data.Select(d => $"{importSetting.Prefix}{d.Name.Trim()}");
     }

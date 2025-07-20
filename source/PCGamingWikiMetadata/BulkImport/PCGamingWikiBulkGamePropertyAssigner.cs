@@ -131,7 +131,7 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
         return false;
     }
 
-    private readonly string[] falseValues = new[] { "false", "unknown", "n/a", "hackable" };
+    private readonly string[] falseValues = ["false", "unknown", "n/a", "hackable"];
 
     private bool GetDefaultSelectionStatus(string value) => !falseValues.Contains(value, StringComparer.InvariantCultureIgnoreCase);
 

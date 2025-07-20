@@ -23,7 +23,7 @@ public class GogClient(IWebViewWrapper webView) : IFriendsGamesClient
 
     public Guid PluginId { get; } = Guid.Parse("AEBE8B7C-6DC3-4A66-AF31-E7375C6B5E9E");
 
-    public IEnumerable<string> CookieDomains => new[] { ".gog.com", "www.gog.com" };
+    public IEnumerable<string> CookieDomains => [".gog.com", "www.gog.com"];
 
     public string LoginUrl => "https://www.gog.com/##openlogin";
 
@@ -81,7 +81,7 @@ public class GogClient(IWebViewWrapper webView) : IFriendsGamesClient
         var acctInfo = GetLoggedInUserAsync().Result;
 
         var response = webView.DownloadPageSource($"https://www.gog.com/u/{acctInfo.Username}/friends");
-        var lines = response.Content.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        var lines = response.Content.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries);
         foreach (var line in lines)
         {
             var l = line.Trim().TrimEnd(';');

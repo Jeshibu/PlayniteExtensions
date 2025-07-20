@@ -148,7 +148,7 @@ public class SortableNameConverterTests
     [InlineData("A Hat in Time", "A Hat in Time")]
     public void SortableNameNoArticlesRemovedTest(string input, string expected)
     {
-        var c = new SortableNameConverter(new string[0]);
+        var c = new SortableNameConverter([]);
         var output = c.Convert(input);
         Assert.Equal(expected, output);
     }

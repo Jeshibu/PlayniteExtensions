@@ -124,7 +124,7 @@ public class SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtil
             return string.Empty;
         }
 
-        var words = str.Split(new[] { ' ', '_', '-' }, StringSplitOptions.RemoveEmptyEntries);
+        var words = str.Split([' ', '_', '-'], StringSplitOptions.RemoveEmptyEntries);
         if (words.Length == 0)
         {
             regionalWord = string.Empty;
@@ -167,7 +167,7 @@ public class SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtil
         }
 
         str = str.Trim();
-        var i = str.LastIndexOfAny(new[] { ' ', '_', '-' });
+        var i = str.LastIndexOfAny([' ', '_', '-']);
         if (i == -1)
         {
             return str;

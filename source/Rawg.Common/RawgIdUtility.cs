@@ -11,7 +11,7 @@ public class RawgIdUtility : SingleExternalDatabaseIdUtility
 
     public override ExternalDatabase Database { get; } = ExternalDatabase.RAWG;
 
-    public override IEnumerable<Guid> LibraryIds { get; } = new[] { RawgMetadataHelper.RawgLibraryId };
+    public override IEnumerable<Guid> LibraryIds { get; } = [RawgMetadataHelper.RawgLibraryId];
 
     public override DbId GetIdFromUrl(string url)
     {

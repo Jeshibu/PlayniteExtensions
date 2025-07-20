@@ -124,7 +124,7 @@ public class BigFishSearchProvider(IWebDownloader downloader, BigFishMetadataSet
             item.CoverUrl = gameElement.QuerySelector(".productcollection__item-images img")?.GetAttribute("src");
 
             var attributes = gameElement.QuerySelector(".productcollection__item-attributes").TextContent.Trim();
-            item.Platform = attributes.Split(new[] { " | " }, StringSplitOptions.None).Select(a => a.Trim()).First();
+            item.Platform = attributes.Split([" | "], StringSplitOptions.None).Select(a => a.Trim()).First();
             yield return item;
         }
     }
@@ -159,7 +159,7 @@ public class BigFishSearchResultGame : IGameSearchResult
 
     IEnumerable<string> IGameSearchResult.AlternateNames => Enumerable.Empty<string>();
 
-    IEnumerable<string> IGameSearchResult.Platforms => string.IsNullOrWhiteSpace(Platform) ? Enumerable.Empty<string>() : new[] { Platform };
+    IEnumerable<string> IGameSearchResult.Platforms => string.IsNullOrWhiteSpace(Platform) ? Enumerable.Empty<string>() : [Platform];
 
     ReleaseDate? IGameSearchResult.ReleaseDate => null;
 }

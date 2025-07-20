@@ -154,7 +154,7 @@ public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platform
         public string DefaultImageUrl { get; set; }
         public string DefaultGalleryImageUrl { get; set; }
         public string AltText { get; set; }
-        public ImageForBreakPoint[] ImageForBreakPoints { get; set; } = new ImageForBreakPoint[0];
+        public ImageForBreakPoint[] ImageForBreakPoints { get; set; } = [];
     }
 
     private class ImageForBreakPoint
@@ -278,7 +278,7 @@ public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platform
 
     private static IEnumerable<string> GetCompanies(string name)
     {
-        var names = name?.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+        var names = name?.Split(['/'], StringSplitOptions.RemoveEmptyEntries);
         return names.NullIfEmpty()?.Select(n => n.Trim().TrimCompanyForms());
     }
 

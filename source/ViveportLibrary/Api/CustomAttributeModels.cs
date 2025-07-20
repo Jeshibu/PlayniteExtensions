@@ -14,7 +14,7 @@ public class CustomAttributeMetadataContainer
 
 public class CustomAttributeMetadata
 {
-    public CustomAttributeMetadataItem[] Items { get; set; } = new CustomAttributeMetadataItem[0];
+    public CustomAttributeMetadataItem[] Items { get; set; } = [];
 }
 
 public class CustomAttributeMetadataItem
@@ -23,7 +23,7 @@ public class CustomAttributeMetadataItem
     public string AttributeCode { get; set; }
 
     [JsonProperty("attribute_options")]
-    public AttributeOption[] AttributeOptions { get; set; } = new AttributeOption[0];
+    public AttributeOption[] AttributeOptions { get; set; } = [];
 }
 
 public class AttributeOption

@@ -17,14 +17,14 @@ public class SteamTagsGetter(SteamTagsImporterSettings settings, ISteamAppIdUtil
         if (Settings.LimitTaggingToPcGames && !IsPcGame(game))
         {
             logger.Debug($"Skipped {game.Name} because it's not a PC game");
-            return new SteamTag[0];
+            return [];
         }
 
         string appId = appIdUtility.GetSteamGameId(game);
         if (string.IsNullOrEmpty(appId))
         {
             logger.Debug($"Couldn't find app ID for game {game.Name}");
-            return new SteamTag[0];
+            return [];
         }
 
         var tagScrapeResult = tagScraper.GetTags(appId, Settings.LanguageKey);

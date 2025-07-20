@@ -58,7 +58,7 @@ public sealed class MutualGamesAccountImporter(IPlayniteAPI playniteAPI, MutualG
 
         var output = new List<Game>();
         var client = clients.FirstOrDefault(c => c.Source == account.Source);
-        if (client == null) return new Game[0];
+        if (client == null) return [];
 
         dbItem = GetDatabaseItem(friendName, client.Name);
 

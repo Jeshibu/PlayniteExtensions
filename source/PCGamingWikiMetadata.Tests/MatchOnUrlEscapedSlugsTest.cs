@@ -21,7 +21,7 @@ public class MatchOnUrlEscapedSlugsTest
         };
 
         var matchHelper = new GameMatchingHelper(new PCGamingWikiIdUtility(), 1);
-        matchHelper.Prepare(new[] { libraryGame }, default);
+        matchHelper.Prepare([libraryGame], default);
 
         var slug = "Vivisector - Beast Within".TitleToSlug();
         var expectedId = DbId.PCGW(PCGamingWikiIdUtility.SlugToId(slug));

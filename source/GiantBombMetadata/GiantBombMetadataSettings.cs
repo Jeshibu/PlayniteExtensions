@@ -62,12 +62,12 @@ public class GiantBombMetadataSettingsViewModel : PluginSettingsViewModel<GiantB
         });
     }
 
-    public PropertyImportTarget[] ImportTargets { get; } = new[]
-    {
+    public PropertyImportTarget[] ImportTargets { get; } =
+    [
         PropertyImportTarget.Ignore,
         PropertyImportTarget.Genres,
         PropertyImportTarget.Tags,
-    };
+    ];
 
     public Dictionary<MultiValuedPropertySelectionMode, string> PropertySelectionModes { get; } = new()
     {

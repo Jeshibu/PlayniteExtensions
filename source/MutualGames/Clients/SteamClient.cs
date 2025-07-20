@@ -22,7 +22,7 @@ public class SteamClient(IWebViewWrapper webView) : IFriendsGamesClient
     public FriendSource Source { get; } = FriendSource.Steam;
     public Guid PluginId { get; } = Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB");
 
-    public IEnumerable<string> CookieDomains => new[] { "steamcommunity.com" };
+    public IEnumerable<string> CookieDomains => ["steamcommunity.com"];
 
     public string LoginUrl => "https://steamcommunity.com/login/home/?goto=search%2Fgroups";
 

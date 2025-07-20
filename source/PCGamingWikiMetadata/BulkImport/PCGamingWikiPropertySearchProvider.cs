@@ -101,7 +101,7 @@ public class PCGamingWikiPropertySearchProvider(ICargoQuery cargoQuery, IPlatfor
             Url = slug.SlugToUrl(),
         };
 
-        game.Platforms = g.OS?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).SelectMany(platformUtility.GetPlatforms).ToList();
+        game.Platforms = g.OS?.Split([','], StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim()).SelectMany(platformUtility.GetPlatforms).ToList();
         game.ReleaseDate = GetReleaseDate(g.Released);
 
         if (!string.IsNullOrWhiteSpace(g.SteamID))
@@ -115,7 +115,7 @@ public class PCGamingWikiPropertySearchProvider(ICargoQuery cargoQuery, IPlatfor
 
     private ReleaseDate? GetReleaseDate(string releaseDateString)
     {
-        var releaseDateStrings = releaseDateString?.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+        var releaseDateStrings = releaseDateString?.Split([';'], StringSplitOptions.RemoveEmptyEntries);
         if (releaseDateStrings == null || releaseDateStrings.Length == 0)
             return null;
 

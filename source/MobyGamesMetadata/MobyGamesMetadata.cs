@@ -28,7 +28,7 @@ public class MobyGamesMetadata : MetadataPlugin
             var fields = new List<MetadataField>();
             if (settings.Settings.DataSource.HasFlag(DataSource.Api))
             {
-                fields.AddMissing(new[] {
+                fields.AddMissing([
                     MetadataField.Name,
                     MetadataField.Description,
                     MetadataField.ReleaseDate,
@@ -40,11 +40,11 @@ public class MobyGamesMetadata : MetadataPlugin
                     MetadataField.CoverImage,
                     MetadataField.BackgroundImage,
                     MetadataField.Links,
-                });
+                ]);
             }
             if (settings.Settings.DataSource.HasFlag(DataSource.Scraping))
             {
-                fields.AddMissing(new[] {
+                fields.AddMissing([
                     MetadataField.Name,
                     MetadataField.Description,
                     MetadataField.ReleaseDate,
@@ -56,7 +56,7 @@ public class MobyGamesMetadata : MetadataPlugin
                     MetadataField.CriticScore,
                     MetadataField.CommunityScore,
                     MetadataField.Series,
-                });
+                ]);
             }
             return fields;
         }

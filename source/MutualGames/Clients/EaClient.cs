@@ -27,7 +27,7 @@ public class EaClient(IWebViewWrapper webView, IWebDownloader downloader) : IFri
 
     public Guid PluginId { get; } = Guid.Parse("85DD7072-2F20-4E76-A007-41035E390724");
 
-    public IEnumerable<string> CookieDomains => new[] { ".ea.com", "myaccount.ea.com" };
+    public IEnumerable<string> CookieDomains => [".ea.com", "myaccount.ea.com"];
 
     public string LoginUrl => "https://myaccount.ea.com/cp-ui/aboutme/index";
 

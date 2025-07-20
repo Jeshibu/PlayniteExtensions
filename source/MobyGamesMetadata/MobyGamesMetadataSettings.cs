@@ -140,21 +140,21 @@ public class MobyGamesMetadataSettingsViewModel : PluginSettingsViewModel<MobyGa
         });
     }
 
-    public PropertyImportTarget[] ImportTargets { get; } = new[]
-    {
+    public PropertyImportTarget[] ImportTargets { get; } =
+    [
         PropertyImportTarget.Ignore,
         PropertyImportTarget.Genres,
         PropertyImportTarget.Tags,
         PropertyImportTarget.Features,
-    };
+    ];
 
-    public AspectRatio[] AspectRatios { get; } = new[]
-    {
+    public AspectRatio[] AspectRatios { get; } =
+    [
         AspectRatio.Any,
         AspectRatio.Vertical,
         AspectRatio.Horizontal,
         AspectRatio.Square,
-    };
+    ];
 
     private void InitializeGenres()
     {

@@ -150,7 +150,7 @@ public class SearchResult : Playnite.SDK.GenericItemOption, IHasName
     {
         Url = url;
         if (url == null) return;
-        var urlSegment = url.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Where(x => x.All(char.IsNumber)).FirstOrDefault();
+        var urlSegment = url.Split(['/'], StringSplitOptions.RemoveEmptyEntries).Where(x => x.All(char.IsNumber)).FirstOrDefault();
         if (urlSegment != null)
             Id = int.Parse(urlSegment);
     }

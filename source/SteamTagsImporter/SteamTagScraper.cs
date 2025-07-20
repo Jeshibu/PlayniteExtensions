@@ -23,7 +23,7 @@ public class SteamTagScraper(Func<string, string, SteamTagScraper.Delistable<str
 
         var match = TagJsonRegex.Match(html.Value);
         if (!match.Success)
-            return new Delistable<IEnumerable<SteamTag>>(new SteamTag[0], html.Delisted);
+            return new Delistable<IEnumerable<SteamTag>>([], html.Delisted);
 
         var json = match.Groups["json"].Value;
         var steamTags = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SteamTag>>(json);

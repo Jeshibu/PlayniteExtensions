@@ -114,7 +114,7 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
 
     private TropePageListItem ParseTropePageListItem(IElement element)
     {
-        var output = new TropePageListItem { Text = element.InnerHtml.Split(new[] { "<ul>" }, StringSplitOptions.RemoveEmptyEntries).First() };
+        var output = new TropePageListItem { Text = element.InnerHtml.Split(["<ul>"], StringSplitOptions.RemoveEmptyEntries).First() };
         var liChildren = element.Children.Where(c => c.TagName == "EM" || IsVideoGameLink(c));
         if (liChildren == null)
             return output;
@@ -133,7 +133,7 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
             var work = new TvTropesWork { Title = lic.TextContent.HtmlDecode() };
             AddWork(work);
             var links = lic.TagName == "A"
-                ? new[] { lic }
+                ? [lic]
                 : lic.Children.Where(IsVideoGameLink);
 
             foreach (var a in links)

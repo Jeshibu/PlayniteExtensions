@@ -77,7 +77,7 @@ public class MobyScreenshotGroup: IHasPlatforms
     public string platform_name { get; set; }
     public List<MobyScreenshot> images { get; set; } = [];
 
-    IEnumerable<string> IHasPlatforms.Platforms => new[] { platform_name };
+    IEnumerable<string> IHasPlatforms.Platforms => [platform_name];
 }
 
 public class MobyCountry

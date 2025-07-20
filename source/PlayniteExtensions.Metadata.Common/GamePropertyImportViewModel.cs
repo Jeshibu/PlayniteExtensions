@@ -10,8 +10,8 @@ public class GamePropertyImportViewModel
 {
     public IPlayniteAPI PlayniteAPI { get; set; }
 
-    public GamePropertyImportTargetField[] TargetFieldOptions { get; set; } = new[]
-    {
+    public GamePropertyImportTargetField[] TargetFieldOptions { get; set; } =
+    [
         GamePropertyImportTargetField.Category,
         GamePropertyImportTargetField.Genre,
         GamePropertyImportTargetField.Tag,
@@ -19,7 +19,7 @@ public class GamePropertyImportViewModel
         GamePropertyImportTargetField.Series,
         GamePropertyImportTargetField.Developers,
         GamePropertyImportTargetField.Publishers,
-    };
+    ];
 
     public GamePropertyImportTargetField TargetField { get; set; }
 

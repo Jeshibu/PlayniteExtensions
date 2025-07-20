@@ -114,10 +114,10 @@ public abstract class BaseScraper(IWebDownloader downloader)
 
     protected IEnumerable<Tuple<string, string>> GetHeaderSegments(string content)
     {
-        var headerSegments = content.Trim().Split(new[] { "<h2>" }, StringSplitOptions.RemoveEmptyEntries);
+        var headerSegments = content.Trim().Split(["<h2>"], StringSplitOptions.RemoveEmptyEntries);
         foreach (var segment in headerSegments)
         {
-            var headerAndContent = segment.Trim().Split(new[] { "</h2>" }, StringSplitOptions.RemoveEmptyEntries);
+            var headerAndContent = segment.Trim().Split(["</h2>"], StringSplitOptions.RemoveEmptyEntries);
             var segmentHeader = headerAndContent.Length == 2 ? headerAndContent[0].HtmlDecode() : string.Empty;
             var segmentContent = headerAndContent.Length == 2 ? headerAndContent[1] : segment;
 

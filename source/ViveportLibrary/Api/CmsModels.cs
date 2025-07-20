@@ -5,12 +5,12 @@ namespace ViveportLibrary.Api;
 public class CmsAppDetailsResponse
 {
     public CmsProducts Products { get; set; }
-    public CmsContents[] Contents { get; set; } = new CmsContents[0];
+    public CmsContents[] Contents { get; set; } = [];
 }
 
 public class CmsProducts
 {
-    public string[] Ids { get; set; } = new string[0];
+    public string[] Ids { get; set; } = [];
     public int Total { get; set; }
     public int Size { get; set; }
     public int From { get; set; }
@@ -45,7 +45,7 @@ public class CmsContents
     [JsonProperty("title_language")]
     public string TitleLanguage { get; set; }
 
-    public ViveportApp[] Apps { get; set; } = new ViveportApp[0];
+    public ViveportApp[] Apps { get; set; } = [];
 
     public int Type { get; set; }
 
@@ -75,9 +75,9 @@ public class ViveportApp
 
     public ViveportThumbnails Thumbnails { get; set; }
 
-    public ViveportMedia[] Gallery { get; set; } = new ViveportMedia[0];
+    public ViveportMedia[] Gallery { get; set; } = [];
 
-    public string[] Genres { get; set; } = new string[0];
+    public string[] Genres { get; set; } = [];
 
     [JsonProperty("sys_reqs")]
     public SystemRequirements SystemRequirements { get; set; }
@@ -103,21 +103,21 @@ public class ViveportApp
     public string Contact { get; set; }
 
     [JsonProperty("play_area")]
-    public string[] PlayArea { get; set; } = new string[0];
+    public string[] PlayArea { get; set; } = [];
 
     [JsonProperty("extra_docs")]
-    public KeyValueWithAttributes[] ExtraDocs { get; set; } = new KeyValueWithAttributes[0];
+    public KeyValueWithAttributes[] ExtraDocs { get; set; } = [];
 
     [JsonProperty("app_type")]
     public int AppType { get; set; }
 
     [JsonProperty("input_methods")]
-    public string[] InputMethods { get; set; } = new string[0];
+    public string[] InputMethods { get; set; } = [];
 
     public string Publisher { get; set; }
 
     [JsonProperty("player_num")]
-    public string[] PlayerNum { get; set; } = new string[0];
+    public string[] PlayerNum { get; set; } = [];
 
     [JsonProperty("hw_matrix")]
     public HardwareMatrix HardwareMatrix { get; set; }
@@ -130,7 +130,7 @@ public class ViveportApp
 
 public class ViveportCloudData
 {
-    public ViveportCloudObject[] Objs { get; set; } = new ViveportCloudObject[0];
+    public ViveportCloudObject[] Objs { get; set; } = [];
 }
 
 public class ViveportCloudObject
@@ -170,8 +170,8 @@ public class ViveportMedia
 
 public class SystemRequirements
 {
-    public string[] OS { get; set; } = new string[0];
-    public string[] OSBits { get; set; } = new string[0];
+    public string[] OS { get; set; } = [];
+    public string[] OSBits { get; set; } = [];
 
     public OtherSystemRequirements Others { get; set; }
 }
@@ -206,12 +206,12 @@ public class KeyValue
 
 public class KeyValueWithAttributes : KeyValue
 {
-    public KeyValue[] Attributes { get; set; } = new KeyValue[0];
+    public KeyValue[] Attributes { get; set; } = [];
 }
 
 public class HardwareMatrix
 {
     [JsonProperty("headset_features")]
-    public string[] HeadsetFeatures { get; set; } = new string[0];
-    public string[] Headsets { get; set; } = new string[0];
+    public string[] HeadsetFeatures { get; set; } = [];
+    public string[] Headsets { get; set; } = [];
 }

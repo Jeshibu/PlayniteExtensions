@@ -140,7 +140,7 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
         if (string.IsNullOrWhiteSpace(str))
             return null;
 
-        var split = str.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+        var split = str.Split([';'], StringSplitOptions.RemoveEmptyEntries);
         var strings = stringSelector == null ? split : split.Select(stringSelector);
         var output = strings.Select(g => new MetadataNameProperty(g.Trim()));
 
@@ -301,7 +301,7 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
             var output = new List<string>();
             foreach (var regionSetting in settings.Regions)
             {
-                var aliases = regionSetting.Aliases?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
+                var aliases = regionSetting.Aliases?.Split([','], StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
                 if (gameRegions.Any(gr => comparer.Equals(gr, regionSetting.Name) || (aliases != null && aliases.ContainsString(gr))))
                     output.Add(regionSetting.Name); //put any matched region at the top
             }

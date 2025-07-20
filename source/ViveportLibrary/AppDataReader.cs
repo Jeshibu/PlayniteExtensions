@@ -119,10 +119,10 @@ public class AppMetadata
     public string Locale;
 
     [JsonProperty("sdl")]
-    public string[] SupportedDeviceList = new string[0];
+    public string[] SupportedDeviceList = [];
 
     [JsonProperty("srl")]
-    public string[] SupportedVrApis = new string[0];
+    public string[] SupportedVrApis = [];
 
     [JsonProperty("tt")]
     public string Title;

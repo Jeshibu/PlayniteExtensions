@@ -62,9 +62,9 @@ public class itchioBundleTagger : GenericPlugin
     public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
     {
         if (Settings.Settings.ShowInContextMenu && args.Games.Any(g => g.PluginId == ItchIoLibraryId))
-            return new[] { new GameMenuItem { Description = Translator.ExecuteTagging, Action = TagItchBundleGames } };
+            return [new GameMenuItem { Description = Translator.ExecuteTagging, Action = TagItchBundleGames }];
         else
-            return new GameMenuItem[0];
+            return [];
     }
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)

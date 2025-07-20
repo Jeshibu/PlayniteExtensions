@@ -255,7 +255,7 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
 
     public void AddCSVTags(string csv, string prefix)
     {
-        char[] trimChars = { ' ' };
+        char[] trimChars = [' '];
         string[] tags = SplitCSVString(csv);
 
         foreach (string tag in tags)

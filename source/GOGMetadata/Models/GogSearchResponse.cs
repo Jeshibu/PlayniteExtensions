@@ -27,7 +27,7 @@ public class GogSearchResponse
 
         public string Title => title;
 
-        public IEnumerable<string> AlternateNames => new string[0];
+        public IEnumerable<string> AlternateNames => [];
 
         public IEnumerable<string> Platforms => operatingSystems;
 

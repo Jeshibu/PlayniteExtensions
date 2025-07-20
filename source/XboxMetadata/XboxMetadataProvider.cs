@@ -109,7 +109,7 @@ public class XboxMetadataProvider(MetadataRequestOptions options, XboxMetadataSe
         if (rating == null || !RatingBoardMatchesSettings(rating))
             return null;
 
-        return new[] { new MetadataNameProperty(rating) };
+        return [new MetadataNameProperty(rating)];
     }
 
     private bool RatingBoardMatchesSettings(string rating)

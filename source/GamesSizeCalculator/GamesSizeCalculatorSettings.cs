@@ -67,12 +67,12 @@ public class GamesSizeCalculatorSettingsViewModel : PluginSettingsViewModel<Game
     public string RegionWordsString
     {
         get => string.Join(Environment.NewLine, Settings.DepotRegionWords);
-        set => Settings.DepotRegionWords = new ObservableCollection<string>(value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
+        set => Settings.DepotRegionWords = new ObservableCollection<string>(value.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries));
     }
     public string RegionWordsBlacklistString
     {
         get => string.Join(Environment.NewLine, Settings.DepotRegionWordsBlacklist);
-        set => Settings.DepotRegionWordsBlacklist = new ObservableCollection<string>(value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
+        set => Settings.DepotRegionWordsBlacklist = new ObservableCollection<string>(value.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries));
     }
 
     public GamesSizeCalculatorSettingsViewModel(GamesSizeCalculator plugin):base(plugin, plugin.PlayniteApi)

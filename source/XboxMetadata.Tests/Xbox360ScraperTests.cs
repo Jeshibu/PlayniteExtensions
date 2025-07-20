@@ -42,7 +42,7 @@ public class Xbox360ScraperTests
         });
 
         var scraper = new Xbox360Scraper(downloader, new PlatformUtility(playniteApi.Object));
-        var scraperManager = new ScraperManager(new[] { scraper });
+        var scraperManager = new ScraperManager([scraper]);
 
         var metadataProvider = new XboxMetadataProvider(options, settings, playniteApi.Object, scraperManager);
 
@@ -83,7 +83,7 @@ public class Xbox360ScraperTests
         });
 
         var scraper = new Xbox360Scraper(downloader, new PlatformUtility(playniteApi.Object));
-        var scraperManager = new ScraperManager(new[] { scraper });
+        var scraperManager = new ScraperManager([scraper]);
 
         var metadataProvider = new XboxMetadataProvider(options, settings, playniteApi.Object, scraperManager);
 

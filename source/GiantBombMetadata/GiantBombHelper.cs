@@ -43,7 +43,7 @@ public class GiantBombIdUtility : SingleExternalDatabaseIdUtility
 {
     public override ExternalDatabase Database { get; } = ExternalDatabase.GiantBomb;
 
-    public override IEnumerable<Guid> LibraryIds { get; } = new Guid[0];
+    public override IEnumerable<Guid> LibraryIds { get; } = [];
 
     public override DbId GetIdFromUrl(string url)
     {

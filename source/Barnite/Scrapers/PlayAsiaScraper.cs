@@ -89,7 +89,7 @@ public class PlayAsiaScraper : MetadataScraper
 
     protected override IEnumerable<GameLink> ScrapeSearchResultHtml(string html)
     {
-        return new GameLink[0];
+        return [];
     }
 
     protected override string ScrapeRedirectUrl(string requestUrl, string html)

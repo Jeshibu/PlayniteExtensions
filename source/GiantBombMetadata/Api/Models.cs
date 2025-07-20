@@ -71,9 +71,9 @@ public class GiantBombObjectDetails : GiantBombObject
         get
         {
             if (string.IsNullOrWhiteSpace(Aliases))
-                return new string[0];
+                return [];
 
-            return Aliases.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            return Aliases.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries);
         }
     }
 
@@ -81,7 +81,7 @@ public class GiantBombObjectDetails : GiantBombObject
 
     [JsonProperty("original_release_date")]
     public string ReleaseDate { get; set; }
-    public GiantBombPlatform[] Platforms { get; set; } = new GiantBombPlatform[0];
+    public GiantBombPlatform[] Platforms { get; set; } = [];
 
     #endregion game search results and details only
 }
@@ -95,29 +95,29 @@ public class GiantBombSearchResultItem : GiantBombObjectDetails, IGameSearchResu
 
     public string Title => Name;
 
-    IEnumerable<string> IGameSearchResult.Platforms => Platforms?.Select(p => p.Name) ?? new string[0];
+    IEnumerable<string> IGameSearchResult.Platforms => Platforms?.Select(p => p.Name) ?? [];
 
     ReleaseDate? IGameSearchResult.ReleaseDate => ReleaseDate.ParseReleaseDate();
 }
 
 public class GiantBombGameDetails : GiantBombObjectDetails
 {
-    public GiantBombObject[] Genres { get; set; } = new GiantBombObject[0];
-    public GiantBombObject[] Developers { get; set; } = new GiantBombObject[0];
-    public GiantBombObject[] Publishers { get; set; } = new GiantBombObject[0];
-    public GiantBombObject[] Franchises { get; set; } = new GiantBombObject[0];
+    public GiantBombObject[] Genres { get; set; } = [];
+    public GiantBombObject[] Developers { get; set; } = [];
+    public GiantBombObject[] Publishers { get; set; } = [];
+    public GiantBombObject[] Franchises { get; set; } = [];
 
     [JsonProperty("original_game_rating")]
-    public GiantBombObject[] Ratings { get; set; } = new GiantBombObject[0];
+    public GiantBombObject[] Ratings { get; set; } = [];
 
-    public GiantBombImage[] Images { get; set; } = new GiantBombImage[0];
+    public GiantBombImage[] Images { get; set; } = [];
 
-    public GiantBombObject[] Characters { get; set; } = new GiantBombObject[0];
-    public GiantBombObject[] Concepts { get; set; } = new GiantBombObject[0];
-    public GiantBombObject[] Locations { get; set; } = new GiantBombObject[0];
-    public GiantBombObject[] Objects { get; set; } = new GiantBombObject[0];
-    public GiantBombObject[] People { get; set; } = new GiantBombObject[0];
-    public GiantBombObject[] Themes { get; set; } = new GiantBombObject[0];
+    public GiantBombObject[] Characters { get; set; } = [];
+    public GiantBombObject[] Concepts { get; set; } = [];
+    public GiantBombObject[] Locations { get; set; } = [];
+    public GiantBombObject[] Objects { get; set; } = [];
+    public GiantBombObject[] People { get; set; } = [];
+    public GiantBombObject[] Themes { get; set; } = [];
 }
 
 public class GiantBombImage : IImageData
@@ -140,7 +140,7 @@ public class GiantBombImage : IImageData
 
     int IImageData.Height => 0;
 
-    IEnumerable<string> IImageData.Platforms => new string[0];
+    IEnumerable<string> IImageData.Platforms => [];
 }
 
 public class GiantBombCoverImage : IImageData
@@ -164,10 +164,10 @@ public class GiantBombCoverImage : IImageData
 
     int IImageData.Height => 0;
 
-    IEnumerable<string> IImageData.Platforms => new string[0];
+    IEnumerable<string> IImageData.Platforms => [];
 }
 
 public class GiantBombGamePropertyDetails : GiantBombObjectDetails
 {
-    public GiantBombObject[] Games { get; set; } = new GiantBombObject[0];
+    public GiantBombObject[] Games { get; set; } = [];
 }

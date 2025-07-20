@@ -13,7 +13,7 @@ public class MutualGamesSettingsViewModel : PluginSettingsViewModel<MutualGamesS
     private List<GameFeature> gameFeatures;
     private IFriendsGamesClient[] clients;
     public IFriendsGamesClient[] Clients => clients ??= Plugin.GetClients().ToArray();
-    public GameField[] ImportFieldOptions { get; } = new[] { GameField.Categories, GameField.Tags };
+    public GameField[] ImportFieldOptions { get; } = [GameField.Categories, GameField.Tags];
     public List<GameFeature> Features
     {
         get

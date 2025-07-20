@@ -40,7 +40,7 @@ public class ViveportMetadataProvider(IViveportApiClient viveportApiClient, Vive
             Source = new MetadataNameProperty("Viveport"),
             Genres = GetCustomAttributeMetadataProperties(appDetails.Genres, customAttributes, "genres", opt => opt.Value),
             InstallSize = GetInstallSize(appDetails),
-            AgeRatings = GetCustomAttributeMetadataProperties(new[] { appDetails.ContentRating.ToString() }, customAttributes, "content_rating", opt => opt.AdminLabel),
+            AgeRatings = GetCustomAttributeMetadataProperties([appDetails.ContentRating.ToString()], customAttributes, "content_rating", opt => opt.AdminLabel),
             ReleaseDate = new ReleaseDate(GetDateFromMilliseconds(appDetails.ReleaseTimeMilliseconds)),
             Version = appDetails.VersionName,
             Links = [new Link("Viveport Store Page", $"https://www.viveport.com/apps/{game.GameId}")],

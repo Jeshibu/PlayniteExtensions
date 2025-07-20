@@ -43,10 +43,10 @@ public class GamersGateLibrary : LibraryPlugin
             case OnImportAction.Prompt:
                 var result = PlayniteApi.Dialogs.ShowMessage("Import GamersGate games? This will open a browser window because you might encounter CAPTCHAs that you need to solve within 60 seconds. This prompt (or the import as a whole) can be turned off in the add-on settings. Do not close the browser window during the import.", "GamersGate import", System.Windows.MessageBoxButton.OKCancel);
                 if (result == System.Windows.MessageBoxResult.Cancel)
-                    return new GameMetadata[0];
+                    return [];
                 break;
             case OnImportAction.DoNothing:
-                return new GameMetadata[0];
+                return [];
             case OnImportAction.ImportWithoutPrompt:
             case OnImportAction.ImportOffscreen:
             default:
@@ -105,7 +105,7 @@ public class GamersGateLibrary : LibraryPlugin
         {
             logger.Error(ex, "Error fetching GamersGate games");
             PlayniteApi.Notifications.Add("gamersgate-error", "Error fetching GamersGate games: " + ex.Message, NotificationType.Error);
-            return new GameMetadata[0];
+            return [];
         }
         finally
         {
