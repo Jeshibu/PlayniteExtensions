@@ -9,6 +9,8 @@ namespace OpenCriticMetadata;
 
 public class OpenCriticMetadata : MetadataPlugin
 {
+    //So for anyone using GongSolutions.Wpf.DragDrop - be aware you have to instantiate something from it before referencing the package in your XAML
+    private readonly GongSolutions.Wpf.DragDrop.DefaultDragHandler dropInfo = new();
     private static readonly ILogger logger = LogManager.GetLogger();
 
     private OpenCriticMetadataSettingsViewModel settings { get; set; }
