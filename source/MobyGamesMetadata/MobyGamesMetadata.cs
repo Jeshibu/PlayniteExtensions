@@ -144,7 +144,7 @@ public class MobyGamesMetadata : MetadataPlugin
         if (chosenOption == groupOption)
         {
             var searchProvider = new MobyGamesGroupSearchProvider(ApiClient, scraper, settings.Settings, platformUtility);
-            var extra = new MobyGamesBulkGroupAssigner(PlayniteApi, settings.Settings, searchProvider, platformUtility, settings.Settings.MaxDegreeOfParallelism);
+            var extra = new MobyGamesBulkGroupAssigner(PlayniteApi, searchProvider, platformUtility, settings.Settings.MaxDegreeOfParallelism);
             extra.ImportGameProperty();
         }
         else if (chosenOption == genreOption)
