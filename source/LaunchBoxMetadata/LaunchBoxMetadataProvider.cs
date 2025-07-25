@@ -77,7 +77,7 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
         }
     }
 
-    private string GetLaunchBoxGamesDatabaseUrl(LaunchBoxGame game = null)
+    private string GetLaunchBoxGamesDatabaseUrl(LaunchBoxGame game)
     {
         game = game ?? FindGame();
         if (game.DatabaseID == null)
@@ -307,7 +307,7 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
             }
             foreach (var regionSetting in settings.Regions)
             {
-                if(regionSetting.Checked && !output.Contains(regionSetting.Name))
+                if (regionSetting.Checked && !output.Contains(regionSetting.Name))
                     output.Add(regionSetting.Name); //add the rest of the enabled regions
             }
             return output;
@@ -394,18 +394,18 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
             return base.GetLinks(args);
 
         var links = new List<Link>();
-        if (settings.UseLaunchBoxLink)
+
+        void AddLink(string name, bool setting, Func<LaunchBoxGame, string> urlSelector)
         {
-            string gameUrl = GetLaunchBoxGamesDatabaseUrl(game);
-            if (!string.IsNullOrEmpty(gameUrl))
-                links.Add(new Link("LaunchBox Games Database", gameUrl));
+            if (!setting) return;
+            var url = urlSelector(game);
+            if (string.IsNullOrWhiteSpace(url)) return;
+            links.Add(new(name, url));
         }
 
-        if (settings.UseWikipediaLink && !string.IsNullOrWhiteSpace(game.WikipediaURL))
-            links.Add(new Link("Wikipedia", game.WikipediaURL));
-
-        if (settings.UseVideoLink && !string.IsNullOrWhiteSpace(game.VideoURL))
-            links.Add(new Link("Video", game.VideoURL));
+        AddLink("LaunchBox", settings.UseLaunchBoxLink, GetLaunchBoxGamesDatabaseUrl);
+        AddLink("Wikipedia", settings.UseWikipediaLink, g => g.WikipediaURL);
+        AddLink("Video", settings.UseVideoLink, g => g.VideoURL);
 
         return links.NullIfEmpty();
     }
