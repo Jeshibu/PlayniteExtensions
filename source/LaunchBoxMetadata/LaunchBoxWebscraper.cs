@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using AngleSharp.Parser.Html;
 using PlayniteExtensions.Common;
@@ -16,56 +17,55 @@ public class LaunchBoxWebscraper(IWebDownloader downloader)
 
     public IEnumerable<LaunchBoxImageDetails> GetGameImageDetails(string detailsUrl)
     {
-        var imageUrl = detailsUrl.Replace("/details/", "/images/");
-
-        var response = downloader.DownloadString(imageUrl);
+        var response = downloader.DownloadString(detailsUrl);
         if (response.StatusCode != System.Net.HttpStatusCode.OK)
             yield break;
 
-        var parser = new HtmlParser();
-        var doc = parser.Parse(response.ResponseContent);
-        var gameTitle = doc.QuerySelector("div.heading > h1").TextContent;
-        var imageLinks = doc.QuerySelectorAll("a[data-gameimagekey]");
-        foreach (var l in imageLinks)
+        var doc = new HtmlParser().Parse(response.ResponseContent);
+        var imageElements = doc.QuerySelectorAll("article>h3~div img");
+        var scriptData = doc.QuerySelector("script#__NUXT_DATA__").TextContent;
+        var gameTitle = doc.QuerySelector("h1").TextContent;
+
+        foreach (var img in imageElements)
         {
-            var imgDetails = new LaunchBoxImageDetails();
-            imgDetails.Url = l.GetAttribute("href");
+            var imgDetails = new LaunchBoxImageDetails { ThumbnailUrl = img.GetAttribute("src") };
 
-            var footer = l.GetAttribute("data-footer");
-            var footerMatch = ImageSizeRegex.Match(footer);
-            if (footerMatch.Success)
-            {
-                imgDetails.Width = int.Parse(footerMatch.Groups["width"].Value);
-                imgDetails.Height = int.Parse(footerMatch.Groups["height"].Value);
-            }
+            var thumbnailFilename = imgDetails.ThumbnailUrl.Split('/').Last();
+            var fullImageFilename = FindNextImageFileInNuxtData(scriptData, thumbnailFilename);
+            if (fullImageFilename == null)
+                continue;
 
-            var dataTitle = l.GetAttribute("data-title");
-            imgDetails.Type = GetImageType(dataTitle, gameTitle, out string region);
-            imgDetails.Region = region;
+            imgDetails.Url = imgDetails.ThumbnailUrl.Replace(thumbnailFilename, fullImageFilename);
 
-            var imgElement = l.QuerySelector("img");
-            imgDetails.ThumbnailUrl = imgElement.GetAttribute("src");
+            var alt = img.GetAttribute("alt");
+            var altMatch = imgAltRegex.Match(alt, gameTitle.Length + 3); // skip the game title and the connecting " - "
+            if(!altMatch.Success)
+                continue;
+
+            imgDetails.Type = altMatch.Groups["type"].Value;
+            imgDetails.Region = altMatch.Groups["region"].Value;
+            imgDetails.Width = int.Parse(altMatch.Groups["width"].Value);
+            imgDetails.Height = int.Parse(altMatch.Groups["height"].Value);
+
+            if (imgDetails.Region == "null")
+                imgDetails.Region = null;
+
             yield return imgDetails;
         }
     }
 
-    private string GetImageType(string title, string gameTitle, out string region)
+    private readonly Regex imageFilenameRegex = new Regex(@"\b[\w-]+\.[a-z]{3,5}\b", RegexOptions.Compiled);
+    private readonly Regex imgAltRegex = new Regex(@"(?<type>.+) \((?<region>[^)]+)\) - (?<width>[0-9]+)x(?<height>[0-9]+)$", RegexOptions.Compiled);
+
+    private string FindNextImageFileInNuxtData(string nuxtData, string thumbFilename)
     {
-        var gameTitleRemoved = title.Remove(0, (gameTitle + " - ").Length);
-        string reg = null;
-        var type = RegionRegex.Replace(gameTitleRemoved, match =>
-        {
-            if (match.Groups["region"].Success)
-                reg = match.Groups["region"].Value;
+        var thumbIndex = nuxtData.IndexOf(thumbFilename);
+        if (thumbIndex < 0)
+            return null;
 
-            return string.Empty;
-        });
-        region = reg;
-        return type;
+        var match = imageFilenameRegex.Match(nuxtData, thumbIndex + thumbFilename.Length);
+        return match.Success ? match.Value : null;
     }
-
-    private static readonly Regex ImageSizeRegex = new(@"(?<width>\d+) x (?<height>\d+) (?<filetype>[A-Z0-9]+)", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
-    private static readonly Regex RegionRegex = new(@"(\s+(Image|\((?<region>[\w\s]+)\))){1,2}$", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 }
 
 public class LaunchBoxImageDetails

@@ -61,14 +61,14 @@
     <ProjectReference Include="..\LaunchBoxMetadata\LaunchBoxMetadata.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Mario &amp; Luigi Superstar Saga Images.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Metadata.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resident Evil 4 Images.html">
+    <None Update="Mario &amp; Luigi Superstar Saga Details.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
+    <None Update="Resident Evil 4 Details.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
