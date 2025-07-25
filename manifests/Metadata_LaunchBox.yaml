@@ -113,3 +113,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/LaunchBoxMetadata_0_7_4.pext
     Changelog:
     - Fixed database creation failing due to illegal XML character
+  - Version: 0.7.5
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2025-07-25
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/launchbox0.7.5/LaunchBoxMetadata_0_7_5.pext
+    Changelog:
+    - Fixed no images being found
+    - Shortened link name from LaunchBox Games Database to just LaunchBox
