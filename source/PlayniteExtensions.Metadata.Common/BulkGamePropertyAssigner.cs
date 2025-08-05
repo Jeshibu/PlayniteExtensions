@@ -20,29 +20,18 @@ public interface IHasName
     string Name { get; }
 }
 
-public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewModel>
+public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewModel>(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, IExternalDatabaseIdUtility databaseIdUtility, ExternalDatabase databaseType, int maxDegreeOfParallelism = 8)
     where TSearchItem : IHasName
     where TApprovalPromptViewModel : GamePropertyImportViewModel, new()
 {
-    public BulkGamePropertyAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, IExternalDatabaseIdUtility databaseIdUtility, ExternalDatabase databaseType, int maxDegreeOfParallelism = 8)
-    {
-        playniteApi = playniteAPI;
-        this.dataSource = dataSource;
-        this.platformUtility = platformUtility;
-        DatabaseIdUtility = databaseIdUtility;
-        DatabaseType = databaseType;
-        MaxDegreeOfParallelism = maxDegreeOfParallelism;
-    }
-
     protected readonly ILogger logger = LogManager.GetLogger();
-    protected readonly ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource;
-    private readonly IPlatformUtility platformUtility;
-    protected readonly IPlayniteAPI playniteApi;
+    protected readonly ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource = dataSource;
+    protected readonly IPlayniteAPI playniteApi = playniteAPI;
     public abstract string MetadataProviderName { get; }
     protected bool AllowEmptySearchQuery { get; set; } = false;
-    public IExternalDatabaseIdUtility DatabaseIdUtility { get; }
-    public ExternalDatabase DatabaseType { get; }
-    public int MaxDegreeOfParallelism { get; }
+    public IExternalDatabaseIdUtility DatabaseIdUtility { get; } = databaseIdUtility;
+    public ExternalDatabase DatabaseType { get; } = databaseType;
+    public int MaxDegreeOfParallelism { get; } = maxDegreeOfParallelism;
 
     protected virtual GlobalProgressOptions GetGameDownloadProgressOptions(TSearchItem selectedItem)
     {
@@ -90,7 +79,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
             catch (Exception e)
             {
                 logger.Error(e, $"Failed to get search data for <{a}>");
-                return new List<GenericItemOption>();
+                return [];
             }
 
             return output;
@@ -124,30 +113,15 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
         var viewModel = new TApprovalPromptViewModel() { Name = $"{importSetting.Prefix}{propName}", Games = proposedMatches, PlayniteAPI = playniteApi };
         viewModel.Links.AddRange(GetPotentialLinks(selectedItem));
         viewModel.Filters.AddRange(GetCheckboxFilters(viewModel));
-        switch (importSetting.ImportTarget)
+        viewModel.TargetField = importSetting.ImportTarget switch
         {
-            case PropertyImportTarget.Genres:
-                viewModel.TargetField = GamePropertyImportTargetField.Genre;
-                break;
-            case PropertyImportTarget.Series:
-                viewModel.TargetField = GamePropertyImportTargetField.Series;
-                break;
-            case PropertyImportTarget.Features:
-                viewModel.TargetField = GamePropertyImportTargetField.Feature;
-                break;
-            case PropertyImportTarget.Developers:
-                viewModel.TargetField = GamePropertyImportTargetField.Developers;
-                break;
-            case PropertyImportTarget.Publishers:
-                viewModel.TargetField = GamePropertyImportTargetField.Publishers;
-                break;
-            case PropertyImportTarget.Ignore:
-            case PropertyImportTarget.Tags:
-            default:
-                viewModel.TargetField = GamePropertyImportTargetField.Tag;
-                break;
-        }
-
+            PropertyImportTarget.Genres => GamePropertyImportTargetField.Genre,
+            PropertyImportTarget.Series => GamePropertyImportTargetField.Series,
+            PropertyImportTarget.Features => GamePropertyImportTargetField.Feature,
+            PropertyImportTarget.Developers => GamePropertyImportTargetField.Developers,
+            PropertyImportTarget.Publishers => GamePropertyImportTargetField.Publishers,
+            _ => GamePropertyImportTargetField.Tag,
+        };
         var window = playniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
         var view = GetBulkPropertyImportView(window, viewModel);
         window.Content = view;
@@ -184,7 +158,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
             matchHelper.Prepare(playniteApi.Database.Games, a.CancelToken);
             a.CurrentProgressValue += 10;
 
-            ParallelOptions parallelOptions = new ParallelOptions() { CancellationToken = a.CancelToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
+            ParallelOptions parallelOptions = new() { CancellationToken = a.CancelToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
             var loopResult = Parallel.ForEach(gamesToMatch, parallelOptions, externalGameInfo =>
             {
                 try
@@ -269,8 +243,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
                     continue;
 
                 foreach (var gd in g.GameDetails)
-                    if (gd.Id == null)
-                        gd.Id = GetGameIdFromUrl(gd.Url);
+                    gd.Id ??= GetGameIdFromUrl(gd.Url);
 
                 bool update = AddItem(g.Game, viewModel.TargetField, dbItem.Id);
 
@@ -280,7 +253,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
                         continue;
 
                     if (g.Game.Links == null)
-                        g.Game.Links = new ObservableCollection<Link>();
+                        g.Game.Links = [];
 
                     foreach (var gd in g.GameDetails)
                     {
@@ -306,24 +279,16 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
     private static DatabaseObject GetDatabaseObject(GamePropertyImportViewModel viewModel)
     {
         var db = viewModel.PlayniteAPI.Database;
-        switch (viewModel.TargetField)
+        return viewModel.TargetField switch
         {
-            case GamePropertyImportTargetField.Category:
-                return GetDatabaseObjectByName(db.Categories, viewModel.Name);
-            case GamePropertyImportTargetField.Genre:
-                return GetDatabaseObjectByName(db.Genres, viewModel.Name);
-            case GamePropertyImportTargetField.Tag:
-                return GetDatabaseObjectByName(db.Tags, viewModel.Name);
-            case GamePropertyImportTargetField.Feature:
-                return GetDatabaseObjectByName(db.Features, viewModel.Name);
-            case GamePropertyImportTargetField.Series:
-                return GetDatabaseObjectByName(db.Series, viewModel.Name);
-            case GamePropertyImportTargetField.Developers:
-            case GamePropertyImportTargetField.Publishers:
-                return GetDatabaseObjectByName(db.Companies, viewModel.Name);
-            default:
-                throw new ArgumentException();
-        }
+            GamePropertyImportTargetField.Category => GetDatabaseObjectByName(db.Categories, viewModel.Name),
+            GamePropertyImportTargetField.Genre => GetDatabaseObjectByName(db.Genres, viewModel.Name),
+            GamePropertyImportTargetField.Tag => GetDatabaseObjectByName(db.Tags, viewModel.Name),
+            GamePropertyImportTargetField.Feature => GetDatabaseObjectByName(db.Features, viewModel.Name),
+            GamePropertyImportTargetField.Series => GetDatabaseObjectByName(db.Series, viewModel.Name),
+            GamePropertyImportTargetField.Developers or GamePropertyImportTargetField.Publishers => GetDatabaseObjectByName(db.Companies, viewModel.Name),
+            _ => throw new ArgumentException(),
+        };
     }
 
     private static DatabaseObject GetDatabaseObjectByName<T>(IItemCollection<T> collection, string name) where T : DatabaseObject
@@ -360,7 +325,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
         var collection = collectionSelector.Compile()(g);
         if (collection == null)
         {
-            collection = new List<Guid>();
+            collection = [];
             var prop = (PropertyInfo)((MemberExpression)collectionSelector.Body).Member;
             prop.SetValue(g, collection, null);
         }
@@ -374,25 +339,17 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
 
     private static Expression<Func<Game, List<Guid>>> GetCollectionSelector(GamePropertyImportTargetField targetField)
     {
-        switch (targetField)
+        return targetField switch
         {
-            case GamePropertyImportTargetField.Category:
-                return x => x.CategoryIds;
-            case GamePropertyImportTargetField.Genre:
-                return x => x.GenreIds;
-            case GamePropertyImportTargetField.Tag:
-                return x => x.TagIds;
-            case GamePropertyImportTargetField.Feature:
-                return x => x.FeatureIds;
-            case GamePropertyImportTargetField.Series:
-                return x => x.SeriesIds;
-            case GamePropertyImportTargetField.Developers:
-                return x => x.DeveloperIds;
-            case GamePropertyImportTargetField.Publishers:
-                return x => x.PublisherIds;
-            default:
-                throw new ArgumentException($"Unknown target field: {targetField}");
-        }
+            GamePropertyImportTargetField.Category => x => x.CategoryIds,
+            GamePropertyImportTargetField.Genre => x => x.GenreIds,
+            GamePropertyImportTargetField.Tag => x => x.TagIds,
+            GamePropertyImportTargetField.Feature => x => x.FeatureIds,
+            GamePropertyImportTargetField.Series => x => x.SeriesIds,
+            GamePropertyImportTargetField.Developers => x => x.DeveloperIds,
+            GamePropertyImportTargetField.Publishers => x => x.PublisherIds,
+            _ => throw new ArgumentException($"Unknown target field: {targetField}"),
+        };
     }
 
     private static bool AddItem(Game g, GamePropertyImportTargetField targetField, Guid idToAdd) => AddItem(g, GetCollectionSelector(targetField), idToAdd);

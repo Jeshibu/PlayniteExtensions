@@ -15,18 +15,10 @@ using System.Web;
 
 namespace BigFishMetadata;
 
-public class BigFishSearchProvider : IGameSearchProvider<BigFishSearchResultGame>
+public class BigFishSearchProvider(IWebDownloader downloader, BigFishMetadataSettings settings) : IGameSearchProvider<BigFishSearchResultGame>
 {
-    private readonly IWebDownloader downloader;
-    private readonly BigFishMetadataSettings settings;
     private readonly ILogger logger = LogManager.GetLogger();
     private readonly Guid BigFishLibraryId = Guid.Parse("37995df7-2ce2-4f7c-83a3-618138ae745d");
-
-    public BigFishSearchProvider(IWebDownloader downloader, BigFishMetadataSettings settings)
-    {
-        this.downloader = downloader;
-        this.settings = settings;
-    }
 
     public GameDetails GetDetails(BigFishSearchResultGame searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
@@ -38,7 +30,7 @@ public class BigFishSearchProvider : IGameSearchProvider<BigFishSearchResultGame
         if (response.StatusCode != System.Net.HttpStatusCode.OK)
             return null;
 
-        var output = new GameDetails() { Url = searchResult.Url, Links = new List<Link> { new Link { Name = "Big Fish Games", Url = searchResult.Url } } };
+        var output = new GameDetails() { Url = searchResult.Url, Links = [new Link { Name = "Big Fish Games", Url = searchResult.Url }] };
 
         var doc = new HtmlParser().Parse(response.ResponseContent);
         var reviewFetchTask = GetCommunityScore(GetReviewsUrl(doc));
@@ -87,15 +79,12 @@ public class BigFishSearchProvider : IGameSearchProvider<BigFishSearchResultGame
         if (attributes == null)
             return null;
 
-        switch (settings.CommunityScoreType)
+        return settings.CommunityScoreType switch
         {
-            case CommunityScoreType.StarRating:
-                return (int)Math.Round(attributes.AvgRating * 20);
-            case CommunityScoreType.PercentageRecommended:
-                return attributes.PercentRecommend;
-            default:
-                return null;
-        }
+            CommunityScoreType.StarRating => (int)Math.Round(attributes.AvgRating * 20),
+            CommunityScoreType.PercentageRecommended => attributes.PercentRecommend,
+            _ => null,
+        };
     }
 
     private class ReviewJsonRoot
@@ -135,13 +124,13 @@ public class BigFishSearchProvider : IGameSearchProvider<BigFishSearchResultGame
             item.CoverUrl = gameElement.QuerySelector(".productcollection__item-images img")?.GetAttribute("src");
 
             var attributes = gameElement.QuerySelector(".productcollection__item-attributes").TextContent.Trim();
-            item.Platform = attributes.Split(new[] { " | " }, StringSplitOptions.None).Select(a => a.Trim()).First();
+            item.Platform = attributes.Split([" | "], StringSplitOptions.None).Select(a => a.Trim()).First();
             yield return item;
         }
     }
 
     public GenericItemOption<BigFishSearchResultGame> ToGenericItemOption(BigFishSearchResultGame item) =>
-        new GenericItemOption<BigFishSearchResultGame>(item) { Name = item.Name, Description = item.Platform };
+        new(item) { Name = item.Name, Description = item.Platform };
 
     public bool TryGetDetails(Game game, out GameDetails gameDetails, CancellationToken cancellationToken)
     {
@@ -170,7 +159,7 @@ public class BigFishSearchResultGame : IGameSearchResult
 
     IEnumerable<string> IGameSearchResult.AlternateNames => Enumerable.Empty<string>();
 
-    IEnumerable<string> IGameSearchResult.Platforms => string.IsNullOrWhiteSpace(Platform) ? Enumerable.Empty<string>() : new[] { Platform };
+    IEnumerable<string> IGameSearchResult.Platforms => string.IsNullOrWhiteSpace(Platform) ? Enumerable.Empty<string>() : [Platform];
 
     ReleaseDate? IGameSearchResult.ReleaseDate => null;
 }

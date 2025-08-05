@@ -15,7 +15,7 @@ public class BarniteSettings : ObservableObject
 
     public BarniteSettings()
     {
-        scrapers = new ObservableCollection<ScraperSettings>();
+        scrapers = [];
     }
 }
 
@@ -70,14 +70,14 @@ public class BarniteSettingsViewModel : PluginSettingsViewModel<BarniteSettings,
     {
         get
         {
-            return visitWebsiteCommand ?? (visitWebsiteCommand = new RelayCommand<ScraperSettings>((ss) =>
+            return visitWebsiteCommand ??= new RelayCommand<ScraperSettings>((ss) =>
             {
                 try
                 {
                     System.Diagnostics.Process.Start(ss.WebsiteUrl);
                 }
                 catch { }
-            }));
+            });
         }
     }
 
@@ -86,7 +86,7 @@ public class BarniteSettingsViewModel : PluginSettingsViewModel<BarniteSettings,
     {
         get
         {
-            return moveUpCommand ?? (moveUpCommand = new RelayCommand<ScraperSettings>((ss) =>
+            return moveUpCommand ??= new RelayCommand<ScraperSettings>((ss) =>
             {
                 var items = ScrapersView.Cast<ScraperSettings>().ToList();
                 var index = items.IndexOf(ss);
@@ -99,7 +99,7 @@ public class BarniteSettingsViewModel : PluginSettingsViewModel<BarniteSettings,
                 OnPropertyChanged(nameof(Settings));
                 ScrapersView.Refresh();
                 OnPropertyChanged(nameof(ScrapersView));
-            }));
+            });
         }
     }
 
@@ -108,7 +108,7 @@ public class BarniteSettingsViewModel : PluginSettingsViewModel<BarniteSettings,
     {
         get
         {
-            return moveDownCommand ?? (moveDownCommand = new RelayCommand<ScraperSettings>((ss) =>
+            return moveDownCommand ??= new RelayCommand<ScraperSettings>((ss) =>
             {
                 var items = ScrapersView.Cast<ScraperSettings>().ToList();
                 var index = items.IndexOf(ss);
@@ -121,7 +121,7 @@ public class BarniteSettingsViewModel : PluginSettingsViewModel<BarniteSettings,
                 OnPropertyChanged(nameof(Settings));
                 ScrapersView.Refresh();
                 OnPropertyChanged(nameof(ScrapersView));
-            }));
+            });
         }
     }
 }

@@ -7,17 +7,11 @@ using PlayniteExtensions.Metadata.Common;
 namespace GiantBombMetadata;
 
 
-public class GiantBombBulkPropertyAssigner : BulkGamePropertyAssigner<GiantBombSearchResultItem, GamePropertyImportViewModel>
+public class GiantBombBulkPropertyAssigner(IPlayniteAPI playniteAPI, GiantBombMetadataSettings settings, GiantBombGamePropertySearchProvider dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism) : BulkGamePropertyAssigner<GiantBombSearchResultItem, GamePropertyImportViewModel>(playniteAPI, dataSource, platformUtility, new GiantBombIdUtility(), ExternalDatabase.GiantBomb, maxDegreeOfParallelism)
 {
-    public GiantBombMetadataSettings Settings { get; }
+    public GiantBombMetadataSettings Settings { get; } = settings;
 
     public override string MetadataProviderName => "Giant Bomb";
-
-    public GiantBombBulkPropertyAssigner(IPlayniteAPI playniteAPI, GiantBombMetadataSettings settings, GiantBombGamePropertySearchProvider dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
-        : base(playniteAPI, dataSource, platformUtility, new GiantBombIdUtility(), ExternalDatabase.GiantBomb, maxDegreeOfParallelism)
-    {
-        Settings = settings;
-    }
 
     protected override PropertyImportSetting GetPropertyImportSetting(GiantBombSearchResultItem selectedItem, out string propName)
     {

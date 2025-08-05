@@ -9,17 +9,8 @@ using TvTropesMetadata.Scraping;
 
 namespace TvTropesMetadata.SearchProviders;
 
-public class TropeSearchProvider : ISearchableDataSourceWithDetails<TvTropesSearchResult, IEnumerable<GameDetails>>
+public class TropeSearchProvider(TropeScraper scraper, TvTropesMetadataSettings settings) : ISearchableDataSourceWithDetails<TvTropesSearchResult, IEnumerable<GameDetails>>
 {
-    private readonly TropeScraper scraper;
-    private readonly TvTropesMetadataSettings settings;
-
-    public TropeSearchProvider(TropeScraper scraper, TvTropesMetadataSettings settings)
-    {
-        this.scraper = scraper;
-        this.settings = settings;
-    }
-
     public IEnumerable<GameDetails> GetDetails(TvTropesSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
         var page = scraper.GetGamesForTrope(searchResult.Url);
@@ -29,8 +20,7 @@ public class TropeSearchProvider : ISearchableDataSourceWithDetails<TvTropesSear
             var works = settings.OnlyFirstGamePerTropeListItem ? item.Works.Take(1) : item.Works;
             foreach (var work in item.Works)
             {
-                HashSet<string> urls;
-                if (!worksByName.TryGetValue(work.Title, out urls))
+                if (!worksByName.TryGetValue(work.Title, out HashSet<string> urls))
                 {
                     urls = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
                     worksByName.Add(work.Title, urls);
@@ -43,7 +33,7 @@ public class TropeSearchProvider : ISearchableDataSourceWithDetails<TvTropesSear
         }
 
         foreach (var kvp in worksByName)
-            yield return new GameDetails { Names = new List<string> { kvp.Key }, Url = kvp.Value.FirstOrDefault() };
+            yield return new GameDetails { Names = [kvp.Key], Url = kvp.Value.FirstOrDefault() };
     }
 
     public IEnumerable<TvTropesSearchResult> Search(string query, CancellationToken cancellationToken = default)

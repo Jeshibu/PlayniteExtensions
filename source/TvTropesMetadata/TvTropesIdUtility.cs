@@ -8,7 +8,7 @@ public class TvTropesIdUtility : SingleExternalDatabaseIdUtility
 {
     public override ExternalDatabase Database { get; } = ExternalDatabase.TvTropes;
 
-    public override IEnumerable<Guid> LibraryIds { get; } = new Guid[0];
+    public override IEnumerable<Guid> LibraryIds { get; } = [];
 
     public override DbId GetIdFromUrl(string url)
     {

@@ -9,7 +9,7 @@ public class PCGWGameController
 {
     private readonly ILogger logger = LogManager.GetLogger();
     public PCGWGame Game;
-    private PCGamingWikiMetadataSettings settings;
+    private readonly PCGamingWikiMetadataSettings settings;
     public PCGamingWikiMetadataSettings Settings { get { return settings; } }
 
     private Dictionary<string, Func<bool>> settingsMap;
@@ -110,15 +110,13 @@ public class PCGWGameController
 
     private bool SettingExistsAndEnabled(string key)
     {
-        Func<bool> enabled;
-        bool settingExists = this.settingsMap.TryGetValue(key, out enabled);
+        bool settingExists = this.settingsMap.TryGetValue(key, out Func<bool> enabled);
         return settingExists && enabled.Invoke();
     }
 
     private bool IsSettingDisabled(string key)
     {
-        Func<bool> enabled;
-        bool settingExists = this.settingsMap.TryGetValue(key, out enabled);
+        bool settingExists = this.settingsMap.TryGetValue(key, out Func<bool> enabled);
         return settingExists && !(enabled.Invoke());
     }
 
@@ -134,8 +132,7 @@ public class PCGWGameController
             return;
         }
 
-        Action<string> action;
-        bool functionExists = this.taxonomyFunctions.TryGetValue(key, out action);
+        bool functionExists = this.taxonomyFunctions.TryGetValue(key, out Action<string> action);
 
         if (functionExists)
         {

@@ -10,7 +10,7 @@ namespace XboxMetadata.Scrapers;
 
 public class ScraperManager
 {
-    public Dictionary<string, BaseXboxScraper> Scrapers { get; set; } = new Dictionary<string, BaseXboxScraper>();
+    public Dictionary<string, BaseXboxScraper> Scrapers { get; set; } = [];
 
     public ScraperManager(IEnumerable<BaseXboxScraper> scrapers)
     {
@@ -19,7 +19,7 @@ public class ScraperManager
 
     public ScraperManager(IWebDownloader downloader, IPlatformUtility platformUtility)
     {
-        Initialize(FindAllDerivedTypes<BaseXboxScraper>().Select(t => (BaseXboxScraper)t.GetConstructor(new[] { typeof(IWebDownloader), typeof(IPlatformUtility) }).Invoke(new object[] { downloader, platformUtility })));
+        Initialize(FindAllDerivedTypes<BaseXboxScraper>().Select(t => (BaseXboxScraper)t.GetConstructor([typeof(IWebDownloader), typeof(IPlatformUtility)]).Invoke([downloader, platformUtility])));
     }
 
     public IEnumerable<XboxGameSearchResultItem> Search(XboxMetadataSettings settings, Game game, string searchString, bool onlyExactMatches = false)
@@ -110,7 +110,7 @@ public class ScraperManager
             .Where(t =>
                 t != baseType &&
                 baseType.IsAssignableFrom(t) &&
-                t.GetConstructor(new[] { typeof(IWebDownloader), typeof(IPlatformUtility) }) != null
+                t.GetConstructor([typeof(IWebDownloader), typeof(IPlatformUtility)]) != null
                 ).ToList();
 
     }

@@ -15,7 +15,7 @@ namespace Barnite;
 public class Barnite : GenericPlugin
 {
     private static readonly ILogger logger = LogManager.GetLogger();
-    private ScraperManager _scraperManager;
+    private readonly ScraperManager _scraperManager;
 
     private BarniteSettingsViewModel settings { get; set; }
 
@@ -76,7 +76,7 @@ public class Barnite : GenericPlugin
 
         //Remove any whitespace and ignore leading/trailing/repeating commas
         string[] barcodes = Regex.Replace(inputResult.SelectedString, @"\s+", string.Empty)
-            .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            .Split([','], StringSplitOptions.RemoveEmptyEntries);
         if (barcodes.Length == 0)
             return;
 

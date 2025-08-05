@@ -21,10 +21,10 @@ public class PlayAsiaScraper : MetadataScraper
         return "https://www.play-asia.com/search/" + HttpUtility.UrlEncode(barcode);
     }
 
-    private Regex EndBracesTextRegex = new Regex(@"(\s+(\([^)]+\)|\[[^]]+\]))+\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
-    private Regex SetCookieRegex = new Regex(@"\bsetCookie\('(?<c_name>\w+)', '(?<value>[.0-9]+)', (?<expiredays>[0-9]+)\);", RegexOptions.Compiled | RegexOptions.Multiline);
-    private Regex JsRedirectRegex = new Regex(@"^\s*window\.location\s*=\s*'(?<url>.+?)'\s*;\s*$", RegexOptions.Compiled | RegexOptions.Multiline);
-    private Regex JsReloadRegex = new Regex(@"^\s*location\.reload\((true)?\)\s*;\s*$", RegexOptions.Compiled | RegexOptions.Multiline);
+    private readonly Regex EndBracesTextRegex = new(@"(\s+(\([^)]+\)|\[[^]]+\]))+\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+    private readonly Regex SetCookieRegex = new(@"\bsetCookie\('(?<c_name>\w+)', '(?<value>[.0-9]+)', (?<expiredays>[0-9]+)\);", RegexOptions.Compiled | RegexOptions.Multiline);
+    private readonly Regex JsRedirectRegex = new(@"^\s*window\.location\s*=\s*'(?<url>.+?)'\s*;\s*$", RegexOptions.Compiled | RegexOptions.Multiline);
+    private readonly Regex JsReloadRegex = new(@"^\s*location\.reload\((true)?\)\s*;\s*$", RegexOptions.Compiled | RegexOptions.Multiline);
 
     protected override CookieCollection ScrapeJsCookies(string html)
     {
@@ -66,7 +66,7 @@ public class PlayAsiaScraper : MetadataScraper
             if (match.Success)
             {
                 string platformMatch = match.Groups["platform"].Value;
-                var platformNames = platformMatch.Split(new[] { ", " }, StringSplitOptions.RemoveEmptyEntries).Select(StringExtensions.HtmlDecode);
+                var platformNames = platformMatch.Split([", "], StringSplitOptions.RemoveEmptyEntries).Select(StringExtensions.HtmlDecode);
                 game.Platforms = new HashSet<MetadataProperty>(platformNames.SelectMany(PlatformUtility.GetPlatforms));
             }
         }
@@ -89,7 +89,7 @@ public class PlayAsiaScraper : MetadataScraper
 
     protected override IEnumerable<GameLink> ScrapeSearchResultHtml(string html)
     {
-        return new GameLink[0];
+        return [];
     }
 
     protected override string ScrapeRedirectUrl(string requestUrl, string html)

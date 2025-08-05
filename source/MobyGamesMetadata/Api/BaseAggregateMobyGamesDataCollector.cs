@@ -9,21 +9,13 @@ using MobyGamesMetadata.Api.V2;
 
 namespace MobyGamesMetadata.Api;
 
-public abstract class BaseAggregateMobyGamesDataCollector
+public abstract class BaseAggregateMobyGamesDataCollector(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility)
 {
-    protected MobyGamesApiClient apiClient;
-    protected MobyGamesScraper scraper;
-    protected MobyGamesMetadataSettings settings;
-    protected IPlatformUtility platformUtility;
+    protected MobyGamesApiClient apiClient = apiClient;
+    protected MobyGamesScraper scraper = scraper;
+    protected MobyGamesMetadataSettings settings = settings;
+    protected IPlatformUtility platformUtility = platformUtility;
     protected ILogger logger = LogManager.GetLogger();
-
-    public BaseAggregateMobyGamesDataCollector(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility)
-    {
-        this.apiClient = apiClient;
-        this.scraper = scraper;
-        this.settings = settings;
-        this.platformUtility = platformUtility;
-    }
 
     protected GameDetails Merge(GameDetails scraperDetails, GameDetails apiDetails)
     {
@@ -36,8 +28,7 @@ public abstract class BaseAggregateMobyGamesDataCollector
         apiDetails.Series.AddMissing(scraperDetails.Series);
         AddCompanies(apiDetails.Developers, scraperDetails.Developers);
         AddCompanies(apiDetails.Publishers, scraperDetails.Publishers);
-        if (apiDetails.Description == null)
-            apiDetails.Description = scraperDetails.Description;
+        apiDetails.Description ??= scraperDetails.Description;
 
         foreach (var scraperLink in scraperDetails.Links)
             if (!apiDetails.Links.Any(l => l.Url == scraperLink.Url))
@@ -58,7 +49,7 @@ public abstract class BaseAggregateMobyGamesDataCollector
 
     protected static string FixCompanyName(string companyName) => companyName.TrimEnd(", the").TrimCompanyForms();
 
-    protected GameSearchResult ToSearchResult(MobyGame mobyGame) => new GameSearchResult(mobyGame);
+    protected GameSearchResult ToSearchResult(MobyGame mobyGame) => new(mobyGame);
 
     protected GameDetails ToGameDetails(MobyGame mobyGame, Game searchGame = null)
     {
@@ -78,7 +69,7 @@ public abstract class BaseAggregateMobyGamesDataCollector
         foreach (var platform in mobyGame.platforms)
         {
             gameDetails.Platforms.AddRange(platformUtility.GetPlatforms(platform.name));
-            if (settings.MatchPlatformsForReleaseDate && platformUtility.PlatformsOverlap(searchGame.Platforms, new[] { platform.name }))
+            if (settings.MatchPlatformsForReleaseDate && platformUtility.PlatformsOverlap(searchGame.Platforms, [platform.name]))
                 gameDetails.ReleaseDate = GetEarliestReleaseDate(gameDetails.ReleaseDate, platform.release_date.ParseReleaseDate());
         }
 
@@ -112,7 +103,7 @@ public abstract class BaseAggregateMobyGamesDataCollector
     private IEnumerable<T> MatchPlatforms<T>(Game searchGame, IEnumerable<T> objects, bool onlyMatchingPlatforms) where T : IHasPlatforms
     {
         if (objects == null)
-            return new T[0];
+            return [];
 
         if (!onlyMatchingPlatforms || searchGame?.Platforms == null)
             return objects;
@@ -136,30 +127,22 @@ public abstract class BaseAggregateMobyGamesDataCollector
             gameDetails.Tags.Add(g.name);
             return;
         }
-        List<string> list;
-        switch (genreSettings.ImportTarget)
-        {
-            case PropertyImportTarget.Genres:
-                list = gameDetails.Genres;
-                break;
-            case PropertyImportTarget.Tags:
-                list = gameDetails.Tags;
-                break;
-            case PropertyImportTarget.Series:
-                list = gameDetails.Series;
-                break;
-            case PropertyImportTarget.Features:
-                list = gameDetails.Features;
-                break;
-            case PropertyImportTarget.Ignore:
-            default:
-                return;
-        }
+        var list = GetGenreImportTarget(genreSettings, gameDetails);
+
         if (string.IsNullOrWhiteSpace(genreSettings.NameOverride))
-            list.Add(g.name);
+            list?.Add(g.name);
         else
-            list.Add(genreSettings.NameOverride);
+            list?.Add(genreSettings.NameOverride);
     }
+
+    private static List<string> GetGenreImportTarget(MobyGamesGenreSetting genreSetting, GameDetails gameDetails) => genreSetting?.ImportTarget switch
+    {
+        PropertyImportTarget.Genres => gameDetails.Genres,
+        PropertyImportTarget.Tags => gameDetails.Tags,
+        PropertyImportTarget.Series => gameDetails.Series,
+        PropertyImportTarget.Features => gameDetails.Features,
+        _ => null,
+    };
 
     protected static BasicImage ToIImageData(MobyImage image)
     {

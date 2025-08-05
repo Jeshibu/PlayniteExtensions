@@ -11,21 +11,9 @@ using System.Threading;
 
 namespace BigFishLibrary;
 
-public class BigFishMetadataProvider : LibraryMetadataProvider
+public class BigFishMetadataProvider(BigFishRegistryReader registryReader, IGameSearchProvider<BigFishSearchResultGame> gameSearchProvider, BigFishLibrarySettings settings, BigFishOnlineLibraryScraper scraper) : LibraryMetadataProvider
 {
-    private readonly BigFishRegistryReader registryReader;
-    private readonly IGameSearchProvider<BigFishSearchResultGame> gameSearchProvider;
-    private readonly BigFishLibrarySettings settings;
-    private readonly BigFishOnlineLibraryScraper scraper;
     private readonly ILogger logger = LogManager.GetLogger();
-
-    public BigFishMetadataProvider(BigFishRegistryReader registryReader, IGameSearchProvider<BigFishSearchResultGame> gameSearchProvider, BigFishLibrarySettings settings, BigFishOnlineLibraryScraper scraper)
-    {
-        this.registryReader = registryReader;
-        this.gameSearchProvider = gameSearchProvider;
-        this.settings = settings;
-        this.scraper = scraper;
-    }
 
     public override GameMetadata GetMetadata(Game game)
     {
@@ -56,7 +44,7 @@ public class BigFishMetadataProvider : LibraryMetadataProvider
         {
             GameId = registryDetails.Sku,
             Name = registryDetails.Name,
-            Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
+            Platforms = [new MetadataSpecProperty("pc_windows")],
             Source = new MetadataNameProperty("Big Fish Games"),
         };
 
@@ -76,8 +64,8 @@ public class BigFishMetadataProvider : LibraryMetadataProvider
             if (File.Exists(registryDetails.Thumbnail))
                 output.Icon = new MetadataFile(registryDetails.Thumbnail);
 
-            string id = new string(registryDetails.Sku.SkipWhile(char.IsLetter).TakeWhile(char.IsNumber).ToArray());
-            output.Links = new List<Link> { new Link("Big Fish Store Page", $"https://www.bigfishgames.com/games/{id}/") };
+            string id = new(registryDetails.Sku.SkipWhile(char.IsLetter).TakeWhile(char.IsNumber).ToArray());
+            output.Links = [new Link("Big Fish Store Page", $"https://www.bigfishgames.com/games/{id}/")];
         }
         return output;
     }

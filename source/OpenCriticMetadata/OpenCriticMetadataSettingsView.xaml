@@ -9,30 +9,95 @@
              xmlns:dd="urn:gong-wpf-dragdrop"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600" d:Background="White">
-    <StackPanel Margin="20">
-        <StackPanel.Resources>
-            <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
-                <Setter Property="SelectionMode" Value="Extended"/>
-                <Setter Property="MinHeight" Value="15"/>
-                <Setter Property="Padding" Value="5"/>
-                <Setter Property="dd:DragDrop.IsDragSource" Value="True"/>
-                <Setter Property="dd:DragDrop.IsDropTarget" Value="True"/>
-                <Setter Property="Width" Value="350"/>
-                <Setter Property="HorizontalAlignment" Value="Left" />
-                <Setter Property="pec:IgnoreScrollBehaviour.IgnoreScroll" Value="True" />
-            </Style>
-        </StackPanel.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="20">
+            <Grid Width="auto" Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                    </Style>
+                    <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                        <Setter Property="Margin" Value="5,3"/>
+                    </Style>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                        <Setter Property="Margin" Value="5,3"/>
+                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                    </Style>
+                    <pec:IntegerFormatConverter x:Key="intConverter"/>
+                </Grid.Resources>
 
-        <TextBlock TextWrapping="Wrap">Use the following image types for covers, in the specified order (drag and drop to reorder):</TextBlock>
-        <ListBox Name="IconImageTypes" ItemsSource="{Binding Settings.Icon.ImageTypes}" d:ItemsSource="{d:SampleData ItemCount=2}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
-                        <TextBlock Text="░" Padding="10,0"/>
-                        <CheckBox IsChecked="{Binding Checked}" Content="{Binding Name}" Width="Auto"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </StackPanel>
+                <TextBlock>Critic score average:</TextBlock>
+                <ComboBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" IsEditable="False" SelectedValuePath="Key" DisplayMemberPath="Value" Width="auto"
+                          ItemsSource="{Binding CriticSources}" SelectedValue="{Binding Settings.CriticScoreSource}"/>
+                <TextBlock Grid.Row="1" Grid.Column="0">Minimum critic review count:</TextBlock>
+                <TextBox Width="70" Text="{Binding Settings.MinimumCriticReviewCount, Converter={StaticResource intConverter}}" Grid.Row="1" Grid.Column="1"/>
+                <TextBlock Grid.Row="2" Grid.Column="0">Minimum user review count:</TextBlock>
+                <TextBox Width="70" Text="{Binding Settings.MinimumCommunityReviewCount, Converter={StaticResource intConverter}}" Grid.Row="2" Grid.Column="1"/>
+            </Grid>
+
+            <TextBlock TextWrapping="Wrap">Use the following image types, in the specified order (drag and drop to reorder):</TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Margin" Value="3,3,13,3"/>
+                        <Setter Property="Grid.Row" Value="0"/>
+                    </Style>
+                    <Style TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+                        <Setter Property="SelectionMode" Value="Extended"/>
+                        <Setter Property="MinHeight" Value="15"/>
+                        <Setter Property="Padding" Value="5"/>
+                        <Setter Property="dd:DragDrop.IsDragSource" Value="True"/>
+                        <Setter Property="dd:DragDrop.IsDropTarget" Value="True"/>
+                        <Setter Property="HorizontalAlignment" Value="Left" />
+                        <Setter Property="Margin" Value="0,0,10,0"/>
+                        <Setter Property="Grid.Row" Value="1"/>                        
+                    </Style>
+                </Grid.Resources>
+
+                <TextBlock Grid.Column="0">Cover</TextBlock>
+                <ListBox ItemsSource="{Binding Settings.CoverSources}" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Column="0" pec:IgnoreScrollBehaviour.IgnoreScroll="True">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
+                                <TextBlock Text="░" Padding="10,0"/>
+                                <CheckBox IsChecked="{Binding Checked}" Content="{Binding Name}" Width="Auto"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <TextBlock Grid.Column="1">Background</TextBlock>
+                <ListBox ItemsSource="{Binding Settings.BackgroundSources}" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Column="1" pec:IgnoreScrollBehaviour.IgnoreScroll="True">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
+                                <TextBlock Text="░" Padding="10,0"/>
+                                <CheckBox IsChecked="{Binding Checked}" Content="{Binding Name}" Width="Auto"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>

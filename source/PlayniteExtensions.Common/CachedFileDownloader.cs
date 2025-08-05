@@ -11,29 +11,20 @@ public interface ICachedFile
     void RefreshCache();
 }
 
-public class CachedFileDownloader : ICachedFile
+public class CachedFileDownloader(string onlinePath, string localPath, TimeSpan maxCacheAge, Encoding encoding = null, string packagedFallbackPath = null) : ICachedFile
 {
-    public CachedFileDownloader(string onlinePath, string localPath, TimeSpan maxCacheAge, Encoding encoding = null, string packagedFallbackPath = null)
-    {
-        OnlinePath = onlinePath;
-        LocalPath = Environment.ExpandEnvironmentVariables(localPath);
-        MaxCacheAge = maxCacheAge;
-        Encoding = encoding;
-        PackagedFallbackPath = packagedFallbackPath;
-    }
-
-    public string OnlinePath { get; }
-    public string LocalPath { get; }
-    public TimeSpan MaxCacheAge { get; }
-    public Encoding Encoding { get; }
-    public string PackagedFallbackPath { get; }
+    public string OnlinePath { get; } = onlinePath;
+    public string LocalPath { get; } = Environment.ExpandEnvironmentVariables(localPath);
+    public TimeSpan MaxCacheAge { get; } = maxCacheAge;
+    public Encoding Encoding { get; } = encoding;
+    public string PackagedFallbackPath { get; } = packagedFallbackPath;
 
     private bool CopyFileFromPackagedFallback()
     {
         if (string.IsNullOrWhiteSpace(PackagedFallbackPath))
             return false;
 
-        FileInfo packagedFallbackFile = new FileInfo(PackagedFallbackPath);
+        FileInfo packagedFallbackFile = new(PackagedFallbackPath);
 
         if (!packagedFallbackFile.Exists)
             return false;
@@ -47,7 +38,7 @@ public class CachedFileDownloader : ICachedFile
         if (string.IsNullOrWhiteSpace(PackagedFallbackPath))
             return false;
 
-        FileInfo packagedFallbackFile = new FileInfo(PackagedFallbackPath);
+        FileInfo packagedFallbackFile = new(PackagedFallbackPath);
 
         if (!packagedFallbackFile.Exists || !f.Exists)
             return false;

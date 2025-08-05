@@ -10,7 +10,7 @@ public static class HtmlAgilityPackExtensions
         if (string.IsNullOrWhiteSpace(htmlContent) || string.IsNullOrWhiteSpace(baseUrl))
             return htmlContent;
 
-        string[] urlAttributeNames = new[] { "href", "src" };
+        string[] urlAttributeNames = ["href", "src"];
         var baseUri = new Uri(baseUrl);
 
         var doc = new HtmlAgilityPack.HtmlDocument();

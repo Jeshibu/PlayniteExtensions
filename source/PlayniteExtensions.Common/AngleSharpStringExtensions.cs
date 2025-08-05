@@ -18,7 +18,7 @@ public static class AngleSharpStringExtensions
 
     public static IHtmlDocument MakeHtmlUrlsAbsolute(this IHtmlDocument doc, string baseUrl)
     {
-        string[] urlAttributeNames = new[] { "href", "src" };
+        string[] urlAttributeNames = ["href", "src"];
         var baseUri = new Uri(baseUrl);
 
         string selector = string.Join(",", urlAttributeNames.Select(a => $"[{a}]"));

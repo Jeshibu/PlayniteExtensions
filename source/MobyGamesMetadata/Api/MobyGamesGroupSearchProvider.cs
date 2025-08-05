@@ -9,11 +9,8 @@ using System.Threading;
 
 namespace MobyGamesMetadata.Api;
 
-public class MobyGamesGroupSearchProvider : BaseAggregateMobyGamesDataCollector, ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>>
+public class MobyGamesGroupSearchProvider(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility) : BaseAggregateMobyGamesDataCollector(apiClient, scraper, settings, platformUtility), ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>>
 {
-    public MobyGamesGroupSearchProvider(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility)
-        : base(apiClient, scraper, settings, platformUtility) { }
-
     public IEnumerable<GameDetails> GetDetails(SearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
         var result = apiClient.GetAllGamesForGroup(searchResult.Id, progressArgs);

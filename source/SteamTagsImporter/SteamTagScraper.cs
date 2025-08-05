@@ -6,20 +6,15 @@ using System.Text.RegularExpressions;
 
 namespace SteamTagsImporter;
 
-public class SteamTagScraper : ISteamTagScraper
+public class SteamTagScraper(Func<string, string, SteamTagScraper.Delistable<string>> getSteamStorePageHtmlMethod) : ISteamTagScraper
 {
-    private static readonly Regex TagJsonRegex = new Regex(@"InitAppTagModal\(\s*\d+,\s*(?<json>\[[^\]]+\])", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
+    private static readonly Regex TagJsonRegex = new(@"InitAppTagModal\(\s*\d+,\s*(?<json>\[[^\]]+\])", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
 
-    public Func<string, string, Delistable<string>> GetSteamStorePageHtmlMethod { get; }
+    public Func<string, string, Delistable<string>> GetSteamStorePageHtmlMethod { get; } = getSteamStorePageHtmlMethod;
 
     public SteamTagScraper()
         : this(GetSteamStorePageHtmlDefault)
     {
-    }
-
-    public SteamTagScraper(Func<string, string, Delistable<string>> getSteamStorePageHtmlMethod)
-    {
-        GetSteamStorePageHtmlMethod = getSteamStorePageHtmlMethod;
     }
 
     public Delistable<IEnumerable<SteamTag>> GetTags(string appId, string languageKey = null)
@@ -28,7 +23,7 @@ public class SteamTagScraper : ISteamTagScraper
 
         var match = TagJsonRegex.Match(html.Value);
         if (!match.Success)
-            return new Delistable<IEnumerable<SteamTag>>(new SteamTag[0], html.Delisted);
+            return new Delistable<IEnumerable<SteamTag>>([], html.Delisted);
 
         var json = match.Groups["json"].Value;
         var steamTags = Newtonsoft.Json.JsonConvert.DeserializeObject<List<SteamTag>>(json);
@@ -59,16 +54,10 @@ public class SteamTagScraper : ISteamTagScraper
         }
     }
 
-    public class Delistable<T>
+    public class Delistable<T>(T value, bool delisted)
     {
-        public bool Delisted { get; set; }
-        public T Value { get; set; }
-
-        public Delistable(T value, bool delisted)
-        {
-            Value = value;
-            Delisted = delisted;
-        }
+        public bool Delisted { get; set; } = delisted;
+        public T Value { get; set; } = value;
     }
 }
 

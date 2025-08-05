@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 namespace BigFishMetadata;
 
-public class BigFishMetadataProvider : GenericMetadataProvider<BigFishSearchResultGame>
+public class BigFishMetadataProvider(IGameSearchProvider<BigFishSearchResultGame> searchProvider, MetadataRequestOptions options, BigFishMetadata plugin, IPlatformUtility platformUtility) : GenericMetadataProvider<BigFishSearchResultGame>(searchProvider, options, plugin.PlayniteApi, platformUtility)
 {
-    public static List<MetadataField> Fields = new List<MetadataField>
-    {
+    public static List<MetadataField> Fields =
+    [
         MetadataField.Name,
         MetadataField.Description,
         MetadataField.Genres,
@@ -16,17 +16,9 @@ public class BigFishMetadataProvider : GenericMetadataProvider<BigFishSearchResu
         MetadataField.CoverImage,
         MetadataField.BackgroundImage,
         MetadataField.CommunityScore,
-    };
-
-    private readonly BigFishMetadata plugin;
+    ];
 
     public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 
     protected override string ProviderName => "Big Fish Games";
-
-    public BigFishMetadataProvider(IGameSearchProvider<BigFishSearchResultGame> searchProvider, MetadataRequestOptions options, BigFishMetadata plugin, IPlatformUtility platformUtility)
-        : base(searchProvider, options, plugin.PlayniteApi, platformUtility)
-    {
-        this.plugin = plugin;
-    }
 }

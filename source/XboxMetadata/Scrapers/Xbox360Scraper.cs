@@ -9,12 +9,8 @@ using System.Threading.Tasks;
 
 namespace XboxMetadata.Scrapers;
 
-public class Xbox360Scraper : BaseXboxScraper
+public class Xbox360Scraper(IWebDownloader downloader, IPlatformUtility platformUtility) : BaseXboxScraper(downloader, platformUtility)
 {
-    public Xbox360Scraper(IWebDownloader downloader, IPlatformUtility platformUtility) : base(downloader, platformUtility)
-    {
-    }
-
     public override string Key { get; } = "Xbox360";
 
     public override int ExecutionOrder { get; } = 10;
@@ -25,7 +21,7 @@ public class Xbox360Scraper : BaseXboxScraper
         //var url = $"https://marketplace.xbox.com/{settings.Market}/Product/-/{id}";
         var response = await downloader.DownloadStringAsync(url, throwExceptionOnErrorResponse: true);
 
-        HtmlParser parser = new HtmlParser();
+        HtmlParser parser = new();
         var doc = await parser.ParseAsync(response.ResponseContent);
 
         var output = new XboxGameDetails() { Url = url };
@@ -82,7 +78,7 @@ public class Xbox360Scraper : BaseXboxScraper
         var url = $"https://marketplace.xbox.com/{settings.Market}/Search?query={escapedQuery}&DownloadType=Game";
         var response = await downloader.DownloadStringAsync(url, throwExceptionOnErrorResponse: true);
 
-        HtmlParser parser = new HtmlParser();
+        HtmlParser parser = new();
         var doc = await parser.ParseAsync(response.ResponseContent);
 
         var output = new List<XboxGameSearchResultItem>();
@@ -104,7 +100,7 @@ public class Xbox360Scraper : BaseXboxScraper
                 Id = id,
                 Url = detailsUrl,
                 Title = titleLink.TextContent,
-                Platforms = new List<MetadataProperty> { new MetadataSpecProperty("xbox360") }
+                Platforms = [new MetadataSpecProperty("xbox360")]
             };
 
             output.Add(item);

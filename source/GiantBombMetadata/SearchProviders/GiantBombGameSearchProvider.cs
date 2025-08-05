@@ -12,19 +12,9 @@ using System.Threading;
 
 namespace GiantBombMetadata.SearchProviders;
 
-public class GiantBombGameSearchProvider : IGameSearchProvider<GiantBombSearchResultItem>
+public class GiantBombGameSearchProvider(IGiantBombApiClient apiClient, GiantBombMetadataSettings settings, IPlatformUtility platformUtility) : IGameSearchProvider<GiantBombSearchResultItem>
 {
-    private readonly IGiantBombApiClient apiClient;
-    private readonly GiantBombMetadataSettings settings;
-    private readonly IPlatformUtility platformUtility;
     private readonly ILogger logger = LogManager.GetLogger();
-
-    public GiantBombGameSearchProvider(IGiantBombApiClient apiClient, GiantBombMetadataSettings settings, IPlatformUtility platformUtility)
-    {
-        this.apiClient = apiClient;
-        this.settings = settings;
-        this.platformUtility = platformUtility;
-    }
 
     public GameDetails GetDetails(GiantBombSearchResultItem searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
@@ -179,7 +169,7 @@ public class GiantBombGameSearchProvider : IGameSearchProvider<GiantBombSearchRe
         return output;
     }
 
-    private static Regex pressEventOrCoverRegex = new Regex(@"\b(e3|pax|blizzcon|box art)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    private static readonly Regex pressEventOrCoverRegex = new(@"\b(e3|pax|blizzcon|box art)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
     private static bool ImageCanBeUsedAsBackground(GiantBombImage img)
     {
@@ -203,7 +193,7 @@ public class GiantBombGameSearchProvider : IGameSearchProvider<GiantBombSearchRe
     private IEnumerable<string> GetValues(PropertyImportSetting importSetting, PropertyImportTarget target, GiantBombObject[] data)
     {
         if (importSetting.ImportTarget != target || data == null || data.Length == 0)
-            return new string[0];
+            return [];
 
         return data.Select(d => $"{importSetting.Prefix}{d.Name.Trim()}");
     }

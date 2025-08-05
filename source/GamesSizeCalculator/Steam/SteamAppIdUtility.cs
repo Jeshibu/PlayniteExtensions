@@ -9,25 +9,20 @@ using System.Text.RegularExpressions;
 
 namespace GamesSizeCalculator.SteamSizeCalculation;
 
-public class SteamAppIdUtility : ISteamAppIdUtility
+public class SteamAppIdUtility(ICachedFile steamAppList) : ISteamAppIdUtility
 {
     private static readonly Guid SteamLibraryPluginId = Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB");
-    private static readonly Regex SteamUrlRegex = new Regex(@"\bhttps?://st(ore\.steampowered|eamcommunity)\.com/app/(?<id>[0-9]+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
-    private static readonly Regex NonLetterOrDigitCharacterRegex = new Regex(@"[^\p{L}\p{Nd}]", RegexOptions.Compiled);
+    private static readonly Regex SteamUrlRegex = new(@"\bhttps?://st(ore\.steampowered|eamcommunity)\.com/app/(?<id>[0-9]+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+    private static readonly Regex NonLetterOrDigitCharacterRegex = new(@"[^\p{L}\p{Nd}]", RegexOptions.Compiled);
     private static readonly ILogger logger = LogManager.GetLogger();
 
     private Dictionary<string, int> _steamIds;
     private Dictionary<string, int> SteamIdsByTitle
     {
-        get { return _steamIds ?? (_steamIds = GetSteamIdsByTitle()); }
+        get { return _steamIds ??= GetSteamIdsByTitle(); }
     }
 
-    public ICachedFile SteamAppList { get; }
-
-    public SteamAppIdUtility(ICachedFile steamAppList)
-    {
-        SteamAppList = steamAppList;
-    }
+    public ICachedFile SteamAppList { get; } = steamAppList;
 
     private static string NormalizeTitle(string title)
     {
@@ -65,7 +60,7 @@ public class SteamAppIdUtility : ISteamAppIdUtility
     {
         var jsonStr = SteamAppList.GetFileContents();
         var jsonContent = Serialization.FromJson<SteamAppListRoot>(jsonStr);
-        Dictionary<string, int> output = new Dictionary<string, int>();
+        Dictionary<string, int> output = [];
         foreach (var app in jsonContent.Applist.Apps)
         {
             var normalizedTitle = NormalizeTitle(app.Name);

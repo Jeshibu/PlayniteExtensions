@@ -8,19 +8,9 @@ using System.Linq;
 
 namespace RawgLibrary;
 
-public class RawgLibraryMetadataProvider : LibraryMetadataProvider
+public class RawgLibraryMetadataProvider(RawgLibrarySettings settings, RawgApiClient client, string languageCode = "eng") : LibraryMetadataProvider
 {
-    private readonly RawgLibrarySettings settings;
-    private readonly RawgApiClient client;
-    private readonly string languageCode;
     private readonly ILogger logger = LogManager.GetLogger();
-
-    public RawgLibraryMetadataProvider(RawgLibrarySettings settings, RawgApiClient client, string languageCode = "eng")
-    {
-        this.settings = settings;
-        this.client = client;
-        this.languageCode = languageCode;
-    }
 
     public override GameMetadata GetMetadata(Game game)
     {

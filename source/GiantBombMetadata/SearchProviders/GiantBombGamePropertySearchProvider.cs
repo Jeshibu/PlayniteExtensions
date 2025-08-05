@@ -10,17 +10,9 @@ using System.Threading;
 
 namespace GiantBombMetadata.SearchProviders;
 
-public class GiantBombGamePropertySearchProvider : ISearchableDataSourceWithDetails<GiantBombSearchResultItem, IEnumerable<GameDetails>>
+public class GiantBombGamePropertySearchProvider(IGiantBombApiClient apiClient, GiantBombScraper scraper) : ISearchableDataSourceWithDetails<GiantBombSearchResultItem, IEnumerable<GameDetails>>
 {
-    private readonly IGiantBombApiClient apiClient;
-    private readonly GiantBombScraper scraper;
     private readonly ILogger logger = LogManager.GetLogger();
-
-    public GiantBombGamePropertySearchProvider(IGiantBombApiClient apiClient, GiantBombScraper scraper)
-    {
-        this.apiClient = apiClient;
-        this.scraper = scraper;
-    }
 
     public IEnumerable<GameDetails> GetDetails(GiantBombSearchResultItem searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
@@ -35,7 +27,7 @@ public class GiantBombGamePropertySearchProvider : ISearchableDataSourceWithDeta
                 $"{searchResult.ResourceType}/{searchResult.Guid}",
                 progressArgs?.CancelToken ?? new CancellationToken());
 
-            return result?.Games.Select(g => new GameDetails { Names = new List<string> { g.Name }, Url = g.SiteDetailUrl }) ?? new GameDetails[0];
+            return result?.Games.Select(g => new GameDetails { Names = [g.Name], Url = g.SiteDetailUrl }) ?? [];
         }
     }
 

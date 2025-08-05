@@ -26,7 +26,7 @@
 
 - Name: Arduboy
   Id: arduboy
-  Emulators: [ralibretro]
+  Emulators: [ralibretro, retroarch]
   
 - Name: Atari 2600
   Id: atari_2600
@@ -484,7 +484,7 @@
 - Name: Texas Instruments TI-83
   Id: ti_83
   Databases: [TIC-80]
-  Emulators: [bizhawk]
+  Emulators: [bizhawk, retroarch]
   
 - Name: Thomson MO5
   Id: thomson_mo5

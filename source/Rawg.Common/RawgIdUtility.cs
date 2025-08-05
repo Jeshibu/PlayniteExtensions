@@ -7,11 +7,11 @@ namespace Rawg.Common;
 
 public class RawgIdUtility : SingleExternalDatabaseIdUtility
 {
-    private static Regex rawgGameUrlRegex = new Regex(@"^https://rawg\.io/games/(?<id>[0-9]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static readonly Regex rawgGameUrlRegex = new(@"^https://rawg\.io/games/(?<id>[0-9]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
     public override ExternalDatabase Database { get; } = ExternalDatabase.RAWG;
 
-    public override IEnumerable<Guid> LibraryIds { get; } = new[] { RawgMetadataHelper.RawgLibraryId };
+    public override IEnumerable<Guid> LibraryIds { get; } = [RawgMetadataHelper.RawgLibraryId];
 
     public override DbId GetIdFromUrl(string url)
     {

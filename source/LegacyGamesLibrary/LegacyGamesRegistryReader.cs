@@ -11,21 +11,14 @@ public interface ILegacyGamesRegistryReader
     IEnumerable<RegistryGameData> GetGameData(RegistryView registryView = RegistryView.Default);
 }
 
-public class LegacyGamesRegistryReader : ILegacyGamesRegistryReader
+public class LegacyGamesRegistryReader(IRegistryValueProvider registryValueProvider) : ILegacyGamesRegistryReader
 {
-    ILogger logger = LogManager.GetLogger();
-
-    public LegacyGamesRegistryReader(IRegistryValueProvider registryValueProvider)
-    {
-        RegistryValueProvider = registryValueProvider;
-    }
-
-    private IRegistryValueProvider RegistryValueProvider { get; }
+    readonly ILogger logger = LogManager.GetLogger();
 
     public IEnumerable<RegistryGameData> GetGameData(RegistryView registryView)
     {
         string legacyGamesFolder = @"Software\Legacy Games";
-        var gameFolderKeys = RegistryValueProvider.GetSubKeysForPath(registryView, RegistryHive.CurrentUser, legacyGamesFolder);
+        var gameFolderKeys = registryValueProvider.GetSubKeysForPath(registryView, RegistryHive.CurrentUser, legacyGamesFolder);
         if (gameFolderKeys == null)
         {
             logger.Info($"Failed to get registry subkeys for {legacyGamesFolder}");
@@ -37,7 +30,7 @@ public class LegacyGamesRegistryReader : ILegacyGamesRegistryReader
             var gameFolder = $@"{legacyGamesFolder}\{gameFolderKey}";
             logger.Info($"Parsing {gameFolder}");
 
-            var gameId = RegistryValueProvider.GetValueForPath(registryView, RegistryHive.CurrentUser, gameFolder, "InstallerUUID");
+            var gameId = registryValueProvider.GetValueForPath(registryView, RegistryHive.CurrentUser, gameFolder, "InstallerUUID");
             if (string.IsNullOrWhiteSpace(gameId))
             {
                 logger.Warn($@"No value found for {gameFolder}\InstallerUUID");
@@ -47,9 +40,9 @@ public class LegacyGamesRegistryReader : ILegacyGamesRegistryReader
             yield return new RegistryGameData
             {
                 InstallerUUID = new Guid(gameId),
-                ProductName = RegistryValueProvider.GetValueForPath(registryView, RegistryHive.CurrentUser, gameFolder, "ProductName"),
-                InstDir = RegistryValueProvider.GetValueForPath(registryView, RegistryHive.CurrentUser, gameFolder, "InstDir"),
-                GameExe = RegistryValueProvider.GetValueForPath(registryView, RegistryHive.CurrentUser, gameFolder, "GameExe"),
+                ProductName = registryValueProvider.GetValueForPath(registryView, RegistryHive.CurrentUser, gameFolder, "ProductName"),
+                InstDir = registryValueProvider.GetValueForPath(registryView, RegistryHive.CurrentUser, gameFolder, "InstDir"),
+                GameExe = registryValueProvider.GetValueForPath(registryView, RegistryHive.CurrentUser, gameFolder, "GameExe"),
             };
         }
     }
@@ -57,7 +50,7 @@ public class LegacyGamesRegistryReader : ILegacyGamesRegistryReader
     public string GetLauncherPath()
     {
         string uninstallFolderPath = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";
-        var uninstallFolderKeys = RegistryValueProvider.GetSubKeysForPath(RegistryView.Registry64, RegistryHive.LocalMachine, uninstallFolderPath);
+        var uninstallFolderKeys = registryValueProvider.GetSubKeysForPath(RegistryView.Registry64, RegistryHive.LocalMachine, uninstallFolderPath);
         if (uninstallFolderKeys == null)
         {
             logger.Info(@"Failed to get registry subkeys for Software\Microsoft\Windows\CurrentVersion\Uninstall");
@@ -67,11 +60,11 @@ public class LegacyGamesRegistryReader : ILegacyGamesRegistryReader
         foreach (var subKey in uninstallFolderKeys)
         {
             var folder = $@"{uninstallFolderPath}\{subKey}";
-            var name = RegistryValueProvider.GetValueForPath(RegistryView.Registry64, RegistryHive.LocalMachine, folder, "DisplayName");
+            var name = registryValueProvider.GetValueForPath(RegistryView.Registry64, RegistryHive.LocalMachine, folder, "DisplayName");
             if (string.IsNullOrWhiteSpace(name) || !name.StartsWith("Legacy Games Launcher"))
                 continue;
 
-            var iconPath = RegistryValueProvider.GetValueForPath(RegistryView.Registry64, RegistryHive.LocalMachine, folder, "DisplayIcon");
+            var iconPath = registryValueProvider.GetValueForPath(RegistryView.Registry64, RegistryHive.LocalMachine, folder, "DisplayIcon");
             var dir = System.IO.Path.GetDirectoryName(iconPath);
             return System.IO.Path.Combine(dir, "Legacy Games Launcher.exe");
         }

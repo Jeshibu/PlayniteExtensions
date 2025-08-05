@@ -13,15 +13,11 @@ using System.Threading.Tasks;
 
 namespace XboxMetadata.Scrapers;
 
-public class XboxOneScraper : BaseXboxScraper
+public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platformUtility) : BaseXboxScraper(downloader, platformUtility)
 {
-    public XboxOneScraper(IWebDownloader downloader, IPlatformUtility platformUtility) : base(downloader, platformUtility)
-    {
-    }
-
     public override string Key { get; } = "XboxOne";
     public override int ExecutionOrder { get; } = 1;
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public override async Task<XboxGameDetails> GetDetailsAsync(XboxMetadataSettings settings, string id, string url)
     {
@@ -43,7 +39,7 @@ public class XboxOneScraper : BaseXboxScraper
     {
         //turns out the Detail-[number]-toggle-target IDs vary, so can't be used
 
-        HtmlParser parser = new HtmlParser();
+        var parser = new HtmlParser();
         var doc = await parser.ParseAsync(response.ResponseContent);
 
         var output = new XboxGameDetails() { Url = response.ResponseUrl };
@@ -158,7 +154,7 @@ public class XboxOneScraper : BaseXboxScraper
         public string DefaultImageUrl { get; set; }
         public string DefaultGalleryImageUrl { get; set; }
         public string AltText { get; set; }
-        public ImageForBreakPoint[] ImageForBreakPoints { get; set; } = new ImageForBreakPoint[0];
+        public ImageForBreakPoint[] ImageForBreakPoints { get; set; } = [];
     }
 
     private class ImageForBreakPoint
@@ -189,13 +185,13 @@ public class XboxOneScraper : BaseXboxScraper
             features.AddRange(summary.AccessibilityCapabilities?.Visual.Select(c => "Accessibility: Visual: " + c));
         }
 
-        Regex multiSpace = new Regex(@"\s{2,}");
+        Regex multiSpace = new(@"\s{2,}");
 
         if (summary.Capabilities != null)
             features.AddRange(summary.Capabilities.Values.Select(c => multiSpace.Replace(c, " ")));
 
         features.Sort();
-        var links = new List<Link> { new Link("Xbox Store", response.ResponseUrl) };
+        var links = new List<Link> { new("Xbox Store", response.ResponseUrl) };
         if (settings.ImportAccessibilityFeatures && summary.AccessibilityCapabilities?.PublisherInformationUri != null)
             links.Add(new Link("Accessibility information", summary.AccessibilityCapabilities.PublisherInformationUri));
 
@@ -282,28 +278,28 @@ public class XboxOneScraper : BaseXboxScraper
 
     private static IEnumerable<string> GetCompanies(string name)
     {
-        var names = name?.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+        var names = name?.Split(['/'], StringSplitOptions.RemoveEmptyEntries);
         return names.NullIfEmpty()?.Select(n => n.Trim().TrimCompanyForms());
     }
 
     private static string ShortenRatingString(string longRatingName)
     {
-        switch (longRatingName.ToUpper())
+        return longRatingName.ToUpper() switch
         {
-            case "RATING PENDING": return "RP";
-            case "ADULTS ONLY 18+": return "AO";
-            case "MATURE 17+": return "M";
-            case "TEEN": return "T";
-            case "EVERYONE 10+": return "E10+";
-            case "EVERYONE": return "E";
-            default: return longRatingName;
-        }
+            "RATING PENDING" => "RP",
+            "ADULTS ONLY 18+" => "AO",
+            "MATURE 17+" => "M",
+            "TEEN" => "T",
+            "EVERYONE 10+" => "E10+",
+            "EVERYONE" => "E",
+            _ => longRatingName,
+        };
     }
 
     private List<ImageData> GetImages(XboxGameDetailsProductSummary summary, XboxImageSourceSettings imgSettings)
     {
         if (summary.Images == null)
-            return new List<ImageData>(); ;
+            return [];
 
         var potentialImages = new List<XboxImageDetails>();
         foreach (var fieldSetting in imgSettings.Fields)
@@ -336,18 +332,13 @@ public class XboxOneScraper : BaseXboxScraper
             if (smallerThanMinimum)
                 return false;
 
-            switch (imgSettings.AspectRatio)
+            return imgSettings.AspectRatio switch
             {
-                case AspectRatio.Vertical:
-                    return i.Width < i.Height;
-                case AspectRatio.Horizontal:
-                    return i.Width > i.Height;
-                case AspectRatio.Square:
-                    return i.Width == i.Height;
-                case AspectRatio.Any:
-                default:
-                    return true;
-            }
+                AspectRatio.Vertical => i.Width < i.Height,
+                AspectRatio.Horizontal => i.Width > i.Height,
+                AspectRatio.Square => i.Width == i.Height,
+                _ => true,
+            };
         }
 
         return potentialImages.FindAll(FilterImageBySize)

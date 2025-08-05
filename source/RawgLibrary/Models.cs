@@ -22,18 +22,11 @@ public class Range
     public string MaxString { get => Max.ToString(); set => int.TryParse(value, out max); }
 }
 
-public class RawgToPlayniteStatus
+public class RawgToPlayniteStatus(string id, string description, Guid playniteCompletionStatusId)
 {
-    public string Id { get; set; }
-    public string Description { get; set; }
-    public Guid PlayniteCompletionStatusId { get; set; }
-
-    public RawgToPlayniteStatus(string id, string description, Guid playniteCompletionStatusId)
-    {
-        Id = id;
-        Description = description;
-        PlayniteCompletionStatusId = playniteCompletionStatusId;
-    }
+    public string Id { get; set; } = id;
+    public string Description { get; set; } = description;
+    public Guid PlayniteCompletionStatusId { get; set; } = playniteCompletionStatusId;
 }
 
 public class RawgToPlayniteRating
@@ -61,38 +54,26 @@ public class RawgToPlayniteRating
     }
 }
 
-public class PlayniteToRawgStatus
+public class PlayniteToRawgStatus(CompletionStatus playniteCompletionStatus, string rawgStatusId)
 {
-    public PlayniteToRawgStatus(CompletionStatus playniteCompletionStatus, string rawgStatusId)
-    {
-        PlayniteCompletionStatus = playniteCompletionStatus;
-        RawgStatusId = rawgStatusId;
-    }
-
-    public CompletionStatus PlayniteCompletionStatus { get; set; }
-    public string RawgStatusId { get; set; }
+    public CompletionStatus PlayniteCompletionStatus { get; set; } = playniteCompletionStatus;
+    public string RawgStatusId { get; set; } = rawgStatusId;
 }
 
-public class PlayniteToRawgRating
+public class PlayniteToRawgRating(int id, string description, Range range)
 {
-    public PlayniteToRawgRating(int id, string description, Range range)
-    {
-        Id = id;
-        Description = description;
-        Range = range;
-    }
-    public int Id { get; set; }
-    public string Description { get; set; }
-    public Range Range { get; set; }
+    public int Id { get; set; } = id;
+    public string Description { get; set; } = description;
+    public Range Range { get; set; } = range;
 }
 
 public static class RawgMapping
 {
-    private static ILogger logger = LogManager.GetLogger();
-    public static Guid DoNotImportId = new Guid("6e18323f-8798-455c-851c-79bf34d83466");
+    private static readonly ILogger logger = LogManager.GetLogger();
+    public static Guid DoNotImportId = new("6e18323f-8798-455c-851c-79bf34d83466");
 
     //"Not Played", "Played", "Beaten", "Completed", "Playing", "Abandoned", "On Hold", "Plan to Play"
-    public static Dictionary<string, string> RawgCompletionStatuses = new Dictionary<string, string>
+    public static Dictionary<string, string> RawgCompletionStatuses = new()
     {
         { "owned", "Uncategorized" },
         { "playing", "Currently Playing" },
@@ -102,7 +83,7 @@ public static class RawgMapping
         { "toplay", "Wishlist" },
     };
 
-    private static Dictionary<string, string> RawgToPlayniteStatusDefaults = new Dictionary<string, string>
+    private static readonly Dictionary<string, string> RawgToPlayniteStatusDefaults = new()
     {
         { "owned", "Not Played" },
         { "playing", "Playing" },
@@ -112,7 +93,7 @@ public static class RawgMapping
         { "toplay", "Wishlist" }, //there's no default completion status for this, just try and see if Wishlist exists
     };
 
-    public static Dictionary<int, string> RawgRatings = new Dictionary<int, string>
+    public static Dictionary<int, string> RawgRatings = new()
     {
         { 1, "skip" },
         { 3, "meh" },
@@ -120,7 +101,7 @@ public static class RawgMapping
         { 5, "excellent" },
     };
 
-    private static Dictionary<string, string> PlayniteToRawgStatusDefaults = new Dictionary<string, string>
+    private static readonly Dictionary<string, string> PlayniteToRawgStatusDefaults = new()
     {
         { "Not Played", "yet" },
         { "Played", "owned" },
@@ -154,11 +135,9 @@ public static class RawgMapping
             if (playniteStatus == null && RawgToPlayniteStatusDefaults.TryGetValue(cs.Key, out string playniteStatusName))
                 playniteStatus = playniteStatuses.FirstOrDefault(s => s.Name.Equals(playniteStatusName, StringComparison.InvariantCultureIgnoreCase));
 
-            if (playniteStatus == null)
-                playniteStatus = playniteStatuses[playniteAPI.ApplicationSettings.CompletionStatus.DefaultStatus];
+            playniteStatus ??= playniteStatuses[playniteAPI.ApplicationSettings.CompletionStatus.DefaultStatus];
 
-            if (playniteStatus == null)
-                playniteStatus = playniteStatuses.FirstOrDefault();
+            playniteStatus ??= playniteStatuses.FirstOrDefault();
 
             logger.Trace($"Completion statuses: {playniteStatuses?.Count}, selected completion status: {playniteStatus?.Name}");
 
@@ -170,8 +149,7 @@ public static class RawgMapping
     {
         foreach (var r in RawgRatings)
         {
-            int rating;
-            if (settings?.RawgToPlayniteRatings == null || !settings.RawgToPlayniteRatings.TryGetValue(r.Key, out rating))
+            if (settings?.RawgToPlayniteRatings == null || !settings.RawgToPlayniteRatings.TryGetValue(r.Key, out int rating))
                 rating = r.Key * 20;
 
             yield return new RawgToPlayniteRating(r.Key, r.Value, rating);

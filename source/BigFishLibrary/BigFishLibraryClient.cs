@@ -4,17 +4,8 @@ using System.IO;
 
 namespace BigFishLibrary;
 
-public class BigFishLibraryClient : LibraryClient
+public class BigFishLibraryClient(BigFishRegistryReader registryReader, string iconPath) : LibraryClient
 {
-    private readonly BigFishRegistryReader registryReader;
-    private readonly string iconPath;
-
-    public BigFishLibraryClient(BigFishRegistryReader registryReader, string iconPath)
-    {
-        this.registryReader = registryReader;
-        this.iconPath = iconPath;
-    }
-
     private string ExePath => $@"{registryReader.GetClientInstallDirectory()}\bfgclient.exe";
 
     public override bool IsInstalled => File.Exists(ExePath);

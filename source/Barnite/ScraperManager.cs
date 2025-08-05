@@ -6,17 +6,11 @@ using System.Linq;
 
 namespace Barnite;
 
-public class ScraperManager
+public class ScraperManager(IPlatformUtility platformUtility, IWebDownloader downloader)
 {
-    public ScraperManager(IPlatformUtility platformUtility, IWebDownloader downloader)
-    {
-        PlatformUtility = platformUtility;
-        Downloader = downloader;
-    }
-
-    public IPlatformUtility PlatformUtility { get; }
-    public IWebDownloader Downloader { get; }
-    public List<MetadataScraper> Scrapers { get; } = new List<MetadataScraper>();
+    public IPlatformUtility PlatformUtility { get; } = platformUtility;
+    public IWebDownloader Downloader { get; } = downloader;
+    public List<MetadataScraper> Scrapers { get; } = [];
 
     public void Add<T>() where T : MetadataScraper, new()
     {

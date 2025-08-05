@@ -8,17 +8,8 @@ using System.Threading;
 
 namespace IgnMetadata;
 
-public class IgnGameSearchProvider : IGameSearchProvider<IgnGame>
+public class IgnGameSearchProvider(IgnClient client, IPlatformUtility platformUtility) : IGameSearchProvider<IgnGame>
 {
-    private IgnClient client;
-    private readonly IPlatformUtility platformUtility;
-
-    public IgnGameSearchProvider(IgnClient client, IPlatformUtility platformUtility)
-    {
-        this.client = client;
-        this.platformUtility = platformUtility;
-    }
-
     public GameDetails GetDetails(IgnGame searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
         var slug = searchResult?.Slug;

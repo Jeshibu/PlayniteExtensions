@@ -12,7 +12,7 @@ public class SteamAppListRoot
 public class AppList
 {
     [SerializationPropertyName("apps")]
-    public List<SteamApp> Apps { get; set; } = new List<SteamApp>();
+    public List<SteamApp> Apps { get; set; } = [];
 }
 
 public class SteamApp

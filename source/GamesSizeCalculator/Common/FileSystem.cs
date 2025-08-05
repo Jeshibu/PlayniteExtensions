@@ -27,7 +27,7 @@ public static partial class FileSystem
     out uint lpSectorsPerCluster, out uint lpBytesPerSector, out uint lpNumberOfFreeClusters,
     out uint lpTotalNumberOfClusters);
 
-    private static ILogger logger = LogManager.GetLogger();
+    private static readonly ILogger logger = LogManager.GetLogger();
     private const string longPathPrefix = @"\\?\";
     private const string longPathUncPrefix = @"\\?\UNC\";
 
@@ -164,7 +164,7 @@ public static partial class FileSystem
             return;
         }
 
-        DirectoryInfo dir = new DirectoryInfo(path);
+        DirectoryInfo dir = new(path);
 
         foreach (FileInfo file in dir.GetFiles())
         {
@@ -433,8 +433,7 @@ public static partial class FileSystem
     public static ulong GetFileSizeOnDisk(FileInfo info)
     {
         // From https://stackoverflow.com/a/3751135
-        uint sectorsPerCluster, bytesPerSector;
-        int freeDiskSpace = GetDiskFreeSpaceW(info.Directory.Root.FullName, out sectorsPerCluster, out bytesPerSector, out _, out _);
+        int freeDiskSpace = GetDiskFreeSpaceW(info.Directory.Root.FullName, out uint sectorsPerCluster, out uint bytesPerSector, out _, out _);
         if (freeDiskSpace == 0)
             throw new System.ComponentModel.Win32Exception();
 

@@ -11,15 +11,9 @@ using System.Linq;
 
 namespace MutualGames;
 
-public sealed class MutualGamesFileImporter : MutualGamesBaseImporter
+public sealed class MutualGamesFileImporter(IPlayniteAPI playniteAPI, MutualGamesSettings settings, IPlatformUtility platformUtility) : MutualGamesBaseImporter(playniteAPI, settings)
 {
-    private readonly IPlatformUtility platformUtility;
-    private readonly TitleComparer titleComparer = new TitleComparer();
-
-    public MutualGamesFileImporter(IPlayniteAPI playniteAPI, MutualGamesSettings settings, IPlatformUtility platformUtility) : base(playniteAPI, settings)
-    {
-        this.platformUtility = platformUtility;
-    }
+    private readonly TitleComparer titleComparer = new();
 
     public void Import()
     {
@@ -146,16 +140,12 @@ public sealed class MutualGamesFileImporter : MutualGamesBaseImporter
     private IEnumerable<Game> GetPlayniteLibraryPotentialMatches()
     {
         var games = playniteAPI.Database.Games;
-        switch (settings.CrossLibraryImportMode)
+        return settings.CrossLibraryImportMode switch
         {
-            case CrossLibraryImportMode.SameLibraryOnly:
-                return games.Where(g => g.PluginId == default);
-            case CrossLibraryImportMode.ImportAllWithFeature:
-                return games.Where(g => g.PluginId == default || HasRelevantFeature(g));
-            case CrossLibraryImportMode.ImportAll:
-            default:
-                return games;
-        }
+            CrossLibraryImportMode.SameLibraryOnly => games.Where(g => g.PluginId == default),
+            CrossLibraryImportMode.ImportAllWithFeature => games.Where(g => g.PluginId == default || HasRelevantFeature(g)),
+            _ => games,
+        };
     }
 
     private bool HasRelevantFeature(Game game)

@@ -59,7 +59,7 @@ public class ViveportLibrary : LibraryPlugin
 
         var installedDict = installedApps.ToDictionary(x => x.AppId);
         var metadataDict = allAppMetadata.ToDictionarySafe(x => x.Id, favorBiggerObject: true);
-        var licenseDict = allLicenseData?.ToDictionarySafe(x => x.AppId) ?? new Dictionary<string, LicenseData>();
+        var licenseDict = allLicenseData?.ToDictionarySafe(x => x.AppId) ?? [];
 
         var keys = metadataDict.Keys.ToHashSet();
         foreach (var key in installedDict.Keys)
@@ -90,7 +90,7 @@ public class ViveportLibrary : LibraryPlugin
                 && settings.Settings.TagSubscriptionGames
                 && !string.IsNullOrWhiteSpace(settings.Settings.SubscriptionTagName))
             {
-                game.Tags = new HashSet<MetadataProperty> { new MetadataNameProperty(settings.Settings.SubscriptionTagName) };
+                game.Tags = [new MetadataNameProperty(settings.Settings.SubscriptionTagName)];
             }
 
             yield return game;
@@ -99,7 +99,7 @@ public class ViveportLibrary : LibraryPlugin
 
     public static string SplitPascalCase(string pascalCaseStr)
     {
-        StringBuilder output = new StringBuilder();
+        StringBuilder output = new();
         for (int i = 0; i < pascalCaseStr.Length; i++)
         {
             char a = pascalCaseStr[i];
@@ -186,8 +186,7 @@ public class ViveportLibrary : LibraryPlugin
 
             if (subscription && !gameHasTag)
             {
-                if (game.TagIds == null)
-                    game.TagIds = new List<Guid>();
+                game.TagIds ??= [];
 
                 game.TagIds.Add(subscriptionTag.Id);
                 return true;

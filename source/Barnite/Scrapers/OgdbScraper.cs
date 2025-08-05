@@ -12,7 +12,7 @@ public class OgdbScraper : MetadataScraper
 {
     public override string Name { get; } = "OGDB";
     public override string WebsiteUrl { get; } = "https://ogdb.eu/";
-    private Regex EndBracesTextRegex = new Regex(@"(\s+(\([^)]+\)|\[[^]]+\]))+\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+    private readonly Regex EndBracesTextRegex = new(@"(\s+(\([^)]+\)|\[[^]]+\]))+\s*$", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
     protected override string GetSearchUrlFromBarcode(string barcode)
     {
@@ -74,11 +74,11 @@ public class OgdbScraper : MetadataScraper
                         break;
                     case "betriebsystem":
                         if (value.StartsWith("Windows"))
-                            game.Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") };
+                            game.Platforms = [new MetadataSpecProperty("pc_windows")];
                         else if (value == "MS-DOS")
-                            game.Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_dos") };
+                            game.Platforms = [new MetadataSpecProperty("pc_dos")];
                         else if (value.Contains("Linux"))
-                            game.Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_linux") };
+                            game.Platforms = [new MetadataSpecProperty("pc_linux")];
                         break;
                     case "erschienen":
                             game.ReleaseDate = ParseReleaseDate(value);
@@ -129,12 +129,12 @@ public class OgdbScraper : MetadataScraper
             return new ReleaseDate();
 
         var segmentNumbers = segments.Select(int.Parse).ToList();
-        switch (segmentNumbers.Count)
+        return segmentNumbers.Count switch
         {
-            case 1: return new ReleaseDate(segmentNumbers[0]);
-            case 2: return new ReleaseDate(segmentNumbers[1], segmentNumbers[0]);
-            case 3: return new ReleaseDate(segmentNumbers[2], segmentNumbers[1], segmentNumbers[0]);
-            default: return new ReleaseDate();
-        }
+            1 => new ReleaseDate(segmentNumbers[0]),
+            2 => new ReleaseDate(segmentNumbers[1], segmentNumbers[0]),
+            3 => new ReleaseDate(segmentNumbers[2], segmentNumbers[1], segmentNumbers[0]),
+            _ => new ReleaseDate(),
+        };
     }
 }

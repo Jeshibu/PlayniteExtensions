@@ -10,7 +10,7 @@ namespace PlayniteExtensions.Common;
 public static class IEnumerableExtensions
 {
     private static ILogger logger;
-    private static ILogger Logger { get => logger ?? (logger = LogManager.GetLogger()); }
+    private static ILogger Logger { get => logger ??= LogManager.GetLogger(); }
 
     public static Dictionary<TKey, TIn> ToDictionarySafe<TIn, TKey>(this IEnumerable<TIn> input, Func<TIn, TKey> keySelector, IEqualityComparer<TKey> equalityComparer = null, bool favorBiggerObject = false)
     {
@@ -21,7 +21,7 @@ public static class IEnumerableExtensions
     {
         Dictionary<TKey, TValue> output;
         if (equalityComparer == null)
-            output = new Dictionary<TKey, TValue>();
+            output = [];
         else
             output = new Dictionary<TKey, TValue>(equalityComparer);
 

@@ -13,31 +13,15 @@ using System.Threading.Tasks;
 
 namespace LaunchBoxMetadata;
 
-public class LaunchBoxMetadataProvider : OnDemandMetadataProvider
+public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBoxMetadata plugin, LaunchBoxMetadataSettings settings, LaunchBoxDatabase database, IPlatformUtility platformUtility, LaunchBoxWebscraper scraper) : OnDemandMetadataProvider
 {
     private readonly ILogger logger = LogManager.GetLogger();
-    private readonly MetadataRequestOptions options;
-    private readonly LaunchBoxMetadata plugin;
-    private readonly LaunchBoxMetadataSettings settings;
-    private readonly LaunchBoxDatabase database;
-    private readonly IPlatformUtility platformUtility;
-    private readonly LaunchBoxWebscraper scraper;
     private LaunchBoxGame foundGame;
     private string foundGameUrl;
     private List<LaunchBoxImageDetails> foundImages;
-    private TitleComparer titleComparer = new TitleComparer();
+    private readonly TitleComparer titleComparer = new();
 
     public override List<MetadataField> AvailableFields => plugin.SupportedFields;
-
-    public LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBoxMetadata plugin, LaunchBoxMetadataSettings settings, LaunchBoxDatabase database, IPlatformUtility platformUtility, LaunchBoxWebscraper scraper)
-    {
-        this.options = options;
-        this.plugin = plugin;
-        this.settings = settings;
-        this.database = database;
-        this.platformUtility = platformUtility;
-        this.scraper = scraper;
-    }
 
     private LaunchBoxGame FindGame()
     {
@@ -93,7 +77,7 @@ public class LaunchBoxMetadataProvider : OnDemandMetadataProvider
         }
     }
 
-    private string GetLaunchBoxGamesDatabaseUrl(LaunchBoxGame game = null)
+    private string GetLaunchBoxGamesDatabaseUrl(LaunchBoxGame game)
     {
         game = game ?? FindGame();
         if (game.DatabaseID == null)
@@ -111,13 +95,13 @@ public class LaunchBoxMetadataProvider : OnDemandMetadataProvider
         var game = FindGame();
         var id = game.DatabaseID;
         if (id == null)
-            return foundImages = new List<LaunchBoxImageDetails>();
+            return foundImages = [];
 
         var detailsUrl = GetLaunchBoxGamesDatabaseUrl(game);
         if (string.IsNullOrWhiteSpace(detailsUrl))
         {
             logger.Error($"Could not retrieve website ID for database ID {id}");
-            return foundImages = new List<LaunchBoxImageDetails>();
+            return foundImages = [];
         }
 
         return foundImages = scraper.GetGameImageDetails(detailsUrl).ToList();
@@ -156,7 +140,7 @@ public class LaunchBoxMetadataProvider : OnDemandMetadataProvider
         if (string.IsNullOrWhiteSpace(str))
             return null;
 
-        var split = str.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+        var split = str.Split([';'], StringSplitOptions.RemoveEmptyEntries);
         var strings = stringSelector == null ? split : split.Select(stringSelector);
         var output = strings.Select(g => new MetadataNameProperty(g.Trim()));
 
@@ -259,19 +243,13 @@ public class LaunchBoxMetadataProvider : OnDemandMetadataProvider
         if (imgDetails.Width < imgSetting.MinWidth || imgDetails.Height < imgSetting.MinHeight)
             return false;
 
-        switch (imgSetting.AspectRatio)
+        return imgSetting.AspectRatio switch
         {
-            case AspectRatio.Vertical:
-                return imgDetails.Width < imgDetails.Height;
-            case AspectRatio.Horizontal:
-                return imgDetails.Width > imgDetails.Height;
-            case AspectRatio.Square:
-                return imgDetails.Width == imgDetails.Height;
-            case AspectRatio.Any:
-            case AspectRatio.AnyExtendToSquare:
-            default:
-                return true;
-        }
+            AspectRatio.Vertical => imgDetails.Width < imgDetails.Height,
+            AspectRatio.Horizontal => imgDetails.Width > imgDetails.Height,
+            AspectRatio.Square => imgDetails.Width == imgDetails.Height,
+            _ => true,
+        };
     }
 
     private MetadataFile PickImage(string caption, LaunchBoxImageSourceSettings imgSettings)
@@ -323,13 +301,13 @@ public class LaunchBoxMetadataProvider : OnDemandMetadataProvider
             var output = new List<string>();
             foreach (var regionSetting in settings.Regions)
             {
-                var aliases = regionSetting.Aliases?.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
+                var aliases = regionSetting.Aliases?.Split([','], StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
                 if (gameRegions.Any(gr => comparer.Equals(gr, regionSetting.Name) || (aliases != null && aliases.ContainsString(gr))))
                     output.Add(regionSetting.Name); //put any matched region at the top
             }
             foreach (var regionSetting in settings.Regions)
             {
-                if(regionSetting.Checked && !output.Contains(regionSetting.Name))
+                if (regionSetting.Checked && !output.Contains(regionSetting.Name))
                     output.Add(regionSetting.Name); //add the rest of the enabled regions
             }
             return output;
@@ -351,7 +329,7 @@ public class LaunchBoxMetadataProvider : OnDemandMetadataProvider
         if (!scaleDown && !resizeToSquare)
             return new MetadataFile(imgDetails.Url);
 
-        using (HttpClient client = new HttpClient())
+        using (HttpClient client = new())
         using (var stream = await client.GetStreamAsync(imgDetails.Url))
         {
             int maxWidth = imgSettings.MaxWidth;
@@ -361,7 +339,7 @@ public class LaunchBoxMetadataProvider : OnDemandMetadataProvider
             if (imgSettings.AspectRatio == AspectRatio.AnyExtendToSquare)
                 maxWidth = maxHeight = minSize;
 
-            MagickImage img = new MagickImage(stream);
+            MagickImage img = new(stream);
             if (scaleDown)
             {
                 logger.Info($"Scaling {imgDetails.Url} ({imgDetails.Width}x{imgDetails.Height}) to make it fit {maxWidth}x{maxHeight}");
@@ -416,18 +394,18 @@ public class LaunchBoxMetadataProvider : OnDemandMetadataProvider
             return base.GetLinks(args);
 
         var links = new List<Link>();
-        if (settings.UseLaunchBoxLink)
+
+        void AddLink(string name, bool setting, Func<LaunchBoxGame, string> urlSelector)
         {
-            string gameUrl = GetLaunchBoxGamesDatabaseUrl(game);
-            if (!string.IsNullOrEmpty(gameUrl))
-                links.Add(new Link("LaunchBox Games Database", gameUrl));
+            if (!setting) return;
+            var url = urlSelector(game);
+            if (string.IsNullOrWhiteSpace(url)) return;
+            links.Add(new(name, url));
         }
 
-        if (settings.UseWikipediaLink && !string.IsNullOrWhiteSpace(game.WikipediaURL))
-            links.Add(new Link("Wikipedia", game.WikipediaURL));
-
-        if (settings.UseVideoLink && !string.IsNullOrWhiteSpace(game.VideoURL))
-            links.Add(new Link("Video", game.VideoURL));
+        AddLink("LaunchBox", settings.UseLaunchBoxLink, GetLaunchBoxGamesDatabaseUrl);
+        AddLink("Wikipedia", settings.UseWikipediaLink, g => g.WikipediaURL);
+        AddLink("Video", settings.UseVideoLink, g => g.VideoURL);
 
         return links.NullIfEmpty();
     }

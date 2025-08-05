@@ -10,19 +10,13 @@ using System.Linq;
 
 namespace MutualGames;
 
-public abstract class MutualGamesBaseImporter
+public abstract class MutualGamesBaseImporter(IPlayniteAPI playniteAPI, MutualGamesSettings settings)
 {
-    protected readonly IPlayniteAPI playniteAPI;
-    protected readonly MutualGamesSettings settings;
-    protected readonly GameMatchingHelper matchingHelper = new GameMatchingHelper(new SteamIdUtility(), 2); //not going to use these args, but no other constructor for now
+    protected readonly IPlayniteAPI playniteAPI = playniteAPI;
+    protected readonly MutualGamesSettings settings = settings;
+    protected readonly GameMatchingHelper matchingHelper = new(new SteamIdUtility(), 2); //not going to use these args, but no other constructor for now
     protected readonly ILogger logger = LogManager.GetLogger();
     protected int updatedCount = 0;
-
-    public MutualGamesBaseImporter(IPlayniteAPI playniteAPI, MutualGamesSettings settings)
-    {
-        this.playniteAPI = playniteAPI;
-        this.settings = settings;
-    }
 
     #region property getting and assigning
 
@@ -35,22 +29,22 @@ public abstract class MutualGamesBaseImporter
 
     private IEnumerable<DatabaseObject> GetDatabaseCollectionToImportTo()
     {
-        switch (settings.ImportTo)
+        return settings.ImportTo switch
         {
-            case GameField.Categories: return playniteAPI.Database.Categories;
-            case GameField.Tags: return playniteAPI.Database.Tags;
-            default: throw new NotImplementedException();
-        }
+            GameField.Categories => playniteAPI.Database.Categories,
+            GameField.Tags => playniteAPI.Database.Tags,
+            _ => throw new NotImplementedException(),
+        };
     }
 
     private DatabaseObject CreateProperty(string propName)
     {
-        switch (settings.ImportTo)
+        return settings.ImportTo switch
         {
-            case GameField.Categories: return playniteAPI.Database.Categories.Add(propName);
-            case GameField.Tags: return playniteAPI.Database.Tags.Add(propName);
-            default: throw new NotImplementedException();
-        }
+            GameField.Categories => playniteAPI.Database.Categories.Add(propName),
+            GameField.Tags => playniteAPI.Database.Tags.Add(propName),
+            _ => throw new NotImplementedException(),
+        };
     }
 
     protected bool AddPropertyToGame(Game game, DatabaseObject databaseObject)
@@ -67,12 +61,12 @@ public abstract class MutualGamesBaseImporter
 
     private IList<Guid> GetIdList(Game game)
     {
-        switch (settings.ImportTo)
+        return settings.ImportTo switch
         {
-            case GameField.Categories: return game.CategoryIds ?? (game.CategoryIds = new List<Guid>());
-            case GameField.Tags: return game.TagIds ?? (game.TagIds = new List<Guid>());
-            default: throw new NotImplementedException();
-        }
+            GameField.Categories => game.CategoryIds ??= [],
+            GameField.Tags => game.TagIds ??= [],
+            _ => throw new NotImplementedException(),
+        };
     }
 
     #endregion property getting and assigning
@@ -111,7 +105,7 @@ public abstract class MutualGamesBaseImporter
     private List<Game> GetSameLibraryGames(Guid libraryPluginId, out List<Game> otherLibraryGames)
     {
         var sameLibrary = new List<Game>();
-        otherLibraryGames = new List<Game>();
+        otherLibraryGames = [];
 
         foreach (var game in playniteAPI.Database.Games)
         {

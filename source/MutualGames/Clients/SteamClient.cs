@@ -13,22 +13,16 @@ using System.Threading.Tasks;
 
 namespace MutualGames.Clients;
 
-public class SteamClient : IFriendsGamesClient
+public class SteamClient(IWebViewWrapper webView) : IFriendsGamesClient
 {
-    private readonly IWebViewWrapper webView;
-    private readonly HtmlParser htmlParser = new HtmlParser();
+    private readonly HtmlParser htmlParser = new();
     private readonly ILogger logger = LogManager.GetLogger();
-
-    public SteamClient(IWebViewWrapper webView)
-    {
-        this.webView = webView;
-    }
 
     public string Name { get; } = "Steam";
     public FriendSource Source { get; } = FriendSource.Steam;
     public Guid PluginId { get; } = Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB");
 
-    public IEnumerable<string> CookieDomains => new[] { "steamcommunity.com" };
+    public IEnumerable<string> CookieDomains => ["steamcommunity.com"];
 
     public string LoginUrl => "https://steamcommunity.com/login/home/?goto=search%2Fgroups";
 
@@ -118,7 +112,7 @@ public class SteamClient : IFriendsGamesClient
 
     private class ProfileDataRoot
     {
-        public List<SteamGame> rgGames { get; set; } = new List<SteamGame>();
+        public List<SteamGame> rgGames { get; set; } = [];
     }
 
     private class SteamGame

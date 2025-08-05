@@ -11,7 +11,7 @@ namespace ViveportLibrary.Api;
 public class ViveportApiClient : IViveportApiClient
 {
     private const string BaseUrl = "https://www.viveport.com/";
-    private static readonly CookieContainer cookies = new CookieContainer();
+    private static readonly CookieContainer cookies = new();
     private readonly RestClient restClient;
     private readonly ILogger logger = LogManager.GetLogger();
 

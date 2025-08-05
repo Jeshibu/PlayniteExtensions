@@ -14,17 +14,8 @@ using System.Windows;
 
 namespace MutualGames;
 
-public sealed class MutualGamesFileExporter
+public sealed class MutualGamesFileExporter(IPlayniteAPI playniteAPI, MutualGamesSettings settings)
 {
-    private IPlayniteAPI PlayniteAPI { get; }
-    private MutualGamesSettings Settings { get; }
-
-    public MutualGamesFileExporter(IPlayniteAPI playniteAPI, MutualGamesSettings settings)
-    {
-        PlayniteAPI = playniteAPI;
-        Settings = settings;
-    }
-
     public void Export()
     {
         var promptResult = Prompt();
@@ -35,8 +26,8 @@ public sealed class MutualGamesFileExporter
             return;
 
         var games = GetGames(promptResult.Mode).Select(ExternalGameData.FromGame);
-        var plugins = PlayniteAPI.Addons.Plugins.OfType<LibraryPlugin>().Select(PluginData.FromPlugin);
-        var platforms = PlayniteAPI.Database.Platforms.Select(PlatformData.FromPlatform);
+        var plugins = playniteAPI.Addons.Plugins.OfType<LibraryPlugin>().Select(PluginData.FromPlugin);
+        var platforms = playniteAPI.Database.Platforms.Select(PlatformData.FromPlatform);
 
         var root = new ExportRoot();
         root.Games.AddRange(games);
@@ -44,17 +35,17 @@ public sealed class MutualGamesFileExporter
         root.Platforms.AddRange(platforms);
 
         File.WriteAllText(filePath, JsonConvert.SerializeObject(root, Formatting.None));
-        PlayniteAPI.Dialogs.ShowMessage($"Exported {root.Games.Count} games! Send the file to friends to let them mark your mutual games.");
+        playniteAPI.Dialogs.ShowMessage($"Exported {root.Games.Count} games! Send the file to friends to let them mark your mutual games.");
     }
 
     private ExportFilePromptViewModel Prompt()
     {
-        var window = PlayniteAPI.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMinimizeButton = false, ShowMaximizeButton = false });
+        var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMinimizeButton = false, ShowMaximizeButton = false });
         var promptViewModel = new ExportFilePromptViewModel();
         var view = new ExportFilePromptView(window) { DataContext = promptViewModel };
         window.Content = view;
         window.SizeToContent = SizeToContent.WidthAndHeight;
-        window.Owner = PlayniteAPI.Dialogs.GetCurrentAppWindow();
+        window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
         window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         window.Title = "Export games for Mutual Games";
         var result = window.ShowDialog();
@@ -69,7 +60,7 @@ public sealed class MutualGamesFileExporter
         var myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         var fileName = Environment.UserName + ".mutualgames";
 
-        SaveFileDialog saveFileDialog1 = new SaveFileDialog
+        SaveFileDialog saveFileDialog1 = new()
         {
             Filter = MutualGamesHelper.ExportFileFilter,
             Title = "Save Mutual Games export file",
@@ -84,16 +75,12 @@ public sealed class MutualGamesFileExporter
 
     private IEnumerable<Game> GetGames(ExportGamesMode mode)
     {
-        switch (mode)
+        return mode switch
         {
-            case ExportGamesMode.AllIncludeHidden:
-                return PlayniteAPI.Database.Games;
-            case ExportGamesMode.AllExcludeHidden:
-                return PlayniteAPI.Database.Games.Where(g => !g.Hidden);
-            case ExportGamesMode.Filtered:
-                return PlayniteAPI.MainView.FilteredGames;
-            default:
-                throw new ArgumentException(nameof(mode));
-        }
+            ExportGamesMode.AllIncludeHidden => playniteAPI.Database.Games,
+            ExportGamesMode.AllExcludeHidden => playniteAPI.Database.Games.Where(g => !g.Hidden),
+            ExportGamesMode.Filtered => playniteAPI.MainView.FilteredGames,
+            _ => throw new ArgumentException(nameof(mode)),
+        };
     }
 }

@@ -26,7 +26,7 @@ public class RawgLibrary : LibraryPlugin
 
     public override string Name { get; } = "RAWG";
 
-    private TitleComparer TitleComparer = new TitleComparer();
+    private readonly TitleComparer TitleComparer = new();
 
     public RawgLibrary(IPlayniteAPI api) : base(api)
     {
@@ -56,7 +56,7 @@ public class RawgLibrary : LibraryPlugin
 
         PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
         {
-            var removedItems = e.RemovedItems ?? new List<Game>();
+            var removedItems = e.RemovedItems ?? [];
             a.ProgressMaxValue = removedItems.Count;
             try
             {
@@ -207,12 +207,12 @@ public class RawgLibrary : LibraryPlugin
             return null;
         }
 
-        return rawgApiClient ?? (rawgApiClient = new RawgApiClient(settings.Settings.User?.ApiKey));
+        return rawgApiClient ??= new RawgApiClient(settings.Settings.User?.ApiKey);
     }
 
     public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
     {
-        List<GameMetadata> output = new List<GameMetadata>();
+        List<GameMetadata> output = [];
 
         try
         {

@@ -15,7 +15,7 @@ public class FriendSourceSettings : ObservableObject
 
     public FriendSource Source { get; set; }
 
-    public ObservableCollection<FriendAccountInfo> Friends { get; set; } = new ObservableCollection<FriendAccountInfo>();
+    public ObservableCollection<FriendAccountInfo> Friends { get; set; } = [];
 
     private Action BackgroundAction(Action action)
     {
@@ -66,10 +66,10 @@ public class FriendSourceSettings : ObservableObject
     }
 
     [DontSerialize]
-    public RelayCommand RefreshCommand => new RelayCommand(SetFriends);
+    public RelayCommand RefreshCommand => new(SetFriends);
 
     [DontSerialize]
-    public RelayCommand AuthenticateCommand => new RelayCommand(BackgroundAction(Login));
+    public RelayCommand AuthenticateCommand => new(BackgroundAction(Login));
 
     [DontSerialize]
     public IFriendsGamesClient Client { get; set; }
@@ -84,7 +84,7 @@ public class FriendSourceSettings : ObservableObject
     internal IPlayniteAPI PlayniteApi { get; set; }
 
     [DontSerialize]
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
     [DontSerialize]
     public AuthStatus AuthStatus

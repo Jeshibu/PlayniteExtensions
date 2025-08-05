@@ -14,7 +14,7 @@ namespace GiantBombMetadata;
 public class GiantBombMetadata : MetadataPlugin
 {
     private static readonly ILogger logger = LogManager.GetLogger();
-    private IWebDownloader downloader = new WebDownloader();
+    private readonly IWebDownloader downloader = new WebDownloader();
 
     public GiantBombMetadataSettingsViewModel Settings { get; set; }
 
@@ -23,8 +23,8 @@ public class GiantBombMetadata : MetadataPlugin
 
     public override Guid Id { get; } = Guid.Parse("975c7dc6-efd5-41d4-b9c1-9394b3bfe9c6");
 
-    public static List<MetadataField> Fields { get; } = new List<MetadataField>
-    {
+    public static List<MetadataField> Fields { get; } =
+    [
         MetadataField.Description,
         MetadataField.Tags,
         MetadataField.Platform,
@@ -39,7 +39,7 @@ public class GiantBombMetadata : MetadataPlugin
         MetadataField.Icon,
         MetadataField.CoverImage,
         MetadataField.BackgroundImage,
-    };
+    ];
 
     public override List<MetadataField> SupportedFields => Fields;
 

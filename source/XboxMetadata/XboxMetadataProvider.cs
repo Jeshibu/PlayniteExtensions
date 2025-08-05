@@ -10,17 +10,13 @@ using XboxMetadata.Scrapers;
 
 namespace XboxMetadata;
 
-public class XboxMetadataProvider : OnDemandMetadataProvider
+public class XboxMetadataProvider(MetadataRequestOptions options, XboxMetadataSettings settings, IPlayniteAPI playniteApi, ScraperManager scraperManager) : OnDemandMetadataProvider
 {
     private readonly ILogger logger = LogManager.GetLogger();
-    private readonly MetadataRequestOptions options;
-    private readonly XboxMetadataSettings settings;
-    private readonly IPlayniteAPI playniteApi;
-    private readonly ScraperManager scraperManager;
     private XboxGameDetails foundGame;
 
-    public static List<MetadataField> Fields { get; } = new List<MetadataField>
-    {
+    public static List<MetadataField> Fields { get; } =
+    [
         MetadataField.Name,
         MetadataField.Description,
         MetadataField.Developers,
@@ -35,17 +31,9 @@ public class XboxMetadataProvider : OnDemandMetadataProvider
         MetadataField.ReleaseDate,
         MetadataField.AgeRating,
         MetadataField.Links,
-    };
+    ];
 
     public override List<MetadataField> AvailableFields => Fields;
-
-    public XboxMetadataProvider(MetadataRequestOptions options, XboxMetadataSettings settings, IPlayniteAPI playniteApi, ScraperManager scraperManager)
-    {
-        this.options = options;
-        this.settings = settings;
-        this.playniteApi = playniteApi;
-        this.scraperManager = scraperManager;
-    }
 
     public override string GetName(GetMetadataFieldArgs args)
     {
@@ -121,31 +109,31 @@ public class XboxMetadataProvider : OnDemandMetadataProvider
         if (rating == null || !RatingBoardMatchesSettings(rating))
             return null;
 
-        return new[] { new MetadataNameProperty(rating) };
+        return [new MetadataNameProperty(rating)];
     }
 
     private bool RatingBoardMatchesSettings(string rating)
     {
-        switch (playniteApi.ApplicationSettings.AgeRatingOrgPriority)
+        return playniteApi.ApplicationSettings.AgeRatingOrgPriority switch
         {
-            case AgeRatingOrg.ESRB: return rating.StartsWith("ESRB");
-            case AgeRatingOrg.PEGI: return rating.StartsWith("PEGI");
-            default: return true;
-        }
+            AgeRatingOrg.ESRB => rating.StartsWith("ESRB"),
+            AgeRatingOrg.PEGI => rating.StartsWith("PEGI"),
+            _ => true,
+        };
     }
 
     private static string ShortenRatingString(string longRatingName)
     {
-        switch (longRatingName.ToUpper())
+        return longRatingName.ToUpper() switch
         {
-            case "RATING PENDING": return "RP";
-            case "ADULTS ONLY 18+": return "AO";
-            case "MATURE 17+": return "M";
-            case "TEEN": return "T";
-            case "EVERYONE 10+": return "E10+";
-            case "EVERYONE": return "E";
-            default: return longRatingName;
-        }
+            "RATING PENDING" => "RP",
+            "ADULTS ONLY 18+" => "AO",
+            "MATURE 17+" => "M",
+            "TEEN" => "T",
+            "EVERYONE 10+" => "E10+",
+            "EVERYONE" => "E",
+            _ => longRatingName,
+        };
     }
 
     public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
@@ -164,18 +152,13 @@ public class XboxMetadataProvider : OnDemandMetadataProvider
             if (!biggerThanMinimum)
                 return false;
 
-            switch (imgSettings.AspectRatio)
+            return imgSettings.AspectRatio switch
             {
-                case AspectRatio.Vertical:
-                    return i.Width < i.Height;
-                case AspectRatio.Horizontal:
-                    return i.Width > i.Height;
-                case AspectRatio.Square:
-                    return i.Width == i.Height;
-                case AspectRatio.Any:
-                default:
-                    return true;
-            }
+                AspectRatio.Vertical => i.Width < i.Height,
+                AspectRatio.Horizontal => i.Width > i.Height,
+                AspectRatio.Square => i.Width == i.Height,
+                _ => true,
+            };
         };
         var filteredImages = images
                              .Where(FilterImageBySize)
@@ -224,7 +207,7 @@ public class XboxMetadataProvider : OnDemandMetadataProvider
                 var selected = playniteApi.Dialogs.ChooseItemWithSearch(null, a =>
                 {
                     var searchResults = scraperManager.Search(settings, options.GameData, a);
-                    return searchResults.Select(XboxGameSearchItemOption.FromSearchResult)?.ToList<GenericItemOption>() ?? new List<GenericItemOption>();
+                    return searchResults.Select(XboxGameSearchItemOption.FromSearchResult)?.ToList<GenericItemOption>() ?? [];
                 }, options.GameData.Name, "Select Xbox game");
 
                 if (selected != null)

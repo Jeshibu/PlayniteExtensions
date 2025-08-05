@@ -13,23 +13,18 @@ using System.Web;
 
 namespace TvTropesMetadata.Scraping;
 
-public abstract class BaseScraper
+public abstract class BaseScraper(IWebDownloader downloader)
 {
-    protected readonly IWebDownloader downloader;
+    protected readonly IWebDownloader downloader = downloader;
     protected readonly ILogger logger = LogManager.GetLogger();
-    public List<string> CategoryWhitelist = new List<string> { "VideoGame", "VisualNovel" };
-    public List<string> BlacklistedWords = new List<string>
-    {
+    public List<string> CategoryWhitelist = ["VideoGame", "VisualNovel"];
+    public List<string> BlacklistedWords =
+    [
         "deconstructed", "averted", "inverted", "subverted",
         "deconstructs", "averts", "inverts", "subverts"
-    };
+    ];
 
     public abstract IEnumerable<TvTropesSearchResult> Search(string query);
-
-    protected BaseScraper(IWebDownloader downloader)
-    {
-        this.downloader = downloader;
-    }
 
     protected IEnumerable<TvTropesSearchResult> Search(string query, string type)
     {
@@ -119,10 +114,10 @@ public abstract class BaseScraper
 
     protected IEnumerable<Tuple<string, string>> GetHeaderSegments(string content)
     {
-        var headerSegments = content.Trim().Split(new[] { "<h2>" }, StringSplitOptions.RemoveEmptyEntries);
+        var headerSegments = content.Trim().Split(["<h2>"], StringSplitOptions.RemoveEmptyEntries);
         foreach (var segment in headerSegments)
         {
-            var headerAndContent = segment.Trim().Split(new[] { "</h2>" }, StringSplitOptions.RemoveEmptyEntries);
+            var headerAndContent = segment.Trim().Split(["</h2>"], StringSplitOptions.RemoveEmptyEntries);
             var segmentHeader = headerAndContent.Length == 2 ? headerAndContent[0].HtmlDecode() : string.Empty;
             var segmentContent = headerAndContent.Length == 2 ? headerAndContent[1] : segment;
 
@@ -138,7 +133,7 @@ public abstract class BaseScraper
         return segments;
     }
 
-    private Regex PathSplitter = new Regex(@"pmwiki\.php(/(?<segment>\w+))+", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+    private readonly Regex PathSplitter = new(@"pmwiki\.php(/(?<segment>\w+))+", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
     protected IHtmlDocument GetDocument(string url)
     {

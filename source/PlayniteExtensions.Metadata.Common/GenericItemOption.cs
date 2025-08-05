@@ -2,12 +2,7 @@
 
 namespace PlayniteExtensions.Metadata.Common;
 
-public class GenericItemOption<T> : GenericItemOption
+public class GenericItemOption<T>(T item) : GenericItemOption
 {
-    public GenericItemOption(T item)
-    {
-        Item = item;
-    }
-
-    public T Item { get; }
+    public T Item { get; } = item;
 }

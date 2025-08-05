@@ -11,20 +11,14 @@ using System.Net.Http.Headers;
 
 namespace IgnMetadata;
 
-public class IgnClient
+public class IgnClient(IWebDownloader downloader)
 {
-    private readonly IWebDownloader downloader;
-    private ILogger logger = LogManager.GetLogger();
-
-    public IgnClient(IWebDownloader downloader)
-    {
-        this.downloader = downloader;
-    }
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public ICollection<IgnGame> Search(string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString))
-            return new List<IgnGame>();
+            return [];
 
         var variables = new { term = searchString, count = 20, objectType = "Game" };
         var data = Call<IgnSearchResultData>("SearchObjectsByName", variables, "664276ed5455a5a05182a25250b11cbe0601a6ecf2e91247d90d34617335d5da");
@@ -82,7 +76,7 @@ public class IgnClient
 public class IgnResponseRoot<T>
 {
     public T Data;
-    public IgnError[] Errors = new IgnError[0];
+    public IgnError[] Errors = [];
 }
 
 public class IgnError
@@ -102,7 +96,7 @@ public class IgnGetGameResultData
 
 public class IgnSearchResultObjects
 {
-    public IgnGame[] Objects = new IgnGame[0];
+    public IgnGame[] Objects = [];
     public IgnPageInfo PageInfo;
 }
 
@@ -120,12 +114,12 @@ public class IgnGame : IGameSearchResult
     public string Url;
     public IgnGameMetadata Metadata;
     public IgnUrlHolder PrimaryImage;
-    public IgnAttribute[] Features = new IgnAttribute[0];
-    public IgnAttribute[] Franchises = new IgnAttribute[0];
-    public IgnAttribute[] Genres = new IgnAttribute[0];
-    public IgnAttribute[] Producers = new IgnAttribute[0];
-    public IgnAttribute[] Publishers = new IgnAttribute[0];
-    public IgnObjectRegion[] ObjectRegions = new IgnObjectRegion[0];
+    public IgnAttribute[] Features = [];
+    public IgnAttribute[] Franchises = [];
+    public IgnAttribute[] Genres = [];
+    public IgnAttribute[] Producers = [];
+    public IgnAttribute[] Publishers = [];
+    public IgnObjectRegion[] ObjectRegions = [];
 
     public List<string> Names
     {
@@ -205,7 +199,7 @@ public class IgnObjectRegion
     /// </summary>
     public string Name;
     public string Region;
-    public IgnRelease[] Releases = new IgnRelease[0];
+    public IgnRelease[] Releases = [];
 
     /// <summary>
     /// Not in search results
@@ -215,7 +209,7 @@ public class IgnObjectRegion
     /// <summary>
     /// Not in search results
     /// </summary>
-    public IgnAttribute[] AgeRatingDescriptors = new IgnAttribute[0];
+    public IgnAttribute[] AgeRatingDescriptors = [];
 }
 
 public class IgnAgeRating
@@ -228,7 +222,7 @@ public class IgnRelease
 {
     public string Date;
     public bool EstimatedDate;
-    public IgnAttribute[] PlatformAttributes = new IgnAttribute[0];
+    public IgnAttribute[] PlatformAttributes = [];
 }
 
 public class IgnGameMetadata
@@ -256,7 +250,7 @@ public class IgnNameData
 {
     public string Name;
     public string Short;
-    public string[] Alt = new string[0];
+    public string[] Alt = [];
 }
 
 public class IgnUrlHolder

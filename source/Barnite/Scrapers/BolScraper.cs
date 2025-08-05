@@ -51,7 +51,7 @@ public class BolScraper : MetadataScraper
             {
                 var specName = specsNode.SelectSingleNode("./*[@class='specs__title']")?.InnerText.HtmlDecode();
                 var value = specsNode.SelectSingleNode("./*[@class='specs__value']")?.InnerText.HtmlDecode();
-                var values = value.Split(new[] { ", ", " | " }, StringSplitOptions.RemoveEmptyEntries);
+                var values = value.Split([", ", " | "], StringSplitOptions.RemoveEmptyEntries);
                 switch (specName)
                 {
                     case "Merk":
@@ -73,7 +73,7 @@ public class BolScraper : MetadataScraper
                         }
                         break;
                     case "Regio":
-                        data.Regions = new HashSet<MetadataProperty> { new MetadataNameProperty(value) };
+                        data.Regions = [new MetadataNameProperty(value)];
                         break;
                     default:
                         break;
@@ -86,12 +86,12 @@ public class BolScraper : MetadataScraper
 
     private static string TranslateGenre(string genre)
     {
-        switch (genre)
+        return genre switch
         {
-            case "Actie": return "Action";
-            case "Avontuur": return "Adventure";
-            default: return genre;
-        }
+            "Actie" => "Action",
+            "Avontuur" => "Adventure",
+            _ => genre,
+        };
     }
 
     private string TrimTitle(string title)

@@ -14,7 +14,7 @@ public class RawgLibrarySettings : RawgBaseSettings
 {
     private string userToken;
     private bool importUserLibrary = true;
-    private List<RawgCollectionSetting> collections = new List<RawgCollectionSetting>();
+    private List<RawgCollectionSetting> collections = [];
     private Dictionary<string, Guid?> rawgToPlayniteStatuses;
     private Dictionary<int, int> rawgToPlayniteRatings;
     private Dictionary<Guid, string> playniteToRawgStatuses;
@@ -88,7 +88,7 @@ public class RawgLibrarySettingsViewModel : PluginSettingsViewModel<RawgLibraryS
 
     public RelayCommand<object> GetApiKeyCommand
     {
-        get => new RelayCommand<object>(a =>
+        get => new(a =>
         {
             Process.Start(@"https://rawg.io/login?forward=developer");
         });
@@ -96,7 +96,7 @@ public class RawgLibrarySettingsViewModel : PluginSettingsViewModel<RawgLibraryS
 
     public RelayCommand<object> LanguageCodesReferenceCommand
     {
-        get => new RelayCommand<object>(a =>
+        get => new(a =>
         {
             Process.Start(@"https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes");
         });
@@ -104,7 +104,7 @@ public class RawgLibrarySettingsViewModel : PluginSettingsViewModel<RawgLibraryS
 
     public RelayCommand<object> LoginCommand
     {
-        get => new RelayCommand<object>(a =>
+        get => new(a =>
         {
             Settings.User = null;
             Settings.UserToken = null;
@@ -164,7 +164,7 @@ public class RawgLibrarySettingsViewModel : PluginSettingsViewModel<RawgLibraryS
 
     public RelayCommand<object> RefreshCollectionsCommand
     {
-        get => new RelayCommand<object>(a =>
+        get => new(a =>
         {
             RefreshCollections();
         });
@@ -235,35 +235,19 @@ public class RawgLibrarySettingsViewModel : PluginSettingsViewModel<RawgLibraryS
         Settings.PlayniteToRawgRatings = PlayniteToRawgRatings.ToDictionary(x => x.Id, x => x.Range);
     }
 
-    private class RawgStatusData
+    private class RawgStatusData(string key, string description, string playniteDefaultStatus)
     {
-        public string Key;
-        public string Description;
-        public string PlayniteDefaultStatus;
-
-        public RawgStatusData(string key, string description, string playniteDefaultStatus)
-        {
-            Key = key;
-            Description = description;
-            PlayniteDefaultStatus = playniteDefaultStatus;
-        }
+        public string Key = key;
+        public string Description = description;
+        public string PlayniteDefaultStatus = playniteDefaultStatus;
     }
 
-    private class RawgRatingDefault
+    private class RawgRatingDefault(int id, string description, string minPlayniteRating, string maxPlayniteRating, string playniteRating)
     {
-        public RawgRatingDefault(int id, string description, string minPlayniteRating, string maxPlayniteRating, string playniteRating)
-        {
-            Id = id;
-            Description = description;
-            MinPlayniteRating = minPlayniteRating;
-            MaxPlayniteRating = maxPlayniteRating;
-            PlayniteRating = playniteRating;
-        }
-
-        public int Id { get; }
-        public string Description { get; }
-        public string MinPlayniteRating { get; }
-        public string MaxPlayniteRating { get; }
-        public string PlayniteRating { get; }
+        public int Id { get; } = id;
+        public string Description { get; } = description;
+        public string MinPlayniteRating { get; } = minPlayniteRating;
+        public string MaxPlayniteRating { get; } = maxPlayniteRating;
+        public string PlayniteRating { get; } = playniteRating;
     }
 }

@@ -8,25 +8,16 @@ using PlayniteExtensions.Common;
 
 namespace PlayniteExtensions.Metadata.Common;
 
-public abstract class GenericMetadataProvider<TSearchResult> : OnDemandMetadataProvider where TSearchResult : IGameSearchResult
+public abstract class GenericMetadataProvider<TSearchResult>(IGameSearchProvider<TSearchResult> dataSource, MetadataRequestOptions options, IPlayniteAPI playniteApi, IPlatformUtility platformUtility) : OnDemandMetadataProvider where TSearchResult : IGameSearchResult
 {
-    private readonly IGameSearchProvider<TSearchResult> dataSource;
-    private readonly MetadataRequestOptions options;
-    private readonly List<Platform> requestPlatforms;
-    private readonly IPlayniteAPI playniteApi;
-    private readonly IPlatformUtility platformUtility;
-    private ILogger logger = LogManager.GetLogger();
-    private GameDetails foundGame = null;
+    protected readonly IGameSearchProvider<TSearchResult> dataSource = dataSource;
+    protected readonly MetadataRequestOptions options = options;
+    protected readonly List<Platform> requestPlatforms = options.GameData.Platforms;
+    protected readonly IPlayniteAPI playniteApi = playniteApi;
+    protected readonly IPlatformUtility platformUtility = platformUtility;
+    protected ILogger logger = LogManager.GetLogger();
+    protected GameDetails foundGame = null;
     protected abstract string ProviderName { get; }
-
-    protected GenericMetadataProvider(IGameSearchProvider<TSearchResult> dataSource, MetadataRequestOptions options, IPlayniteAPI playniteApi, IPlatformUtility platformUtility)
-    {
-        this.dataSource = dataSource;
-        this.options = options;
-        this.playniteApi = playniteApi;
-        this.platformUtility = platformUtility;
-        requestPlatforms = options.GameData.Platforms;
-    }
 
     protected virtual GameDetails GetGameDetails(GetMetadataFieldArgs args)
     {
@@ -57,7 +48,7 @@ public abstract class GenericMetadataProvider<TSearchResult> : OnDemandMetadataP
             if (searchResult == null)
                 return default;
 
-            var snc = new SortableNameConverter(new string[0], numberLength: 1, removeEditions: true);
+            var snc = new SortableNameConverter([], numberLength: 1, removeEditions: true);
 
             var nameToMatch = snc.Convert(options.GameData.Name).Deflate();
 
@@ -194,7 +185,7 @@ public abstract class GenericMetadataProvider<TSearchResult> : OnDemandMetadataP
     public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
     {
         var gameDetails = GetGameDetails(args);
-        var links = gameDetails.Links ?? new List<Link>();
+        var links = gameDetails.Links ?? [];
         if (gameDetails.Url != null && !links.Any(l => l.Url == gameDetails.Url))
             links.Add(new Link(ProviderName, gameDetails.Url));
 

@@ -10,15 +10,15 @@ public class IgnMetadata : MetadataPlugin
 {
     private static readonly ILogger logger = LogManager.GetLogger();
 
-    private IPlatformUtility platformUtility;
-    private IgnClient client;
+    private readonly IPlatformUtility platformUtility;
+    private readonly IgnClient client;
 
     public override Guid Id { get; } = Guid.Parse("6024e3a9-de7e-4848-9101-7a2f818e7e47");
 
     public override List<MetadataField> SupportedFields => Fields;
 
-    internal static List<MetadataField> Fields = new List<MetadataField>
-    {
+    internal static List<MetadataField> Fields =
+    [
         MetadataField.CoverImage,
         MetadataField.Name,
         MetadataField.Developers,
@@ -31,7 +31,7 @@ public class IgnMetadata : MetadataPlugin
         MetadataField.ReleaseDate,
         MetadataField.Platform,
         MetadataField.Links,
-    };
+    ];
 
     public override string Name => "IGN";
 

@@ -10,24 +10,19 @@ using System.Text.RegularExpressions;
 
 namespace SteamTagsImporter;
 
-public class SteamAppIdUtility : ISteamAppIdUtility
+public class SteamAppIdUtility(ICachedFile steamAppList) : ISteamAppIdUtility
 {
-    private readonly SteamIdUtility steamIdUtility = new SteamIdUtility();
+    private readonly SteamIdUtility steamIdUtility = new();
 
-    private static readonly Regex NonLetterOrDigitCharacterRegex = new Regex(@"[^\p{L}\p{Nd}]", RegexOptions.Compiled);
+    private static readonly Regex NonLetterOrDigitCharacterRegex = new(@"[^\p{L}\p{Nd}]", RegexOptions.Compiled);
 
     private Dictionary<string, int> _steamIds;
     private Dictionary<string, int> SteamIdsByTitle
     {
-        get { return _steamIds ?? (_steamIds = GetSteamIdsByTitle()); }
+        get { return _steamIds ??= GetSteamIdsByTitle(); }
     }
 
-    public ICachedFile SteamAppList { get; }
-
-    public SteamAppIdUtility(ICachedFile steamAppList)
-    {
-        SteamAppList = steamAppList;
-    }
+    public ICachedFile SteamAppList { get; } = steamAppList;
 
     private static string NormalizeTitle(string title)
     {
@@ -60,7 +55,7 @@ public class SteamAppIdUtility : ISteamAppIdUtility
         var jsonStr = File.ReadAllText(tempPath, Encoding.UTF8);
         var jsonContent = Newtonsoft.Json.JsonConvert.DeserializeObject<AppListRoot>(jsonStr);
 
-        Dictionary<string, int> output = new Dictionary<string, int>(StringComparer.InvariantCultureIgnoreCase);
+        Dictionary<string, int> output = new(StringComparer.InvariantCultureIgnoreCase);
         foreach (var app in jsonContent.Applist.Apps)
         {
             var normalizedTitle = NormalizeTitle(app.Name);
@@ -80,7 +75,7 @@ public class SteamAppIdUtility : ISteamAppIdUtility
 
     private class AppList
     {
-        public List<SteamApp> Apps { get; set; } = new List<SteamApp>();
+        public List<SteamApp> Apps { get; set; } = [];
     }
 
     private class SteamApp

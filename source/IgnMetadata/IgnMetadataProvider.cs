@@ -6,13 +6,8 @@ using System.Collections.Generic;
 
 namespace IgnMetadata;
 
-public class IgnMetadataProvider : GenericMetadataProvider<IgnGame>
+public class IgnMetadataProvider(IGameSearchProvider<IgnGame> dataSource, MetadataRequestOptions options, IPlayniteAPI playniteApi, IPlatformUtility platformUtility) : GenericMetadataProvider<IgnGame>(dataSource, options, playniteApi, platformUtility)
 {
-    public IgnMetadataProvider(IGameSearchProvider<IgnGame> dataSource, MetadataRequestOptions options, IPlayniteAPI playniteApi, IPlatformUtility platformUtility)
-        : base(dataSource, options, playniteApi, platformUtility)
-    {
-    }
-
     public override List<MetadataField> AvailableFields => IgnMetadata.Fields;
 
     protected override string ProviderName => "IGN";

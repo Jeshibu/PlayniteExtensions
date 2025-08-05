@@ -10,8 +10,8 @@ namespace GamersGateLibrary;
 
 public class GamersGateScraper
 {
-    private Random random = new Random();
-    private ILogger logger = LogManager.GetLogger();
+    private readonly Random random = new();
+    private readonly ILogger logger = LogManager.GetLogger();
     public int MinDelay { get; set; }
     public int MaxDelay { get; set; }
 
@@ -70,7 +70,7 @@ public class GamersGateScraper
             return new List<string>();
         }
 
-        HtmlDocument doc = new HtmlDocument();
+        HtmlDocument doc = new();
         doc.LoadHtml(response);
 
         var pageLinks = doc.DocumentNode.SelectNodes("//div[@class='paginator']//a[@href]");
@@ -111,7 +111,7 @@ public class GamersGateScraper
             return output;
         }
 
-        HtmlDocument doc = new HtmlDocument();
+        HtmlDocument doc = new();
         doc.LoadHtml(response);
 
         var gameNodes = doc.DocumentNode.SelectNodes("//div[@class='content-sub-container order-item-container']");
@@ -242,9 +242,9 @@ public class GamersGateScraper
 
 public class LibraryScrapeResults
 {
-    public HashSet<int> OrderIds { get; } = new HashSet<int>();
+    public HashSet<int> OrderIds { get; } = [];
 
-    public List<GameDetails> Games { get; } = new List<GameDetails>();
+    public List<GameDetails> Games { get; } = [];
 }
 
 public class GameDetails
@@ -256,5 +256,5 @@ public class GameDetails
     public string DRM { get; set; }
     public string Key { get; set; }
     public bool UnrevealedKey { get; set; }
-    public List<DownloadUrl> DownloadUrls { get; set; } = new List<DownloadUrl>();
+    public List<DownloadUrl> DownloadUrls { get; set; } = [];
 }

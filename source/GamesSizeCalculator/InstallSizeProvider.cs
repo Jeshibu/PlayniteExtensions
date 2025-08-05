@@ -7,19 +7,12 @@ using System.Collections.Generic;
 
 namespace GamesSizeCalculator;
 
-public class InstallSizeProvider : OnDemandMetadataProvider
+public class InstallSizeProvider(Game game, IPlayniteAPI playniteAPI, ICollection<ISizeCalculator> sizeCalculators) : OnDemandMetadataProvider
 {
-    public InstallSizeProvider(Game game, IPlayniteAPI playniteAPI, ICollection<ISizeCalculator> sizeCalculators)
-    {
-        Game = game;
-        PlayniteApi = playniteAPI;
-        SizeCalculators = sizeCalculators;
-    }
-
-    public override List<MetadataField> AvailableFields { get; } = new List<MetadataField> { MetadataField.InstallSize };
-    public Game Game { get; }
-    public IPlayniteAPI PlayniteApi { get; }
-    public ICollection<ISizeCalculator> SizeCalculators { get; }
+    public override List<MetadataField> AvailableFields { get; } = [MetadataField.InstallSize];
+    public Game Game { get; } = game;
+    public IPlayniteAPI PlayniteApi { get; } = playniteAPI;
+    public ICollection<ISizeCalculator> SizeCalculators { get; } = sizeCalculators;
     private readonly ILogger logger = LogManager.GetLogger();
 
     public override ulong? GetInstallSize(GetMetadataFieldArgs args)

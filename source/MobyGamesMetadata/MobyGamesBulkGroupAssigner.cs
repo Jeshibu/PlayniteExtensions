@@ -7,16 +7,9 @@ using System.Collections.Generic;
 
 namespace MobyGamesMetadata;
 
-public class MobyGamesBulkGroupAssigner : BulkGamePropertyAssigner<SearchResult, GamePropertyImportViewModel>
+public class MobyGamesBulkGroupAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
+    : BulkGamePropertyAssigner<SearchResult, GamePropertyImportViewModel>(playniteAPI, dataSource, platformUtility, new MobyGamesIdUtility(), ExternalDatabase.MobyGames, maxDegreeOfParallelism)
 {
-    private readonly MobyGamesMetadataSettings settings;
-
-    public MobyGamesBulkGroupAssigner(IPlayniteAPI playniteAPI, MobyGamesMetadataSettings settings, ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
-        : base(playniteAPI, dataSource, platformUtility, new MobyGamesIdUtility(), ExternalDatabase.MobyGames, maxDegreeOfParallelism)
-    {
-        this.settings = settings;
-    }
-
     public override string MetadataProviderName => "MobyGames";
 
     protected override string GetGameIdFromUrl(string url)

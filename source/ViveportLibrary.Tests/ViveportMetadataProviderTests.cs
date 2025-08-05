@@ -50,15 +50,8 @@ public class ViveportMetadataProviderTests
     //}
 }
 
-public class FakeViveportApiClient : IViveportApiClient
+public class FakeViveportApiClient(string filename) : IViveportApiClient
 {
-    private readonly string filename;
-
-    public FakeViveportApiClient(string filename)
-    {
-        this.filename = filename;
-    }
-
     public Task<GetCustomAttributeResponseRoot> GetAttributesAsync(CancellationToken cancellationToken = default)
     {
         var content = File.ReadAllText("custom_attributes.json");

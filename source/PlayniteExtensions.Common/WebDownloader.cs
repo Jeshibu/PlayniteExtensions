@@ -23,30 +23,23 @@ public interface IWebDownloader
     Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null, bool getContent = true);
 }
 
-public class DownloadStringResponse
+public class DownloadStringResponse(string responseUrl, string responseContent, HttpStatusCode statusCode)
 {
-    public DownloadStringResponse(string responseUrl, string responseContent, HttpStatusCode statusCode)
-    {
-        ResponseUrl = responseUrl;
-        ResponseContent = responseContent;
-        StatusCode = statusCode;
-    }
-
-    public string ResponseUrl { get; set; }
-    public string ResponseContent { get; set; }
-    public HttpStatusCode StatusCode { get; set; }
+    public string ResponseUrl { get; set; } = responseUrl;
+    public string ResponseContent { get; set; } = responseContent;
+    public HttpStatusCode StatusCode { get; set; } = statusCode;
 }
 
 public class WebDownloader : IWebDownloader
 {
-    private DangerouslySimpleCookieContainer cookieContainer;
-    private HttpClient httpClient;
-    private ILogger logger = LogManager.GetLogger();
-    public static HttpStatusCode[] HttpRedirectStatusCodes = new[] { HttpStatusCode.Redirect, HttpStatusCode.Moved, HttpStatusCode.TemporaryRedirect, (HttpStatusCode)308 };
+    private readonly DangerouslySimpleCookieContainer cookieContainer;
+    private readonly HttpClient httpClient;
+    private readonly ILogger logger = LogManager.GetLogger();
+    public static HttpStatusCode[] HttpRedirectStatusCodes = [HttpStatusCode.Redirect, HttpStatusCode.Moved, HttpStatusCode.TemporaryRedirect, (HttpStatusCode)308];
 
     public CookieContainer Cookies => cookieContainer.Container;
-    public string UserAgent { get; set; } = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0";
     public string Accept { get; set; } = "text/html,application/json,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
+    public string UserAgent { get; set; } = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0";
 
     public WebDownloader()
     {
@@ -166,7 +159,7 @@ public class WebDownloader : IWebDownloader
         }
     }
 
-    private object cookieLock = new object();
+    private readonly object cookieLock = new();
 }
 
 public static class HttpRequestHeaderExtensionMethods
@@ -223,8 +216,7 @@ public static class CookieContainerExtensions
         if (response is null)
             throw new ArgumentNullException(nameof(response));
 
-        IEnumerable<string> cookieHeaders;
-        if (response.Headers.TryGetValues("Set-Cookie", out cookieHeaders))
+        if (response.Headers.TryGetValues("Set-Cookie", out IEnumerable<string> cookieHeaders))
         {
             foreach (string cookie in cookieHeaders)
             {

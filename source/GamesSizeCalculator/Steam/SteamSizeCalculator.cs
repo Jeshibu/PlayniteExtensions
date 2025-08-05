@@ -10,20 +10,13 @@ using System.Threading.Tasks;
 
 namespace GamesSizeCalculator.SteamSizeCalculation;
 
-public class SteamSizeCalculator : ISizeCalculator
+public class SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtility steamAppIdUtility, GamesSizeCalculatorSettings settings) : ISizeCalculator
 {
-    private ILogger logger = LogManager.GetLogger();
-    public ISteamApiClient SteamApiClient { get; }
-    public ISteamAppIdUtility SteamAppIdUtility { get; }
-    public GamesSizeCalculatorSettings Settings { get; }
+    private readonly ILogger logger = LogManager.GetLogger();
+    public ISteamApiClient SteamApiClient { get; } = steamApiClient;
+    public ISteamAppIdUtility SteamAppIdUtility { get; } = steamAppIdUtility;
+    public GamesSizeCalculatorSettings Settings { get; } = settings;
     public string ServiceName { get; } = "Steam";
-
-    public SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtility steamAppIdUtility, GamesSizeCalculatorSettings settings)
-    {
-        SteamApiClient = steamApiClient;
-        SteamAppIdUtility = steamAppIdUtility;
-        Settings = settings;
-    }
 
     public async Task<ulong?> GetInstallSizeAsync(Game game)
     {
@@ -94,7 +87,7 @@ public class SteamSizeCalculator : ISizeCalculator
             if (orderedDepots.Count == 1 || string.IsNullOrWhiteSpace(key))
                 continue;
 
-            StringBuilder logStringBuilder = new StringBuilder($"Depot group {key}, {orderedDepots.Count} depots: ");
+            StringBuilder logStringBuilder = new($"Depot group {key}, {orderedDepots.Count} depots: ");
             logStringBuilder.AppendLine();
 
             for (int i = 0; i < orderedDepots.Count; i++)
@@ -131,7 +124,7 @@ public class SteamSizeCalculator : ISizeCalculator
             return string.Empty;
         }
 
-        var words = str.Split(new[] { ' ', '_', '-' }, StringSplitOptions.RemoveEmptyEntries);
+        var words = str.Split([' ', '_', '-'], StringSplitOptions.RemoveEmptyEntries);
         if (words.Length == 0)
         {
             regionalWord = string.Empty;
@@ -174,7 +167,7 @@ public class SteamSizeCalculator : ISizeCalculator
         }
 
         str = str.Trim();
-        var i = str.LastIndexOfAny(new[] { ' ', '_', '-' });
+        var i = str.LastIndexOfAny([' ', '_', '-']);
         if (i == -1)
         {
             return str;

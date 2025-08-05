@@ -10,8 +10,8 @@ public class GamePropertyImportViewModel
 {
     public IPlayniteAPI PlayniteAPI { get; set; }
 
-    public GamePropertyImportTargetField[] TargetFieldOptions { get; set; } = new[]
-    {
+    public GamePropertyImportTargetField[] TargetFieldOptions { get; set; } =
+    [
         GamePropertyImportTargetField.Category,
         GamePropertyImportTargetField.Genre,
         GamePropertyImportTargetField.Tag,
@@ -19,15 +19,15 @@ public class GamePropertyImportViewModel
         GamePropertyImportTargetField.Series,
         GamePropertyImportTargetField.Developers,
         GamePropertyImportTargetField.Publishers,
-    };
+    ];
 
     public GamePropertyImportTargetField TargetField { get; set; }
 
     public string Name { get; set; }
 
-    public List<PotentialLink> Links { get; set; } = new List<PotentialLink>();
+    public List<PotentialLink> Links { get; set; } = [];
 
-    public List<CheckboxFilter> Filters { get; set; } = new List<CheckboxFilter>();
+    public List<CheckboxFilter> Filters { get; set; } = [];
 
     public ICollection<GameCheckboxViewModel> Games { get; set; }
 }
@@ -44,7 +44,7 @@ public class GameCheckboxViewModel : ObservableObject
     }
 
     public Game Game { get; set; }
-    public List<GameDetails> GameDetails { get; } = new List<GameDetails>();
+    public List<GameDetails> GameDetails { get; } = [];
     public bool IsChecked { get => isChecked; set => SetValue(ref isChecked, value); }
     public string DisplayName
     {
@@ -58,19 +58,9 @@ public class GameCheckboxViewModel : ObservableObject
     }
 }
 
-public class PotentialLink
+public class PotentialLink(string name, Func<GameDetails, string> getUrlMethod, Func<IEnumerable<Link>, string, bool> isAlreadyLinkedMethod = null)
 {
-    private readonly Func<GameDetails, string> getUrlMethod;
-    private readonly Func<IEnumerable<Link>, string, bool> isAlreadyLinkedMethod;
-
-    public PotentialLink(string name, Func<GameDetails, string> getUrlMethod, Func<IEnumerable<Link>, string, bool> isAlreadyLinkedMethod = null)
-    {
-        Name = name;
-        this.getUrlMethod = getUrlMethod;
-        this.isAlreadyLinkedMethod = isAlreadyLinkedMethod;
-    }
-
-    public string Name { get; }
+    public string Name { get; } = name;
     public bool Checked { get; set; } = true;
     public string GetUrl(GameDetails game) => getUrlMethod(game);
     public virtual bool IsAlreadyLinked(IEnumerable<Link> links, string url)

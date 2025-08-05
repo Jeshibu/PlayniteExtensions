@@ -20,8 +20,8 @@ public class LaunchBoxMetadata : MetadataPlugin
 
     public override Guid Id { get; } = Guid.Parse("3b1908f2-de02-48c9-9633-10d978903652");
 
-    public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
-    {
+    public override List<MetadataField> SupportedFields { get; } =
+    [
         MetadataField.Name,
         MetadataField.Description,
         MetadataField.Platform,
@@ -35,7 +35,7 @@ public class LaunchBoxMetadata : MetadataPlugin
         MetadataField.CoverImage,
         MetadataField.BackgroundImage,
         MetadataField.Links,
-    };
+    ];
 
     public override string Name => "LaunchBox";
 

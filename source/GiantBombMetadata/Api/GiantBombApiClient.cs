@@ -32,7 +32,7 @@ public class GiantBombApiClient : IGiantBombApiClient, IDisposable
     public const string BaseUrl = "https://www.giantbomb.com/api/";
     private string apiKey;
     private RestClient restClient;
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
     private bool disposed = false;
 
     public string ApiKey

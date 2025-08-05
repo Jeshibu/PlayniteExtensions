@@ -18,7 +18,7 @@ public class LaunchBoxMetadataSettings : ObservableObject
     public LaunchBoxImageSourceSettings Icon { get; set; }
     public LaunchBoxImageSourceSettings Cover { get; set; }
     public LaunchBoxImageSourceSettings Background { get; set; }
-    public ObservableCollection<RegionSetting> Regions { get; set; } = new ObservableCollection<RegionSetting>();
+    public ObservableCollection<RegionSetting> Regions { get; set; } = [];
     public bool PreferGameRegion { get; set; } = true;
 
     public LaunchBoxMetadataSettings()
@@ -52,7 +52,7 @@ public class LaunchBoxMetadataSettings : ObservableObject
 
 public class LaunchBoxImageSourceSettings
 {
-    public ObservableCollection<CheckboxSetting> ImageTypes { get; set; } = new ObservableCollection<CheckboxSetting>();
+    public ObservableCollection<CheckboxSetting> ImageTypes { get; set; } = [];
     public int MaxHeight { get; set; }
     public int MaxWidth { get; set; }
     public int MinHeight { get; set; }
@@ -101,7 +101,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
     {
         get
         {
-            return initializeDatabaseCommand ?? (initializeDatabaseCommand = new RelayCommand(InitializeDatabase));
+            return initializeDatabaseCommand ??= new RelayCommand(InitializeDatabase);
         }
     }
 
@@ -109,7 +109,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
     {
         get
         {
-            return downloadMetadataCommand ?? (downloadMetadataCommand = new RelayCommand(DownloadMetadata));
+            return downloadMetadataCommand ??= new RelayCommand(DownloadMetadata);
         }
     }
 
@@ -142,7 +142,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
         catch (Exception ex)
         {
             Logger.Error(ex, "Error initializing database lists");
-            InitializeRegionList(new List<string> { null });
+            InitializeRegionList([null]);
         }
     }
 
@@ -176,13 +176,13 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
 
     private string GetDefaultRegionAliases(string region)
     {
-        switch (region)
+        return region switch
         {
-            case "United States": return "US, USA";
-            case "United Kingdom": return "UK, GB, Great Britain";
-            case "Japan": return "JP, JA";
-            default: return null;
-        }
+            "United States" => "US, USA",
+            "United Kingdom" => "UK, GB, Great Britain",
+            "Japan" => "JP, JA",
+            _ => null,
+        };
     }
 
     private void DownloadMetadata()
@@ -209,7 +209,11 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
                 {
                     database.CreateDatabase(xmlParser, a);
                 }
-                catch (Exception ex) { exception = ex; }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex, "Error creating database");
+                    exception = ex;
+                }
             }, new GlobalProgressOptions("Initializing database...", false));
 
             OnPropertyChanged(nameof(StatusText));
@@ -274,7 +278,8 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
         }
     }
 
-    public Dictionary<AspectRatio, string> AspectRatios { get; } = new Dictionary<AspectRatio, string> {
+    public Dictionary<AspectRatio, string> AspectRatios { get; } = new()
+    {
         { AspectRatio.Any, "Any" },
         { AspectRatio.Vertical, "Vertical" },
         { AspectRatio.Horizontal, "Horizontal" },

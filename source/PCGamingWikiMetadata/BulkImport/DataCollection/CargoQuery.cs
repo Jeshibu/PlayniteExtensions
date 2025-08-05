@@ -17,9 +17,9 @@ public interface ICargoQuery
 
 internal class CargoQuery : ICargoQuery
 {
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
-    private RestClient restClient = new RestClient("https://www.pcgamingwiki.com/w/api.php")
+    private readonly RestClient restClient = new RestClient("https://www.pcgamingwiki.com/w/api.php")
         .AddDefaultQueryParameter("action", "cargoquery")
         .AddDefaultQueryParameter("limit", "max")
         .AddDefaultQueryParameter("format", "json");

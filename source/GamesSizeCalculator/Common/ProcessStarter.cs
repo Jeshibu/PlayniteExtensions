@@ -18,7 +18,7 @@ public static class CmdLineTools
 
 public static class ProcessStarter
 {
-    private static ILogger logger = LogManager.GetLogger();
+    private static readonly ILogger logger = LogManager.GetLogger();
 
     public static int ShellExecute(string cmdLine)
     {

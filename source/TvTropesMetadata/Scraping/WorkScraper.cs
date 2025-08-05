@@ -7,10 +7,8 @@ using System.Linq;
 
 namespace TvTropesMetadata.Scraping;
 
-public class WorkScraper : BaseScraper
+public class WorkScraper(IWebDownloader downloader) : BaseScraper(downloader)
 {
-    public WorkScraper(IWebDownloader downloader) : base(downloader) { }
-
     public override IEnumerable<TvTropesSearchResult> Search(string query)
     {
         return Search(query, "work").OrderByDescending(sr => UrlBelongsToWhitelistedWorkCategory(sr.Url));
@@ -90,7 +88,7 @@ public class ParsedWorkPage
 {
     public string Title { get; set; }
     public string Description { get; set; }
-    public List<string> CoverImageUrls { get; set; } = new List<string>();
-    public List<string> Tropes { get; set; } = new List<string>();
-    public List<string> Franchises { get; set; } = new List<string>();
+    public List<string> CoverImageUrls { get; set; } = [];
+    public List<string> Tropes { get; set; } = [];
+    public List<string> Franchises { get; set; } = [];
 }

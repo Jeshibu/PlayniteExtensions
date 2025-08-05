@@ -3,25 +3,16 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
+using System;
 using System.Collections.Generic;
 
 namespace MobyGamesMetadata;
 
-public class MobyGamesMetadataProvider : GenericMetadataProvider<GameSearchResult>
+public class MobyGamesMetadataProvider(MetadataRequestOptions options, MobyGamesMetadata plugin, IGameSearchProvider<GameSearchResult> dataSource, IPlatformUtility platformUtility, MobyGamesMetadataSettings settings) : GenericMetadataProvider<GameSearchResult>(dataSource, options, plugin.PlayniteApi, platformUtility)
 {
-    private readonly MobyGamesMetadata plugin;
-    private readonly MobyGamesMetadataSettings settings;
-
     public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 
     protected override string ProviderName { get; } = "MobyGames";
-
-    public MobyGamesMetadataProvider(MetadataRequestOptions options, MobyGamesMetadata plugin, IGameSearchProvider<GameSearchResult> dataSource, IPlatformUtility platformUtility, MobyGamesMetadataSettings settings)
-        :base(dataSource, options, plugin.PlayniteApi, platformUtility)
-    {
-        this.plugin = plugin;
-        this.settings = settings;
-    }
 
     protected override bool FilterImage(GameField field, IImageData imageData)
     {
@@ -42,17 +33,20 @@ public class MobyGamesMetadataProvider : GenericMetadataProvider<GameSearchResul
         if (imageData.Width < imgSettings.MinWidth || imageData.Height < imgSettings.MinHeight)
             return false;
 
-        switch (imgSettings.AspectRatio)
+        return imgSettings.AspectRatio switch
         {
-            case AspectRatio.Vertical:
-                return imageData.Width < imageData.Height;
-            case AspectRatio.Horizontal:
-                return imageData.Width > imageData.Height;
-            case AspectRatio.Square:
-                return imageData.Width == imageData.Height;
-            case AspectRatio.Any:
-            default:
-                return true;
-        }
+            AspectRatio.Vertical => imageData.Width < imageData.Height,
+            AspectRatio.Horizontal => imageData.Width > imageData.Height,
+            AspectRatio.Square => imageData.Width == imageData.Height,
+            _ => true,
+        };
+    }
+
+    public override void Dispose()
+    {
+        if(dataSource is IDisposable disposableDataSource)
+            disposableDataSource.Dispose();
+        
+        base.Dispose();
     }
 }

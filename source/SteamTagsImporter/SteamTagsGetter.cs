@@ -5,19 +5,11 @@ using System.Linq;
 
 namespace SteamTagsImporter;
 
-public class SteamTagsGetter
+public class SteamTagsGetter(SteamTagsImporterSettings settings, ISteamAppIdUtility appIdUtility, ISteamTagScraper tagScraper)
 {
-    public SteamTagsGetter(SteamTagsImporterSettings settings, ISteamAppIdUtility appIdUtility, ISteamTagScraper tagScraper)
-    {
-        this.Settings = settings;
-        this.appIdUtility = appIdUtility;
-        this.tagScraper = tagScraper;
-    }
+    public SteamTagsImporterSettings Settings { get; } = settings;
 
-    public SteamTagsImporterSettings Settings { get; }
-    private ISteamAppIdUtility appIdUtility { get; }
-    private ISteamTagScraper tagScraper { get; }
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public IEnumerable<SteamTag> GetSteamTags(Game game, out bool newTagsAddedToSettings)
     {
@@ -25,14 +17,14 @@ public class SteamTagsGetter
         if (Settings.LimitTaggingToPcGames && !IsPcGame(game))
         {
             logger.Debug($"Skipped {game.Name} because it's not a PC game");
-            return new SteamTag[0];
+            return [];
         }
 
         string appId = appIdUtility.GetSteamGameId(game);
         if (string.IsNullOrEmpty(appId))
         {
             logger.Debug($"Couldn't find app ID for game {game.Name}");
-            return new SteamTag[0];
+            return [];
         }
 
         var tagScrapeResult = tagScraper.GetTags(appId, Settings.LanguageKey);

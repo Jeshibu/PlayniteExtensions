@@ -6,20 +6,9 @@ using System.Linq;
 
 namespace SteamTagsImporter;
 
-public class SteamTagsMetadataProvider : OnDemandMetadataProvider
+public class SteamTagsMetadataProvider(SteamTagsGetter tagsGetter, MetadataRequestOptions options, Plugin plugin) : OnDemandMetadataProvider
 {
-    private readonly SteamTagsGetter tagsGetter;
-    private readonly MetadataRequestOptions options;
-    private readonly Plugin plugin;
-
-    public SteamTagsMetadataProvider(SteamTagsGetter tagsGetter, MetadataRequestOptions options, Plugin plugin)
-    {
-        this.tagsGetter = tagsGetter;
-        this.options = options;
-        this.plugin = plugin;
-    }
-
-    public override List<MetadataField> AvailableFields { get; } = new List<MetadataField> { MetadataField.Tags };
+    public override List<MetadataField> AvailableFields { get; } = [MetadataField.Tags];
 
     public override IEnumerable<MetadataProperty> GetTags(GetMetadataFieldArgs args)
     {

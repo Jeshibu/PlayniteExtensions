@@ -8,11 +8,11 @@ namespace PCGamingWikiBulkImport;
 
 public class PCGamingWikiIdUtility : SingleExternalDatabaseIdUtility
 {
-    private readonly Regex PCGamingWikiUrlRegex = new Regex(@"^https?://(www\.)?pcgamingwiki\.com/(api/appid\.php\?appid=(?<steamId>[0-9]+)|wiki/(?<slug>[^?#]+))", RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
+    private readonly Regex PCGamingWikiUrlRegex = new(@"^https?://(www\.)?pcgamingwiki\.com/(api/appid\.php\?appid=(?<steamId>[0-9]+)|wiki/(?<slug>[^?#]+))", RegexOptions.Compiled | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
 
     public override ExternalDatabase Database { get; } = ExternalDatabase.PCGamingWiki;
 
-    public override IEnumerable<Guid> LibraryIds { get; } = new Guid[0];
+    public override IEnumerable<Guid> LibraryIds { get; } = [];
 
     public override DbId GetIdFromUrl(string url)
     {

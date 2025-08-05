@@ -20,7 +20,7 @@ public class GamersGateScraperTests
     [Fact]
     public void ScrapingAllOrderUrlsReturnsMoreThanTheFirstPage()
     {
-        var downloader = new FakeWebViewWrapper(new Dictionary<string, string> {
+        var downloader = new FakeWebViewWrapper(new() {
             { "https://www.gamersgate.com/account/orders/", "orders_page1.html" },
             { "https://www.gamersgate.com/account/orders/?page=2", "orders_page2.html" },
         });

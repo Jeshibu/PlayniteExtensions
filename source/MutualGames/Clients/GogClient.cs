@@ -11,17 +11,11 @@ using System.Threading.Tasks;
 
 namespace MutualGames.Clients;
 
-public class GogClient : IFriendsGamesClient
+public class GogClient(IWebViewWrapper webView) : IFriendsGamesClient
 {
-    private readonly IWebViewWrapper offscreenWebView;
-    private readonly HtmlParser htmlParser = new HtmlParser();
+    private readonly HtmlParser htmlParser = new();
     private readonly ILogger logger = LogManager.GetLogger();
     private AccountInfo accountInfo = null;
-
-    public GogClient(IWebViewWrapper webView)
-    {
-        this.offscreenWebView = webView;
-    }
 
     public string Name { get; } = "GOG";
 
@@ -29,7 +23,7 @@ public class GogClient : IFriendsGamesClient
 
     public Guid PluginId { get; } = Guid.Parse("AEBE8B7C-6DC3-4A66-AF31-E7375C6B5E9E");
 
-    public IEnumerable<string> CookieDomains => new[] { ".gog.com", "www.gog.com" };
+    public IEnumerable<string> CookieDomains => [".gog.com", "www.gog.com"];
 
     public string LoginUrl => "https://www.gog.com/##openlogin";
 
@@ -59,7 +53,7 @@ public class GogClient : IFriendsGamesClient
     private GetFriendGamesResponse GetFriendGames(AccountInfo account, FriendAccountInfo friend, int page)
     {
         var url = $"https://www.gog.com/u/{friend.Name}/games/stats/{account.Username}?sort=recent_playtime&order=desc&page={page}&sort_user={account.UserId}";
-        var response = offscreenWebView.DownloadPageTextAsync(url).Result;
+        var response = webView.DownloadPageTextAsync(url).Result;
         return JsonConvert.DeserializeObject<GetFriendGamesResponse>(response.Content);
     }
 
@@ -86,8 +80,8 @@ public class GogClient : IFriendsGamesClient
     {
         var acctInfo = GetLoggedInUserAsync().Result;
 
-        var response = offscreenWebView.DownloadPageSource($"https://www.gog.com/u/{acctInfo.Username}/friends");
-        var lines = response.Content.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        var response = webView.DownloadPageSource($"https://www.gog.com/u/{acctInfo.Username}/friends");
+        var lines = response.Content.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries);
         foreach (var line in lines)
         {
             var l = line.Trim().TrimEnd(';');
@@ -103,7 +97,7 @@ public class GogClient : IFriendsGamesClient
         if (accountInfo != null)
             return accountInfo;
 
-        var response = await offscreenWebView.DownloadPageTextAsync("https://menu.gog.com/v1/account/basic");
+        var response = await webView.DownloadPageTextAsync("https://menu.gog.com/v1/account/basic");
         if (string.IsNullOrWhiteSpace(response.Content))
             throw new NotAuthenticatedException();
 
@@ -147,7 +141,7 @@ public class GogClient : IFriendsGamesClient
 
     private class EmbeddedGames
     {
-        public List<GameAndStats> Items { get; set; } = new List<GameAndStats>();
+        public List<GameAndStats> Items { get; set; } = [];
     }
 
     private class GameAndStats

@@ -11,14 +11,9 @@ using System.Text.RegularExpressions;
 
 namespace Barnite.Scrapers;
 
-public class MobyGamesHelper : MobyGamesIdUtility
+public class MobyGamesHelper(IPlatformUtility platformUtility) : MobyGamesIdUtility
 {
-    public MobyGamesHelper(IPlatformUtility platformUtility)
-    {
-        PlatformUtility = platformUtility;
-    }
-
-    public IPlatformUtility PlatformUtility { get; }
+    public IPlatformUtility PlatformUtility { get; } = platformUtility;
 
     public string GetMobyGameIdStringFromUrl(string url)
     {
@@ -93,7 +88,7 @@ public class MobyGamesHelper : MobyGamesIdUtility
                 data.Description = string.Join("", descriptionNodes).Trim();
         }
 
-        var groups = page.DocumentNode.SelectNodes("//section[@id='gameGroups']/ul/li/a")?.Select(e => e.InnerText.HtmlDecode()).ToList() ?? new List<string>();
+        var groups = page.DocumentNode.SelectNodes("//section[@id='gameGroups']/ul/li/a")?.Select(e => e.InnerText.HtmlDecode()).ToList() ?? [];
         foreach (string group in groups)
         {
             var target = GetGroupImportTarget(group, out string processedGroupName);
@@ -121,9 +116,9 @@ public class MobyGamesHelper : MobyGamesIdUtility
         var userScoreStyle = page.DocumentNode.SelectSingleNode("//dt[text()='Players']/following-sibling::dd/span[@class='stars stars-sm'][@style]")?.GetAttributeValue("style", null);
         if (userScoreStyle != null)
         {
-            foreach (var styleRule in userScoreStyle.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var styleRule in userScoreStyle.Split([';'], StringSplitOptions.RemoveEmptyEntries))
             {
-                var styleRuleSegments = styleRule.Split(new[] { ":" }, StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToList();
+                var styleRuleSegments = styleRule.Split([":"], StringSplitOptions.RemoveEmptyEntries).Select(s => s.Trim()).ToList();
                 if (styleRuleSegments.Count != 2)
                     continue;
 
@@ -137,7 +132,7 @@ public class MobyGamesHelper : MobyGamesIdUtility
         return data;
     }
 
-    private Regex WhiteSpaceRegex = new Regex(@"\s+", RegexOptions.Compiled);
+    private readonly Regex WhiteSpaceRegex = new(@"\s+", RegexOptions.Compiled);
 
     private string NormalizeHtmlWhitespace(string input) => WhiteSpaceRegex.Replace(input, " ");
 
@@ -205,7 +200,7 @@ public class MobyGamesHelper : MobyGamesIdUtility
     {
         var nodes = doc.DocumentNode.SelectNodes($"//dl[@class='metadata']/dt[text()='{propName}']/following-sibling::dd[1]/a");
         var output = nodes?.Select(n => n.InnerText).ToList();
-        return output ?? new List<string>();
+        return output ?? [];
     }
 
     public static PropertyImportTarget GetGroupImportTarget(string groupName, out string processedGroupName)

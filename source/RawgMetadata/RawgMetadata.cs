@@ -17,8 +17,8 @@ public class RawgMetadata : MetadataPlugin
 
     public override Guid Id { get; } = Guid.Parse("07f4f852-bfc8-4937-b189-3a5a308569a6");
 
-    public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
-    {
+    public override List<MetadataField> SupportedFields { get; } =
+    [
         MetadataField.Name,
         MetadataField.ReleaseDate,
         MetadataField.Description,
@@ -31,7 +31,7 @@ public class RawgMetadata : MetadataPlugin
         MetadataField.Developers,
         MetadataField.Publishers,
         MetadataField.Links
-    };
+    ];
 
     public override string Name => "RAWG";
 
@@ -55,7 +55,7 @@ public class RawgMetadata : MetadataPlugin
             return null;
         }
 
-        return rawgApiClient ?? (rawgApiClient = new RawgApiClient(settings.Settings.ApiKey));
+        return rawgApiClient ??= new RawgApiClient(settings.Settings.ApiKey);
     }
 
     private void OpenSettings()

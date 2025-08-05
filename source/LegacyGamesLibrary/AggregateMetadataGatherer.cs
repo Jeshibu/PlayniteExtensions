@@ -10,21 +10,12 @@ using System.Threading;
 
 namespace LegacyGamesLibrary;
 
-public class AggregateMetadataGatherer : LibraryMetadataProvider
+public class AggregateMetadataGatherer(ILegacyGamesRegistryReader registryReader, IAppStateReader appStateReader, IPlayniteAPI playniteAPI, LegacyGamesLibrarySettings settings) : LibraryMetadataProvider
 {
-    public AggregateMetadataGatherer(ILegacyGamesRegistryReader registryReader, IAppStateReader appStateReader, IPlayniteAPI playniteAPI, LegacyGamesLibrarySettings settings)
-    {
-        RegistryReader = registryReader;
-        AppStateReader = appStateReader;
-        PlayniteAPI = playniteAPI;
-        Settings = settings;
-    }
+    public ILegacyGamesRegistryReader RegistryReader { get; } = registryReader;
+    public IAppStateReader AppStateReader { get; } = appStateReader;
 
-    public ILegacyGamesRegistryReader RegistryReader { get; }
-    public IAppStateReader AppStateReader { get; }
-    private IPlayniteAPI PlayniteAPI { get; }
-    private ILogger logger = LogManager.GetLogger();
-    private LegacyGamesLibrarySettings Settings { get; }
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public IEnumerable<GameMetadata> GetGames(CancellationToken cancellationToken)
     {
@@ -37,7 +28,7 @@ public class AggregateMetadataGatherer : LibraryMetadataProvider
 
             if (ownedGames == null)
             {
-                PlayniteAPI.Notifications.Add(new NotificationMessage("legacy-games-error", $"No Legacy Games games found - check your Legacy Games client installation. Click this message to download it. If it's already installed, please open the list of non-installed games there, or install one game.", NotificationType.Error, () =>
+                playniteAPI.Notifications.Add(new NotificationMessage("legacy-games-error", $"No Legacy Games games found - check your Legacy Games client installation. Click this message to download it. If it's already installed, please open the list of non-installed games there, or install one game.", NotificationType.Error, () =>
                 {
                     try
                     {
@@ -64,14 +55,14 @@ public class AggregateMetadataGatherer : LibraryMetadataProvider
                     Source = new MetadataNameProperty("Legacy Games"),
 
                     //the following are probably safe assumptions
-                    Features = new HashSet<MetadataProperty> { new MetadataNameProperty("Single-player") },
-                    Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") },
+                    Features = [new MetadataNameProperty("Single-player")],
+                    Platforms = [new MetadataSpecProperty("pc_windows")],
                 };
 
-                if (Settings.UseCovers)
+                if (settings.UseCovers)
                     metadata.CoverImage = new MetadataFile(game.GameCoverArt);
 
-                if (Settings.NormalizeGameNames && metadata.Name.EndsWith(" CE"))
+                if (settings.NormalizeGameNames && metadata.Name.EndsWith(" CE"))
                     metadata.Name = metadata.Name.Remove(metadata.Name.Length - 3) + " Collector's Edition";
 
                 if (installation != null)
@@ -87,8 +78,8 @@ public class AggregateMetadataGatherer : LibraryMetadataProvider
         catch (Exception ex)
         {
             logger.Error(ex, "Failed to gather metadata");
-            PlayniteAPI.Notifications.Add(new NotificationMessage("legacy-games-error", $"Failed to get Legacy Games games: {ex.Message}", NotificationType.Error));
-            return new GameMetadata[0];
+            playniteAPI.Notifications.Add(new NotificationMessage("legacy-games-error", $"Failed to get Legacy Games games: {ex.Message}", NotificationType.Error));
+            return [];
         }
     }
 

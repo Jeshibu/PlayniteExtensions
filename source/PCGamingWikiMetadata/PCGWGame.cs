@@ -8,40 +8,24 @@ using PCGamingWikiBulkImport;
 
 namespace PCGamingWikiMetadata;
 
-public class PCGWGame : GenericItemOption
+public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
 {
     private readonly ILogger logger = LogManager.GetLogger();
     public int PageID { get; set; }
 
-    private PCGamingWikiMetadataSettings settings;
+    public List<MetadataProperty> Genres { get; } = [];
+    public List<MetadataProperty> Developers { get; } = [];
+    public List<MetadataProperty> Publishers { get; } = [];
+    public List<MetadataProperty> Features { get; } = [];
+    public List<MetadataProperty> Series { get; } = [];
 
-    public List<MetadataProperty> Genres { get; }
-    public List<MetadataProperty> Developers { get; }
-    public List<MetadataProperty> Publishers { get; }
-    public List<MetadataProperty> Features { get; }
-    public List<MetadataProperty> Series { get; }
+    public List<Link> Links { get; } = [];
+    public List<MetadataProperty> Tags { get; } = [];
 
-    public List<Link> Links { get; }
-    public List<MetadataProperty> Tags { get; }
-
-    private IDictionary<string, int?> reception;
-    private IDictionary<string, ReleaseDate?> ReleaseDates;
+    private readonly IDictionary<string, int?> reception = new Dictionary<string, int?>();
+    private readonly IDictionary<string, ReleaseDate?> ReleaseDates = new Dictionary<string, ReleaseDate?>();
 
     public Game LibraryGame;
-
-    public PCGWGame(PCGamingWikiMetadataSettings settings)
-    {
-        this.settings = settings;
-        this.Links = new List<Link>();
-        this.Genres = new List<MetadataProperty>();
-        this.Features = new List<MetadataProperty>();
-        this.Series = new List<MetadataProperty>();
-        this.Developers = new List<MetadataProperty>();
-        this.Publishers = new List<MetadataProperty>();
-        this.Tags = new List<MetadataProperty>();
-        this.ReleaseDates = new Dictionary<string, ReleaseDate?>();
-        this.reception = new Dictionary<string, int?>();
-    }
 
     public PCGWGame(PCGamingWikiMetadataSettings settings, string name, int pageid) : this(settings)
     {
@@ -89,7 +73,7 @@ public class PCGWGame : GenericItemOption
 
     public void AddPlayStationControllerSupport(string description)
     {
-        if (!this.settings.ImportFeaturePlayStationControllers)
+        if (!settings.ImportFeaturePlayStationControllers)
         {
             return;
         }
@@ -102,7 +86,7 @@ public class PCGWGame : GenericItemOption
 
     public void AddPlayStationButtonPrompts(string description)
     {
-        if (!this.settings.ImportFeaturePlayStationButtonPrompts)
+        if (!settings.ImportFeaturePlayStationButtonPrompts)
         {
             return;
         }
@@ -115,7 +99,7 @@ public class PCGWGame : GenericItemOption
 
     public void AddLightBarSupport(string description)
     {
-        if (!this.settings.ImportFeatureLightBar)
+        if (!settings.ImportFeatureLightBar)
         {
             return;
         }
@@ -128,7 +112,7 @@ public class PCGWGame : GenericItemOption
 
     public void AddAdaptiveTriggerSupport(string description)
     {
-        if (!this.settings.ImportFeatureAdaptiveTrigger)
+        if (!settings.ImportFeatureAdaptiveTrigger)
         {
             return;
         }
@@ -141,7 +125,7 @@ public class PCGWGame : GenericItemOption
 
     public void AddHapticFeedbackSupport(string description)
     {
-        if (!this.settings.ImportFeatureHapticFeedback)
+        if (!settings.ImportFeatureHapticFeedback)
         {
             return;
         }
@@ -271,7 +255,7 @@ public class PCGWGame : GenericItemOption
 
     public void AddCSVTags(string csv, string prefix)
     {
-        char[] trimChars = { ' ' };
+        char[] trimChars = [' '];
         string[] tags = SplitCSVString(csv);
 
         foreach (string tag in tags)
@@ -293,9 +277,8 @@ public class PCGWGame : GenericItemOption
 
     public ReleaseDate? WindowsReleaseDate()
     {
-        ReleaseDate? date;
 
-        if (this.ReleaseDates.TryGetValue("Windows", out date))
+        if (this.ReleaseDates.TryGetValue("Windows", out ReleaseDate? date))
         {
             return date;
         }
@@ -312,7 +295,7 @@ public class PCGWGame : GenericItemOption
 
     public string[] SplitCSVString(string csv)
     {
-        TextFieldParser parser = new TextFieldParser(new StringReader(csv));
+        TextFieldParser parser = new(new StringReader(csv));
         parser.SetDelimiters(",");
         return parser.ReadFields();
     }

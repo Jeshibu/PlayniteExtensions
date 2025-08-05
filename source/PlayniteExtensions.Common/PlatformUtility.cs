@@ -13,9 +13,9 @@ public class PlatformUtility : IPlatformUtility
     private Dictionary<string, string[]> platformSpecNameByNormalName;
     private HashSet<string> platformSpecNames;
 
-    private Dictionary<string, string[]> PlatformSpecNameByNormalName => platformSpecNameByNormalName ?? (platformSpecNameByNormalName = GetPlatformSpecsByNormalName(api));
+    private Dictionary<string, string[]> PlatformSpecNameByNormalName => platformSpecNameByNormalName ??= GetPlatformSpecsByNormalName(api);
 
-    private HashSet<string> PlatformSpecNames => platformSpecNames ?? (platformSpecNames = api?.Database?.Platforms?.Select(p => p.SpecificationId).Where(x => x != null).ToHashSet());
+    private HashSet<string> PlatformSpecNames => platformSpecNames ??= api?.Database?.Platforms?.Select(p => p.SpecificationId).Where(x => x != null).ToHashSet();
 
     public PlatformUtility(IPlayniteAPI api)
     {
@@ -43,9 +43,9 @@ public class PlatformUtility : IPlatformUtility
             TryAddPlatformByName(platformSpecNameByNormalName, platformName, specIds);
     }
 
-    private static Regex TrimCompanyName = new Regex(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
-    private static Regex TrimInput = new Regex(@"^(pal|jpn?|usa?|ntsc)\s+|[™®©]| version$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
-    private static Regex TrimPlatformName = new Regex(@"\s*(\((?<platform>[^()]+)\)|\[(?<platform>[^\[\]]+)\]|-\s+(?<platform>[a-z0-9 ]+))$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex TrimCompanyName = new(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex TrimInput = new(@"^(pal|jpn?|usa?|ntsc)\s+|[™®©]| version$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private static readonly Regex TrimPlatformName = new(@"\s*(\((?<platform>[^()]+)\)|\[(?<platform>[^\[\]]+)\]|-\s+(?<platform>[a-z0-9 ]+))$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     private static Dictionary<string, string[]> GetPlatformSpecsByNormalName(IPlayniteAPI api)
     {
@@ -58,29 +58,29 @@ public class PlatformUtility : IPlatformUtility
                     continue;
 
                 if (!output.ContainsKey(platform.Name))
-                    output.Add(platform.Name, new[] { platform.SpecificationId });
+                    output.Add(platform.Name, [platform.SpecificationId]);
 
                 string nameWithoutCompany = TrimCompanyName.Replace(platform.Name, string.Empty);
                 if (!output.ContainsKey(nameWithoutCompany))
-                    output.Add(nameWithoutCompany, new[] { platform.SpecificationId });
+                    output.Add(nameWithoutCompany, [platform.SpecificationId]);
             }
         }
         TryAddPlatformByName(output, "3DO", "3do");
-        TryAddPlatformByName(output, new[] { "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM", "Windows Apps", "win", "Windows 3.x" }, new[] { "pc_windows" });
-        TryAddPlatformByName(output, new[] { "DOS", "MS-DOS" }, "pc_dos");
-        TryAddPlatformByName(output, new[] { "Linux", "LIN" }, "pc_linux");
-        TryAddPlatformByName(output, new[] { "Mac", "OSX" }, "macintosh");
-        TryAddPlatformByName(output, new[] { "Xbox360", "X360" }, new[] { "xbox360" });
-        TryAddPlatformByName(output, new[] { "XboxOne", "XONE" }, new[] { "xbox_one" });
-        TryAddPlatformByName(output, new[] { "Microsoft Xbox Series X", "Microsoft Xbox Series S", "Xbox Series X", "Xbox Series S", "Microsoft Xbox Series X/S", "Microsoft Xbox Series S/X", "Xbox Series X/S", "Xbox Series S/X", "Xbox Series X|S", "XboxSeriesX", "XSX" }, new[] { "xbox_series" });
-        TryAddPlatformByName(output, new[] { "PS", "PS1", "PSX" }, new[] { "sony_playstation" });
+        TryAddPlatformByName(output, ["Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM", "Windows Apps", "win", "Windows 3.x"], ["pc_windows"]);
+        TryAddPlatformByName(output, ["DOS", "MS-DOS"], "pc_dos");
+        TryAddPlatformByName(output, ["Linux", "LIN"], "pc_linux");
+        TryAddPlatformByName(output, ["Mac", "OSX"], "macintosh");
+        TryAddPlatformByName(output, ["Xbox360", "X360"], ["xbox360"]);
+        TryAddPlatformByName(output, ["XboxOne", "XONE"], ["xbox_one"]);
+        TryAddPlatformByName(output, ["Microsoft Xbox Series X", "Microsoft Xbox Series S", "Xbox Series X", "Xbox Series S", "Microsoft Xbox Series X/S", "Microsoft Xbox Series S/X", "Xbox Series X/S", "Xbox Series S/X", "Xbox Series X|S", "XboxSeriesX", "XSX"], ["xbox_series"]);
+        TryAddPlatformByName(output, ["PS", "PS1", "PSX"], ["sony_playstation"]);
         TryAddPlatformByName(output, "PS2", "sony_playstation2");
         TryAddPlatformByName(output, "PS3", "sony_playstation3");
         TryAddPlatformByName(output, "PS4", "sony_playstation4");
         TryAddPlatformByName(output, "PS5", "sony_playstation5");
         TryAddPlatformByName(output, "PSP", "sony_psp");
-        TryAddPlatformByName(output, new[] { "PS Vita", "Vita" }, "sony_vita");
-        TryAddPlatformByName(output, new[] { "PS4/5", "Playstation 4/5" }, new[] { "sony_playstation4", "sony_playstation5" });
+        TryAddPlatformByName(output, ["PS Vita", "Vita"], "sony_vita");
+        TryAddPlatformByName(output, ["PS4/5", "Playstation 4/5"], ["sony_playstation4", "sony_playstation5"]);
         TryAddPlatformByName(output, "Commodore 64/128", "commodore_64");
         TryAddPlatformByName(output, "AMI", "commodore_amiga");
         TryAddPlatformByName(output, "GB", "nintendo_gameboy");
@@ -89,7 +89,7 @@ public class PlatformUtility : IPlatformUtility
         TryAddPlatformByName(output, "GEN", "sega_genesis");
         TryAddPlatformByName(output, "LYNX", "atari_lynx");
         TryAddPlatformByName(output, "SMS", "sega_mastersystem");
-        TryAddPlatformByName(output, new[] { "SNES", "Super Nintendo Entertainment System" }, "nintendo_super_nes");
+        TryAddPlatformByName(output, ["SNES", "Super Nintendo Entertainment System"], "nintendo_super_nes");
         TryAddPlatformByName(output, "APL2", "apple_2");
         TryAddPlatformByName(output, "AST", "atari_st");
         TryAddPlatformByName(output, "C64", "commodore_64");
@@ -137,7 +137,7 @@ public class PlatformUtility : IPlatformUtility
         return output;
     }
 
-    private static Dictionary<string, string> nameAbbreviations = new Dictionary<string, string>(StringComparer.InvariantCulture)
+    private static readonly Dictionary<string, string> nameAbbreviations = new(StringComparer.InvariantCulture)
     {
         { "CDI", "Philips CD-i" },
         { "NGE", "Nokia N-Gage" },
@@ -288,7 +288,7 @@ public class PlatformUtility : IPlatformUtility
     public IEnumerable<MetadataProperty> GetPlatforms(string platformName, bool strict)
     {
         if (string.IsNullOrWhiteSpace(platformName))
-            return new List<MetadataProperty>();
+            return [];
 
         string sanitizedPlatformName = TrimInput.Replace(platformName, string.Empty);
         string companyTrimmedPlatformName = TrimCompanyName.Replace(sanitizedPlatformName, string.Empty);
@@ -298,15 +298,15 @@ public class PlatformUtility : IPlatformUtility
             return specIds.Select(s => new MetadataSpecProperty(s)).ToList<MetadataProperty>();
 
         if (nameAbbreviations.TryGetValue(sanitizedPlatformName, out string foundPlatformName))
-            return new[] { new MetadataNameProperty(foundPlatformName) };
+            return [new MetadataNameProperty(foundPlatformName)];
 
         if (PlatformSpecNames.Contains(platformName))
-            return new[] { new MetadataSpecProperty(platformName) };
+            return [new MetadataSpecProperty(platformName)];
 
         if (strict)
-            return new List<MetadataProperty>();
+            return [];
         else
-            return new List<MetadataProperty> { new MetadataNameProperty(sanitizedPlatformName) };
+            return [new MetadataNameProperty(sanitizedPlatformName)];
     }
 
     public IEnumerable<string> GetPlatformNames()
@@ -316,7 +316,7 @@ public class PlatformUtility : IPlatformUtility
 
     public IEnumerable<MetadataProperty> GetPlatformsFromName(string name, out string trimmedName)
     {
-        IEnumerable<MetadataProperty> platforms = new MetadataProperty[0];
+        IEnumerable<MetadataProperty> platforms = [];
         trimmedName = TrimPlatformName.Replace(name, match =>
         {
             var platformName = match.Groups["platform"].Value;

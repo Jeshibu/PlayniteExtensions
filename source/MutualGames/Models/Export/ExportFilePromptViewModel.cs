@@ -4,7 +4,7 @@ namespace MutualGames.Models.Export;
 
 public class ExportFilePromptViewModel
 {
-    public Dictionary<ExportGamesMode, string> Modes { get; } = new Dictionary<ExportGamesMode, string>()
+    public Dictionary<ExportGamesMode, string> Modes { get; } = new()
     {
         { ExportGamesMode.Filtered, "Only currently visible games (filtered)" },
         { ExportGamesMode.AllExcludeHidden, "All games (exclude hidden)" },

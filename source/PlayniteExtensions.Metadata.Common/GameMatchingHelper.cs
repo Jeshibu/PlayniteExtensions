@@ -10,22 +10,15 @@ using System.Threading.Tasks;
 
 namespace PlayniteExtensions.Metadata.Common;
 
-public class GameMatchingHelper
+public class GameMatchingHelper(IExternalDatabaseIdUtility externalDatabaseIdUtility, int maxDegreeOfParallelism)
 {
-    public GameMatchingHelper(IExternalDatabaseIdUtility externalDatabaseIdUtility, int maxDegreeOfParallelism)
-    {
-        ExternalDatabaseIdUtility = externalDatabaseIdUtility;
-        MaxDegreeOfParallelism = maxDegreeOfParallelism;
-        GamesById = new ConcurrentDictionary<DbId, IList<Game>>();
-    }
+    private ConcurrentDictionary<DbId, IList<Game>> GamesById { get; } = new();
 
-    private ConcurrentDictionary<DbId, IList<Game>> GamesById { get; }
+    public ConcurrentDictionary<string, string> DeflatedNames { get; } = new();
+    public IExternalDatabaseIdUtility ExternalDatabaseIdUtility { get; } = externalDatabaseIdUtility;
+    public int MaxDegreeOfParallelism { get; } = maxDegreeOfParallelism;
 
-    public ConcurrentDictionary<string, string> DeflatedNames { get; } = new ConcurrentDictionary<string, string>();
-    public IExternalDatabaseIdUtility ExternalDatabaseIdUtility { get; }
-    public int MaxDegreeOfParallelism { get; }
-
-    private SortableNameConverter sortableNameConverter = new SortableNameConverter(numberLength: 1, removeEditions: true);
+    private readonly SortableNameConverter sortableNameConverter = new(numberLength: 1, removeEditions: true);
 
     public HashSet<string> GetDeflatedNames(IEnumerable<string> names)
     {
@@ -65,7 +58,7 @@ public class GameMatchingHelper
 
     private IList<Game> AddGameById(DbId key, Game game)
     {
-        return GamesById.AddOrUpdate(key, new List<Game> { game }, (DbId _, IList<Game> existing) =>
+        return GamesById.AddOrUpdate(key, [game], (DbId _, IList<Game> existing) =>
         {
             if (!existing.Contains(game))
                 existing.Add(game);
@@ -80,7 +73,7 @@ public class GameMatchingHelper
     {
         if (string.IsNullOrWhiteSpace(key.Id))
         {
-            games = new List<Game>();
+            games = [];
             return false;
         }
 
@@ -91,7 +84,7 @@ public class GameMatchingHelper
     {
         if (string.IsNullOrWhiteSpace(name))
         {
-            games = new List<Game>();
+            games = [];
             return false;
         }
 

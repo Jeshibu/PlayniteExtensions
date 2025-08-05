@@ -57,7 +57,7 @@ public class XboxOneScraperTests
         downloader.AddRedirect("https://www.microsoft.com/en-us/store/p/sniper-elite-5/9pp8q82h79lc", detailsUrl);
 
         var scraper = new XboxOneScraper(downloader, new PlatformUtility(playniteApi.Object));
-        var scraperManager = new ScraperManager(new[] { scraper });
+        var scraperManager = new ScraperManager([scraper]);
 
         var metadataProvider = new XboxMetadataProvider(options, settings, playniteApi.Object, scraperManager);
 
@@ -70,7 +70,7 @@ public class XboxOneScraperTests
     public async Task MicrosoftStorePageParses()
     {
         var content = System.IO.File.ReadAllText("microsoft minesweeper 2019 details.html");
-        XboxOneScraper scraper = new XboxOneScraper(null, new PlatformUtility((string)null));
+        XboxOneScraper scraper = new(null, new PlatformUtility((string)null));
         var settings = new XboxMetadataSettings
         {
             Market = "en-us",
@@ -81,7 +81,7 @@ public class XboxOneScraperTests
                 MinWidth = 100,
                 MaxHeight = 1000,
                 MaxWidth = 1000,
-                Fields = new List<CheckboxSetting> { new CheckboxSetting(ImageSourceField.AppStoreProductImage, true) }
+                Fields = [new CheckboxSetting(ImageSourceField.AppStoreProductImage, true)]
             }
         };
         var response = new DownloadStringResponse("https://www.microsoft.com/somepage", content, System.Net.HttpStatusCode.OK);

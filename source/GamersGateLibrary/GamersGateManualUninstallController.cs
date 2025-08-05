@@ -6,19 +6,12 @@ using System.IO;
 
 namespace GamersGateLibrary;
 
-public class GamersGateManualUninstallController : UninstallController
+public class GamersGateManualUninstallController(Game game, GamersGateLibrarySettings settings, IPlayniteAPI playniteApi, Plugin plugin) : UninstallController(game)
 {
-    public GamersGateManualUninstallController(Game game, GamersGateLibrarySettings settings, IPlayniteAPI playniteApi, Plugin plugin) : base(game)
-    {
-        Settings = settings;
-        PlayniteApi = playniteApi;
-        Plugin = plugin;
-    }
-
-    public GamersGateLibrarySettings Settings { get; }
-    public IPlayniteAPI PlayniteApi { get; }
-    public Plugin Plugin { get; }
-    private ILogger logger = LogManager.GetLogger();
+    public GamersGateLibrarySettings Settings { get; } = settings;
+    public IPlayniteAPI PlayniteApi { get; } = playniteApi;
+    public Plugin Plugin { get; } = plugin;
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public override void Uninstall(UninstallActionArgs args)
     {
@@ -30,7 +23,7 @@ public class GamersGateManualUninstallController : UninstallController
                 "No install/download data found for this game. Please re-run the game import after checking your orders page.",
                 "Install data missing",
                 System.Windows.MessageBoxImage.Error,
-                new List<MessageBoxOption> { openPurchasesOption, new MessageBoxOption("Ok") });
+                [openPurchasesOption, new MessageBoxOption("Ok")]);
 
             if (result == openPurchasesOption)
                 System.Diagnostics.Process.Start("https://www.gamersgate.com/account/orders/");
@@ -51,7 +44,7 @@ public class GamersGateManualUninstallController : UninstallController
             "Uninstalling GamersGate games is manual. Once you've uninstalled the game, you can mark it uninstalled here.",
             $"Uninstall {Game.Name}",
             System.Windows.MessageBoxImage.Question,
-            new List<MessageBoxOption> { showInstallDirOption, markUninstalled, new MessageBoxOption("Cancel", isCancel: true) });
+            [showInstallDirOption, markUninstalled, new MessageBoxOption("Cancel", isCancel: true)]);
         if (dialogResult == showInstallDirOption)
         {
             System.Diagnostics.Process.Start("explorer.exe", $"/select,\"{installData.InstallLocation}\"");

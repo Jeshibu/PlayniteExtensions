@@ -10,17 +10,9 @@ using ViveportLibrary.Api;
 
 namespace ViveportLibrary;
 
-public class ViveportMetadataProvider : LibraryMetadataProvider
+public class ViveportMetadataProvider(IViveportApiClient viveportApiClient, ViveportLibrarySettings settings) : LibraryMetadataProvider
 {
-    private readonly IViveportApiClient viveportApiClient;
-    private readonly ViveportLibrarySettings settings;
     private readonly ILogger logger = LogManager.GetLogger();
-
-    public ViveportMetadataProvider(IViveportApiClient viveportApiClient, ViveportLibrarySettings settings)
-    {
-        this.viveportApiClient = viveportApiClient;
-        this.settings = settings;
-    }
 
     public override GameMetadata GetMetadata(Game game)
     {
@@ -48,10 +40,10 @@ public class ViveportMetadataProvider : LibraryMetadataProvider
             Source = new MetadataNameProperty("Viveport"),
             Genres = GetCustomAttributeMetadataProperties(appDetails.Genres, customAttributes, "genres", opt => opt.Value),
             InstallSize = GetInstallSize(appDetails),
-            AgeRatings = GetCustomAttributeMetadataProperties(new[] { appDetails.ContentRating.ToString() }, customAttributes, "content_rating", opt => opt.AdminLabel),
+            AgeRatings = GetCustomAttributeMetadataProperties([appDetails.ContentRating.ToString()], customAttributes, "content_rating", opt => opt.AdminLabel),
             ReleaseDate = new ReleaseDate(GetDateFromMilliseconds(appDetails.ReleaseTimeMilliseconds)),
             Version = appDetails.VersionName,
-            Links = new List<Link> { new Link("Viveport Store Page", $"https://www.viveport.com/apps/{game.GameId}") },
+            Links = [new Link("Viveport Store Page", $"https://www.viveport.com/apps/{game.GameId}")],
         };
 
         var coverUrl = GetCoverUrl(appDetails);
@@ -60,17 +52,17 @@ public class ViveportMetadataProvider : LibraryMetadataProvider
 
         var developer = appDetails.DeveloperDisplayName?.TrimCompanyForms();
         if (!string.IsNullOrWhiteSpace(developer))
-            metadata.Developers = new HashSet<MetadataProperty> { new MetadataNameProperty(developer.TrimCompanyForms()) };
+            metadata.Developers = [new MetadataNameProperty(developer.TrimCompanyForms())];
 
         var publisher = appDetails.Publisher?.TrimCompanyForms();
         if (!string.IsNullOrWhiteSpace(publisher))
-            metadata.Publishers = new HashSet<MetadataProperty> { new MetadataNameProperty(publisher.TrimCompanyForms()) };
+            metadata.Publishers = [new MetadataNameProperty(publisher.TrimCompanyForms())];
 
         #region platforms
         if (settings.ImportHeadsetsAsPlatforms)
             metadata.Platforms = GetCustomAttributeMetadataProperties(appDetails.HardwareMatrix?.Headsets, customAttributes, "headsets", opt => opt.AdminLabel);
         else
-            metadata.Platforms = new HashSet<MetadataProperty>();
+            metadata.Platforms = [];
 
         if (appDetails.SystemRequirements?.OS != null)
         {
@@ -104,21 +96,15 @@ public class ViveportMetadataProvider : LibraryMetadataProvider
     private string GetCoverUrl(ViveportApp appDetails)
     {
         var verticalCover = appDetails.Cloud?.Objs.FirstOrDefault(o => o.Type == "portrait_image");
-        switch (settings.CoverPreference)
+        return settings.CoverPreference switch
         {
-            case CoverPreference.None:
-                return null;
-            case CoverPreference.VerticalOrSquare:
-                return verticalCover?.Url ?? appDetails.Thumbnails?.Square?.Url;
-            case CoverPreference.VerticalOrBust:
-                return verticalCover?.Url;
-            case CoverPreference.Square:
-                return appDetails.Thumbnails?.Square?.Url;
-            case CoverPreference.Horizontal:
-                return appDetails.Thumbnails?.Medium?.Url;
-            default:
-                return null;
-        }
+            CoverPreference.None => null,
+            CoverPreference.VerticalOrSquare => verticalCover?.Url ?? appDetails.Thumbnails?.Square?.Url,
+            CoverPreference.VerticalOrBust => verticalCover?.Url,
+            CoverPreference.Square => appDetails.Thumbnails?.Square?.Url,
+            CoverPreference.Horizontal => appDetails.Thumbnails?.Medium?.Url,
+            _ => null,
+        };
     }
 
     private IEnumerable<string> GetCustomAttributeLabels<T>(IEnumerable<T> values, CustomAttributeMetadataItem[] items, string attributeCodeName, Func<AttributeOption, T> matchSelector)
@@ -165,15 +151,15 @@ public class ViveportMetadataProvider : LibraryMetadataProvider
 
     private int GetPowerOf1024FromUnit(string unit)
     {
-        switch (unit)
+        return unit switch
         {
-            case "B": return 0;
-            case "KB": return 1;
-            case "MB": return 2;
-            case "GB": return 3;
-            case "TB": return 4;
-            default: return 0;
-        }
+            "B" => 0,
+            "KB" => 1,
+            "MB" => 2,
+            "GB" => 3,
+            "TB" => 4,
+            _ => 0,
+        };
     }
 
     private static DateTime GetDateFromMilliseconds(long milliseconds)

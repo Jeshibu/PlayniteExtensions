@@ -19,8 +19,8 @@ public class RawgApiClient
     }
 
     public string Key { get; set; }
-    private ILogger logger = LogManager.GetLogger();
-    private RestClient restClient;
+    private readonly ILogger logger = LogManager.GetLogger();
+    private readonly RestClient restClient;
 
     private T Execute<T>(RestRequest request)
     {

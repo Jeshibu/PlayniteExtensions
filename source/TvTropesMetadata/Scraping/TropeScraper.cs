@@ -9,12 +9,10 @@ using System.Text.RegularExpressions;
 
 namespace TvTropesMetadata.Scraping;
 
-public class TropeScraper : BaseScraper
+public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
 {
-    public List<string> SubcategoryWhitelist = new List<string> { "VideoGames", "VisualNovels" };
-    public List<string> FolderLabelWhitelist = new List<string> { "Video Game", "Videogame", "Visual Novel" };
-
-    public TropeScraper(IWebDownloader downloader) : base(downloader) { }
+    public List<string> SubcategoryWhitelist = ["VideoGames", "VisualNovels"];
+    public List<string> FolderLabelWhitelist = ["Video Game", "Videogame", "Visual Novel"];
 
     public override IEnumerable<TvTropesSearchResult> Search(string query) => Search(query, "trope");
 
@@ -116,7 +114,7 @@ public class TropeScraper : BaseScraper
 
     private TropePageListItem ParseTropePageListItem(IElement element)
     {
-        var output = new TropePageListItem { Text = element.InnerHtml.Split(new[] { "<ul>" }, StringSplitOptions.RemoveEmptyEntries).First() };
+        var output = new TropePageListItem { Text = element.InnerHtml.Split(["<ul>"], StringSplitOptions.RemoveEmptyEntries).First() };
         var liChildren = element.Children.Where(c => c.TagName == "EM" || IsVideoGameLink(c));
         if (liChildren == null)
             return output;
@@ -135,7 +133,7 @@ public class TropeScraper : BaseScraper
             var work = new TvTropesWork { Title = lic.TextContent.HtmlDecode() };
             AddWork(work);
             var links = lic.TagName == "A"
-                ? new[] { lic }
+                ? [lic]
                 : lic.Children.Where(IsVideoGameLink);
 
             foreach (var a in links)
@@ -143,13 +141,13 @@ public class TropeScraper : BaseScraper
                 var url = GetAbsoluteUrl(a.GetAttribute("href"));
                 work.Urls.Add(url);
                 var gameUrlName = GetWikiPathSegments(url).Last();
-                AddWork(new TvTropesWork { Title = ReverseEngineerGameNameFromUrlSegment(gameUrlName), Urls = new List<string> { url } });
+                AddWork(new TvTropesWork { Title = ReverseEngineerGameNameFromUrlSegment(gameUrlName), Urls = [url] });
             }
         }
         return output;
     }
 
-    private Regex NonLettersAndNumbers = new Regex(@"[^\p{L}0-9]", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private readonly Regex NonLettersAndNumbers = new(@"[^\p{L}0-9]", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     private bool IsVideoGameLink(IElement element)
     {
@@ -182,7 +180,7 @@ public class TropeScraper : BaseScraper
 public class ParsedTropePage
 {
     public string Title { get; set; }
-    public List<TropePageListItem> Items { get; set; } = new List<TropePageListItem>();
+    public List<TropePageListItem> Items { get; set; } = [];
     public override string ToString() => Title;
 }
 
@@ -190,7 +188,7 @@ public class TropePageListItem
 {
     public string Text { get; set; }
 
-    public List<TvTropesWork> Works { get; set; } = new List<TvTropesWork>();
+    public List<TvTropesWork> Works { get; set; } = [];
 
     public override string ToString() => Text;
 }
@@ -198,6 +196,6 @@ public class TropePageListItem
 public class TvTropesWork
 {
     public string Title { get; set; }
-    public List<string> Urls { set; get; } = new List<string>();
+    public List<string> Urls { set; get; } = [];
     public override string ToString() => Title;
 }

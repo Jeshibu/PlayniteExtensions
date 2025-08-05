@@ -9,18 +9,10 @@ using System.Threading;
 
 namespace BigFishLibrary;
 
-public class BigFishUninstallController : UninstallController
+public class BigFishUninstallController(Game game, BigFishRegistryReader registryReader, string uninstallerPath) : UninstallController(game)
 {
-    private readonly BigFishRegistryReader registryReader;
-    private readonly string uninstallerPath;
     private CancellationTokenSource watcherToken;
     private readonly ILogger logger = LogManager.GetLogger();
-
-    public BigFishUninstallController(Game game, BigFishRegistryReader registryReader, string uninstallerPath) : base(game)
-    {
-        this.registryReader = registryReader;
-        this.uninstallerPath = uninstallerPath;
-    }
 
     public override void Uninstall(UninstallActionArgs args)
     {

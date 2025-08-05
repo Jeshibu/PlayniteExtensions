@@ -24,17 +24,17 @@ public class MobyGame : IHasPlatforms
 {
     public int game_id { get; set; }
     public string title { get; set; }
-    public List<string> highlights { get; set; } = new List<string>();
+    public List<string> highlights { get; set; } = [];
     public string moby_url { get; set; }
-    public List<MobyGenre> genres { get; set; } = new List<MobyGenre>();
+    public List<MobyGenre> genres { get; set; } = [];
     public string description { get; set; }
     public string official_url { get; set; }
     public float? moby_score { get; set; }
-    public List<MobyCoverGroup> covers { get; set; } = new List<MobyCoverGroup>();
-    public List<MobyCompany> developers { get; set; } = new List<MobyCompany>();
-    public List<MobyCompany> publishers { get; set; } = new List<MobyCompany>();
-    public List<GamePlatform> platforms { get; set; } = new List<GamePlatform>();
-    public List<MobyScreenshotGroup> screenshots { get; set; } = new List<MobyScreenshotGroup>();
+    public List<MobyCoverGroup> covers { get; set; } = [];
+    public List<MobyCompany> developers { get; set; } = [];
+    public List<MobyCompany> publishers { get; set; } = [];
+    public List<GamePlatform> platforms { get; set; } = [];
+    public List<MobyScreenshotGroup> screenshots { get; set; } = [];
     public string release_date { get; set; }
     IEnumerable<string> IHasPlatforms.Platforms => platforms.Select(p => p.name);
 }
@@ -42,7 +42,7 @@ public class MobyGame : IHasPlatforms
 public class MobyCompany : MobyIdName, IHasPlatforms
 {
     public string url { get; set; }
-    public List<string> platforms { get; set; } = new List<string>();
+    public List<string> platforms { get; set; } = [];
 
     IEnumerable<string> IHasPlatforms.Platforms => platforms;
 }
@@ -57,10 +57,10 @@ public class MobyCoverGroup : IHasPlatforms
 {
     public int cover_group_id { get; set; }
     public string comments { get; set; }
-    public List<MobyCountry> countries { get; set; } = new List<MobyCountry>();
-    public List<MobyIdName> platforms { get; set; } = new List<MobyIdName>();
-    public List<MobyAttributeGroup> attributes { get; set; } = new List<MobyAttributeGroup>();
-    public List<MobyCover> images { get; set; } = new List<MobyCover>();
+    public List<MobyCountry> countries { get; set; } = [];
+    public List<MobyIdName> platforms { get; set; } = [];
+    public List<MobyAttributeGroup> attributes { get; set; } = [];
+    public List<MobyCover> images { get; set; } = [];
 
     IEnumerable<string> IHasPlatforms.Platforms => platforms.Select(p => p.name);
 }
@@ -68,16 +68,16 @@ public class MobyCoverGroup : IHasPlatforms
 public class MobyAttributeGroup
 {
     public string category { get; set; }
-    public List<MobyIdName> attributes { get; set; } = new List<MobyIdName>();
+    public List<MobyIdName> attributes { get; set; } = [];
 }
 
 public class MobyScreenshotGroup: IHasPlatforms
 {
     public int platform_id { get; set; }
     public string platform_name { get; set; }
-    public List<MobyScreenshot> images { get; set; } = new List<MobyScreenshot>();
+    public List<MobyScreenshot> images { get; set; } = [];
 
-    IEnumerable<string> IHasPlatforms.Platforms => new[] { platform_name };
+    IEnumerable<string> IHasPlatforms.Platforms => [platform_name];
 }
 
 public class MobyCountry

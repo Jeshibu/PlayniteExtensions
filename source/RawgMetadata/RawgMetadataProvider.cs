@@ -9,13 +9,9 @@ using System.Linq;
 
 namespace RawgMetadata;
 
-public class RawgMetadataProvider : OnDemandMetadataProvider
+public class RawgMetadataProvider(MetadataRequestOptions options, RawgMetadata plugin, RawgApiClient client, string languageCode = "eng") : OnDemandMetadataProvider
 {
     private RawgGameDetails foundGameData;
-    private readonly MetadataRequestOptions options;
-    private readonly RawgMetadata plugin;
-    private readonly RawgApiClient client;
-    private readonly string languageCode;
     private readonly ILogger logger = LogManager.GetLogger();
     private RawgGameDetails FoundGameData
     {
@@ -28,8 +24,8 @@ public class RawgMetadataProvider : OnDemandMetadataProvider
     }
     private RawgGameBase FoundSearchResult { get; set; }
 
-    public override List<MetadataField> AvailableFields { get; } = new List<MetadataField>
-    {
+    public override List<MetadataField> AvailableFields { get; } =
+    [
         MetadataField.Name,
         MetadataField.Description,
         MetadataField.ReleaseDate,
@@ -42,15 +38,7 @@ public class RawgMetadataProvider : OnDemandMetadataProvider
         MetadataField.Developers,
         MetadataField.Publishers,
         MetadataField.Links
-    };
-
-    public RawgMetadataProvider(MetadataRequestOptions options, RawgMetadata plugin, RawgApiClient client, string languageCode = "eng")
-    {
-        this.options = options;
-        this.plugin = plugin;
-        this.client = client;
-        this.languageCode = languageCode;
-    }
+    ];
 
     public override string GetName(GetMetadataFieldArgs args)
     {
@@ -187,8 +175,7 @@ public class RawgMetadataProvider : OnDemandMetadataProvider
         if (IsEmpty(data))
             return base.GetLinks(args);
 
-        var links = new List<Link>();
-        links.Add(new Link("RAWG", $"https://rawg.io/games/{data.Id}"));
+        List<Link> links = [new Link("RAWG", $"https://rawg.io/games/{data.Id}")];
 
         if (!string.IsNullOrWhiteSpace(data.Website))
             links.Add(new Link("Website", data.Website));
@@ -230,7 +217,7 @@ public class RawgMetadataProvider : OnDemandMetadataProvider
                 catch (Exception e)
                 {
                     logger.Error(e, $"Failed to get RAWG search data for <{a}>");
-                    return new List<GenericItemOption>();
+                    return [];
                 }
             }, options.GameData.Name, string.Empty);
 
@@ -252,14 +239,9 @@ public class RawgMetadataProvider : OnDemandMetadataProvider
         return FoundGameData;
     }
 
-    private class GenericSearchResultGame : GenericItemOption
+    private class GenericSearchResultGame(RawgGameBase g) : GenericItemOption(g.Name, g.Released)
     {
-        public GenericSearchResultGame(RawgGameBase g) : base(g.Name, g.Released)
-        {
-            Game = g;
-        }
-
-        public RawgGameBase Game { get; set; }
+        public RawgGameBase Game { get; set; } = g;
     }
 
     private bool IsEmpty(RawgGameBase rawgGame)

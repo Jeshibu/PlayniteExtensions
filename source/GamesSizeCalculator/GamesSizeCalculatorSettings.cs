@@ -15,13 +15,13 @@ public class GamesSizeCalculatorSettings : ObservableObject
     public bool IncludeDlcInSteamCalculation { get; set; }
     public bool IncludeOptionalInSteamCalculation { get; set; }
 
-    private ObservableCollection<string> depotRegionWords = new ObservableCollection<string> { "eu", "europe", "row", "en", "english", "ww" };
+    private ObservableCollection<string> depotRegionWords = ["eu", "europe", "row", "en", "english", "ww"];
 
     [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public ObservableCollection<string> DepotRegionWords { get => depotRegionWords; set => SetValue(ref depotRegionWords, DeduplicateStrings(value)); }
 
-    private ObservableCollection<string> depotRegionWordsBlacklist = new ObservableCollection<string>
-    {
+    private ObservableCollection<string> depotRegionWordsBlacklist =
+    [
         "asia",
         "aus",
         "australia",
@@ -47,7 +47,7 @@ public class GamesSizeCalculatorSettings : ObservableObject
         "tr/mena",
         "sea",
         "tw"
-    };
+    ];
 
     [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
     public ObservableCollection<string> DepotRegionWordsBlacklist { get => depotRegionWordsBlacklist; set => SetValue(ref depotRegionWordsBlacklist, DeduplicateStrings(value)); }
@@ -67,12 +67,12 @@ public class GamesSizeCalculatorSettingsViewModel : PluginSettingsViewModel<Game
     public string RegionWordsString
     {
         get => string.Join(Environment.NewLine, Settings.DepotRegionWords);
-        set => Settings.DepotRegionWords = new ObservableCollection<string>(value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
+        set => Settings.DepotRegionWords = new ObservableCollection<string>(value.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries));
     }
     public string RegionWordsBlacklistString
     {
         get => string.Join(Environment.NewLine, Settings.DepotRegionWordsBlacklist);
-        set => Settings.DepotRegionWordsBlacklist = new ObservableCollection<string>(value.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
+        set => Settings.DepotRegionWordsBlacklist = new ObservableCollection<string>(value.Split([Environment.NewLine], StringSplitOptions.RemoveEmptyEntries));
     }
 
     public GamesSizeCalculatorSettingsViewModel(GamesSizeCalculator plugin):base(plugin, plugin.PlayniteApi)

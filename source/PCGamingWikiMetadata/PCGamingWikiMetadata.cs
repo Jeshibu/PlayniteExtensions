@@ -20,8 +20,8 @@ public class PCGamingWikiMetadata : MetadataPlugin
 
     public override Guid Id { get; } = Guid.Parse("c038558e-427b-4551-be4c-be7009ce5a8d");
 
-    public override List<MetadataField> SupportedFields { get; } = new List<MetadataField>
-    {
+    public override List<MetadataField> SupportedFields { get; } =
+    [
         MetadataField.Name,
         MetadataField.Links,
         MetadataField.ReleaseDate,
@@ -32,7 +32,7 @@ public class PCGamingWikiMetadata : MetadataPlugin
         MetadataField.Publishers,
         MetadataField.CriticScore,
         MetadataField.Tags,
-    };
+    ];
     public override string Name => "PCGamingWiki";
 
     public PCGamingWikiMetadata(IPlayniteAPI api) : base(api)

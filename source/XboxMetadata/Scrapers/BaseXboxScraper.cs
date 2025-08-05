@@ -6,18 +6,13 @@ using System.Threading.Tasks;
 
 namespace XboxMetadata.Scrapers;
 
-public abstract class BaseXboxScraper
+public abstract class BaseXboxScraper(IWebDownloader downloader, IPlatformUtility platformUtility)
 {
     public abstract string Key { get; }
     public abstract int ExecutionOrder { get; }
-    protected IWebDownloader downloader;
-    protected IPlatformUtility platformUtility;
+    protected IWebDownloader downloader = downloader;
+    protected IPlatformUtility platformUtility = platformUtility;
 
-    public BaseXboxScraper(IWebDownloader downloader, IPlatformUtility platformUtility)
-    {
-        this.downloader = downloader;
-        this.platformUtility = platformUtility;
-    }
     public abstract Task<List<XboxGameSearchResultItem>> SearchAsync(XboxMetadataSettings settings, string query);
     public abstract Task<XboxGameDetails> GetDetailsAsync(XboxMetadataSettings settings, string id, string url);
     public abstract string FixUrl(string url);
@@ -29,23 +24,23 @@ public class XboxGameSearchResultItem
     public string Id { get; set; }
     public string Title { get; set; }
     public DateTime? ReleaseDate { get; set; }
-    public List<MetadataProperty> Platforms { get; set; } = new List<MetadataProperty>();
+    public List<MetadataProperty> Platforms { get; set; } = [];
     public string Url { get; set; }
 }
 
 public class XboxGameDetails : XboxGameSearchResultItem
 {
     public string Description { get; set; }
-    public List<string> Developers { get; set; } = new List<string>();
-    public List<string> Publishers { get; set; } = new List<string>();
+    public List<string> Developers { get; set; } = [];
+    public List<string> Publishers { get; set; } = [];
     public int? CommunityScore { get; set; }
     public ulong? InstallSize { get; set; }
-    public List<string> Genres { get; set; } = new List<string>();
-    public List<string> Features { get; set; } = new List<string>();
-    public List<ImageData> Covers { get; set; } = new List<ImageData>();
-    public List<ImageData> Backgrounds { get; set; } = new List<ImageData>();
+    public List<string> Genres { get; set; } = [];
+    public List<string> Features { get; set; } = [];
+    public List<ImageData> Covers { get; set; } = [];
+    public List<ImageData> Backgrounds { get; set; } = [];
     public string AgeRating { get; set; }
-    public List<Link> Links { get; set; } = new List<Link>();
+    public List<Link> Links { get; set; } = [];
 }
 
 public class ImageData

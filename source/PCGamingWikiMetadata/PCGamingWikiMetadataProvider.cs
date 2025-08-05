@@ -12,9 +12,9 @@ public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
     private readonly IPlayniteAPI playniteApi;
     private readonly PCGamingWikiMetadataSettings settings;
 
-    private PCGWClient client;
+    private readonly PCGWClient client;
 
-    private PCGWGameController gameController;
+    private readonly PCGWGameController gameController;
     private static readonly ILogger logger = LogManager.GetLogger();
 
     private List<MetadataField> availableFields;
@@ -23,10 +23,7 @@ public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
     {
         get
         {
-            if (availableFields == null)
-            {
-                availableFields = GetAvailableFields();
-            }
+            availableFields ??= GetAvailableFields();
 
             return availableFields;
         }
@@ -200,10 +197,9 @@ public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
 
     public override int? GetCriticScore(GetMetadataFieldArgs args)
     {
-        int? score;
 
         if (AvailableFields.Contains(MetadataField.CriticScore) &&
-                (this.gameController.Game.GetOpenCriticReception(out score) ||
+                (this.gameController.Game.GetOpenCriticReception(out int? score) ||
                 this.gameController.Game.GetIGDBReception(out score) ||
                 this.gameController.Game.GetMetacriticReception(out score))
             )

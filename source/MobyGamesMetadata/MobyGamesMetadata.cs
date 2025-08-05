@@ -14,9 +14,8 @@ namespace MobyGamesMetadata;
 public class MobyGamesMetadata : MetadataPlugin
 {
     private readonly ILogger logger = LogManager.GetLogger();
-    private readonly IWebDownloader downloader = new WebDownloader();
     private MobyGamesApiClient apiClient;
-    public MobyGamesApiClient ApiClient { get { return apiClient ?? (apiClient = new MobyGamesApiClient(settings?.Settings?.ApiKey)); } }
+    public MobyGamesApiClient ApiClient { get { return apiClient ??= new MobyGamesApiClient(settings?.Settings?.ApiKey); } }
 
     private MobyGamesMetadataSettingsViewModel settings { get; set; }
 
@@ -29,7 +28,7 @@ public class MobyGamesMetadata : MetadataPlugin
             var fields = new List<MetadataField>();
             if (settings.Settings.DataSource.HasFlag(DataSource.Api))
             {
-                fields.AddMissing(new[] {
+                fields.AddMissing([
                     MetadataField.Name,
                     MetadataField.Description,
                     MetadataField.ReleaseDate,
@@ -41,11 +40,11 @@ public class MobyGamesMetadata : MetadataPlugin
                     MetadataField.CoverImage,
                     MetadataField.BackgroundImage,
                     MetadataField.Links,
-                });
+                ]);
             }
             if (settings.Settings.DataSource.HasFlag(DataSource.Scraping))
             {
-                fields.AddMissing(new[] {
+                fields.AddMissing([
                     MetadataField.Name,
                     MetadataField.Description,
                     MetadataField.ReleaseDate,
@@ -57,7 +56,7 @@ public class MobyGamesMetadata : MetadataPlugin
                     MetadataField.CriticScore,
                     MetadataField.CommunityScore,
                     MetadataField.Series,
-                });
+                ]);
             }
             return fields;
         }
@@ -77,7 +76,7 @@ public class MobyGamesMetadata : MetadataPlugin
             return null;
 
         var platformUtility = new PlatformUtility(PlayniteApi);
-        var scraper = new MobyGamesScraper(platformUtility, downloader);
+        var scraper = new MobyGamesScraper(platformUtility, PlayniteApi.WebViews);
         var aggr = new MobyGamesGameSearchProvider(ApiClient, scraper, settings.Settings, platformUtility);
         return new MobyGamesMetadataProvider(options, this, aggr, platformUtility, settings.Settings);
     }
@@ -133,7 +132,7 @@ public class MobyGamesMetadata : MetadataPlugin
                 break;
             case DataSource.ApiAndScraping:
                 chosenOption = PlayniteApi.Dialogs.ShowMessage("Assign one of the following to all your matching games:", "Bulk property import",
-                    System.Windows.MessageBoxImage.Question, new List<MessageBoxOption> { genreOption, groupOption, cancelOption });
+                    System.Windows.MessageBoxImage.Question, [genreOption, groupOption, cancelOption]);
                 break;
             default:
                 return;
@@ -141,11 +140,11 @@ public class MobyGamesMetadata : MetadataPlugin
         if (chosenOption == null || chosenOption == cancelOption) return;
 
         var platformUtility = new PlatformUtility(PlayniteApi);
-        var scraper = new MobyGamesScraper(platformUtility, downloader);
+        var scraper = new MobyGamesScraper(platformUtility, PlayniteApi.WebViews);
         if (chosenOption == groupOption)
         {
             var searchProvider = new MobyGamesGroupSearchProvider(ApiClient, scraper, settings.Settings, platformUtility);
-            var extra = new MobyGamesBulkGroupAssigner(PlayniteApi, settings.Settings, searchProvider, platformUtility, settings.Settings.MaxDegreeOfParallelism);
+            var extra = new MobyGamesBulkGroupAssigner(PlayniteApi, searchProvider, platformUtility, settings.Settings.MaxDegreeOfParallelism);
             extra.ImportGameProperty();
         }
         else if (chosenOption == genreOption)

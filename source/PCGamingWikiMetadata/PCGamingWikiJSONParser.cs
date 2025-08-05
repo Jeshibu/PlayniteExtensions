@@ -2,19 +2,11 @@ using Newtonsoft.Json.Linq;
 
 namespace PCGamingWikiMetadata;
 
-public class PCGamingWikiJSONParser
+public class PCGamingWikiJSONParser(JObject content, PCGWGameController gameController)
 {
-    private PCGWGameController gameController;
-    private JObject content;
-    public PCGamingWikiJSONParser(JObject content, PCGWGameController gameController)
-    {
-        this.content = content;
-        this.gameController = gameController;
-    }
-
     public void ParseGameDataJson()
     {
-        JToken playAnywhere = this.content.SelectToken("$.parse.links[?(@.* == 'List of Xbox Play Anywhere games')]");
+        JToken playAnywhere = content.SelectToken("$.parse.links[?(@.* == 'List of Xbox Play Anywhere games')]");
 
         if (playAnywhere != null)
         {
@@ -24,6 +16,6 @@ public class PCGamingWikiJSONParser
 
     public string PageHTMLText()
     {
-        return this.content["parse"]["text"]["*"].ToString();
+        return content["parse"]["text"]["*"].ToString();
     }
 }

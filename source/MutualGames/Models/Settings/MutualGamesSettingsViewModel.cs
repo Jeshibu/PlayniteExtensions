@@ -12,8 +12,8 @@ public class MutualGamesSettingsViewModel : PluginSettingsViewModel<MutualGamesS
 {
     private List<GameFeature> gameFeatures;
     private IFriendsGamesClient[] clients;
-    public IFriendsGamesClient[] Clients => clients ?? (clients = Plugin.GetClients().ToArray());
-    public GameField[] ImportFieldOptions { get; } = new[] { GameField.Categories, GameField.Tags };
+    public IFriendsGamesClient[] Clients => clients ??= Plugin.GetClients().ToArray();
+    public GameField[] ImportFieldOptions { get; } = [GameField.Categories, GameField.Tags];
     public List<GameFeature> Features
     {
         get
@@ -21,7 +21,7 @@ public class MutualGamesSettingsViewModel : PluginSettingsViewModel<MutualGamesS
             if (gameFeatures != null)
                 return gameFeatures;
 
-            var output = new List<GameFeature> { new GameFeature { Id = Guid.Empty, Name = "None" } };
+            var output = new List<GameFeature> { new() { Id = Guid.Empty, Name = "None" } };
             output.AddRange(PlayniteApi.Database.Features.OrderBy(f => f.Name));
             return gameFeatures = output;
         }
@@ -97,7 +97,7 @@ public class MutualGamesSettingsViewModel : PluginSettingsViewModel<MutualGamesS
 
     public override bool VerifySettings(out List<string> errors)
     {
-        errors = new List<string>();
+        errors = [];
         try
         {
             var exampleFriend = new FriendAccountInfo { Id = "42069", Name = "xXx_1337Slayer_xXx", Source = FriendSource.Steam };

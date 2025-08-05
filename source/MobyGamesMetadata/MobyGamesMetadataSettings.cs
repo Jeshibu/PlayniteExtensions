@@ -22,7 +22,7 @@ public class MobyGamesMetadataSettings : BulkImportPluginSettings
     }
     public bool ShowTopPanelButton { get; set; } = true;
 
-    public ObservableCollection<MobyGamesGenreSetting> Genres { get; set; } = new ObservableCollection<MobyGamesGenreSetting>();
+    public ObservableCollection<MobyGamesGenreSetting> Genres { get; set; } = [];
 
     public MobyGamesImageSourceSettings Cover { get; set; } = new MobyGamesImageSourceSettings
     {
@@ -134,27 +134,27 @@ public class MobyGamesMetadataSettingsViewModel : PluginSettingsViewModel<MobyGa
 
     public RelayCommand<object> GetApiKeyCommand
     {
-        get => new RelayCommand<object>((a) =>
+        get => new((a) =>
         {
             Process.Start(@"https://www.mobygames.com/info/api/");
         });
     }
 
-    public PropertyImportTarget[] ImportTargets { get; } = new[]
-    {
+    public PropertyImportTarget[] ImportTargets { get; } =
+    [
         PropertyImportTarget.Ignore,
         PropertyImportTarget.Genres,
         PropertyImportTarget.Tags,
         PropertyImportTarget.Features,
-    };
+    ];
 
-    public AspectRatio[] AspectRatios { get; } = new[]
-    {
+    public AspectRatio[] AspectRatios { get; } =
+    [
         AspectRatio.Any,
         AspectRatio.Vertical,
         AspectRatio.Horizontal,
         AspectRatio.Square,
-    };
+    ];
 
     private void InitializeGenres()
     {

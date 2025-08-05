@@ -52,6 +52,7 @@
     <Compile Include="..\PlayniteExtensions.Common\GlobalCommands.cs" Link="Common\GlobalCommands.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Common\IEnumerableExtensions.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IgnoreScrollBehavior.cs" Link="Common\IgnoreScrollBehavior.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs" Link="Common\IntegerFormatConverter.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Common\IPlatformUtility.cs" />
     <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="Common\LibraryIdUtility.cs" />
     <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs" Link="Common\PlatformUtility.cs" />

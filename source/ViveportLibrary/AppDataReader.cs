@@ -16,23 +16,16 @@ public interface IAppDataReader
     IEnumerable<LicenseData> GetLicenseData();
 }
 
-public class AppDataReader : IAppDataReader
+public class AppDataReader(string appStatePath = null, string contentMetadataPath = null, string licenseDataPath = null) : IAppDataReader
 {
     private static readonly string DefaultAppStatePath = Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\HTC\Viveport\installed_apps.json");
     private static readonly string DefaultContentMetadataPath = Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\HTC\Viveport\content_metadata2.pref");
     private static readonly string DefaultLicenseDataPath = Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\HTC\Viveport\content_licensing2.pref");
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
-    public string AppStatePath { get; }
-    public string ContentMetadataPath { get; }
-    public string LicenseDataPath { get; }
-
-    public AppDataReader(string appStatePath = null, string contentMetadataPath = null, string licenseDataPath = null)
-    {
-        AppStatePath = appStatePath ?? DefaultAppStatePath;
-        ContentMetadataPath = contentMetadataPath ?? DefaultContentMetadataPath;
-        LicenseDataPath = licenseDataPath ?? DefaultLicenseDataPath;
-    }
+    public string AppStatePath { get; } = appStatePath ?? DefaultAppStatePath;
+    public string ContentMetadataPath { get; } = contentMetadataPath ?? DefaultContentMetadataPath;
+    public string LicenseDataPath { get; } = licenseDataPath ?? DefaultLicenseDataPath;
 
     public IEnumerable<InstalledAppData> GetInstalledApps()
     {
@@ -126,16 +119,16 @@ public class AppMetadata
     public string Locale;
 
     [JsonProperty("sdl")]
-    public string[] SupportedDeviceList = new string[0];
+    public string[] SupportedDeviceList = [];
 
     [JsonProperty("srl")]
-    public string[] SupportedVrApis = new string[0];
+    public string[] SupportedVrApis = [];
 
     [JsonProperty("tt")]
     public string Title;
 
     [JsonProperty("tm")]
-    public Dictionary<string, ThumbnailData> Thumbnails = new Dictionary<string, ThumbnailData>();
+    public Dictionary<string, ThumbnailData> Thumbnails = [];
 }
 
 public class ThumbnailData

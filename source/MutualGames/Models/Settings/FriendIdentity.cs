@@ -7,7 +7,7 @@ namespace MutualGames.Models.Settings;
 public class FriendIdentity
 {
     public string FriendName { get; set; }
-    public ObservableCollection<FriendAccountInfo> Accounts { get; set; } = new ObservableCollection<FriendAccountInfo>();
+    public ObservableCollection<FriendAccountInfo> Accounts { get; set; } = [];
 
     [DontSerialize]
     public RelayCommand<FriendAccountInfo> RemoveCommand { get; }

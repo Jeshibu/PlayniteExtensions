@@ -11,15 +11,10 @@ namespace GamesSizeCalculator.PS3;
 /// <summary>
 /// Only an ISizeCalculator in name for now; installed games cannot get their install size from metadata providers
 /// </summary>
-public class PS3InstallSizeCalculator : ISizeCalculator
+public class PS3InstallSizeCalculator(IPlayniteAPI playniteAPI) : ISizeCalculator
 {
     public string ServiceName { get; } = "PS3";
-    public IPlayniteAPI PlayniteAPI { get; }
-
-    public PS3InstallSizeCalculator(IPlayniteAPI playniteAPI)
-    {
-        PlayniteAPI = playniteAPI;
-    }
+    public IPlayniteAPI PlayniteAPI { get; } = playniteAPI;
 
     public async Task<ulong?> GetInstallSizeAsync(Game game)
     {

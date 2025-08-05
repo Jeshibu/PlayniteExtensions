@@ -9,19 +9,12 @@ using System.Linq;
 
 namespace PCGamingWikiMetadata;
 
-public class PCGWClient
+public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameController)
 {
     private readonly ILogger logger = LogManager.GetLogger();
-    private RestClient client;
-    protected MetadataRequestOptions options;
-    protected PCGWGameController gameController;
-
-    public PCGWClient(MetadataRequestOptions options, PCGWGameController gameController)
-    {
-        client = new RestClient("https://www.pcgamingwiki.com/w/api.php").AddDefaultQueryParameter("format", "json");
-        this.options = options;
-        this.gameController = gameController;
-    }
+    private readonly RestClient client = new RestClient("https://www.pcgamingwiki.com/w/api.php").AddDefaultQueryParameter("format", "json");
+    protected MetadataRequestOptions options = options;
+    protected PCGWGameController gameController = gameController;
 
     public JObject ExecuteRequest(RestRequest request)
     {
@@ -49,7 +42,7 @@ public class PCGWClient
 
     public List<GenericItemOption> SearchGames(string searchName)
     {
-        List<GenericItemOption> gameResults = new List<GenericItemOption>();
+        List<GenericItemOption> gameResults = [];
         logger.Info(searchName);
 
         var request = new RestRequest();
@@ -62,9 +55,8 @@ public class PCGWClient
         try
         {
             JObject searchResults = ExecuteRequest(request);
-            JToken error;
 
-            if (searchResults.TryGetValue("error", out error))
+            if (searchResults.TryGetValue("error", out JToken error))
             {
                 logger.Error($"Encountered API error: {error.ToString()}");
                 return gameResults;
@@ -74,7 +66,7 @@ public class PCGWClient
 
             foreach (dynamic game in searchResults["query"]["search"])
             {
-                PCGWGame g = new PCGWGame(gameController.Settings, (string)game.title, (int)game.pageid);
+                PCGWGame g = new(gameController.Settings, (string)game.title, (int)game.pageid);
                 gameResults.Add(g);
             }
         }
@@ -97,19 +89,17 @@ public class PCGWClient
         try
         {
             JObject content = ExecuteRequest(request);
-            JToken error;
 
-            if (content.TryGetValue("error", out error))
+            if (content.TryGetValue("error", out JToken error))
             {
                 logger.Error($"Encountered API error: {error.ToString()}");
             }
 
-            PCGamingWikiJSONParser jsonParser = new PCGamingWikiJSONParser(content, this.gameController);
-            PCGamingWikiHTMLParser parser = new PCGamingWikiHTMLParser(jsonParser.PageHTMLText(), this.gameController);
+            PCGamingWikiJSONParser jsonParser = new(content, this.gameController);
+            PCGamingWikiHTMLParser parser = new(jsonParser.PageHTMLText(), this.gameController);
 
-            string redirectPage;
 
-            if (parser.CheckPageRedirect(out redirectPage))
+            if (parser.CheckPageRedirect(out string redirectPage))
             {
                 logger.Debug($"redirect link: {redirectPage}");
                 game.Name = redirectPage;

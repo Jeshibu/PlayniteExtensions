@@ -8,9 +8,9 @@ namespace PCGamingWikiMetadata.Tests;
 
 public class PCGWGame_Test_BAT : IDisposable
 {
-    private PCGWGame testGame;
-    private LocalPCGWClient client;
-    private TestMetadataRequestOptions options;
+    private readonly PCGWGame testGame;
+    private readonly LocalPCGWClient client;
+    private readonly TestMetadataRequestOptions options;
 
 
     public PCGWGame_Test_BAT()

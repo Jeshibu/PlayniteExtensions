@@ -8,7 +8,7 @@ internal class CargoTables
 {
     public static string GameInfoBoxTableName = "Infobox_game";
 
-    public List<CargoFieldInfo> Fields { get; } = new List<CargoFieldInfo>();
+    public List<CargoFieldInfo> Fields { get; } = [];
 
     public CargoTables()
     {

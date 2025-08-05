@@ -11,16 +11,11 @@ public interface IImageData
     IEnumerable<string> Platforms { get; }
 }
 
-public class BasicImage : IImageData
+public class BasicImage(string url) : IImageData
 {
-    public BasicImage(string url)
-    {
-        Url = url;
-    }
-
-    public string Url { get; set; }
+    public string Url { get; set; } = url;
     public string ThumbnailUrl { get; set; }
     public int Width { get; set; }
     public int Height { get; set; }
-    public IEnumerable<string> Platforms { get; set; } = new List<string>();
+    public IEnumerable<string> Platforms { get; set; } = [];
 }

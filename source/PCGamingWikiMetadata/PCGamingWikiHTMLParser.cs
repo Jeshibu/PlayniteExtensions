@@ -11,8 +11,8 @@ namespace PCGamingWikiMetadata;
 public class PCGamingWikiHTMLParser
 {
     private readonly ILogger logger = LogManager.GetLogger();
-    private HtmlDocument doc;
-    private PCGWGameController gameController;
+    private readonly HtmlDocument doc;
+    private readonly PCGWGameController gameController;
 
     public const short UndefinedPlayerCount = -1;
 
@@ -76,7 +76,7 @@ public class PCGamingWikiHTMLParser
             return table.SelectNodes($"//tr[@class='{rowClass}']");
         }
 
-        return new List<HtmlNode>();
+        return [];
     }
 
     public bool CheckPageRedirect(out string redirectPage)
@@ -185,9 +185,9 @@ public class PCGamingWikiHTMLParser
 
     private IList<string> ParseMultiplayerNotes(HtmlNode notes)
     {
-        List<string> multiplayerTypes = new List<string>();
+        List<string> multiplayerTypes = [];
 
-        Regex pattern = new Regex(@"class=""table-network-multiplayer-body-notes"">(?<mode1>(Co-op|Versus))?(,)?(&#32;)?(?<mode2>(Co-op|Versus))?<br>");
+        Regex pattern = new(@"class=""table-network-multiplayer-body-notes"">(?<mode1>(Co-op|Versus))?(,)?(&#32;)?(?<mode2>(Co-op|Versus))?<br>");
         Match match = pattern.Match(notes.OuterHtml);
 
         if (match.Groups["mode1"].Success)
@@ -359,9 +359,8 @@ public class PCGamingWikiHTMLParser
 
     private void AddReception(string aggregator, HtmlNode node)
     {
-        int score;
 
-        if (int.TryParse(node.SelectNodes(".//a")[0].InnerText.HtmlDecode(), out score))
+        if (int.TryParse(node.SelectNodes(".//a")[0].InnerText.HtmlDecode(), out int score))
         {
             this.gameController.Game.AddReception(aggregator, score);
         }

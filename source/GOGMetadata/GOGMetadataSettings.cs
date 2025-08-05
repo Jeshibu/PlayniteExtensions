@@ -35,7 +35,7 @@ public class GOGMetadataSettingsViewModel : PluginSettingsViewModel<GOGMetadataS
             Settings.Locale = langCode;
     }
 
-    public Dictionary<string, string> Languages { get; } = new Dictionary<string, string>
+    public Dictionary<string, string> Languages { get; } = new()
     {
         {"en", "English" },
         {"de", "Deutsch" },

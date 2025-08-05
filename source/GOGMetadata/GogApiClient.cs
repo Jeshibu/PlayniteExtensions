@@ -14,19 +14,9 @@ using System.Threading;
 
 namespace GOGMetadata;
 
-public class GogApiClient : IGameSearchProvider<GogSearchResponse.Product>
+public class GogApiClient(IWebDownloader downloader, GOGMetadataSettings settings, IPlatformUtility platformUtility) : IGameSearchProvider<GogSearchResponse.Product>
 {
-    private ILogger logger = LogManager.GetLogger();
-    private readonly IWebDownloader downloader;
-    private readonly GOGMetadataSettings settings;
-    private readonly IPlatformUtility platformUtility;
-
-    public GogApiClient(IWebDownloader downloader, GOGMetadataSettings settings, IPlatformUtility platformUtility)
-    {
-        this.downloader = downloader;
-        this.settings = settings;
-        this.platformUtility = platformUtility;
-    }
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public StorePageResult.ProductDetails GetGameStoreData(GogSearchResponse.Product product)
     {
@@ -112,11 +102,11 @@ public class GogApiClient : IGameSearchProvider<GogSearchResponse.Product>
             Genres = AsList(searchResult.genres),
             Tags = AsList(searchResult.tags),
             ReleaseDate = searchResult.ReleaseDate,
-            CoverOptions = new List<IImageData> { new BasicImage(settings.UseVerticalCovers ? searchResult.coverVertical : searchResult.coverHorizontal) },
-            BackgroundOptions = searchResult.screenshots?.Select(ScreenshotUrlToImageData).ToList() ?? new List<IImageData>(),
-            Platforms = searchResult.operatingSystems?.SelectMany(platformUtility.GetPlatforms).ToList() ?? new List<MetadataProperty>(),
+            CoverOptions = [new BasicImage(settings.UseVerticalCovers ? searchResult.coverVertical : searchResult.coverHorizontal)],
+            BackgroundOptions = searchResult.screenshots?.Select(ScreenshotUrlToImageData).ToList() ?? [],
+            Platforms = searchResult.operatingSystems?.SelectMany(platformUtility.GetPlatforms).ToList() ?? [],
             CommunityScore = searchResult.reviewsRating * 2,
-            Links = new List<Link> { new Link("GOG Store Page", $"https://www.gog.com/{settings.Locale}/game/{searchResult.slug}") },
+            Links = [new Link("GOG Store Page", $"https://www.gog.com/{settings.Locale}/game/{searchResult.slug}")],
         };
 
         if (gogDetails != null)
@@ -150,15 +140,15 @@ public class GogApiClient : IGameSearchProvider<GogSearchResponse.Product>
     private static List<string> AsList(string single)
     {
         if (string.IsNullOrEmpty(single))
-            return new List<string>();
+            return [];
 
-        return new List<string> { single };
+        return [single];
     }
 
     private static List<string> AsList(IEnumerable<SluggedName> sluggedNames)
     {
         if (sluggedNames == null)
-            return new List<string>();
+            return [];
 
         return sluggedNames.Select(x => x.name).ToList();
     }
