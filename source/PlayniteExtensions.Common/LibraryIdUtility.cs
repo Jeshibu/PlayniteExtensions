@@ -80,8 +80,6 @@ public abstract class SingleExternalDatabaseIdUtility : ISingleExternalDatabaseI
 
     public IEnumerable<DbId> GetIdsFromGame(Game game)
     {
-        var output = new List<(ExternalDatabase, string)>();
-
         if (LibraryIds.Contains(game.PluginId))
             yield return new DbId(Database, game.GameId);
 

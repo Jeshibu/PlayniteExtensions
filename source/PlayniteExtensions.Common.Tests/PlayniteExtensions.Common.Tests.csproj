@@ -16,30 +16,15 @@
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.9.9" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
-    <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.10.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="NuGet.Frameworks" Version="6.10.0" />
     <PackageReference Include="PlayniteSDK" Version="6.9.0" />
-    <PackageReference Include="System.Buffers" Version="4.5.1" />
-    <PackageReference Include="System.Collections.Immutable" Version="7.0.0" />
-    <PackageReference Include="System.Memory" Version="4.5.5" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-    <PackageReference Include="System.Reflection.Metadata" Version="1.6.0" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
-    <PackageReference Include="xunit" Version="2.8.1" />
-    <PackageReference Include="xunit.abstractions" Version="2.0.3" />
-    <PackageReference Include="xunit.analyzers" Version="1.14.0">
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.console" Version="2.9.3">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="xunit.assert" Version="2.8.1" />
-    <PackageReference Include="xunit.core" Version="2.8.1" />
-    <PackageReference Include="xunit.extensibility.core" Version="2.8.1" />
-    <PackageReference Include="xunit.extensibility.execution" Version="2.8.1" />
-    <PackageReference Include="xunit.runner.console" Version="2.8.1">
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
       <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.1">
-      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

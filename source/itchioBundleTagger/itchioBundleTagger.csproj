@@ -13,13 +13,9 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="IndexRange" Version="1.0.2" />
     <PackageReference Include="Linguini.Bundle" Version="0.3.2" />
-    <PackageReference Include="Linguini.Shared" Version="0.3.0" />
-    <PackageReference Include="Linguini.Syntax" Version="0.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="PlayniteSDK" Version="6.2.2" />
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />

@@ -44,7 +44,7 @@ jobs:
       - name: Run unit tests
         run: |
           $testprojects = ConvertFrom-Json '${{ steps.projectselection.outputs.testprojects }}'
-          $runnerpath = "$env:USERPROFILE\.nuget\packages\xunit.runner.console\2.8.1\tools\net462\xunit.console.x86.exe"
+          $runnerpath = "$env:USERPROFILE\.nuget\packages\xunit.runner.console\2.9.3\tools\net462\xunit.console.x86.exe"
           foreach ($tp in $testprojects){
             "Executing tests in project: $tp"
             & $runnerpath "$Env:GITHUB_WORKSPACE\source\$tp\bin\Release\net462\$tp.dll"
