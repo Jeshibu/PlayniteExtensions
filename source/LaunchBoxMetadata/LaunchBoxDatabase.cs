@@ -39,9 +39,6 @@ public class LaunchBoxDatabase
         else
             db = new SQLiteDatabase(DatabasePath);
 
-        //db.EnableLoadExtension(true);
-        //db.LoadExtension("System.Data.SQLite.dll", "sqlite3_fts5_init");
-
         return db;
     }
 
@@ -50,7 +47,7 @@ public class LaunchBoxDatabase
         if (args != null)
         {
             args.IsIndeterminate = false;
-            args.ProgressMaxValue = 4;
+            args.ProgressMaxValue = 5;
         }
 
         if (File.Exists(DatabasePath))
@@ -73,6 +70,12 @@ public class LaunchBoxDatabase
             if (args != null) args.CurrentProgressValue++;
 
             db.Save(data.GameImages);
+            if (args != null) args.CurrentProgressValue++;
+
+            db.Save(data.GameImages.GroupBy(gi => gi.Type).Select(x => new ImageType { Name = x.Key, Count = x.Count() }));
+            if (args != null) args.CurrentProgressValue++;
+
+            db.Save(data.GameImages.GroupBy(gi => gi.Region).Select(x => new ImageRegion { Name = x.Key, Count = x.Count() }));
             if (args != null) args.CurrentProgressValue++;
 
             db.Commit();
@@ -103,29 +106,16 @@ limit {limit.Value}";
         }
     }
 
-    public IEnumerable<string> GetGameImageTypes()
+    private IEnumerable<ItemCount> GetItemCounts<T>() where T:ItemCount
     {
-        var query = @"
-select distinct Type
-from GameImages
-order by Type asc";
         using (var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY))
         {
-            return db.Load<LaunchBoxGameImage>(query).Select(i => i.Type).ToList();
+            return db.LoadAll<T>().ToList();
         }
     }
-    public IEnumerable<string> GetRegions()
-    {
-        var query = @"
-select Region
-from GameImages
-group by Region
-order by count(1) desc";
-        using (var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY))
-        {
-            return db.Load<LaunchBoxGameImage>(query).Select(i => i.Region).ToList();
-        }
-    }
+
+    public IEnumerable<string> GetGameImageTypes() => GetItemCounts<ImageType>().Select(x => x.Name);
+    public IEnumerable<string> GetRegions() => GetItemCounts<ImageRegion>().Select(x => x.Name);
 
     public static string GetMatchStringFromSearchString(string searchString)
     {

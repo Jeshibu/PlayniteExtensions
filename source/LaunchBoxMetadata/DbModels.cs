@@ -40,16 +40,23 @@ public class LaunchBoxGameImage : IDatabaseObject
 
     public string FileName { get; set; }
 
-    [SQLiteIndex("IX_ImageType")]
     public string Type { get; set; }
 
-    [SQLiteIndex("IX_ImageRegion")]
     public string Region { get; set; }
 
     public uint CRC32 { get; set; }
 
     string IDatabaseObject.Name => FileName;
 }
+
+public class ItemCount
+{
+    public string Name { get; set; }
+    public int Count { get; set; }
+}
+
+public class ImageType : ItemCount { }
+public class ImageRegion : ItemCount { }
 
 public interface IDatabaseObject
 {
