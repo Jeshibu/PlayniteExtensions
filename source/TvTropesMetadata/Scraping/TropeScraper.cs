@@ -12,7 +12,25 @@ namespace TvTropesMetadata.Scraping;
 public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
 {
     public List<string> SubcategoryWhitelist = ["VideoGames", "VisualNovels"];
-    public List<string> FolderLabelWhitelist = ["Video Game", "Videogame", "Visual Novel"];
+    public List<string> FolderLabelWhitelist = [
+        "Game",
+        "Visual Novel",
+        "Action-Adventure",
+        "Fighting",
+        "First-Person Shooter",
+        "Music/Rhythm",
+        "Platform",
+        "Real-Time Strategy",
+        "Role-Playing",
+        "Roguelike",
+        "Simulation",
+        "Stealth-Based Game",
+        "Strategy",
+        "Survival Horror",
+        "Third-Person Shooter",
+        "Turn-Based Strategy",
+        "Sandbox"
+    ];
 
     public override IEnumerable<TvTropesSearchResult> Search(string query) => Search(query, "trope");
 
@@ -67,6 +85,7 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
 
         void AddListElementsFromSourceString(string source) => output.AddRange(htmlParser.Parse(source).QuerySelectorAll("ul > li:has(> em, > a.twikilink)"));
         bool IsNonVideoGamesHeader(string header) => NonLettersAndNumbers.Replace(header, "").Contains("nonvideogame", StringComparison.InvariantCultureIgnoreCase);
+        bool IsVideogameFolderName(string folderName) => FolderLabelWhitelist.Any(l => folderName.Contains(l, StringComparison.InvariantCultureIgnoreCase));
 
         if (!getAllUnfiltered)
         {
@@ -77,15 +96,14 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
                     continue;
 
                 var segmentContent = segment.Item2;
-                if (FolderLabelWhitelist.Any(l => segmentHeader.Contains(l, StringComparison.InvariantCultureIgnoreCase)))
+                if (IsVideogameFolderName(segmentHeader))
                     AddListElementsFromSourceString(segmentContent);
 
-                var segmentDoc = htmlParser.Parse(segmentContent);
-                var folderLabels = segmentDoc.QuerySelectorAll(".folderlabel[onclick^=\"togglefolder(\"]");
+                var folderLabels = htmlParser.Parse(segmentContent).QuerySelectorAll(".folderlabel[onclick^=\"togglefolder(\"]");
                 foreach (var folderLabel in folderLabels)
                 {
                     var label = folderLabel.TextContent.HtmlDecode();
-                    if (FolderLabelWhitelist.Any(l => label.Contains(l, StringComparison.InvariantCultureIgnoreCase)))
+                    if (IsVideogameFolderName(label))
                         output.AddRange(folderLabel.NextElementSibling.QuerySelectorAll("ul > li:has(em)"));
                 }
             }

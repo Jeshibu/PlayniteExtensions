@@ -18,6 +18,7 @@ public class TropeScraperTests
         { "https://tvtropes.org/pmwiki/pmwiki.php/Main/WallRun", "html/WallRun.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/Main/WallJump", "html/WallJump.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/Main/KillTheGod", "html/KillTheGod.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/Main/PlayableEpilogue", "html/PlayableEpilogue.html" },
     });
 
     [Fact]
@@ -95,6 +96,16 @@ public class TropeScraperTests
         ContainsGame(result, "Neverwinter Nights 2", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/NeverwinterNights2");
         ContainsGame(result, "Neverwinter Nights 2: Mask of the Betrayer", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/NeverwinterNights2");
         ContainsGame(result, "Pillars of Eternity", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/PillarsOfEternity");
+    }
+
+    [Fact]
+    public void VideogameOnlyTropeParsesRight()
+    {
+        var scraper = new TropeScraper(downloader);
+        var result = scraper.GetGamesForTrope("https://tvtropes.org/pmwiki/pmwiki.php/Main/PlayableEpilogue");
+
+        Assert.Equal("Playable Epilogue", result.Title);
+        Assert.NotEmpty(result.Items);
     }
 
     private void ContainsGame(ParsedTropePage tropePage, string title, string url)

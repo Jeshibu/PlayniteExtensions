@@ -148,6 +148,10 @@ public abstract class BaseScraper(IWebDownloader downloader)
         if (titleElement == null)
             return null;
 
+        var wrapped = titleElement.QuerySelector("span.wrapped_title");
+        if (wrapped != null)
+            return wrapped.TextContent.HtmlDecode();
+
         var strong = titleElement.QuerySelector("strong");
         if (strong != null)
             strong.Remove();
