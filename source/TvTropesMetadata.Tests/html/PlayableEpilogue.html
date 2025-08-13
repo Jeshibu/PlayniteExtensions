@@ -64,42 +64,16 @@
                         
                         						
                         						
-												<script type="text/javascript">
-						  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-						  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-						  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-						  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-						  ga('create', 'UA-3821842-1', 'auto');
-						  ga('send', 'pageview');
-						</script>
+												
 
 
-                                                <script>
-                        !function(f,b,e,v,n,t,s)
-                        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-                        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-                        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-                        n.queue=[];t=b.createElement(e);t.async=!0;
-                        t.src=v;s=b.getElementsByTagName(e)[0];
-                        s.parentNode.insertBefore(t,s)}(window, document,'script',
-                        'https://connect.facebook.net/en_US/fbevents.js');
-
-                                                                          fbq('init', '850567933835915');
-                                                fbq('track', 'PageView');
-                        </script>
+                                                
                         <noscript><img height="1" width="1" style="display:none"
                         src="https://www.facebook.com/tr?id=850567933835915&ev=PageView&noscript=1"
                         /></noscript>
 
 
-                                                <script>
-                        !function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);
-
-                                                                        rdt('init','a2_fksv8rryv493');
                                                 
-                        rdt('track', 'PageVisit');
-                        </script>
 
 
 
@@ -108,9 +82,7 @@
  <body class="">
 
         <i id="user-prefs"></i>
-    <script>updateUserPrefs(); 
-    show_promo();
-    </script>
+    
 
     <div id="fb-root"></div>
 
@@ -162,40 +134,7 @@
     </div>
 </div>
 
-<script>
-    // Detect if browser is Safari
-    function is_ios_safari(){
-        var ua = navigator.userAgent;
-        return /iP(hone|ad|od)/.test(ua) && /Safari/.test(ua) && !/CriOS|FxiOS|OPiOS|EdgiOS/.test(ua);
-    }
 
-    // Detect OS only
-    function get_mobile_type(){
-        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-        if(/iPhone|iPad|iPod/i.test(userAgent)){
-            return "iOS";
-        } else if(/Android/i.test(userAgent)){
-            return "Android";
-        } else {
-            return "Other";
-        }
-    }
-
-    var promo_link = document.getElementById("promo-app-link");
-    var os = get_mobile_type();
-
-    if(os === "iOS" && is_ios_safari()){
-        // Safari iOS — rely on native Smart App Banner, hide custom one
-        document.body.classList.remove("app-promo");
-    } else if(os === "Android"){
-        // Android: Open app via intent, fallback to Play Store
-        promo_link.href = "https://play.google.com/store/apps/details?id=org.tvtropes.app";
-    } else {
-        // All other browsers, including non-Safari iOS browsers
-        promo_link.href = "https://apps.apple.com/app/6738365737";
-    }
-</script>
 
     <header id="main-header-bar" class="headroom-element ">
         <div id="main-header-bar-inner">
@@ -320,7 +259,7 @@
                 <li>Sticky Header <div id="mobile-toggle-stickyheader" class="display-toggle sticky-header"></div></li>
                 <li>Highlight Links <div id="mobile-toggle-highlightlinks" class="display-toggle highlight-links"></div></li>
             </ul>
-            <script>updateMobilePrefs();</script>
+            
         </div>
 
     </div>
@@ -348,680 +287,9 @@
 
             </div>
 
-    <script>
-                // Get device type
-function get_device_type(){
-    var ua = navigator.userAgent.toLowerCase();
-    var device_type = "";
     
-    // This is usually "tablet", but for this case we are going to call it mobile
-    if(/(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(ua)) device_type = "mobile";
-    // This is mobile
-    else if(/(mobi|ipod|phone|blackberry|opera mini|fennec|minimo|symbian|psp|nintendo ds|archos|skyfire|puffin|blazer|bolt|gobrowser|iris|maemo|semc|teashark|uzard)/.test(ua)) device_type = "mobile";
-    // Otherwise desktop
-    else device_type = "desktop";
-
-    return device_type;
-}
-
-var show_modal_loaded = false;
-
-//// MOBILE MENU TOGGLE FUNCTIONS ////
-function show_modal(type, message, confirmation_url, call_back, oauth_finalize, groupname, title, video_id, author, time, replytext) {
-    console.log("showing modal " + type);
     
-    const modalBox = document.getElementById('modal-box');
-    const childDivs = modalBox.querySelectorAll(':scope > div');
-
-    // Check if there are more than one child divs in the modal box, indicating a modal is already there
-    if (childDivs.length > 1) {
-        kill_modal();
-    }
-    // Show the modal and the loading graphic
-    modalBox.classList.add('active');
-
-    let alert = '';
-    if (typeof message === 'object' && message !== null) {
-        Object.keys(message).forEach(function(key) {
-            alert += '&' + key + '=' + encodeURIComponent(message[key]);
-        });
-    } else {
-        alert = '&message=' + encodeURIComponent(message);
-    }
-
-    // Construct the URL with parameters
-    const url = '/design/parts/component-modalBox.php?window=' + type + alert + 
-                (confirmation_url ? '&curl=' + encodeURIComponent(confirmation_url) : "") + 
-                (oauth_finalize ? '&oauth_finalize=' + encodeURIComponent(oauth_finalize) : "") + 
-                (groupname ? '&groupname=' + groupname : "") + 
-                (video_id ? '&video_id=' + encodeURIComponent(video_id) : "") +
-                (author ? '&author=' + encodeURIComponent(author) : "") +
-                (time ? '&time=' + encodeURIComponent(time) : "");
-
-    // Prepare body ONLY with replytext
-    const body_data = new URLSearchParams();
-    if (replytext) body_data.append('replytext', replytext);
-
-    fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: body_data.toString()
-        })
-        .then(response => response.text())
-        .then(html => {
-            modalBox.innerHTML = html;
-
-            // Find and execute scripts
-            const scripts = modalBox.querySelectorAll('script');
-            scripts.forEach(script => {
-                const newScript = document.createElement('script');
-                newScript.type = 'text/javascript';
-                
-                if (script.src) {
-                    newScript.src = script.src;
-
-                    // Wait for Dropzone.js to load before adding the imguploader.js
-                    if(newScript.src.includes('/design/js/dropzone.js')) {
-                        newScript.onload = function() {
-                            
-                            // Now load the imguploader.js script
-                            const img_uploader_script = document.createElement('script');
-                            img_uploader_script.type = 'text/javascript';
-                            img_uploader_script.src = "/design/js/imguploader.js";
-
-                            img_uploader_script.onload = function (){
-                                myAwesomeDropzone = new Dropzone("#myAwesomeDropzone", { url: "/ajax/uploadImg.php" });
-                            }
-                            document.body.appendChild(img_uploader_script);
-                        }
-                    }
-                } else {
-                    newScript.textContent = script.textContent;
-                }
-
-                // Remove the old script and add the new one
-                script.parentNode.removeChild(script);
-                modalBox.appendChild(newScript);
-            });
-
-            if(call_back) { 
-                call_back(); 
-            }
-        });
-
-    if(show_modal_loaded == false){
-        // Kill modal if blackout is clicked
-        modalBox.addEventListener('click', function(e) { 
-            if (e.target === e.currentTarget) { 
-                kill_modal(); 
-            } 
-        });
-    }
-    show_modal_loaded = true;
-}
-
-// Modal kill function
-function kill_modal() {
-    console.log("killing modal");
-    const modalBox = document.getElementById('modal-box');
-    modalBox.classList.remove('active');
-
-    // Replace the content directly with the new loading graphic
-    modalBox.innerHTML = '<div class="modal-loading-graphic"></div>';
-}
-
-// Modal "loading" mode, without killing
-function pause_modal() {
-    var modal = document.querySelector('#modal-box > div.modal');
-    if(!modal) modal = document.querySelector('#modal-box');
-    modal.classList.add('hidden');
-
-    const modalBox = document.getElementById('modal-box');
-    modalBox.classList.add('paused');
-
-    const loadingGraphic = document.createElement('div');
-    loadingGraphic.className = 'modal-loading-graphic';
-    modalBox.appendChild(loadingGraphic);
-}
-
-function unpause_modal() {
-    const modalBox = document.getElementById('modal-box');
-    modalBox.classList.remove('paused');
-
-    var modal = document.querySelector('#modal-box > div.modal');
-    if(!modal) modal = document.querySelector('#modal-box');
-    modal.classList.remove('hidden');
-
-    const loadingGraphic = document.querySelector('#modal-box > div.modal-loading-graphic');
-    if (loadingGraphic) {
-        modalBox.removeChild(loadingGraphic);
-    }
-}
-
-// COMPONENT: LOAD GRAPHIC
-function show_loader() {
-    console.log("Displaying loading graphic");
-    
-    kill_modal();
-    const modalBox = document.getElementById('modal-box');
-    modalBox.classList.add('active');
-
-    const loadingGraphic = document.createElement('div');
-    loadingGraphic.className = 'modal-loading-graphic';
-    modalBox.appendChild(loadingGraphic);
-}
-// TOGGLE NOTES
-function togglenote(id){
-    var ele=object(id);
-    var state = ele.style.display;
-    if(state=='none') ele.style.display='inline';
-    if(state=='inline')ele.style.display='none';
-}
-// Toggle more menu
-function toggle_more_menu(position){
-    var more_menu = document.getElementById(position+"_more_list");
-
-    more_menu.classList.toggle("hidden_more_list");
-    more_menu.classList.toggle("display");
-
-    var menu_button = document.getElementById(position+"_more_button");
-
-    menu_button.classList.toggle("is-open");
-}
-// scroll to top of page
-function scroll_to_top(duration) {
-    var start = window.pageYOffset;
-    var start_time = performance.now();
-
-    if ('requestAnimationFrame' in window === false) {
-        window.scrollTo(0, 0);
-        return;
-    }
-
-    function scroll() {
-        var current_time = performance.now();
-        var elapsed_time = current_time - start_time;
-        var progress = elapsed_time / duration;
-        var ease_in_out_quad = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
-        window.scrollTo(0, start * (1 - ease_in_out_quad));
-
-        if (elapsed_time < duration) {
-            requestAnimationFrame(scroll);
-        } else {
-            window.scrollTo(0, 0);
-        }
-    }
-
-    scroll();
-}
-
-// FOLDER BUTTONS (unused) - declared to prevent console errors.
-function toggleAllFolders() {}
-function togglefolder(id) {}
-
-var device_type = get_device_type();
-
-const mobile_menu_button = document.querySelector('.mobile-menu-toggle-button');
-
-if (mobile_menu_button) {
-    mobile_menu_button.addEventListener('click', function(e) {
-        e.preventDefault();
-        const header = document.querySelector('header#main-header-bar');
-        if (header.classList.contains('mobile-menu-active')) {
-            header.classList.remove('mobile-menu-active');
-        } else {
-            header.classList.add('mobile-menu-active');
-        }
-    });
-}    
-// tracking height for multiple folders to insert ads
-var global_pHeight = 0;
-
-var search_form = document.querySelector("form.search");
-var search_button = document.querySelector("#main_search_submit");
-
-// ctrl/cmd/shift click to open in new tab or window for main search button
-if(search_form && search_button) {
-    search_button.addEventListener("click", function (e) {
-        var query = search_form.q.value.trim();
-        var is_new_search = cookies.read('new-search') == 'true';
-
-        var search_url = is_new_search
-            ? "/pmwiki/elastic_search_result.php?q=" + encodeURIComponent(query)
-            : "/pmwiki/search_result.php#gsc.tab=0&gsc.q=" + encodeURIComponent(query) + "&gsc.sort=";
-
-        if (e.metaKey || e.ctrlKey || e.shiftKey) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            
-            window.open(search_url, '_blank');
-            return false;
-        }
-
-        // if query is blank, don't do anything
-        if (query.trim() === "") {
-            return false;
-        }
-
-        if (is_new_search) {
-            search_form.setAttribute('action', "/pmwiki/elastic_search_result.php");
-        } else {
-            e.preventDefault(); // override default
-            window.location.href = search_url;
-        }
-    });
-}
-
-// MODAL - FOLDER - SPOILER BUTTONS
-document.body.addEventListener('click', function(e) {
-    // WATCH / FOLLOW BUTTONS
-    const target = e.target.closest('.watch-button');
-    const loggedInElement = document.getElementById('logged_in');
-    const loggedIn = loggedInElement ? loggedInElement.value : null;
-
-    //special code for the desktop-on-mobile-toggle cookie link
-    if (e.target.closest('#desktop-on-mobile-toggle > a')) {
-        e.preventDefault();
-        var body_class = "desktop-on-mobile";
-        var userPrefs = document.getElementById('user-prefs');
-
-        if (userPrefs.classList.contains(body_class)) {
-            cookies.remove(body_class);
-        } else {
-            cookies.create(body_class, 'true', 300, '/');
-        }
-
-        location.reload();
-    }
-
-    // Display toggle buttons for user preferences
-    if (e.target.closest('.display-toggles > li')) {
-        var toggle = e.target;
-        if(toggle.tagName.toLowerCase() === 'li') toggle = toggle.children[0];
-
-        var body_class = '';
-        var pref = '';
-        var val = 0;
-
-        // SIDEBAR AND MOBILE MENU OPTIONS
-        if (toggle.classList.contains('wide-load')) {
-            body_class = "wide-load";
-        } else if (toggle.classList.contains('sticky-header')) {
-            body_class = "sticky-header";
-        } else if (toggle.classList.contains('night-vision')) {
-            body_class = "night-vision";
-        } else if (toggle.classList.contains('show-spoilers')) {
-            body_class = "show-spoilers";
-        } else if (toggle.classList.contains('tvtropes-editor-on')) {
-            body_class = "tvtropes-editor-on";
-        }
-
-        // PROFILE PAGE OPTIONS
-        else if (toggle.classList.contains('folders-open')) {
-            body_class = "folders-open";
-        } else if (toggle.classList.contains('wysiwyg-toggle')) {
-            body_class = "wysiwyg-toggle";
-        } else if (toggle.classList.contains('mono-font')) {
-            body_class = "mono-font";
-        } else if (toggle.classList.contains('lefthand-sidebar')) {
-            body_class = "lefthand-sidebar";
-        } else if (toggle.classList.contains('highlight-links')) {
-            body_class = "highlight-links";
-        } else if (toggle.classList.contains('forum-gingerbread')) {
-            body_class = "forum-gingerbread";
-        } else if (toggle.classList.contains('shared-avatars')) {
-            body_class = "shared-avatars";
-            pref = 'accept_share';
-            val = toggle.classList.contains('active') ? 0 : 1;
-        } else if (toggle.classList.contains('new-search')) {
-            body_class = "new-search";
-            pref = 'new_search';
-            val = toggle.classList.contains('active') ? 0 : 1;
-        } else if (toggle.classList.contains('stop-auto-play-video')) {
-            body_class = "stop-auto-play-video";
-            pref = 'stop_auto_play_video';
-            val = toggle.classList.contains('active') ? 0 : 1;
-        } else if (toggle.classList.contains('notification-pm')) {
-            body_class = 'notification-pm';
-            pref = 'toggle_notification_pm';
-            val = toggle.classList.contains('active') ? 0 : 1;
-        } else if (toggle.classList.contains('notification-video')) {
-            body_class = 'notification-video';
-            pref = 'toggle_notification_video';
-            val = toggle.classList.contains('active') ? 0 : 1;
-        } else if (toggle.classList.contains('notification-query')) {
-            body_class = 'notification-query';
-            pref = 'toggle_notification_query';
-            val = toggle.classList.contains('active') ? 0 : 1;
-        }
-
-        if (pref === 'accept_share' || pref === 'new_search' || pref === 'stop_auto_play_video' || pref === 'toggle_notification_query' || pref === 'toggle_notification_pm' || pref === 'toggle_notification_video') {
-            if (pref === 'new_search' && document.querySelector('#new-search-toggle')) show_loader();
-        
-            fetch('/ajax/toggle_user_prefs.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'pref=' + encodeURIComponent(pref) + '&value=' + encodeURIComponent(val)
-            })
-            .then(response => response.json())
-            .then(json => {
-                if (pref === 'new_search') {
-                    const newSearchToggle = document.querySelector('#new-search-toggle');
-                    const searchInput = document.getElementById('srch-term').value;
-                    const pageType = document.getElementsByName('page_type')[0].value;
-                    if (newSearchToggle && newSearchToggle.classList.contains('active')) {
-                        kill_modal();
-                        window.location.href = '/pmwiki/elastic_search_result.php?new_search=true&q=' + encodeURIComponent(searchInput) + '&page_type=' + encodeURIComponent(pageType);
-                    } else if (newSearchToggle) {
-                        kill_modal();
-                        window.location.href = '/pmwiki/search_result.php?new_search=false&q=' + encodeURIComponent(searchInput);
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        
-        }
-
-        // Toggle 'active' class based on body_class. Skipping wysiwyg-toggle because it's handled in wysiwyg_source_editor_mod.js
-        if (body_class != 'wysiwyg-toggle') {
-            var displayToggles = document.querySelectorAll('.display-toggle.' + body_class);
-            displayToggles.forEach(item_to_toggle => {
-                item_to_toggle.classList.toggle('active');
-            });
-        }
-        
-        var userPrefs = document.getElementById('user-prefs');
-        userPrefs.classList.toggle(body_class);
-
-        console.log('BODY CLASS:',body_class);
-
-        if (userPrefs.classList.contains(body_class)) {
-            cookies.create(body_class, 'true', 300, '/');
-        } else {
-            cookies.remove(body_class);
-    
-            // Specific logic for 'show-spoilers' class
-            if (body_class === "show-spoilers") {
-                document.querySelectorAll('.spoiler').forEach(spoiler => {
-                    spoiler.classList.remove('off');
-                });
-            }
-        }
-    }
-
-    if (target && loggedIn !== null) {
-        e.preventDefault();
-
-        if (loggedIn === 'true') {
-            target.classList.add('processing');
-        }
-
-        // Article
-        if (target.getAttribute('data-watch-info')) {
-            var data = target.dataset.watchInfo.split(',');
-
-            if (!data.length) return;
-
-            var addOrDrop = target.classList.contains('watching') || target.parentElement.classList.contains('watching') ? 'drop' : 'add';
-
-            handleWatchItem(addOrDrop, data[0], data[1], target);
-
-        // Discussion page
-        } else if (target.getAttribute('data-watch-discussion-info')) {
-            var data = target.dataset.watchDiscussionInfo.split(',');
-
-            if (!data.length) return;
-
-            var addOrDrop = target.classList.contains('watching') || target.parentElement.classList.contains('watching') ? 'drop' : 'add';
-            var pageType = 'Discussion';
-
-            handleWatchItem(addOrDrop, data[0], data[1], target, pageType);
-
-        // Forum thread
-        } else if (target.getAttribute('data-watch-thread-id')) {
-            var threadId = target.getAttribute('data-watch-thread-id');
-            var url = target.classList.contains('watching') || target.parentElement.classList.contains('watching') ? '/pmwiki/thread_watch_drop.php?thread=' : '/pmwiki/setthreadwatch.php?d_id=';
-            url += threadId;
-
-            handleWatchThread(url, target);
-        }
-    }
-    // Check for kill modal button click
-    if (e.target.classList.contains('kill-modal-button')) {
-        e.preventDefault();
-        kill_modal();
-    }
-
-    // Check for data-click-toggle without data-click-toggle-target
-    const targetWithoutToggleTarget = e.target.closest('*[data-click-toggle]:not([data-click-toggle-target])');
-    if (targetWithoutToggleTarget) {
-        e.preventDefault();
-        const toggleClass = targetWithoutToggleTarget.getAttribute('data-click-toggle');
-        targetWithoutToggleTarget.classList.toggle(toggleClass);
-    }
-
-    // Check for data-click-toggle with data-click-toggle-target
-    const targetWithToggleTarget = e.target.closest('*[data-click-toggle][data-click-toggle-target]:not(#signup-form-toggles a)');
-    if (targetWithToggleTarget) {
-        e.preventDefault();
-
-        // Check if the target contains fetch_articles in the onclick attribute
-        const hasFetchArticles = targetWithToggleTarget.getAttribute('onclick') && targetWithToggleTarget.getAttribute('onclick').includes('fetch_articles');
-
-        // If fetch_articles is not in the onclick attribute, stop propagation
-        if (!hasFetchArticles) {
-            e.stopPropagation();
-        }
-
-        const toggleTargetId = targetWithToggleTarget.getAttribute('data-click-toggle-target');
-        const toggleClass = targetWithToggleTarget.getAttribute('data-click-toggle');
-        const isExclusive = targetWithToggleTarget.getAttribute('data-click-toggle-exclusive') === 'true';
-
-        if (isExclusive) {
-            // Exclusive mode: toggle target and clear siblings
-            const toggleTarget = document.getElementById(toggleTargetId);
-
-            if (toggleTarget) {
-                // Remove the toggle class from all siblings
-                const siblings = Array.from(toggleTarget.parentNode.children);
-                for (let sibling of siblings) {
-                    if (sibling !== toggleTarget) {
-                        sibling.classList.remove(toggleClass);
-                    }
-                }
-
-                // Add the toggle class to the target element
-                toggleTarget.classList.add(toggleClass);
-            }
-        } else {
-            // Non-exclusive mode: toggle targets normally
-            if (toggleTargetId.indexOf(',') > -1) {
-                const targets = toggleTargetId.split(",");
-                targets.forEach(t => {
-                    document.querySelectorAll('#' + t).forEach(el => {
-                        el.classList.toggle(toggleClass);
-                    });
-                });
-            } else {
-                document.querySelectorAll('#' + toggleTargetId).forEach(el => {
-                    el.classList.toggle(toggleClass);
-                });
-            }
-        }
-    }
-    
-    // initiate all modals
-    const modalTarget = e.target.closest('*[data-modal-target]');
-    if(modalTarget) {
-        if (!modalTarget) {
-            return; // Skip, if no target found with the specified attribute
-        }
-
-        // Get modal details
-        let modal = modalTarget.getAttribute('data-modal-target');
-        let msg = modalTarget.getAttribute('data-modal-vars') ? modalTarget.getAttribute('data-modal-vars') : modalTarget.getAttribute('data-modal-confirmation-message');
-        let url = modalTarget.getAttribute('data-modal-confirmation-url');
-
-        // convert to json if possible
-        try {
-            var obj = JSON.parse(msg);
-            if (obj && typeof obj === "object") {
-                msg = obj;
-            }
-        } 
-        catch (e) {
-        }
-
-        // Skip modal and go straight to the link
-        if (modal === "allow") return;
-
-        // Don't allow link since we are showing a modal instead
-        e.preventDefault();
-
-        // Add support for alert tags
-        if (modal.substring(0, 6) === "alert-") {
-            // Message array
-            const msgArr = {
-                "alert-banned": "Your permissions for this area have been suspended. Please visit <a href='/pmwiki/pmwiki.php/Administrivia/WhatToDoIfYouAreSuspended'>this page</a> for more details.",
-                "alert-bounced": "This account has committed severe or repeated violations of our rules and is permanently denied access to many of the account features of the site. If you feel that this may be an error, please <a href=\"/pmwiki/contact.php\">contact the mods</a>.",
-                "alert-denied": "Your account was denied by a moderator. If you believe this was done in error please <a href=\"/pmwiki/contact.php\">contact the mods</a>.",
-                "alert-verify": "You must verify your email address before doing this. Check your email for a link.",
-                "alert-approval": "Your account must be approved by a moderator before you can do this. If you still have this problem in a couple hours try <a href=\"/pmwiki/contact.php\">contacting the mods</a>.",
-                "alert-age": "Your account is not old enough. Give it a little more time.",
-                "alert-mod": "This page is only for moderators. Try something else.",
-                "alert-db": "We are currently updating our database systems to UTF-8MB4. Please try again in 10-12 hours."
-            };
-
-            if (modal in msgArr) {
-                msg = msgArr[modal];
-            } else {
-                msg = "Unknown error. Please <a href=\"/pmwiki/contact.php\">Contact us</a> if the problem persists.";
-            }
-
-            modal = "alert";
-        }
-
-        // Bring up modal now
-        show_modal(modal, msg, url);
-    }
-
-    // SPOILERS
-    const spoilers = e.target.closest('.spoiler');
-    if (spoilers) {
-        spoilers.classList.toggle('off');
-    }
-    
-    // OPEN INDIVIDUAL FOLDERS
-    const folders = e.target.closest('.folderlabel');
-    if (folders && e.target.getAttribute('onclick') !== "toggleAllFolders();") {
-        e.preventDefault();
-
-        folders.classList.toggle('is-open');
-        let folder = folders.nextElementSibling;
-
-        if (folders.classList.contains('is-open')) {
-            gtag('event', 'folder_click', {'device_type': device_type});
-        }
-
-        if (folder && folders.classList.contains('is-open') && live_ads == 1 && (document.body.clientWidth && document.body.clientWidth<=768) 
-        && tvtropes_config.universal_page_type == 'Article') {
-            if (folder.querySelectorAll('.tvtropes-ad-unit').length === 0) {
-                global_pHeight = insert_ads_in_content(folder, globalAdInsertionCount, global_pHeight);
-            }
-        }
-    }
-
-    // OPEN ALL FOLDERS
-    const allFolders = e.target.closest('div[onclick*="toggleAllFolders()"]');
-    
-    if (allFolders) {
-        let parentElement = allFolders.parentNode;
-        // If the button is inside an H2, select the parent div of it
-        if (parentElement.tagName === 'H2') parentElement = parentElement.parentNode;
-        let isCurrentlyOpen = e.target.classList.contains('is-open');
-        // Select only folder labels that are inside the same parent div as the clicked button
-        let foldersAndButtons = parentElement.querySelectorAll('.folderlabel, .toggle-all-folders-button');
-
-        foldersAndButtons.forEach(function(element) {
-            if (isCurrentlyOpen) {
-                element.classList.remove('is-open');
-            } else {
-                element.classList.add('is-open');
-            }
-        });
-
-        if (!isCurrentlyOpen) {
-            gtag('event', 'all_folders_click', {'device_type': device_type});
-            // Also target only .folder elements within the same parent div
-            parentElement.querySelectorAll('.folder').forEach(function(folder) {
-                if (!folder.querySelector('.tvtropes-ad-unit') && live_ads == 1 && (document.body.clientWidth && document.body.clientWidth<=768) 
-                && tvtropes_config.universal_page_type == 'Article') {
-                    global_pHeight = insert_ads_in_content(folder, globalAdInsertionCount, global_pHeight);
-                }
-            });
-        }
-    }
-
-}, true);
-// Add/remove watched article
-var handleWatchItem = function(addOrDrop, groupname, title, obj, pageType = '') {
-    fetch("/ajax/watchlist.php", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-        },
-        body: `groupname=${encodeURIComponent(groupname)}&title=${encodeURIComponent(title)}&type=${encodeURIComponent(addOrDrop)}&json=1&pageType=${encodeURIComponent(pageType)}`
-    })
-    .then(response => response.json())
-    .then(data => {
-        obj.classList.remove('processing');
-
-        if (obj.classList.contains('tile-watch-button')) {
-            obj.parentNode.classList.toggle('watching');
-        } else {
-            obj.classList.toggle('watching');
-        }
-    })
-    .catch(error => {
-        obj.classList.remove('processing');
-        show_modal('alert-red', 'Whoops, something went wrong. Please try adding again.');
-    });
-}
-
-// add/remove watched forum thread
-var handleWatchThread = function(url, obj) {
-    fetch(url)
-    .then(response => response.text()) // assuming the server responds with plain text
-    .then(data => {
-        obj.classList.remove('processing');
-
-        if (obj.classList.contains('tile-watch-button')) {
-            obj.parentNode.classList.toggle('watching');
-        } else {
-            obj.classList.toggle('watching');
-        }
-    })
-    .catch(error => {
-        obj.classList.remove('processing');
-        show_modal('alert-red', 'Whoops, something went wrong. Please try adding again.');
-    });
-}
-    </script>
-    
-                    <script>
-                if(is_mobile()) {
-                    document.write("<div class=\"htlad-tvtropes_m_sticky\"></div>");
-                }
-                else {
-                    document.write("<div class=\"htlad-tvtropes_dt_sticky\"></div>");
-                }
-            </script>
+                    
 
                 <div id="tvtropes_oop_ad_slot" style="display: none;"></div>
     <div id="top_container_spacing"></div>
@@ -1139,67 +407,14 @@ var handleWatchThread = function(url, obj) {
     
 
 
-        <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [{
-                "@type": "ListItem",
-                "position": 1,
-                "name": "TV Tropes",
-                "item": "https://tvtropes.org/"
-            },{
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Tropes",
-                "item": "https://tvtropes.org/pmwiki/pmwiki.php/Main/Tropes"
-            },{
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Playable Epilogue",
-                "item": "https://tvtropes.org/pmwiki/pmwiki.php/Main/PlayableEpilogue"
-            }]
-
-        }
-    </script>
-        <script type="application/ld+json">
-                {
-          "@context": "https://schema.org",
-          "@type": "Article",
-          "name": "Playable Epilogue",
-          "headline": "Playable Epilogue",
-          "url": "https://tvtropes.org/pmwiki/pmwiki.php/Main/PlayableEpilogue",
-          "image": "https://static.tvtropes.org/pmwiki/pub/images/logo_light.png",
-          "author": {
-            "@type": "Organization",
-            "name": "Contributors to TV Tropes (aka Tropers)"
-          },
-          "datePublished": "2008-02-11T00:00:00-08:00",
-          "dateModified": "2025-07-21T08:36:31-07:00"
-        }
-    </script>
+        
+        
 
 
 <a href="#mobile-actions-toggle" id="mobile-actionbar-toggle" class="mobile-actionbar-toggle mobile-on" data-click-toggle="active" >
 <p class="tiny-off">Go To</p><span></span><span></span><span></span><i class="fa fa-pencil"></i></a>
 <nav id="mobile-actions-bar" class="mobile-actions-wrapper mobile-on"></nav>
-<script>
-    //duplicate action bar to the mobile-action-bar holder
-    if (document.getElementById("mobile-actions-bar")) {
-        // Clone the main list
-        var top_main_list = document.getElementById('top_main_list');
-        var top_main_list_cln = top_main_list.cloneNode(true);
-        // Clone the more list
-        var top_more_list = document.getElementById('top_more_list');
-        var top_more_list_cln = top_more_list.cloneNode(true);
 
-        top_more_list_cln.querySelectorAll("li").forEach(function(child){
-            top_main_list_cln.appendChild(child);
-        });
-
-        document.getElementById("mobile-actions-bar").appendChild(top_main_list_cln);
-    }
-</script>
 
 
 <nav class="body-options" itemscope itemtype="http://schema.org/SiteNavigationElement">
@@ -1611,245 +826,10 @@ var handleWatchThread = function(url, obj) {
     </div>
 
 
-<script>
-    if( document.getElementById('user-prefs').classList.contains('folders-open') ){
-        console.log('open all folders');
-        var elements = document.querySelectorAll('.folderlabel, .toggle-all-folders-button');
-        elements.forEach((element) => {
-          element.classList.add('is-open');
-        });
-    }
-</script>
 
 
-<script>
-// correct incorrect URL capitalization on article pages
-if(tvtropes_config.universal_page_type == 'Article'){
-    // Extract the groupname and title from the URL
-    var url = window.location.href;
-    var url_parts = url.split('/');
-    var title = url_parts[url_parts.length - 1];
-    var groupname = url_parts[url_parts.length - 2];
-
-    // Correct groupname and title from PHP (also works on new/non-existing pages)
-    var correct_groupname = 'Main';
-    var correct_title = 'PlayableEpilogue';
-
-    // Check if they are different (case-sensitive comparison)
-    if (groupname !== correct_groupname || title !== correct_title) {
-        // Construct the corrected URL
-        var correctedUrl = url_parts.slice(0, -2).join('/') + '/' + correct_groupname + '/' + correct_title;
-
-        // Update the browser URL without reloading the page
-        window.history.replaceState(null, '', correctedUrl);
-    }
-}
-
-function insert_ad(adCount, paragraph, adName, folder = 0){
-
-        var ad_count = adCount < 10 ? "0"+adCount : adCount;
-        var inside_folder = folder ? "1" : "0";
-
-        // Create element for ad unit
-        var adUnit = document.createElement('div');
-        adUnit.setAttribute("class", `htlad-${adName}`);
-        adUnit.setAttribute("id", `${adName}_${adCount}`);
-        adUnit.setAttribute("data-targeting", `{"slot_number": "${ad_count}", "in_folder": "${inside_folder}"}`);
-
-        // Add Advertisement label
-        var adLabel = document.createElement("span");
-        adLabel.innerHTML = "Advertisement:"
-        adLabel.setAttribute("class","ad-caption");
-
-        var adWrapper = document.createElement("div");
-        adWrapper.setAttribute("class","tvtropes-ad-unit mobile-fad square_fad mobile_unit_scroll");
-        adWrapper.setAttribute("id","mobile_"+adCount);
-
-        // Merge all pieces
-        adWrapper.appendChild(adLabel);
-        adWrapper.appendChild(adUnit);
-
-        // Insert into DOM
-        paragraph.parentNode.insertBefore(adWrapper, paragraph.nextSibling);
-
-        // for getting correct ad count even when ones are deleted
-        globalAdInsertionCount++;
-}
-
-function insert_ads_in_content(folder = 0, totalAdsCount = 0, pHeight = 0) {
-
-    if(folder) var node = folder.firstElementChild; // Get the first traversable element of the folder
-    else var node = document.getElementById("main-article").firstElementChild;
-
-    var pCount = 0;
-    var adCount = totalAdsCount + 1;
-    var nodeCount = 0;
-    var nodeLevel = 0;
-    var x = 0;
-
-    //loop through elements of content
-    while(x<300) {
-        x++; nodeCount++;
-
-        //traverse to the next element (if exists)
-        if(nodeCount>1) {
-            if(!node.nextElementSibling) {
-                console.log('adparser: no next element');
-
-                if(nodeLevel>0) {
-                    nodeLevel--;
-                    node = node.parentElement;
-                    console.log('adparser: we were down a level, go back up ('+nodeLevel+')');
-                    continue;
-                }
-                else {
-                    break; 
-                }
-            }
-
-            node = node.nextElementSibling;
-        }
 
 
-        //skip inserted ads or empty nodes
-        if(!node || node==="null" || typeof node !== "object") continue;
-        if(!node.offsetHeight || node.offsetHeight==0) continue;
-        if(node.className && node.className.includes('tvtropes-ad-unit')) continue;
-
-        //skip if image block that has a caption after it (NEW: ALWAYS SKIP THE IMAGE BLOCK)
-        if(node.className && node.className.includes('quoteright')) {
-            // if(node.nextElementSibling && node.nextElementSibling.className && node.nextElementSibling.className.includes('acaptionright')) {
-                pHeight += node.offsetHeight;
-                continue;
-            // }
-        } 
-
-        //if very large element, loop through elements inside
-        if(node.offsetHeight>700 && node.firstElementChild) {
-            nodeLevel++;
-            console.log('adparser: traverse through large element='+node.nodeName+', height='+node.offsetHeight+' level='+nodeLevel);
-            node = node.firstElementChild;
-            nodeCount = 0;
-            continue;
-        }
-
-        // Skip if after a folder label or if the current node is a folder label itself
-        if ((node.previousElementSibling && node.previousElementSibling.className && node.previousElementSibling.className.includes("folderlabel")) || (node.className && node.className.includes("folderlabel"))) {
-            console.log('adparser: skipping ad insertion related to folder label');
-            if (!node.className || !node.className.includes("folderlabel")) { // If it's not the folder label itself, skip the insertion
-                continue;
-            } else {
-                pHeight += node.offsetHeight; // If it is the folder label, just add its height to pHeight and continue
-                continue;
-            }
-        }
-
-        //paragraph counter
-        if(node.nodeName=="P") pCount++;
-
-        //add height of node to counter
-        pHeight += node.offsetHeight;
-
-        //add margin of node to counter if available
-        try {
-            var nodeStyle = getComputedStyle(node);
-            if(nodeStyle.marginTop && parseInt(nodeStyle.marginTop)>0) pHeight+=parseInt(nodeStyle.marginTop);
-            if(nodeStyle.marginBottom && parseInt(nodeStyle.marginBottom)>0) pHeight+=parseInt(nodeStyle.marginBottom);
-            //console.log(nodeStyle.marginTop+','+nodeStyle.marginBottom);
-        } catch(e) { }
-
-        //debug logging
-        console.log('adparser: name='+node.nodeName+', height='+node.offsetHeight+' =>'+pHeight);
-        //console.log(node.className);
-
-        // check if user is logged in
-        var logged_in = 0;
-
-        // Calculate the required height based on the user's logged-in status or ad count
-        var requiredHeight           = globalAdInsertionCount > 15 ? 1500 : 750;
-        if(logged_in) requiredHeight = 2250;
-
-        // only inserts an ad if the total height and paragraph count conditions are met
-        if ((adCount === 1 && pCount >= 1 && pHeight >= 400) || pHeight >= requiredHeight) {
-            // Check existing ad positions and compare with the item about to be inserted after
-            var ads = document.querySelectorAll('.tvtropes-ad-unit');
-            var nodeBottomPosition = node.getBoundingClientRect().bottom + window.scrollY; // Get bottom position of current node
-            var canInsertAd = true; // Flag to track if we can insert an ad
-
-            ads.forEach(function (ad) {
-                var adTop = ad.getBoundingClientRect().top + window.scrollY;
-                var adBottom = ad.getBoundingClientRect().bottom + window.scrollY;
-
-                // Ensure the new ad is at least requiredHeight away from any existing ads
-                if (Math.abs(nodeBottomPosition - adTop) < requiredHeight || Math.abs(nodeBottomPosition - adBottom) < requiredHeight) {
-                    canInsertAd = false;
-                    console.log('adparser: cannot insert ad, not enough space between ads.');
-                }
-            });
-            // If we can't insert an ad, skip to the next node
-            if(!canInsertAd) continue;
-
-            // after 50 ads, stop inserting. Or after 20 ads if the user is logged in
-            if ((adCount > 50 || (adCount > 20 && logged_in))) {
-                break;
-            }
-
-            console.log('adparser: insert ad '+adCount);
-            insert_ad(adCount, node, "tvtropes_m_incontent_dynamic", folder);
-            adCount++;
-            pHeight = 0;
-            pCount = 0;
-        }
-    }
-
-    //insert one at end if room
-    var maxpHeight = 500; if(logged_in) maxpHeight=1500;
-    if(pHeight>=maxpHeight && folder==0) {
-        console.log('adparser: insert ad');
-
-        insert_ad(adCount, document.getElementById("main-article").lastElementChild, "tvtropes_m_incontent_dynamic");
-    }
-
-    // delete ads after the 8th one to reduce load times
-    BCLighthouseTag.cmd.push(function() {
-        googletag.cmd.push(function() {
-            googletag.pubads().addEventListener('slotRequested', function(event) {
-                const slot = event.slot;
-                const slotName = slot.getAdUnitPath().split('/').pop() || slot.getAdUnitPath();
-
-                if(slotName === 'tvtropes_m_incontent_dynamic') {
-                    const slotNumber = parseInt(slot.getTargeting('slot_number')[0]);
-                    console.log(slotName+' = '+slotNumber);
-
-                    // Determine the ad slot that needs to be deleted.
-                    const adNumberToDelete = slotNumber - 8;
-
-                    if(adNumberToDelete > 0) {
-                        const adToDelete = document.getElementById(`mobile_${adNumberToDelete}`);
-                        if(adToDelete) {
-                            var adHeight = window.pageYOffset + adToDelete.getBoundingClientRect().top;
-                            var windowHeight = window.scrollY;
-
-                            // Check if the ad element exists and is above the current viewport (above the fold).
-                            if (adHeight < windowHeight) {
-                                console.log('ad delete = '+adNumberToDelete);
-                                adToDelete.remove(); 
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    });
-
-    // return pHeight 
-    return pHeight;
-}
-
-if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
-    insert_ads_in_content();
-}
-</script>
 
 
                 
@@ -1865,7 +845,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
     <li>Sticky Header <div id="sidebar-toggle-stickyheader" class="display-toggle sticky-header"></div></li>
     <li>Wide Load <div id="sidebar-toggle-wideload" class="display-toggle wide-load"></div></li>
   </ul>
-  <script>updateDesktopPrefs();</script>
+  
 </div>
 
         <div class="sidebar-item quick-links" itemtype="http://schema.org/SiteNavigationElement">
@@ -2038,15 +1018,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
             <p style="margin-top: 20px;" class="sidebar-item-title" data-title="Advertisement">Advertisement:</p>
             <div id="asteri_cont"></div>
         </div>
-        <script>
-            //asteri enabled
-            if((tvtropes_config.asteri_stream_enabled || tvtropes_config.get_asteri_stream == 'live')) {
-                //aster stream currently live and not a logged-in troper
-                if(!tvtropes_config.is_logged_in && cookies.read('asteri_event_active') != '') {
-                    document.getElementById('asteri-sidebar').style.display="";
-                }
-            }
-        </script>
+        
 
     </div>
 
@@ -2055,37 +1027,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
 
     
         
-            <script>
-    if(!is_mobile()) {
-
-        //don't insert if content is too small on page
-        var tropes_insert_side_ad=true;
-        if(document.getElementById("main-article") && document.getElementById("main-article").clientHeight) {
-            var sidebar_height=document.getElementById("main-article").clientHeight;
-            if(sidebar_height>0 && sidebar_height<500) {
-                tropes_insert_side_ad=false;
-                console.log('ad parser: content too small for sidebar ad');
-            }
-        }
-
-        if(tropes_insert_side_ad) {
-
-       document.write(`
-        <div id="stick-cont"  class="sidebar-item sb-fad-unit">
-            <p class="sidebar-item-title" data-title="Advertisement">Advertisement:</p>
-            <div id="stick-bar" class="sidebar-section">
-                <div class="square_fad fad-size-300x600 fad-section text-center">
-                    <div class='tvtropes-ad-unit '>
-                      <div id='tvtropes_dt_inview' class='htlad-tvtropes_dt_inview'></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        `);
-        }
-
-    }
-    </script>
+            
     
 
 </div>
@@ -2204,28 +1146,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
 
         
     
-        <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/javascript">
-
-        var cleanCreativeEnabled = "";
-        var donation = "";
-        var live_ads = "1";
-        var img_domain = "https://static.tvtropes.org";
-        var snoozed = cookies.read('snoozedabm');
-        var elem = document.createElement('script');
-        elem.async = true;
-
-
-        // if page type is article or homepage load bundle_nojquery. otherwise load regular bundle.js
-        if(tvtropes_config.universal_page_type == "Article" || tvtropes_config.universal_page_type == "HomePage") {
-            elem.src = 'https://assets.tvtropes.org/design/assets/bundle_nojquery.js?rev=a6090873e2890dfd367d476e5a2ae514d43f9a5a';
-        } else {
-            elem.src = 'https://assets.tvtropes.org/design/assets/bundle.js?rev=a6090873e2890dfd367d476e5a2ae514d43f9a5a';
-        }
-
-        elem.onload = function() {
-                                 }
-        document.getElementsByTagName('head')[0].appendChild(elem);
-    </script>
+        
 
 
     
@@ -2233,49 +1154,12 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
 
     
     
-  <script type="text/javascript">
-      function send_analytics_event(user_type, donation){
-          // if(user_type == 'uncached' || user_type == 'cached'){
-          //   ga('send', 'event', 'caching', 'load', user_type, {'nonInteraction': 1});
-          //   return;
-          // }
-          var event_name = user_type;
-
-          if(donation == 'true'){
-              event_name += "_donation"
-          }else if(typeof(valid_user) == 'undefined'){
-              event_name += "_blocked"
-          }else if(valid_user == true){
-              event_name += "_unblocked";
-          }else{
-              event_name = "_unknown"
-          }
-          ga('send', 'event', 'ads', 'load', event_name, {'nonInteraction': 1});
-      }
-
-    
-    send_analytics_event("guest", "false");
-      </script>
+  
 
 
 
 <!-- Quantcast Tag -->
-<script type="text/javascript">
-  window._qevents = window._qevents || [];
 
-  (function() {
-    var elem = document.createElement('script');
-    elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
-    elem.async = true;
-    elem.type = "text/javascript";
-    var scpt = document.getElementsByTagName('script')[0];
-    scpt.parentNode.insertBefore(elem, scpt);
-  })();
-
-  window._qevents.push({
-      qacct:"p-mEzuYq24VEJ-3"
-  });
-</script>
 
 <noscript>
   <div style="display:none;">
@@ -2286,18 +1170,10 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
 
 
 <!-- Begin comScore Tag -->
-<script>
-  var _comscore = _comscore || [];
-  _comscore.push({ c1: "2", c2: "38282685" });
-  (function() {
-    var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
-    s.src = "https://sb.scorecardresearch.com/cs/38282685/beacon.js";
-    el.parentNode.insertBefore(s, el);
-  })();
-</script>
+
 <noscript>
   <img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=38282685&amp;cv=3.6.0&amp;cj=1">
 </noscript>
 <!-- End comScore Tag -->
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96ce1ce5dbafd593',t:'MTc1NDgxNDQzNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
