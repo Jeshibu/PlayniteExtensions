@@ -19,6 +19,21 @@ public class TropeScraperTests
         { "https://tvtropes.org/pmwiki/pmwiki.php/Main/WallJump", "html/WallJump.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/Main/KillTheGod", "html/KillTheGod.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/Main/PlayableEpilogue", "html/PlayableEpilogue.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/Main/MultipleEndings", "html/MultipleEndings.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/VideoGames", "html/MultipleEndings-VideoGames.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ActionGames", "html/MultipleEndings-ActionGames.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/AdventureGames", "html/MultipleEndings-AdventureGames.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/NotForBroadcast", "html/MultipleEndings-NotForBroadcast.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/RolePlayingGames", "html/MultipleEndings-RolePlayingGames.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/BaldursGateIII", "html/MultipleEndings-BaldursGateIII.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/LonelyWolfTreat", "html/MultipleEndings-LonelyWolfTreat.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ShinMegamiTensei", "html/MultipleEndings-ShinMegamiTensei.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/Undertale", "html/MultipleEndings-Undertale.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/TheHundredLineLastDefenseAcademy", "html/MultipleEndings-TheHundredLineLastDefenseAcademy.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/SurvivalHorrorGames", "html/MultipleEndings-SurvivalHorrorGames.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/VisualNovels", "html/MultipleEndings-VisualNovels.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ClassOf09", "html/MultipleEndings-ClassOf09.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/NeedyStreamerOverload", "html/MultipleEndings-NeedyStreamerOverload.html" },
     });
 
     [Fact]
@@ -108,10 +123,43 @@ public class TropeScraperTests
         Assert.NotEmpty(result.Items);
     }
 
+    [Fact]
+    public void VideogameSubcategoriesMixedWithGamesParseRight()
+    {
+        var scraper = new TropeScraper(downloader);
+        var result = scraper.GetGamesForTrope("https://tvtropes.org/pmwiki/pmwiki.php/Main/MultipleEndings");
+
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/Main/MultipleEndings", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/VideoGames", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ActionGames", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/AdventureGames", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/NotForBroadcast", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/RolePlayingGames", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/BaldursGateIII", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/LonelyWolfTreat", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ShinMegamiTensei", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/Undertale", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/TheHundredLineLastDefenseAcademy", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/SurvivalHorrorGames", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/VisualNovels", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ClassOf09", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/NeedyStreamerOverload", downloader.CalledUrls);
+
+        //from the breadcrumb headers of the game's subcategory pages - these don't appear elsewhere
+        ContainsGame(result, "The Stanley Parable", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/TheStanleyParable");
+        ContainsGame(result, "The Hundred Line -Last Defense Academy-", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/TheHundredLineLastDefenseAcademy");
+
+        ContainsGame(result, "DATE TREAT", null);
+    }
+
     private void ContainsGame(ParsedTropePage tropePage, string title, string url)
     {
         var work = tropePage.Items.SelectMany(i => i.Works).SingleOrDefault(w => w.Title == title);
         Assert.NotNull(work);
-        Assert.Contains(url, work.Urls);
+
+        if (url == null)
+            Assert.Empty(work.Urls);
+        else
+            Assert.Contains(url, work.Urls);
     }
 }
