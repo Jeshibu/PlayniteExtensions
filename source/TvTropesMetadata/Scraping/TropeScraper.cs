@@ -11,6 +11,7 @@ namespace TvTropesMetadata.Scraping;
 
 public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
 {
+    public List<string> VideogameCategoryUrlRoots = ["VideoGame", "VisualNovel"];
     public List<string> SubcategoryWhitelist = ["VideoGames", "VisualNovels"];
     public List<string> FolderLabelWhitelist = [
         "Game",
@@ -22,8 +23,10 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
         "Platform",
         "Real-Time Strategy",
         "Role-Playing",
+        "RPG",
         "Roguelike",
         "Simulation",
+        " Sim",
         "Stealth-Based Game",
         "Strategy",
         "Survival Horror",
@@ -45,7 +48,18 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
         var output = new ParsedTropePage { Title = GetTitle(doc) };
         var articleContent = doc.QuerySelector(".article-content")?.InnerHtml;
         output.Items.AddRange(GetTropePageListElements(articleContent, getAllUnfiltered: pageIsSubsection).Select(ParseTropePageListItem));
-        if (!pageIsSubsection)
+        if (pageIsSubsection)
+        {
+            var breadcrumbLinks = doc.QuerySelectorAll(".entry-title .entry-breadcrumb > a[href]");
+            foreach(var a in breadcrumbLinks)
+            {
+                var linkUrl = a.GetAttribute("href");
+                var linkText = a.TextContent.HtmlDecode();
+                if (IsVideogameUrl(linkUrl))
+                    output.Items.Add(new() { Text = "", Works = [new() { Title = linkText, Urls = [linkUrl] }] });
+            }
+        }
+        else
         {
             var subcategoryUrls = GetSubcategoryUrls(doc, url);
             foreach (var subcategoryUrl in subcategoryUrls)
@@ -53,27 +67,41 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
                 var subcategoryPage = GetGamesForTrope(subcategoryUrl, pageIsSubsection: true);
                 output.Items.AddRange(subcategoryPage.Items);
             }
-            output.Items.RemoveAll(i => i.Works.Count == 0 || BlacklistedWords.Any(w => i.Text.Contains(w)));
+            output.Items.RemoveAll(i => i.Works.Count == 0 || BlacklistedWords.Any(w => i.Text.Contains(w, StringComparison.InvariantCultureIgnoreCase)));
         }
         return output;
+    }
+
+    private bool IsVideogameFolderName(string folderName) => FolderLabelWhitelist.Any(l => folderName.Contains(l, StringComparison.InvariantCultureIgnoreCase));
+    private bool IsVideogameUrl(string url)
+    {
+        var linkSegments = GetWikiPathSegments(url);
+        return linkSegments.Length == 2 && VideogameCategoryUrlRoots.Contains(linkSegments[0]);
     }
 
     private IEnumerable<string> GetSubcategoryUrls(IHtmlDocument doc, string pageUrl)
     {
         var lastUrlSegment = GetWikiPathSegments(pageUrl).Last();
         var links = doc.QuerySelectorAll(".article-content > ul > li > a.twikilink[href]");
+
+        bool IsSubcategoryUrl(string subcategoryUrl)
+        {
+            var linkSegments = GetWikiPathSegments(subcategoryUrl);
+            return linkSegments.Length == 2 && linkSegments[0].Equals(lastUrlSegment, StringComparison.InvariantCultureIgnoreCase);
+        }
+
         foreach (var a in links)
         {
             var linkUrl = a.GetAttribute("href");
-            var linkSegments = GetWikiPathSegments(linkUrl);
-            if (linkSegments.Length != 2)
+            var linkText = a.TextContent.HtmlDecode();
+            if (!IsSubcategoryUrl(linkUrl) || !IsVideogameFolderName(linkText))
                 continue;
 
-            foreach (var sub in SubcategoryWhitelist)
-            {
-                if (linkSegments[0].Equals(lastUrlSegment, StringComparison.InvariantCultureIgnoreCase) && linkSegments[1].Contains(sub, StringComparison.InvariantCultureIgnoreCase))
-                    yield return linkUrl.GetAbsoluteUrl(pageUrl);
-            }
+            yield return linkUrl.GetAbsoluteUrl(pageUrl);
+
+            var childUrls = a.ParentElement.QuerySelectorAll("ul > li a.twikilink[href]").Select(x=>x.GetAttribute("href").GetAbsoluteUrl(pageUrl)).ToArray();
+            foreach (var childUrl in childUrls)
+                yield return childUrl;
         }
     }
 
@@ -85,7 +113,6 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
 
         void AddListElementsFromSourceString(string source) => output.AddRange(htmlParser.Parse(source).QuerySelectorAll("ul > li:has(> em, > a.twikilink)"));
         bool IsNonVideoGamesHeader(string header) => NonLettersAndNumbers.Replace(header, "").Contains("nonvideogame", StringComparison.InvariantCultureIgnoreCase);
-        bool IsVideogameFolderName(string folderName) => FolderLabelWhitelist.Any(l => folderName.Contains(l, StringComparison.InvariantCultureIgnoreCase));
 
         if (!getAllUnfiltered)
         {

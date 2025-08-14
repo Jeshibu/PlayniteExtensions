@@ -1,7 +1,9 @@
-﻿using PlayniteExtensions.Tests.Common;
+﻿using PlayniteExtensions.Metadata.Common;
+using PlayniteExtensions.Tests.Common;
 using System.Collections.Generic;
 using System.Linq;
 using TvTropesMetadata.Scraping;
+using TvTropesMetadata.SearchProviders;
 using Xunit;
 
 namespace TvTropesMetadata.Tests;
@@ -24,6 +26,7 @@ public class TropeScraperTests
         { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ActionGames", "html/MultipleEndings-ActionGames.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/AdventureGames", "html/MultipleEndings-AdventureGames.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/NotForBroadcast", "html/MultipleEndings-NotForBroadcast.html" },
+        { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/TheStanleyParable", "html/MultipleEndings-TheStanleyParable.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/RolePlayingGames", "html/MultipleEndings-RolePlayingGames.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/BaldursGateIII", "html/MultipleEndings-BaldursGateIII.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/LonelyWolfTreat", "html/MultipleEndings-LonelyWolfTreat.html" },
@@ -127,13 +130,16 @@ public class TropeScraperTests
     public void VideogameSubcategoriesMixedWithGamesParseRight()
     {
         var scraper = new TropeScraper(downloader);
-        var result = scraper.GetGamesForTrope("https://tvtropes.org/pmwiki/pmwiki.php/Main/MultipleEndings");
+        var sp = new TropeSearchProvider(scraper, new TvTropesMetadataSettings { OnlyFirstGamePerTropeListItem = false });
+        //var result = scraper.GetGamesForTrope("https://tvtropes.org/pmwiki/pmwiki.php/Main/MultipleEndings");
+        var result = sp.GetDetails("https://tvtropes.org/pmwiki/pmwiki.php/Main/MultipleEndings").ToList();
 
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/Main/MultipleEndings", downloader.CalledUrls);
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/VideoGames", downloader.CalledUrls);
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ActionGames", downloader.CalledUrls);
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/AdventureGames", downloader.CalledUrls);
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/NotForBroadcast", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/TheStanleyParable", downloader.CalledUrls);
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/RolePlayingGames", downloader.CalledUrls);
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/BaldursGateIII", downloader.CalledUrls);
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/LonelyWolfTreat", downloader.CalledUrls);
@@ -144,6 +150,7 @@ public class TropeScraperTests
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/VisualNovels", downloader.CalledUrls);
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ClassOf09", downloader.CalledUrls);
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/NeedyStreamerOverload", downloader.CalledUrls);
+        Assert.DoesNotContain("https://tvtropes.org/pmwiki/pmwiki.php/Main/AlgorithmicStoryBranching", downloader.CalledUrls);
 
         //from the breadcrumb headers of the game's subcategory pages - these don't appear elsewhere
         ContainsGame(result, "The Stanley Parable", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/TheStanleyParable");
@@ -161,5 +168,12 @@ public class TropeScraperTests
             Assert.Empty(work.Urls);
         else
             Assert.Contains(url, work.Urls);
+    }
+
+    private void ContainsGame(IEnumerable<GameDetails> games, string title, string url)
+    {
+        var titleMatch = games.SingleOrDefault(g => g.Names.Contains(title));
+        Assert.NotNull(titleMatch);
+        Assert.Equal(url, titleMatch.Url);
     }
 }
