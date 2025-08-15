@@ -61,3 +61,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-09-24/RawgLibrary_0_4_1.pext
     Changelog:
      - Removed duplicate setting
+  - Version: 0.4.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2025-08-15
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-15/RawgLibrary_0_4_2.pext
+    Changelog:
+     - Fixed pushing things to RAWG failing

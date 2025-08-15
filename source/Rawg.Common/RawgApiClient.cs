@@ -315,8 +315,7 @@ internal static class RawgApiClientHelpers
     internal static RestRequest AddJsonBody2(this RestRequest request, object obj)
     {
         var body = JsonConvert.SerializeObject(obj);
-        request.AddBody(body);
-        return request;
+        return request.AddBody(body);
     }
 }
 
