@@ -117,3 +117,9 @@ Packages:
     Changelog:
     - "Fixed useless links being added to games"
     - "Reminder that API access is no longer free (except to researchers or academics). The cheapest subscription is $10 per month at the moment. API keys previously granted for free should have expired by now."
+  - Version: 0.7.2
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-08-16
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-16/MobyGamesMetadata_0_7_2.pext
+    Changelog:
+    - "Small link handling fix"

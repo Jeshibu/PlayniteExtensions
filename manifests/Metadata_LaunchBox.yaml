@@ -125,6 +125,7 @@ Packages:
     ReleaseDate: 2025-08-16
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-16/LaunchBoxMetadata_0_8.pext
     Changelog:
-    - "New database format that is faster to create. Requires redownloading data."
+    - "New database format that requires redownloading database. It is smaller and faster to create."
     - "Added setting to notify you after x days since last database update to update it again"
     - "Added Icon image source type as default enabled for the icon field"
+    - "All checks regarding database existence and age now run at both startup and when fetching metadata"
