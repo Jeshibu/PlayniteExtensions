@@ -38,3 +38,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/XboxMetadata_0_3_3.pext
     Changelog:
     - Improvement in connection handling; less likely to run out of connections
+  - Version: 0.4
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2025-08-15
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-15/XboxMetadata_0_4.pext
+    Changelog:
+    - "Removed Xbox 360 game search since it's been removed from the website"

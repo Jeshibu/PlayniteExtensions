@@ -1,7 +1,7 @@
 ﻿Id: XboxMetadata
 Name: Xbox Metadata Provider
 Author: Jeshibu
-Version: 0.3.3
+Version: 0.4
 Module: XboxMetadata.dll
 Type: MetadataProvider
 Icon: icon.png
