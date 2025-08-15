@@ -53,7 +53,7 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
             var breadcrumbLinks = doc.QuerySelectorAll(".entry-title .entry-breadcrumb > a[href]");
             foreach(var a in breadcrumbLinks)
             {
-                var linkUrl = a.GetAttribute("href");
+                var linkUrl = a.GetAttribute("href").GetAbsoluteUrl(url);
                 var linkText = a.TextContent.HtmlDecode();
                 if (IsVideogameUrl(linkUrl))
                     output.Items.Add(new() { Text = "", Works = [new() { Title = linkText, Urls = [linkUrl] }] });
