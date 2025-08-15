@@ -43,14 +43,13 @@ public class TropeScraperTests
     public void SubcategoryLinksParse()
     {
         var scraper = new TropeScraper(downloader);
-        var result = scraper.GetGamesForTrope("https://tvtropes.org/pmwiki/pmwiki.php/Main/StalkerWithACrush");
+        var sp = new TropeSearchProvider(scraper, new TvTropesMetadataSettings { OnlyFirstGamePerTropeListItem = false });
+        var result = sp.GetDetails("https://tvtropes.org/pmwiki/pmwiki.php/Main/StalkerWithACrush").ToList();
 
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/StalkerWithACrush/VideoGames", downloader.CalledUrls);
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/StalkerWithACrush/VisualNovels", downloader.CalledUrls);
 
-        Assert.NotNull(result);
-        Assert.Equal("Stalker with a Crush", result.Title);
-        Assert.NotEmpty(result.Items);
+        Assert.NotEmpty(result);
 
         ContainsGame(result, "Alice: Madness Returns", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/AliceMadnessReturns");
         ContainsGame(result, "Doki Doki Literature Club!", "https://tvtropes.org/pmwiki/pmwiki.php/VisualNovel/DokiDokiLiteratureClub");
@@ -60,13 +59,12 @@ public class TropeScraperTests
     public void MixedSubcategoryAndFolderLinksParse()
     {
         var scraper = new TropeScraper(downloader);
-        var result = scraper.GetGamesForTrope("https://tvtropes.org/pmwiki/pmwiki.php/Main/TheAtoner");
+        var sp = new TropeSearchProvider(scraper, new TvTropesMetadataSettings { OnlyFirstGamePerTropeListItem = false });
+        var result = sp.GetDetails("https://tvtropes.org/pmwiki/pmwiki.php/Main/TheAtoner").ToList();
 
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/TheAtoner/VideoGames", downloader.CalledUrls);
 
-        Assert.NotNull(result);
-        Assert.Equal("The Atoner", result.Title);
-        Assert.NotEmpty(result.Items);
+        Assert.NotEmpty(result);
 
         ContainsGame(result, "Double Homework", "https://tvtropes.org/pmwiki/pmwiki.php/VisualNovel/DoubleHomework");
         ContainsGame(result, "Bendy and the Ink Machine", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/BendyAndTheInkMachine");
@@ -131,7 +129,6 @@ public class TropeScraperTests
     {
         var scraper = new TropeScraper(downloader);
         var sp = new TropeSearchProvider(scraper, new TvTropesMetadataSettings { OnlyFirstGamePerTropeListItem = false });
-        //var result = scraper.GetGamesForTrope("https://tvtropes.org/pmwiki/pmwiki.php/Main/MultipleEndings");
         var result = sp.GetDetails("https://tvtropes.org/pmwiki/pmwiki.php/Main/MultipleEndings").ToList();
 
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/Main/MultipleEndings", downloader.CalledUrls);
