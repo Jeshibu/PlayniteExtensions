@@ -43,3 +43,10 @@ Packages:
     - "Geolith (NeoGeo/Arcade)"
     - "Numero (TI-83)"
     - "ScummVM (PC)"
+  - Version: 1.6
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2025-08-16
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-16/ExtraEmulatorProfiles_1_6.pext
+    Changelog:
+    - "Added Xenia Canary Netplay profile"
+    - "Added rom, dsk, and m3u as ROM file extensions for ares MSX and MSX 2 profiles"
