@@ -67,7 +67,6 @@ public class MutualGames : GenericPlugin
     public IEnumerable<IFriendsGamesClient> GetClients()
     {
         var webView = new OffScreenWebViewWrapper(PlayniteApi);
-        yield return new EaClient(webView, Downloader);
         yield return new GogClient(webView);
         yield return new SteamClient(webView);
     }
