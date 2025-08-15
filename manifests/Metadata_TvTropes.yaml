@@ -26,3 +26,9 @@ Packages:
     Changelog:
     - Improved property bulk import title matching with regard to editions in braces and roman numerals
     - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them
+  - Version: 0.4.6
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-08-16
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-16/TvTropesMetadata_0_4_6.pext
+    Changelog:
+    - Improved property bulk import for tropes with subcategory pages
