@@ -44,3 +44,9 @@ Packages:
     Changelog:
      - Made Viveport Infinity a separate source
      - Added a main menu > Extensions > Viveport entry to reset sources for already imported Viveport games
+  - Version: 0.4.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2025-08-15
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-15/ViveportLibrary_0_4_1.pext
+    Changelog:
+     - Fixed metadata collection failing
