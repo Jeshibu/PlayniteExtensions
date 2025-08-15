@@ -120,3 +120,11 @@ Packages:
     Changelog:
     - Fixed no images being found
     - Shortened link name from LaunchBox Games Database to just LaunchBox
+  - Version: 0.8
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: 2025-08-16
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-16/LaunchBoxMetadata_0_8.pext
+    Changelog:
+    - "New database format that is faster to create. Requires redownloading data."
+    - "Added setting to notify you after x days since last database update to update it again"
+    - "Added Icon image source type as default enabled for the icon field"

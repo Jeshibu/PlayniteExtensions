@@ -82,9 +82,14 @@ public class LaunchBoxMetadata : MetadataPlugin
 
         if (settings.Settings.DatabaseVersion < LaunchBoxMetadataSettings.CurrentDatabaseVersion)
         {
-            PlayniteApi.Notifications.Add(new NotificationMessage("launchbox-database-outdated", "LaunchBox database format outdated. Click here to update it.", NotificationType.Error, () => OpenSettingsView()));
+            PlayniteApi.Notifications.Add(new NotificationMessage("launchbox-database-format-outdated", "LaunchBox database format outdated. Click here to update it.", NotificationType.Error, () => OpenSettingsView()));
             return false;
         }
+
+        var dbFile = new FileInfo(dbPath);
+        var daysSinceLastUpdate = (DateTime.Now - dbFile.LastWriteTime).TotalDays;
+        if (daysSinceLastUpdate > settings.Settings.AdviseDatabaseUpdateAfterDays)
+            PlayniteApi.Notifications.Add(new NotificationMessage("launchbox-database-outdated", $"LaunchBox database was last updated {daysSinceLastUpdate:0} days ago. Click here to update it.", NotificationType.Error, () => OpenSettingsView()));
 
         return true;
     }

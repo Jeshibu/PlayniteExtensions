@@ -15,7 +15,7 @@ Packages:
     - Added IDs to settings accounts lists
   - Version: 0.4
     RequiredApiVersion: 6.11.0
-    ReleaseDate: 2025-08-15
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-15/MutualGames_0_4.pext
+    ReleaseDate: 2025-08-16
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-16/MutualGames_0_4.pext
     Changelog:
     - "Removed EA functionality. It might return at some point, but the API that this plugin used is permanently gone."

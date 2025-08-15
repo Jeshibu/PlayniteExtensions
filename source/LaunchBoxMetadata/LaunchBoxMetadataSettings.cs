@@ -48,6 +48,7 @@ public class LaunchBoxMetadataSettings : ObservableObject
             MinWidth = 1000,
         };
     }
+    public int AdviseDatabaseUpdateAfterDays { get; set; } = 30;
 
     public int DatabaseVersion { get; set; } = 1;
 
