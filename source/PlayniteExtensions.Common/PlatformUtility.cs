@@ -15,7 +15,7 @@ public class PlatformUtility : IPlatformUtility
 
     private Dictionary<string, string[]> PlatformSpecNameByNormalName => platformSpecNameByNormalName ??= GetPlatformSpecsByNormalName(api);
 
-    private HashSet<string> PlatformSpecNames => platformSpecNames ??= api?.Database?.Platforms?.Select(p => p.SpecificationId).Where(x => x != null).ToHashSet();
+    private HashSet<string> PlatformSpecNames => platformSpecNames ??= api?.Database?.Platforms?.Select(p => p.SpecificationId).Where(x => x != null).ToHashSet() ?? [];
 
     public PlatformUtility(IPlayniteAPI api)
     {
@@ -65,57 +65,122 @@ public class PlatformUtility : IPlatformUtility
                     output.Add(nameWithoutCompany, [platform.SpecificationId]);
             }
         }
-        TryAddPlatformByName(output, "3DO", "3do");
-        TryAddPlatformByName(output, ["Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM", "Windows Apps", "win", "Windows 3.x"], ["pc_windows"]);
-        TryAddPlatformByName(output, ["DOS", "MS-DOS"], "pc_dos");
-        TryAddPlatformByName(output, ["Linux", "LIN"], "pc_linux");
-        TryAddPlatformByName(output, ["Mac", "OSX"], "macintosh");
-        TryAddPlatformByName(output, ["Xbox360", "X360"], ["xbox360"]);
-        TryAddPlatformByName(output, ["XboxOne", "XONE"], ["xbox_one"]);
-        TryAddPlatformByName(output, ["Microsoft Xbox Series X", "Microsoft Xbox Series S", "Xbox Series X", "Xbox Series S", "Microsoft Xbox Series X/S", "Microsoft Xbox Series S/X", "Xbox Series X/S", "Xbox Series S/X", "Xbox Series X|S", "XboxSeriesX", "XSX"], ["xbox_series"]);
-        TryAddPlatformByName(output, ["PS", "PS1", "PSX"], ["sony_playstation"]);
-        TryAddPlatformByName(output, "PS2", "sony_playstation2");
-        TryAddPlatformByName(output, "PS3", "sony_playstation3");
-        TryAddPlatformByName(output, "PS4", "sony_playstation4");
-        TryAddPlatformByName(output, "PS5", "sony_playstation5");
-        TryAddPlatformByName(output, "PSP", "sony_psp");
-        TryAddPlatformByName(output, ["PS Vita", "Vita"], "sony_vita");
-        TryAddPlatformByName(output, ["PS4/5", "Playstation 4/5"], ["sony_playstation4", "sony_playstation5"]);
-        TryAddPlatformByName(output, "Commodore 64/128", "commodore_64");
+        TryAddPlatformByName(output, ["3DO", "3DO Interactive Multiplayer"], "3do");
+        TryAddPlatformByName(output, "Adobe", ["Flash"], "adobe_flash");
+        TryAddPlatformByName(output, "Amstrad", ["CPC"], "amstrad_cpc");
+        TryAddPlatformByName(output, ["Apple II", "Apple 2"], "apple_2");
+        TryAddPlatformByName(output, "Atari", ["2600"], "atari_2600");
+        TryAddPlatformByName(output, "Atari", ["5200"], "atari_5200");
+        TryAddPlatformByName(output, "Atari", ["7800"], "atari_7800");
+        TryAddPlatformByName(output, ["Atari 8-bit", "Atari 8bit", "Atari 8 bit"], "atari_8bit");
+        TryAddPlatformByName(output, "Atari", ["Falcon030", "Falcon"], "atari_falcon030");
+        TryAddPlatformByName(output, "Atari", ["Jaguar"], "atari_jaguar");
+        TryAddPlatformByName(output, "Atari", ["Lynx"], "atari_lynx");
+        TryAddPlatformByName(output, "Atari", ["ST", "STE"], "atari_st");
+        TryAddPlatformByName(output, "Bandai", ["WonderSwan Color"], "bandai_wonderswan_color");
+        TryAddPlatformByName(output, "Bandai", ["WonderSwan"], "bandai_wonderswan");
+        TryAddPlatformByName(output, "Coleco", ["ColecoVision"], "coleco_vision");
+        TryAddPlatformByName(output, ["Commodore 64", "Commodore 128", "Commodore 64/128"], "commodore_64");
+        TryAddPlatformByName(output, "Commodore", ["Amiga"], "commodore_amiga");
+        TryAddPlatformByName(output, "Commodore", ["Amiga CD32", "Amiga CD³²"], "commodore_amiga_cd32");
+        TryAddPlatformByName(output, "Commodore", ["CBM-5x0"], "commodore_cbm5x0");
+        TryAddPlatformByName(output, "Commodore", ["CBM-II"], "commodore_cbm2");
+        TryAddPlatformByName(output, "Commodore", ["PET", "CBM"], "commodore_pet");
+        TryAddPlatformByName(output, "Commodore 16", "commodore_plus4");
+        TryAddPlatformByName(output, "Commodore", ["16, Plus/4", "Plus/4"], "commodore_plus4");
+        TryAddPlatformByName(output, "Commodore", ["VIC20"], "commodore_vci20"); //typo in Playnite's Platforms.yaml
+        TryAddPlatformByName(output, "GCE", ["Vectrex"], "vectrex");
+        TryAddPlatformByName(output, "Apple", ["Mac", "Macintosh", "OSX"], "macintosh");
+        TryAddPlatformByName(output, "Magnavox", ["Odyssey 2"], "magnavox_odyssey_2");
+        TryAddPlatformByName(output, "Mattel", ["Intellivision"], "mattel_intellivision");
+        TryAddPlatformByName(output, "Microsoft MSX", "microsoft_msx");
+        TryAddPlatformByName(output, "MSX", "microsoft_msx", "microsoft_msx2");
+        TryAddPlatformByName(output, "Microsoft", ["MSX2"], "microsoft_msx2");
+        TryAddPlatformByName(output, "Microsoft", ["Xbox"], "xbox");
+        TryAddPlatformByName(output, "Microsoft", ["Xbox 360", "Xbox360", "X360"], "xbox360");
+        TryAddPlatformByName(output, "Microsoft", ["Xbox One", "XboxOne", "XONE"], "xbox_one");
+        TryAddPlatformByName(output, "Microsoft", ["Xbox Series X", "Xbox Series S", "Xbox Series X/S", "Xbox Series S/X", "Xbox Series X|S", "XboxSeriesX", "XSX"], ["xbox_series"]);
+        TryAddPlatformByName(output, "NEC", ["PC-98", "PC98"], "nec_pc98");
+        TryAddPlatformByName(output, "NEC", ["PC-FX", "PCFX"], "nec_pcfx");
+        TryAddPlatformByName(output, "NEC", ["SuperGrafx"], "nec_supergrafx");
+        TryAddPlatformByName(output, "NEC", ["TurboGrafx 16"], "nec_turbografx_16");
+        TryAddPlatformByName(output, "NEC", ["TurboGrafx-CD", "TurboGrafx CD"], "nec_turbografx_cd");
+        TryAddPlatformByName(output, "Nintendo", ["3DS"], "nintendo_3ds");
+        TryAddPlatformByName(output, ["New Nintendo 3DS", "N3DS"], "nintendo_3ds"); //count it as part of 3DS for emulation purposes
+        TryAddPlatformByName(output, ["Nintendo 64", "N64"], "nintendo_64");
+        TryAddPlatformByName(output, "Nintendo", ["DS"], "nintendo_ds");
+        TryAddPlatformByName(output, "Nintendo", ["DSi"], "nintendo_dsi");
+        TryAddPlatformByName(output, ["Nintendo Entertainment System", "NES"], "nintendo_nes");
+        TryAddPlatformByName(output, "Nintendo", ["Family Computer Disk System", "Famicom Disk System"], "nintendo_famicom_disk");
+        TryAddPlatformByName(output, "Nintendo", ["Game Boy Advance", "Gameboy Advance", "GBA"], "nintendo_gameboyadvance");
+        TryAddPlatformByName(output, "Nintendo", ["Game Boy Color", "Gameboy Color", "GBC"], "nintendo_gameboycolor");
+        TryAddPlatformByName(output, "Nintendo", ["Game Boy", "Gameboy", "GB"], "nintendo_gameboy");
+        TryAddPlatformByName(output, "Nintendo", ["GameCube"], "nintendo_gamecube");
+        TryAddPlatformByName(output, "Nintendo", ["Super NES", "SNES"], "nintendo_super_nes");
+        TryAddPlatformByName(output, "Super Nintendo Entertainment System", "nintendo_super_nes");
+        TryAddPlatformByName(output, "Nintendo", ["Switch"], "nintendo_switch");
+        TryAddPlatformByName(output, "Nintendo", ["Switch 2"], "nintendo_switch2");
+        TryAddPlatformByName(output, "Nintendo", ["Virtual Boy"], "nintendo_virtualboy");
+        TryAddPlatformByName(output, "Nintendo", ["Wii U", "WiiU"], "nintendo_wiiu");
+        TryAddPlatformByName(output, ["PC (DOS)", "DOS", "MS-DOS"], "pc_dos");
+        TryAddPlatformByName(output, ["PC (Linux)", "Linux", "LIN"], "pc_linux");
+        TryAddPlatformByName(output, ["PC (Windows)", "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM", "Windows Apps", "win", "Windows 3.x"], "pc_windows");
+        TryAddPlatformByName(output, "Sega", ["32X"], "sega_32x");
+        TryAddPlatformByName(output, "Sega CD", "sega_cd");
+        TryAddPlatformByName(output, "Sega", ["Dreamcast", "DC"], "sega_dreamcast");
+        TryAddPlatformByName(output, "Sega", ["Game Gear"], "sega_gamegear");
+        TryAddPlatformByName(output, "Sega", ["Genesis"], "sega_genesis");
+        TryAddPlatformByName(output, "Sega", ["Master System"], "sega_mastersystem");
+        TryAddPlatformByName(output, "Sega", ["Saturn"], "sega_saturn");
+        TryAddPlatformByName(output, "Sega", ["SG-1000"], "sega_sg1000");
+        TryAddPlatformByName(output, "Sharp", ["X68000"], "sharp_x68000");
+        TryAddPlatformByName(output, "Sinclair", ["ZX Spectrum"], "sinclair_zxspectrum");
+        TryAddPlatformByName(output, "Sinclair", ["ZX Spectrum +3"], "sinclair_zxspectrum3");
+        TryAddPlatformByName(output, "Sinclair", ["ZX81"], "sinclair_zx81");
+        TryAddPlatformByName(output, "SNK", ["Neo Geo AES"], "snk_neogeo_aes");
+        TryAddPlatformByName(output, "SNK", ["Neo Geo CD"], "snk_neogeo_cd");
+        TryAddPlatformByName(output, "SNK", ["Neo Geo Pocket Color"], "snk_neogeopocket_color");
+        TryAddPlatformByName(output, "SNK", ["Neo Geo Pocket"], "snk_neogeopocket");
+        TryAddPlatformByName(output, "Sony", ["Playstation", "PS", "PS1", "PSX"], "sony_playstation");
+        TryAddPlatformByName(output, "Sony", ["Playstation 2", "PS2"], "sony_playstation2");
+        TryAddPlatformByName(output, "Sony", ["Playstation 3", "PS3"], "sony_playstation3");
+        TryAddPlatformByName(output, "Sony", ["Playstation 4", "PS4"], "sony_playstation4");
+        TryAddPlatformByName(output, "Sony", ["Playstation 5", "PS5"], "sony_playstation5");
+        TryAddPlatformByName(output, "Sony", ["Playstation Portable", "PSP"], "sony_psp");
+        TryAddPlatformByName(output, "Sony", ["Playstation Vita", "PS Vita", "Vita"], "sony_vita");
+        TryAddPlatformByName(output, "Sony", ["PS4/5", "Playstation 4/5"], ["sony_playstation4", "sony_playstation5"]);
+        TryAddPlatformByName(output, "Texas Instruments", ["TI-83"], "ti_83");
+        TryAddPlatformByName(output, "Thomson", ["MO5"], "thomson_mo5");
+        TryAddPlatformByName(output, "Thomson", ["TO7"], "thomson_to7");
+        TryAddPlatformByName(output, "TIC-80", "tic_80");
+        TryAddPlatformByName(output, "Uzebox", "uzebox");
+        TryAddPlatformByName(output, "Watara", ["Supervision"], "watara_supervision");
+        TryAddPlatformByName(output, "Philips", ["CD-i", "CDI"], "philips_cdi");
+        TryAddPlatformByName(output, ["Pokémon mini", "Pokemon mini"], "pokemon_mini");
         TryAddPlatformByName(output, "AMI", "commodore_amiga");
-        TryAddPlatformByName(output, "GB", "nintendo_gameboy");
-        TryAddPlatformByName(output, "GBA", "nintendo_gameboyadvance");
         TryAddPlatformByName(output, "GG", "sega_gamegear");
         TryAddPlatformByName(output, "GEN", "sega_genesis");
         TryAddPlatformByName(output, "LYNX", "atari_lynx");
         TryAddPlatformByName(output, "SMS", "sega_mastersystem");
-        TryAddPlatformByName(output, ["SNES", "Super Nintendo Entertainment System"], "nintendo_super_nes");
         TryAddPlatformByName(output, "APL2", "apple_2");
         TryAddPlatformByName(output, "AST", "atari_st");
         TryAddPlatformByName(output, "C64", "commodore_64");
-        TryAddPlatformByName(output, "MSX", "microsoft_msx", "microsoft_msx2");
         TryAddPlatformByName(output, "SPEC", "sinclair_zxspectrum");
-        TryAddPlatformByName(output, "NES", "nintendo_nes");
         TryAddPlatformByName(output, "GCN", "nintendo_gamecube");
         TryAddPlatformByName(output, "A800", "atari_8bit");
         TryAddPlatformByName(output, "NEO", "snk_neogeo_aes");
         TryAddPlatformByName(output, "JAG", "atari_jaguar");
         TryAddPlatformByName(output, "SCD", "sega_cd");
         TryAddPlatformByName(output, "VC20", "commodore_vci20"); //typo in Playnite's Platforms.yaml
-        TryAddPlatformByName(output, "32X", "sega_32x");
-        TryAddPlatformByName(output, "DC", "sega_dreamcast");
         TryAddPlatformByName(output, "CD32", "commodore_amiga_cd32");
         TryAddPlatformByName(output, "SAT", "sega_saturn");
-        TryAddPlatformByName(output, "N64", "nintendo_64");
         TryAddPlatformByName(output, "CVIS", "coleco_vision");
         TryAddPlatformByName(output, "INTV", "mattel_intellivision");
         TryAddPlatformByName(output, "DS", "nintendo_ds");
         TryAddPlatformByName(output, "TGCD", "nec_turbografx_cd");
         TryAddPlatformByName(output, "WSC", "bandai_wonderswan_color");
         TryAddPlatformByName(output, "TG16", "nec_turbografx_16");
-        TryAddPlatformByName(output, "GBC", "nintendo_gameboycolor");
         TryAddPlatformByName(output, "NGCD", "snk_neogeo_cd");
-        TryAddPlatformByName(output, "CBM", "commodore_pet");
         TryAddPlatformByName(output, "WSW", "bandai_wonderswan");
         TryAddPlatformByName(output, "2600", "atari_2600");
         TryAddPlatformByName(output, "5200", "atari_5200");
@@ -127,19 +192,15 @@ public class PlatformUtility : IPlatformUtility
         TryAddPlatformByName(output, "NGPC", "snk_neogeopocket_color");
         TryAddPlatformByName(output, "FDS", "nintendo_famicom_disk");
         TryAddPlatformByName(output, "X68K", "sharp_x68000");
-        TryAddPlatformByName(output, "3DS", "nintendo_3ds");
         TryAddPlatformByName(output, "SGFX", "nec_supergrafx");
-        TryAddPlatformByName(output, "WiiU", "nintendo_wiiu");
         TryAddPlatformByName(output, "SG1K", "sega_sg1000");
         TryAddPlatformByName(output, "SVIS", "watara_supervision");
-        TryAddPlatformByName(output, "N3DS", "nintendo_3ds"); //New Nintendo 3DS, count it as part of 3DS for emulation purposes
         TryAddPlatformByName(output, "NSW", "nintendo_switch");
         return output;
     }
 
     private static readonly Dictionary<string, string> nameAbbreviations = new(StringComparer.InvariantCulture)
     {
-        { "CDI", "Philips CD-i" },
         { "NGE", "Nokia N-Gage" },
         { "A2GS", "Apple IIgs" },
         { "TI99", "TI-99/4A" },
@@ -274,11 +335,18 @@ public class PlatformUtility : IPlatformUtility
         return true;
     }
 
-    private static bool TryAddPlatformByName(Dictionary<string, string[]> dict, string[] platformNames, params string[] platformSpecNames)
+    private static bool TryAddPlatformByName(Dictionary<string, string[]> dict, string[] platformNames, params string[] platformSpecNames) => TryAddPlatformByName(dict, null, platformNames, platformSpecNames);
+
+    private static bool TryAddPlatformByName(Dictionary<string, string[]> dict, string companyName, string[] platformNames, params string[] platformSpecNames)
     {
         bool success = true;
-        foreach (var platformName in platformNames)
-            success &= TryAddPlatformByName(dict, platformName, platformSpecNames);
+        HashSet<string> namePrefixes = [""];
+        if (!string.IsNullOrEmpty(companyName))
+            namePrefixes.Add(companyName + ' ');
+
+        foreach (var prefix in namePrefixes)
+            foreach (var platformName in platformNames)
+                success &= TryAddPlatformByName(dict, prefix + platformName, platformSpecNames);
 
         return success;
     }
