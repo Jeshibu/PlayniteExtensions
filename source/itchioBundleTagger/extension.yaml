@@ -1,7 +1,7 @@
 ﻿Id: itchioBundleTagger_fc4fa75e-6e99-4c02-8547-113747efbb82
 Name: itch.io Bundle Tagger
 Author: Jeshibu
-Version: 0.14
+Version: 0.14.1
 Module: itchioBundleTagger.dll
 Type: GenericPlugin
 Icon: icon.png

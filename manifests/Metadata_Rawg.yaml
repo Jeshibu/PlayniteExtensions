@@ -44,3 +44,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/RawgMetadata_0_4_1.pext
     Changelog:
      - Fixed fetching metadata for games potentially adding a link for a different game of the same name
+  - Version: 0.4.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/RawgMetadata_0_4_2.pext
+    Changelog:
+     - "Fixed platform matching failing to match some platforms if they'd been renamed"

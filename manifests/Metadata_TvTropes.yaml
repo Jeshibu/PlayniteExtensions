@@ -32,3 +32,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-16/TvTropesMetadata_0_4_6.pext
     Changelog:
     - Improved property bulk import for tropes with subcategory pages
+  - Version: 0.4.7
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/TvTropesMetadata_0_4_7.pext
+    Changelog:
+    - "Fixed platform matching failing to match some platforms if they'd been renamed"

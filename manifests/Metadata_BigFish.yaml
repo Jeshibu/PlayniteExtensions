@@ -12,4 +12,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/BigFishMetadata_0_4.pext
     Changelog:
     - Improvement in connection handling; less likely to run out of connections
-
+  - Version: 0.4.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/BigFishMetadata_0_4_1.pext
+    Changelog:
+    - "Fixed platform matching failing to match some platforms if they'd been renamed"

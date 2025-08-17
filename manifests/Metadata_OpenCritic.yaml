@@ -27,3 +27,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/opencritic0.2.1/OpenCriticMetadata_0_2_1.pext
     Changelog:
     - Fixed drag-drop control in settings not initializing if no other extension does it
+  - Version: 0.2.2
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/OpenCriticMetadata_0_2_2.pext
+    Changelog:
+    - "Fixed platform matching failing to match some platforms if they'd been renamed"

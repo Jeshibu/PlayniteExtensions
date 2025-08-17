@@ -30,3 +30,9 @@ Packages:
      - 'Fixed authenticated status not being detected correctly.'
      - 'Added setting to import in the background. This is the default for new users.'
      - 'Skip importing previously imported orders to save time.'
+  - Version: 0.2.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/GamersGateLibrary_0_2_1.pext
+    Changelog:
+     - "Fixed platform matching failing to match some platforms if they'd been renamed"

@@ -67,3 +67,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-16/RawgLibrary_0_4_2.pext
     Changelog:
      - Fixed pushing things to RAWG failing
+  - Version: 0.4.3
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/RawgLibrary_0_4_3.pext
+    Changelog:
+     - "Fixed platform matching failing to match some platforms if they'd been renamed"

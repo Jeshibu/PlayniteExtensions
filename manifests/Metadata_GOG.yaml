@@ -19,3 +19,9 @@ Packages:
     Changelog:
     - Split companies when multiple are entered in a single entry
     - Improvement in connection handling; less likely to run out of connections
+  - Version: 0.2.2
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/GOGMetadata_0_2_2.pext
+    Changelog:
+    - "Fixed platform matching failing to match some platforms if they'd been renamed"

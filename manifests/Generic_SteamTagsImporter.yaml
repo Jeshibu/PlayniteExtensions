@@ -155,3 +155,9 @@ Packages:
     Changelog:
     - "Fixed accessibility features always showing up in bulk property import search results"
     - "Fixed accessibility features not showing a category in bulk property import search results"
+  - Version: 4.2.7
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/SteamTagsImporter_4_2_7.pext
+    Changelog:
+    - "Fixed platform matching failing to match some platforms if they'd been renamed"

@@ -231,3 +231,9 @@ Packages:
   Changelog:
     - "Fixed failing to get data for games with special URL characters in the name"
     - "Fixed PCGW link for redirect pages"
+- Version: 1.5.2
+  RequiredApiVersion: 6.11.0
+  ReleaseDate: {NEWDATE}
+  PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/PCGamingWikiMetadata_1_5_2.pext
+  Changelog:
+    - "Fixed platform matching failing to match some platforms if they'd been renamed"

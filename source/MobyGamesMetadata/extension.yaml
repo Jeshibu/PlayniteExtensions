@@ -1,7 +1,7 @@
 ﻿Id: MobyGamesMetadata
 Name: MobyGames Metadata Provider
 Author: Jeshibu
-Version: 0.7.2
+Version: 0.7.3
 Module: MobyGamesMetadata.dll
 Type: MetadataProvider
 Icon: icon.png

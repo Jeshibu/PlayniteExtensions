@@ -50,21 +50,6 @@ public class PlatformUtility : IPlatformUtility
     private static Dictionary<string, string[]> GetPlatformSpecsByNormalName(IPlayniteAPI api)
     {
         var output = new Dictionary<string, string[]>(StringComparer.InvariantCultureIgnoreCase);
-        if (api?.Database?.Platforms != null) //for use in unit tests so you don't have to instantiate the entire database or platform list
-        {
-            foreach (var platform in api.Database.Platforms)
-            {
-                if (platform.SpecificationId == null)
-                    continue;
-
-                if (!output.ContainsKey(platform.Name))
-                    output.Add(platform.Name, [platform.SpecificationId]);
-
-                string nameWithoutCompany = TrimCompanyName.Replace(platform.Name, string.Empty);
-                if (!output.ContainsKey(nameWithoutCompany))
-                    output.Add(nameWithoutCompany, [platform.SpecificationId]);
-            }
-        }
         TryAddPlatformByName(output, ["3DO", "3DO Interactive Multiplayer"], "3do");
         TryAddPlatformByName(output, "Adobe", ["Flash"], "adobe_flash");
         TryAddPlatformByName(output, "Amstrad", ["CPC"], "amstrad_cpc");
@@ -196,6 +181,22 @@ public class PlatformUtility : IPlatformUtility
         TryAddPlatformByName(output, "SG1K", "sega_sg1000");
         TryAddPlatformByName(output, "SVIS", "watara_supervision");
         TryAddPlatformByName(output, "NSW", "nintendo_switch");
+
+        if (api?.Database?.Platforms == null) //for use in unit tests so you don't have to instantiate the entire database or platform list
+            return output;
+
+        foreach (var platform in api.Database.Platforms)
+        {
+            if (platform.SpecificationId == null)
+                continue;
+
+            if (!output.ContainsKey(platform.Name))
+                output.Add(platform.Name, [platform.SpecificationId]);
+
+            string nameWithoutCompany = TrimCompanyName.Replace(platform.Name, string.Empty);
+            if (!output.ContainsKey(nameWithoutCompany))
+                output.Add(nameWithoutCompany, [platform.SpecificationId]);
+        }
         return output;
     }
 
@@ -340,7 +341,7 @@ public class PlatformUtility : IPlatformUtility
     private static bool TryAddPlatformByName(Dictionary<string, string[]> dict, string companyName, string[] platformNames, params string[] platformSpecNames)
     {
         bool success = true;
-        HashSet<string> namePrefixes = [""];
+        List<string> namePrefixes = [""];
         if (!string.IsNullOrEmpty(companyName))
             namePrefixes.Add(companyName + ' ');
 
@@ -359,10 +360,8 @@ public class PlatformUtility : IPlatformUtility
             return [];
 
         string sanitizedPlatformName = TrimInput.Replace(platformName, string.Empty);
-        string companyTrimmedPlatformName = TrimCompanyName.Replace(sanitizedPlatformName, string.Empty);
 
-        if (PlatformSpecNameByNormalName.TryGetValue(sanitizedPlatformName, out string[] specIds)
-            || PlatformSpecNameByNormalName.TryGetValue(companyTrimmedPlatformName, out specIds))
+        if (PlatformSpecNameByNormalName.TryGetValue(sanitizedPlatformName, out string[] specIds))
             return specIds.Select(s => new MetadataSpecProperty(s)).ToList<MetadataProperty>();
 
         if (nameAbbreviations.TryGetValue(sanitizedPlatformName, out string foundPlatformName))

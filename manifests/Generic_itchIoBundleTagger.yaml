@@ -109,3 +109,9 @@ Packages:
     - "Added support for new bundle - Amor per Valencia / Love for Valencia"
     - "Added support for new bundle - TTRPGs for Trans Rights - Ohio"
     - "Added support for new bundle - Crips for eSims for Gaza Bundle"
+  - Version: 0.14.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/itchIoBundleTagger_0_14_1.pext
+    Changelog:
+    - "Fixed platform matching failing to match some platforms if they'd been renamed"
