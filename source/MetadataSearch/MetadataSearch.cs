@@ -1,8 +1,10 @@
-﻿using Playnite.SDK;
+﻿using MetadataSearch.SearchItems;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MetadataSearch;
 
@@ -10,7 +12,22 @@ public class MetadataSearch : GenericPlugin
 {
     public MetadataSearch(IPlayniteAPI playniteAPI) : base(playniteAPI)
     {
-
+        Searches = [
+            new("fp", "Filter presets", new DatabaseObjectFilterSearchContext<FilterPreset, FilterPresetSearchItem>(playniteAPI, pn=>pn.Database.FilterPresets, x=>new(playniteAPI.MainView, x))),
+            new("library", "Filter by library", new DatabaseObjectFilterSearchContext<DatabaseObject, LibraryFilterSearchItem>(playniteAPI, pn=>pn.Addons.Plugins.OfType<LibraryPlugin>().Select(p=>new DatabaseObject{Id=p.Id,Name=p.Name }), x=>new(playniteAPI.MainView, x))),
+            new("agerating", "Filter by age rating", new DatabaseObjectFilterSearchContext<AgeRating, AgeRatingFilterSearchItem>(playniteAPI, pn=>pn.Database.AgeRatings, x=>new(playniteAPI.MainView, x))),
+            new("category", "Filter by category", new DatabaseObjectFilterSearchContext<Category, CategoryFilterSearchItem>(playniteAPI, pn=>pn.Database.Categories, x=>new(playniteAPI.MainView, x))),
+            new("completion", "Filter by completion status", new DatabaseObjectFilterSearchContext<CompletionStatus, CompletionStatusFilterSearchItem>(playniteAPI, pn=>pn.Database.CompletionStatuses, x=>new(playniteAPI.MainView, x))),
+            new("developer", "Filter by developer", new DatabaseObjectFilterSearchContext<Company, DeveloperFilterSearchItem>(playniteAPI, pn=>pn.Database.Companies, x=>new(playniteAPI.MainView, x))),
+            new("publisher", "Filter by publisher", new DatabaseObjectFilterSearchContext<Company, PublisherFilterSearchItem>(playniteAPI, pn=>pn.Database.Companies, x=>new(playniteAPI.MainView, x))),
+            new("feature", "Filter by feature", new DatabaseObjectFilterSearchContext<GameFeature, FeatureFilterSearchItem>(playniteAPI, pn=>pn.Database.Features, x=>new(playniteAPI.MainView, x))),
+            new("genre", "Filter by genre", new DatabaseObjectFilterSearchContext<Genre, GenreFilterSearchItem>(playniteAPI, pn=>pn.Database.Genres, x=>new(playniteAPI.MainView, x))),
+            new("platform", "Filter by platform", new DatabaseObjectFilterSearchContext<Platform, PlatformFilterSearchItem>(playniteAPI, pn=>pn.Database.Platforms, x=>new(playniteAPI.MainView, x))),
+            new("region", "Filter by region", new DatabaseObjectFilterSearchContext<Region, RegionFilterSearchItem>(playniteAPI, pn=>pn.Database.Regions, x=>new(playniteAPI.MainView, x))),
+            new("series", "Filter by series", new DatabaseObjectFilterSearchContext<Series, SeriesFilterSearchItem>(playniteAPI, pn=>pn.Database.Series, x=>new(playniteAPI.MainView, x))),
+            new("source", "Filter by source", new DatabaseObjectFilterSearchContext<GameSource, SourceFilterSearchItem>(playniteAPI, pn=>pn.Database.Sources, x=>new(playniteAPI.MainView, x))),
+            new("tag", "Filter by tag", new DatabaseObjectFilterSearchContext<Tag,TagFilterSearchItem>(playniteAPI, pn=>pn.Database.Tags, x=>new(playniteAPI.MainView, x)))
+        ];
     }
 
     public override Guid Id { get; } = new("bd6bdf7f-86d8-4fa9-b056-29c8753d475f");
@@ -18,111 +35,6 @@ public class MetadataSearch : GenericPlugin
     public override IEnumerable<SearchItem> GetSearchGlobalCommands()
     {
         foreach (var filterPreset in PlayniteApi.Database.FilterPresets)
-            yield return new FilterPresetSearchItem(PlayniteApi.MainView, filterPreset, "Filter preset");
-
-        //foreach (var tag in PlayniteApi.Database.Tags)
-        //    yield return new TagFilterSearchItem(PlayniteApi.MainView, tag, "Tag");
+            yield return new FilterPresetSearchItem(PlayniteApi.MainView, filterPreset);
     }
-}
-
-public abstract class MetadataFilterSearchItem<T> : SearchItem where T : DatabaseObject
-{
-    protected IMainViewAPI MainView { get; }
-    protected T DatabaseObject { get; }
-
-    protected MetadataFilterSearchItem(IMainViewAPI mainViewAPI, T databaseObject, string type, bool appendFilterIsPrimary = true) : base($"{type}: {databaseObject.Name}", null)
-    {
-        MainView = mainViewAPI;
-        DatabaseObject = databaseObject;
-        PrimaryAction = new SearchItemAction("Append to filter", AppendToCurrentFilter);
-        SecondaryAction = new SearchItemAction("Filter exclusively", ReplaceFilter);
-    }
-
-    void AppendToCurrentFilter()
-    {
-        var fs = MainView.GetCurrentFilterSettings();
-        var fp = new FilterPreset() { Settings = fs };
-        ApplyFilterImpl(fp);
-        MainView.ApplyFilterPreset(fp);
-    }
-
-    void ReplaceFilter()
-    {
-        var fp = new FilterPreset() { Settings = new() };
-        ApplyFilterImpl(fp);
-        MainView.ApplyFilterPreset(fp);
-    }
-
-    protected abstract void ApplyFilterImpl(FilterPreset fp);
-
-    protected void Append(IdItemFilterItemProperties fp1, IdItemFilterItemProperties fp2)
-    {
-        if (fp2?.Ids != null)
-            (fp1.Ids ??= new()).AddRange(fp2.Ids);
-    }
-
-    protected void Append(IdItemFilterItemProperties fp1, Guid id) => (fp1.Ids ??= new()).Add(id);
-
-    protected void Append(EnumFilterItemProperties fp1, EnumFilterItemProperties fp2)
-    {
-        if (fp2?.Values != null)
-            (fp1.Values ??= new()).AddRange(fp2.Values);
-    }
-
-    protected void Append(StringFilterItemProperties fp1, StringFilterItemProperties fp2)
-    {
-        if (fp2?.Values != null)
-            (fp1.Values ??= new()).AddRange(fp2.Values);
-    }
-}
-
-public class FilterPresetSearchItem : MetadataFilterSearchItem<FilterPreset>
-{
-    public FilterPresetSearchItem(IMainViewAPI mainViewAPI, FilterPreset databaseObject, string type, bool appendFilterIsPrimary = true) : base(mainViewAPI, databaseObject, type, appendFilterIsPrimary)
-    {
-    }
-
-    protected override void ApplyFilterImpl(FilterPreset fp)
-    {
-        Append(fp.Settings.Added ??= new(), DatabaseObject.Settings.Added);
-        Append(fp.Settings.AgeRating ??= new(), DatabaseObject.Settings.AgeRating);
-        Append(fp.Settings.Category ??= new(), DatabaseObject.Settings.Category);
-        Append(fp.Settings.CommunityScore ??= new(), DatabaseObject.Settings.CommunityScore);
-        Append(fp.Settings.CompletionStatuses ??= new(), DatabaseObject.Settings.CompletionStatuses);
-        Append(fp.Settings.CriticScore ??= new(), DatabaseObject.Settings.CriticScore);
-        Append(fp.Settings.Developer ??= new(), DatabaseObject.Settings.Developer);
-        fp.Settings.Favorite &= DatabaseObject.Settings.Favorite;
-        Append(fp.Settings.Feature ??= new(), DatabaseObject.Settings.Feature);
-        Append(fp.Settings.Genre ??= new(), DatabaseObject.Settings.Genre);
-        fp.Settings.Hidden &= DatabaseObject.Settings.Hidden;
-        Append(fp.Settings.InstallSize ??= new(), DatabaseObject.Settings.InstallSize);
-        fp.Settings.IsInstalled &= DatabaseObject.Settings.IsInstalled;
-        fp.Settings.IsUnInstalled &= DatabaseObject.Settings.IsUnInstalled;
-        Append(fp.Settings.Modified ??= new(), DatabaseObject.Settings.Modified);
-        if (string.IsNullOrEmpty(fp.Settings.Name))
-            fp.Settings.Name = DatabaseObject.Settings.Name;
-        Append(fp.Settings.Platform ??= new(), DatabaseObject.Settings.Platform);
-        Append(fp.Settings.PlayTime ??= new(), DatabaseObject.Settings.PlayTime);
-        Append(fp.Settings.Publisher ??= new(), DatabaseObject.Settings.Publisher);
-        Append(fp.Settings.Publisher ??= new(), DatabaseObject.Settings.Publisher);
-        Append(fp.Settings.RecentActivity ??= new(), DatabaseObject.Settings.RecentActivity);
-        Append(fp.Settings.Region ??= new(), DatabaseObject.Settings.Region);
-        Append(fp.Settings.ReleaseYear ??= new(), DatabaseObject.Settings.ReleaseYear);
-        Append(fp.Settings.Series ??= new(), DatabaseObject.Settings.Series);
-        Append(fp.Settings.Source ??= new(), DatabaseObject.Settings.Source);
-        Append(fp.Settings.Tag ??= new(), DatabaseObject.Settings.Tag);
-        fp.Settings.UseAndFilteringStyle &= DatabaseObject.Settings.UseAndFilteringStyle;
-        Append(fp.Settings.UserScore ??= new(), DatabaseObject.Settings.UserScore);
-        if (string.IsNullOrEmpty(fp.Settings.Version))
-            fp.Settings.Version = DatabaseObject.Settings.Version;
-    }
-}
-
-public class TagFilterSearchItem : MetadataFilterSearchItem<Tag>
-{
-    public TagFilterSearchItem(IMainViewAPI mainViewAPI, Tag databaseObject, string type, bool appendFilterIsPrimary = true) : base(mainViewAPI, databaseObject, type, appendFilterIsPrimary)
-    {
-    }
-
-    protected override void ApplyFilterImpl(FilterPreset fp) => Append(fp.Settings.Tag ??= new(), DatabaseObject.Id);
 }
