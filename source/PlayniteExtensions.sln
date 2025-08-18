@@ -119,6 +119,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{02EA681E
 		..\.github\workflows\release.yml = ..\.github\workflows\release.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetadataSearch", "MetadataSearch\MetadataSearch.csproj", "{39149A1A-227D-48B0-BB0A-6683BC6E9FD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -273,6 +275,10 @@ Global
 		{9E96D1DD-7223-4948-A297-D0F731CBE9B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E96D1DD-7223-4948-A297-D0F731CBE9B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E96D1DD-7223-4948-A297-D0F731CBE9B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39149A1A-227D-48B0-BB0A-6683BC6E9FD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39149A1A-227D-48B0-BB0A-6683BC6E9FD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39149A1A-227D-48B0-BB0A-6683BC6E9FD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39149A1A-227D-48B0-BB0A-6683BC6E9FD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
