@@ -332,9 +332,9 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
         using (HttpClient client = new())
         using (var stream = await client.GetStreamAsync(imgDetails.Url))
         {
-            uint maxWidth = imgSettings.MaxWidth;
-            uint maxHeight = imgSettings.MaxHeight;
-            uint minSize = Math.Min(imgSettings.MaxWidth, imgSettings.MaxHeight);
+            int maxWidth = imgSettings.MaxWidth;
+            int maxHeight = imgSettings.MaxHeight;
+            int minSize = Math.Min(imgSettings.MaxWidth, imgSettings.MaxHeight);
 
             if (imgSettings.AspectRatio == AspectRatio.AnyExtendToSquare)
                 maxWidth = maxHeight = minSize;

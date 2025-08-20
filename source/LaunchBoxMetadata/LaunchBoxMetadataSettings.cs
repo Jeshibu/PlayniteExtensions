@@ -58,10 +58,10 @@ public class LaunchBoxMetadataSettings : ObservableObject
 public class LaunchBoxImageSourceSettings
 {
     public ObservableCollection<CheckboxSetting> ImageTypes { get; set; } = [];
-    public uint MaxHeight { get; set; }
-    public uint MaxWidth { get; set; }
-    public uint MinHeight { get; set; }
-    public uint MinWidth { get; set; }
+    public int MaxHeight { get; set; }
+    public int MaxWidth { get; set; }
+    public int MinHeight { get; set; }
+    public int MinWidth { get; set; }
     public AspectRatio AspectRatio { get; set; }
 }
 
