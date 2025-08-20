@@ -134,4 +134,5 @@ Packages:
     ReleaseDate: {NEWDATE}
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/LaunchBoxMetadata_0_8_1.pext
     Changelog:
-    - "Fixed platform matching failing to match some platforms if they'd been renamed"
+    - "Fixed platform matching failing to match some platforms if they'd been renamed."
+    - "Fixed DLL conflict with Extra Metadata Loader. Probably still conflicts with Description Image Fixer."
