@@ -130,7 +130,7 @@ Packages:
      - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them
   - Version: 0.9.3
     RequiredApiVersion: 6.8.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/GiantBombMetadata_0_9_3.pext
+    ReleaseDate: 2025-08-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/GiantBombMetadata_0_9_3.pext
     Changelog:
      - "Fixed platform matching failing to match some platforms if they'd been renamed"

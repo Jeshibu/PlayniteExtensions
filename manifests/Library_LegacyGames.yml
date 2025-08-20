@@ -74,7 +74,7 @@ Packages:
      - Fixed installed game import breaking on some registry entries
   - Version: 0.6.3
     RequiredApiVersion: 6.4.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/LegacyGamesLibrary_0_6_3.pext
+    ReleaseDate: 2025-08-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/LegacyGamesLibrary_0_6_3.pext
     Changelog:
      - "Fixed platform matching failing to match some platforms if they'd been renamed"

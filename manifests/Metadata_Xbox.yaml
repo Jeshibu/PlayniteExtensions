@@ -46,7 +46,7 @@ Packages:
     - "Removed Xbox 360 game search since it's been removed from the website"
   - Version: 0.4.1
     RequiredApiVersion: 6.8.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/XboxMetadata_0_4_1.pext
+    ReleaseDate: 2025-08-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/XboxMetadata_0_4_1.pext
     Changelog:
     - "Fixed platform matching failing to match some platforms if they'd been renamed"

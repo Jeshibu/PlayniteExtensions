@@ -2,7 +2,7 @@ AddonId: MetadataSearch
 Packages:
   - Version: 0.1
     RequiredApiVersion: 6.12.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/MetadataSearch_0_1.pext
+    ReleaseDate: 2025-08-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/MetadataSearch_0_1.pext
     Changelog:
     - Initial release

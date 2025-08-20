@@ -21,7 +21,7 @@ Packages:
     - "Removed EA functionality. It might return at some point, but the API that this plugin used is permanently gone."
   - Version: 0.4.1
     RequiredApiVersion: 6.11.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/MutualGames_0_4_1.pext
+    ReleaseDate: 2025-08-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/MutualGames_0_4_1.pext
     Changelog:
     - "Fixed platform matching failing to match some platforms if they'd been renamed"

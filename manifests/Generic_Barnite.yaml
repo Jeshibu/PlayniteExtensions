@@ -76,7 +76,7 @@ Packages:
     - Input now accepts comma-separated batches - contributed by pennstatephil
   - Version: 0.7.1
     RequiredApiVersion: 6.9.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/Barnite_0_7_1.pext
+    ReleaseDate: 2025-08-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/Barnite_0_7_1.pext
     Changelog:
     - "Fixed platform matching failing to match some platforms if they'd been renamed"

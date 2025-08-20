@@ -111,7 +111,7 @@ Packages:
     - "Added support for new bundle - Crips for eSims for Gaza Bundle"
   - Version: 0.14.1
     RequiredApiVersion: 6.2.2
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/itchIoBundleTagger_0_14_1.pext
+    ReleaseDate: 2025-08-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/itchIoBundleTagger_0_14_1.pext
     Changelog:
     - "Fixed platform matching failing to match some platforms if they'd been renamed"

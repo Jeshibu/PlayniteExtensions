@@ -131,8 +131,8 @@ Packages:
     - "All checks regarding database existence and age now run at both startup and when fetching metadata"
   - Version: 0.8.1
     RequiredApiVersion: 6.8.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/LaunchBoxMetadata_0_8_1.pext
+    ReleaseDate: 2025-08-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/LaunchBoxMetadata_0_8_1.pext
     Changelog:
     - "Fixed platform matching failing to match some platforms if they'd been renamed."
     - "Fixed DLL conflict with Extra Metadata Loader. Probably still conflicts with Description Image Fixer."
