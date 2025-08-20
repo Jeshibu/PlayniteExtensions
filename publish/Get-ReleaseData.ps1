@@ -83,6 +83,7 @@ function Get-ProjectNames {
         "itchiobundletagger"    = @("itchIoBundleTagger")
         "launchbox"             = @("LaunchBoxMetadata")
         "legacygames"           = @("LegacyGamesLibrary")
+        "metadatasearch"        = @("MetadataSearch")
         "mobygames"             = @("MobyGamesMetadata")
         "mutualgames"           = @("MutualGames")
         "opencritic"            = @("OpenCriticMetadata")

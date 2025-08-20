@@ -9,6 +9,7 @@
     <File Path="../manifests/Generic_ExtraEmulatorProfiles.yaml" />
     <File Path="../manifests/Generic_GamesSizeCalculator.yaml" />
     <File Path="../manifests/Generic_itchIoBundleTagger.yaml" />
+    <File Path="../manifests/Generic_MetadataSearch.yaml" />
     <File Path="../manifests/Generic_MutualGames.yaml" />
     <File Path="../manifests/Generic_PathReplacer.yaml" />
     <File Path="../manifests/Generic_SteamTagsImporter.yaml" />
