@@ -115,3 +115,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/itchIoBundleTagger_0_14_1.pext
     Changelog:
     - "Fixed platform matching failing to match some platforms if they'd been renamed"
+  - Version: 0.14.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2025-08-22
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/itchIoBundleTagger_0_14_2.pext
+    Changelog:
+    - "Fixed plugin failing to load (and taking Ludusavi with it)"
