@@ -24,6 +24,8 @@ public class GiantBombMetadataSettings : BulkImportPluginSettings
     public PropertyImportSetting Objects { get; set; } = new PropertyImportSetting { Prefix = "Object: ", ImportTarget = PropertyImportTarget.Ignore };
     public PropertyImportSetting Themes { get; set; } = new PropertyImportSetting { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
     public PropertyImportSetting People { get; set; } = new PropertyImportSetting { Prefix = "Person: ", ImportTarget = PropertyImportTarget.Ignore };
+    public PropertyImportSetting Franchises { get; set; } = new PropertyImportSetting { Prefix = "", ImportTarget = PropertyImportTarget.Series };
+    public PropertyImportSetting Genres { get; set; } = new PropertyImportSetting { Prefix = "", ImportTarget = PropertyImportTarget.Genres };
     public MultiValuedPropertySelectionMode FranchiseSelectionMode { get; set; } = MultiValuedPropertySelectionMode.All;
     public bool ShowTopPanelButton { get; set; } = true;
 }
@@ -54,13 +56,11 @@ public class GiantBombMetadataSettingsViewModel : PluginSettingsViewModel<GiantB
         }
     }
 
-    public RelayCommand<object> GetApiKeyCommand
-    {
-        get => new((a) =>
+    public RelayCommand<object> GetApiKeyCommand =>
+        new((a) =>
         {
             Process.Start(@"https://www.giantbomb.com/api/");
         });
-    }
 
     public PropertyImportTarget[] ImportTargets { get; } =
     [

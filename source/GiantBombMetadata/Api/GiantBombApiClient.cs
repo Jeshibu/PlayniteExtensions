@@ -12,6 +12,8 @@ public interface IGiantBombApiClient
     GiantBombGamePropertyDetails GetGameProperty(string url, CancellationToken cancellationToken);
     GiantBombSearchResultItem[] SearchGameProperties(string query, CancellationToken cancellationToken);
     GiantBombSearchResultItem[] SearchGames(string query, CancellationToken cancellationToken);
+    GiantBombSearchResultItem[] GetGenres(CancellationToken cancellationToken);
+    GiantBombSearchResultItem[] GetThemes(CancellationToken cancellationToken);
 }
 
 public class GiantBombApiClient : IGiantBombApiClient, IDisposable
@@ -75,11 +77,6 @@ public class GiantBombApiClient : IGiantBombApiClient, IDisposable
             return default;
         }
 
-        if (response == null)
-        {
-            logger.Debug("No response");
-            return default;
-        }
         statusCode = response.StatusCode;
 
         logger.Debug($"Response code {response.StatusCode}");
@@ -106,7 +103,8 @@ public class GiantBombApiClient : IGiantBombApiClient, IDisposable
         if (url.StartsWith(BaseUrl))
             url = url.Remove(0, BaseUrl.Length);
 
-        var request = new RestRequest(url);
+        var request = new RestRequest(url)
+            .AddQueryParameter("field_list", "aliases,api_detail_url,deck,games,guid,id,name,site_detail_url");
         return Execute<GiantBombGamePropertyDetails>(request, cancellationToken);
     }
 
@@ -120,7 +118,19 @@ public class GiantBombApiClient : IGiantBombApiClient, IDisposable
     }
 
     public GiantBombSearchResultItem[] SearchGames(string query, CancellationToken cancellationToken) => Search(query, "game", cancellationToken);
-    //public GiantBombSearchResultItem[] SearchGameProperties(string query) => Search(query, "character,concept,object,person");
-    //TODO: figure out how to get games for locations (and maybe for themes too)
-    public GiantBombSearchResultItem[] SearchGameProperties(string query, CancellationToken cancellationToken) => Search(query, "character,concept,object,location,person", cancellationToken);
+    public GiantBombSearchResultItem[] SearchGameProperties(string query, CancellationToken cancellationToken) => Search(query, "character,concept,object,location,person,franchise", cancellationToken);
+
+    public GiantBombSearchResultItem[] GetGenres(CancellationToken cancellationToken)
+    {
+        var request = new RestRequest("genres")
+            .AddQueryParameter("field_list", "api_detail_url,deck,guid,id,name,site_detail_url");
+
+        return Execute<GiantBombSearchResultItem[]>(request, cancellationToken);
+    }
+
+    public GiantBombSearchResultItem[] GetThemes(CancellationToken cancellationToken)
+    {
+        var request = new RestRequest("themes");
+        return Execute<GiantBombSearchResultItem[]>(request, cancellationToken);
+    }
 }

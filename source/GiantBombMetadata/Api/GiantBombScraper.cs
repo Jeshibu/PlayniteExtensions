@@ -13,40 +13,19 @@ namespace GiantBombMetadata.Api;
 
 public class GiantBombScraper(IWebDownloader downloader, IPlatformUtility platformUtility)
 {
-    private static string GetFirstGamePageUrl(string entityUrl)
-    {
-        return entityUrl + "games/";
-    }
+    private static string GetFirstEntityGamePageUrl(string entityUrl) => entityUrl + "games/";
+    private static string GetFirstGlobalGamesFilterPageUrl(string entityType, int entityId) => $"https://www.giantbomb.com/games/?game_filter%5B{entityType}%5D={entityId}";
 
     public IEnumerable<GameDetails> GetGamesForEntity(string entityUrl, GlobalProgressActionArgs progressArgs = null)
     {
-        if (progressArgs != null)
-            progressArgs.Text = "Downloading list of associated games...";
+        var firstPageUrl = GetFirstEntityGamePageUrl(entityUrl);
+        return GetPaginatedGames(firstPageUrl, "li.related-game > a", progressArgs);
+    }
 
-        bool totalSet = progressArgs == null;
-        var url = GetFirstGamePageUrl(entityUrl);
-
-        PaginationInfo pagination = null;
-        do
-        {
-            var response = downloader.DownloadString(url);
-            var htmlDocument = new HtmlParser().Parse(response.ResponseContent);
-            pagination = GetPaginationInfo(url, htmlDocument);
-            if (pagination != null)
-            {
-                if (!totalSet)
-                {
-                    progressArgs.ProgressMaxValue = pagination.TotalPages;
-                    totalSet = true;
-                }
-                if (progressArgs != null)
-                    progressArgs.CurrentProgressValue = pagination.CurrentPage;
-            }
-            foreach (var game in GetGames(url, htmlDocument))
-                yield return game;
-
-            url = pagination?.NextPageUrl;
-        } while (pagination?.NextPageUrl != null);
+    public IEnumerable<GameDetails> GetGamesForGenreOrTheme(string entityType, int entityId, GlobalProgressActionArgs progressArgs = null)
+    {
+        var firstPageUrl = GetFirstGlobalGamesFilterPageUrl(entityType, entityId);
+        return GetPaginatedGames(firstPageUrl, "ul.editorial > li > a");
     }
 
     public IEnumerable<GiantBombSearchResultItem> SearchObjects(string query)
@@ -74,7 +53,7 @@ public class GiantBombScraper(IWebDownloader downloader, IPlatformUtility platfo
 
     private readonly Regex giantBombItemIdRegex = new("3[0-9]{3}-[0-9]+", RegexOptions.Compiled);
 
-    private PaginationInfo GetPaginationInfo(string url, IHtmlDocument htmlDocument)
+    private static PaginationInfo GetPaginationInfo(string url, IHtmlDocument htmlDocument)
     {
         var pagination = htmlDocument.QuerySelector("ul.paginate");
         if (pagination == null) return new PaginationInfo { CurrentPage = 1, TotalPages = 1 };
@@ -97,9 +76,9 @@ public class GiantBombScraper(IWebDownloader downloader, IPlatformUtility platfo
         return output;
     }
 
-    private IEnumerable<GameDetails> GetGames(string url, IHtmlDocument htmlDocument)
+    private IEnumerable<GameDetails> GetGamesFromDocument(string url, IHtmlDocument htmlDocument, string gameElementSelector)
     {
-        var gameElements = htmlDocument.QuerySelectorAll("li.related-game > a");
+        var gameElements = htmlDocument.QuerySelectorAll(gameElementSelector);
         if (gameElements == null)
             yield break;
         foreach (var gameElement in gameElements)
@@ -107,12 +86,42 @@ public class GiantBombScraper(IWebDownloader downloader, IPlatformUtility platfo
             var gameDetails = new GameDetails();
             var relativeUrl = gameElement.GetAttribute("href");
             var title = gameElement.QuerySelector(".title")?.TextContent;
-            var platformElements = gameElement.QuerySelectorAll("ul.system-list > li.system");
+            var platformElements = gameElement.QuerySelectorAll("ul.system-list > li.system:not(.more)");
             gameDetails.Url = new Uri(new Uri(url), relativeUrl).AbsoluteUri;
             gameDetails.Names.Add(title);
             gameDetails.Platforms.AddRange(platformElements.SelectMany(p => platformUtility.GetPlatforms(p.TextContent)));
             yield return gameDetails;
         }
+    }
+
+    private IEnumerable<GameDetails> GetPaginatedGames(string firstPageUrl, string gameElementSelector, GlobalProgressActionArgs progressArgs = null)
+    {
+        const string baseProgressString = "Downloading list of associated games...";
+        if (progressArgs != null)
+            progressArgs.Text = baseProgressString;
+
+        var url = firstPageUrl;
+
+        do
+        {
+            var response = downloader.DownloadString(url);
+            var htmlDocument = new HtmlParser().Parse(response.ResponseContent);
+            var pagination = GetPaginationInfo(url, htmlDocument);
+            if (pagination != null)
+            {
+                if (progressArgs != null)
+                {
+                    progressArgs.IsIndeterminate = false;
+                    progressArgs.ProgressMaxValue = pagination.TotalPages;
+                    progressArgs.CurrentProgressValue = pagination.CurrentPage;
+                    progressArgs.Text = $"{baseProgressString} page {pagination.CurrentPage}/{pagination.TotalPages}";
+                }
+            }
+            foreach (var game in GetGamesFromDocument(url, htmlDocument, gameElementSelector))
+                yield return game;
+
+            url = pagination?.NextPageUrl;
+        } while (url != null && progressArgs?.CancelToken.IsCancellationRequested != true);
     }
 
     private class PaginationInfo

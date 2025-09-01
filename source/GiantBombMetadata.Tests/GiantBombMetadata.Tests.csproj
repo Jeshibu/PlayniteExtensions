@@ -11,6 +11,26 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="html\genres.json" />
+    <None Remove="html\theme-vietnam1.html" />
+    <None Remove="html\theme-vietnam2.html" />
+    <None Remove="html\themes.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="html\genres.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="html\theme-vietnam1.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="html\theme-vietnam2.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="html\themes.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="xunit" Version="2.8.1" />
     <PackageReference Include="xunit.runner.console" Version="2.8.1">
@@ -31,4 +51,5 @@
   <ItemGroup>
     <ProjectReference Include="..\GiantBombMetadata\GiantBombMetadata.csproj" />
   </ItemGroup>
+  <Import Project="..\PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems" Label="Shared" />
 </Project>
