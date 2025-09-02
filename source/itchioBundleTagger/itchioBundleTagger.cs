@@ -62,24 +62,24 @@ public class itchioBundleTagger : GenericPlugin
     public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
     {
         if (Settings.Settings.ShowInContextMenu && args.Games.Any(g => g.PluginId == ItchIoLibraryId))
-            return [new GameMenuItem { Description = Translator.ExecuteTagging, Action = TagItchBundleGames }];
+            return [new() { Description = Translator.ExecuteTagging, Action = TagItchBundleGames }];
         else
             return [];
     }
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
-        yield return new MainMenuItem { Description = Translator.RefreshDatabase, Action = DownloadNewDataFile, MenuSection = "@" + Translator.ExtensionName };
-        yield return new MainMenuItem { Description = Translator.ExecuteTaggingAll, Action = TagItchBundleGamesForEverything, MenuSection = "@" + Translator.ExtensionName };
+        yield return new() { Description = Translator.RefreshDatabase, Action = DownloadNewDataFile, MenuSection = "@" + Translator.ExtensionName };
+        yield return new() { Description = Translator.ExecuteTaggingAll, Action = TagItchBundleGamesForEverything, MenuSection = "@" + Translator.ExtensionName };
     }
 
-    public void DownloadNewDataFile(MainMenuItemActionArgs args)
+    private void DownloadNewDataFile(MainMenuItemActionArgs args)
     {
         DatabaseFile.RefreshCache();
         PlayniteApi.Dialogs.ShowMessage(Translator.DatabaseRefreshed);
     }
 
-    public Dictionary<string, ItchIoGame> GetAllBundleGameData()
+    private Dictionary<string, ItchIoGame> GetAllBundleGameData()
     {
         return Playnite.SDK.Data.Serialization.FromJson<Dictionary<string, ItchIoGame>>(DatabaseFile.GetFileContents());
     }

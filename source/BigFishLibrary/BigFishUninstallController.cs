@@ -2,7 +2,6 @@
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
@@ -22,7 +21,7 @@ public class BigFishUninstallController(Game game, BigFishRegistryReader registr
 
     public async void StartUninstallWatcher()
     {
-        watcherToken = watcherToken ?? new CancellationTokenSource();
+        watcherToken ??= new CancellationTokenSource();
 
         while (true)
         {

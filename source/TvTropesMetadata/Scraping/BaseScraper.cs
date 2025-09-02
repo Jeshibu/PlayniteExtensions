@@ -122,7 +122,7 @@ public abstract class BaseScraper(IWebDownloader downloader)
             var segmentContent = headerAndContent.Length == 2 ? headerAndContent[1] : segment;
 
             if (!string.IsNullOrWhiteSpace(segmentContent))
-                yield return new Tuple<string, string>(segmentHeader, segmentContent);
+                yield return new(segmentHeader, segmentContent);
         }
     }
 
@@ -153,8 +153,7 @@ public abstract class BaseScraper(IWebDownloader downloader)
             return wrapped.TextContent.HtmlDecode();
 
         var strong = titleElement.QuerySelector("strong");
-        if (strong != null)
-            strong.Remove();
+        strong?.Remove();
 
         return titleElement.TextContent.HtmlDecode();
     }
@@ -173,9 +172,9 @@ public class TvTropesSearchResult : IHasName, IGameSearchResult
 
     public string Name { get; set; }
 
-    public IEnumerable<string> AlternateNames => Enumerable.Empty<string>();
+    public IEnumerable<string> AlternateNames => [];
 
-    public IEnumerable<string> Platforms => Enumerable.Empty<string>();
+    public IEnumerable<string> Platforms => [];
 
     public ReleaseDate? ReleaseDate => null;
 
@@ -184,6 +183,6 @@ public class TvTropesSearchResult : IHasName, IGameSearchResult
         var id = Url.TrimStart("https://tvtropes.org/pmwiki/pmwiki.php/");
         var description = $"{id} | {Description}";
 
-        return new GenericItemOption<TvTropesSearchResult>(this) { Description = description, Name = Name };
+        return new(this) { Description = description, Name = Name };
     }
 }

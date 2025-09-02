@@ -77,7 +77,7 @@ public class GamesSizeCalculator : MetadataPlugin
                 }
             }
 
-            return steamApiClient ??= new SteamApiClient();
+            return steamApiClient ??= new();
         }
     }
 
@@ -94,9 +94,8 @@ public class GamesSizeCalculator : MetadataPlugin
 
     public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
     {
-        var ps3Calc = new PS3InstallSizeCalculator(PlayniteApi);
         if (args.Games.Any(PS3InstallSizeCalculator.IsPs3Rom))
-            yield return new GameMenuItem { Description = PlayniteApi.Resources.GetString("LOCGame_Sizes_Calculator_PS3_Option"), Action = FixPs3RomInstallSize };
+            yield return new() { Description = PlayniteApi.Resources.GetString("LOCGame_Sizes_Calculator_PS3_Option"), Action = FixPs3RomInstallSize };
     }
 
     private void FixPs3RomInstallSize(GameMenuItemActionArgs args)

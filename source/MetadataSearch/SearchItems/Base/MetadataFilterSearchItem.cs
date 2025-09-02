@@ -27,28 +27,19 @@ public abstract class MetadataFilterSearchItem<T> : SearchItem where T : Databas
     void AppendToCurrentFilter()
     {
         var fs = MainView.GetCurrentFilterSettings();
-        var fp = new FilterPreset() { Settings = fs };
+        var fp = new FilterPreset { Settings = fs };
         ApplyFilterImpl(fp);
         MainView.ApplyFilterPreset(fp);
     }
 
     void ReplaceFilter()
     {
-        var fp = new FilterPreset() { Settings = new() };
+        var fp = new FilterPreset { Settings = new() };
         ApplyFilterImpl(fp);
         MainView.ApplyFilterPreset(fp);
     }
 
     protected abstract void ApplyFilterImpl(FilterPreset fp);
-
-    protected void Append(IdItemFilterItemProperties fp1, IdItemFilterItemProperties fp2)
-    {
-        if (fp2?.Ids == null)
-            return;
-
-        if (fp1?.Ids == null)
-            (fp1.Ids ??= new()).AddRange(fp2.Ids);
-    }
 
     protected static void Append(FilterPresetSettings fs1, List<Guid> addIds, Expression<Func<FilterPresetSettings, IdItemFilterItemProperties>> selector, Func<FilterPresetSettings, IdItemFilterItemProperties> compiledSelector = null)
     {

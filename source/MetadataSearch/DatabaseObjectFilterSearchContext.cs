@@ -3,6 +3,7 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MetadataSearch;
 
@@ -11,8 +12,8 @@ public class DatabaseObjectFilterSearchContext<TDatabaseObject, TSearchItem> : S
     where TSearchItem : SearchItem
 {
     private readonly IPlayniteAPI playniteAPI;
-    private readonly Func<IPlayniteAPI, IEnumerable<TDatabaseObject>> objectSelector;
-    private readonly Func<TDatabaseObject, TSearchItem> toSearchItem;
+    internal readonly Func<IPlayniteAPI, IEnumerable<TDatabaseObject>> objectSelector;
+    internal readonly Func<TDatabaseObject, TSearchItem> toSearchItem;
 
     public DatabaseObjectFilterSearchContext(IPlayniteAPI playniteAPI, Func<IPlayniteAPI, IEnumerable<TDatabaseObject>> objectSelector, Func<TDatabaseObject, TSearchItem> toSearchItem)
     {
@@ -22,9 +23,5 @@ public class DatabaseObjectFilterSearchContext<TDatabaseObject, TSearchItem> : S
         this.toSearchItem = toSearchItem;
     }
 
-    public override IEnumerable<SearchItem> GetSearchResults(GetSearchResultsArgs args)
-    {
-        foreach (var item in objectSelector(playniteAPI))
-            yield return toSearchItem(item);
-    }
+    public override IEnumerable<SearchItem> GetSearchResults(GetSearchResultsArgs args) => objectSelector(playniteAPI).Select(toSearchItem);
 }

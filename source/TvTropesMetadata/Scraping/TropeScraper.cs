@@ -161,8 +161,6 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
     {
         var output = new TropePageListItem { Text = element.InnerHtml.Split(["<ul>"], StringSplitOptions.RemoveEmptyEntries).First() };
         var liChildren = element.Children.Where(c => c.TagName == "EM" || IsVideoGameLink(c));
-        if (liChildren == null)
-            return output;
 
         var workNamesDeflated = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
 
@@ -206,7 +204,7 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
         {
             char a = str[i];
             char b = str[i + 1];
-            char? c = str.Count > i + 2 ? str[i + 2] : (char?)null;
+            char? c = str.Count > i + 2 ? str[i + 2] : null;
 
             bool upperAfterLower = char.IsUpper(b) && !char.IsUpper(a);
             bool digitAfterNonDigit = char.IsDigit(b) && !char.IsDigit(a);

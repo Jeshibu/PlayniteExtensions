@@ -10,7 +10,7 @@ namespace PlayniteExtensions.Common;
 public static class IEnumerableExtensions
 {
     private static ILogger logger;
-    private static ILogger Logger { get => logger ??= LogManager.GetLogger(); }
+    private static ILogger Logger => logger ??= LogManager.GetLogger();
 
     public static Dictionary<TKey, TIn> ToDictionarySafe<TIn, TKey>(this IEnumerable<TIn> input, Func<TIn, TKey> keySelector, IEqualityComparer<TKey> equalityComparer = null, bool favorBiggerObject = false)
     {
@@ -23,7 +23,7 @@ public static class IEnumerableExtensions
         if (equalityComparer == null)
             output = [];
         else
-            output = new Dictionary<TKey, TValue>(equalityComparer);
+            output = new(equalityComparer);
 
         foreach (var item in input)
         {
@@ -34,7 +34,7 @@ public static class IEnumerableExtensions
                 var stackTrace = new StackTrace(true);
                 var existingValueString = existingValue == null ? null : JsonConvert.SerializeObject(existingValue, new JsonSerializerSettings { MaxDepth = 5 });
                 var newValueString = value == null ? null : JsonConvert.SerializeObject(value, new JsonSerializerSettings { MaxDepth = 5 });
-                var stacktraceString = string.Join(string.Empty, stackTrace.GetFrames().Select(f => f.ToString()));
+                var stacktraceString = string.Join(string.Empty, stackTrace.GetFrames()!.Select(f => f.ToString()));
                 var logString = $@"An item with the same key has already been added: {key}
 existing value: {existingValueString}
 new value: {newValueString}
@@ -52,17 +52,9 @@ stacktrace: {stacktraceString}";
 
     public static ICollection<T> NullIfEmpty<T>(this ICollection<T> items)
     {
-        if (items != null && items.Count > 0)
+        if (items is { Count: > 0 })
             return items;
         else
             return null;
-    }
-
-    public static void Sort<TSource, TKey>(this ICollection<TSource> source, Func<TSource, TKey> keySelector)
-    {
-        List<TSource> sortedList = source.OrderBy(keySelector).ToList();
-        source.Clear();
-        foreach (var sortedItem in sortedList)
-            source.Add(sortedItem);
     }
 }

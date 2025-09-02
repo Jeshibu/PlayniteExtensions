@@ -78,7 +78,7 @@ public class GiantBombMetadata : MetadataPlugin
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
-        yield return new MainMenuItem { Description = "Import Giant Bomb game property", MenuSection = "@Giant Bomb", Action = a => ImportGameProperty() };
+        yield return new MainMenuItem { Description = "Import Giant Bomb game property", MenuSection = "@Giant Bomb", Action = _ => ImportGameProperty() };
     }
 
     public override IEnumerable<TopPanelItem> GetTopPanelItems()
@@ -97,7 +97,7 @@ public class GiantBombMetadata : MetadataPlugin
         };
     }
 
-    public void ImportGameProperty()
+    private void ImportGameProperty()
     {
         if (BlockMissingApiKey())
             return;

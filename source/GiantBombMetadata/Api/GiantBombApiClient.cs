@@ -31,7 +31,7 @@ public class GiantBombApiClient : IGiantBombApiClient, IDisposable
         Dispose();
     }
 
-    public const string BaseUrl = "https://www.giantbomb.com/api/";
+    private const string BaseUrl = "https://www.giantbomb.com/api/";
     private string apiKey;
     private RestClient restClient;
     private readonly ILogger logger = LogManager.GetLogger();
@@ -39,10 +39,7 @@ public class GiantBombApiClient : IGiantBombApiClient, IDisposable
 
     public string ApiKey
     {
-        get
-        {
-            return apiKey;
-        }
+        get => apiKey;
         set
         {
             if (apiKey != value && !string.IsNullOrEmpty(value))
@@ -86,9 +83,8 @@ public class GiantBombApiClient : IGiantBombApiClient, IDisposable
             return default;
         var output = JsonConvert.DeserializeObject<GiantBombResponse<T>>(response.Content);
         if (output?.Error != "OK")
-        {
             throw new Exception($"Error requesting {request?.Resource}: {output?.Error}");
-        }
+
         return output.Results;
     }
 

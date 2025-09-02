@@ -95,7 +95,7 @@ public class MobyGamesMetadata : MetadataPlugin
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
         if (settings.Settings.DataSource.HasFlag(DataSource.Api))
-            yield return new MainMenuItem { Description = "Import MobyGames genre/group", MenuSection = "@MobyGames", Action = a => ImportGameProperty() };
+            yield return new MainMenuItem { Description = "Import MobyGames genre/group", MenuSection = "@MobyGames", Action = _ => ImportGameProperty() };
     }
 
     public override IEnumerable<TopPanelItem> GetTopPanelItems()

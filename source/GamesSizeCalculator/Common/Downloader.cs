@@ -179,8 +179,8 @@ public class Downloader : IDownloader
         {
             using (var webClient = new WebClient())
             {
-                webClient.DownloadProgressChanged += (s, e) => progressHandler(e);
-                webClient.DownloadFileCompleted += (s, e) =>
+                webClient.DownloadProgressChanged += (_, e) => progressHandler(e);
+                webClient.DownloadFileCompleted += (_, _) =>
                 {
                     // This event also triggers if the Cancellation Token cancels the download
                     // so we have to check if it was not what stopped the download
@@ -213,8 +213,8 @@ public class Downloader : IDownloader
         FileSystem.CreateDirectory(Path.GetDirectoryName(path));
         using (var webClient = new WebClient())
         {
-            webClient.DownloadProgressChanged += (s, e) => progressHandler(e);
-            webClient.DownloadFileCompleted += (s, e) => webClient.Dispose();
+            webClient.DownloadProgressChanged += (_, e) => progressHandler(e);
+            webClient.DownloadFileCompleted += (_, _) => webClient.Dispose();
             await webClient.DownloadFileTaskAsync(url, path);
         }
     }

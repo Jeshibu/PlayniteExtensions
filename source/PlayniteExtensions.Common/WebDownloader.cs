@@ -119,11 +119,9 @@ public class WebDownloader : IWebDownloader
 
             if (getContent)
             {
-                using (var stream = await response.Content.ReadAsStreamAsync())
-                using (var reader = new StreamReader(stream))
-                {
-                    responseContent = await reader.ReadToEndAsync();
-                }
+                using var stream = await response.Content.ReadAsStreamAsync();
+                using var reader = new StreamReader(stream);
+                responseContent = await reader.ReadToEndAsync();
             }
         }
 
@@ -133,7 +131,7 @@ public class WebDownloader : IWebDownloader
             Combine(Cookies, jsCookies);
         }
 
-        redirectUrl = redirectUrl ?? redirectUrlGetFunc?.Invoke(url, responseContent);
+        redirectUrl ??= redirectUrlGetFunc?.Invoke(url, responseContent);
         if (redirectUrl != null)
         {
             if (depth > maxRedirectDepth)

@@ -1,5 +1,4 @@
 ﻿using AngleSharp.Dom.Html;
-using AngleSharp.Extensions;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;

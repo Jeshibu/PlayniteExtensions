@@ -131,13 +131,11 @@ public class MetadataZipFileHandler(IPlayniteAPI playniteAPI, LaunchBoxMetadataS
     {
         var hexEntityRegex = new Regex(@"&#x[0-9A-F]{1,2};", RegexOptions.Compiled);
 
-        using (var writer = new StreamWriter(outputFilePath))
+        using var writer = new StreamWriter(outputFilePath);
+        foreach (var line in File.ReadLines(inputFilePath))
         {
-            foreach (var line in File.ReadLines(inputFilePath))
-            {
-                var cleanLine = hexEntityRegex.Replace(line, string.Empty);
-                writer.WriteLine(cleanLine);
-            }
+            var cleanLine = hexEntityRegex.Replace(line, string.Empty);
+            writer.WriteLine(cleanLine);
         }
     }
 }

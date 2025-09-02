@@ -6,7 +6,7 @@ namespace TvTropesMetadata;
 
 public class TvTropesIdUtility : SingleExternalDatabaseIdUtility
 {
-    public override ExternalDatabase Database { get; } = ExternalDatabase.TvTropes;
+    public override ExternalDatabase Database => ExternalDatabase.TvTropes;
 
     public override IEnumerable<Guid> LibraryIds { get; } = [];
 
@@ -18,7 +18,7 @@ public class TvTropesIdUtility : SingleExternalDatabaseIdUtility
         var trimmed = url.TrimStart("https://tvtropes.org/pmwiki/pmwiki.php/");
         if (trimmed != url)
             return DbId.TvTropes(trimmed);
-        else
-            return default;
+        
+        return default;
     }
 }

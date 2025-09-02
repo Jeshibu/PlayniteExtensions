@@ -79,7 +79,7 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
 
     private string GetLaunchBoxGamesDatabaseUrl(LaunchBoxGame game)
     {
-        game = game ?? FindGame();
+        game ??= FindGame();
         if (game.DatabaseID == null)
             return null;
 
@@ -329,33 +329,31 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
         if (!scaleDown && !resizeToSquare)
             return new MetadataFile(imgDetails.Url);
 
-        using (HttpClient client = new())
-        using (var stream = await client.GetStreamAsync(imgDetails.Url))
+        using HttpClient client = new();
+        using var stream = await client.GetStreamAsync(imgDetails.Url);
+        int maxWidth = imgSettings.MaxWidth;
+        int maxHeight = imgSettings.MaxHeight;
+        int minSize = Math.Min(imgSettings.MaxWidth, imgSettings.MaxHeight);
+
+        if (imgSettings.AspectRatio == AspectRatio.AnyExtendToSquare)
+            maxWidth = maxHeight = minSize;
+
+        MagickImage img = new(stream);
+        if (scaleDown)
         {
-            int maxWidth = imgSettings.MaxWidth;
-            int maxHeight = imgSettings.MaxHeight;
-            int minSize = Math.Min(imgSettings.MaxWidth, imgSettings.MaxHeight);
-
-            if (imgSettings.AspectRatio == AspectRatio.AnyExtendToSquare)
-                maxWidth = maxHeight = minSize;
-
-            MagickImage img = new(stream);
-            if (scaleDown)
-            {
-                logger.Info($"Scaling {imgDetails.Url} ({imgDetails.Width}x{imgDetails.Height}) to make it fit {maxWidth}x{maxHeight}");
-                img.Scale(maxWidth, maxHeight);
-            }
-
-            if (imgSettings.AspectRatio == AspectRatio.AnyExtendToSquare && img.Width != img.Height)
-            {
-                logger.Info($"Extending {imgDetails.Url} ({img.Width}x{img.Height}) to make it {maxWidth}x{maxHeight}");
-
-                img.BackgroundColor = MagickColor.FromRgba(0, 0, 0, 0);
-                img.Extent(minSize, minSize, Gravity.Center);
-            }
-            var filename = Path.GetFileName(imgDetails.Url);
-            return new MetadataFile(filename, img.ToByteArray());
+            logger.Info($"Scaling {imgDetails.Url} ({imgDetails.Width}x{imgDetails.Height}) to make it fit {maxWidth}x{maxHeight}");
+            img.Scale(maxWidth, maxHeight);
         }
+
+        if (imgSettings.AspectRatio == AspectRatio.AnyExtendToSquare && img.Width != img.Height)
+        {
+            logger.Info($"Extending {imgDetails.Url} ({img.Width}x{img.Height}) to make it {maxWidth}x{maxHeight}");
+
+            img.BackgroundColor = MagickColor.FromRgba(0, 0, 0, 0);
+            img.Extent(minSize, minSize, Gravity.Center);
+        }
+        var filename = Path.GetFileName(imgDetails.Url);
+        return new MetadataFile(filename, img.ToByteArray());
     }
 
     private class LaunchBoxImageFileOption : ImageFileOption

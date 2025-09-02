@@ -77,48 +77,34 @@ public class SortableNameConverter
         {
             if (match.Groups["roman"].Success)
             {
-                if (match.Value == "I")
+                switch (match.Value)
                 {
-                    if (MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match) || MatchComesBeforeConnectingCharacter(input, match))
+                    case "I" when MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match) || MatchComesBeforeConnectingCharacter(input, match):
                         return "1".PadLeft(numberLength, '0');
-                    else
-                        return match.Value;
-                }
-                else if (match.Value == "X")
-                {
-                    if (MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match, maxDistanceFromEnd: 4) && !MatchComesBeforeDashAndWord(input, match))
+                    case "X" when MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match, maxDistanceFromEnd: 4) && !MatchComesBeforeDashAndWord(input, match):
                         return "10".PadLeft(numberLength, '0');
-                    else
+                    case "I":
+                    case "X":
                         return match.Value;
+                    default:
+                        return excludedRomanNumerals.Contains(match.Value)
+                            ? match.Value
+                            : ConvertRomanNumeralToInt(match.Value)?.ToString(new string('0', numberLength)) ?? match.Value;
                 }
-                else if (excludedRomanNumerals.Contains(match.Value))
-                {
-                    return match.Value;
-                }
-                return ConvertRomanNumeralToInt(match.Value)?.ToString(new string('0', numberLength)) ?? match.Value;
             }
-            else if (match.Groups["arabic"].Success)
-            {
+            if (match.Groups["arabic"].Success)
                 return match.Value.PadLeft(numberLength, '0');
-            }
-            else if (match.Groups["article"].Success)
-            {
+
+            if (match.Groups["article"].Success)
                 return string.Empty;
-            }
-            else if (match.Groups["numberword"].Success)
-            {
-                if (MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match))
-                    return numberWordValues[match.Value].ToString(new string('0', numberLength));
-                else
-                    return match.Value;
-            }
+
+            if (match.Groups["numberword"].Success && MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match))
+                return numberWordValues[match.Value].ToString(new string('0', numberLength));
+            
             return match.Value;
         });
 
-        if (removeEditions)
-            return output;
-        else
-            return output + edition;
+        return removeEditions ? output : output + edition;
     }
 
     private string StripArticles(string input)

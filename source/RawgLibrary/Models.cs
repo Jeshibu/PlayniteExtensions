@@ -171,7 +171,7 @@ public static class RawgMapping
             if (rawgStatusId == null)
                 PlayniteToRawgStatusDefaults.TryGetValue(playniteStatus.Name, out rawgStatusId);
 
-            yield return new PlayniteToRawgStatus(playniteStatus, rawgStatusId ?? "owned");
+            yield return new(playniteStatus, rawgStatusId ?? "owned");
         }
     }
 
@@ -192,7 +192,7 @@ public static class RawgMapping
                     range = new Range { Min = (rating.Key - 1) * 20 + 1, Max = rating.Key * 20 };
             }
 
-            yield return new PlayniteToRawgRating(rating.Key, rating.Value, range);
+            yield return new(rating.Key, rating.Value, range);
         }
     }
 }

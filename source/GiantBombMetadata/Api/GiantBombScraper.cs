@@ -67,7 +67,7 @@ public class GiantBombScraper(IWebDownloader downloader, IPlatformUtility platfo
             output.NextPageUrl = new Uri(new Uri(url), relativeNextPageUrl).AbsoluteUri;
 
         var allLinks = pagination.QuerySelectorAll("li > a")?.ToList();
-        if (allLinks != null && allLinks.Count > 2)
+        if (allLinks is { Count: > 2 })
         {
             string totalPagesString = allLinks[allLinks.Count - 2].TextContent;
             if (int.TryParse(totalPagesString, out int totalPages))

@@ -79,9 +79,6 @@ public class AppStateReader(string appStatePath = null) : IAppStateReader
 
         if (downloads.Count == 0 || catalog == null)
         {
-            if (downloads == null)
-                logger.Warn($"Missing downloads section in {AppStatePath}");
-
             if (catalog == null)
                 logger.Warn($"Missing catalog section in {AppStatePath}");
 
@@ -94,7 +91,7 @@ public class AppStateReader(string appStatePath = null) : IAppStateReader
         foreach (int ownedBundleId in ownedBundleIds)
         {
             var bundle = catalog.FirstOrDefault(b => b.Id == ownedBundleId);
-            if (bundle == null || bundle.Games == null || bundle.Games.Count == 0)
+            if (bundle?.Games == null || bundle.Games.Count == 0)
             {
                 logger.Info($"No catalog bundle found with games for {ownedBundleId}. Catalog entry: {bundle?.Name}");
                 bundle = appState?.SiteData?.GiveawayCatalog?.FirstOrDefault(b => b.Id == ownedBundleId);

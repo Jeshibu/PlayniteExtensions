@@ -15,7 +15,7 @@ public class PathReplacer : GenericPlugin
 
     public PathReplacer(IPlayniteAPI api) : base(api)
     {
-        Properties = new GenericPluginProperties
+        Properties = new()
         {
             HasSettings = false
         };
@@ -23,9 +23,9 @@ public class PathReplacer : GenericPlugin
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
-        yield return new MainMenuItem { MenuSection = "@Path Replacer", Description = "Replace paths for all games", Action = ReplacePathsForAllGames };
-        yield return new MainMenuItem { MenuSection = "@Path Replacer", Description = "Replace paths for visible games", Action = ReplacePathsForVisibleGames };
-        yield return new MainMenuItem { MenuSection = "@Path Replacer", Description = "Replace paths for selected games", Action = ReplacePathsForSelectedGames };
+        yield return new() { MenuSection = "@Path Replacer", Description = "Replace paths for all games", Action = ReplacePathsForAllGames };
+        yield return new() { MenuSection = "@Path Replacer", Description = "Replace paths for visible games", Action = ReplacePathsForVisibleGames };
+        yield return new() { MenuSection = "@Path Replacer", Description = "Replace paths for selected games", Action = ReplacePathsForSelectedGames };
     }
 
     private void ReplacePathsForSelectedGames(MainMenuItemActionArgs args)
@@ -141,7 +141,7 @@ public class PathReplacer : GenericPlugin
             {
                 buffer.Dispose();
             }
-        }, new GlobalProgressOptions($"Replacing {normalizedFind} with {replace}…", true) { IsIndeterminate = false });
+        }, new($"Replacing {normalizedFind} with {replace}…", true) { IsIndeterminate = false });
     }
 
     public static bool ReplacePathsForEmulator(Emulator emulator, string normalizedFind, string replace)

@@ -50,7 +50,7 @@ public class TvTropesMetadata : MetadataPlugin
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
-        yield return new MainMenuItem { Description = "Import Trope", MenuSection = "@TV Tropes", Action = a => ImportGameProperty() };
+        yield return new() { Description = "Import Trope", MenuSection = "@TV Tropes", Action = _ => ImportGameProperty() };
     }
 
     public override IEnumerable<TopPanelItem> GetTopPanelItems()
@@ -60,7 +60,7 @@ public class TvTropesMetadata : MetadataPlugin
 
         var assemblyLocation = Assembly.GetExecutingAssembly().Location;
         var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation), "icon.png");
-        yield return new TopPanelItem()
+        yield return new()
         {
             Icon = iconPath,
             Visible = true,
@@ -69,7 +69,7 @@ public class TvTropesMetadata : MetadataPlugin
         };
     }
 
-    public void ImportGameProperty()
+    private void ImportGameProperty()
     {
         var searchProvider = new TropeSearchProvider(new Scraping.TropeScraper(downloader), settings.Settings);
         var extra = new BulkTropeAssigner(PlayniteApi, searchProvider, new PlatformUtility(PlayniteApi), settings.Settings);

@@ -2,7 +2,6 @@
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
-using System.Collections.ObjectModel;
 using Xunit;
 
 namespace PCGamingWikiMetadata.Tests;

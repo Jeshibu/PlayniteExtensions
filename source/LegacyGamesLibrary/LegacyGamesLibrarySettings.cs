@@ -17,13 +17,6 @@ public class LegacyGamesLibrarySettingsViewModel : PluginSettingsViewModel<Legac
         var savedSettings = plugin.LoadPluginSettings<LegacyGamesLibrarySettings>();
 
         // LoadPluginSettings returns null if not saved data is available.
-        if (savedSettings != null)
-        {
-            Settings = savedSettings;
-        }
-        else
-        {
-            Settings = new LegacyGamesLibrarySettings();
-        }
+        Settings = savedSettings ?? new();
     }
 }

@@ -33,9 +33,7 @@ public class SearchResultTests
 
     private class FakeWebViewFactory(string pageSource) : IWebViewFactory
     {
-        public string PageSource { get; } = pageSource;
-
-        public IWebView CreateOffscreenView() => new FakeWebView(PageSource);
+        public IWebView CreateOffscreenView() => new FakeWebView(pageSource);
 
         public IWebView CreateOffscreenView(WebViewSettings settings) => throw new NotImplementedException();
 
@@ -51,8 +49,6 @@ public class SearchResultTests
         public bool CanExecuteJavascriptInMainFrame { get; set; } = true;
 
         public System.Windows.Window WindowHost => throw new NotImplementedException();
-
-        public string PageSource { get; } = pageSource;
 
         public event EventHandler<WebViewLoadingChangedEventArgs> LoadingChanged;
 
@@ -72,7 +68,7 @@ public class SearchResultTests
 
         public string GetCurrentAddress() => throw new NotImplementedException();
 
-        public string GetPageSource() => PageSource;
+        public string GetPageSource() => pageSource;
 
         public Task<string> GetPageSourceAsync() => throw new NotImplementedException();
 

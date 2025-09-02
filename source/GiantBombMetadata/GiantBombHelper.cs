@@ -41,7 +41,7 @@ public static class GiantBombHelper
 
 public class GiantBombIdUtility : SingleExternalDatabaseIdUtility
 {
-    public override ExternalDatabase Database { get; } = ExternalDatabase.GiantBomb;
+    public override ExternalDatabase Database => ExternalDatabase.GiantBomb;
 
     public override IEnumerable<Guid> LibraryIds { get; } = [];
 

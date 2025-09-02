@@ -13,7 +13,7 @@ namespace MobyGamesMetadata.Api.V2;
 
 public class MobyGamesApiClient
 {
-    public const string BaseUrl = "https://api.mobygames.com/v2/";
+    private const string BaseUrl = "https://api.mobygames.com/v2/";
     private readonly ExecuteRestRequest restHandlerOverride;
     private readonly string apiKey;
     private readonly RestClient restClient;

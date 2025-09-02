@@ -6,14 +6,12 @@ namespace LegacyGamesLibrary;
 
 public class LegacyGamesLibraryClient(string exePath, string icon) : LibraryClient
 {
-    public override bool IsInstalled => !string.IsNullOrWhiteSpace(ExePath) && File.Exists(ExePath);
+    public override bool IsInstalled => !string.IsNullOrWhiteSpace(exePath) && File.Exists(exePath);
     public override string Icon => icon;
-
-    public string ExePath { get; } = exePath;
 
     public override void Open()
     {
         if (IsInstalled)
-            try { Process.Start(ExePath); } catch { }
+            try { Process.Start(exePath); } catch { }
     }
 }

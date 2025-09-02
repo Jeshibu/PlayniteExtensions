@@ -169,7 +169,7 @@ public static class StringExtensions
         string number = match.Groups["number"].Value;
         string scale = match.Groups["scale"].Value.ToUpperInvariant();
 
-        culture = culture ?? CultureInfo.InvariantCulture;
+        culture ??= CultureInfo.InvariantCulture;
         if (!double.TryParse(number, NumberStyles.Number | NumberStyles.AllowDecimalPoint, culture, out double n))
             return null;
 

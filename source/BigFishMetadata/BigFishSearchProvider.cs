@@ -1,5 +1,4 @@
 ﻿using AngleSharp.Dom.Html;
-using AngleSharp.Extensions;
 using AngleSharp.Parser.Html;
 using Newtonsoft.Json;
 using Playnite.SDK;

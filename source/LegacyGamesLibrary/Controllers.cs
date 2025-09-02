@@ -32,9 +32,9 @@ public class LegacyGamesUninstallController : UninstallController
     {
         var uninstallerPath = Path.Combine(Game.InstallDirectory, "Uninstall.exe");
         if (!File.Exists(uninstallerPath))
-            throw new Exception("Can't uninstall game. Uninstall.exe not found in game directory.");
+            throw new("Can't uninstall game. Uninstall.exe not found in game directory.");
 
-        System.Diagnostics.Process.Start(uninstallerPath);
+        Process.Start(uninstallerPath);
         StartUninstallWatcher();
     }
 
@@ -65,7 +65,7 @@ public class LegacyGamesUninstallController : UninstallController
             {
                 if (!installedGames.Any(g => g.InstallerUUID == gameId))
                 {
-                    InvokeOnUninstalled(new GameUninstalledEventArgs());
+                    InvokeOnUninstalled(new());
                     return;
                 }
             }
@@ -120,7 +120,7 @@ public class LegacyGamesInstallController : InstallController
             }
 
             IEnumerable<RegistryGameData> installedGames = null;
-            Guid gameId = Guid.Empty;
+            var gameId = Guid.Empty;
             try
             {
                 installedGames = registryReader.GetGameData(Microsoft.Win32.RegistryView.Default);
@@ -136,7 +136,7 @@ public class LegacyGamesInstallController : InstallController
                 var installedGame = installedGames.FirstOrDefault(g => g.InstallerUUID == gameId);
                 if (installedGame?.InstDir != null)
                 {
-                    InvokeOnInstalled(new GameInstalledEventArgs(new GameInstallationData { InstallDirectory = installedGame.InstDir }));
+                    InvokeOnInstalled(new(new GameInstallationData { InstallDirectory = installedGame.InstDir }));
                     return;
                 }
             }

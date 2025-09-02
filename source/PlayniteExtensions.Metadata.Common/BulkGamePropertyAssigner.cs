@@ -11,7 +11,6 @@ using System.Windows.Controls;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Collections.Concurrent;
-using System.Collections.ObjectModel;
 
 namespace PlayniteExtensions.Metadata.Common;
 

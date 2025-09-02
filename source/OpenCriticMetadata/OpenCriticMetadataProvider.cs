@@ -45,7 +45,7 @@ public class OpenCriticSearchProvider(IPlatformUtility platformUtility, OpenCrit
 
     public GenericItemOption<OpenCriticSearchResultItem> ToGenericItemOption(OpenCriticSearchResultItem item)
     {
-        return new GenericItemOption<OpenCriticSearchResultItem>(item) { Name = item.Name };
+        return new(item) { Name = item.Name };
     }
 
     public bool TryGetDetails(Game game, out GameDetails gameDetails, CancellationToken cancellationToken)
@@ -100,7 +100,7 @@ public class OpenCriticSearchProvider(IPlatformUtility platformUtility, OpenCrit
         if (images == null)
             return output;
 
-        IEnumerable<IImageData> getSingleImage(OpenCriticImage i)
+        IEnumerable<IImageData> GetSingleImage(OpenCriticImage i)
         {
             if (i?.OG == null)
                 yield break;
@@ -112,10 +112,10 @@ public class OpenCriticSearchProvider(IPlatformUtility platformUtility, OpenCrit
             if (option.Checked)
                 output.AddRange(option.Name switch
                 {
-                    Box => getSingleImage(images.Box),
-                    Square => getSingleImage(images.Square),
-                    Masthead => getSingleImage(images.Masthead),
-                    Banner => getSingleImage(images.Banner),
+                    Box => GetSingleImage(images.Box),
+                    Square => GetSingleImage(images.Square),
+                    Masthead => GetSingleImage(images.Masthead),
+                    Banner => GetSingleImage(images.Banner),
                     Screenshots => images.Screenshots ?? [],
                     _ => [],
                 });

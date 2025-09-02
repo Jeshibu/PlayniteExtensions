@@ -94,7 +94,7 @@ public class SteamIdUtility : SingleExternalDatabaseIdUtility
 {
     public readonly Regex SteamUrlRegex = new(@"^(steam://openurl/)?https?://(store\.steampowered\.com|steamcommunity\.com|steamdb\.info)/app/(?<id>[0-9]+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
-    public override ExternalDatabase Database { get; } = ExternalDatabase.Steam;
+    public override ExternalDatabase Database => ExternalDatabase.Steam;
 
     public override IEnumerable<Guid> LibraryIds { get; } = [Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB")];
 
@@ -115,7 +115,7 @@ public class GOGIdUtility : SingleExternalDatabaseIdUtility
 {
     private readonly Regex GOGUrlRegex = new(@"^https://www\.gogdb\.org/product/(?<id>[0-9]+)");
 
-    public override ExternalDatabase Database { get; } = ExternalDatabase.GOG;
+    public override ExternalDatabase Database => ExternalDatabase.GOG;
 
     public override IEnumerable<Guid> LibraryIds => [
         Guid.Parse("AEBE8B7C-6DC3-4A66-AF31-E7375C6B5E9E"), // GOG
@@ -139,7 +139,7 @@ public class MobyGamesIdUtility : SingleExternalDatabaseIdUtility
 {
     private readonly Regex UrlIdRegex = new(@"\bmobygames\.com/game/(?<id>[0-9]+)(/|$)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
-    public override ExternalDatabase Database { get; } = ExternalDatabase.MobyGames;
+    public override ExternalDatabase Database => ExternalDatabase.MobyGames;
 
     public override IEnumerable<Guid> LibraryIds { get; } = [];
 

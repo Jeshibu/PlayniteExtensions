@@ -180,14 +180,10 @@ public class XboxMetadataProvider(MetadataRequestOptions options, XboxMetadataSe
         }
 
         if (selected == null)
-        {
             return null;
-        }
-        else
-        {
-            var selectedImage = ((XboxImageFileOption)selected).ImageData;
-            return new MetadataFile(selectedImage.Url);
-        }
+        
+        var selectedImage = ((XboxImageFileOption)selected).ImageData;
+        return new MetadataFile(selectedImage.Url);
     }
 
     private XboxGameDetails FindGame()

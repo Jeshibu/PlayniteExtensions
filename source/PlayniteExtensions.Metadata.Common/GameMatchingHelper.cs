@@ -22,7 +22,7 @@ public class GameMatchingHelper(IExternalDatabaseIdUtility externalDatabaseIdUti
 
     public HashSet<string> GetDeflatedNames(IEnumerable<string> names)
     {
-        return new HashSet<string>(names.Select(GetDeflatedName), StringComparer.InvariantCultureIgnoreCase);
+        return new(names.Select(GetDeflatedName), StringComparer.InvariantCultureIgnoreCase);
     }
 
     public string GetDeflatedName(string name)

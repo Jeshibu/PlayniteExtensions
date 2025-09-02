@@ -17,13 +17,13 @@ public class Barnite : GenericPlugin
     private static readonly ILogger logger = LogManager.GetLogger();
     private readonly ScraperManager _scraperManager;
 
-    private BarniteSettingsViewModel settings { get; set; }
+    private BarniteSettingsViewModel Settings { get; set; }
 
     public override Guid Id { get; } = Guid.Parse("fdcf35cc-edcd-4fc3-8640-bb037d3349fe");
 
     public Barnite(IPlayniteAPI api) : base(api)
     {
-        settings = new BarniteSettingsViewModel(this, api);
+        Settings = new BarniteSettingsViewModel(this, api);
         Properties = new GenericPluginProperties
         {
             HasSettings = true
@@ -41,12 +41,12 @@ public class Barnite : GenericPlugin
         _scraperManager.Add<PriceChartingScraper>();
         _scraperManager.Add<UpcItemDbScraper>();
         _scraperManager.Add<RetroplaceScraper>();
-        _scraperManager.InitializeScraperSettingsCollection(settings.Settings.Scrapers);
+        _scraperManager.InitializeScraperSettingsCollection(Settings.Settings.Scrapers);
     }
 
     public override ISettings GetSettings(bool firstRunSettings)
     {
-        return settings;
+        return Settings;
     }
 
     public override UserControl GetSettingsView(bool firstRunSettings)
@@ -98,10 +98,10 @@ public class Barnite : GenericPlugin
 
     private void ProcessEntries(List<BarcodeResultEntry> resultEntries)
     {
-        var scraperExceptions = new List<String>();
+        var scraperExceptions = new List<string>();
         PlayniteApi.Dialogs.ActivateGlobalProgress((args) =>
         {
-            var orderedScrapers = _scraperManager.GetOrderedListFromSettings(settings.Settings.Scrapers);
+            var orderedScrapers = _scraperManager.GetOrderedListFromSettings(Settings.Settings.Scrapers);
             args.ProgressMaxValue = orderedScrapers.Count * resultEntries.Count;
             int barcodeCount = 1;
             foreach (var entry in resultEntries)
@@ -149,7 +149,7 @@ public class Barnite : GenericPlugin
 
         if (scraperExceptions.Any())
         {
-            PlayniteApi.Notifications.Add(new NotificationMessage("barnite_scraper_errors", String.Join(Environment.NewLine, scraperExceptions), NotificationType.Error));
+            PlayniteApi.Notifications.Add(new NotificationMessage("barnite_scraper_errors", string.Join(Environment.NewLine, scraperExceptions), NotificationType.Error));
             scraperExceptions.Clear(); //Only keep errors from the most recent run
         }
 

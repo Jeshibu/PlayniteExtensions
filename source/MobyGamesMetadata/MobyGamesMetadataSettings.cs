@@ -24,14 +24,14 @@ public class MobyGamesMetadataSettings : BulkImportPluginSettings
 
     public ObservableCollection<MobyGamesGenreSetting> Genres { get; set; } = [];
 
-    public MobyGamesImageSourceSettings Cover { get; set; } = new MobyGamesImageSourceSettings
+    public MobyGamesImageSourceSettings Cover { get; set; } = new()
     {
         MinWidth = 200,
         MinHeight = 300,
         AspectRatio = AspectRatio.Vertical,
     };
 
-    public MobyGamesImageSourceSettings Background { get; set; } = new MobyGamesImageSourceSettings
+    public MobyGamesImageSourceSettings Background { get; set; } = new()
     {
         MinWidth = 900,
         MinHeight = 600,
@@ -132,13 +132,7 @@ public class MobyGamesMetadataSettingsViewModel : PluginSettingsViewModel<MobyGa
         InitializeGenres();
     }
 
-    public RelayCommand<object> GetApiKeyCommand
-    {
-        get => new((a) =>
-        {
-            Process.Start(@"https://www.mobygames.com/info/api/");
-        });
-    }
+    public RelayCommand<object> GetApiKeyCommand => new(_ => { Process.Start(@"https://www.mobygames.com/info/api/"); });
 
     public PropertyImportTarget[] ImportTargets { get; } =
     [

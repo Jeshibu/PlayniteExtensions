@@ -3,7 +3,6 @@ using PlayniteExtensions.Common;
 using SqlNado;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -56,30 +55,28 @@ public class LaunchBoxDatabase
         var data = xmlSource.GetData();
         if (args != null) args.CurrentProgressValue++;
 
-        using (var db = GetConnection())
-        {
-            db.BeginTransaction();
-            db.Save(data.Games);
-            if (args != null) args.CurrentProgressValue++;
+        using var db = GetConnection();
+        db.BeginTransaction();
+        db.Save(data.Games);
+        if (args != null) args.CurrentProgressValue++;
 
-            var gameNames = data.Games.Select(g => new LaunchBoxGameName { DatabaseID = g.DatabaseID, Name = g.Name }).ToList();
-            gameNames.AddRange(data.GameAlternateNames);
-            var gameNameDeduplicatedDictionary = gameNames.ToDictionarySafe(n => $"{n.DatabaseID}|{n.Name}", StringComparer.InvariantCultureIgnoreCase);
+        var gameNames = data.Games.Select(g => new LaunchBoxGameName { DatabaseID = g.DatabaseID, Name = g.Name }).ToList();
+        gameNames.AddRange(data.GameAlternateNames);
+        var gameNameDeduplicatedDictionary = gameNames.ToDictionarySafe(n => $"{n.DatabaseID}|{n.Name}", StringComparer.InvariantCultureIgnoreCase);
 
-            db.Save(gameNameDeduplicatedDictionary.Values);
-            if (args != null) args.CurrentProgressValue++;
+        db.Save(gameNameDeduplicatedDictionary.Values);
+        if (args != null) args.CurrentProgressValue++;
 
-            db.Save(data.GameImages);
-            if (args != null) args.CurrentProgressValue++;
+        db.Save(data.GameImages);
+        if (args != null) args.CurrentProgressValue++;
 
-            db.Save(data.GameImages.GroupBy(gi => gi.Type).Select(x => new ImageType { Name = x.Key, Count = x.Count() }));
-            if (args != null) args.CurrentProgressValue++;
+        db.Save(data.GameImages.GroupBy(gi => gi.Type).Select(x => new ImageType { Name = x.Key, Count = x.Count() }));
+        if (args != null) args.CurrentProgressValue++;
 
-            db.Save(data.GameImages.GroupBy(gi => gi.Region).Select(x => new ImageRegion { Name = x.Key, Count = x.Count() }));
-            if (args != null) args.CurrentProgressValue++;
+        db.Save(data.GameImages.GroupBy(gi => gi.Region).Select(x => new ImageRegion { Name = x.Key, Count = x.Count() }));
+        if (args != null) args.CurrentProgressValue++;
 
-            db.Commit();
-        }
+        db.Commit();
     }
 
     public IEnumerable<LaunchboxGameSearchResult> SearchGames(string search, int? limit = null)
@@ -108,16 +105,14 @@ limit {limit.Value}";
 
     private IEnumerable<ItemCount> GetItemCounts<T>() where T:ItemCount
     {
-        using (var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY))
-        {
-            return db.LoadAll<T>().ToList();
-        }
+        using var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY);
+        return db.LoadAll<T>().ToList();
     }
 
     public IEnumerable<string> GetGameImageTypes() => GetItemCounts<ImageType>().Select(x => x.Name);
     public IEnumerable<string> GetRegions() => GetItemCounts<ImageRegion>().Select(x => x.Name);
 
-    public static string GetMatchStringFromSearchString(string searchString)
+    private static string GetMatchStringFromSearchString(string searchString)
     {
         var segments = searchString.Split(' ');
         var matchStr = new StringBuilder();
