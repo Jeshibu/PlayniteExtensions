@@ -4,32 +4,6 @@
     <File Path="../publish/Get-ReleaseData.ps1" />
     <File Path="Directory.Build.Props" />
   </Folder>
-  <Folder Name="/Manifests/">
-    <File Path="../manifests/Generic_Barnite.yaml" />
-    <File Path="../manifests/Generic_ExtraEmulatorProfiles.yaml" />
-    <File Path="../manifests/Generic_GamesSizeCalculator.yaml" />
-    <File Path="../manifests/Generic_itchIoBundleTagger.yaml" />
-    <File Path="../manifests/Generic_MetadataSearch.yaml" />
-    <File Path="../manifests/Generic_MutualGames.yaml" />
-    <File Path="../manifests/Generic_PathReplacer.yaml" />
-    <File Path="../manifests/Generic_SteamTagsImporter.yaml" />
-    <File Path="../manifests/Library_BigFish.yaml" />
-    <File Path="../manifests/Library_GamersGate.yml" />
-    <File Path="../manifests/Library_LegacyGames.yml" />
-    <File Path="../manifests/Library_Rawg.yaml" />
-    <File Path="../manifests/Library_Viveport.yaml" />
-    <File Path="../manifests/Metadata_BigFish.yaml" />
-    <File Path="../manifests/Metadata_GiantBomb.yaml" />
-    <File Path="../manifests/Metadata_GOG.yaml" />
-    <File Path="../manifests/Metadata_IGN.yaml" />
-    <File Path="../manifests/Metadata_LaunchBox.yaml" />
-    <File Path="../manifests/Metadata_MobyGames.yaml" />
-    <File Path="../manifests/Metadata_OpenCritic.yaml" />
-    <File Path="../manifests/Metadata_PCGamingWiki.yaml" />
-    <File Path="../manifests/Metadata_Rawg.yaml" />
-    <File Path="../manifests/Metadata_TvTropes.yaml" />
-    <File Path="../manifests/Metadata_Xbox.yaml" />
-  </Folder>
   <Project Path="Barnite.Tests/Barnite.Tests.csproj" />
   <Project Path="Barnite/Barnite.csproj" />
   <Project Path="BigFishLibrary/BigFishLibrary.csproj" />
