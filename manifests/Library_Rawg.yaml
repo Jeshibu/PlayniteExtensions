@@ -5,71 +5,71 @@ Packages:
     ReleaseDate: 2022-10-01
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/rawg0.1/RawgLibrary_0_1.pext
     Changelog:
-     - Initial release
-     - Library import
-     - Collections import
+      - Initial release
+      - Library import
+      - Collections import
   - Version: 0.2
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-11-23
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2022-11-23/RawgLibrary_0_2.pext
     Changelog:
-     - Fixed library only fetching the first 20 games
-     - Fixed missing icon in "Update Game Library" menu
-     - Switched to username/password authentication (to facilitate the following points)
-     - Added completion status fetching (with options to set the mapping to Playnite statuses)
-     - Added user score fetching (with options to set the mapping to Playnite user score)
-     - Added Playnite completion status syncing to RAWG (with options to set the mapping to RAWG statuses)
-     - Added Playnite user score syncing to RAWG (with options to set the mapping to RAWG ratings)
+      - Fixed library only fetching the first 20 games
+      - Fixed missing icon in "Update Game Library" menu
+      - Switched to username/password authentication (to facilitate the following points)
+      - Added completion status fetching (with options to set the mapping to Playnite statuses)
+      - Added user score fetching (with options to set the mapping to Playnite user score)
+      - Added Playnite completion status syncing to RAWG (with options to set the mapping to RAWG statuses)
+      - Added Playnite user score syncing to RAWG (with options to set the mapping to RAWG ratings)
   - Version: 0.3
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-11-27
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/rawg0.3/RawgLibrary_0_3.pext
     Changelog:
-     - Allowed use of "None" Playnite completion status for sync
-     - Implemented use of RAWG wishlist
-     - Implemented deleting games from RAWG library
-     - Added option per RAWG completion status to not import
-     - Added option per RAWG completion status to leave the status default (this allows "None" when Playnite is configured that way)
-     - Fixed Playstation 1 games not importing
-     - Improved game matching
-     - Removed year from imported game names
+      - Allowed use of "None" Playnite completion status for sync
+      - Implemented use of RAWG wishlist
+      - Implemented deleting games from RAWG library
+      - Added option per RAWG completion status to not import
+      - Added option per RAWG completion status to leave the status default (this allows "None" when Playnite is configured that way)
+      - Fixed Playstation 1 games not importing
+      - Improved game matching
+      - Removed year from imported game names
   - Version: 0.3.1
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-11-28
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/rawg0.3.1/RawgLibrary_0_3_1.pext
     Changelog:
-     - No longer add RAWG link to games before they have other links
-     - Fixed exception when games have no platform
-     - Fixed double search call for new games
-     - Honored new/deleted game sync settings
+      - No longer add RAWG link to games before they have other links
+      - Fixed exception when games have no platform
+      - Fixed double search call for new games
+      - Honored new/deleted game sync settings
   - Version: 0.3.2
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2023-03-11
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-03-11/RawgLibrary_0_3_2.pext
     Changelog:
-     - Fixed empty collection values not allowing fallback to other metadata providers
+      - Fixed empty collection values not allowing fallback to other metadata providers
   - Version: 0.4
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2023-09-22
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-09-22/RawgLibrary_0_4.pext
     Changelog:
-     - "Feature: don not sync hidden games (on by default)"
-     - Tweaked automatic game matching
+      - "Feature: don not sync hidden games (on by default)"
+      - Tweaked automatic game matching
   - Version: 0.4.1
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2023-09-24
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-09-24/RawgLibrary_0_4_1.pext
     Changelog:
-     - Removed duplicate setting
+      - Removed duplicate setting
   - Version: 0.4.2
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2025-08-16
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-16/RawgLibrary_0_4_2.pext
     Changelog:
-     - Fixed pushing things to RAWG failing
+      - Fixed pushing things to RAWG failing
   - Version: 0.4.3
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2025-08-20
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/RawgLibrary_0_4_3.pext
     Changelog:
-     - "Fixed platform matching failing to match some platforms if they'd been renamed"
+      - "Fixed platform matching failing to match some platforms if they'd been renamed"

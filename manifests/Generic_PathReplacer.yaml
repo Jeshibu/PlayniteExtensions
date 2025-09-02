@@ -5,12 +5,12 @@ Packages:
     ReleaseDate: 2022-07-30
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/pathreplacer0.2/PathReplacer_0_2.pext
     Changelog:
-     - Made path matching insensitive
-     - Added emulator, custom emulator profile, and auto-scan configuration path replacing
-     - Added menu items to replace for visible or selected games, in addition to the already existing option for all games
+      - Made path matching insensitive
+      - Added emulator, custom emulator profile, and auto-scan configuration path replacing
+      - Added menu items to replace for visible or selected games, in addition to the already existing option for all games
   - Version: 0.3
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2023-01-14
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/pathreplacer0.3/PathReplacer_0_3.pext
     Changelog:
-     - Game action paths are now also replaced
+      - Game action paths are now also replaced

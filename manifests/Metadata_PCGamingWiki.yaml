@@ -1,239 +1,239 @@
 AddonId: PCGamingWikiMetadata_c038558e-427b-4551-be4c-be7009ce5a8d
 Packages:
-- Version: 0.3.0
-  RequiredApiVersion: 6.0.0
-  ReleaseDate: 2021-09-06
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.3.0/PCGamingWiki_Metadata_Provider_v0.3.0.pext
-  Changelog:
-    - Playnite 9 support
-    - Add Critic Score metadata field
-- Version: 0.3.1
-  RequiredApiVersion: 6.0.0
-  ReleaseDate: 2021-09-07
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.3.1/PCGamingWiki_Metadata_Provider_v0.3.1.pext
-  Changelog:
-    - Add support for Tag metadata
-- Version: 0.3.2
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-02-19
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.3.2/PCGamingWiki_Metadata_Provider_v0.3.2.pext
-  Changelog:
-    - Fix extreneous characters in engine metadata tags
-- Version: 0.3.3
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-02-19
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.3.3/PCGamingWiki_Metadata_Provider_v0.3.3.pext
-  Changelog:
-    - Add Xbox Play Anywhere tag for supported Xbox titles
-    - Fix issue parsing text values where a citation was present
-    - Parsing improvements
-- Version: 0.3.4
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-02-21
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.3.4/PCGamingWiki_Metadata_Provider_v0.3.4.pext
-  Changelog:
-    - Fix issue parsing game features
-- Version: 0.4.0
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-03-01
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.4.0/PCGamingWiki_Metadata_Provider_v0.4.0.pext
-  Changelog:
-    - Add Full Controller Support feature metadata.
-    - Add "Cloud Saves" feature metadata. If game and launcher supports it.
-    - Add "No Cloud Saves" tag. If game and launcher do not support it.
-- Version: 0.5.0
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-03-20
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.5.0/PCGamingWiki_Metadata_Provider_v0.5.0.pext
-  Changelog:
-    - Add Controller Support feature.
-    - Add detailed multiplayer features (LAN, Local, Online, etc)
-    - Add settings to enable/disable importing of multiplayer features, xbox play anywhere tag, and engine tag
-- Version: 0.5.1
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-03-20
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.5.1/PCGamingWiki_Metadata_Provider_v0.5.1.pext
-  Changelog:
-    - Add player counts (when available) to the multiplayer featuress
-- Version: 1.0.0
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-04-03
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.0.0/PCGamingWiki_Metadata_Provider_v1.0.0.pext
-  Changelog:
-    - Move Xbox Play Anywhere from Tag to Feature
-    - Add Features for HDR and Ray Tracing
-    - Add support for Asynchronous multiplayer type
-    - Add settings for most Tags and Features to allow specifying which are imported
-- Version: 1.0.1
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-04-03
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.0.1/PCGamingWiki_Metadata_Provider_v1.0.1.pext
-  Changelog:
-    - Fix video features incorrectly added to ineligible games
-- Version: 1.0.2
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-04-04
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.0.2/PCGamingWiki_Metadata_Provider_v1.0.2.pext
-  Changelog:
-    - Add features for supported frame rate
-    - Add feature for ultrawide support
-    - Remove unused tag settings
-- Version: 1.0.3
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-04-10
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.0.3/PCGamingWiki_Metadata_Provider_v1.0.3.pext
-  Changelog:
-    - Fix Xbox Play Anywhere feature incorrectly applied in some cases
-    - Add option to prefix taxonomy tags with type
-- Version: 1.0.4
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-04-12
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.0.4/PCGamingWiki_Metadata_Provider_v1.0.4.pext
-  Changelog:
-    - HTML parsing enhancements
-    - Fix parsing developer/publisher names containing an apostrophe
-- Version: 1.0.5
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-04-18
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.0.5/PCGamingWiki_Metadata_Provider_v1.0.5.pext
-  Changelog:
-    - Fix search matching when game title contains special characters
-- Version: 1.1.0
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-04-18
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.1.0/PCGamingWiki_Metadata_Provider_v1.1.0.pext
-  Changelog:
-    - Add VR features
-- Version: 1.1.1
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-04-20
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.1.1/PCGamingWiki_Metadata_Provider_v1.1.1.pext
-  Changelog:
-    - Fix VR feature being added when a game has 3d features
-- Version: 1.1.2
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-04-23
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.1.2/PCGamingWiki_Metadata_Provider_v1.1.2.pext
-  Changelog:
-    - Fix parsing wiki pages failing when "citation needed" span present
-- Version: 1.1.3
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-04-28
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.1.3/PCGamingWiki_Metadata_Provider_v1.1.3.pext
-  Changelog:
-    - Fix follow game page redirects
-- Version: 1.1.4
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2022-08-01
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.1.4/PCGamingWiki_Metadata_Provider_v1.1.4.pext
-  Changelog:
-    - Add feature for touchscreen support
-- Version: 1.1.5
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2023-03-18
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.1.5/PCGamingWiki_Metadata_Provider_v1.1.5.pext
-  Changelog:
-    - Add feature for Dualshock 4 support (@lscholte)
-- Version: 1.1.6
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2023-04-05
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.1.6/PCGamingWiki_Metadata_Provider_v1.1.6.pext
-  Changelog:
-    - Add settings for specifying custom tag prefixes
-    - Add tags for Monetization and Microtransactions
-- Version: 1.2.0
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2023-05-10
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.2.0/PCGamingWiki_Metadata_Provider_v1.2.0.pext
-  Changelog:
-    - Add settings to customize which links are imported
-    - Prevent "None" microtransaction/monetization tags
-- Version: 1.2.1
-  RequiredApiVersion: 6.2.2
-  ReleaseDate: 2023-05-28
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.2.1/PCGamingWiki_Metadata_Provider_v1.2.1.pext
-  Changelog:
-    - Fix import link settings not being loaded at startup
-    - Fix properly setting Series when series name contianed a comma
-- Version: 1.2.2
-  RequiredApiVersion: 6.11.0
-  ReleaseDate: 2024-02-14
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.2.2/PCGamingWiki_Metadata_Provider_v1.2.2.pext
-  Changelog:
-    - Fixes to series name parsing. Games with multiple series should now be parsed correctly.
-    - Update dependencies
-- Version: 1.2.3
-  RequiredApiVersion: 6.11.0
-  ReleaseDate: 2024-02-16
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.2.3/PCGamingWiki_Metadata_Provider_v1.2.3.pext
-  Changelog:
-    - Fix Ray Tracing feature
-- Version: 1.2.4
-  RequiredApiVersion: 6.11.0
-  ReleaseDate: 2024-02-16
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.2.4/PCGamingWiki_Metadata_Provider_v1.2.4.pext
-  Changelog:
-    - Fix search matching for game titles containing apostrophe
-- Version: 1.2.5
-  RequiredApiVersion: 6.11.0
-  ReleaseDate: 2024-03-04
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.2.5/PCGamingWiki_Metadata_Provider_v1.2.5.pext
-  Changelog:
-    - Fix disabling of GOG DB and Official site links via extension settings
-- Version: 1.3.0
-  RequiredApiVersion: 6.11.0
-  ReleaseDate: 2024-05-08
-  PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.3.0/PCGamingWiki_Metadata_Provider_v1.3.0.pext
-  Changelog:
-    - Support additional PlayStation controller metadata (@lscholte)
-- Version: 1.4.1
-  RequiredApiVersion: 6.11.0
-  ReleaseDate: 2025-01-20
-  PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/PCGamingWikiMetadata_1_4_1.pext
-  Changelog:
-    - Added bulk property import functionality
-    - Fixed cloud saves feature not importing for EA app games
-    - Development taken over by Jeshibu for now
-- Version: 1.4.2
-  RequiredApiVersion: 6.11.0
-  ReleaseDate: 2025-01-21
-  PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/PCGamingWikiMetadata_1_4_2.pext
-  Changelog:
-    - Fixed getting no results in search
-    - Fixed property import for series targeting the publishers field by default
-    - Property import names now take the prefix setting checkbox into account
-    - "Made property import gracefully handle URL encoded PCGW links to match on. If you have PCGW links with %20 in the URLs you might want to run any bulk property import you've run in the past few days again."
-- Version: 1.4.3
-  RequiredApiVersion: 6.11.0
-  ReleaseDate: 2025-01-22
-  PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/PCGamingWikiMetadata_1_4_3.pext
-  Changelog:
-    - Fixed duplicate links being added by bulk property import
-- Version: 1.4.4
-  RequiredApiVersion: 6.11.0
-  ReleaseDate: 2025-02-15
-  PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/PCGamingWikiMetadata_1_4_4.pext
-  Changelog:
-    - Fixed property bulk import failing for items with an apostrophe
-    - Improved property bulk import title matching with regard to editions in braces and roman numerals
-    - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them
-- Version: 1.5
-  RequiredApiVersion: 6.11.0
-  ReleaseDate: 2025-04-26
-  PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-04-26/PCGamingWikiMetadata_1_5.pext
-  Changelog:
-    - "Game search now includes redirect pages (which are used as aliases)"
-    - "Added the availability table to the bulk property import functionality. Mainly useful for tagging (removed) DRM."
-- Version: 1.5.1
-  RequiredApiVersion: 6.11.0
-  ReleaseDate: 2025-04-27
-  PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-04-26/PCGamingWikiMetadata_1_5_1.pext
-  Changelog:
-    - "Fixed failing to get data for games with special URL characters in the name"
-    - "Fixed PCGW link for redirect pages"
-- Version: 1.5.2
-  RequiredApiVersion: 6.11.0
-  ReleaseDate: 2025-08-20
-  PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/PCGamingWikiMetadata_1_5_2.pext
-  Changelog:
-    - "Fixed platform matching failing to match some platforms if they'd been renamed"
+  - Version: 0.3.0
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-06
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.3.0/PCGamingWiki_Metadata_Provider_v0.3.0.pext
+    Changelog:
+      - Playnite 9 support
+      - Add Critic Score metadata field
+  - Version: 0.3.1
+    RequiredApiVersion: 6.0.0
+    ReleaseDate: 2021-09-07
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.3.1/PCGamingWiki_Metadata_Provider_v0.3.1.pext
+    Changelog:
+      - Add support for Tag metadata
+  - Version: 0.3.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-02-19
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.3.2/PCGamingWiki_Metadata_Provider_v0.3.2.pext
+    Changelog:
+      - Fix extreneous characters in engine metadata tags
+  - Version: 0.3.3
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-02-19
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.3.3/PCGamingWiki_Metadata_Provider_v0.3.3.pext
+    Changelog:
+      - Add Xbox Play Anywhere tag for supported Xbox titles
+      - Fix issue parsing text values where a citation was present
+      - Parsing improvements
+  - Version: 0.3.4
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-02-21
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.3.4/PCGamingWiki_Metadata_Provider_v0.3.4.pext
+    Changelog:
+      - Fix issue parsing game features
+  - Version: 0.4.0
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-01
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.4.0/PCGamingWiki_Metadata_Provider_v0.4.0.pext
+    Changelog:
+      - Add Full Controller Support feature metadata.
+      - Add "Cloud Saves" feature metadata. If game and launcher supports it.
+      - Add "No Cloud Saves" tag. If game and launcher do not support it.
+  - Version: 0.5.0
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-20
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.5.0/PCGamingWiki_Metadata_Provider_v0.5.0.pext
+    Changelog:
+      - Add Controller Support feature.
+      - Add detailed multiplayer features (LAN, Local, Online, etc)
+      - Add settings to enable/disable importing of multiplayer features, xbox play anywhere tag, and engine tag
+  - Version: 0.5.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-03-20
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v0.5.1/PCGamingWiki_Metadata_Provider_v0.5.1.pext
+    Changelog:
+      - Add player counts (when available) to the multiplayer featuress
+  - Version: 1.0.0
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-03
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.0.0/PCGamingWiki_Metadata_Provider_v1.0.0.pext
+    Changelog:
+      - Move Xbox Play Anywhere from Tag to Feature
+      - Add Features for HDR and Ray Tracing
+      - Add support for Asynchronous multiplayer type
+      - Add settings for most Tags and Features to allow specifying which are imported
+  - Version: 1.0.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-03
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.0.1/PCGamingWiki_Metadata_Provider_v1.0.1.pext
+    Changelog:
+      - Fix video features incorrectly added to ineligible games
+  - Version: 1.0.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-04
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.0.2/PCGamingWiki_Metadata_Provider_v1.0.2.pext
+    Changelog:
+      - Add features for supported frame rate
+      - Add feature for ultrawide support
+      - Remove unused tag settings
+  - Version: 1.0.3
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-10
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.0.3/PCGamingWiki_Metadata_Provider_v1.0.3.pext
+    Changelog:
+      - Fix Xbox Play Anywhere feature incorrectly applied in some cases
+      - Add option to prefix taxonomy tags with type
+  - Version: 1.0.4
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-12
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.0.4/PCGamingWiki_Metadata_Provider_v1.0.4.pext
+    Changelog:
+      - HTML parsing enhancements
+      - Fix parsing developer/publisher names containing an apostrophe
+  - Version: 1.0.5
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-18
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.0.5/PCGamingWiki_Metadata_Provider_v1.0.5.pext
+    Changelog:
+      - Fix search matching when game title contains special characters
+  - Version: 1.1.0
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-18
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.1.0/PCGamingWiki_Metadata_Provider_v1.1.0.pext
+    Changelog:
+      - Add VR features
+  - Version: 1.1.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-20
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.1.1/PCGamingWiki_Metadata_Provider_v1.1.1.pext
+    Changelog:
+      - Fix VR feature being added when a game has 3d features
+  - Version: 1.1.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-23
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.1.2/PCGamingWiki_Metadata_Provider_v1.1.2.pext
+    Changelog:
+      - Fix parsing wiki pages failing when "citation needed" span present
+  - Version: 1.1.3
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-04-28
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.1.3/PCGamingWiki_Metadata_Provider_v1.1.3.pext
+    Changelog:
+      - Fix follow game page redirects
+  - Version: 1.1.4
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2022-08-01
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.1.4/PCGamingWiki_Metadata_Provider_v1.1.4.pext
+    Changelog:
+      - Add feature for touchscreen support
+  - Version: 1.1.5
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-03-18
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.1.5/PCGamingWiki_Metadata_Provider_v1.1.5.pext
+    Changelog:
+      - Add feature for Dualshock 4 support (@lscholte)
+  - Version: 1.1.6
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-04-05
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.1.6/PCGamingWiki_Metadata_Provider_v1.1.6.pext
+    Changelog:
+      - Add settings for specifying custom tag prefixes
+      - Add tags for Monetization and Microtransactions
+  - Version: 1.2.0
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-05-10
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.2.0/PCGamingWiki_Metadata_Provider_v1.2.0.pext
+    Changelog:
+      - Add settings to customize which links are imported
+      - Prevent "None" microtransaction/monetization tags
+  - Version: 1.2.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2023-05-28
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.2.1/PCGamingWiki_Metadata_Provider_v1.2.1.pext
+    Changelog:
+      - Fix import link settings not being loaded at startup
+      - Fix properly setting Series when series name contianed a comma
+  - Version: 1.2.2
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-02-14
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.2.2/PCGamingWiki_Metadata_Provider_v1.2.2.pext
+    Changelog:
+      - Fixes to series name parsing. Games with multiple series should now be parsed correctly.
+      - Update dependencies
+  - Version: 1.2.3
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-02-16
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.2.3/PCGamingWiki_Metadata_Provider_v1.2.3.pext
+    Changelog:
+      - Fix Ray Tracing feature
+  - Version: 1.2.4
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-02-16
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.2.4/PCGamingWiki_Metadata_Provider_v1.2.4.pext
+    Changelog:
+      - Fix search matching for game titles containing apostrophe
+  - Version: 1.2.5
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-03-04
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.2.5/PCGamingWiki_Metadata_Provider_v1.2.5.pext
+    Changelog:
+      - Fix disabling of GOG DB and Official site links via extension settings
+  - Version: 1.3.0
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-05-08
+    PackageUrl: https://github.com/sharkusmanch/playnite-pcgamingwiki-metadata-provider/releases/download/v1.3.0/PCGamingWiki_Metadata_Provider_v1.3.0.pext
+    Changelog:
+      - Support additional PlayStation controller metadata (@lscholte)
+  - Version: 1.4.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-01-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/PCGamingWikiMetadata_1_4_1.pext
+    Changelog:
+      - Added bulk property import functionality
+      - Fixed cloud saves feature not importing for EA app games
+      - Development taken over by Jeshibu for now
+  - Version: 1.4.2
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-01-21
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/PCGamingWikiMetadata_1_4_2.pext
+    Changelog:
+      - Fixed getting no results in search
+      - Fixed property import for series targeting the publishers field by default
+      - Property import names now take the prefix setting checkbox into account
+      - "Made property import gracefully handle URL encoded PCGW links to match on. If you have PCGW links with %20 in the URLs you might want to run any bulk property import you've run in the past few days again."
+  - Version: 1.4.3
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-01-22
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/PCGamingWikiMetadata_1_4_3.pext
+    Changelog:
+      - Fixed duplicate links being added by bulk property import
+  - Version: 1.4.4
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-02-15
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/PCGamingWikiMetadata_1_4_4.pext
+    Changelog:
+      - Fixed property bulk import failing for items with an apostrophe
+      - Improved property bulk import title matching with regard to editions in braces and roman numerals
+      - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them
+  - Version: 1.5
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-04-26
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-04-26/PCGamingWikiMetadata_1_5.pext
+    Changelog:
+      - "Game search now includes redirect pages (which are used as aliases)"
+      - "Added the availability table to the bulk property import functionality. Mainly useful for tagging (removed) DRM."
+  - Version: 1.5.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-04-27
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-04-26/PCGamingWikiMetadata_1_5_1.pext
+    Changelog:
+      - "Fixed failing to get data for games with special URL characters in the name"
+      - "Fixed PCGW link for redirect pages"
+  - Version: 1.5.2
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-08-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/PCGamingWikiMetadata_1_5_2.pext
+    Changelog:
+      - "Fixed platform matching failing to match some platforms if they'd been renamed"

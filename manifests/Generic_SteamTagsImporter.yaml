@@ -18,146 +18,146 @@ Packages:
     ReleaseDate: 2021-09-30
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-1/Steam_Tags_Importer_01b67948-33a1-42d5-bd39-e4e8a226d215_2_2.pext
     Changelog:
-    - Updated localizations
+      - Updated localizations
   - Version: 2.3
     RequiredApiVersion: 6.0.0
     ReleaseDate: 2021-10-14
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/Steam_Tags_Importer_01b67948-33a1-42d5-bd39-e4e8a226d215_2_3.pext
     Changelog:
-    - Updated localizations
+      - Updated localizations
   - Version: 2.4
     RequiredApiVersion: 6.1.0
     ReleaseDate: 2021-10-18
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-2/Steam_Tags_Importer_01b67948-33a1-42d5-bd39-e4e8a226d215_2_4.pext
     Changelog:
-    - Updated localizations
+      - Updated localizations
   - Version: 2.5
     RequiredApiVersion: 6.1.0
     ReleaseDate: 2021-10-24
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.0-3/Steam_Tags_Importer_01b67948-33a1-42d5-bd39-e4e8a226d215_2_5.pext
     Changelog:
-    - Updated localizations
+      - Updated localizations
   - Version: 2.6
     RequiredApiVersion: 6.1.0
     ReleaseDate: 2021-11-09
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.2/Steam_Tags_Importer_01b67948-33a1-42d5-bd39-e4e8a226d215_2_6.pext
     Changelog:
-    - Updated localizations
+      - Updated localizations
   - Version: 2.7
     RequiredApiVersion: 6.2.1
     ReleaseDate: 2022-01-09
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.3/Steam_Tags_Importer_01b67948-33a1-42d5-bd39-e4e8a226d215_2_7.pext
     Changelog:
-    - Updated localizations
-    - Improvements to how tags are obtained
+      - Updated localizations
+      - Improvements to how tags are obtained
   - Version: 2.8
     RequiredApiVersion: 6.2.1
     ReleaseDate: 2022-01-18
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/Steam_Tags_Importer_01b67948-33a1-42d5-bd39-e4e8a226d215_2_8.pext
     Changelog:
-    - Updated localizations
+      - Updated localizations
   - Version: 2.9
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-01-28
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/Steam_Tags_Importer_01b67948-33a1-42d5-bd39-e4e8a226d215_2_9.pext
     Changelog:
-    - Updated localizations
+      - Updated localizations
   - Version: 2.10
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-02-03
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.7/Steam_Tags_Importer_01b67948-33a1-42d5-bd39-e4e8a226d215_2_10.pext
     Changelog:
-    - Updated localizations
+      - Updated localizations
   - Version: 2.11
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-02-14
     PackageUrl: https://github.com/darklinkpower/PlayniteExtensionsCollection/releases/download/2.8/Steam_Tags_Importer_01b67948-33a1-42d5-bd39-e4e8a226d215_2_11.pext
     Changelog:
-    - Updated localizations
+      - Updated localizations
   - Version: 3.0
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-03-21
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/steamtagsimporter3.0.0/Steam_Tags_Importer_01b67948-33a1-42d5-bd39-e4e8a226d215_3_0.pext
     Changelog:
-    - Total rewrite
-    - English only (for now)
-    - Progress bar (no longer hangs user interface)
-    - Speed increase
-    - Option to limit tags to a selectable maximum
-    - Option to limit tags to PC games
-    - Option to get tags for each new game
-    - Option to exclude tags
+      - Total rewrite
+      - English only (for now)
+      - Progress bar (no longer hangs user interface)
+      - Speed increase
+      - Option to limit tags to a selectable maximum
+      - Option to limit tags to PC games
+      - Option to get tags for each new game
+      - Option to exclude tags
   - Version: 3.1
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-05-24
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/steamtagsimporter3.1/Steam_Tags_Importer_3_1.pext
     Changelog:
-    - Added option to add a prefix to all newly imported Steam tags
+      - Added option to add a prefix to all newly imported Steam tags
   - Version: 3.2
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-08-04
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/steamtagsimporter3.2/Steam_Tags_Importer_3_2.pext
     Changelog:
-    - Turned plugin into a metadata source. This lets the tag fetching be integrated into the post-import metadata fetching. But, since there is no metadata merging in Playnite, this is exclusive with other tag sources (for example itch.io). The existing post-import tag fetching (which does merge with any existing tags) is still available, unchanged.
-    - Added option to pick tag language
-    - Added option to tag delisted games
+      - Turned plugin into a metadata source. This lets the tag fetching be integrated into the post-import metadata fetching. But, since there is no metadata merging in Playnite, this is exclusive with other tag sources (for example itch.io). The existing post-import tag fetching (which does merge with any existing tags) is still available, unchanged.
+      - Added option to pick tag language
+      - Added option to tag delisted games
   - Version: 3.2.1
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2023-03-11
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-03-11/SteamTagsImporter_3_2_1.pext
     Changelog:
-    - Fixed empty collection values not allowing fallback to other metadata providers
+      - Fixed empty collection values not allowing fallback to other metadata providers
   - Version: 4.0
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-06-22
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-06-22/SteamTagsImporter_4.pext
     Changelog:
-    - Added single-property bulk import, similar to Giant Bomb and MobyGames metadata plugins
+      - Added single-property bulk import, similar to Giant Bomb and MobyGames metadata plugins
   - Version: 4.2
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-08-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/SteamTagsImporter_4_2.pext
     Changelog:
-    - Added options to add more links to bulk tag import
-    - Added options to only match filtered or Steam games
-    - Deduplicated bulk import proposed game matches
-    - Improvement in connection handling; less likely to run out of connections
+      - Added options to add more links to bulk tag import
+      - Added options to only match filtered or Steam games
+      - Deduplicated bulk import proposed game matches
+      - Improvement in connection handling; less likely to run out of connections
   - Version: 4.2.2
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-11-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/SteamTagsImporter_4_2_2.pext
     Changelog:
-    - Fixed bulk import breaking when it included a Steam game with no name
-    - Added missing In-App Purchases feature for bulk import
+      - Fixed bulk import breaking when it included a Steam game with no name
+      - Added missing In-App Purchases feature for bulk import
   - Version: 4.2.3
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-01-18
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/SteamTagsImporter_4_2_3.pext
     Changelog:
-    - Improved game matching speed for bulk property import
+      - Improved game matching speed for bulk property import
   - Version: 4.2.4
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-01-22
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/SteamTagsImporter_4_2_4.pext
     Changelog:
-    - Fixed bulk import links other than the store page missing Steam app ID in the URL
+      - Fixed bulk import links other than the store page missing Steam app ID in the URL
   - Version: 4.2.5
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-02-15
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/SteamTagsImporter_4_2_5.pext
     Changelog:
-    - Improved property bulk import title matching with regard to editions in braces and roman numerals
-    - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them
+      - Improved property bulk import title matching with regard to editions in braces and roman numerals
+      - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them
   - Version: 4.2.6
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-06-16
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-06-16/SteamTagsImporter_4_2_6.pext
     Changelog:
-    - "Fixed accessibility features always showing up in bulk property import search results"
-    - "Fixed accessibility features not showing a category in bulk property import search results"
+      - "Fixed accessibility features always showing up in bulk property import search results"
+      - "Fixed accessibility features not showing a category in bulk property import search results"
   - Version: 4.2.7
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-08-20
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/SteamTagsImporter_4_2_7.pext
     Changelog:
-    - "Fixed platform matching failing to match some platforms if they'd been renamed"
+      - "Fixed platform matching failing to match some platforms if they'd been renamed"

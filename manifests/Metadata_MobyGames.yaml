@@ -5,127 +5,127 @@ Packages:
     ReleaseDate: 2023-04-16
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-04-16/MobyGamesMetadata_0_2.pext
     Changelog:
-     - Initial public release
-     - Added genre settings
-     - Added bulk genre assignment
+      - Initial public release
+      - Added genre settings
+      - Added bulk genre assignment
   - Version: 0.3
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2023-04-18
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-04-18/MobyGamesMetadata_0_3.pext
     Changelog:
-     - "Added image filtering options: minimum size and orientation"
-     - "Added right-click options to genre settings to (mass-)set name overrides"
+      - "Added image filtering options: minimum size and orientation"
+      - "Added right-click options to genre settings to (mass-)set name overrides"
   - Version: 0.3.1
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2023-04-23
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-04-23/MobyGamesMetadata_0_3_1.pext
     Changelog:
-     - Fixed links in game descriptions
+      - Fixed links in game descriptions
   - Version: 0.4
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2023-05-16
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-05-16/MobyGamesMetadata_0_4.pext
     Changelog:
-     - Made bulk game property import execution parallel (improves speed significantly)
-     - Fixed bulk property assignment window overflowing screen bounds for some multi-monitor setups
-     - Small platform matching improvements
-     - Fixed link URL matching for games with old-style MobyGames links (no ID in the URL) and titles that start with a number
+      - Made bulk game property import execution parallel (improves speed significantly)
+      - Fixed bulk property assignment window overflowing screen bounds for some multi-monitor setups
+      - Small platform matching improvements
+      - Fixed link URL matching for games with old-style MobyGames links (no ID in the URL) and titles that start with a number
   - Version: 0.4.1
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2023-07-26
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-07-26/MobyGamesMetadata_0_4_1.pext
     Changelog:
-     - Fixed title matching for automated metadata collection for games with alternate titles
+      - Fixed title matching for automated metadata collection for games with alternate titles
   - Version: 0.4.2
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2023-09-22
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-09-22/MobyGamesMetadata_0_4_2.pext
     Changelog:
-     - Fixed HTML entities in game names
-     - Changed Windows Apps platform to Windows
-     - Fixed games with numeric-only names fetching data from the wrong game
+      - Fixed HTML entities in game names
+      - Changed Windows Apps platform to Windows
+      - Fixed games with numeric-only names fetching data from the wrong game
   - Version: 0.4.3
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2023-10-29
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-10-29/MobyGamesMetadata_0_4_3.pext
     Changelog:
-     - Fixed HTML entities in game names (for real this time)
+      - Fixed HTML entities in game names (for real this time)
   - Version: 0.4.4
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2024-02-22
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-02-22/MobyGamesMetadata_0_4_4.pext
     Changelog:
-     - Optimized game matching for bulk property import
+      - Optimized game matching for bulk property import
   - Version: 0.5
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2024-05-20
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-05-20/MobyGamesMetadata_0_5.pext
     Changelog:
-    - Added option to get release date for the game's platforms instead of earliest overall
-    - Added ratings
-    - Added developers and publishers
-    - Updated available genres
-    - Improved group field targeting
+      - Added option to get release date for the game's platforms instead of earliest overall
+      - Added ratings
+      - Added developers and publishers
+      - Updated available genres
+      - Improved group field targeting
   - Version: 0.5.1
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2024-05-20
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-05-20/MobyGamesMetadata_0_5_1.pext
     Changelog:
-    - Fixed getting release date for the game's platforms instead of earliest overall
+      - Fixed getting release date for the game's platforms instead of earliest overall
   - Version: 0.5.2
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2024-06-22
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-06-22/MobyGamesMetadata_0_5_2.pext
     Changelog:
-    - Fixed deadlock when importing properties
+      - Fixed deadlock when importing properties
   - Version: 0.6
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2024-08-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/MobyGamesMetadata_0_6.pext
     Changelog:
-    - Added bulk import option to only match filtered games
-    - Fixed HTML entities showing up in search result descriptions
-    - Removed ', the' from the end of company names
-    - Improvement in connection handling; less likely to run out of connections
+      - Added bulk import option to only match filtered games
+      - Fixed HTML entities showing up in search result descriptions
+      - Removed ', the' from the end of company names
+      - Improvement in connection handling; less likely to run out of connections
   - Version: 0.6.1
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2025-01-18
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/MobyGamesMetadata_0_6_1.pext
     Changelog:
-    - Improved game matching speed for bulk property import
+      - Improved game matching speed for bulk property import
   - Version: 0.6.2
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2025-02-15
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/MobyGamesMetadata_0_6_2.pext
     Changelog:
-    - Improved property bulk import title matching with regard to editions in braces and roman numerals
-    - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them
+      - Improved property bulk import title matching with regard to editions in braces and roman numerals
+      - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them
   - Version: 0.7
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2025-04-18
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/mobygames0.7/MobyGamesMetadata_0_7.pext
     Changelog:
-    - "Transitioned to MobyGames API v2 (v1 is deactivated as far as I can tell)"
-    - "Unfortunately this new API is stricter in several ways:"
-    - "Only one request per 5 seconds can be made now, as opposed to 1 per second."
-    - "Bulk property import is limited to fetching 10 games every 5 seconds. I've discussed this with their developer and he's indicated this page size will be increased in the future, at which point I'll update this plugin again."
-    - "And finally, API use is now exclusive to students, academic researchers, and paying subscribers ($10 a month minimum at time of writing) - see the API subscription options (and find a link to apply for a free API key) at https://www.mobygames.com/api/subscribe/"
+      - "Transitioned to MobyGames API v2 (v1 is deactivated as far as I can tell)"
+      - "Unfortunately this new API is stricter in several ways:"
+      - "Only one request per 5 seconds can be made now, as opposed to 1 per second."
+      - "Bulk property import is limited to fetching 10 games every 5 seconds. I've discussed this with their developer and he's indicated this page size will be increased in the future, at which point I'll update this plugin again."
+      - "And finally, API use is now exclusive to students, academic researchers, and paying subscribers ($10 a month minimum at time of writing) - see the API subscription options (and find a link to apply for a free API key) at https://www.mobygames.com/api/subscribe/"
   - Version: 0.7.1
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2025-04-26
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-04-26/MobyGamesMetadata_0_7_1.pext
     Changelog:
-    - "Fixed useless links being added to games"
-    - "Reminder that API access is no longer free (except to researchers or academics). The cheapest subscription is $10 per month at the moment. API keys previously granted for free should have expired by now."
+      - "Fixed useless links being added to games"
+      - "Reminder that API access is no longer free (except to researchers or academics). The cheapest subscription is $10 per month at the moment. API keys previously granted for free should have expired by now."
   - Version: 0.7.2
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2025-08-16
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-16/MobyGamesMetadata_0_7_2.pext
     Changelog:
-    - "Small link handling fix"
+      - "Small link handling fix"
   - Version: 0.7.3
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2025-08-20
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/MobyGamesMetadata_0_7_3.pext
     Changelog:
-    - "Fixed platform matching failing to match some platforms if they'd been renamed"
+      - "Fixed platform matching failing to match some platforms if they'd been renamed"

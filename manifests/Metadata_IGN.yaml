@@ -5,68 +5,68 @@ Packages:
     ReleaseDate: 2022-10-23
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ign0.1/IgnMetadata_0_1.pext
     Changelog:
-    - Initial release
+      - Initial release
   - Version: 0.2
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-10-23
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ign0.2/IgnMetadata_0_2.pext
     Changelog:
-    - Fixed possible exception in platform parsing
+      - Fixed possible exception in platform parsing
   - Version: 0.2.1
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2023-02-15
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ign0.2.1/IgnMetadata_0_2_1.pext
     Changelog:
-    - Fixed IGN API requests not returning anything
+      - Fixed IGN API requests not returning anything
   - Version: 0.2.2
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2023-03-11
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-03-11/IgnMetadata_0_2_2.pext
     Changelog:
-    - Fixed empty collection values not allowing fallback to other metadata providers
+      - Fixed empty collection values not allowing fallback to other metadata providers
   - Version: 0.2.3
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2023-05-16
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-05-16/IgnMetadata_0_2_3.pext
     Changelog:
-    - Small platform matching improvements
+      - Small platform matching improvements
   - Version: 0.3
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2023-07-26
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-07-26/IgnMetadata_0_3.pext
     Changelog:
-    - Added shortened game names as alternate names for searching/matching
-    - Added the use of platforms for searching/matching
-    - Removed settings (was never supposed to appear in the first place)
-    - Fixed title matching for automated metadata collection for games with alternate titles
-    - Small platform matching improvements
+      - Added shortened game names as alternate names for searching/matching
+      - Added the use of platforms for searching/matching
+      - Removed settings (was never supposed to appear in the first place)
+      - Fixed title matching for automated metadata collection for games with alternate titles
+      - Small platform matching improvements
   - Version: 0.3.1
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2023-08-30
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ign0.3.1/IgnMetadata_0_3_1.pext
     Changelog:
-    - Fixed not being able to fetch or search any data
+      - Fixed not being able to fetch or search any data
   - Version: 0.3.2
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-08-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/IgnMetadata_0_3_2.pext
     Changelog:
-    - Improvement in connection handling; less likely to run out of connections
+      - Improvement in connection handling; less likely to run out of connections
   - Version: 0.3.3
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-08-18
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/IgnMetadata_0_3_3.pext
     Changelog:
-    - Fixed search results being empty
+      - Fixed search results being empty
   - Version: 0.4
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2025-03-09
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/IgnMetadata_0_4.pext
     Changelog:
-    - Added IGN game page link to provided metadata
+      - Added IGN game page link to provided metadata
   - Version: 0.4.1
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2025-08-20
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/IgnMetadata_0_4_1.pext
     Changelog:
-    - "Fixed platform matching failing to match some platforms if they'd been renamed"
+      - "Fixed platform matching failing to match some platforms if they'd been renamed"
