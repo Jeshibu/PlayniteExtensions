@@ -27,7 +27,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
     protected readonly ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource = dataSource;
     protected readonly IPlayniteAPI playniteApi = playniteAPI;
     public abstract string MetadataProviderName { get; }
-    protected bool AllowEmptySearchQuery { get; set; } = false;
+    public bool AllowEmptySearchQuery { get; set; } = false;
     public IExternalDatabaseIdUtility DatabaseIdUtility { get; } = databaseIdUtility;
     public ExternalDatabase DatabaseType { get; } = databaseType;
     public int MaxDegreeOfParallelism { get; } = maxDegreeOfParallelism;
