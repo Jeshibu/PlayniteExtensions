@@ -1,8 +1,9 @@
-﻿using Playnite.SDK;
+﻿using System;
+using System.Collections.Generic;
+using IgnMetadata.Api;
+using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
-using System;
-using System.Collections.Generic;
 
 namespace IgnMetadata;
 
@@ -11,7 +12,7 @@ public class IgnMetadata : MetadataPlugin
     private static readonly ILogger logger = LogManager.GetLogger();
 
     private readonly IPlatformUtility platformUtility;
-    private readonly IgnClient client;
+    private readonly IgnApiClient client;
 
     public override Guid Id { get; } = Guid.Parse("6024e3a9-de7e-4848-9101-7a2f818e7e47");
 
@@ -31,6 +32,7 @@ public class IgnMetadata : MetadataPlugin
         MetadataField.ReleaseDate,
         MetadataField.Platform,
         MetadataField.Links,
+        MetadataField.BackgroundImage,
     ];
 
     public override string Name => "IGN";
@@ -42,7 +44,7 @@ public class IgnMetadata : MetadataPlugin
             HasSettings = false
         };
         platformUtility = new PlatformUtility(PlayniteApi);
-        client = new IgnClient(new WebDownloader() { Accept = "*/*" });
+        client = new IgnApiClient(new WebDownloader() { Accept = "*/*" });
     }
 
     public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
