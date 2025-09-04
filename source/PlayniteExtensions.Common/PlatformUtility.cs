@@ -85,7 +85,7 @@ public class PlatformUtility : IPlatformUtility
         TryAddPlatformByName(output, "Microsoft", ["Xbox 360", "Xbox360", "X360"], "xbox360");
         TryAddPlatformByName(output, "Microsoft", ["Xbox One", "XboxOne", "XONE"], "xbox_one");
         TryAddPlatformByName(output, "Microsoft", ["Xbox Series X", "Xbox Series S", "Xbox Series X/S", "Xbox Series S/X", "Xbox Series X|S", "XboxSeriesX", "XSX"], ["xbox_series"]);
-        TryAddPlatformByName(output, "NEC", ["PC-98", "PC98"], "nec_pc98");
+        TryAddPlatformByName(output, "NEC", ["PC-98", "PC98", "PC-9801"], "nec_pc98");
         TryAddPlatformByName(output, "NEC", ["PC-FX", "PCFX"], "nec_pcfx");
         TryAddPlatformByName(output, "NEC", ["SuperGrafx"], "nec_supergrafx");
         TryAddPlatformByName(output, "NEC", ["TurboGrafx 16"], "nec_turbografx_16");
