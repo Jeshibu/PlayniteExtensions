@@ -4,10 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:pec="clr-namespace:PlayniteExtensions.Common"
+             mc:Ignorable="d"
              xmlns:opencriticmetadata="clr-namespace:OpenCriticMetadata"
              d:DataContext="{d:DesignInstance Type=opencriticmetadata:OpenCriticMetadataSettingsViewModel}"
              xmlns:dd="urn:gong-wpf-dragdrop"
-             mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600" d:Background="White">
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="20">
@@ -33,16 +33,16 @@
                         <Setter Property="Margin" Value="5,3"/>
                         <Setter Property="HorizontalAlignment" Value="Left"/>
                     </Style>
-                    <pec:IntegerFormatConverter x:Key="intConverter"/>
+                    <pec:IntegerFormatConverter x:Key="IntConverter"/>
                 </Grid.Resources>
 
                 <TextBlock>Critic score average:</TextBlock>
                 <ComboBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" IsEditable="False" SelectedValuePath="Key" DisplayMemberPath="Value" Width="auto"
                           ItemsSource="{Binding CriticSources}" SelectedValue="{Binding Settings.CriticScoreSource}"/>
                 <TextBlock Grid.Row="1" Grid.Column="0">Minimum critic review count:</TextBlock>
-                <TextBox Width="70" Text="{Binding Settings.MinimumCriticReviewCount, Converter={StaticResource intConverter}}" Grid.Row="1" Grid.Column="1"/>
+                <TextBox Width="70" Text="{Binding Settings.MinimumCriticReviewCount, Converter={StaticResource IntConverter}}" Grid.Row="1" Grid.Column="1"/>
                 <TextBlock Grid.Row="2" Grid.Column="0">Minimum user review count:</TextBlock>
-                <TextBox Width="70" Text="{Binding Settings.MinimumCommunityReviewCount, Converter={StaticResource intConverter}}" Grid.Row="2" Grid.Column="1"/>
+                <TextBox Width="70" Text="{Binding Settings.MinimumCommunityReviewCount, Converter={StaticResource IntConverter}}" Grid.Row="2" Grid.Column="1"/>
             </Grid>
 
             <TextBlock TextWrapping="Wrap">Use the following image types, in the specified order (drag and drop to reorder):</TextBlock>
@@ -74,8 +74,9 @@
                     </Style>
                 </Grid.Resources>
 
-                <TextBlock Grid.Column="0">Cover</TextBlock>
-                <ListBox ItemsSource="{Binding Settings.CoverSources}" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Column="0" pec:IgnoreScrollBehaviour.IgnoreScroll="True">
+                <TextBlock Grid.Column="0" Grid.Row="0">Cover</TextBlock>
+                <ListBox ItemsSource="{Binding Settings.CoverSources}" dd:DragDrop.DragDropContext="Cover"
+                         Grid.Row="1" Grid.Column="0" d:ItemsSource="{d:SampleData ItemCount=5}" pec:IgnoreScrollBehaviour.IgnoreScroll="True">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
@@ -86,8 +87,9 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <TextBlock Grid.Column="1">Background</TextBlock>
-                <ListBox ItemsSource="{Binding Settings.BackgroundSources}" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Column="1" pec:IgnoreScrollBehaviour.IgnoreScroll="True">
+                <TextBlock Grid.Row="0" Grid.Column="1">Background</TextBlock>
+                <ListBox ItemsSource="{Binding Settings.BackgroundSources}" dd:DragDrop.DragDropContext="Background"
+                         Grid.Row="1" Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=5}" pec:IgnoreScrollBehaviour.IgnoreScroll="True">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
