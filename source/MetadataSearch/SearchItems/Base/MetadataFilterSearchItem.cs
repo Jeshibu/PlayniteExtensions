@@ -20,23 +20,38 @@ public abstract class MetadataFilterSearchItem<T> : SearchItem where T : Databas
         DatabaseObject = databaseObject;
         Description = type;
 
-        PrimaryAction = new SearchItemAction("Append to filter", AppendToCurrentFilter);
-        SecondaryAction = new SearchItemAction("Filter exclusively", ReplaceFilter);
+        var appendAction = new SearchItemAction("Append to filter", AppendToCurrentFilter);
+        var exclusiveAction = new SearchItemAction("Filter exclusively", ReplaceFilter);
+
+        PrimaryAction = appendFilterIsPrimary ? appendAction : exclusiveAction;
+        SecondaryAction = appendFilterIsPrimary ? exclusiveAction : appendAction;
     }
 
-    void AppendToCurrentFilter()
+    private void AppendToCurrentFilter()
     {
-        var fs = MainView.GetCurrentFilterSettings();
-        var fp = new FilterPreset { Settings = fs };
+        var fp = new FilterPreset
+        {
+            Settings = MainView.GetCurrentFilterSettings(),
+            GroupingOrder = MainView.Grouping,
+            SortingOrder = MainView.SortOrder,
+            SortingOrderDirection = MainView.SortOrderDirection
+        };
         ApplyFilterImpl(fp);
         MainView.ApplyFilterPreset(fp);
     }
 
-    void ReplaceFilter()
+    private void ReplaceFilter()
     {
-        var fp = new FilterPreset { Settings = new() };
-        ApplyFilterImpl(fp);
-        MainView.ApplyFilterPreset(fp);
+        if (DatabaseObject is FilterPreset x)
+        {
+            MainView.ApplyFilterPreset(x);
+        }
+        else
+        {
+            var fp = new FilterPreset { Settings = new() };
+            ApplyFilterImpl(fp);
+            MainView.ApplyFilterPreset(fp);
+        }
     }
 
     protected abstract void ApplyFilterImpl(FilterPreset fp);

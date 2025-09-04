@@ -1,5 +1,4 @@
-﻿using MetadataSearch.SearchItems.Base;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -11,8 +10,8 @@ namespace MetadataSearch.SearchItems;
 
 public class FilterPresetSearchItem : MetadataFilterSearchItem<FilterPreset>
 {
-    public FilterPresetSearchItem(IMainViewAPI mainViewAPI, FilterPreset databaseObject, bool appendFilterIsPrimary = true)
-        : base(mainViewAPI, databaseObject, "Filter preset", appendFilterIsPrimary) { }
+    public FilterPresetSearchItem(IMainViewAPI mainViewApi, FilterPreset databaseObject, bool appendFilterIsPrimary = true)
+        : base(mainViewApi, databaseObject, "Filter preset", appendFilterIsPrimary) { }
 
     private static void Append(FilterPresetSettings fs1, EnumFilterItemProperties x2, Expression<Func<FilterPresetSettings, EnumFilterItemProperties>> selector, Func<FilterPresetSettings, EnumFilterItemProperties> compiledSelector = null)
     {
@@ -68,13 +67,13 @@ public class FilterPresetSearchItem : MetadataFilterSearchItem<FilterPreset>
         Append(fp, fs => fs.CompletionStatuses);
         Append(fp, fs => fs.CriticScore);
         Append(fp, fs => fs.Developer);
-        fp.Settings.Favorite &= DatabaseObject.Settings.Favorite;
+        fp.Settings.Favorite |= DatabaseObject.Settings.Favorite;
         Append(fp, fs => fs.Feature);
         Append(fp, fs => fs.Genre);
         fp.Settings.Hidden &= DatabaseObject.Settings.Hidden;
         Append(fp, fs => fs.InstallSize);
-        fp.Settings.IsInstalled &= DatabaseObject.Settings.IsInstalled;
-        fp.Settings.IsUnInstalled &= DatabaseObject.Settings.IsUnInstalled;
+        fp.Settings.IsInstalled |= DatabaseObject.Settings.IsInstalled;
+        fp.Settings.IsUnInstalled |= DatabaseObject.Settings.IsUnInstalled;
         Append(fp, fs => fs.Library);
         Append(fp, fs => fs.Modified);
         if (string.IsNullOrEmpty(fp.Settings.Name))
@@ -88,7 +87,7 @@ public class FilterPresetSearchItem : MetadataFilterSearchItem<FilterPreset>
         Append(fp, fs => fs.Series);
         Append(fp, fs => fs.Source);
         Append(fp, fs => fs.Tag);
-        fp.Settings.UseAndFilteringStyle &= DatabaseObject.Settings.UseAndFilteringStyle;
+        fp.Settings.UseAndFilteringStyle |= DatabaseObject.Settings.UseAndFilteringStyle;
         Append(fp, fs => fs.UserScore);
         if (string.IsNullOrEmpty(fp.Settings.Version))
             fp.Settings.Version = DatabaseObject.Settings.Version;

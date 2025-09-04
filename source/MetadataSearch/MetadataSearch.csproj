@@ -18,4 +18,24 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\PlayniteExtensions.Common\IgnoreScrollBehavior.cs">
+      <Link>Common\IgnoreScrollBehavior.cs</Link>
+    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
+      <Link>Common\PluginSettingsViewModel.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Settings\MetadataSearchSettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
 </Project>
