@@ -14,9 +14,9 @@ public class WebscraperTests
     {
         var downloader = new FakeWebDownloader("https://gamesdb.launchbox-app.com/games/details/3712", "Resident Evil 4 Details.html");
         downloader.AddRedirect("https://gamesdb.launchbox-app.com/games/dbid/3928/", "https://gamesdb.launchbox-app.com/games/details/3712");
-        var scraper = new LaunchBoxWebscraper(downloader);
+        var scraper = new LaunchBoxWebScraper(downloader);
 
-        var url = scraper.GetLaunchBoxGamesDatabaseUrl("3928");
+        var url = scraper.GetLaunchBoxGamesDatabaseUrl(3928L);
         var images = scraper.GetGameImageDetails(url).ToList();
 
         Assert.Equal(57, images.Count);
@@ -45,9 +45,9 @@ public class WebscraperTests
     {
         var downloader = new FakeWebDownloader("https://gamesdb.launchbox-app.com/games/details/6399", "Mario & Luigi Superstar Saga Details.html");
         downloader.AddRedirect("https://gamesdb.launchbox-app.com/games/dbid/6691/", "https://gamesdb.launchbox-app.com/games/details/6399");
-        var scraper = new LaunchBoxWebscraper(downloader);
+        var scraper = new LaunchBoxWebScraper(downloader);
 
-        var url = scraper.GetLaunchBoxGamesDatabaseUrl("6691");
+        var url = scraper.GetLaunchBoxGamesDatabaseUrl(6691L);
         var images = scraper.GetGameImageDetails(url).ToList();
 
         Assert.Equal(36, images.Count);

@@ -72,7 +72,7 @@ public class PotentialLink(string name, Func<GameDetails, string> getUrlMethod, 
 
         if (string.IsNullOrWhiteSpace(url)) return true;
 
-        return links != null && links.Any(l => url.Equals(l.Url, StringComparison.InvariantCultureIgnoreCase));
+        return links.Any(l => url.Equals(l.Url, StringComparison.InvariantCultureIgnoreCase));
     }
 }
 

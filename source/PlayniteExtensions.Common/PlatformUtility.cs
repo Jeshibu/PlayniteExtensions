@@ -16,8 +16,10 @@ public class PlatformUtility : IPlatformUtility
     private Dictionary<string, string[]> PlatformSpecNameByNormalName => platformSpecNameByNormalName ??= GetPlatformSpecsByNormalName(api);
 
     private HashSet<string> PlatformSpecNames => platformSpecNames ??= api?.Database?.Platforms?.Select(p => p.SpecificationId).Where(x => x != null).ToHashSet() ?? [];
-    
-    public PlatformUtility() { }
+
+    public PlatformUtility()
+    {
+    }
 
     public PlatformUtility(IPlayniteAPI api)
     {
@@ -199,6 +201,7 @@ public class PlatformUtility : IPlatformUtility
             if (!output.ContainsKey(nameWithoutCompany))
                 output.Add(nameWithoutCompany, [platform.SpecificationId]);
         }
+
         return output;
     }
 
@@ -348,8 +351,8 @@ public class PlatformUtility : IPlatformUtility
             namePrefixes.Add(companyName + ' ');
 
         foreach (var prefix in namePrefixes)
-            foreach (var platformName in platformNames)
-                success &= TryAddPlatformByName(dict, prefix + platformName, platformSpecNames);
+        foreach (var platformName in platformNames)
+            success &= TryAddPlatformByName(dict, prefix + platformName, platformSpecNames);
 
         return success;
     }
@@ -414,12 +417,16 @@ public class PlatformUtility : IPlatformUtility
             if (mp is MetadataNameProperty namePlatform && platforms.Select(p => p.Name).Contains(namePlatform.Name, comparer))
                 return true;
         }
+
         return false;
     }
 
     public bool PlatformsOverlap(List<Platform> platforms, IEnumerable<string> metadataPlatforms, bool returnValueWhenEmpty = true)
     {
-        var parsedMetadataPlatforms = metadataPlatforms.SelectMany(p => GetPlatforms(p)).ToList();
+        if (platforms == null || metadataPlatforms == null)
+            return returnValueWhenEmpty;
+
+        var parsedMetadataPlatforms = metadataPlatforms.SelectMany(GetPlatforms).ToList();
         return PlatformsOverlap(platforms, parsedMetadataPlatforms, returnValueWhenEmpty);
     }
 }

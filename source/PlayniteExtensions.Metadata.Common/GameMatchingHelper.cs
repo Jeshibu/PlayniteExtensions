@@ -47,7 +47,7 @@ public class GameMatchingHelper(IExternalDatabaseIdUtility externalDatabaseIdUti
 
     private void AddGame(Game game)
     {
-        var dbIDs = ExternalDatabaseIdUtility.GetIdsFromGame(game).ToList();
+        var dbIDs = ExternalDatabaseIdUtility?.GetIdsFromGame(game).ToList() ?? [];
 
         if (dbIDs.Any())
             foreach (var dbID in dbIDs)

@@ -6,9 +6,9 @@ using PlayniteExtensions.Common;
 
 namespace LaunchBoxMetadata;
 
-public class LaunchBoxWebscraper(IWebDownloader downloader)
+public class LaunchBoxWebScraper(IWebDownloader downloader)
 {
-    public string GetLaunchBoxGamesDatabaseUrl(string databaseId)
+    public string GetLaunchBoxGamesDatabaseUrl(long databaseId)
     {
         var redirectRequestUrl = $"https://gamesdb.launchbox-app.com/games/dbid/{databaseId}/";
         var redirectResponse = downloader.DownloadString(redirectRequestUrl, getContent: false, maxRedirectDepth: -1); //don't accept redirects, just get the URL
@@ -54,8 +54,8 @@ public class LaunchBoxWebscraper(IWebDownloader downloader)
         }
     }
 
-    private readonly Regex imageFilenameRegex = new Regex(@"\b[\w-]+\.[a-z]{3,5}\b", RegexOptions.Compiled);
-    private readonly Regex imgAltRegex = new Regex(@"(?<type>.+) \((?<region>[^)]+)\) - (?<width>[0-9]+)x(?<height>[0-9]+)$", RegexOptions.Compiled);
+    private readonly Regex imageFilenameRegex = new(@"\b[\w-]+\.[a-z]{3,5}\b", RegexOptions.Compiled);
+    private readonly Regex imgAltRegex = new(@"(?<type>.+) \((?<region>[^)]+)\) - (?<width>[0-9]+)x(?<height>[0-9]+)$", RegexOptions.Compiled);
 
     private string FindNextImageFileInNuxtData(string nuxtData, string thumbFilename)
     {

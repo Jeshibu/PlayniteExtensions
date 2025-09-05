@@ -30,89 +30,70 @@ public class LaunchBoxXmlParser(string xmlPath)
         return data;
     }
 
-    private bool FilterObject(IDatabaseObject obj)
+    private bool FilterObject(IDatabaseObject obj) => obj.DatabaseID != default;
+
+    private LaunchBoxGameName ParseGameAlternateName(XElement n) => new()
     {
-        var emptyId = string.IsNullOrEmpty(obj.DatabaseID);
+        DatabaseID = GetDatabaseId(n),
+        Name = n.Element("AlternateName")?.Value
+    };
 
-        if (emptyId)
-            logger.Warn($"No ID for {obj.GetType()} {obj.Name}");
+    private LaunchBoxGame ParseGame(XElement g)
+    {
+        var game = new LaunchBoxGame
+        {
+            DatabaseID = GetDatabaseId(g),
+            Name = g.Element("Name")?.Value,
+        };
 
-        return !emptyId;
+        if (DateTime.TryParse(g.Element("ReleaseDate")?.Value, out DateTime releaseDate))
+            game.ReleaseDate = releaseDate;
+
+        if (int.TryParse(g.Element("ReleaseYear")?.Value, out int releaseYear))
+            game.ReleaseYear = releaseYear;
+
+        game.Overview = g.Element("Overview")?.Value;
+        if (int.TryParse(g.Element("MaxPlayers")?.Value, out int maxPlayers))
+            game.MaxPlayers = maxPlayers;
+
+        game.ReleaseType = g.Element("ReleaseType")?.Value;
+        if (bool.TryParse(g.Element("Cooperative")?.Value, out bool cooperative))
+            game.Cooperative = cooperative;
+
+        game.WikipediaURL = g.Element("WikipediaURL")?.Value;
+        game.VideoURL = g.Element("VideoURL")?.Value;
+
+        if (double.TryParse(g.Element("CommunityRating")?.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out double communityRating))
+            game.CommunityRating = communityRating;
+
+        game.Platform = g.Element("Platform")?.Value;
+        game.ESRB = g.Element("ESRB")?.Value;
+        game.CommunityRatingCount = int.Parse(g.Element("CommunityRatingCount").Value);
+        game.Genres = g.Element("Genres")?.Value;
+        game.Developer = g.Element("Developer")?.Value;
+        game.Publisher = g.Element("Publisher")?.Value;
+        return game;
     }
 
-    private static LaunchBoxGameName ParseGameAlternateName(XElement n)
+    private LaunchBoxGameImage ParseGameImage(XElement i)
     {
-        try
-        {
-            var altName = new LaunchBoxGameName();
-            altName.DatabaseID = n.Element("DatabaseID")?.Value;
-            altName.Name = n.Element("AlternateName")?.Value;
-            return altName;
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
+        var img = new LaunchBoxGameImage();
+        img.DatabaseID = GetDatabaseId(i);
+        img.FileName = i.Element("FileName")?.Value;
+        img.Type = i.Element("Type")?.Value;
+        img.Region = i.Element("Region")?.Value;
+        if (uint.TryParse(i.Element("CRC32")?.Value, out uint crc32))
+            img.CRC32 = crc32;
+        return img;
     }
 
-    private static LaunchBoxGame ParseGame(XElement g)
+    private long GetDatabaseId(XElement i)
     {
-        try
-        {
-            var game = new LaunchBoxGame();
-            game.Name = g.Element("Name")?.Value;
-            if (DateTime.TryParse(g.Element("ReleaseDate")?.Value, out DateTime releaseDate))
-                game.ReleaseDate = releaseDate;
-
-            if (int.TryParse(g.Element("ReleaseYear")?.Value, out int releaseYear))
-                game.ReleaseYear = releaseYear;
-
-            game.Overview = g.Element("Overview")?.Value;
-            if (int.TryParse(g.Element("MaxPlayers")?.Value, out int maxPlayers))
-                game.MaxPlayers = maxPlayers;
-
-            game.ReleaseType = g.Element("ReleaseType")?.Value;
-            if (bool.TryParse(g.Element("Cooperative")?.Value, out bool cooperative))
-                game.Cooperative = cooperative;
-
-            game.WikipediaURL = g.Element("WikipediaURL")?.Value;
-            game.VideoURL = g.Element("VideoURL")?.Value;
-            game.DatabaseID = g.Element("DatabaseID")?.Value;
-
-            if (double.TryParse(g.Element("CommunityRating")?.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out double communityRating))
-                game.CommunityRating = communityRating;
-
-            game.Platform = g.Element("Platform")?.Value;
-            game.ESRB = g.Element("ESRB")?.Value;
-            game.CommunityRatingCount = int.Parse(g.Element("CommunityRatingCount").Value);
-            game.Genres = g.Element("Genres")?.Value;
-            game.Developer = g.Element("Developer")?.Value;
-            game.Publisher = g.Element("Publisher")?.Value;
-            return game;
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
-    }
-
-    private static LaunchBoxGameImage ParseGameImage(XElement i)
-    {
-        try
-        {
-            var img = new LaunchBoxGameImage();
-            img.DatabaseID = i.Element("DatabaseID")?.Value;
-            img.FileName = i.Element("FileName")?.Value;
-            img.Type = i.Element("Type")?.Value;
-            img.Region = i.Element("Region")?.Value;
-            if (uint.TryParse(i.Element("CRC32")?.Value, out uint crc32))
-                img.CRC32 = crc32;
-            return img;
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
+        if (long.TryParse(i.Element("DatabaseID")?.Value, out long dbId))
+            return dbId;
+        
+        logger.Warn($"No Database ID found in XML element {i}");
+        return default;
     }
 }
 

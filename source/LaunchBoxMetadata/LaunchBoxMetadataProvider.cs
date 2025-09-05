@@ -13,13 +13,12 @@ using System.Threading.Tasks;
 
 namespace LaunchBoxMetadata;
 
-public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBoxMetadata plugin, LaunchBoxMetadataSettings settings, LaunchBoxDatabase database, IPlatformUtility platformUtility, LaunchBoxWebscraper scraper) : OnDemandMetadataProvider
+public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBoxMetadata plugin, LaunchBoxMetadataSettings settings, LaunchBoxDatabase database, IPlatformUtility platformUtility, LaunchBoxWebScraper scraper) : OnDemandMetadataProvider
 {
     private readonly ILogger logger = LogManager.GetLogger();
     private LaunchBoxGame foundGame;
     private string foundGameUrl;
     private List<LaunchBoxImageDetails> foundImages;
-    private readonly TitleComparer titleComparer = new();
 
     public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 
@@ -32,34 +31,14 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
         {
             var results = database.SearchGames(options.GameData.Name, 100);
             var deflatedSearchGameName = options.GameData.Name.Deflate();
-            var platformSpecs = options.GameData.Platforms?.Where(p => p.SpecificationId != null).Select(p => p.SpecificationId).ToList();
-            var platformNames = options.GameData.Platforms?.Select(p => p.Name).ToList();
             foreach (var game in results)
             {
                 var deflatedMatchedGameName = game.MatchedName.Deflate();
                 if (!deflatedSearchGameName.Equals(deflatedMatchedGameName, StringComparison.InvariantCultureIgnoreCase))
                     continue;
 
-                if (options.GameData.Platforms?.Count > 0)
-                {
-                    var platforms = platformUtility.GetPlatforms(game.Platform);
-                    foreach (var platform in platforms)
-                    {
-                        if (platform is MetadataSpecProperty specPlatform && platformSpecs.Contains(specPlatform.Id))
-                        {
-                            return foundGame = game;
-                        }
-                        else if (platform is MetadataNameProperty namePlatform && platformNames.Contains(namePlatform.Name, titleComparer))
-                        {
-                            return foundGame = game;
-                        }
-                    }
-                }
-                else
-                {
-                    //no platforms to match, so consider a name match a success
+                if (platformUtility.PlatformsOverlap(options.GameData?.Platforms, game.Platform?.SplitLaunchBox()))
                     return foundGame = game;
-                }
             }
             return foundGame = new LaunchBoxGame();
         }
@@ -80,7 +59,7 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
     private string GetLaunchBoxGamesDatabaseUrl(LaunchBoxGame game)
     {
         game ??= FindGame();
-        if (game.DatabaseID == null)
+        if (game.DatabaseID == default)
             return null;
 
         string gameUrl = foundGameUrl ?? (foundGameUrl = scraper.GetLaunchBoxGamesDatabaseUrl(game.DatabaseID)) ?? (foundGameUrl = string.Empty);
@@ -94,7 +73,7 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
 
         var game = FindGame();
         var id = game.DatabaseID;
-        if (id == null)
+        if (id == default)
             return foundImages = [];
 
         var detailsUrl = GetLaunchBoxGamesDatabaseUrl(game);
@@ -135,14 +114,13 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
         }
     }
 
-    private IEnumerable<MetadataProperty> Split(string str, Func<string, string> stringSelector = null)
+    private IEnumerable<MetadataProperty> Split(string str)
     {
         if (string.IsNullOrWhiteSpace(str))
             return null;
 
         var split = str.Split([';'], StringSplitOptions.RemoveEmptyEntries);
-        var strings = stringSelector == null ? split : split.Select(stringSelector);
-        var output = strings.Select(g => new MetadataNameProperty(g.Trim()));
+        var output = split.Select(g => new MetadataNameProperty(g.Trim()));
 
         return output;
     }
@@ -331,9 +309,9 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
 
         using HttpClient client = new();
         using var stream = await client.GetStreamAsync(imgDetails.Url);
-        int maxWidth = imgSettings.MaxWidth;
-        int maxHeight = imgSettings.MaxHeight;
-        int minSize = Math.Min(imgSettings.MaxWidth, imgSettings.MaxHeight);
+        uint maxWidth = imgSettings.MaxWidth;
+        uint maxHeight = imgSettings.MaxHeight;
+        uint minSize = Math.Min(imgSettings.MaxWidth, imgSettings.MaxHeight);
 
         if (imgSettings.AspectRatio == AspectRatio.AnyExtendToSquare)
             maxWidth = maxHeight = minSize;
@@ -358,7 +336,6 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
 
     private class LaunchBoxImageFileOption : ImageFileOption
     {
-        public LaunchBoxImageFileOption() : base() { }
         public LaunchBoxImageFileOption(string path) : base(path) { }
 
         public LaunchBoxImageDetails ImageDetails { get; set; }
@@ -388,7 +365,7 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
     public override IEnumerable<Link> GetLinks(GetMetadataFieldArgs args)
     {
         var game = FindGame();
-        if (game.DatabaseID == null)
+        if (game.DatabaseID == default)
             return base.GetLinks(args);
 
         var links = new List<Link>();

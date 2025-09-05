@@ -19,7 +19,13 @@ public interface IHasName
     string Name { get; }
 }
 
-public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewModel>(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, IExternalDatabaseIdUtility databaseIdUtility, ExternalDatabase databaseType, int maxDegreeOfParallelism = 8)
+public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewModel>(
+    IPlayniteAPI playniteAPI,
+    ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource,
+    IPlatformUtility platformUtility,
+    IExternalDatabaseIdUtility databaseIdUtility,
+    ExternalDatabase databaseType,
+    int maxDegreeOfParallelism = 8)
     where TSearchItem : IHasName
     where TApprovalPromptViewModel : GamePropertyImportViewModel, new()
 {
@@ -34,7 +40,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
 
     protected virtual GlobalProgressOptions GetGameDownloadProgressOptions(TSearchItem selectedItem)
     {
-        return new GlobalProgressOptions("Downloading list of associated games", cancelable: true) { IsIndeterminate = true };
+        return new("Downloading list of associated games", cancelable: true) { IsIndeterminate = true };
     }
 
     public void ImportGameProperty()
@@ -109,7 +115,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
             return null;
         }
 
-        var viewModel = new TApprovalPromptViewModel() { Name = $"{importSetting.Prefix}{propName}", Games = proposedMatches, PlayniteAPI = playniteApi };
+        var viewModel = new TApprovalPromptViewModel { Name = $"{importSetting.Prefix}{propName}", Games = proposedMatches, PlayniteAPI = playniteApi };
         viewModel.Links.AddRange(GetPotentialLinks(selectedItem));
         viewModel.Filters.AddRange(GetCheckboxFilters(viewModel));
         viewModel.TargetField = importSetting.ImportTarget switch
@@ -246,22 +252,21 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
 
                 bool update = AddItem(g.Game, viewModel.TargetField, dbItem.Id);
 
-                foreach (var link in viewModel.Links)
+                foreach (var potentialLink in viewModel.Links)
                 {
-                    if (!link.Checked)
+                    if (!potentialLink.Checked)
                         continue;
 
-                    if (g.Game.Links == null)
-                        g.Game.Links = [];
+                    g.Game.Links ??= [];
 
                     foreach (var gd in g.GameDetails)
                     {
-                        var url = link.GetUrl(gd);
+                        var url = potentialLink.GetUrl(gd);
 
-                        if (link.IsAlreadyLinked(g.Game.Links, url))
+                        if (string.IsNullOrWhiteSpace(url) || potentialLink.IsAlreadyLinked(g.Game.Links, url))
                             continue;
 
-                        g.Game.Links.Add(new Link(link.Name, url));
+                        g.Game.Links.Add(new Link(potentialLink.Name, url));
                         update = true;
                     }
                 }
@@ -298,7 +303,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
 
     protected virtual IEnumerable<PotentialLink> GetPotentialLinks(TSearchItem searchItem)
     {
-        yield return new PotentialLink(MetadataProviderName, game => game.Url);
+        yield return new(MetadataProviderName, game => game.Url);
     }
 
     protected virtual IEnumerable<CheckboxFilter> GetCheckboxFilters(GamePropertyImportViewModel viewModel)
@@ -332,6 +337,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
         {
             return false;
         }
+
         collection.Add(idToAdd);
         return true;
     }

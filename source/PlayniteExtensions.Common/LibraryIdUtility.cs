@@ -2,7 +2,9 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace PlayniteExtensions.Common;
 
@@ -16,7 +18,8 @@ public enum ExternalDatabase
     GiantBomb,
     TvTropes,
     RAWG,
-    // if you add an 8 value here, update the bit shift in DbId.GetHashCode() to 4 instead of 3
+    Wikipedia
+    // if you add a 16 value here, update the bit shift in DbId.GetHashCode() to 5 instead of 4
 }
 
 public struct DbId(ExternalDatabase database, string id)
@@ -34,7 +37,7 @@ public struct DbId(ExternalDatabase database, string id)
 
     public override int GetHashCode()
     {
-        return (int)Database ^ Id.GetHashCode() << 3;
+        return (int)Database ^ Id.GetHashCode() << 4;
     }
 
     public static DbId NoDb(string id) => new(ExternalDatabase.None, id);
@@ -44,6 +47,8 @@ public struct DbId(ExternalDatabase database, string id)
     public static DbId Moby(string id) => new(ExternalDatabase.MobyGames, id);
     public static DbId GiantBomb(string id) => new(ExternalDatabase.GiantBomb, id);
     public static DbId TvTropes(string id) => new(ExternalDatabase.TvTropes, id);
+    public static DbId RAWG(string id) => new(ExternalDatabase.RAWG, id);
+    public static DbId Wikipedia(string id) => new(ExternalDatabase.Wikipedia, id);
 }
 
 public interface IExternalDatabaseIdUtility
@@ -151,6 +156,27 @@ public class MobyGamesIdUtility : SingleExternalDatabaseIdUtility
         if (!match.Success) return default;
         var idString = match.Groups["id"].Value;
         return DbId.Moby(idString);
+    }
+}
+
+public class WikipediaIdUtility : SingleExternalDatabaseIdUtility
+{
+    private Regex idRegex = new(@"https?://(?<lang>[a-z]+)\.wikipedia\.org/wiki/(?<article>[^?]+)", RegexOptions.Compiled);
+    
+    public override ExternalDatabase Database => ExternalDatabase.Wikipedia;
+    public override IEnumerable<Guid> LibraryIds => [];
+    public override DbId GetIdFromUrl(string url)
+    {
+        if(string.IsNullOrWhiteSpace(url))
+            return default;
+        
+        var match =  idRegex.Match(url);
+        if(!match.Success)
+            return default;
+        
+        var idString = WebUtility.UrlDecode(match.Groups["id"].Value);
+        var lang = match.Groups["lang"].Value;
+        return DbId.Wikipedia($"{lang}/{idString}");
     }
 }
 
