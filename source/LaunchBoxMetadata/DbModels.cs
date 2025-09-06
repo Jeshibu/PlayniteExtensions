@@ -25,6 +25,11 @@ public class LaunchBoxGame : IDatabaseObject
     public string Genres { get; set; }
     public string Developer { get; set; }
     public string Publisher { get; set; }
+    
+    /// <summary>
+    /// Computed after XML parsing, not part of the original XML spec
+    /// </summary>
+    public string Aliases { get; set; }
 }
 
 [SQLiteTable(Name = "GameNames", Module = "fts5", ModuleArguments = nameof(DatabaseID) + "," + nameof(Name))]

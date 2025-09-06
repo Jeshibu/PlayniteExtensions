@@ -35,7 +35,7 @@ public class GenreSearchProvider(LaunchBoxDatabase database, IPlatformUtility pl
         {
             Id = "",
             Platforms = game.Platform.Split([';'], StringSplitOptions.RemoveEmptyEntries).SelectMany(platformUtility.GetPlatforms).ToList(),
-            Names = [game.Name],
+            Names = [game.Name, ..game.Aliases.SplitAliases()],
         };
         
         if (game.ReleaseDate.HasValue)

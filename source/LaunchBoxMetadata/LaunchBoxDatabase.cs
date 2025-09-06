@@ -35,7 +35,7 @@ public class LaunchBoxDatabase
         if (args != null)
         {
             args.IsIndeterminate = false;
-            args.ProgressMaxValue = 7;
+            args.ProgressMaxValue = 8;
         }
 
         void AdvanceProgress()
@@ -49,7 +49,10 @@ public class LaunchBoxDatabase
 
         var data = xmlSource.GetData();
         AdvanceProgress();
-
+        
+        AddAliasesToGames(data.Games, data.GameAlternateNames);
+        AdvanceProgress();
+        
         using var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_CREATE | SQLiteOpenOptions.SQLITE_OPEN_READWRITE);
         db.BeginTransaction();
         db.Save(data.Games);
@@ -90,6 +93,21 @@ public class LaunchBoxDatabase
         AdvanceProgress();
 
         db.Commit();
+    }
+
+    private static void AddAliasesToGames(ICollection<LaunchBoxGame> games, ICollection<LaunchBoxGameName> aliases)
+    {
+        var gameIdDictionary = games.ToDictionary(g => g.DatabaseID);
+        foreach (var a in aliases)
+        {
+            if (!gameIdDictionary.TryGetValue(a.DatabaseID, out var game))
+                continue;
+
+            if (string.IsNullOrEmpty(game.Aliases))
+                game.Aliases = a.Name;
+            else
+                game.Aliases += LaunchBoxHelper.AliasSeparator + a.Name;
+        }
     }
 
     public IEnumerable<LaunchboxGameSearchResult> SearchGames(string search, int limit = 1000)
