@@ -191,16 +191,16 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
 
     private void DownloadMetadata()
     {
-        MetadataZipFileHandler zipfileHandler = null;
+        MetadataZipFileHandler zipFileHandler = null;
         try
         {
-            zipfileHandler = new MetadataZipFileHandler(PlayniteApi, Settings);
+            zipFileHandler = new MetadataZipFileHandler(PlayniteApi, Settings);
 
-            var zipFilePath = zipfileHandler.DownloadMetadataZipFile(warnOnSameVersion: Settings.DatabaseVersion == LaunchBoxMetadataSettings.CurrentDatabaseVersion);
+            var zipFilePath = zipFileHandler.DownloadMetadataZipFile(warnOnSameVersion: Settings.DatabaseVersion == LaunchBoxMetadataSettings.CurrentDatabaseVersion);
             if (zipFilePath == null || !File.Exists(zipFilePath))
                 return;
 
-            var xmlPath = zipfileHandler.ExtractMetadataXmlFromZipFile(zipFilePath);
+            var xmlPath = zipFileHandler.ExtractMetadataXmlFromZipFile(zipFilePath);
             if (xmlPath == null || !File.Exists(xmlPath))
                 return;
 
@@ -224,7 +224,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
 
             if (exception != null)
             {
-                PlayniteApi.Dialogs.ShowMessage($"Failed to initialize local Launchbox metadata database: {exception.Message}", "LaunchBox database", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                PlayniteApi.Dialogs.ShowMessage($"Failed to initialize local LaunchBox metadata database: {exception.Message}", "LaunchBox database", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
             else
             {
@@ -241,7 +241,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
         }
         finally
         {
-            zipfileHandler?.Dispose();
+            zipFileHandler?.Dispose();
         }
     }
 

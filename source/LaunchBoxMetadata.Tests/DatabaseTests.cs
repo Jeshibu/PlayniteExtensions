@@ -1,23 +1,15 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using Xunit;
 
 namespace LaunchBoxMetadata.Tests;
 
-public class DatabaseTests
+public class DatabaseTests(DatabaseFixture fixture): IClassFixture<DatabaseFixture>
 {
-    public static LaunchBoxDatabase Setup()
-    {
-        var dir = Path.GetTempPath();
-        var db = new LaunchBoxDatabase(dir);
-        db.CreateDatabase(new LaunchBoxXmlParser(@"Metadata.xml"));
-        return db;
-    }
+    private readonly LaunchBoxDatabase db = fixture.Database;
 
     [Fact]
     public void ReturnsSearchResults()
     {
-        var db = Setup();
         var searchResult = db.SearchGames("alien", 50).ToList();
         Assert.Equal(6, searchResult.Count);
     }
@@ -25,7 +17,6 @@ public class DatabaseTests
     [Fact]
     public void DeduplicatesNames()
     {
-        var db = Setup();
         var searchResult = db.SearchGames("lylat wars", 50).ToList();
         Assert.Single(searchResult);
     }
@@ -33,7 +24,6 @@ public class DatabaseTests
     [Fact]
     public void CanGetGamesByGenre()
     {
-        var db = Setup();
         var genres = db.GetGenres().ToList();
 
         var expectedGenres = new Genre[]

@@ -53,7 +53,7 @@ public class PCGWGame_Test_YAKUZA4 : IDisposable
     public void TestParseSeries()
     {
         var arr = this.testGame.Series.Select(i => i.ToString()).ToArray();
-        arr.Should().BeEquivalentTo("Yakuza (Like a Dragon)");
+        arr.Should().BeEquivalentTo("Like a Dragon (Yakuza)");
     }
 
     [Fact]

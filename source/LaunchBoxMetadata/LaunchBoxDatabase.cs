@@ -26,7 +26,7 @@ public class LaunchBoxDatabase
 
     private string DatabasePath => GetFilePath(UserDataDirectory);
 
-    public string UserDataDirectory { get; }
+    private string UserDataDirectory { get; }
 
     private SQLiteDatabase GetConnection(SQLiteOpenOptions openOptions) => new(DatabasePath, openOptions);
 
@@ -44,8 +44,7 @@ public class LaunchBoxDatabase
                 args.CurrentProgressValue++;
         }
 
-        if (File.Exists(DatabasePath))
-            File.Delete(DatabasePath);
+        DeleteDatabase();
 
         var data = xmlSource.GetData();
         AdvanceProgress();
@@ -93,6 +92,12 @@ public class LaunchBoxDatabase
         AdvanceProgress();
 
         db.Commit();
+    }
+
+    public void DeleteDatabase()
+    {
+        if (File.Exists(DatabasePath))
+            File.Delete(DatabasePath);
     }
 
     private static void AddAliasesToGames(ICollection<LaunchBoxGame> games, ICollection<LaunchBoxGameName> aliases)

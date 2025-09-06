@@ -21,16 +21,16 @@ public class TitleComparer : StringComparer
         y = y.Normalize(NormalizationForm.FormKD);
 
         int ix = 0, iy = 0;
-        bool xend = false, yend = false;
-        while (!xend && !yend)
+        bool xEnd, yEnd;
+        while (true)
         {
-            char? cx = GetNextLetterOrNumber(x, ref ix, out xend);
-            char? cy = GetNextLetterOrNumber(y, ref iy, out yend);
+            char? cx = GetNextLetterOrNumber(x, ref ix, out xEnd);
+            char? cy = GetNextLetterOrNumber(y, ref iy, out yEnd);
 
-            if (xend || yend)
+            if (xEnd || yEnd)
                 break;
 
-            var charComparison = char.ToUpperInvariant(cx.Value).CompareTo(char.ToUpperInvariant(cy.Value));
+            var charComparison = char.ToUpperInvariant(cx!.Value).CompareTo(char.ToUpperInvariant(cy!.Value));
             if (charComparison != 0)
                 return charComparison;
 
@@ -39,9 +39,9 @@ public class TitleComparer : StringComparer
             iy++;
         }
 
-        if (xend && !yend && HasLettersOrNumbersFromIndex(y, iy))
+        if (xEnd && !yEnd && HasLettersOrNumbersFromIndex(y, iy))
             return -1;
-        if (!xend && yend && HasLettersOrNumbersFromIndex(x, ix))
+        if (!xEnd && yEnd && HasLettersOrNumbersFromIndex(x, ix))
             return 1;
 
         return 0;

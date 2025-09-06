@@ -17,6 +17,7 @@ public class TitleComparerTests
     [InlineData("A1", "A2", -1)]
     [InlineData("B2", "B1", 1)]
     [InlineData("A", "A 2", -1)]
+    [InlineData("Test", "TEST", 0)]
     public void TestTitleComparison(string title1, string title2, int expected)
     {
         var titleComparer = new TitleComparer();
