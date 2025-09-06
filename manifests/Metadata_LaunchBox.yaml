@@ -136,3 +136,11 @@ Packages:
     Changelog:
       - "Fixed platform matching failing to match some platforms if they'd been renamed."
       - "Fixed DLL conflict with Extra Metadata Loader. Probably still conflicts with Description Image Fixer."
+  - Version: 0.9.0
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/LaunchBoxMetadata_0_9_0.pext
+    Changelog:
+      - "⚠ This update will once again require you to re-initialize the database."
+      - "New: import genres to your games. Optionally add Wikipedia and/or video links."
+      - "Fix: PC-98 games would not match platforms not named exactly PC-9801"
