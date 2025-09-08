@@ -1,8 +1,9 @@
-﻿using MetadataSearch.SearchItems.Base;
+﻿using FilterSearch.SearchItems.Base;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 
-namespace MetadataSearch.SearchItems;
+namespace FilterSearch.SearchItems;
+
 public sealed class TagFilterSearchItem(IMainViewAPI mainViewApi, Tag databaseObject, bool appendFilterIsPrimary = true)
     : SingleFilterSearchItem<Tag>(mainViewApi, databaseObject, "Tag", appendFilterIsPrimary)
 {

@@ -1,22 +1,22 @@
-﻿using Playnite.SDK;
-using Playnite.SDK.Models;
-using Playnite.SDK.Plugins;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Playnite.SDK;
+using Playnite.SDK.Models;
+using Playnite.SDK.Plugins;
 
-namespace MetadataSearch.SearchItems;
+namespace FilterSearch.SearchItems.Base;
 
 public abstract class MetadataFilterSearchItem<T> : SearchItem where T : DatabaseObject
 {
-    protected IMainViewAPI MainView { get; }
+    private IMainViewAPI MainView { get; }
     protected T DatabaseObject { get; }
 
-    protected MetadataFilterSearchItem(IMainViewAPI mainViewAPI, T databaseObject, string type, bool appendFilterIsPrimary = true) : base(databaseObject.Name, null)
+    protected MetadataFilterSearchItem(IMainViewAPI mainViewApi, T databaseObject, string type, bool appendFilterIsPrimary = true) : base(databaseObject.Name, null)
     {
-        MainView = mainViewAPI;
+        MainView = mainViewApi;
         DatabaseObject = databaseObject;
         Description = type;
 

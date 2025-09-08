@@ -1,4 +1,4 @@
-AddonId: MetadataSearch
+AddonId: FilterSearch
 Packages:
   - Version: 0.1
     RequiredApiVersion: 6.12.0

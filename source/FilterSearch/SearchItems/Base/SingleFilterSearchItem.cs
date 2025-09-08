@@ -3,7 +3,7 @@ using Playnite.SDK.Models;
 using System;
 using System.Linq.Expressions;
 
-namespace MetadataSearch.SearchItems.Base;
+namespace FilterSearch.SearchItems.Base;
 
 public abstract class SingleFilterSearchItem<T>(IMainViewAPI mainViewApi, T databaseObject, string type, bool appendFilterIsPrimary = true)
     : MetadataFilterSearchItem<T>(mainViewApi, databaseObject, type, appendFilterIsPrimary)

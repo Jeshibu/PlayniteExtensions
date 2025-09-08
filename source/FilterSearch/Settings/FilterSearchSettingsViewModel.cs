@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Playnite.SDK;
 
-namespace MetadataSearch.Settings;
+namespace FilterSearch.Settings;
 
-public class MetadataSearchSettingsViewModel : PluginSettingsViewModel<MetadataSearchSettings, MetadataSearch>
+public class FilterSearchSettingsViewModel : PluginSettingsViewModel<FilterSearchSettings, FilterSearch>
 {
-    public MetadataSearchSettingsViewModel(MetadataSearch plugin, IPlayniteAPI playniteApi) : base(plugin, playniteApi)
+    public FilterSearchSettingsViewModel(FilterSearch plugin, IPlayniteAPI playniteApi) : base(plugin, playniteApi)
     {
-        Settings = plugin.LoadPluginSettings<MetadataSearchSettings>() ?? new();
+        Settings = plugin.LoadPluginSettings<FilterSearchSettings>() ?? new();
         InitializeSearchPropertySettings();
     }
 

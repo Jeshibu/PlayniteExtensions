@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace MetadataSearch.Settings;
+namespace FilterSearch.Settings;
 
-public class MetadataSearchSettings : ObservableObject
+public class FilterSearchSettings : ObservableObject
 {
     public FilterActionType PrimaryAction { get; set; } = FilterActionType.Append;
     

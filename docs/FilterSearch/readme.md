@@ -1,4 +1,4 @@
-# Metadata Search
+# Filter Search
 This extension lets you change your filter settings from the [Playnite keyboard launcher](https://api.playnite.link/docs/manual/features/keyboardLauncher.html).
 
 For example, here's some of the search contexts that can be added (though the last one here is from [Filter Presets Quick Launcher](https://playnite.link/addons.html#FilterPresetsQuickLauncher_ef9df36c-24c2-418c-8468-eed95a09d950)):

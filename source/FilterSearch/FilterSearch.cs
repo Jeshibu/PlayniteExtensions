@@ -1,18 +1,18 @@
-﻿using MetadataSearch.SearchItems;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
-using MetadataSearch.Settings;
+using FilterSearch.SearchItems;
+using FilterSearch.Settings;
 
-namespace MetadataSearch;
+namespace FilterSearch;
 
-public class MetadataSearch : GenericPlugin
+public class FilterSearch : GenericPlugin
 {
-    public MetadataSearch(IPlayniteAPI playniteApi) : base(playniteApi)
+    public FilterSearch(IPlayniteAPI playniteApi) : base(playniteApi)
     {
         Properties = new GenericPluginProperties { HasSettings = true };
         Settings = new(this, PlayniteApi);
@@ -20,7 +20,7 @@ public class MetadataSearch : GenericPlugin
     }
 
     public override Guid Id => new("bd6bdf7f-86d8-4fa9-b056-29c8753d475f");
-    private MetadataSearchSettingsViewModel Settings { get; set; }
+    private FilterSearchSettingsViewModel Settings { get; set; }
     private bool AppendFilterIsPrimary => Settings.Settings.PrimaryAction == FilterActionType.Append;
 
     public override IEnumerable<SearchItem> GetSearchGlobalCommands()
@@ -40,7 +40,7 @@ public class MetadataSearch : GenericPlugin
     }
 
     public override ISettings GetSettings(bool firstRunSettings) => Settings;
-    public override UserControl GetSettingsView(bool firstRunView) => new MetadataSearchSettingsView();
+    public override UserControl GetSettingsView(bool firstRunView) => new FilterSearchSettingsView();
 
     private List<SearchSupport> GetSearchSupports()
     {

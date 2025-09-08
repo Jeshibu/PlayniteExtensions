@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace MetadataSearch;
+namespace FilterSearch;
 
 public class DbObjFilterSearchContext<TDatabaseObject> : SearchContext
     where TDatabaseObject : DatabaseObject

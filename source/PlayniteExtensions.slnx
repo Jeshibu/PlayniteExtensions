@@ -9,6 +9,7 @@
   <Project Path="BigFishLibrary/BigFishLibrary.csproj" />
   <Project Path="BigFishMetadata/BigFishMetadata.csproj" />
   <Project Path="ExtraEmulatorProfiles/ExtraEmulatorProfiles.csproj" />
+  <Project Path="FilterSearch\FilterSearch.csproj" />
   <Project Path="GamersGateLibrary.Tests/GamersGateLibrary.Tests.csproj" />
   <Project Path="GamersGateLibrary/GamersGateLibrary.csproj" />
   <Project Path="GamesSizeCalculator.Tests/GamesSizeCalculator.Tests.csproj" />
@@ -22,7 +23,6 @@
   <Project Path="LaunchBoxMetadata/LaunchBoxMetadata.csproj" />
   <Project Path="LegacyGamesLibrary.Tests/LegacyGamesLibrary.Tests.csproj" />
   <Project Path="LegacyGamesLibrary/LegacyGamesLibrary.csproj" />
-  <Project Path="MetadataSearch/MetadataSearch.csproj" />
   <Project Path="MobyGamesMetadata.Tests/MobyGamesMetadata.Tests.csproj" />
   <Project Path="MobyGamesMetadata/MobyGamesMetadata.csproj" />
   <Project Path="MutualGames/MutualGames.csproj" />

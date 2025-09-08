@@ -1,12 +1,12 @@
-﻿<UserControl x:Class="MetadataSearch.Settings.MetadataSearchSettingsView"
+﻿<UserControl x:Class="FilterSearch.Settings.FilterSearchSettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              xmlns:pec="clr-namespace:PlayniteExtensions.Common"
-             xmlns:mds="clr-namespace:MetadataSearch.Settings"
-             d:DataContext="{d:DesignInstance Type=mds:MetadataSearchSettingsViewModel}"
+             xmlns:mds="clr-namespace:FilterSearch.Settings"
+             d:DataContext="{d:DesignInstance Type=mds:FilterSearchSettingsViewModel}"
              d:DesignHeight="400" d:DesignWidth="600" d:Background="White">
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <StackPanel Margin="20">
