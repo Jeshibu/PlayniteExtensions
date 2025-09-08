@@ -63,20 +63,20 @@ public class MetadataSearch : GenericPlugin
 
     private static SearchContext GetSearchContext(FilterProperty prop, IPlayniteAPI playniteApi, bool appendFilterIsPrimary) => prop switch
     {
-        FilterProperty.FilterPreset => new DbObjFilterSearchContext<FilterPreset, FilterPresetSearchItem>(playniteApi, pn => pn.Database.FilterPresets, x => new(playniteApi.MainView, x, appendFilterIsPrimary)),
-        FilterProperty.Library => new DbObjFilterSearchContext<DatabaseObject, LibraryFilterSearchItem>(playniteApi, GetPlugins, x => new(playniteApi.MainView, x, appendFilterIsPrimary)),
-        FilterProperty.AgeRating => new DbObjFilterSearchContext<AgeRating, AgeRatingFilterSearchItem>(playniteApi, pn => pn.Database.AgeRatings, x => new(playniteApi.MainView, x, appendFilterIsPrimary)),
-        FilterProperty.Category => new DbObjFilterSearchContext<Category, CategoryFilterSearchItem>(playniteApi, pn => pn.Database.Categories, x => new(playniteApi.MainView, x, appendFilterIsPrimary)),
-        FilterProperty.CompletionStatus => new DbObjFilterSearchContext<CompletionStatus, CompletionStatusFilterSearchItem>(playniteApi, pn => pn.Database.CompletionStatuses, x => new(playniteApi.MainView, x, appendFilterIsPrimary)),
-        FilterProperty.Developer => new DbObjFilterSearchContext<Company, DeveloperFilterSearchItem>(playniteApi, pn => pn.Database.Companies, x => new(playniteApi.MainView, x, appendFilterIsPrimary)),
-        FilterProperty.Publisher => new DbObjFilterSearchContext<Company, PublisherFilterSearchItem>(playniteApi, pn => pn.Database.Companies, x => new(playniteApi.MainView, x, appendFilterIsPrimary)),
-        FilterProperty.Feature => new DbObjFilterSearchContext<GameFeature, FeatureFilterSearchItem>(playniteApi, pn => pn.Database.Features, x => new(playniteApi.MainView, x, appendFilterIsPrimary)),
-        FilterProperty.Genre => new DbObjFilterSearchContext<Genre, GenreFilterSearchItem>(playniteApi, pn => pn.Database.Genres, x => new(playniteApi.MainView, x, appendFilterIsPrimary)),
-        FilterProperty.Platform => new DbObjFilterSearchContext<Platform, PlatformFilterSearchItem>(playniteApi, pn => pn.Database.Platforms, x => new(playniteApi.MainView, x, appendFilterIsPrimary)),
-        FilterProperty.Region => new DbObjFilterSearchContext<Region, RegionFilterSearchItem>(playniteApi, pn => pn.Database.Regions, x => new(playniteApi.MainView, x, appendFilterIsPrimary)),
-        FilterProperty.Series => new DbObjFilterSearchContext<Series, SeriesFilterSearchItem>(playniteApi, pn => pn.Database.Series, x => new(playniteApi.MainView, x, appendFilterIsPrimary)),
-        FilterProperty.Source => new DbObjFilterSearchContext<GameSource, SourceFilterSearchItem>(playniteApi, pn => pn.Database.Sources, x => new(playniteApi.MainView, x, appendFilterIsPrimary)),
-        FilterProperty.Tag => new DbObjFilterSearchContext<Tag, TagFilterSearchItem>(playniteApi, pn => pn.Database.Tags, x => new(playniteApi.MainView, x, appendFilterIsPrimary)),
+        FilterProperty.FilterPreset => new DbObjFilterSearchContext<FilterPreset>(playniteApi.Database.FilterPresets, x => new FilterPresetSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
+        FilterProperty.Library => new DbObjFilterSearchContext<DatabaseObject>(GetPlugins(playniteApi), x => new LibraryFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
+        FilterProperty.AgeRating => new DbObjFilterSearchContext<AgeRating>(playniteApi.Database.AgeRatings, x => new AgeRatingFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
+        FilterProperty.Category => new DbObjFilterSearchContext<Category>(playniteApi.Database.Categories, x => new CategoryFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
+        FilterProperty.CompletionStatus => new DbObjFilterSearchContext<CompletionStatus>(playniteApi.Database.CompletionStatuses, x => new CompletionStatusFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
+        FilterProperty.Developer => new DbObjFilterSearchContext<Company>(playniteApi.Database.Companies, x => new DeveloperFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
+        FilterProperty.Publisher => new DbObjFilterSearchContext<Company>(playniteApi.Database.Companies, x => new PublisherFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
+        FilterProperty.Feature => new DbObjFilterSearchContext<GameFeature>(playniteApi.Database.Features, x => new FeatureFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
+        FilterProperty.Genre => new DbObjFilterSearchContext<Genre>(playniteApi.Database.Genres, x => new GenreFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
+        FilterProperty.Platform => new DbObjFilterSearchContext<Platform>(playniteApi.Database.Platforms, x => new PlatformFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
+        FilterProperty.Region => new DbObjFilterSearchContext<Region>(playniteApi.Database.Regions, x => new RegionFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
+        FilterProperty.Series => new DbObjFilterSearchContext<Series>(playniteApi.Database.Series, x => new SeriesFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
+        FilterProperty.Source => new DbObjFilterSearchContext<GameSource>(playniteApi.Database.Sources, x => new SourceFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
+        FilterProperty.Tag => new DbObjFilterSearchContext<Tag>(playniteApi.Database.Tags, x => new TagFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
     };
 
     private static IEnumerable<DatabaseObject> GetPlugins(IPlayniteAPI playniteApi)
@@ -103,6 +103,7 @@ public class MetadataSearch : GenericPlugin
     private static string GetDefaultKeyword(FilterProperty prop) => prop switch
     {
         FilterProperty.FilterPreset => "fp",
+        FilterProperty.CompletionStatus => "completion",
         _ => prop.ToString().ToLowerInvariant()
     };
 }

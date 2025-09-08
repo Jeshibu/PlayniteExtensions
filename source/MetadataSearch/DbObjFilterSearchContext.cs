@@ -4,24 +4,31 @@ using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace MetadataSearch;
 
-public class DbObjFilterSearchContext<TDatabaseObject, TSearchItem> : SearchContext
+public class DbObjFilterSearchContext<TDatabaseObject> : SearchContext
     where TDatabaseObject : DatabaseObject
-    where TSearchItem : SearchItem
 {
-    private readonly IPlayniteAPI playniteApi;
-    private readonly Func<IPlayniteAPI, IEnumerable<TDatabaseObject>> objectSelector;
-    private readonly Func<TDatabaseObject, TSearchItem> toSearchItem;
+    private readonly IEnumerable<TDatabaseObject> objects;
+    private readonly Func<TDatabaseObject, SearchItem> toSearchItem;
+    private static readonly PropertyInfo CacheProperty = typeof(SearchContext).GetProperty("AutoSearchCache", BindingFlags.NonPublic | BindingFlags.Instance);
 
-    public DbObjFilterSearchContext(IPlayniteAPI playniteApi, Func<IPlayniteAPI, IEnumerable<TDatabaseObject>> objectSelector, Func<TDatabaseObject, TSearchItem> toSearchItem)
+    public DbObjFilterSearchContext(IEnumerable<TDatabaseObject> objects, Func<TDatabaseObject, SearchItem> toSearchItem)
     {
         UseAutoSearch = true;
-        this.playniteApi = playniteApi;
-        this.objectSelector = objectSelector;
+        this.objects = objects;
         this.toSearchItem = toSearchItem;
+        
+        if (objects is IItemCollection<TDatabaseObject> itemCollection)
+            itemCollection.ItemCollectionChanged += OnItemCollectionChanged;
     }
 
-    public override IEnumerable<SearchItem> GetSearchResults(GetSearchResultsArgs args) => objectSelector(playniteApi).Select(toSearchItem);
+    private void OnItemCollectionChanged(object sender, ItemCollectionChangedEventArgs<TDatabaseObject> e)
+    {
+        CacheProperty.SetValue(this, null);
+    }
+
+    public override IEnumerable<SearchItem> GetSearchResults(GetSearchResultsArgs args) => objects.Select(toSearchItem);
 }
