@@ -21,7 +21,7 @@ jobs:
 
       - name: Copy shared xaml for bulk import projects
         run: |
-            $bulkImportProjects = @('GiantBombMetadata', 'MobyGamesMetadata', 'PCGamingWikiMetadata', 'SteamTagsImporter', 'TvTropesMetadata')
+            $bulkImportProjects = @('GiantBombMetadata', 'LaunchBoxMetadata', 'MobyGamesMetadata', 'PCGamingWikiMetadata', 'SteamTagsImporter', 'TvTropesMetadata')
             foreach ($proj in $bulkImportProjects){
               xcopy "$Env:GITHUB_WORKSPACE\source\PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$Env:GITHUB_WORKSPACE\source\$proj\Common\Metadata" /Y /I
             }
