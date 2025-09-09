@@ -9,11 +9,9 @@ using FilterSearch.SearchItems.Base;
 
 namespace FilterSearch.SearchItems;
 
-public class FilterPresetSearchItem : MetadataFilterSearchItem<FilterPreset>
+public class FilterPresetSearchItem(IMainViewAPI mainViewApi, FilterPreset databaseObject, bool appendFilterIsPrimary)
+    : MetadataFilterSearchItem<FilterPreset>(mainViewApi, databaseObject, "Filter preset", appendFilterIsPrimary)
 {
-    public FilterPresetSearchItem(IMainViewAPI mainViewApi, FilterPreset databaseObject, bool appendFilterIsPrimary = true)
-        : base(mainViewApi, databaseObject, "Filter preset", appendFilterIsPrimary) { }
-
     private static void Append(FilterPresetSettings fs1, EnumFilterItemProperties x2, Expression<Func<FilterPresetSettings, EnumFilterItemProperties>> selector, Func<FilterPresetSettings, EnumFilterItemProperties> compiledSelector = null)
     {
         if (x2?.Values == null || x2.Values.Count == 0)

@@ -14,3 +14,4 @@ Packages:
       - Rename from Metadata Search to Filter Search
       - Added settings
       - Fixed database updates not being reflected in search
+      - Added platform icons
