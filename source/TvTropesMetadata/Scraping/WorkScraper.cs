@@ -3,14 +3,19 @@ using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Playnite.SDK;
 
 namespace TvTropesMetadata.Scraping;
 
-public class WorkScraper(IWebDownloader downloader) : BaseScraper(downloader)
+public class WorkScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewFactory)
 {
+    private readonly List<string> VideogameBreadCrumbs = ["Video Games", "Video Game", "VideoGame", "Visual Novel", "Franchise"];
+
     public override IEnumerable<TvTropesSearchResult> Search(string query)
     {
-        return Search(query, "work").OrderByDescending(sr => UrlBelongsToWhitelistedWorkCategory(sr.Url));
+        var results = Search(query, "work").ToList();
+        results.RemoveAll(sr => sr.Breadcrumbs.Count != 1 || !VideogameBreadCrumbs.Contains(sr.Breadcrumbs[0]));
+        return results.OrderByDescending(sr => UrlBelongsToWhitelistedWorkCategory(sr.Url));
     }
 
     public ParsedWorkPage GetTropesForGame(string url)
@@ -36,6 +41,7 @@ public class WorkScraper(IWebDownloader downloader) : BaseScraper(downloader)
                 output.Tropes.AddRange(subcategoryPage.Tropes);
             }
         }
+
         return output;
     }
 

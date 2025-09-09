@@ -1,25 +1,11 @@
 <!DOCTYPE html>
 	<html>
 		<head lang="en">
+                        <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=newest_pages" />
+            <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=most_popular" />
+            <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=updated_content" />
+
                         <link rel="preload" href="/images/loading-graphic.png" as="image">
-
-            <!-- Google tag (gtag.js) -->
-            
-            
-
-                        
-			
-						
-
-            
-                        
-
-                        
-
-                        
-			
-			
-											
 						<meta http-equiv="X-UA-Compatible" content="IE=edge">
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
@@ -47,6 +33,8 @@
 			<meta property="og:image" content="https://static.tvtropes.org/pmwiki/pub/images/atoner.png" />
 			<meta property="og:description" content="Once, there was a major villain named Bob. He committed every crime one could think of, and he did it with a song in his heart and a skip in his step. Then, something happened to make him see the horror of what he was doing. He realized how much &hellip;" />
 
+                        <meta name="robots" content="max-image-preview:large">
+
 						
 
 			            <link rel="apple-touch-icon" sizes="57x57" href="https://assets.tvtropes.org/img/icons/apple-icon-57x57.png" type="image/png">
@@ -63,19 +51,29 @@
             <link rel="icon" sizes="96x96" href="https://assets.tvtropes.org/img/icons/favicon-96x96.png" type="image/png">
             <link rel="icon" sizes="192x192" href="https://assets.tvtropes.org/img/icons/favicon-192x192.png" type="image/png">
 
-                                    
-
+                        
+                        
 						<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-                        <link rel="stylesheet" href="https://assets.tvtropes.org/design/assets/bundle.css?rev=671f9ba8e4afc81c41f31b56ffd024a629f38e87" />
+                        <link rel="stylesheet" href="https://assets.tvtropes.org/design/assets/bundle.css?rev=2f4875abe459cab3d315f2f182ddd58516a5737c" />
+
+            <meta name="apple-itunes-app" content="app-id=6738365737, app-argument=tvtropes://home">
 
                                                 
                         
                         
                         						
-                        
-						
                         						
 												
+
+
+                                                
+                        
+
+
+                                                
+
+
+
 
 						        </head>
  <body class="">
@@ -88,35 +86,25 @@
     <div id="modal-box">
         <div class="modal-loading-graphic"></div>
     </div>
-    <style>
-        @keyframes rotate-forever {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+    
 
-        #modal-box > .modal-loading-graphic {
-            display: none; /* Hidden by default */
+    
+    
+<div class="outer-promo-banner" id="outer-promo-banner">
+    <div class="promo-banner">
+        <img src="/images/tvtropes_logo_180x180.png" alt="TVTropes Logo" class="promo-logo">
+        <div class="promo-text-container">
+            <span class="promo-text-top">TVTropes</span>
+            <span class="promo-text">Now available in the app store!</span>
+        </div>
+        <a href="#" class="promo-button" id="promo-app-link">Open</a>
 
-            background: no-repeat center url('/images/loading-graphic.png');
-            background-size: 80px 80px;
+        <a href="#" id="promo-close-button"><i class="fa fa-close"></i></a>
+    </div>
+</div>
 
-            width: 80px;
-            height: 80px;
 
-            border-radius: 50%;
 
-            position: absolute;
-            top: calc(30% - 40px);
-            left: calc(50% - 40px);
-            z-index: 2;
-
-            animation: rotate-forever 0.34s linear infinite;
-
-        }
-        #modal-box.active > .modal-loading-graphic {
-            display: block; /* Show only when modal is active */
-        }
-    </style>
     <header id="main-header-bar" class="headroom-element ">
         <div id="main-header-bar-inner">
 
@@ -132,7 +120,7 @@
                 <a href="/pmwiki/pmwiki.php/Main/Tropes">Tropes</a>
                 <a href="/pmwiki/pmwiki.php/Main/Media">Media</a>
                 <a href="/pmwiki/browse.php" class="nav-browse">Browse</a>
-                <a href="/pmwiki/index_report.php">Indexes</a>
+                <a href="/pmwiki/popular-pages.php">Popular</a>
                 <a href="/pmwiki/topics.php">Forums</a>
                 <a href="/pmwiki/recent_videos.php" class="nav-browse">Videos</a>
             </nav>
@@ -148,9 +136,9 @@
                 </div>
                 
                 <div id="search-box">
-                    <form class="search" action="/pmwiki/search_result.php">
+                    <form class="search" action="/pmwiki/search_result.php" onSubmit="return sendToSiteSearch(this, this.q.value);">
                         <input type="text" name="q" class="search-box" placeholder="Search" value="" required>
-                        <input type="submit" class="submit-button" value="&#xf002;" />
+                        <input id="main_search_submit"type="submit" class="submit-button" value="&#xf002;" />
                                                 <input type="hidden" name="search_type" value="article">
                         <input type="hidden" name="page_type" value="all">
                                                 <input type="hidden" name="cx" value="partner-pub-6610802604051523:amzitfn8e7v">
@@ -164,8 +152,8 @@
                 </div>
 
                 <div id="random-box">
-                    <a href="/pmwiki/pmwiki.php/Main/ImAHumanitarian" class="button-random-trope" rel="nofollow" onclick="ga('send', 'event', 'button', 'click', 'random trope');"></a>
-                    <a href="/pmwiki/pmwiki.php/Creator/MelanieScrofano" class="button-random-media" rel="nofollow" onclick="ga('send', 'event', 'button', 'click', 'random media');"></a>
+                    <a href="/pmwiki/pmwiki.php/Main/NoBadassToHisValet" class="button-random-trope" rel="nofollow" onclick="gtag('event', 'trope_random_button_click', {'is_user': 0});"></a>
+                    <a href="/pmwiki/pmwiki.php/Creator/SaffronBurrows" class="button-random-media" rel="nofollow" onclick="gtag('event', 'media_random_button_click', {'is_user': 0});"></a>
                 </div>
 
             </div>
@@ -178,6 +166,7 @@
         <a href="/pmwiki/pmwiki.php/Main/Tropes" class="xl">Tropes</a>
         <a href="/pmwiki/pmwiki.php/Main/Media" class="xl">Media</a>
         <a href="/pmwiki/browse.php" class="xl">Browse</a>
+        <a href="/pmwiki/popular-pages.php" class="xl">Popular</a>
         <a href="/pmwiki/index_report.php" class="xl">Indexes</a>
         <a href="/pmwiki/topics.php" class="xl">Forums</a>
         <a href="/pmwiki/recent_videos.php" class="xl">Videos</a>
@@ -189,14 +178,15 @@
         <a href="/pmwiki/query.php?type=wl">Tech Wishlist</a>
         <a href="/pmwiki/review_activity.php">Reviews</a> 
         
-        <a href="#tools" data-click-toggle="active">Tools <i class="fa fa-chevron-down"></i></a>
+                <a href="#tools" data-click-toggle="active">Tools <i class="fa fa-chevron-down"></i></a>
         <div class="tools-dropdown mobile-dropdown-linkList">
-            <a href="/pmwiki/cutlist.php">Cut List</a>
+            <a href="/pmwiki/cutlist.php" data-modal-target="login" rel="nofollow">Cut List</a>
+            <a href="/pmwiki/image-fixer.php" data-modal-target="login" rel="nofollow">Image Fixer</a>
             <a href="/pmwiki/changes.php">New Edits</a>
             <a href="/pmwiki/articles_new.php">New Articles</a>
             <a href="/pmwiki/recent_edit_reasons.php">Edit Reasons</a>
-            <a href="/pmwiki/launches.php">Launches</a>
-            <a href="/pmwiki/img_list.php">Images List</a>
+            <a href="/pmwiki/launches.php" data-modal-target="login" rel="nofollow">Launches</a>
+            <a href="/pmwiki/img_list.php" data-modal-target="login" rel="nofollow">Images List</a>
             <a href="/pmwiki/crown_activity.php">Crowner Activity</a>
             <a href="/pmwiki/no_types.php">Un-typed Pages</a>
             <a href="/pmwiki/page_type_audit.php">Recent Page Type Changes</a>
@@ -212,7 +202,7 @@
                 <a href="/pmwiki/pmwiki.php/Administrivia/TVTropesGlossary?from=Main.TVTropesGlossary">Glossary</a>
                 <a href="/pmwiki/pmwiki.php/Administrivia/EditReasonsAndWhyYouShouldUseThem">Edit Reasons</a>
                 <a href="/pmwiki/pmwiki.php/Administrivia/HandlingSpoilers">Handling Spoilers</a>
-                <a href="/pmwiki/pmwiki.php/Main/WordCruft">Word Cruft</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/WordCruft">Word Cruft</a>
                 <a href="/pmwiki/pmwiki.php/Main/Administrivia">Administrivia</a>
                 <a href="/pmwiki/pmwiki.php/Main/FAQ">FAQ</a>
         </div>
@@ -225,6 +215,7 @@
             <a href="/pmwiki/dmca.php">DMCA Notice</a>
             <a href="/pmwiki/privacypolicy.php">Privacy Policy</a>
             <a href="/pmwiki/query.php?type=bug">Report Bug</a>
+            <a href="/pmwiki/termsofservice.php">Terms Of Service</a>
         </div>
 
         <a href="/pmwiki/ad-free-subscribe.php">Go Ad-Free</a>
@@ -250,7 +241,7 @@
     <div id="homepage-introBox-mobile" class="mobile-on">
                   <a href="/"><img src="/images/logo-white-big.png" class="logo-small" /></a>
         
-        <form class="search" action="/pmwiki/search_result.php" style="margin:10px -5px -6px -5px;">
+        <form class="search" action="/pmwiki/search_result.php" style="margin:10px -5px -6px -5px;" onSubmit="return sendToSiteSearch(this, this.q.value);">
             <input type="text" name="q" class="search-box" placeholder="Search" value="" required>
             <input type="submit" class="submit-button" value="&#xf002;" />
                         <input type="hidden" name="search_type" value="article">
@@ -270,10 +261,7 @@
                     
 
                 <div id="tvtropes_oop_ad_slot" style="display: none;"></div>
-    <div id="header-fad-wrapper" class="fad">
-    <div id="header-fad">
-    <div class="fad-size-970x90" style="height:20px">&nbsp;</div>    </div>
-</div>
+    <div id="top_container_spacing"></div>
 
 <div id="main-container">
 
@@ -317,8 +305,6 @@
         
         
 
-
-<!-- HIDDEN INPUTS FOR JS -->
 <input type="hidden" id="groupname-hidden" value="Main"/>
 <input type="hidden" id="title-hidden" value="TheAtoner"/>
 <input type="hidden" id="article_id" value="6611" />
@@ -337,19 +323,51 @@
 
 
 
-<a href="#watch" class="watch-button " data-modal-target="login" >Follow<span>ing</span></a>
 
 
-<h1 itemprop="headline" class="entry-title">
 
-    
+
         
-        The Atoner
-    
-        
-</h1>
 
     
+
+             
+
+                                        <h1 itemprop="headline" class="entry-title" style=""> 
+                    <span class="wrapped_title">
+                        The Atoner 
+                         
+                    </span>
+                    <div class="watch_rank_wrap">
+                    <span 
+            class="thumb-vote-area"
+            data-seq-num="TheAtoner"
+            data-discussion-id="TheAtoner"
+            data-subject-trope="Main.TheAtoner"
+            data-page-type="article"
+        >
+            <a 
+                href="javascript:void(0);" 
+                class="thumb-button up heart-only"
+                data-modal-target="login"            >
+                <span class="thumb-count up-count" style="margin-top: 2px;margin-right: 1px;">13</span>
+                <i class="fa fa-heart-o"></i>
+            </a>
+        </span>
+        <a href="#watch" class="watch-button " data-modal-target="login" >Follow<span>ing</span></a>
+</div>
+                   
+                                    </h1>
+
+                        
+
+
+    
+
+
+        
+        
+
 
 <a href="#mobile-actions-toggle" id="mobile-actionbar-toggle" class="mobile-actionbar-toggle mobile-on" data-click-toggle="active" >
 <p class="tiny-off">Go To</p><span></span><span></span><span></span><i class="fa fa-pencil"></i></a>
@@ -357,42 +375,35 @@
 
 
 
-<div id="editLockModal" class="modal fade hidden-until-active" >
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit Locked</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="body">
-                        <div class="danger troper_locked_message"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <nav class="body-options" itemscope itemtype="http://schema.org/SiteNavigationElement">
 
     <ul class="subpage-links">
 
-                    <li>
-                <a href="/pmwiki/pmwiki.php/Main/TheAtoner" class="subpage-link curr-subpage" title="The Main page">
-                <span class="wrapper"><span class="spi main-page"></span>Main</span></a>
+                            <li>
+                <a href="/pmwiki/pmwiki.php/Main/TheAtoner"
+                class="subpage-link curr-subpage"
+                title="The Main page">
+                    <span class="wrapper">
+                        <span class="spi main-page"></span>                        Main                    </span>
+                </a>
             </li>
         
-                                        <li>
+        
+                
+                                 
+                                <li>
                     <a href="/pmwiki/pmwiki.php/Laconic/TheAtoner" class="subpage-link " title="The Laconic page">
                     <span class="wrapper"><span class="spi laconic-icon"></span>Laconic</span></a>
                 </li>
-                                                                                        <li>
+                            
+                                 
+                                <li>
                     <a href="/pmwiki/pmwiki.php/Quotes/TheAtoner" class="subpage-link " title="The Quotes page">
                     <span class="wrapper"><span class="spi quotes"></span>Quotes</span></a>
                 </li>
-                                                            <li>
+                            
+                                 
+                                <li>
                     <a href="/pmwiki/pmwiki.php/PlayingWith/TheAtoner" class="subpage-link " title="The PlayingWith page">
                     <span class="wrapper">PlayingWith</span></a>
                 </li>
@@ -407,7 +418,7 @@
 
                             <li class="create-subpage dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    <span class="wrapper">Create New <i class="fa fa-plus-circle"></i></span>
+                    <span class="wrapper">Create Subpage <i class="fa fa-plus-circle"></i></span>
                     </a>
 
 
@@ -415,17 +426,23 @@
                         <option value="">- Create New -</option>
 
                                                 <option value="/pmwiki/pmwiki.php/Analysis/TheAtoner?action=edit">Analysis</option>
+                                                <option value="/pmwiki/pmwiki.php/Archive/TheAtoner?action=edit">Archive</option>
                                                 <option value="/pmwiki/pmwiki.php/Awesome/TheAtoner?action=edit">Awesome</option>
                                                 <option value="/pmwiki/pmwiki.php/Characters/TheAtoner?action=edit">Characters</option>
-                                                <option value="/pmwiki/pmwiki.php/FanWorks/TheAtoner?action=edit">FanWorks</option>
+                                                <option value="/pmwiki/pmwiki.php/DerivativeWorks/TheAtoner?action=edit">DerivativeWork&#8230;</option>
                                                 <option value="/pmwiki/pmwiki.php/FanficRecs/TheAtoner?action=edit">FanficRecs</option>
+                                                <option value="/pmwiki/pmwiki.php/FanWorks/TheAtoner?action=edit">FanWorks</option>
                                                 <option value="/pmwiki/pmwiki.php/Fridge/TheAtoner?action=edit">Fridge</option>
                                                 <option value="/pmwiki/pmwiki.php/Funny/TheAtoner?action=edit">Funny</option>
                                                 <option value="/pmwiki/pmwiki.php/Haiku/TheAtoner?action=edit">Haiku</option>
                                                 <option value="/pmwiki/pmwiki.php/Headscratchers/TheAtoner?action=edit">Headscratchers</option>
                                                 <option value="/pmwiki/pmwiki.php/Heartwarming/TheAtoner?action=edit">Heartwarming</option>
                                                 <option value="/pmwiki/pmwiki.php/ImageLinks/TheAtoner?action=edit">ImageLinks</option>
+                                                <option value="/pmwiki/pmwiki.php/ImageSource/TheAtoner?action=edit">ImageSource</option>
+                                                <option value="/pmwiki/pmwiki.php/MediaNotes/TheAtoner?action=edit">MediaNotes</option>
+                                                <option value="/pmwiki/pmwiki.php/Newsletter/TheAtoner?action=edit">Newsletter</option>
                                                 <option value="/pmwiki/pmwiki.php/NightmareFuel/TheAtoner?action=edit">NightmareFuel</option>
+                                                <option value="/pmwiki/pmwiki.php/QuoteSource/TheAtoner?action=edit">QuoteSource</option>
                                                 <option value="/pmwiki/pmwiki.php/Recap/TheAtoner?action=edit">Recap</option>
                                                 <option value="/pmwiki/pmwiki.php/ReferencedBy/TheAtoner?action=edit">ReferencedBy</option>
                                                 <option value="/pmwiki/pmwiki.php/Shocking/TheAtoner?action=edit">Shocking</option>
@@ -448,22 +465,25 @@
 
 
 <div id="main-article" class="article-content retro-folders">
-    <p><!-- Trope was declared Administrivia/NoRealLifeExamplesPlease via crowner by the Real Life Maintenance thread.-->
-<!-- Image picked per Image Pickin' thread: https://tvtropes.org/pmwiki/posts.php?discussion=1372288835063266300-->
-<!-- Please do not replace of remove without starting a new thread.-->
-<!--&#010;-->
-<div class="quoteright" style="width:269px;" ><a class='twikilink' href='/pmwiki/pmwiki.php/Webcomic/ElGoonishShive' title='/pmwiki/pmwiki.php/Webcomic/ElGoonishShive' data-format='W1tXZWJjb21pYy9FbEdvb25pc2hTaGl2ZSBodHRwczovL3N0YXRpYy50dnRyb3Blcy5vcmcvcG13aWtpL3B1Yi9pbWFnZXMvYXRvbmVyLnBuZ11d'><div class="lazy_load_img_box" style="padding-top:88.85%"><img src='https://static.tvtropes.org/pmwiki/pub/images/atoner.png' class='embeddedimage' border='0' alt='https://static.tvtropes.org/pmwiki/pub/images/atoner.png' / width=269 height=239></div></a></div>
+
+        
+            <p>
+
+
+
+<div class="quoteright" style="width:269px;" ><a class='twikilink' href='/pmwiki/pmwiki.php/Webcomic/ElGoonishShive' title='/pmwiki/pmwiki.php/Webcomic/ElGoonishShive' data-format='W1tXZWJjb21pYy9FbEdvb25pc2hTaGl2ZSBodHRwczovL3N0YXRpYy50dnRyb3Blcy5vcmcvcG13aWtpL3B1Yi9pbWFnZXMvYXRvbmVyLnBuZ11d'><div class="lazy_load_img_box" style="padding-top:88.85%"><img src='https://static.tvtropes.org/pmwiki/pub/images/atoner.png' class='embeddedimage' border='0' alt='The Atoner (trope)'  width=269 height=239></div></a></div>
 <div class="acaptionright" style="width:269px;" >This is why you don't want to take the Atoner <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TakenForGranite' title='/pmwiki/pmwiki.php/Main/TakenForGranite' data-format='W1tUYWtlbkZvckdyYW5pdGUgZm9yIGdyYW5pdGVdXQ=='>for granite</a>.</div>
 </p><p><div class='indent'><em>"Long is the way, and hard, that out of Hell leads up to Light."</em>
 <div class='indent'>&#8212; <strong><a class='twikilink' href='/pmwiki/pmwiki.php/Creator/JohnMilton' title='/pmwiki/pmwiki.php/Creator/JohnMilton' data-format='Q3JlYXRvci9Kb2huTWlsdG9u'>John Milton</a></strong>, <em><a class='twikilink' href='/pmwiki/pmwiki.php/Literature/ParadiseLost' title='/pmwiki/pmwiki.php/Literature/ParadiseLost' data-format='TGl0ZXJhdHVyZS9QYXJhZGlzZUxvc3Q='>Paradise Lost</a></em>
-</div></div></p><p>Once, there was a major villain named Bob. He committed every crime one could think of, and he did it with a song in his heart and a skip in his step. Then, something happened to make him <em>see</em> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PersonalHorror' title='/pmwiki/pmwiki.php/Main/PersonalHorror' data-format='W1tQZXJzb25hbEhvcnJvciB0aGUgaG9ycm9yIG9mIHdoYXQgaGUgd2FzIGRvaW5nXV0='>the horror of what he was doing</a>. He realized how much pain he had caused, and he set out on a personal quest to try to make it right.
+</div></div></p><p>Once, there was a major villain named Bob. He committed every crime one could think of, and he did it with a song in his heart and a skip in his step. Then, something happened to make him <em>see</em> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PersonalHorror' title='/pmwiki/pmwiki.php/Main/PersonalHorror' data-format='W1tQZXJzb25hbEhvcnJvciB0aGUgaG9ycm9yIG9mIHdoYXQgaGUgd2FzIGRvaW5nXV0='>the horror of what he was doing</a>. He realized how much pain he had caused, and he set out on a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RedemptionQuest' title='/pmwiki/pmwiki.php/Main/RedemptionQuest' data-format='UmVkZW1wdGlvblF1ZXN0'>Redemption Quest</a> to try to make it right.
 </p><p>The Atoner is an evil character who has <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HeelRealization' title='/pmwiki/pmwiki.php/Main/HeelRealization' data-format='W1tIZWVsUmVhbGl6YXRpb24gcmVhbGl6ZWQgdGhlIGVycm9yIG9mIGhpcyB3YXlzXV0='>realized the error of his ways</a>, possibly wants to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MustMakeAmends' title='/pmwiki/pmwiki.php/Main/MustMakeAmends' data-format='W1tNdXN0TWFrZUFtZW5kcyBtYWtlIGFtZW5kc11d'>make amends</a>, and has decided that they will do so via heroic deeds. <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GetOutOfJailFreeCard' title='/pmwiki/pmwiki.php/Main/GetOutOfJailFreeCard' data-format='W1tHZXRPdXRPZkphaWxGcmVlQ2FyZCBTaW1wbGUgaW1wcmlzb25tZW50IHdvbiYjMDM5O3QgZG9dXQ=='>Simple imprisonment won't do</a>, because it does nothing to make recompense for what he's done wrong. Besides, he still has all these amazing skills and resources from the Bad Old Days — wouldn't it be better to use them for good?
 </p><p>The problem is, Bob often has to wrestle with the temptation to return to his old ways, along with the massive guilt built up over years of carefree evil. Also, said previous villain skills usually involve <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BadPowersBadPeople' title='/pmwiki/pmwiki.php/Main/BadPowersBadPeople' data-format='W1tCYWRQb3dlcnNCYWRQZW9wbGUga2lsbGluZyBwZW9wbGUgaW4gdmVyeSBtZXNzeSB3YXlzXV0='>killing people in very messy ways</a>, which can result in <a class='twikilink' href='/pmwiki/pmwiki.php/Main/KarmaMeter' title='/pmwiki/pmwiki.php/Main/KarmaMeter' data-format='W1tLYXJtYU1ldGVyIGthcm1pY2FsbHkgaGFybWZ1bF1d'>karmically harmful</a> situations. Other times Bob's evil side won't go down without a fight, and manifests itself as an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/EnemyWithin' title='/pmwiki/pmwiki.php/Main/EnemyWithin' data-format='RW5lbXlXaXRoaW4='>Enemy Within</a>. Ultimately, it comes down to the fact that morality isn't a book that can be balanced &#8212; no amount of babies saved now will bring Bob's past victims back to life. The Atoner usually realizes that "Redemption is the path, not the destination" thanks to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheRedeemer' title='/pmwiki/pmwiki.php/Main/TheRedeemer' data-format='VGhlUmVkZWVtZXI='>The Redeemer</a> and continues for the rest of his life.
 </p><p>Sometimes 'the rest of his life' is short because <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RedemptionEqualsDeath' title='/pmwiki/pmwiki.php/Main/RedemptionEqualsDeath' data-format='UmVkZW1wdGlvbkVxdWFsc0RlYXRo'>Redemption Equals Death</a>. Generally the only Atoners who avoid this are main characters who are already in the atoning stage by the series' start. Atoners often end up as <a class='twikilink' href='/pmwiki/pmwiki.php/Main/KnightInSourArmor' title='/pmwiki/pmwiki.php/Main/KnightInSourArmor' data-format='W1tLbmlnaHRJblNvdXJBcm1vciBLbmlnaHRzIGluIFNvdXIgQXJtb3JdXQ=='>Knights in Sour Armor</a>. Those who believe redemption <em><a class='twikilink' href='/pmwiki/pmwiki.php/Main/InvokedTrope' title='/pmwiki/pmwiki.php/Main/InvokedTrope' data-format='W1tJbnZva2VkVHJvcGUgaW5oZXJlbnRseV1d'>inherently</a></em> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RedemptionEqualsDeath' title='/pmwiki/pmwiki.php/Main/RedemptionEqualsDeath' data-format='W1tSZWRlbXB0aW9uRXF1YWxzRGVhdGggZXF1YWxzIGRlYXRoXV0='>equals death</a> may well become <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DeathSeeker' title='/pmwiki/pmwiki.php/Main/DeathSeeker' data-format='e3tEZWF0aCBTZWVrZXJ9fXM='>Death Seekers</a>.
 </p><p>A subtrope of this is "<a class='twikilink' href='/pmwiki/pmwiki.php/Main/HitmanWithAHeart' title='/pmwiki/pmwiki.php/Main/HitmanWithAHeart' data-format='W1tIaXRtYW5XaXRoQUhlYXJ0IEFzc2Fzc2luIFdhbnRzIHRvIFF1aXRdXQ=='>Assassin Wants to Quit</a>". Stories involving them allow us to cheer on the assassin as they battle their former employers using the same murderous skills they honed during their previous career. Atoners sometimes go on a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RedemptionQuest' title='/pmwiki/pmwiki.php/Main/RedemptionQuest' data-format='UmVkZW1wdGlvblF1ZXN0'>Redemption Quest</a> in order to atone. If their deed of atonement is especially painful, it may overlap with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ThePenance' title='/pmwiki/pmwiki.php/Main/ThePenance' data-format='VGhlUGVuYW5jZQ=='>The Penance</a>.
 </p><p>Would-be Atoners who are not sincere are trying to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BuyThemOff' title='/pmwiki/pmwiki.php/Main/BuyThemOff' data-format='QnV5VGhlbU9mZg=='>Buy Them Off</a>. Not to be confused with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheAloner' title='/pmwiki/pmwiki.php/Main/TheAloner' data-format='VGhlQWxvbmVy'>The Aloner</a>, though they can both coincide if the character is trying to atone for killing off everyone else on the planet. And <em>especially</em> not to be confused with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheStoner' title='/pmwiki/pmwiki.php/Main/TheStoner' data-format='VGhlU3RvbmVy'>The Stoner</a> (unless they turned to drugs to cope with their guilt). The Atoner may face rejection and hatred from <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AccuserOfTheBrethren' title='/pmwiki/pmwiki.php/Main/AccuserOfTheBrethren' data-format='W1tBY2N1c2VyT2ZUaGVCcmV0aHJlbiB0aG9zZSB3aG8gZG9uJiMwMzk7dCBiZWxpZXZlIGhlJiMwMzk7cyByZWZvcm1lZF1d'>those who don't believe he's reformed</a>, which is <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ReformedButRejected' title='/pmwiki/pmwiki.php/Main/ReformedButRejected' data-format='UmVmb3JtZWRCdXRSZWplY3RlZA=='>Reformed, but Rejected</a>, and more importantly, he must be careful not to run into the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HeelFaceDoorSlam' title='/pmwiki/pmwiki.php/Main/HeelFaceDoorSlam' data-format='SGVlbEZhY2VEb29yU2xhbQ=='>Heel–Face Door-Slam</a>. In some instances, however, there are characters who will acknowledge The Atoner's change of heart, but <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ForgivenButNotForgotten' title='/pmwiki/pmwiki.php/Main/ForgivenButNotForgotten' data-format='W1tGb3JnaXZlbkJ1dE5vdEZvcmdvdHRlbiBkbyBzbyBpbiBhIGdydWRnaW5nIG1hbm5lcl1d'>do so in a grudging manner</a>. The Atoner must also beware of <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AccuserOfTheBrethren' title='/pmwiki/pmwiki.php/Main/AccuserOfTheBrethren' data-format='W1tBY2N1c2VyT2ZUaGVCcmV0aHJlbiBvbmUgY2hhcmFjdGVyIHdobyBhY3RpdmVseSBzZWVrcyB0byBlbmQgaGlzIHBhdGggdG8gcmVkZW1wdGlvbl1d'>one character who actively seeks to end his path to redemption</a>.
-</p><p>The success rate of atoners depends on where the work sits on the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SlidingScaleOfIdealismVersusCynicism' title='/pmwiki/pmwiki.php/Main/SlidingScaleOfIdealismVersusCynicism' data-format='U2xpZGluZ1NjYWxlT2ZJZGVhbGlzbVZlcnN1c0N5bmljaXNt'>Sliding Scale of Idealism Versus Cynicism</a>. In more idealistic works, or at least ones that posit that people can change for the better, atoners may have a greater chance of success, as proof that no matter one's actions may have been in the past, it's always possible to change for the better and do good.
-</p><p>Genuine atoners have a high chance of becoming <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheWoobie' title='/pmwiki/pmwiki.php/Main/TheWoobie' data-format='VGhlV29vYmll'>The Woobie</a>, especially if they were an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AntiVillain' title='/pmwiki/pmwiki.php/Main/AntiVillain' data-format='QW50aVZpbGxhaW4='>Anti-Villain</a> in the first place. See also, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BeAllMySinsRemembered' title='/pmwiki/pmwiki.php/Main/BeAllMySinsRemembered' data-format='QmVBbGxNeVNpbnNSZW1lbWJlcmVk'>Be All My Sins Remembered</a>, where they continue to suffer a guilt complex over their past misdeeds. Contrast with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MyGreatestFailure' title='/pmwiki/pmwiki.php/Main/MyGreatestFailure' data-format='TXlHcmVhdGVzdEZhaWx1cmU='>My Greatest Failure</a> — instead of a formerly evil character turning from their past, a good character feels the need to atone for not preventing a bad outcome (regardless of whether they could have changed anything), and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RetiredMonster' title='/pmwiki/pmwiki.php/Main/RetiredMonster' data-format='UmV0aXJlZE1vbnN0ZXI='>Retired Monster</a> — a villain who has retired from their villainy but hasn't shown any regret or remorse for their misdeeds nor has made any attempt to redeem themselves. The Atoner may have experienced <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GoAndSinNoMore' title='/pmwiki/pmwiki.php/Main/GoAndSinNoMore' data-format='R29BbmRTaW5Ob01vcmU='>Go and Sin No More</a>, and may enact a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SelfPunishmentOverFailure' title='/pmwiki/pmwiki.php/Main/SelfPunishmentOverFailure' data-format='U2VsZlB1bmlzaG1lbnRPdmVyRmFpbHVyZQ=='>Self-Punishment Over Failure</a> or have a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GuiltInducedNightmare' title='/pmwiki/pmwiki.php/Main/GuiltInducedNightmare' data-format='R3VpbHRJbmR1Y2VkTmlnaHRtYXJl'>Guilt-Induced Nightmare</a>.
+</p><p>The success rate of atoners depends on where the work sits on the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SlidingScaleOfIdealismVersusCynicism' title='/pmwiki/pmwiki.php/Main/SlidingScaleOfIdealismVersusCynicism' data-format='U2xpZGluZ1NjYWxlT2ZJZGVhbGlzbVZlcnN1c0N5bmljaXNt'>Sliding Scale of Idealism Versus Cynicism</a>. In more idealistic works, or at least ones that posit that people can change for the better, atoners may have a greater chance of success, as proof that no matter what one's actions may have been in the past, it's always possible to change for the better and do good.
+</p><p>Genuine atoners have a high chance of becoming <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheWoobie' title='/pmwiki/pmwiki.php/Main/TheWoobie' data-format='VGhlV29vYmll'>The Woobie</a>, especially if they were an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AntiVillain' title='/pmwiki/pmwiki.php/Main/AntiVillain' data-format='QW50aVZpbGxhaW4='>Anti-Villain</a> in the first place. See also, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BeAllMySinsRemembered' title='/pmwiki/pmwiki.php/Main/BeAllMySinsRemembered' data-format='QmVBbGxNeVNpbnNSZW1lbWJlcmVk'>Be All My Sins Remembered</a>, where they continue to suffer a guilt complex over their past misdeeds. Contrast with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MyGreatestFailure' title='/pmwiki/pmwiki.php/Main/MyGreatestFailure' data-format='TXlHcmVhdGVzdEZhaWx1cmU='>My Greatest Failure</a> — instead of a formerly evil character turning from their past, a good character feels the need to atone for not preventing a bad outcome (regardless of whether they could have changed anything), and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RetiredMonster' title='/pmwiki/pmwiki.php/Main/RetiredMonster' data-format='UmV0aXJlZE1vbnN0ZXI='>Retired Monster</a> — a villain who has retired from their villainy but hasn't shown any regret or remorse for their misdeeds nor has made any attempt to redeem themselves. The Atoner may have experienced <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GoAndSinNoMore' title='/pmwiki/pmwiki.php/Main/GoAndSinNoMore' data-format='R29BbmRTaW5Ob01vcmU='>Go and Sin No More</a>, and may enact a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SelfPunishmentOverFailure' title='/pmwiki/pmwiki.php/Main/SelfPunishmentOverFailure' data-format='U2VsZlB1bmlzaG1lbnRPdmVyRmFpbHVyZQ=='>Self-Punishment Over Failure</a> or have a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GuiltInducedNightmare' title='/pmwiki/pmwiki.php/Main/GuiltInducedNightmare' data-format='R3VpbHRJbmR1Y2VkTmlnaHRtYXJl'>Guilt-Induced Nightmare</a>. Often a reason why they <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DoesntMindABeating' title='/pmwiki/pmwiki.php/Main/DoesntMindABeating' data-format='W1tEb2VzbnRNaW5kQUJlYXRpbmcgZG9u4oCZdCBtaW5kIGEgYmVhdGluZ11d'>don’t mind a beating</a> and why the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/KillerIncapacitatesInstead' title='/pmwiki/pmwiki.php/Main/KillerIncapacitatesInstead' data-format='S2lsbGVySW5jYXBhY2l0YXRlc0luc3RlYWQ='>Killer Incapacitates Instead</a>. See also <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ApologyTour' title='/pmwiki/pmwiki.php/Main/ApologyTour' data-format='QXBvbG9neVRvdXI='>Apology Tour</a>, where we see them go make amends to everyone on their list.
+</p><p>Compare and contrast <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WhiteSheep' title='/pmwiki/pmwiki.php/Main/WhiteSheep' data-format='V2hpdGVTaGVlcA=='>White Sheep</a>, when the misdeeds the Atoner is trying to make amends for were committed by their family rather than themselves.
 </p><p><hr data-format='&#8212;&#8212;' />
 <h2>Example subpages:</h2>
 <!&#8212;index&#8212;>
@@ -488,7 +508,7 @@
 </div></li><li> "What I've Done" by <em>Linkin Park</em>
 <div class='indent'> I'll face myself<span class='esc-seq' title='non-wikiword'>/</span>To cross out what I've become<span class='esc-seq' title='non-wikiword'>/</span>Erase myself<span class='esc-seq' title='non-wikiword'>/</span>And let go of what I've done
 </div></li><li> "Working My Way Back To You" by The Four Seasons, about an abusive ex-boyfriend who sees the error of his ways too late and is now trying to win the girl back, unsuccessfully to date.
-</li><li> <a class='urllink' href='https://www.youtube.com/watch?v=ytKvgLuy7ng'>"Awoken"<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> by H8_Seed and <a class='twikilink' href='/pmwiki/pmwiki.php/Music/WoodenToaster' title='/pmwiki/pmwiki.php/Music/WoodenToaster' data-format='W1tNdXNpYy9Xb29kZW5Ub2FzdGVyIEdsYXplXV0='>Glaze</a>.
+</li><li> <a class='urllink' href='https://www.youtube.com/watch?v=ytKvgLuy7ng'>"Awoken"<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> by <a class='createlink' rel='nofollow' href='/pmwiki/pmwiki.php/Main/H8_Seed' title='/pmwiki/pmwiki.php/Main/H8_Seed' data-format='SDhfU2VlZA=='>H8_Seed</a> and <a class='twikilink' href='/pmwiki/pmwiki.php/Music/WoodenToaster' title='/pmwiki/pmwiki.php/Music/WoodenToaster' data-format='W1tNdXNpYy9Xb29kZW5Ub2FzdGVyIEdsYXplXV0='>Glaze</a>.
 <div class='indent'> I've stoked the fire, seen more pain than you can know/The tears of the broken have washed away my soul/Pushed by desire to change the way my stream will flow/Now I've awoken, and I'm taking back control
 </div></li><li> The song "Cat's in the Cradle" by Harry Chapin focuses on a father who is far too busy with his work to connect with his son. By the time the father has the time (i.e. the son has grown up), he tries to reach out to his son and atone, but by then, his son is, like his father, far too busy.
 </li><li> "I'll Be Good" by Jaymes Young is about a man who wishes to atone for his bad behavior in the past.
@@ -524,21 +544,24 @@
 </li><li> Converted Lamanites often felt this way.
 <ul ><li> The people of Ammon, acutely aware of their history of violence, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ActualPacifist' title='/pmwiki/pmwiki.php/Main/ActualPacifist' data-format='W1tBY3R1YWxQYWNpZmlzdCBzd2VhciB0aGF0IHRoZXkgd2lsbCBuZXZlciBzaGVkIGJsb29kIGFnYWluXV0='>swear that they will never shed blood again</a>, being willing to die rather than continue to hurt anyone else.
 </li><li> Later groups of converted Lamanites actually move en masse out of lands they'd conquered so the Nephites can return.
-</li></ul></li></ul></li></ul></div>
+</li></ul></li></ul></li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Literature/TheTalmud' title='/pmwiki/pmwiki.php/Literature/TheTalmud' data-format='TGl0ZXJhdHVyZS9UaGVUYWxtdWQ='>The Talmud</a> (Makkot 5b) describes how Rabbi Yehudah ben Tabbai accidentally executed someone against proper procedure. For the rest of his life he would visit the grave, lying prostrate and asking the dead man's forgiveness, to the point where locals mistook his cries for the dead man's ghost.
+</li></ul></div>
 </p><p><div class="folderlabel" onclick="togglefolder('folder6');">&nbsp;&nbsp;&nbsp;&nbsp;Tabletop Games&nbsp;</div><div id="folder6" class="folder" isfolder="true" style="display:block;">
 <ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/ArkhamHorror' title='/pmwiki/pmwiki.php/TabletopGame/ArkhamHorror' data-format='VGFibGV0b3BHYW1lL0Fya2hhbUhvcnJvcg=='>Arkham Horror</a></em>'s "Dunwich Horror" expansion adds Diana Stanley as a playable character. She joined the city's exclusive <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Cult' title='/pmwiki/pmwiki.php/Main/Cult' data-format='W1t7e0N1bHR9fSBTaWx2ZXIgVHdpbGlnaHQgTG9kZ2VdXQ=='>Silver Twilight Lodge</a> and learned to her horror that they plan to awaken an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/EldritchAbomination' title='/pmwiki/pmwiki.php/Main/EldritchAbomination' data-format='RWxkcml0Y2hBYm9taW5hdGlvbg=='>Eldritch Abomination</a> into the world. Diana is now the mole in the cult planning on thwarting them&#8212;granting her bonuses <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RaceAgainstTheClock' title='/pmwiki/pmwiki.php/Main/RaceAgainstTheClock' data-format='W1tSYWNlQWdhaW5zdFRoZUNsb2NrIHRoZSBjbG9zZXIgdGhleSBnZXQgdG8gc3VjY2VlZGluZ11d'>the closer they get to succeeding</a>.
 </li><li> Every player character in <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/DemonTheFallen' title='/pmwiki/pmwiki.php/TabletopGame/DemonTheFallen' data-format='VGFibGV0b3BHYW1lL0RlbW9uVGhlRmFsbGVu'>Demon: The Fallen</a></em> is a demon, one of those who fought against God and the angels in the War of Wrath. In modern times, there's a faction called the Reconcilers, who have asked themselves, "What if we really <em>were</em> the bad guys?" They work to either undo their sins and return to Heaven, or, if that's impossible, to at least fix the damage they did to the world all those years ago.
 </li><li> The <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/DungeonsAndDragons' title='/pmwiki/pmwiki.php/TabletopGame/DungeonsAndDragons' data-format='VGFibGV0b3BHYW1lL0R1bmdlb25zQW5kRHJhZ29ucw=='>Dungeons & Dragons</a></em> sourcebook <em>Fiendish Codex II</em> introduces the Hellbred, former evildoers who repented of their actions before they were condemned to Hell, but too late to gain entry to the heavens. The good deities reincarnate them into <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DarkIsNotEvil' title='/pmwiki/pmwiki.php/Main/DarkIsNotEvil' data-format='W1tEYXJrSXNOb3RFdmlsIGZpZW5kaXNoLWxvb2tpbmddXQ=='>fiendish-looking</a> bodies to give them one last chance to prove their search for redemption is genuine, and since only the greatest of heroic deeds will free their souls from damnation, the Hellbred throw themselves into their quests with zeal and desperation.
-</li><li> The Loyalists of Thule in <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/HunterTheVigil' title='/pmwiki/pmwiki.php/TabletopGame/HunterTheVigil' data-format='VGFibGV0b3BHYW1lL0h1bnRlclRoZVZpZ2ls'>Hunter: The Vigil</a></em> have an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AncientConspiracy' title='/pmwiki/pmwiki.php/Main/AncientConspiracy' data-format='QW5jaWVudENvbnNwaXJhY3k='>Ancient Conspiracy</a>-wide <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GuiltComplex' title='/pmwiki/pmwiki.php/Main/GuiltComplex' data-format='R3VpbHRDb21wbGV4'>Guilt Complex</a>, and it rubs off on its members. Why? Oh, nothing, they just <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ThoseWackyNazis' title='/pmwiki/pmwiki.php/Main/ThoseWackyNazis' data-format='W1tUaG9zZVdhY2t5TmF6aXMgaGVscGVkIHRoZSBOYXppc11d'>helped the Nazis</a> in <a class='twikilink' href='/pmwiki/pmwiki.php/UsefulNotes/WorldWarII' title='/pmwiki/pmwiki.php/UsefulNotes/WorldWarII' data-format='VXNlZnVsTm90ZXMvV29ybGRXYXJJSQ=='>World War II</a> and they largely believe themselves responsible for <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MoralEventHorizon' title='/pmwiki/pmwiki.php/Main/MoralEventHorizon' data-format='W1tNb3JhbEV2ZW50SG9yaXpvbiB0aGUgSG9sb2NhdXN0XV0='>the Holocaust</a> as a result. Yeah, they have issues.
 </li><li> One of the two main paths for Abyssal <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Exalted' title='/pmwiki/pmwiki.php/TabletopGame/Exalted' data-format='e3tUYWJsZXRvcEdhbWUvRXhhbHRlZH19'>Exalted</a></em> is to become this, make up for their dark deeds in the service of the Void and work their asses off to avoid spontaneously combusting from Resonance. If they can pull it off, they become Solars, without the Great Curse that messed up so very much of the First Age. The potential impact of this remains to be seen.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/FabulaUltima' title='/pmwiki/pmwiki.php/TabletopGame/FabulaUltima' data-format='VGFibGV0b3BHYW1lL0ZhYnVsYVVsdGltYQ=='>Fabula Ultima</a></em>, the Repentant Enforcer quirk represents a character who had previously worked for a villainous organization, only to turn their back on the group once they realized the full extent of its evil. The character now seeks to make things right by helping to bring their former organization down, with the quirk granting mechanical benefits for thwarting the organization's activities or redressing its wrongs.
+</li><li> The Loyalists of Thule in <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/HunterTheVigil' title='/pmwiki/pmwiki.php/TabletopGame/HunterTheVigil' data-format='VGFibGV0b3BHYW1lL0h1bnRlclRoZVZpZ2ls'>Hunter: The Vigil</a></em> have an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AncientConspiracy' title='/pmwiki/pmwiki.php/Main/AncientConspiracy' data-format='QW5jaWVudENvbnNwaXJhY3k='>Ancient Conspiracy</a>-wide <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GuiltComplex' title='/pmwiki/pmwiki.php/Main/GuiltComplex' data-format='R3VpbHRDb21wbGV4'>Guilt Complex</a>, and it rubs off on its members. Why? Oh, nothing, they just <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ThoseWackyNazis' title='/pmwiki/pmwiki.php/Main/ThoseWackyNazis' data-format='W1tUaG9zZVdhY2t5TmF6aXMgaGVscGVkIHRoZSBOYXppc11d'>helped the Nazis</a> in <a class='twikilink' href='/pmwiki/pmwiki.php/UsefulNotes/WorldWarII' title='/pmwiki/pmwiki.php/UsefulNotes/WorldWarII' data-format='VXNlZnVsTm90ZXMvV29ybGRXYXJJSQ=='>World War II</a> and they largely believe themselves responsible for <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MoralEventHorizon' title='/pmwiki/pmwiki.php/Main/MoralEventHorizon' data-format='W1tNb3JhbEV2ZW50SG9yaXpvbiB0aGUgSG9sb2NhdXN0XV0='>the Holocaust</a> as a result. Yeah, they have issues.
 </li><li> In the world of <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/InNomine' title='/pmwiki/pmwiki.php/TabletopGame/InNomine' data-format='VGFibGV0b3BHYW1lL0luTm9taW5l'>In Nomine</a></em> (an ongoing War between Heaven and Hell), it is possible for a demon to redeem and join the ranks of the angels, fighting to undo the evil they once supported. Just remember that old habits can be hard to break...
+</li><li> In the world of <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/TheLostCitadel' title='/pmwiki/pmwiki.php/TabletopGame/TheLostCitadel' data-format='VGFibGV0b3BHYW1lL1RoZUxvc3RDaXRhZGVs'>The Lost Citadel</a></em>, many humans of the Surinzan and Venmir are wracked with guilt over the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DirtyBusiness' title='/pmwiki/pmwiki.php/Main/DirtyBusiness' data-format='RGlydHlCdXNpbmVzcw=='>Dirty Business</a> of their ancestors. The Surinzan in particular have to all practical effects split into two factions; those who believe their race <em>needs</em> to find some way to make amends for their sins, and those who doing everything they can to deny that they did anything wrong in the first place.
 </li><li> This is the background of <a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/MagicTheGathering' title='/pmwiki/pmwiki.php/TabletopGame/MagicTheGathering' data-format='VGFibGV0b3BHYW1lL01hZ2ljVGhlR2F0aGVyaW5n'>Magic: The Gathering</a> <em>Legends</em> card <a class='urllink' href='http://gatherer.wizards.com/pages/card/Details.aspx?multiverseid=1674'>Pavel Maliki<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a>.
 <ul ><li> There's a similar effect with <a class='urllink' href='http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=29945'>Repentant Vampire<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a>.
-</li></ul></li><li> The Apok class from the Wormwood setting from <a class='twikilink' href='/pmwiki/pmwiki.php/Creator/PalladiumBooks' title='/pmwiki/pmwiki.php/Creator/PalladiumBooks' data-format='Q3JlYXRvci9QYWxsYWRpdW1Cb29rcw=='>Palladium Books</a> centers on people who were thoroughly evil who nevertheless realized the depths of their evil and due to that devotion to atoning for their past evil (and immersion in a Lifeforce Cauldron) they become transformed into powerful agents of good who're 100% devoted to good and cannot be corrupted by any means and are immune to the most horrific of sights and corrupting influences due to their unbreakable devotion to good.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Pathfinder' title='/pmwiki/pmwiki.php/TabletopGame/Pathfinder' data-format='VGFibGV0b3BHYW1lL3t7UGF0aGZpbmRlcn19'>Pathfinder</a></em>
+</li></ul></li><li> The Apok class from the Wormwood setting from <a class='twikilink' href='/pmwiki/pmwiki.php/Creator/PalladiumBooks' title='/pmwiki/pmwiki.php/Creator/PalladiumBooks' data-format='Q3JlYXRvci9QYWxsYWRpdW1Cb29rcw=='>Palladium Books</a> centers on people who were thoroughly evil, but who realized the depths of their evil and felt a powerful urge to repent, immersing themselves in a Lifeforce Cauldron to cement this recantation of their sins. As a result, they are among the most powerful agents of good on Wormwood, completely immune to supernatural corruption and feeling no fear at horrific sights. Their devotion to good is unquestionable, but they usually work alone, as they know people still remember their evil days and are probably not in a rush to forgive them.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Pathfinder' title='/pmwiki/pmwiki.php/TabletopGame/Pathfinder' data-format='VGFibGV0b3BHYW1lL3t7UGF0aGZpbmRlcn19'>Pathfinder</a></em>:
 <ul ><li> Here's a canonical tale: Some years before the setting's current time, a fourteen-year-old <a class='twikilink' href='/pmwiki/pmwiki.php/Main/StreetUrchin' title='/pmwiki/pmwiki.php/Main/StreetUrchin' data-format='U3RyZWV0VXJjaGlu'>Street Urchin</a> named Seelah stole a paladin's helm, intending to pawn it for food money. The paladin, Acemi, was so kind she let Seelah get away with it, thinking the girl's poverty was such that she needed the helm more than Acemi. Of course, Acemi was there as part of a force fighting to save Seelah's home town from gnolls; Acemi died in the fighting from blow to the head. Seelah, consumed with guilt, returned the helm with the intent to commit suicide on the paladin's funeral pyre. Instead, she was taken in by the order and became <a class='twikilink' href='/pmwiki/pmwiki.php/Characters/Pathfinder' title='/pmwiki/pmwiki.php/Characters/Pathfinder' data-format='W1tDaGFyYWN0ZXJzL3t7UGF0aGZpbmRlcn19IHRoZSBpY29uaWMgcGFsYWRpbl1d'>the iconic paladin</a>.
 </li><li> The <em>Wrath of the Righteous</em> Adventure Path features a succubus called Arueshalae who decided to peek in a dying priestess of Desna's dreams and got caught red-handed by Desna, who decided to give her a chance and awakened her soul, and ever since she's been struggling to change her nature to become a force of good - her first action was to save a child that found themselves in the Worldwound, and which might eventually become one of the <span class='esc-seq' title='non-wikiword'>AP's</span> heroes. When the <span class='esc-seq' title='non-wikiword'>PCs</span> find her, Arueshalae is a few tasks away from full redemption.
-</li></ul></li><li> The Asilos of <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/TheSplinter' title='/pmwiki/pmwiki.php/TabletopGame/TheSplinter' data-format='VGFibGV0b3BHYW1lL3t7VGhlIFNwbGludGVyfX0='>The Splinter</a></em> are an entire race of atoners. They're incapable of letting go of their past and are primarily driven by the desire to repent for their sins by doing good.
+</li></ul></li><li> The Asilos of <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/TheSplinter' title='/pmwiki/pmwiki.php/TabletopGame/TheSplinter' data-format='VGFibGV0b3BHYW1lL1RoZVNwbGludGVy'>The Splinter</a></em> are an entire race of atoners. They're incapable of letting go of their past and are primarily driven by the desire to repent for their sins by doing good.
 </li><li> Some <a class='twikilink' href='/pmwiki/pmwiki.php/Main/OurDwarvesAreAllTheSame' title='/pmwiki/pmwiki.php/Main/OurDwarvesAreAllTheSame' data-format='W1tPdXJEd2FydmVzQXJlQWxsVGhlU2FtZSBEd2FyZnNdXQ=='>Dwarfs</a> in <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Warhammer' title='/pmwiki/pmwiki.php/TabletopGame/Warhammer' data-format='VGFibGV0b3BHYW1lL3t7V2FyaGFtbWVyfX0='>Warhammer</a></em> may find themselves unable to fulfill an oath, and so to assuage their honor join the Slayer cult, dyeing their hair red, eschewing armor, grabbing an axe, and throwing themselves at the worst monster they can find to either kill it <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DeathSeeker' title='/pmwiki/pmwiki.php/Main/DeathSeeker' data-format='W1tEZWF0aFNlZWtlciBvciBiZSBraWxsZWQgYnkgaXRdXQ=='>or be killed by it</a>. (Un)successful ones may graduate from Troll Slayers to become Giant Slayers, Dragon Slayer, or even Daemon Slayers.
 </li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Warhammer40000' title='/pmwiki/pmwiki.php/TabletopGame/Warhammer40000' data-format='VGFibGV0b3BHYW1lL1dhcmhhbW1lcjQwMDAw'>Warhammer 40,000</a></em>:
 <ul ><li> The Dark Angels are a Space Marines chapter that refers to themselves as the Unforgiven, because during the <a class='twikilink' href='/pmwiki/pmwiki.php/Literature/HorusHeresy' title='/pmwiki/pmwiki.php/Literature/HorusHeresy' data-format='TGl0ZXJhdHVyZS9Ib3J1c0hlcmVzeQ=='>Horus Heresy</a> a portion of their force turned traitor out of pride or confusion. This being <a class='twikilink' href='/pmwiki/pmwiki.php/Main/CrapsackWorld' title='/pmwiki/pmwiki.php/Main/CrapsackWorld' data-format='W1tDcmFwc2Fja1dvcmxkIDQwa11d'>40k</a>, their method of atonement is to hunt down these Fallen Angels and "redeem" them by torturing them to death, and it's hinted that perhaps the original Dark Angels were traitors themselves who were sitting out the Horus Heresy until a winner emerged.
@@ -557,23 +580,28 @@
 <ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Toys/Bionicle' title='/pmwiki/pmwiki.php/Toys/Bionicle' data-format='VG95cy97e0Jpb25pY2xlfX0='>BIONICLE</a></em>, Brutaka is treated as one: sent to the highest security prison in this verse, sent to a suicide mission as probation, then welcomed back in the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HeroSecretService' title='/pmwiki/pmwiki.php/Main/HeroSecretService' data-format='SGVyb1NlY3JldFNlcnZpY2U='>Hero Secret Service</a>. The big surprise is that his best friend Axonn, who had to stop him when he betrayed, is another, according to the Atlas.
 </li></ul></div>
 </p><p><div class="folderlabel" onclick="togglefolder('folder9');">&nbsp;&nbsp;&nbsp;&nbsp;Visual Novels&nbsp;</div><div id="folder9" class="folder" isfolder="true" style="display:block;">
-<ul ><li> Downplayed with the protagonist of <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/DoubleHomework' title='/pmwiki/pmwiki.php/VisualNovel/DoubleHomework' data-format='VmlzdWFsTm92ZWwvRG91YmxlSG9tZXdvcms='>Double Homework</a></em>. He killed 12 people by starting an avalanche, but that was an accident. And he made enemies of many jealous classmates, but not because he intended to be mean. And he has plenty of opportunities for self-gratification during his atonement.
+<ul ><li> Deconstructed with Valerian Trifa from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/DiesIrae' title='/pmwiki/pmwiki.php/VisualNovel/DiesIrae' data-format='VmlzdWFsTm92ZWwvRGllc0lyYWU='>Dies Irae</a></em>. Back when he was just a kindly priest, he attempted to run away from the madness of the Longinus Dreizehn Orden alongside the orphan children he cared for. Unfortunately, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BigBad' title='/pmwiki/pmwiki.php/Main/BigBad' data-format='W1tCaWdCYWQgUmVpbmhhcmRdXQ=='>Reinhard</a> found him and as punishment forced Trifa to pick ten of the children to be executed right in front of him. This lead to him blaming himself for their deaths due to being weak and unable to protect them in the face of adversity and vows to make amends. This vow however becomes an obsession and ends up making him blind to just how wicked he has become by the start of the story and to how flawed and nonsensical his idea of atonement really is.
+</li><li> Downplayed with the protagonist of <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/DoubleHomework' title='/pmwiki/pmwiki.php/VisualNovel/DoubleHomework' data-format='VmlzdWFsTm92ZWwvRG91YmxlSG9tZXdvcms='>Double Homework</a></em>. He killed 12 people by starting an avalanche, but that was an accident. And he made enemies of many jealous classmates, but not because he intended to be mean. And he has plenty of opportunities for self-gratification during his atonement.
 </li><li> In the second <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/FragmentsNote' title='/pmwiki/pmwiki.php/VisualNovel/FragmentsNote' data-format='VmlzdWFsTm92ZWwvRnJhZ21lbnRzTm90ZQ=='>Fragment's Note</a></em>, this is what inspires Yukitsuki to go into psychology and to a lesser extent help Kyoichi with his own psychological problems.
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/HatofulBoyfriend' title='/pmwiki/pmwiki.php/VisualNovel/HatofulBoyfriend' data-format='VmlzdWFsTm92ZWwvSGF0b2Z1bEJveWZyaWVuZA=='>Hatoful Boyfriend</a></em> <span class="spoiler" title="you can set spoilers visible by default on your profile" > Sakazaki Yuuya</span> is midway between this point and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MyGreatestFailure' title='/pmwiki/pmwiki.php/Main/MyGreatestFailure' data-format='TXlHcmVhdGVzdEZhaWx1cmU='>My Greatest Failure</a>. When he was very young someone killed his father to marry his mother, and would have <span class="spoiler" title="you can set spoilers visible by default on your profile" > killed his unhatched brother. Yuuya hung on to it and switched it with his new half-brother's egg so his brother would survive, then smashed the new egg</span>. This action weighs heavily on him years later and is something he's unable to ever forget, though he's fully accepted it and what it means, and so he tries endlessly to do good and save people.
-</li><li> Mamiya Shinzo in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/KaraNoShoujo' title='/pmwiki/pmwiki.php/VisualNovel/KaraNoShoujo' data-format='VmlzdWFsTm92ZWwvS2FyYU5vU2hvdWpv'>Kara no Shoujo</a></em>. <span class="spoiler" title="you can set spoilers visible by default on your profile" >He went insane and turned his lover int a model for a fresco by cutting off all her limbs and putting her into a large black egg. When he regained his sanity, he absolutely repented and felt the fresco was a horrible horrible thing, but by then it was too late and worse, there was no real way to atone for it</span>.
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/KissOfRevenge' title='/pmwiki/pmwiki.php/VisualNovel/KissOfRevenge' data-format='VmlzdWFsTm92ZWwvS2lzc09mUmV2ZW5nZQ=='>Kiss of Revenge</a></em>, <span class="spoiler" title="you can set spoilers visible by default on your profile" >Issei Sezaki</span> is haunted by a mistake he made during a during a routine operation which led to the death of his patient. He's spent the more than ten years since the incident devoting himself to the patients of his hospital and doing everything humanly possible to give them and their families the best of care; the nurses are used to seeing him pulling all-night research sessions when not on call, and he keeps a notebook filled with the details of every patient he fails to save, keeping the guilt fresh. <span class="spoiler" title="you can set spoilers visible by default on your profile" >When confronted by the daughter of the patient he accidentally killed, he takes it even further, making a public confession of the mistake and deciding to quit medicine entirely, and going so far as to offer to kill himself if that's what it will take to make amends</span>.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/LittleBusters' title='/pmwiki/pmwiki.php/VisualNovel/LittleBusters' data-format='VmlzdWFsTm92ZWwvTGl0dGxlQnVzdGVycw=='>Little Busters!</a></em>: <span class="spoiler" title="you can set spoilers visible by default on your profile" >Mio holds a huge guilt complex for forgetting Midori, her imaginary friend turned real from childhood, after her parents sent her to therapy and gave her medication. Her route even involves her giving up her entire existence so that Midori can live instead of her. It's even sadder in that in the real world, Midori doesn't actually exist&#8212;she only appears in the game because that's part of the world Mio had the boys create</span>.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/MonsterProm' title='/pmwiki/pmwiki.php/VisualNovel/MonsterProm' data-format='VmlzdWFsTm92ZWwvTW9uc3RlclByb20='>Monster Prom</a></em>: Coach took his job as a PE teacher and coach at a high school to break with his father, who earned a fortune as a spokesman for <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ChocolateFrostedSugarBombs' title='/pmwiki/pmwiki.php/Main/ChocolateFrostedSugarBombs' data-format='W1tDaG9jb2xhdGVGcm9zdGVkU3VnYXJCb21icyBudXRyaXRpb25hbGx5LWJhbmtydXB0IGJyZWFrZmFzdCBjZXJlYWxdXQ=='>nutritionally-bankrupt breakfast cereal</a>.
-</li><li> This is a running theme in the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/ParascientificEscape' title='/pmwiki/pmwiki.php/VisualNovel/ParascientificEscape' data-format='VmlzdWFsTm92ZWwvUGFyYXNjaWVudGlmaWNFc2NhcGU='>Parascientific Escape</a></em> series. The villain of each game realizes their evil and attempts to make up for it. In fact, the villains of the first two games turn themselves in to jail and do go on trial! <span class="spoiler" title="you can set spoilers visible by default on your profile" > Misaki, villain of the first game, is found Not Guilty due to coercion and is allowed to go free. Tsukiko, villain of the second, is guilty but is eventually allowed to live under house arrest on the grounds she serves as a spy for Yukiya.</span>
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/TheFruitOfGrisaia' title='/pmwiki/pmwiki.php/VisualNovel/TheFruitOfGrisaia' data-format='VmlzdWFsTm92ZWwvVGhlRnJ1aXRPZkdyaXNhaWE='>The Fruit of Grisaia</a></em>:
 <ul ><li> Yuuyi has quite a few things that haunts him from his past, and it's obvious he has done things he regrets to this day. Throughout the novell he wonders numerous times whether he even deserves a peaceful life, let alone happiness.
 </li><li> <span class="spoiler" title="you can set spoilers visible by default on your profile" >Amane</span> feels this especially towards <span class="spoiler" title="you can set spoilers visible by default on your profile" >Yuuji</span>. She has this in general, living with survivors guilt as the sole survivor of a terrible accident. However when the same person's <span class="spoiler" title="you can set spoilers visible by default on your profile" >brother shows up in her school, whom she was force to leave behind</span>, that feeling quadruples.
 </li><li> <span class="spoiler" title="you can set spoilers visible by default on your profile" >Yumiko's father Michiaki</span> becomes this after being defeated, wondering where his life went utterly wrong and realising that he can no longer feel empathy for the people he hurt.
-</li></ul></li><li> Deconstructed with Valerian Trifa from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/DiesIrae' title='/pmwiki/pmwiki.php/VisualNovel/DiesIrae' data-format='VmlzdWFsTm92ZWwvRGllc0lyYWU='>Dies Irae</a></em>. Back when he was just a kindly priest, he attempted to run away from the madness of the Longinus Dreizehn Orden alongside the orphan children he cared for. Unfortunately, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BigBad' title='/pmwiki/pmwiki.php/Main/BigBad' data-format='W1tCaWdCYWQgUmVpbmhhcmRdXQ=='>Reinhard</a> found him and as punishment forced Trifa to pick ten of the children to be executed right in front of him. This lead to him blaming himself for their deaths due to being weak and unable to protect them in the face of adversity and vows to make amends. This vow however becomes an obsession and ends up making him blind to just how wicked he has become by the start of the story and to how flawed and nonsensical his idea of atonement really is.
+</li></ul></li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/HatofulBoyfriend' title='/pmwiki/pmwiki.php/VisualNovel/HatofulBoyfriend' data-format='VmlzdWFsTm92ZWwvSGF0b2Z1bEJveWZyaWVuZA=='>Hatoful Boyfriend</a></em> <span class="spoiler" title="you can set spoilers visible by default on your profile" > Sakazaki Yuuya</span> is midway between this point and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MyGreatestFailure' title='/pmwiki/pmwiki.php/Main/MyGreatestFailure' data-format='TXlHcmVhdGVzdEZhaWx1cmU='>My Greatest Failure</a>. When he was very young someone killed his father to marry his mother, and would have <span class="spoiler" title="you can set spoilers visible by default on your profile" > killed his unhatched brother. Yuuya hung on to it and switched it with his new half-brother's egg so his brother would survive, then smashed the new egg</span>. This action weighs heavily on him years later and is something he's unable to ever forget, though he's fully accepted it and what it means, and so he tries endlessly to do good and save people.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/KissOfRevenge' title='/pmwiki/pmwiki.php/VisualNovel/KissOfRevenge' data-format='VmlzdWFsTm92ZWwvS2lzc09mUmV2ZW5nZQ=='>Kiss of Revenge</a></em>, <span class="spoiler" title="you can set spoilers visible by default on your profile" >Issei Sezaki</span> is haunted by a mistake he made during a during a routine operation which led to the death of his patient. He's spent the more than ten years since the incident devoting himself to the patients of his hospital and doing everything humanly possible to give them and their families the best of care; the nurses are used to seeing him pulling all-night research sessions when not on call, and he keeps a notebook filled with the details of every patient he fails to save, keeping the guilt fresh. <span class="spoiler" title="you can set spoilers visible by default on your profile" >When confronted by the daughter of the patient he accidentally killed, he takes it even further, making a public confession of the mistake and deciding to quit medicine entirely, and going so far as to offer to kill himself if that's what it will take to make amends</span>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/LittleBusters' title='/pmwiki/pmwiki.php/VisualNovel/LittleBusters' data-format='VmlzdWFsTm92ZWwvTGl0dGxlQnVzdGVycw=='>Little Busters!</a></em>: <span class="spoiler" title="you can set spoilers visible by default on your profile" >Mio holds a huge guilt complex for forgetting Midori, her imaginary friend turned real from childhood, after her parents sent her to therapy and gave her medication. Her route even involves her giving up her entire existence so that Midori can live instead of her. It's even sadder in that in the real world, Midori doesn't actually exist&#8212;she only appears in the game because that's part of the world Mio had the boys create</span>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/LoveBakudan' title='/pmwiki/pmwiki.php/VisualNovel/LoveBakudan' data-format='VmlzdWFsTm92ZWwvTG92ZUJha3VkYW4='>Love Bakudan</a></em> has <span class="spoiler" title="you can set spoilers visible by default on your profile" >Ayame Tokugawa. Ayame</span> is implied to have done many terrible things to people when she was growing up, before she (presumably) hit a point in her life that made her stop. It's unclear what the catalyst for this was, but she now spends her life trying to make amends for the things she caused.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/MonsterProm' title='/pmwiki/pmwiki.php/VisualNovel/MonsterProm' data-format='VmlzdWFsTm92ZWwvTW9uc3RlclByb20='>Monster Prom</a></em>: Coach took his job as a PE teacher and coach at a high school to break with his father, who earned a fortune as a spokesman for <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ChocolateFrostedSugarBombs' title='/pmwiki/pmwiki.php/Main/ChocolateFrostedSugarBombs' data-format='W1tDaG9jb2xhdGVGcm9zdGVkU3VnYXJCb21icyBudXRyaXRpb25hbGx5LWJhbmtydXB0IGJyZWFrZmFzdCBjZXJlYWxdXQ=='>nutritionally-bankrupt breakfast cereal</a>.
+</li><li> This is a running theme in the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/ParascientificEscape' title='/pmwiki/pmwiki.php/VisualNovel/ParascientificEscape' data-format='VmlzdWFsTm92ZWwvUGFyYXNjaWVudGlmaWNFc2NhcGU='>Parascientific Escape</a></em> series. The villain of each game realizes their evil and attempts to make up for it. In fact, the villains of the first two games turn themselves in to jail and do go on trial! <span class="spoiler" title="you can set spoilers visible by default on your profile" > Misaki, villain of the first game, is found Not Guilty due to coercion and is allowed to go free. Tsukiko, villain of the second, is guilty but is eventually allowed to live under house arrest on the grounds she serves as a spy for Yukiya.</span>
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/PiofioreFatedMemories' title='/pmwiki/pmwiki.php/VisualNovel/PiofioreFatedMemories' data-format='VmlzdWFsTm92ZWwvUGlvZmlvcmVGYXRlZE1lbW9yaWVz'>Piofiore: Fated Memories</a></em> As an otome game about the mafia, this trope is rampant.
 <ul ><li> Henri Lambert struggles greatly over the murders he has committed and the implication of what it means for him to continue to live. He does not believe he can ever be forgiven for his crimes and believes he should continue to suffer because of what he has done in the past. He does feel great guilt over subjecting the heroine to a life with him, and this serves as one of the main reasons he tries to push the heroine away from him romantically.
 </li><li> Orlok, though he has only killed on the Church's orders (for most of the first game, depending on the ending) he believes he will never go to Heaven. He believes the murders he has committed in the past were necessary and he continues to believe in his role as a Disciple of the Church, but also believes that he can never be forgiven.
 </li><li> Dante Falzone, as the capo of the Falzone family, has committed many crimes and does not believe he will find salvation. However, he does not believe he should change the way he lives.
+</li></ul></li><li> Mamiya Shinzo in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/TheShell' title='/pmwiki/pmwiki.php/VisualNovel/TheShell' data-format='VmlzdWFsTm92ZWwvVGhlU2hlbGw='>The Shell</a></em>. <span class="spoiler" title="you can set spoilers visible by default on your profile" >He went insane and turned his lover into a model for a fresco by cutting off all her limbs and putting her into a large black egg. When he regained his sanity, he absolutely repented and felt the fresco was a horrible horrible thing, but by then it was too late and worse, there was no real way to atone for it</span>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/UminekoWhenTheyCry' title='/pmwiki/pmwiki.php/VisualNovel/UminekoWhenTheyCry' data-format='VmlzdWFsTm92ZWwvVW1pbmVrb1doZW5UaGV5Q3J5'>Umineko: When They Cry</a></em>:
+<ul ><li> In Episode 7, we learn that <span class="spoiler" title="you can set spoilers visible by default on your profile" > he was responsible for the maintenance of Beatrice II's <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GildedCage' title='/pmwiki/pmwiki.php/Main/GildedCage' data-format='R2lsZGVkQ2FnZQ=='>Gilded Cage</a>. Unable to forgive himself for allowing her to be abused by her father, and terrified that Kinzo would inflict the same suffering on Sayo, he faked Sayo's death and passed the child off as an orphan. Alas, making Sayo work as a servant in the Ushiromiya estate just in the hope that she and Kinzo could be reunited one day was yet another mistake&#8212;one that, according to "Confession of the Golden Witch", he was willing to atone for by knowingly assisting Sayo in her murder-suicide plot.</span>
+</li><li> In the end, it turns out Kinzō is all too aware of the tragic extent of his failings towards his entirely family. It turns out the whole deal with the epitaph was actually his wild gamble to <span class="spoiler" title="you can set spoilers visible by default on your profile" >establish contact with Sayo, grant her the headship, and try to somehow make up for what he did to his daughter Beatrice</span>.
+</li><li> In <span class='esc-seq' title='non-wikiword'>EP8</span>, Eva acknowledges her guilt for the suffering of her niece Ange and openly tries to remedy this with the help of Battler <span class="spoiler" title="you can set spoilers visible by default on your profile" >who creates a final game where the family can make good memories with Ange. Eva is assigned as Ange's main helper to make up for her failure at amending their relationship during life.</span>
 </li></ul></li></ul></div>
 </p><p><hr data-format='&#8212;&#8212;' />
 </p></div>
@@ -597,28 +625,28 @@
   <div class="video-examples-featured">
     <div class="example_video_box">
       <a href="#video-link"
-         data-video-id="06xpi1"
-         data-video-descrip="A Mercenary who worked for Vilgax, only to watch as his Homeworld and entire species was destroyed because of his actions"
-         data-video-title="Tetrax Shard"
-         data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/06xpi1_640x360p_qvbr.mp4"
-         data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/06xpi1.mpd"
-         data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/06xpi1.m3u8"
-         data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/06xpi1.jpg"
+         data-video-id="7s7xqa"
+         data-video-descrip="Once, Tobita tried and failed to be a hero, which led him down the path to becoming the villain known as Gentle Criminal. Now, thanks to Midoriya's influence, he is ready to become the hero he was always destined to be!"
+         data-video-title="Tobita's Redemption"
+         data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/7s7xqa_640x360p_qvbr.mp4"
+         data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/7s7xqa.mpd"
+         data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/7s7xqa.m3u8"
+         data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/7s7xqa.jpg"
          data-video-trope="Main/TheAtoner"
          data-video-tropename="The Atoner"
          data-video-approval="APPROVED"
          data-video-troper-rating=""
          data-video-average-rating="5.00"
-         data-video-rating-count="12"
-         data-video-media-sources="Main/LastOfHisKind,Main/MyGodWhatHaveIDone,WesternAnimation/Ben10,WesternAnimation/Ben10SecretOfTheOmnitrix"
+         data-video-rating-count="2"
+         data-video-media-sources="Main/BarrierWarrior,Main/BigDamnHeroes,Main/HellYesMoment,Main/MyGreatestSecondChance,Main/ReformedCriminal,Main/ThePowerOfLove,Manga/MyHeroAcademia,Recap/MyHeroAcademiaS7E16TheChainThusFar"
          class="video-launch-link video-overlay-link featured-widget-vid">
 
           <div class="featured-widget-vid-iframe">
               <div id="tvtropes_no_volume_player" 
-                  data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/06xpi1.jpg" 
-                  data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/06xpi1_640x360p_qvbr.mp4" 
-                  data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/06xpi1.mpd" 
-                  data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/06xpi1.m3u8"
+                  data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/7s7xqa.jpg" 
+                  data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/7s7xqa_640x360p_qvbr.mp4" 
+                  data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/7s7xqa.mpd" 
+                  data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/7s7xqa.m3u8"
               		data-controls="0"
               		data-muted="1">
                   
@@ -628,14 +656,98 @@
       </a>
     </div>
 
-    <h2 class="bold font-l">Tetrax Shard</h2>
+    <h2 class="bold font-l">Tobita's Redemption</h2>
     <p class="_pmvv-vidbox-descTxt">
-      A Mercenary who worked for Vilgax, only to watch as his Homeworld and entire species was destroyed because of his actions    </p>
+      Once, Tobita tried and failed to be a hero, which led him down the path to becoming the villain known as Gentle Criminal. Now, thanks to Midoriya's influence, he is ready to become the hero he was always destined to be!    </p>
     
 
   </div>
 
     <div class="video-examples-thumbs">
+
+          
+      <a href="#video-link"
+      data-video-id="n6u1cy"
+      data-video-descrip="When she was held captive by the Iron Kingdom, Jill was forced to commit all manner of atrocity, the guilt from which continues to weigh upon her..."
+      data-video-title="&quot;I Had Become a Monster&quot;"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/n6u1cy_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/n6u1cy.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/n6u1cy.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/n6u1cy.jpg"
+      data-video-trope="Main/IAmAMonster"
+      data-video-tropename="I Am a Monster"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Main/TheAtoner,VideoGame/FinalFantasyXVI"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/n6u1cy.jpg">
+      <p><span class="bold">"I Had Become a...</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="ie3bsj"
+      data-video-descrip="If Shepard doesn't tell anyone about the sabotage and only later points out Mordin's change in opinion on the Genophage cure, Mordin admits that he was wrong to support it before going to cure it, dying in the process."
+      data-video-title="I MADE A MISTAKE!"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/ie3bsj_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/ie3bsj.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/ie3bsj.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/ie3bsj.jpg"
+      data-video-trope="Main/TheAtoner"
+      data-video-tropename="The Atoner"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Main/HeroicSacrifice,Main/MyGreatestFailure,Main/MyGreatestSecondChance,Main/RedemptionEqualsDeath,VideoGame/MassEffect3"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/ie3bsj.jpg">
+      <p><span class="bold">I MADE A MISTAKE!</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="77a6a6"
+      data-video-descrip="Rtas Vadum gives an imposing speech to his troops about combating a heresy, but makes clear to Thel' Vadam that the safety of his troops take priority over the disgraced Elite. Vadam concurs. "
+      data-video-title="On the Blood of Our Fathers"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/77a6a6_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/77a6a6.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/77a6a6.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/77a6a6.jpg"
+      data-video-trope="Main/AFatherToHisMen"
+      data-video-tropename="A Father to His Men"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Main/BadassBoast,Main/DeathSeeker,Main/TheAtoner,VideoGame/Halo2,Main/BadassCreed"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/77a6a6.jpg">
+      <p><span class="bold">On the Blood of...</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="06xpi1"
+      data-video-descrip="A Mercenary who worked for Vilgax, only to watch as his Homeworld and entire species was destroyed because of his actions"
+      data-video-title="Tetrax Shard"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/06xpi1_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/06xpi1.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/06xpi1.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/06xpi1.jpg"
+      data-video-trope="Main/TheAtoner"
+      data-video-tropename="The Atoner"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Main/LastOfHisKind,Main/MyGodWhatHaveIDone,WesternAnimation/Ben10,WesternAnimation/Ben10SecretOfTheOmnitrix"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/06xpi1.jpg">
+      <p><span class="bold">Tetrax Shard</span></p>
+    </a>
 
           
       <a href="#video-link"
@@ -694,7 +806,7 @@
       data-video-troper-rating=""
       data-video-average-rating=""
       data-video-rating-count=""
-      data-video-media-sources="Film/AvengersEndgame,Film/AvengersInfinityWar,Film/CaptainAmericaTheFirstAvenger,Film/DoctorStrangeInTheMultiverseOfMadness,Film/IronMan1,Film/ShangChiAndTheLegendOfTheTenRings,Film/SpiderManNoWayHome,Film/Thor,Franchise/MarvelCinematicUniverse,Main/JumpingOnAGrenade,Main/TheAtoner,WebVideo/GameTheory"
+      data-video-media-sources="Film/AvengersEndgame,Film/AvengersInfinityWar,Film/CaptainAmericaTheFirstAvenger,Film/DoctorStrangeInTheMultiverseOfMadness,Film/IronMan1,Film/ShangChiAndTheLegendOfTheTenRings,Film/SpiderManNoWayHome,Film/Thor2011,Main/JumpingOnAGrenade,Main/TheAtoner,WebVideo/GameTheory"
       class="video-launch-link video-overlay-link video-background-image lazy-image"
       data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/2kygz3.jpg">
       <p><span class="bold">The MCU's 3rd F...</span></p>
@@ -733,8 +845,6 @@
 </div>
 
 
-
-    
         <div class="section-links" itemscope itemtype="http://schema.org/SiteNavigationElement">
 
     
@@ -747,34 +857,6 @@
 
     <div class="links">
                     
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AscendedDemon">Ascended Demon</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/IndexWithAHeartOfGold">Index with a Heart of Gold</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/BadPowersGoodPeople">Bad Powers, Good People</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AttentionWhore">Attention Whore</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/BeingInThisIndexSucks">Being in This Index Sucks</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/BeingEvilSucks">Being Evil Sucks</a> 
-                                            </li>
-                </ul>
-
-            
                 <ul>
                     <li>
                                                     <a href="/pmwiki/pmwiki.php/Main/AchillesInHisTent">Achilles in His Tent</a>
@@ -791,70 +873,42 @@
             
                 <ul>
                     <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AccompliceByInaction">Accomplice by Inaction</a>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AllergicToRoutine">Allergic to Routine</a>
                                             </li>
                     <li>
-                        <a href="/pmwiki/pmwiki.php/Main/ResponsibilityTropes">Responsibility Tropes</a>
+                        <a href="/pmwiki/pmwiki.php/Main/BeingInThisIndexSucks">Being in This Index Sucks</a>
                     </li>
                     <li>
                          
-                            <a href="/pmwiki/pmwiki.php/Main/BeingGodIsHard">Being God Is Hard</a> 
+                            <a href="/pmwiki/pmwiki.php/Main/AttentionWhore">Attention Whore</a> 
                                             </li>
                 </ul>
 
             
                 <ul>
                     <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AccidentalChildKillerBackstory">Accidental Child-Killer Backstory</a>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AscendedDemon">Ascended Demon</a>
                                             </li>
                     <li>
-                        <a href="/pmwiki/pmwiki.php/Main/IRegretThisIndex">I Regret This Index</a>
+                        <a href="/pmwiki/pmwiki.php/Main/IndexWithAHeartOfGold">Index with a Heart of Gold</a>
                     </li>
                     <li>
                          
-                            <a href="/pmwiki/pmwiki.php/Main/BloodyHallucinationsOfGuilt">Bloody Hallucinations of Guilt</a> 
+                            <a href="/pmwiki/pmwiki.php/Main/BadPowersGoodPeople">Bad Powers, Good People</a> 
                                             </li>
                 </ul>
 
             
                 <ul>
                     <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AntiVillain">Anti-Villain</a>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AscendedDemon">Ascended Demon</a>
                                             </li>
                     <li>
-                        <a href="/pmwiki/pmwiki.php/Main/MaturityTropes">Maturity Tropes</a>
+                        <a href="/pmwiki/pmwiki.php/Main/HeelFaceIndex">Heel/Face Index</a>
                     </li>
                     <li>
                          
-                            <a href="/pmwiki/pmwiki.php/Main/BenevolentBoss">Benevolent Boss</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AthleticallyChallenged">Athletically Challenged</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/NoRealLife/Tropes0ToC">NoRealLife/Tropes 0 to C</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/AttackOfThePoliticalAd">Attack of the Political Ad</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AtomicFBomb">Atomic F-Bomb</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/TruthInTelevision/AToC">TruthInTelevision/A to C</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/AttractiveBentGender">Attractive Bent-Gender</a> 
+                            <a href="/pmwiki/pmwiki.php/Main/BecauseYouWereNiceToMe">Because You Were Nice to Me</a> 
                                             </li>
                 </ul>
 
@@ -875,14 +929,14 @@
             
                 <ul>
                     <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AtLeastIAdmitIt">At Least I Admit It</a>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AlwaysNeedWhatYouGaveUp">Always Need What You Gave Up</a>
                                             </li>
                     <li>
-                        <a href="/pmwiki/pmwiki.php/Main/MoralityTropes">Morality Tropes</a>
+                        <a href="/pmwiki/pmwiki.php/Main/IRegretThisIndex">I Regret This Index</a>
                     </li>
                     <li>
                          
-                            <a href="/pmwiki/pmwiki.php/Main/AvengingTheVillain">Avenging the Villain</a> 
+                            <a href="/pmwiki/pmwiki.php/Main/BloodyHallucinationsOfGuilt">Bloody Hallucinations of Guilt</a> 
                                             </li>
                 </ul>
 
@@ -903,6 +957,34 @@
             
                 <ul>
                     <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/ATeamMontage">A-Team Montage</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/TimeImmemorial/TropesAToG">TimeImmemorial/Tropes A to G</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/AttackOfThe50FootWhatever">Attack of the 50-Foot Whatever</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AccompliceByInaction">Accomplice by Inaction</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/ResponsibilityTropes">Responsibility Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/BeingGodIsHard">Being God Is Hard</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
                                                     <a href="/pmwiki/pmwiki.php/Main/AfterTheEnd">After the End</a>
                                             </li>
                     <li>
@@ -911,6 +993,34 @@
                     <li>
                          
                             <a href="/pmwiki/pmwiki.php/Main/BecameTheirOwnAntithesis">Became Their Own Antithesis</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AntiVillain">Anti-Villain</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/MaturityTropes">Maturity Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/BenevolentBoss">Benevolent Boss</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AtomicFBomb">Atomic F-Bomb</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/TruthInTelevision/AToC">TruthInTelevision/A–C</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/AttractiveBentGender">Attractive Bent-Gender</a> 
                                             </li>
                 </ul>
 
@@ -945,34 +1055,6 @@
             
                 <ul>
                     <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AscendedDemon">Ascended Demon</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/HeelFaceIndex">Heel/Face Index</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/BecauseYouWereNiceToMe">Because You Were Nice to Me</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/ATeamMontage">A-Team Montage</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/TimeImmemorial/TropesAToG">TimeImmemorial/Tropes A to G</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/AttackOfThe50FootWhatever">Attack of the 50-Foot Whatever</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
                                                     <a href="/pmwiki/pmwiki.php/Literature/ParadiseLost">Paradise Lost</a>
                                             </li>
                     <li>
@@ -984,12 +1066,52 @@
                                             </li>
                 </ul>
 
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AthleticallyChallenged">Athletically Challenged</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/NoRealLife/Tropes0ToC">NoRealLife/Tropes 0 to C</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/AttackOfThePoliticalAd">Attack of the Political Ad</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AtLeastIAdmitIt">At Least I Admit It</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/MoralityTropes">Morality Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/AvengingTheVillain">Avenging the Villain</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AnguishedDeclarationOfLove">Anguished Declaration of Love</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/SugarWiki/HeartwarmingMoments">SugarWiki/Heartwarming Moments</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/ArsonMurderAndLifesaving">Arson, Murder, and Lifesaving</a> 
+                                            </li>
+                </ul>
+
                     
         
             </div>
 </div>
-
-
 
 
 
@@ -1031,6 +1153,8 @@
             <div class="crucial_browsing_dropdown">
                 <a href="javascript:void(0);" onclick="double_dropdown(); return false;" id="crucial_browsing_dropdown"><span class="new_blue">Crucial Browsing</span><i class="fa fa-angle-down"></i></a>
                 <ul id="main_dropdown">
+                    <li class="first_dropdown"><a href="/pmwiki/index_report.php">Indexes</a>
+
                     <li class="first_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Genre</a>
                         <ul>
                             <li><a href='/pmwiki/pmwiki.php/Main/ActionAdventureTropes' title='Main/ActionAdventureTropes'>Action Adventure</a></li>
@@ -1045,7 +1169,6 @@
                             <li><a href='/pmwiki/pmwiki.php/Main/SpeculativeFictionTropes' title='Main/SpeculativeFictionTropes'>Speculative Fiction</a></li>
                             <li><a href='/pmwiki/pmwiki.php/Main/SportsStoryTropes' title='Main/SportsStoryTropes'>Sports Story</a></li>
                             <li><a href='/pmwiki/pmwiki.php/Main/WarTropes' title='Main/WarTropes'>War</a></li>
-                            <li><a href="/pmwiki/lbs.php" data-modal-target="login">Live Blogs</a></li>
                         </ul>
                     </li>
 
@@ -1065,7 +1188,7 @@
                             <li><a href="/pmwiki/pmwiki.php/Main/Radio" title="Main/Radio">Radio</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/SequentialArt" title="Main/SequentialArt">Sequential Art</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/TabletopGames" title="Main/TabletopGames">Tabletop Games</a></li>
-                            <li><a href="/pmwiki/pmwiki.php/UsefulNotes/Television" title="Main/Television">Television</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/MediaNotes/Television" title="MediaNotes/Television">Television</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/Theater" title="Main/Theater">Theater</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/VideogameTropes" title="Main/VideogameTropes">Videogame</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/Webcomics" title="Main/Webcomics">Webcomics</a></li>
@@ -1137,6 +1260,7 @@
                         <ul>
                             <li><a href="/pmwiki/pmwiki.php/Administrivia/IttyBittyWikiTools">Wiki Tools</a></li>
                             <li><a href="/pmwiki/cutlist.php" data-modal-target="login" rel="nofollow">Cut List</a></li>
+                            <li><a href="/pmwiki/image-fixer.php" data-modal-target="login" rel="nofollow">Image Fixer</a></li>
                             <li><a href="/pmwiki/changes.php">New Edits</a></li>
                             <li><a href="/pmwiki/articles_new.php">New Articles</a></li>
                             <li><a href="/pmwiki/recent_edit_reasons.php">Edit Reasons</a></li>
@@ -1201,7 +1325,7 @@
     </div>
 
         <div id="action-bar-bottom" class="action-bar tablet-off">
-        <a href="#top-of-page" class="scroll-to-top dead-button" onclick="$('html, body').animate({scrollTop : 0},500);">Top</a>
+        <a href="#top-of-page" class="scroll-to-top dead-button" onclick="scroll_to_top(500);">Top</a>
     </div>
     
 </div>    <footer id="main-footer">
@@ -1240,7 +1364,6 @@
                 <li><a href="/pmwiki/tlp_activity.php">Trope Launch Pad</a></li>
                 <li><a href="/pmwiki/query.php?type=tf">Trope Finder</a></li>
                 <li><a href="/pmwiki/query.php?type=ykts">Media Finder</a></li>
-                <li><a href="/pmwiki/lbs.php" data-modal-target="login">Live Blogs</a></li>
                 <li><a href="/pmwiki/query.php?type=wl">Tech Wishlist</a></li>
                 <li><a href="/pmwiki/review_activity.php">Reviews</a></li>
                 <li><a href="/pmwiki/topics.php">Forum</a></li>
@@ -1256,6 +1379,7 @@
                 <li><a href="/pmwiki/changelog.php">Changelog</a></li>
                 <li><a href="/pmwiki/dmca.php">DMCA Notice</a></li>
                 <li><a href="/pmwiki/privacypolicy.php">Privacy Policy</a></li>
+                <li><a href="/pmwiki/termsofservice.php">Terms Of Service</a></li>
 
             </ul>
 
@@ -1266,7 +1390,7 @@
         </div>
 
         <div class="legal">
-            <p>TVTropes is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. <br>Permissions beyond the scope of this license may be available from <a xmlns:cc="http://creativecommons.org/ns#" href="mailto:thestaff@tvtropes.org" rel="cc:morePermissions"> thestaff@tvtropes.org</a>.</p>
+            <p>TVTropes is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. <br>Permissions beyond the scope of this license may be available from <a xmlns:cc="http://creativecommons.org/ns#" href="/cdn-cgi/l/email-protection#7a0e121f090e1b1c1c3a0e0c0e08150a1f095415081d" rel="cc:morePermissions"> <span class="__cf_email__" data-cfemail="780c101d0b0c191e1e380c0e0c0a17081d0b56170a1f">[email&#160;protected]</span></a>.</p>
             <br>
             <div class="privacy_wrapper">
             </div>
@@ -1274,25 +1398,7 @@
     </footer>
     
     
-    <style>
-      div.fc-ccpa-root {
-        position: absolute !important;
-        bottom: 93px !important;
-        margin: auto !important;
-        width: 100% !important;
-        z-index: 9999 !important;
-        overflow: hidden !important;
-      }
-      .fc-ccpa-root .fc-dns-dialog .fc-dns-link p{
-        outline: none !important;
-        text-decoration: underline !important;
-        font-size: .7em !important;
-        font-family: sans-serif !important;
-      }
-      .fc-ccpa-root .fc-dns-dialog .fc-dns-link .fc-button-background {
-        background: none !important;
-      }
-    </style>
+    
 
         <div id="_pm_videoViewer" class="full-screen">
 
@@ -1305,12 +1411,12 @@
         <div id="overlay_outer_player_max">
 	<div id="overlay_outer_player_wrapper">
 		<div id="tvtropes_overlay_player" 
-			data-video-id="tvtropes-videos-06xpi1" 
-			data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/06xpi1.jpg" 
-			data-video-title="Tetrax Shard" 
-			data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/06xpi1_640x360p_qvbr.mp4" 
-			data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/06xpi1.mpd" 
-			data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/06xpi1.m3u8"
+			data-video-id="tvtropes-videos-7s7xqa" 
+			data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/7s7xqa.jpg" 
+			data-video-title="Tobita's Redemption" 
+			data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/7s7xqa_640x360p_qvbr.mp4" 
+			data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/7s7xqa.mpd" 
+			data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/7s7xqa.m3u8"
 			data-small-player="never"
 			data-track-events="1"
 			data-do-not-loop="1"
@@ -1322,11 +1428,11 @@
 
 <div class="_pmvv-vidbox-desc">
 
-	<h1 id="overlay-title">Tetrax Shard</h1>
+	<h1 id="overlay-title">Tobita's Redemption</h1>
 	<p id="overlay-descrip" class="_pmvv-vidbox-descTxt">
-	    A Mercenary who worked for Vilgax, only to watch as his Homeworld and entire species was destroyed because of his actions	</p>
+	    Once, Tobita tried and failed to be a hero, which led him down the path to becoming the villain known as Gentle Criminal. Now, thanks to Midoriya's influence, he is ready to become the hero he was always destined to be!	</p>
 
-      <div class="rating-row"  data-video-id="06xpi1" >
+      <div class="rating-row"  data-video-id="7s7xqa" >
         <input type="hidden" name="is_logged_in"  value="0" >
         <p>How well does it match the trope?</p>
 				<div id="star-rating-group">
@@ -1344,7 +1450,7 @@
 													</div>
 
                         <div id="star-rating-total">
-                                                            5 (12 votes)
+                                                            5 (2 votes)
                                                     </div>
 
 					</div>
@@ -1367,7 +1473,7 @@
 			</div>
 		</div>
 	<p class="_pmvv-vidbox-stats text-right font-s" style="padding-top:8px; border-top: solid 1px rgba(255,255,255,0.2)">
-	<!--    <i class="fa fa-eye"></i> 11,241-->
+	
 
 
 			    <a href="#video-feedback" class="float-right" 
@@ -1387,6 +1493,86 @@
 
     <div class="_pmvv-foot-scrollwrapper">
                 <a href="#video-link" 
+             data-video-id="7s7xqa"
+             data-vimeo-id=""
+             data-video-descrip="Once, Tobita tried and failed to be a hero, which led him down the path to becoming the villain known as Gentle Criminal. Now, thanks to Midoriya's influence, he is ready to become the hero he was always destined to be!"
+             data-video-title="Tobita's Redemption"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/7s7xqa_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/7s7xqa.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/7s7xqa.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/7s7xqa.jpg"
+             data-video-trope="Main/TheAtoner"
+             data-video-tropename="The Atoner"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="5.00"
+             data-video-rating-count="2"
+             data-video-media-sources="Main/BarrierWarrior,Main/BigDamnHeroes,Main/HellYesMoment,Main/MyGreatestSecondChance,Main/ReformedCriminal,Main/ThePowerOfLove,Manga/MyHeroAcademia,Recap/MyHeroAcademiaS7E16TheChainThusFar"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/7s7xqa.jpg">
+            <p><span class="bold">Tobita's Redemp...</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="n6u1cy"
+             data-vimeo-id=""
+             data-video-descrip="When she was held captive by the Iron Kingdom, Jill was forced to commit all manner of atrocity, the guilt from which continues to weigh upon her..."
+             data-video-title="&quot;I Had Become a Monster&quot;"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/n6u1cy_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/n6u1cy.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/n6u1cy.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/n6u1cy.jpg"
+             data-video-trope="Main/IAmAMonster"
+             data-video-tropename="I Am a Monster"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="5.00"
+             data-video-rating-count="3"
+             data-video-media-sources="Main/TheAtoner,VideoGame/FinalFantasyXVI"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/n6u1cy.jpg">
+            <p><span class="bold">"I Had Become a...</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="ie3bsj"
+             data-vimeo-id=""
+             data-video-descrip="If Shepard doesn't tell anyone about the sabotage and only later points out Mordin's change in opinion on the Genophage cure, Mordin admits that he was wrong to support it before going to cure it, dying in the process."
+             data-video-title="I MADE A MISTAKE!"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/ie3bsj_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/ie3bsj.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/ie3bsj.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/ie3bsj.jpg"
+             data-video-trope="Main/TheAtoner"
+             data-video-tropename="The Atoner"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="4.90"
+             data-video-rating-count="10"
+             data-video-media-sources="Main/HeroicSacrifice,Main/MyGreatestFailure,Main/MyGreatestSecondChance,Main/RedemptionEqualsDeath,VideoGame/MassEffect3"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/ie3bsj.jpg">
+            <p><span class="bold">I MADE A MISTAKE!</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="77a6a6"
+             data-vimeo-id=""
+             data-video-descrip="Rtas Vadum gives an imposing speech to his troops about combating a heresy, but makes clear to Thel' Vadam that the safety of his troops take priority over the disgraced Elite. Vadam concurs. "
+             data-video-title="On the Blood of Our Fathers"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/77a6a6_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/77a6a6.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/77a6a6.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/77a6a6.jpg"
+             data-video-trope="Main/AFatherToHisMen"
+             data-video-tropename="A Father to His Men"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="4.67"
+             data-video-rating-count="6"
+             data-video-media-sources="Main/BadassBoast,Main/DeathSeeker,Main/TheAtoner,VideoGame/Halo2,Main/BadassCreed"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/77a6a6.jpg">
+            <p><span class="bold">On the Blood of...</span></p>
+          </a>
+                <a href="#video-link" 
              data-video-id="06xpi1"
              data-vimeo-id=""
              data-video-descrip="A Mercenary who worked for Vilgax, only to watch as his Homeworld and entire species was destroyed because of his actions"
@@ -1400,7 +1586,7 @@
              data-video-approval="APPROVED"
              data-video-troper-rating=""
              data-video-average-rating="5.00"
-             data-video-rating-count="12"
+             data-video-rating-count="21"
              data-video-media-sources="Main/LastOfHisKind,Main/MyGodWhatHaveIDone,WesternAnimation/Ben10,WesternAnimation/Ben10SecretOfTheOmnitrix"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/06xpi1.jpg">
@@ -1420,7 +1606,7 @@
              data-video-approval="APPROVED"
              data-video-troper-rating=""
              data-video-average-rating="5.00"
-             data-video-rating-count="9"
+             data-video-rating-count="11"
              data-video-media-sources="Anime/DigimonAdventure02,Main/Forgiveness,Main/TheAtoner,Main/ThePromise,Main/UsedToBeASweetKid,Recap/DigimonAdventure02E23GenesisOfEvil"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/qrqjv9.jpg">
@@ -1439,8 +1625,8 @@
              data-video-tropename="The Atoner"
              data-video-approval="APPROVED"
              data-video-troper-rating=""
-             data-video-average-rating="5.00"
-             data-video-rating-count="7"
+             data-video-average-rating="4.88"
+             data-video-rating-count="8"
              data-video-media-sources="Anime/YuGiOh5Ds,Main/MustMakeAmends,Main/WhatHaveIBecome"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/rlhwtn.jpg">
@@ -1460,8 +1646,8 @@
              data-video-approval="APPROVED"
              data-video-troper-rating=""
              data-video-average-rating="5.00"
-             data-video-rating-count="9"
-             data-video-media-sources="Film/AvengersEndgame,Film/AvengersInfinityWar,Film/CaptainAmericaTheFirstAvenger,Film/DoctorStrangeInTheMultiverseOfMadness,Film/IronMan1,Film/ShangChiAndTheLegendOfTheTenRings,Film/SpiderManNoWayHome,Film/Thor,Franchise/MarvelCinematicUniverse,Main/JumpingOnAGrenade,Main/TheAtoner,WebVideo/GameTheory"
+             data-video-rating-count="14"
+             data-video-media-sources="Film/AvengersEndgame,Film/AvengersInfinityWar,Film/CaptainAmericaTheFirstAvenger,Film/DoctorStrangeInTheMultiverseOfMadness,Film/IronMan1,Film/ShangChiAndTheLegendOfTheTenRings,Film/SpiderManNoWayHome,Film/Thor2011,Main/JumpingOnAGrenade,Main/TheAtoner,WebVideo/GameTheory"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/2kygz3.jpg">
             <p><span class="bold">The MCU's 3rd F...</span></p>
@@ -1506,22 +1692,16 @@
 
 
 
-<!-- Quantcast Tag -->
 
 
-<noscript>
-  <div style="display:none;">
-    <img src="//pixel.quantserve.com/pixel/p-mEzuYq24VEJ-3.gif" border="0" height="1" width="1" alt="Quantcast"/>
-  </div>
-</noscript>
-<!-- End Quantcast tag -->
 
 
-<!-- Begin comScore Tag -->
 
-<noscript>
-  <img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=38282685&amp;cv=3.6.0&amp;cj=1">
-</noscript>
-<!-- End comScore Tag -->
+
+
+
+
+
+
 </body>
 </html>

@@ -13,16 +13,23 @@ using System.Web;
 
 namespace TvTropesMetadata.Scraping;
 
-public abstract class BaseScraper(IWebDownloader downloader)
+public abstract class BaseScraper(IWebViewFactory webViewFactory)
 {
-    protected readonly IWebDownloader downloader = downloader;
+    private IWebView _webView;
+    protected IWebView WebView => _webView ??= webViewFactory.CreateOffscreenView();
     protected readonly ILogger logger = LogManager.GetLogger();
-    public List<string> CategoryWhitelist = ["VideoGame", "VisualNovel"];
-    public List<string> BlacklistedWords =
+    protected List<string> CategoryWhitelist = ["VideoGame", "VisualNovel"];
+
+    protected List<string> BlacklistedWords =
     [
         "deconstructed", "averted", "inverted", "subverted",
         "deconstructs", "averts", "inverts", "subverts"
     ];
+
+    public static string GetSearchUrl(string query)
+    {
+        return $"https://tvtropes.org/pmwiki/search_result.php#gsc.tab=0&gsc.q={HttpUtility.UrlEncode(query)}&gsc.sort=";
+    }
 
     public abstract IEnumerable<TvTropesSearchResult> Search(string query);
 
@@ -35,31 +42,34 @@ public abstract class BaseScraper(IWebDownloader downloader)
             yield break;
         }
 
-        string url = $"https://tvtropes.org/pmwiki/elastic_search_result.php?q={HttpUtility.UrlEncode(query)}&page_type={type}&search_type=article";
+        string url = GetSearchUrl(query);
         var doc = GetDocument(url);
-        var searchResults = doc.QuerySelectorAll("a.search-result[href]");
-        foreach (var a in searchResults)
-        {
-            var absoluteUrl = a.GetAttribute("href").GetAbsoluteUrl(url);
-            var imgUrl = a.QuerySelector("img[src]")?.GetAttribute("src");
-            var title = a.FirstElementChild.TextContent;
-            string description = null;
-            var descriptionElement = a.QuerySelector("div");
-            if (descriptionElement != null)
-            {
-                var childrenToRemove = descriptionElement.Children.Where(c => c.ClassName == "img-wrapper" || c.ClassName == "more-button");
-                foreach (var child in childrenToRemove)
-                    descriptionElement.RemoveChild(child);
+        var searchResults = doc.QuerySelectorAll("div.gs-result");
+        var skipBreadcrumbs = new[] { "TV Tropes", "pmwiki", "pmwiki.php" };
 
-                description = descriptionElement.TextContent.Trim();
-            }
-            yield return new TvTropesSearchResult
+        foreach (var div in searchResults)
+        {
+            var a = div.QuerySelector("a.gs-title[href]");
+            if (a == null)
+                continue;
+
+            var absoluteUrl = a.GetAttribute("href").GetAbsoluteUrl(url);
+            var title = a.TextContent;
+            var imgUrl = div.QuerySelector("img[src]")?.GetAttribute("src");
+            var description = div.QuerySelector("div.gs-snippet")?.TextContent;
+            var breadCrumbs = div.QuerySelectorAll("div.gs-visibleUrl-breadcrumb > span")
+                                 .Select(x => x.TextContent.TrimStart('›', ' '))
+                                 .SkipWhile(skipBreadcrumbs.Contains)
+                                 .ToList();
+
+            yield return new()
             {
                 Description = description,
                 ImageUrl = imgUrl,
                 Name = title,
-                Title = title.TrimEnd(" (VideoGame)").TrimEnd(" (VisualNovel)"),
+                Title = title.TrimEnd(" (Video Game)").TrimEnd(" (Visual Novel)"),
                 Url = absoluteUrl,
+                Breadcrumbs = breadCrumbs,
             };
         }
     }
@@ -137,7 +147,8 @@ public abstract class BaseScraper(IWebDownloader downloader)
 
     protected IHtmlDocument GetDocument(string url)
     {
-        var pageSource = downloader.DownloadString(url).ResponseContent;
+        WebView.NavigateAndWait(url);
+        var pageSource = WebView.GetPageSource();
         var doc = new HtmlParser().Parse(pageSource);
         return doc;
     }
@@ -148,12 +159,10 @@ public abstract class BaseScraper(IWebDownloader downloader)
         if (titleElement == null)
             return null;
 
-        var wrapped = titleElement.QuerySelector("span.wrapped_title");
-        if (wrapped != null)
-            return wrapped.TextContent.HtmlDecode();
-
-        var strong = titleElement.QuerySelector("strong");
-        strong?.Remove();
+        titleElement = titleElement.QuerySelector("strong, span.wrapped_title") ?? titleElement;
+        var removeElements = titleElement.QuerySelectorAll(".ns_parts, div.watch_rank_wrap");
+        foreach (var r in removeElements)
+            titleElement.RemoveChild(r);
 
         return titleElement.TextContent.HtmlDecode();
     }
@@ -169,6 +178,7 @@ public class TvTropesSearchResult : IHasName, IGameSearchResult
     public string Description { get; set; }
     public string Url { get; set; }
     public string ImageUrl { get; set; }
+    public List<string> Breadcrumbs { get; set; }
 
     public string Name { get; set; }
 

@@ -10,5 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)FakeWebDownloader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FakeWebView.cs" />
   </ItemGroup>
 </Project>

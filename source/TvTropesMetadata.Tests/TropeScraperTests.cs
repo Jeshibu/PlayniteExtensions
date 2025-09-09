@@ -10,7 +10,7 @@ namespace TvTropesMetadata.Tests;
 
 public class TropeScraperTests
 {
-    private readonly FakeWebDownloader downloader = new(new Dictionary<string, string>
+    private readonly FakeWebViewFactory webViewFactory = new(new()
     {
         { "https://tvtropes.org/pmwiki/pmwiki.php/Main/TheAtoner", "html/TheAtoner.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/TheAtoner/VideoGames", "html/TheAtoner-VideoGames.html" },
@@ -37,17 +37,17 @@ public class TropeScraperTests
         { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/VisualNovels", "html/MultipleEndings-VisualNovels.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ClassOf09", "html/MultipleEndings-ClassOf09.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/NeedyStreamerOverload", "html/MultipleEndings-NeedyStreamerOverload.html" },
+        { BaseScraper.GetSearchUrl("multiple endings"), "html/Search-multiple-endings.html" },
     });
 
     [Fact]
     public void SubcategoryLinksParse()
     {
-        var scraper = new TropeScraper(downloader);
+        var scraper = new TropeScraper(webViewFactory);
         var sp = new TropeSearchProvider(scraper, new TvTropesMetadataSettings { OnlyFirstGamePerTropeListItem = false });
         var result = sp.GetDetails("https://tvtropes.org/pmwiki/pmwiki.php/Main/StalkerWithACrush").ToList();
 
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/StalkerWithACrush/VideoGames", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/StalkerWithACrush/VisualNovels", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/StalkerWithACrush/VideoGames", webViewFactory.CalledUrls);
 
         Assert.NotEmpty(result);
 
@@ -58,11 +58,11 @@ public class TropeScraperTests
     [Fact]
     public void MixedSubcategoryAndFolderLinksParse()
     {
-        var scraper = new TropeScraper(downloader);
+        var scraper = new TropeScraper(webViewFactory);
         var sp = new TropeSearchProvider(scraper, new TvTropesMetadataSettings { OnlyFirstGamePerTropeListItem = false });
         var result = sp.GetDetails("https://tvtropes.org/pmwiki/pmwiki.php/Main/TheAtoner").ToList();
 
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/TheAtoner/VideoGames", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/TheAtoner/VideoGames", webViewFactory.CalledUrls);
 
         Assert.NotEmpty(result);
 
@@ -73,7 +73,7 @@ public class TropeScraperTests
     [Fact]
     public void WallRunContainsTitanFall2()
     {
-        var scraper = new TropeScraper(downloader);
+        var scraper = new TropeScraper(webViewFactory);
         var result = scraper.GetGamesForTrope("https://tvtropes.org/pmwiki/pmwiki.php/Main/WallRun");
 
         Assert.NotNull(result);
@@ -86,10 +86,10 @@ public class TropeScraperTests
     [Fact]
     public void WallJumpContainsVideoGames()
     {
-        var scraper = new TropeScraper(downloader);
+        var scraper = new TropeScraper(webViewFactory);
         var result = scraper.GetGamesForTrope("https://tvtropes.org/pmwiki/pmwiki.php/Main/WallJump");
 
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/Main/WallJump", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/Main/WallJump", webViewFactory.CalledUrls);
 
         Assert.NotNull(result);
         Assert.Equal("Wall Jump", result.Title);
@@ -102,7 +102,7 @@ public class TropeScraperTests
     [Fact]
     public void KillTheGodParsesRight()
     {
-        var scraper = new TropeScraper(downloader);
+        var scraper = new TropeScraper(webViewFactory);
         var result = scraper.GetGamesForTrope("https://tvtropes.org/pmwiki/pmwiki.php/Main/KillTheGod");
 
         ContainsGame(result, "Nier Automata", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/NierAutomata");
@@ -117,7 +117,7 @@ public class TropeScraperTests
     [Fact]
     public void VideogameOnlyTropeParsesRight()
     {
-        var scraper = new TropeScraper(downloader);
+        var scraper = new TropeScraper(webViewFactory);
         var result = scraper.GetGamesForTrope("https://tvtropes.org/pmwiki/pmwiki.php/Main/PlayableEpilogue");
 
         Assert.Equal("Playable Epilogue", result.Title);
@@ -127,33 +127,45 @@ public class TropeScraperTests
     [Fact]
     public void VideogameSubcategoriesMixedWithGamesParseRight()
     {
-        var scraper = new TropeScraper(downloader);
+        var scraper = new TropeScraper(webViewFactory);
         var sp = new TropeSearchProvider(scraper, new TvTropesMetadataSettings { OnlyFirstGamePerTropeListItem = false });
         var result = sp.GetDetails("https://tvtropes.org/pmwiki/pmwiki.php/Main/MultipleEndings").ToList();
 
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/Main/MultipleEndings", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/VideoGames", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ActionGames", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/AdventureGames", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/NotForBroadcast", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/TheStanleyParable", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/RolePlayingGames", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/BaldursGateIII", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/LonelyWolfTreat", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ShinMegamiTensei", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/Undertale", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/TheHundredLineLastDefenseAcademy", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/SurvivalHorrorGames", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/VisualNovels", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ClassOf09", downloader.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/NeedyStreamerOverload", downloader.CalledUrls);
-        Assert.DoesNotContain("https://tvtropes.org/pmwiki/pmwiki.php/Main/AlgorithmicStoryBranching", downloader.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/Main/MultipleEndings", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/VideoGames", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ActionGames", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/AdventureGames", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/NotForBroadcast", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/TheStanleyParable", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/RolePlayingGames", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/BaldursGateIII", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/LonelyWolfTreat", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ShinMegamiTensei", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/Undertale", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/TheHundredLineLastDefenseAcademy", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/SurvivalHorrorGames", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/VisualNovels", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ClassOf09", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/NeedyStreamerOverload", webViewFactory.CalledUrls);
+        Assert.DoesNotContain("https://tvtropes.org/pmwiki/pmwiki.php/Main/AlgorithmicStoryBranching", webViewFactory.CalledUrls);
 
         //from the breadcrumb headers of the game's subcategory pages - these don't appear elsewhere
-        ContainsGame(result, "The Stanley Parable", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/TheStanleyParable");
-        ContainsGame(result, "The Hundred Line -Last Defense Academy-", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/TheHundredLineLastDefenseAcademy");
+        ContainsGame(result, "The Hundred Line -Last Defense Academy-", null);
 
         ContainsGame(result, "DATE TREAT", null);
+    }
+
+    [Fact]
+    public void SearchProducesResults()
+    {
+        var scraper = new TropeScraper(webViewFactory);
+        var sp = new TropeSearchProvider(scraper, new());
+        
+        var searchResults = sp.Search("multiple endings").ToList();
+        
+        Assert.Equal(2, searchResults.Count);
+        Assert.Equal("Multiple Endings", searchResults[0].Name);
+        Assert.Equal("Golden Ending", searchResults[1].Name);
     }
 
     private void ContainsGame(ParsedTropePage tropePage, string title, string url)

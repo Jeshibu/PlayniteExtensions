@@ -1,25 +1,11 @@
 <!DOCTYPE html>
 	<html>
 		<head lang="en">
+                        <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=newest_pages" />
+            <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=most_popular" />
+            <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=updated_content" />
+
                         <link rel="preload" href="/images/loading-graphic.png" as="image">
-
-            <!-- Google tag (gtag.js) -->
-            
-            
-
-                        
-			
-						
-
-            
-                        
-
-                        
-
-                        
-			
-			
-											
 						<meta http-equiv="X-UA-Compatible" content="IE=edge">
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
@@ -47,6 +33,8 @@
 			<meta property="og:image" content="https://static.tvtropes.org/pmwiki/pub/images/stalkercrush_sayonara-z-sensei_7441.jpg" />
 			<meta property="og:description" content="A character noted for their obsession with another character. They claim that the motivation for their morally outrageous acts is a simple wish to gain attention from the crush-ee. Alternatively, the obsession may be explained as a misguided &hellip;" />
 
+                        <meta name="robots" content="max-image-preview:large">
+
 						
 
 			            <link rel="apple-touch-icon" sizes="57x57" href="https://assets.tvtropes.org/img/icons/apple-icon-57x57.png" type="image/png">
@@ -63,19 +51,29 @@
             <link rel="icon" sizes="96x96" href="https://assets.tvtropes.org/img/icons/favicon-96x96.png" type="image/png">
             <link rel="icon" sizes="192x192" href="https://assets.tvtropes.org/img/icons/favicon-192x192.png" type="image/png">
 
-                                    
-
+                        
+                        
 						<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-                        <link rel="stylesheet" href="https://assets.tvtropes.org/design/assets/bundle.css?rev=671f9ba8e4afc81c41f31b56ffd024a629f38e87" />
+                        <link rel="stylesheet" href="https://assets.tvtropes.org/design/assets/bundle.css?rev=2f4875abe459cab3d315f2f182ddd58516a5737c" />
+
+            <meta name="apple-itunes-app" content="app-id=6738365737, app-argument=tvtropes://home">
 
                                                 
                         
                         
                         						
-                        
-						
                         						
 												
+
+
+                                                
+                        
+
+
+                                                
+
+
+
 
 						        </head>
  <body class="">
@@ -88,35 +86,25 @@
     <div id="modal-box">
         <div class="modal-loading-graphic"></div>
     </div>
-    <style>
-        @keyframes rotate-forever {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+    
 
-        #modal-box > .modal-loading-graphic {
-            display: none; /* Hidden by default */
+    
+    
+<div class="outer-promo-banner" id="outer-promo-banner">
+    <div class="promo-banner">
+        <img src="/images/tvtropes_logo_180x180.png" alt="TVTropes Logo" class="promo-logo">
+        <div class="promo-text-container">
+            <span class="promo-text-top">TVTropes</span>
+            <span class="promo-text">Now available in the app store!</span>
+        </div>
+        <a href="#" class="promo-button" id="promo-app-link">Open</a>
 
-            background: no-repeat center url('/images/loading-graphic.png');
-            background-size: 80px 80px;
+        <a href="#" id="promo-close-button"><i class="fa fa-close"></i></a>
+    </div>
+</div>
 
-            width: 80px;
-            height: 80px;
 
-            border-radius: 50%;
 
-            position: absolute;
-            top: calc(30% - 40px);
-            left: calc(50% - 40px);
-            z-index: 2;
-
-            animation: rotate-forever 0.34s linear infinite;
-
-        }
-        #modal-box.active > .modal-loading-graphic {
-            display: block; /* Show only when modal is active */
-        }
-    </style>
     <header id="main-header-bar" class="headroom-element ">
         <div id="main-header-bar-inner">
 
@@ -132,7 +120,7 @@
                 <a href="/pmwiki/pmwiki.php/Main/Tropes">Tropes</a>
                 <a href="/pmwiki/pmwiki.php/Main/Media">Media</a>
                 <a href="/pmwiki/browse.php" class="nav-browse">Browse</a>
-                <a href="/pmwiki/index_report.php">Indexes</a>
+                <a href="/pmwiki/popular-pages.php">Popular</a>
                 <a href="/pmwiki/topics.php">Forums</a>
                 <a href="/pmwiki/recent_videos.php" class="nav-browse">Videos</a>
             </nav>
@@ -148,9 +136,9 @@
                 </div>
                 
                 <div id="search-box">
-                    <form class="search" action="/pmwiki/search_result.php">
+                    <form class="search" action="/pmwiki/search_result.php" onSubmit="return sendToSiteSearch(this, this.q.value);">
                         <input type="text" name="q" class="search-box" placeholder="Search" value="" required>
-                        <input type="submit" class="submit-button" value="&#xf002;" />
+                        <input id="main_search_submit"type="submit" class="submit-button" value="&#xf002;" />
                                                 <input type="hidden" name="search_type" value="article">
                         <input type="hidden" name="page_type" value="all">
                                                 <input type="hidden" name="cx" value="partner-pub-6610802604051523:amzitfn8e7v">
@@ -164,8 +152,8 @@
                 </div>
 
                 <div id="random-box">
-                    <a href="/pmwiki/pmwiki.php/Main/BrightIsNotGood" class="button-random-trope" rel="nofollow" onclick="ga('send', 'event', 'button', 'click', 'random trope');"></a>
-                    <a href="/pmwiki/pmwiki.php/WesternAnimation/BigCityGreens" class="button-random-media" rel="nofollow" onclick="ga('send', 'event', 'button', 'click', 'random media');"></a>
+                    <a href="/pmwiki/pmwiki.php/Main/TechnoWreckage" class="button-random-trope" rel="nofollow" onclick="gtag('event', 'trope_random_button_click', {'is_user': 0});"></a>
+                    <a href="/pmwiki/pmwiki.php/Webcomic/StationSquare" class="button-random-media" rel="nofollow" onclick="gtag('event', 'media_random_button_click', {'is_user': 0});"></a>
                 </div>
 
             </div>
@@ -178,6 +166,7 @@
         <a href="/pmwiki/pmwiki.php/Main/Tropes" class="xl">Tropes</a>
         <a href="/pmwiki/pmwiki.php/Main/Media" class="xl">Media</a>
         <a href="/pmwiki/browse.php" class="xl">Browse</a>
+        <a href="/pmwiki/popular-pages.php" class="xl">Popular</a>
         <a href="/pmwiki/index_report.php" class="xl">Indexes</a>
         <a href="/pmwiki/topics.php" class="xl">Forums</a>
         <a href="/pmwiki/recent_videos.php" class="xl">Videos</a>
@@ -189,14 +178,15 @@
         <a href="/pmwiki/query.php?type=wl">Tech Wishlist</a>
         <a href="/pmwiki/review_activity.php">Reviews</a> 
         
-        <a href="#tools" data-click-toggle="active">Tools <i class="fa fa-chevron-down"></i></a>
+                <a href="#tools" data-click-toggle="active">Tools <i class="fa fa-chevron-down"></i></a>
         <div class="tools-dropdown mobile-dropdown-linkList">
-            <a href="/pmwiki/cutlist.php">Cut List</a>
+            <a href="/pmwiki/cutlist.php" data-modal-target="login" rel="nofollow">Cut List</a>
+            <a href="/pmwiki/image-fixer.php" data-modal-target="login" rel="nofollow">Image Fixer</a>
             <a href="/pmwiki/changes.php">New Edits</a>
             <a href="/pmwiki/articles_new.php">New Articles</a>
             <a href="/pmwiki/recent_edit_reasons.php">Edit Reasons</a>
-            <a href="/pmwiki/launches.php">Launches</a>
-            <a href="/pmwiki/img_list.php">Images List</a>
+            <a href="/pmwiki/launches.php" data-modal-target="login" rel="nofollow">Launches</a>
+            <a href="/pmwiki/img_list.php" data-modal-target="login" rel="nofollow">Images List</a>
             <a href="/pmwiki/crown_activity.php">Crowner Activity</a>
             <a href="/pmwiki/no_types.php">Un-typed Pages</a>
             <a href="/pmwiki/page_type_audit.php">Recent Page Type Changes</a>
@@ -212,7 +202,7 @@
                 <a href="/pmwiki/pmwiki.php/Administrivia/TVTropesGlossary?from=Main.TVTropesGlossary">Glossary</a>
                 <a href="/pmwiki/pmwiki.php/Administrivia/EditReasonsAndWhyYouShouldUseThem">Edit Reasons</a>
                 <a href="/pmwiki/pmwiki.php/Administrivia/HandlingSpoilers">Handling Spoilers</a>
-                <a href="/pmwiki/pmwiki.php/Main/WordCruft">Word Cruft</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/WordCruft">Word Cruft</a>
                 <a href="/pmwiki/pmwiki.php/Main/Administrivia">Administrivia</a>
                 <a href="/pmwiki/pmwiki.php/Main/FAQ">FAQ</a>
         </div>
@@ -225,6 +215,7 @@
             <a href="/pmwiki/dmca.php">DMCA Notice</a>
             <a href="/pmwiki/privacypolicy.php">Privacy Policy</a>
             <a href="/pmwiki/query.php?type=bug">Report Bug</a>
+            <a href="/pmwiki/termsofservice.php">Terms Of Service</a>
         </div>
 
         <a href="/pmwiki/ad-free-subscribe.php">Go Ad-Free</a>
@@ -250,7 +241,7 @@
     <div id="homepage-introBox-mobile" class="mobile-on">
                   <a href="/"><img src="/images/logo-white-big.png" class="logo-small" /></a>
         
-        <form class="search" action="/pmwiki/search_result.php" style="margin:10px -5px -6px -5px;">
+        <form class="search" action="/pmwiki/search_result.php" style="margin:10px -5px -6px -5px;" onSubmit="return sendToSiteSearch(this, this.q.value);">
             <input type="text" name="q" class="search-box" placeholder="Search" value="" required>
             <input type="submit" class="submit-button" value="&#xf002;" />
                         <input type="hidden" name="search_type" value="article">
@@ -270,10 +261,7 @@
                     
 
                 <div id="tvtropes_oop_ad_slot" style="display: none;"></div>
-    <div id="header-fad-wrapper" class="fad">
-    <div id="header-fad">
-    <div class="fad-size-970x90" style="height:20px">&nbsp;</div>    </div>
-</div>
+    <div id="top_container_spacing"></div>
 
 <div id="main-container">
 
@@ -317,8 +305,6 @@
         
         
 
-
-<!-- HIDDEN INPUTS FOR JS -->
 <input type="hidden" id="groupname-hidden" value="Main"/>
 <input type="hidden" id="title-hidden" value="StalkerWithACrush"/>
 <input type="hidden" id="article_id" value="6241" />
@@ -337,19 +323,51 @@
 
 
 
-<a href="#watch" class="watch-button " data-modal-target="login" >Follow<span>ing</span></a>
 
 
-<h1 itemprop="headline" class="entry-title">
 
-    
+
         
-        Stalker with a Crush
-    
-        
-</h1>
 
     
+
+             
+
+                                        <h1 itemprop="headline" class="entry-title" style=""> 
+                    <span class="wrapped_title">
+                        Stalker with a Crush 
+                         
+                    </span>
+                    <div class="watch_rank_wrap">
+                    <span 
+            class="thumb-vote-area"
+            data-seq-num="StalkerWithACrush"
+            data-discussion-id="StalkerWithACrush"
+            data-subject-trope="Main.StalkerWithACrush"
+            data-page-type="article"
+        >
+            <a 
+                href="javascript:void(0);" 
+                class="thumb-button up heart-only"
+                data-modal-target="login"            >
+                <span class="thumb-count up-count" style="margin-top: 2px;margin-right: 1px;">15</span>
+                <i class="fa fa-heart-o"></i>
+            </a>
+        </span>
+        <a href="#watch" class="watch-button " data-modal-target="login" >Follow<span>ing</span></a>
+</div>
+                   
+                                    </h1>
+
+                        
+
+
+    
+
+
+        
+        
+
 
 <a href="#mobile-actions-toggle" id="mobile-actionbar-toggle" class="mobile-actionbar-toggle mobile-on" data-click-toggle="active" >
 <p class="tiny-off">Go To</p><span></span><span></span><span></span><i class="fa fa-pencil"></i></a>
@@ -357,46 +375,41 @@
 
 
 
-<div id="editLockModal" class="modal fade hidden-until-active" >
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit Locked</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="body">
-                        <div class="danger troper_locked_message"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <nav class="body-options" itemscope itemtype="http://schema.org/SiteNavigationElement">
 
     <ul class="subpage-links">
 
-                    <li>
-                <a href="/pmwiki/pmwiki.php/Main/StalkerWithACrush" class="subpage-link curr-subpage" title="The Main page">
-                <span class="wrapper"><span class="spi main-page"></span>Main</span></a>
+                            <li>
+                <a href="/pmwiki/pmwiki.php/Main/StalkerWithACrush"
+                class="subpage-link curr-subpage"
+                title="The Main page">
+                    <span class="wrapper">
+                        <span class="spi main-page"></span>                        Main                    </span>
+                </a>
             </li>
         
-                                        <li>
+        
+                
+                                 
+                                <li>
                     <a href="/pmwiki/pmwiki.php/Laconic/StalkerWithACrush" class="subpage-link " title="The Laconic page">
                     <span class="wrapper"><span class="spi laconic-icon"></span>Laconic</span></a>
                 </li>
-                                                                                        <li>
+                            
+                                 
+                                <li>
                     <a href="/pmwiki/pmwiki.php/Quotes/StalkerWithACrush" class="subpage-link " title="The Quotes page">
                     <span class="wrapper"><span class="spi quotes"></span>Quotes</span></a>
                 </li>
-                                                            <li>
+                            
+                                 
+                                <li>
                     <a href="/pmwiki/pmwiki.php/ImageLinks/StalkerWithACrush" class="subpage-link " title="The ImageLinks page">
                     <span class="wrapper">ImageLinks</span></a>
                 </li>
-                                                            <li>
+                            
+                                 
+                                <li>
                     <a href="/pmwiki/pmwiki.php/PlayingWith/StalkerWithACrush" class="subpage-link " title="The PlayingWith page">
                     <span class="wrapper">PlayingWith</span></a>
                 </li>
@@ -411,7 +424,7 @@
 
                             <li class="create-subpage dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    <span class="wrapper">Create New <i class="fa fa-plus-circle"></i></span>
+                    <span class="wrapper">Create Subpage <i class="fa fa-plus-circle"></i></span>
                     </a>
 
 
@@ -419,16 +432,22 @@
                         <option value="">- Create New -</option>
 
                                                 <option value="/pmwiki/pmwiki.php/Analysis/StalkerWithACrush?action=edit">Analysis</option>
+                                                <option value="/pmwiki/pmwiki.php/Archive/StalkerWithACrush?action=edit">Archive</option>
                                                 <option value="/pmwiki/pmwiki.php/Awesome/StalkerWithACrush?action=edit">Awesome</option>
                                                 <option value="/pmwiki/pmwiki.php/Characters/StalkerWithACrush?action=edit">Characters</option>
-                                                <option value="/pmwiki/pmwiki.php/FanWorks/StalkerWithACrush?action=edit">FanWorks</option>
+                                                <option value="/pmwiki/pmwiki.php/DerivativeWorks/StalkerWithACrush?action=edit">DerivativeWork&#8230;</option>
                                                 <option value="/pmwiki/pmwiki.php/FanficRecs/StalkerWithACrush?action=edit">FanficRecs</option>
+                                                <option value="/pmwiki/pmwiki.php/FanWorks/StalkerWithACrush?action=edit">FanWorks</option>
                                                 <option value="/pmwiki/pmwiki.php/Fridge/StalkerWithACrush?action=edit">Fridge</option>
                                                 <option value="/pmwiki/pmwiki.php/Funny/StalkerWithACrush?action=edit">Funny</option>
                                                 <option value="/pmwiki/pmwiki.php/Haiku/StalkerWithACrush?action=edit">Haiku</option>
                                                 <option value="/pmwiki/pmwiki.php/Headscratchers/StalkerWithACrush?action=edit">Headscratchers</option>
                                                 <option value="/pmwiki/pmwiki.php/Heartwarming/StalkerWithACrush?action=edit">Heartwarming</option>
+                                                <option value="/pmwiki/pmwiki.php/ImageSource/StalkerWithACrush?action=edit">ImageSource</option>
+                                                <option value="/pmwiki/pmwiki.php/MediaNotes/StalkerWithACrush?action=edit">MediaNotes</option>
+                                                <option value="/pmwiki/pmwiki.php/Newsletter/StalkerWithACrush?action=edit">Newsletter</option>
                                                 <option value="/pmwiki/pmwiki.php/NightmareFuel/StalkerWithACrush?action=edit">NightmareFuel</option>
+                                                <option value="/pmwiki/pmwiki.php/QuoteSource/StalkerWithACrush?action=edit">QuoteSource</option>
                                                 <option value="/pmwiki/pmwiki.php/Recap/StalkerWithACrush?action=edit">Recap</option>
                                                 <option value="/pmwiki/pmwiki.php/ReferencedBy/StalkerWithACrush?action=edit">ReferencedBy</option>
                                                 <option value="/pmwiki/pmwiki.php/Shocking/StalkerWithACrush?action=edit">Shocking</option>
@@ -451,17 +470,20 @@
 
 
 <div id="main-article" class="article-content retro-folders">
-    <p><!-- Image selected per Image Pickin' thread: https://tvtropes.org/pmwiki/posts.php?discussion=1svopjn2o94e0oxfolz2qsst-->
-<!-- Image kept on page per IP thread: https://tvtropes.org/pmwiki/posts.php?discussion=1320424835070200100-->
-<!-- Please do not change or remove without starting a new thread.-->
-<div class="quoteright" style="width:350px;" ><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/SayonaraZetsubouSensei' title='/pmwiki/pmwiki.php/Manga/SayonaraZetsubouSensei' data-format='W1tNYW5nYS9TYXlvbmFyYVpldHN1Ym91U2Vuc2VpIGh0dHBzOi8vc3RhdGljLnR2dHJvcGVzLm9yZy9wbXdpa2kvcHViL2ltYWdlcy9zdGFsa2VyY3J1c2hfc2F5b25hcmEtei1zZW5zZWlfNzQ0MS5qcGddXQ=='><div class="lazy_load_img_box" style="padding-top:120.86%"><img src='https://static.tvtropes.org/pmwiki/pub/images/stalkercrush_sayonara-z-sensei_7441.jpg' class='embeddedimage' border='0' alt='https://static.tvtropes.org/pmwiki/pub/images/stalkercrush_sayonara-z-sensei_7441.jpg' / width=350 height=423></div></a></div>
+
+        
+            <p>
+
+
+<div class="quoteright" style="width:350px;" ><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/SayonaraZetsubouSensei' title='/pmwiki/pmwiki.php/Manga/SayonaraZetsubouSensei' data-format='W1tNYW5nYS9TYXlvbmFyYVpldHN1Ym91U2Vuc2VpIGh0dHBzOi8vc3RhdGljLnR2dHJvcGVzLm9yZy9wbXdpa2kvcHViL2ltYWdlcy9zdGFsa2VyY3J1c2hfc2F5b25hcmEtei1zZW5zZWlfNzQ0MS5qcGddXQ=='><div class="lazy_load_img_box" style="padding-top:120.86%"><img src='https://static.tvtropes.org/pmwiki/pub/images/stalkercrush_sayonara-z-sensei_7441.jpg' class='embeddedimage' border='0' alt='Stalker with a Crush (trope)'  width=350 height=423></div></a></div>
 <div class="acaptionright" style="width:350px;" >She isn't the <em>worst</em> of his stalkers.</div>
 </p><p><div class='indent'><em>"Stalking is when two people take a long romantic walk together, but only one of them is aware of it."</em>
-<div class='indent'>&#8212; <strong><a class='urllink' href='https://www.youtube.com/watch?v=upL9tFMgv9o&amp;lc=UgycfsjZ84-pkiZcvbR4AaABAg'>Sean Dupupis<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a></strong>, <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/FridayThe13th' title='/pmwiki/pmwiki.php/Franchise/FridayThe13th' data-format='W1tGcmFuY2hpc2UvRnJpZGF5VGhlMTN0aCBKQVNPTiBWT09SSEVFU11d'>JASON VOORHEES</a> — "<a class='twikilink' href='/pmwiki/pmwiki.php/Music/ThePolice' title='/pmwiki/pmwiki.php/Music/ThePolice' data-format='W1tNdXNpYy9UaGVQb2xpY2UgRVZFUlkgTElGRSBJIFRBS0UuLi5dXQ=='>EVERY LIFE I TAKE...</a>"</em>
-</div></div></p><p>A character noted for their obsession with another character. They claim that the motivation for their morally outrageous acts is a simple wish to gain attention from the crush-ee. Alternatively, the obsession may be explained as a misguided desire to "protect" <span class="notelabel" onclick="togglenote('note04p8q');"><sup>note&nbsp;</sup></span><span id="note04p8q" class="inlinefolder" isnote="true" onclick="togglenote('note04p8q');" style="cursor:pointer;font-size:smaller;display:none;">(which often translates to <em>isolate</em> or <em>smother</em>)</span> the crush-ee, whether or not the crush-ee wants or needs such "protection". In any case, the more sincere they seem, the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TermsOfEndangerment' title='/pmwiki/pmwiki.php/Main/TermsOfEndangerment' data-format='W1tUZXJtc09mRW5kYW5nZXJtZW50IGNyZWVwaWVyIHRoZXkgYXJlLl1d'>creepier they are.</a>
+<div class='indent'>&#8212; <strong><a class='urllink' href='https://www.youtube.com/watch?v=upL9tFMgv9o&amp;lc=UgycfsjZ84-pkiZcvbR4AaABAg'>Sean Dupupis<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a></strong>, <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/FridayThe13th' title='/pmwiki/pmwiki.php/Franchise/FridayThe13th' data-format='W1tGcmFuY2hpc2UvRnJpZGF5VGhlMTN0aCBKQVNPTiBWT09SSEVFU11d'>JASON VOORHEES</a> &#8212; "<a class='twikilink' href='/pmwiki/pmwiki.php/Music/ThePolice' title='/pmwiki/pmwiki.php/Music/ThePolice' data-format='W1tNdXNpYy9UaGVQb2xpY2UgRVZFUlkgTElGRSBJIFRBS0UuLi5dXQ=='>EVERY LIFE I TAKE...</a>"</em>
+</div></div></p><p>A character noted for their obsession with another character. They claim that the motivation for their morally outrageous acts is a simple wish to gain attention from the crush-ee. Alternatively, the obsession may be explained as a misguided desire to "protect" <span class="notelabel" onclick="togglenote('note0cuqx');"><sup>note&nbsp;</sup></span><span id="note0cuqx" class="inlinefolder" isnote="true" onclick="togglenote('note0cuqx');" style="cursor:pointer;font-size:smaller;display:none;">(which often translates to <em>isolate</em> or <em>smother</em>)</span> the crush-ee, whether or not the crush-ee wants or needs such "protection". In any case, the more sincere they seem, the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TermsOfEndangerment' title='/pmwiki/pmwiki.php/Main/TermsOfEndangerment' data-format='W1tUZXJtc09mRW5kYW5nZXJtZW50IGNyZWVwaWVyIHRoZXkgYXJlLl1d'>creepier they are.</a>
 </p><p>Why does this happen? Because <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LoveMakesYouEvil' title='/pmwiki/pmwiki.php/Main/LoveMakesYouEvil' data-format='TG92ZU1ha2VzWW91RXZpbA=='>Love Makes You Evil</a>, and "<a class='twikilink' href='/pmwiki/pmwiki.php/Main/IfICantHaveYou' title='/pmwiki/pmwiki.php/Main/IfICantHaveYou' data-format='SWZJQ2FudEhhdmVZb3U='>If I Can't Have You…</a> No One Can!"
-</p><p>There'll usually be a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DoubleStandard' title='/pmwiki/pmwiki.php/Main/DoubleStandard' data-format='RG91YmxlU3RhbmRhcmQ='>Double Standard</a> at play with this trope. Male stalkers are more likely to be portrayed unsympathetically, and as an actual danger to their object of obsession. <a class='twikilink' href='/pmwiki/pmwiki.php/Main/StalkingIsFunnyIfItIsFemaleAfterMale' title='/pmwiki/pmwiki.php/Main/StalkingIsFunnyIfItIsFemaleAfterMale' data-format='W1tTdGFsa2luZ0lzRnVubnlJZkl0SXNGZW1hbGVBZnRlck1hbGUgRmVtYWxlIHN0YWxrZXJzXV0='>Female stalkers</a>, by contrast, are likely to be portrayed sympathetically, and typically portrayed as <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Moe' title='/pmwiki/pmwiki.php/Main/Moe' data-format='W1t7e01vZX19IGNoYXJtaW5nIG9yIGN1dGVdXQ=='>charming or cute</a> (though <em>beware</em> the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WomanScorned' title='/pmwiki/pmwiki.php/Main/WomanScorned' data-format='V29tYW5TY29ybmVk'>Woman Scorned</a>!).<span class="notelabel" onclick="togglenote('note18m3q');"><sup>note&nbsp;</sup></span><span id="note18m3q" class="inlinefolder" isnote="true" onclick="togglenote('note18m3q');" style="cursor:pointer;font-size:smaller;display:none;">This is partly due to male stalkers being more likely to murder their victims than female stalkers, and partly due to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AManIsAlwaysEager' title='/pmwiki/pmwiki.php/Main/AManIsAlwaysEager' data-format='W1tBTWFuSXNBbHdheXNFYWdlciB0aGUgYXNzdW1wdGlvbiB0aGF0IG1hbGVzIGFyZW4mIzAzOTt0IGFzIHBpY2t5IHdoZW4gaXQgY29tZXMgdG8gbG92ZSBvciBzZXggaW4gdGhlIGZpcnN0IHBsYWNlXV0='>the assumption that males aren't as picky when it comes to love or sex in the first place</a>.</span> Both however will often be portrayed sympathetically if they happen to be <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BeautyEqualsGoodness' title='/pmwiki/pmwiki.php/Main/BeautyEqualsGoodness' data-format='W1tCZWF1dHlFcXVhbHNHb29kbmVzcyBwcmV0dHldXQ=='>pretty</a>. An increasingly common tool for stalking is the internet; the trope may cross over with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/InternetStalking' title='/pmwiki/pmwiki.php/Main/InternetStalking' data-format='SW50ZXJuZXRTdGFsa2luZw=='>Internet Stalking</a> if they use the world wide web as a tool for it.
-</p><p>Compare <a class='twikilink' href='/pmwiki/pmwiki.php/Main/StalkerWithoutACrush' title='/pmwiki/pmwiki.php/Main/StalkerWithoutACrush' data-format='U3RhbGtlcldpdGhvdXRBQ3J1c2g='>Stalker without a Crush</a>, whose obsession is unrelated to romantic or sexual feelings.
+</p><p>There'll usually be a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DoubleStandard' title='/pmwiki/pmwiki.php/Main/DoubleStandard' data-format='RG91YmxlU3RhbmRhcmQ='>Double Standard</a> at play with this trope. Male stalkers are more likely to be portrayed unsympathetically, and as an actual danger to their object of obsession. <a class='twikilink' href='/pmwiki/pmwiki.php/Main/StalkingIsFunnyIfItIsFemaleAfterMale' title='/pmwiki/pmwiki.php/Main/StalkingIsFunnyIfItIsFemaleAfterMale' data-format='W1tTdGFsa2luZ0lzRnVubnlJZkl0SXNGZW1hbGVBZnRlck1hbGUgRmVtYWxlIHN0YWxrZXJzXV0='>Female stalkers</a>, by contrast, are likely to be portrayed sympathetically, and typically portrayed as <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Moe' title='/pmwiki/pmwiki.php/Main/Moe' data-format='W1t7e01vZX19IGNoYXJtaW5nIG9yIGN1dGVdXQ=='>charming or cute</a> (though <em>beware</em> the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WomanScorned' title='/pmwiki/pmwiki.php/Main/WomanScorned' data-format='V29tYW5TY29ybmVk'>Woman Scorned</a>!).<span class="notelabel" onclick="togglenote('note1wmwv');"><sup>note&nbsp;</sup></span><span id="note1wmwv" class="inlinefolder" isnote="true" onclick="togglenote('note1wmwv');" style="cursor:pointer;font-size:smaller;display:none;">This is partly due to male stalkers being more likely to murder their victims than female stalkers, and partly due to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AManIsAlwaysEager' title='/pmwiki/pmwiki.php/Main/AManIsAlwaysEager' data-format='W1tBTWFuSXNBbHdheXNFYWdlciB0aGUgYXNzdW1wdGlvbiB0aGF0IG1hbGVzIGFyZW4mIzAzOTt0IGFzIHBpY2t5IHdoZW4gaXQgY29tZXMgdG8gbG92ZSBvciBzZXggaW4gdGhlIGZpcnN0IHBsYWNlXV0='>the assumption that males aren't as picky when it comes to love or sex in the first place</a>.</span> Both however will often be portrayed sympathetically if they happen to be <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BeautyEqualsGoodness' title='/pmwiki/pmwiki.php/Main/BeautyEqualsGoodness' data-format='W1tCZWF1dHlFcXVhbHNHb29kbmVzcyBwcmV0dHldXQ=='>pretty</a>. An increasingly common tool for stalking is the internet; the trope may cross over with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/InternetStalking' title='/pmwiki/pmwiki.php/Main/InternetStalking' data-format='SW50ZXJuZXRTdGFsa2luZw=='>Internet Stalking</a> if they use the world wide web as a tool for it.
+</p><p>The stalker may also engage in <a class='twikilink' href='/pmwiki/pmwiki.php/Main/IgnoringSexualOrientation' title='/pmwiki/pmwiki.php/Main/IgnoringSexualOrientation' data-format='SWdub3JpbmdTZXh1YWxPcmllbnRhdGlvbg=='>Ignoring Sexual Orientation</a>, particularly if they are <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LovingAShadow' title='/pmwiki/pmwiki.php/Main/LovingAShadow' data-format='TG92aW5nQVNoYWRvdw=='>Loving a Shadow</a>.
+</p><p>Compare <a class='twikilink' href='/pmwiki/pmwiki.php/Main/StalkerWithoutACrush' title='/pmwiki/pmwiki.php/Main/StalkerWithoutACrush' data-format='U3RhbGtlcldpdGhvdXRBQ3J1c2g='>Stalker Without a Crush</a>, whose obsession is unrelated to romantic or sexual feelings.
 </p><p>Related Tropes:
 </p><p><ul ><li> If the stalker's behavior is meant to be romantic instead of creepy, it's <a class='twikilink' href='/pmwiki/pmwiki.php/Main/StalkingIsLove' title='/pmwiki/pmwiki.php/Main/StalkingIsLove' data-format='U3RhbGtpbmdJc0xvdmU='>Stalking is Love</a>.
 </li><li> If the stalker is chasing a celebrity, especially one who doesn't know them, they're a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LoonyFan' title='/pmwiki/pmwiki.php/Main/LoonyFan' data-format='TG9vbnlGYW4='>Loony Fan</a>.
@@ -475,27 +497,117 @@
 </li><li> If the stalker's crush is in a relationship, the stalker is likely to be an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AttemptedHomewrecker' title='/pmwiki/pmwiki.php/Main/AttemptedHomewrecker' data-format='QXR0ZW1wdGVkSG9tZXdyZWNrZXI='>Attempted Homewrecker</a>.
 </li><li> If the stalker makes obscene phone calls to the target, this is a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HarassingPhoneCall' title='/pmwiki/pmwiki.php/Main/HarassingPhoneCall' data-format='SGFyYXNzaW5nUGhvbmVDYWxs'>Harassing Phone Call</a>.
 </li><li> If the character is not actually a stalker but the fandom makes them out to be one, they're a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MemeticMolester' title='/pmwiki/pmwiki.php/Main/MemeticMolester' data-format='TWVtZXRpY01vbGVzdGVy'>Memetic Molester</a>.
-</li></ul></p><p>As with all <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SexualHarassmentAndRapeTropes' title='/pmwiki/pmwiki.php/Main/SexualHarassmentAndRapeTropes' data-format='U2V4dWFsSGFyYXNzbWVudEFuZFJhcGVUcm9wZXM='>Sexual Harassment and Rape Tropes</a>, <strong><a class='twikilink' href='/pmwiki/pmwiki.php/Administrivia/NoRealLifeExamplesPlease' title='/pmwiki/pmwiki.php/Administrivia/NoRealLifeExamplesPlease' data-format='QWRtaW5pc3RyaXZpYS9Ob1JlYWxMaWZlRXhhbXBsZXNQbGVhc2U='>No Real Life Examples, Please!</a></strong>
+</li></ul></p><p>May result in a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ClichedVillainAccusation' title='/pmwiki/pmwiki.php/Main/ClichedVillainAccusation' data-format='Q2xpY2hlZFZpbGxhaW5BY2N1c2F0aW9u'>"Clichéd Villain" Accusation</a>. See also <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DoesntMindABeating' title='/pmwiki/pmwiki.php/Main/DoesntMindABeating' data-format='RG9lc250TWluZEFCZWF0aW5n'>Doesn't Mind a Beating</a>.
+</p><p>As with all <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SexualHarassmentAndRapeTropes' title='/pmwiki/pmwiki.php/Main/SexualHarassmentAndRapeTropes' data-format='U2V4dWFsSGFyYXNzbWVudEFuZFJhcGVUcm9wZXM='>Sexual Harassment and Rape Tropes</a>, <strong><a class='twikilink' href='/pmwiki/pmwiki.php/Administrivia/NoRealLifeExamplesPlease' title='/pmwiki/pmwiki.php/Administrivia/NoRealLifeExamplesPlease' data-format='QWRtaW5pc3RyaXZpYS9Ob1JlYWxMaWZlRXhhbXBsZXNQbGVhc2U='>No Real Life Examples, Please!</a></strong>
 <hr data-format='&#8212;&#8212;' />
 </p><p><h2>Example subpages:</h2>
 <!&#8212;index&#8212;>
 <ul ><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/AnimeAndManga' title='/pmwiki/pmwiki.php/StalkerWithACrush/AnimeAndManga' data-format='U3RhbGtlcldpdGhBQ3J1c2gvQW5pbWVBbmRNYW5nYQ=='>Anime & Manga</a>
 </li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/ComicBooks' title='/pmwiki/pmwiki.php/StalkerWithACrush/ComicBooks' data-format='U3RhbGtlcldpdGhBQ3J1c2gvQ29taWNCb29rcw=='>Comic Books</a>
-</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/ComicStrips' title='/pmwiki/pmwiki.php/StalkerWithACrush/ComicStrips' data-format='U3RhbGtlcldpdGhBQ3J1c2gvQ29taWNTdHJpcHM='>Comic Strips</a>
 </li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/FanWorks' title='/pmwiki/pmwiki.php/StalkerWithACrush/FanWorks' data-format='U3RhbGtlcldpdGhBQ3J1c2gvRmFuV29ya3M='>Fan Works</a>
 </li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/Film' title='/pmwiki/pmwiki.php/StalkerWithACrush/Film' data-format='U3RhbGtlcldpdGhBQ3J1c2gve3tGaWxtfX0='>Film</a>
 </li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/Literature' title='/pmwiki/pmwiki.php/StalkerWithACrush/Literature' data-format='U3RhbGtlcldpdGhBQ3J1c2gve3tMaXRlcmF0dXJlfX0='>Literature</a>
 </li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/LiveActionTV' title='/pmwiki/pmwiki.php/StalkerWithACrush/LiveActionTV' data-format='U3RhbGtlcldpdGhBQ3J1c2gvTGl2ZUFjdGlvblRW'>Live-Action TV</a>
 </li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/Music' title='/pmwiki/pmwiki.php/StalkerWithACrush/Music' data-format='U3RhbGtlcldpdGhBQ3J1c2gve3tNdXNpY319'>Music</a>
-</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/ProfessionalWrestling' title='/pmwiki/pmwiki.php/StalkerWithACrush/ProfessionalWrestling' data-format='U3RhbGtlcldpdGhBQ3J1c2gvUHJvZmVzc2lvbmFsV3Jlc3RsaW5n'>Professional Wrestling</a>
-</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/Theatre' title='/pmwiki/pmwiki.php/StalkerWithACrush/Theatre' data-format='U3RhbGtlcldpdGhBQ3J1c2gve3tUaGVhdHJlfX0='>Theatre</a>
 </li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/VideoGames' title='/pmwiki/pmwiki.php/StalkerWithACrush/VideoGames' data-format='U3RhbGtlcldpdGhBQ3J1c2gvVmlkZW9HYW1lcw=='>Video Games</a>
-</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/VisualNovels' title='/pmwiki/pmwiki.php/StalkerWithACrush/VisualNovels' data-format='U3RhbGtlcldpdGhBQ3J1c2gvVmlzdWFsTm92ZWxz'>Visual Novels</a>
 </li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/Webcomics' title='/pmwiki/pmwiki.php/StalkerWithACrush/Webcomics' data-format='U3RhbGtlcldpdGhBQ3J1c2gve3tXZWJjb21pY3N9fQ=='>Webcomics</a>
 </li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/WebOriginal' title='/pmwiki/pmwiki.php/StalkerWithACrush/WebOriginal' data-format='U3RhbGtlcldpdGhBQ3J1c2gvV2ViT3JpZ2luYWw='>Web Original</a>
 </li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/WesternAnimation' title='/pmwiki/pmwiki.php/StalkerWithACrush/WesternAnimation' data-format='U3RhbGtlcldpdGhBQ3J1c2gvV2VzdGVybkFuaW1hdGlvbg=='>Western Animation</a>
-</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/StalkerWithACrush/OtherMedia' title='/pmwiki/pmwiki.php/StalkerWithACrush/OtherMedia' data-format='U3RhbGtlcldpdGhBQ3J1c2gvT3RoZXJNZWRpYQ=='>Other Media</a>
 </li></ul><!&#8212;/index&#8212;>
+</p><p><hr data-format='&#8212;&#8212;' />
+<h2>Other Examples:</h2>
+<div class="folderlabel" onclick="toggleAllFolders();">&nbsp;&nbsp;&nbsp;&nbsp;open/close all folders&nbsp; </div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder0');">&nbsp;&nbsp;&nbsp;&nbsp;Advertising&nbsp;</div><div id="folder0" class="folder" isfolder="true" style="display:block;">
+<ul ><li> <a class='urllink' href='https://www.youtube.com/watch?v=PpV7DyM4Zk0'>These<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> Virgin Mobile ads. God, the crazy eyes...
+<ul ><li> Something that makes it hilariously worse to <em><a class='twikilink' href='/pmwiki/pmwiki.php/Series/Supernatural' title='/pmwiki/pmwiki.php/Series/Supernatural' data-format='U2VyaWVzL3t7U3VwZXJuYXR1cmFsfX0='>Supernatural</a></em> fans, the same actress played the demon Lillith in one episode. She isn't just a creepy stalker, she's a <strong>demonic</strong> creepy stalker.
+</li></ul></li><li> What's worse than your computer turning <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Yandere' title='/pmwiki/pmwiki.php/Main/Yandere' data-format='e3tZYW5kZXJlfX0='>Yandere</a> on you? <a class='urllink' href='https://www.youtube.com/watch?v=Ds8eTWEtmQY'>The anthropomorphic personification of your computer being<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> the Overly Attached Girlfriend.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder1');">&nbsp;&nbsp;&nbsp;&nbsp;Asian Animation&nbsp;</div><div id="folder1" class="folder" isfolder="true" style="display:block;">
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Animation/PangPond' title='/pmwiki/pmwiki.php/Animation/PangPond' data-format='QW5pbWF0aW9uL1BhbmdQb25k'>PangPond</a></em>: Leng and Hong's Chinese cousin Mei from the episode "<span class='esc-seq' title='non-wikiword'>PangPond</span> in Love 2" goes as far as to try to <em>kidnap <span class='esc-seq' title='non-wikiword'>PangPond</span> and take him back to China with her</em>, all because she has a massive crush on him.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder2');">&nbsp;&nbsp;&nbsp;&nbsp;Comic Strips&nbsp;</div><div id="folder2" class="folder" isfolder="true" style="display:block;">
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/ComicStrip/ForBetterOrForWorse' title='/pmwiki/pmwiki.php/ComicStrip/ForBetterOrForWorse' data-format='Q29taWNTdHJpcC9Gb3JCZXR0ZXJPckZvcldvcnNl'>For Better or for Worse</a></em> had a storyline in which Elizabeth was stalked by an obsessed co-worker. For some reason she <a class='twikilink' href='/pmwiki/pmwiki.php/Main/IdiotBall' title='/pmwiki/pmwiki.php/Main/IdiotBall' data-format='W1tJZGlvdEJhbGwgdGhvdWdodCBpdCB3b3VsZCBiZSBiZXN0IHRvIGRpc3N1YWRlIGhlciBmYXRoZXIgZnJvbSBwdXR0aW5nIGEgc3RvcCB0byBpdF1d'>thought it would be best to dissuade her father from putting a stop to it</a>, which resulted in her nearly being raped and ultimately rescued by <a class='twikilink' href='/pmwiki/pmwiki.php/Main/CreatorsPet' title='/pmwiki/pmwiki.php/Main/CreatorsPet' data-format='W1tDcmVhdG9yc1BldCBBbnRob255XV0='>Anthony</a>.
+</li><li> Aldo <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SignificantAnagram' title='/pmwiki/pmwiki.php/Main/SignificantAnagram' data-format='W1tTaWduaWZpY2FudEFuYWdyYW0gS2VscmFzdF1d'>Kelrast</a> from <em><a class='twikilink' href='/pmwiki/pmwiki.php/ComicStrip/MaryWorth' title='/pmwiki/pmwiki.php/ComicStrip/MaryWorth' data-format='Q29taWNTdHJpcC9NYXJ5V29ydGg='>Mary Worth</a></em>, who even <a class='urllink' href='http://joshreads.com/?p=719'>spawned a meme<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a>.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/ComicStrip/PreTeena' title='/pmwiki/pmwiki.php/ComicStrip/PreTeena' data-format='Q29taWNTdHJpcC9QcmVUZWVuYQ=='>PreTeena</a></em>, Johnson Pinecone teeters on the verge of this in his pursuit of Jeri Keene, always managing to be there and knowing from observation what she likes.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/ComicStrip/Luann' title='/pmwiki/pmwiki.php/ComicStrip/Luann' data-format='Q29taWNTdHJpcC97e0x1YW5ufX0='>Luann</a></em> had <a class='twikilink' href='/pmwiki/pmwiki.php/Main/UnsympatheticComedyProtagonist' title='/pmwiki/pmwiki.php/Main/UnsympatheticComedyProtagonist' data-format='W1tVbnN5bXBhdGhldGljQ29tZWR5UHJvdGFnb25pc3QgQmVybmljZV1d'>Bernice</a> towards <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SatelliteLoveInterest' title='/pmwiki/pmwiki.php/Main/SatelliteLoveInterest' data-format='W1tTYXRlbGxpdGVMb3ZlSW50ZXJlc3QgUGlyb11d'>Piro</a>, until she kissed him, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/NoSparks' title='/pmwiki/pmwiki.php/Main/NoSparks' data-format='W1tOb1NwYXJrcyBmZWx0IG5vdGhpbmddXQ=='>felt nothing</a>, and ghosted him as a result.
+<ul ><li> It also has <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RichBitch' title='/pmwiki/pmwiki.php/Main/RichBitch' data-format='W1tSaWNoQml0Y2ggVGlmZmFueV1d'>Tiffany</a> towards Kip, even though A. Kip is already dating <a class='twikilink' href='/pmwiki/pmwiki.php/Main/CruelCheerleader' title='/pmwiki/pmwiki.php/Main/CruelCheerleader' data-format='W1tDcnVlbENoZWVybGVhZGVyIFN0ZWZdXQ=='>Stef</a> and B. <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GentleGiant' title='/pmwiki/pmwiki.php/Main/GentleGiant' data-format='W1tHZW50bGVHaWFudCBPeF1d'>Ox</a> has an incredibly obvious crush on Tiffany.
+</li></ul></li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder3');">&nbsp;&nbsp;&nbsp;&nbsp;Manhwa&nbsp;</div><div id="folder3" class="folder" isfolder="true" style="display:block;">
+<ul ><li> Yuri in <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manhwa/FaeriesLanding' title='/pmwiki/pmwiki.php/Manhwa/FaeriesLanding' data-format='TWFuaHdhL0ZhZXJpZXNMYW5kaW5n'>Faeries' Landing</a></em> cuts up Ryang's (the object of her obsession) face for breaking up with her, and she can and will do <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MurderTheHypotenuse' title='/pmwiki/pmwiki.php/Main/MurderTheHypotenuse' data-format='W1tNdXJkZXJUaGVIeXBvdGVudXNlIGFueXRoaW5nXV0='>anything</a> it takes to keep any other girls away from Ryang.
+</li><li> Jae-min in <em><a class='twikilink' href='/pmwiki/pmwiki.php/Webcomic/OrangeMarmalade' title='/pmwiki/pmwiki.php/Webcomic/OrangeMarmalade' data-format='V2ViY29taWMvT3JhbmdlTWFybWFsYWRl'>Orange Marmalade</a></em> follows Ma-ri around a lot at the start and when she accuses him of stalking her he says he's happy when he's watching her. Eventually their relationship becomes more mutual and he stops following her around. Later, when Si-Hoo is introduced, <span class="spoiler" title="you can set spoilers visible by default on your profile" >he begins stalking and harassing Jae-Min</span>.
+</li><li> Sali Tayi from <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manhwa/ThreadsOfTime' title='/pmwiki/pmwiki.php/Manhwa/ThreadsOfTime' data-format='TWFuaHdhL1RocmVhZHNPZlRpbWU='>Threads of Time</a></em> is this way for Atan Hadas. He actually notices when her hairpin (which she gave to Moon-bin as a present of love) is missing, and manages to put two-and-two together remarkably fast (quickly deciding that the best way to resolve everything is to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MurderTheHypotenuse' title='/pmwiki/pmwiki.php/Main/MurderTheHypotenuse' data-format='TXVyZGVyVGhlSHlwb3RlbnVzZQ=='>Murder the Hypotenuse</a>). To put it in his words: "I've always been watching you..."
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder4');">&nbsp;&nbsp;&nbsp;&nbsp;Pinball&nbsp;</div><div id="folder4" class="folder" isfolder="true" style="display:block;">
+<ul ><li> Played with in <em><a class='twikilink' href='/pmwiki/pmwiki.php/Pinball/WhoDunnit1995' title='/pmwiki/pmwiki.php/Pinball/WhoDunnit1995' data-format='UGluYmFsbC9XaG9EdW5uaXQxOTk1'>WHO dunnit (1995)</a></em>: Bruno keeps a locker full of Trixie's pictures and news clippings, suggesting that he's stalking her out of love. <span class="spoiler" title="you can set spoilers visible by default on your profile" ><a class='twikilink' href='/pmwiki/pmwiki.php/Main/SubvertedTrope' title='/pmwiki/pmwiki.php/Main/SubvertedTrope' data-format='W1tTdWJ2ZXJ0ZWRUcm9wZSBIb3dldmVyXV0='>However</a>, the truth is that he's actually her father, Tex, who came back from the dead and is out to protect her.</span>
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder5');">&nbsp;&nbsp;&nbsp;&nbsp;Podcasts&nbsp;</div><div id="folder5" class="folder" isfolder="true" style="display:block;">
+<ul ><li> The first case on the <em><a class='twikilink' href='/pmwiki/pmwiki.php/Podcast/SickSadWorld' title='/pmwiki/pmwiki.php/Podcast/SickSadWorld' data-format='UG9kY2FzdC9TaWNrU2FkV29ybGQ='>Sick Sad World</a></em> episode "Mysterious and Unsolved Cases" features one of these. When said stalker's target is kidnapped and murdered, he takes up calling her mother and saying "I've got her" or "I killed her". Dev and Jasmine speculate he wasn't the killer. Instead, he kept calling because he wanted the target of his obsession found and to continue having power related to her by harassing her mom.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder6');">&nbsp;&nbsp;&nbsp;&nbsp;Professional Wrestling&nbsp;</div><div id="folder6" class="folder" isfolder="true" style="display:block;">
+<ul ><li> Stevie Richards started in <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/ECW' title='/pmwiki/pmwiki.php/Wrestling/ECW' data-format='V3Jlc3RsaW5nL3t7RUNXfX0='>ECW</a> as <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/Raven' title='/pmwiki/pmwiki.php/Wrestling/Raven' data-format='V3Jlc3RsaW5nL3t7UmF2ZW59fQ=='>Raven</a>'s insanely dedicated follower, and then to everyone's surprise, Richards himself was the object of someone's obsession. He was being stalked by then newcomer <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/Francine' title='/pmwiki/pmwiki.php/Wrestling/Francine' data-format='V3Jlc3RsaW5nL3t7RnJhbmNpbmV9fQ=='>Francine</a>.
+</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/StevieRichards' title='/pmwiki/pmwiki.php/Wrestling/StevieRichards' data-format='W1tXcmVzdGxpbmcvU3RldmllUmljaGFyZHMgU3RldmVuIFJpY2hhcmRzXV0='>Steven Richards</a>, when he followed around <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/LisaMarieVaron' title='/pmwiki/pmwiki.php/Wrestling/LisaMarieVaron' data-format='W1tXcmVzdGxpbmcvTGlzYU1hcmllVmFyb24gVmljdG9yaWFdXQ=='>Victoria</a> in drag, interfering with all her matches.
+</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/WWE' title='/pmwiki/pmwiki.php/Wrestling/WWE' data-format='V3Jlc3RsaW5nL3t7V1dFfX0='>WWE</a> wrestler <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/MickieJames' title='/pmwiki/pmwiki.php/Wrestling/MickieJames' data-format='V3Jlc3RsaW5nL01pY2tpZUphbWVz'>Mickie James</a>'s obsession with <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/TrishStratus' title='/pmwiki/pmwiki.php/Wrestling/TrishStratus' data-format='V3Jlc3RsaW5nL1RyaXNoU3RyYXR1cw=='>Trish Stratus</a> went from hero worship, to dressing as Trish on Halloween, to trying to become Trish's lesbian lover (and abducting her boyfriend in the process), to beating Trish severely and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/EvilTastesGood' title='/pmwiki/pmwiki.php/Main/EvilTastesGood' data-format='W1tFdmlsVGFzdGVzR29vZCBsaWNraW5nIHRoZSBibG9vZF1d'>licking the blood</a> off her hands afterward. Somehow, when their climactic confrontation for the WWE Women's Championship came, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DracoInLeatherPants' title='/pmwiki/pmwiki.php/Main/DracoInLeatherPants' data-format='W1tEcmFjb0luTGVhdGhlclBhbnRzIHNoZSBzdGlsbCBnb3QgY2hlZXJlZF1d'>she still got cheered</a>.
+<ul ><li> Possibly because the writing was so over-the-top, it was impossible to take seriously.
+</li><li> Earlier, Alexis Laree herself had one in Ring Of Honor, Allison Danger. Danger's case was less obsessive gone too far and more "Laree will be my play thing whether she like it or not" from the very start.
+</li></ul></li><li> Around the time Mickie got started in WWE, <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/KurtAngle' title='/pmwiki/pmwiki.php/Wrestling/KurtAngle' data-format='V3Jlc3RsaW5nL0t1cnRBbmdsZQ=='>Kurt Angle</a> was in hot pursuit of <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/BookerT' title='/pmwiki/pmwiki.php/Wrestling/BookerT' data-format='V3Jlc3RsaW5nL0Jvb2tlclQ='>Booker T</a>'s wife, Sharmell, whom he insisted was a gutter slut.
+</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/JimmyJacobs' title='/pmwiki/pmwiki.php/Wrestling/JimmyJacobs' data-format='V3Jlc3RsaW5nL0ppbW15SmFjb2Jz'>Jimmy Jacobs</a> in <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/RingOfHonor' title='/pmwiki/pmwiki.php/Wrestling/RingOfHonor' data-format='V3Jlc3RsaW5nL1JpbmdPZkhvbm9y'>Ring of Honor</a>. First to his ex girlfriend, The Lovely Lacey, and then to the Panama City Playboy Adam Cole.
+</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/ImpactWrestling' title='/pmwiki/pmwiki.php/Wrestling/ImpactWrestling' data-format='W1tXcmVzdGxpbmcvSW1wYWN0V3Jlc3RsaW5nIFROQV1d'>TNA</a> would later rehash the Kurt Angle/Booker T/Sharmell angle with <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/ScottSteiner' title='/pmwiki/pmwiki.php/Wrestling/ScottSteiner' data-format='V3Jlc3RsaW5nL1Njb3R0U3RlaW5lcg=='>Scott Steiner</a> relentlessly pursuing <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/BobbyLashley' title='/pmwiki/pmwiki.php/Wrestling/BobbyLashley' data-format='V3Jlc3RsaW5nL0JvYmJ5TGFzaGxleQ=='>Bobby Lashley</a>'s wife, Kristal Marshall. There was a twist though, as Lashley was a two sport athlete, Kristal began pressuring him to quit pro wrestling and focus exclusively on mixed martial arts, due to TNA's poor handling of the situation, which in turn lead to Lashley assaulting random TNA wrestlers an a bid to get fired when they refused to terminate his contract. Scott Steiner turned out to be a real <a class='twikilink' href='/pmwiki/pmwiki.php/Main/UnwittingInstigatorOfDoom' title='/pmwiki/pmwiki.php/Main/UnwittingInstigatorOfDoom' data-format='VW53aXR0aW5nSW5zdGlnYXRvck9mRG9vbQ=='>Unwitting Instigator of Doom</a>, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/VerbalTic' title='/pmwiki/pmwiki.php/Main/VerbalTic' data-format='W1tWZXJiYWxUaWMgaHVoXV0='>huh</a>?
+</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/Kane' title='/pmwiki/pmwiki.php/Wrestling/Kane' data-format='V3Jlc3RsaW5nL3t7S2FuZX19'>Kane</a> would count, but the stalking doesn't last before he just grabs the woman and walks off with her.
+<ul ><li> Kane has done this at least twice, first with <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/Lita' title='/pmwiki/pmwiki.php/Wrestling/Lita' data-format='V3Jlc3RsaW5nL3t7TGl0YX19'>Lita</a> and later with <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/KellyKelly' title='/pmwiki/pmwiki.php/Wrestling/KellyKelly' data-format='V3Jlc3RsaW5nL0tlbGx5S2VsbHk='>Kelly Kelly</a>. The first time he was played as a heel but was gradually shifted to face after the story shifted from him stalking, tormenting, and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ScarpiaUltimatum' title='/pmwiki/pmwiki.php/Main/ScarpiaUltimatum' data-format='W1tTY2FycGlhVWx0aW1hdHVtIHRlY2huaWNhbGx5XV0='>technically</a> raping Lita, to Lita having a miscarriage and losing their child and Kane going out for revenge against the man who caused it, to eventually Lita betraying Kane for <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/EdgeWrestler' title='/pmwiki/pmwiki.php/Wrestling/EdgeWrestler' data-format='V3Jlc3RsaW5nL3t7RWRnZXxXcmVzdGxlcn19'>Edge</a>. The second time, Kane was portrayed much more sympathetically from the get go, it starting from an unfortunate misunderstanding. It helped that one, his romantic rival in this case was <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/RandyOrton' title='/pmwiki/pmwiki.php/Wrestling/RandyOrton' data-format='V3Jlc3RsaW5nL1JhbmR5T3J0b24='>Randy Orton</a>, and two, that the storyline <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AbortedArc' title='/pmwiki/pmwiki.php/Main/AbortedArc' data-format='W1tBYm9ydGVkQXJjIGZpenpsZWQgb3V0XV0='>fizzled out</a> before anything came of it.
+</li><li> And, all things coming full circle, Kane was then the target of his own stalker with a crush in the form of <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/AJLee' title='/pmwiki/pmwiki.php/Wrestling/AJLee' data-format='V3Jlc3RsaW5nL0FKTGVl'>A.J. Lee</a>, who was convinced that <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TroubledButCute' title='/pmwiki/pmwiki.php/Main/TroubledButCute' data-format='W1tUcm91YmxlZEJ1dEN1dGUgZGVlcCBiZW5lYXRoIGhpcyB0b3JtZW50ZWQgc291bF1d'>deep beneath his tormented soul</a>, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DracoInLeatherPants' title='/pmwiki/pmwiki.php/Main/DracoInLeatherPants' data-format='W1tEcmFjb0luTGVhdGhlclBhbnRzIGhlXV0='>he</a> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HiddenHeartOfGold' title='/pmwiki/pmwiki.php/Main/HiddenHeartOfGold' data-format='W1tIaWRkZW5IZWFydE9mR29sZCByZWFsbHkgZG9lcyBoYXZlIGEgaGVhcnRdXQ=='>really does have a heart</a>. For his part, Kane seemed more confused by this than anything else, possibly because she was simultaneously a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/StalkerWithACrush' title='/pmwiki/pmwiki.php/Main/StalkerWithACrush' data-format='U3RhbGtlcldpdGhBQ3J1c2g='>Stalker with a Crush</a> for both <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/CMPunk' title='/pmwiki/pmwiki.php/Wrestling/CMPunk' data-format='V3Jlc3RsaW5nL0NNUHVuaw=='>CM Punk</a> and <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/BryanDanielson' title='/pmwiki/pmwiki.php/Wrestling/BryanDanielson' data-format='W1tXcmVzdGxpbmcvQnJ5YW5EYW5pZWxzb24gRGFuaWVsIEJyeWFuXV0='>Daniel Bryan</a>.
+</li></ul></li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/TheUndertaker' title='/pmwiki/pmwiki.php/Wrestling/TheUndertaker' data-format='V3Jlc3RsaW5nL1RoZVVuZGVydGFrZXI='>The Undertaker</a> showed hints of this with <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/StephanieMcMahon' title='/pmwiki/pmwiki.php/Wrestling/StephanieMcMahon' data-format='V3Jlc3RsaW5nL1N0ZXBoYW5pZU1jTWFob24='>Stephanie McMahon</a> during his Ministry of Darkness period. He seemingly wanted to marry her to take control of the WWF but he invaded her house, left notes on her mirror, messed with her personal belongings, and had pictures taken of her which he had delivered to <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/VinceMcMahon' title='/pmwiki/pmwiki.php/Wrestling/VinceMcMahon' data-format='V3Jlc3RsaW5nL3t7VmluY2V8TWNNYWhvbn19'>Vince</a> in an envelope. He referred to himself as her soul mate and kidnapped her on two occasions. During a sit-down with her father &amp; Jerry Lawler, Stephanie said that Taker was sending her pictures. <span class="notelabel" onclick="togglenote('note2qgx2');"><sup>note&nbsp;</sup></span><span id="note2qgx2" class="inlinefolder" isnote="true" onclick="togglenote('note2qgx2');" style="cursor:pointer;font-size:smaller;display:none;"> Her statement was very vague which left questions of -was Taker sending pictures he had taken of her just as he'd sent them to Vince, or was he sending her candid shots of himself in return for the shots he had of her?</span> On a final note, Stephanie said Taker stripped her, placed her in the dark robes for the ceremony, and repeatedly touched her while declaring that she was his &amp; couldn't do anything about it.
+</li><li> In the WWE subsidized version of Florida Championship Wrestling, <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/SethRollins' title='/pmwiki/pmwiki.php/Wrestling/SethRollins' data-format='V3Jlc3RsaW5nL1NldGhSb2xsaW5z'>Seth Rollins</a> found himself with a physical and cyber stalker in the form of <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/Paige' title='/pmwiki/pmwiki.php/Wrestling/Paige' data-format='V3Jlc3RsaW5nL3t7UGFpZ2V9fQ=='>Paige</a>. She eventually got over it though.
+</li><li> Samuel Shaw in TNA towards interviewer <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/ChristyHemme' title='/pmwiki/pmwiki.php/Wrestling/ChristyHemme' data-format='V3Jlc3RsaW5nL0NocmlzdHlIZW1tZQ=='>Christy Hemme</a>. Then he got his own in Brittany.
+</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/TerriPoch' title='/pmwiki/pmwiki.php/Wrestling/TerriPoch' data-format='W1tXcmVzdGxpbmcvVGVycmlQb2NoIFRvcmkgKFRlcnJpIFBvY2gpXV0='>Tori (Terri Poch)</a> was this to <a class='twikilink' href='/pmwiki/pmwiki.php/Wrestling/Sable' title='/pmwiki/pmwiki.php/Wrestling/Sable' data-format='V3Jlc3RsaW5nL3t7U2FibGV9fQ=='>Sable</a> in 1999 WWE. The original plan was for Tori to be Sable's "sister," but the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HoYay' title='/pmwiki/pmwiki.php/Main/HoYay' data-format='W1tIb1lheSBMZXMgWWF5XV0='>Les Yay</a> potential was too good for WWE not to use.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder7');">&nbsp;&nbsp;&nbsp;&nbsp;Theatre&nbsp;</div><div id="folder7" class="folder" isfolder="true" style="display:block;">
+<ul ><li> Charles Gérard in <em><a class='twikilink' href='/pmwiki/pmwiki.php/Theatre/AndreaChenier' title='/pmwiki/pmwiki.php/Theatre/AndreaChenier' data-format='VGhlYXRyZS9BbmRyZWFDaGVuaWVy'>Andrea Chénier</a></em> is crazy about Maddalena de Coigny and stalks her without getting discovered since he is a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BeneathNotice' title='/pmwiki/pmwiki.php/Main/BeneathNotice' data-format='QmVuZWF0aE5vdGljZQ=='>Beneath Notice</a> servant in her house until the first act’s end. Then he becomes a revolutionary leader and sends spies after her. She is horrified when she finds out, though at first she thinks he <a class='twikilink' href='/pmwiki/pmwiki.php/Main/StalkerWithoutACrush' title='/pmwiki/pmwiki.php/Main/StalkerWithoutACrush' data-format='W1tTdGFsa2VyV2l0aG91dEFDcnVzaCBoYXMgZG9uZSBpdCBiZWNhdXNlIGhlIGhhdGVzIGhlcl1d'>has done it because he hates her</a>.
+</li><li> Don José in <em><a class='twikilink' href='/pmwiki/pmwiki.php/Theatre/Carmen1875' title='/pmwiki/pmwiki.php/Theatre/Carmen1875' data-format='VGhlYXRyZS9DYXJtZW4xODc1'>Carmen (1875)</a></em> after Carmen gets tired of him. He eventually <a class='twikilink' href='/pmwiki/pmwiki.php/Main/IfICantHaveYou' title='/pmwiki/pmwiki.php/Main/IfICantHaveYou' data-format='W1tJZklDYW50SGF2ZVlvdSBraWxscyBoZXJdXQ=='>kills her</a> when she refuses to take him back.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Theatre/TheCrucible' title='/pmwiki/pmwiki.php/Theatre/TheCrucible' data-format='VGhlYXRyZS9UaGVDcnVjaWJsZQ=='>The Crucible</a></em> has Abby Williams, who remorselessly accuses a woman of witchcraft so that she can marry the woman's husband. <span class="spoiler" title="you can set spoilers visible by default on your profile" >It backfires. Spectacularly.</span>
+<ul ><li> Even before this, it starts to fall into <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Yandere' title='/pmwiki/pmwiki.php/Main/Yandere' data-format='e3tZYW5kZXJlfX0='>Yandere</a> territory when it's revealed that Abby <span class="spoiler" title="you can set spoilers visible by default on your profile" >drank blood in a charm to murder Elizabeth</span>. Although it's subverted in the end, as Abby <span class="spoiler" title="you can set spoilers visible by default on your profile" >leaves before John is executed</span>.
+</li></ul></li><li> Der Tod (Death) in <em><a class='twikilink' href='/pmwiki/pmwiki.php/Theatre/Elisabeth' title='/pmwiki/pmwiki.php/Theatre/Elisabeth' data-format='VGhlYXRyZS97e0VsaXNhYmV0aH19'>Elisabeth</a></em>. He spends most of Elisabeth's life stalking her because he's very attracted to her.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Theatre/Fangirls' title='/pmwiki/pmwiki.php/Theatre/Fangirls' data-format='VGhlYXRyZS97e0ZhbmdpcmxzfX0='>Fangirls</a></em>, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LoonyFan' title='/pmwiki/pmwiki.php/Main/LoonyFan' data-format='TG9vbnlGYW4='>Loony Fan</a> Edna abducts pop star Harry and holds him prisoner in her bedroom because she feels she is the only one who truly understands him. It is implied that most of the other <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Fangirl' title='/pmwiki/pmwiki.php/Main/Fangirl' data-format='e3tGYW5naXJsfX1z'>Fangirls</a> are just bad, but they don't act on their obsession.
+</li><li> Marius and Eponine both qualify in <em><a class='twikilink' href='/pmwiki/pmwiki.php/Theatre/LesMiserables' title='/pmwiki/pmwiki.php/Theatre/LesMiserables' data-format='VGhlYXRyZS9MZXNNaXNlcmFibGVz'>Les Misérables</a></em>. Eponine stalks Marius, Marius stalks Cosette and uses Eponine as an intermediary in his stalking of Cosette. Only one stalker comes out of it alive.
+<ul ><li> It helps that Cosette would probably be stalking Marius right back if her <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HelicopterParents' title='/pmwiki/pmwiki.php/Main/HelicopterParents' data-format='W1tIZWxpY29wdGVyUGFyZW50cyBvdmVycHJvdGVjdGl2ZSBmYXRoZXJdXQ=='>overprotective father</a> ever let her out of the house on her own. She certainly obsesses over him at home, and once they finally meet, it's <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LoveAtFirstSight' title='/pmwiki/pmwiki.php/Main/LoveAtFirstSight' data-format='TG92ZUF0Rmlyc3RTaWdodA=='>Love at First Sight</a>.
+</li></ul></li><li> Tom in <em><a class='twikilink' href='/pmwiki/pmwiki.php/Theatre/MurderBallad' title='/pmwiki/pmwiki.php/Theatre/MurderBallad' data-format='VGhlYXRyZS9NdXJkZXJCYWxsYWQ='>Murder Ballad</a></em> becomes this after Sara ends their affair.
+</li><li> Roderigo in <em><a class='twikilink' href='/pmwiki/pmwiki.php/Theatre/Othello' title='/pmwiki/pmwiki.php/Theatre/Othello' data-format='VGhlYXRyZS97e090aGVsbG99fQ=='>Othello</a></em> definitely qualifies, chasing Desdemona to Cyprus in his mistaken belief she'll submit. How he expects this to happen when they never actually meet...
+<ul ><li> The fact that Iago was leading him on probably didn't help to discourage him.
+</li></ul></li><li> Fosca from <em><a class='twikilink' href='/pmwiki/pmwiki.php/Theatre/Passion' title='/pmwiki/pmwiki.php/Theatre/Passion' data-format='VGhlYXRyZS97e1Bhc3Npb259fQ=='>Passion</a></em> is, aside from being a terminally ill <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AbhorrentAdmirer' title='/pmwiki/pmwiki.php/Main/AbhorrentAdmirer' data-format='QWJob3JyZW50QWRtaXJlcg=='>Abhorrent Admirer</a>, a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Tsundere' title='/pmwiki/pmwiki.php/Main/Tsundere' data-format='e3tUc3VuZGVyZX19'>Tsundere</a> who emotionally blackmails her target, Giorgio, starving herself when he spurns her and guilting him into writing her a love letter when he finally visits her again. Unusually, Fosca ends up winning Giorgio over - and we're not so sure that's a good thing. What convinces him to go to Fosca is the realization that she would give everything, including her life, for his sake, whereas his current lover Clara won't leave her husband. (This, ignoring that Fosca has one foot in the grave already, and Clara says she'll leave her husband once her infant son is old enough to fend for himself.)
+</li><li> While it was mentioned in the literature section, <em><a class='twikilink' href='/pmwiki/pmwiki.php/Theatre/ThePhantomOfTheOpera' title='/pmwiki/pmwiki.php/Theatre/ThePhantomOfTheOpera' data-format='VGhlYXRyZS9UaGVQaGFudG9tT2ZUaGVPcGVyYQ=='>The Phantom of the Opera</a></em> deserves a mention here as well. The title character is a combination of <a class='twikilink' href='/pmwiki/pmwiki.php/Main/StalkerWithACrush' title='/pmwiki/pmwiki.php/Main/StalkerWithACrush' data-format='W1tTdGFsa2VyV2l0aEFDcnVzaCB0aGlzIHRyb3BlXV0='>this trope</a> and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheWoobie' title='/pmwiki/pmwiki.php/Main/TheWoobie' data-format='VGhlV29vYmll'>The Woobie</a>. Even though he's usually portrayed pretty sympathetically, he still has a number of rather creepy lines.
+<div class='indent'><strong>Erik:</strong> Your chains are still mine &#8212; you belong to <em>me</em>!
+</div><ul ><li> He gains Christine's trust by <em>impersonating an angel sent by her dead father</em>.
+</li></ul></li><li> Mizgir in <em><a class='twikilink' href='/pmwiki/pmwiki.php/Theatre/TheSnowMaiden' title='/pmwiki/pmwiki.php/Theatre/TheSnowMaiden' data-format='VGhlYXRyZS9UaGVTbm93TWFpZGVu'>The Snow Maiden</a></em>. Ever since he sees the eponymous heroine he follows her wherever she goes. When she's in a crowd, he merely watches her, and whenever she's alone or without anyone able to protect her, he tries to use first bribes and then force to win her. And then it can be seen as quite creepy when <span class="spoiler" title="you can set spoilers visible by default on your profile" >he does get her, if only for a short while, thanks to a sort of love philtre</span>.
+<ul ><li> To a lesser extent the Snow Maiden herself for Lel, the attractive shepherd who eventually shuns her because of her frigidity. Justified as she's far too naive and childish for her age and simply doesn't understand that stalking won't endear her to him again. The poor guy can't even <span class="spoiler" title="you can set spoilers visible by default on your profile" >sing a love duet with his new darling</span> without the Snow Maiden watching.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Theatre/SweeneyToddTheDemonBarberOfFleetStreet' title='/pmwiki/pmwiki.php/Theatre/SweeneyToddTheDemonBarberOfFleetStreet' data-format='VGhlYXRyZS9Td2VlbmV5VG9kZFRoZURlbW9uQmFyYmVyT2ZGbGVldFN0cmVldA=='>Sweeney Todd: The Demon Barber of Fleet Street</a></em>: Anthony's song, "Johanna", is creepy in a few ways:
+<div class='indent'><em>Do they think that walls can hide you?<br data-format="\\" />Even now I'm at your window...<br data-format="\\" />I am in the dark beside you<br data-format="\\" />buried sweetly in your yellow hair<br data-format="\\" />I feel you, Johanna<br data-format="\\" />And one day, I'll steal you<br data-format="\\" />'Til I'm with you then<br data-format="\\" />I'm with you there...<br data-format="\\" />Sweetly buried in your yellow hair</em>
+</div><ul ><li> Although Sweeney and Turpin's versions of "Johanna" take the creepiness to the nth power. Besides, "stalker" implies that Johanna wanted him to leave her alone. She was perfectly happy to have his attention, if only because she really, <em>really</em> didn't want to marry Turpin.
+</li><li> Yep to above. It's mainly in the film version that Anthony's song takes on a "stalkerish" feel, particularly with his somewhat creepy bloody face as he sings (since he just got the crap beaten out of him by the Beadle). In the stage version, the two of them actually meet for the first half of the song before being interrupted by Turpin and the Beadle (which involves the Beadle <a class='twikilink' href='/pmwiki/pmwiki.php/Main/KickTheDog' title='/pmwiki/pmwiki.php/Main/KickTheDog' data-format='W1tLaWNrVGhlRG9nIHNuYXBwaW5nIHRoZSBuZWNrIG9mIHRoZSBwb29yIGxpdHRsZSBiaXJkIHRoYXQgd2FzIEFudGhvbnkmIzAzOTtzIGdpZnQgdG8gaGVyXV0='>snapping the neck of the poor little bird that was Anthony's gift to her</a>). The second half of the stage version isn't nearly as stalkerish as the film version, and has Anthony ripping apart the bird cage in a rather symbolic gesture.
+<ul ><li> And besides, any stalkerish tendencies that Anthony has towards Johanna are pretty much kicked to the curb in the musical when you look at Judge Turpin, given the uber-<a class='twikilink' href='/pmwiki/pmwiki.php/Main/Squick' title='/pmwiki/pmwiki.php/Main/Squick' data-format='e3tTcXVpY2t9fQ=='>Squick</a> of "Mea Culpa". To accuse Anthony of being a perv after that is like being violently attacked by an anaconda and then freaking out at the sight of a grass snake.
+</li></ul></li><li> Also, Mrs Lovett. Not so overt, but definitely there. She's clearly obsessed with Sweeney, and has been for a very long time. Complete with cooing over how "beautiful" he was fifteen years ago, keeping his straight razors in case he ever came back and needed them, and (in the film version at least) keeping his old room <em>exactly</em> the way it was when he left it. Yikes.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Theatre/Wicked' title='/pmwiki/pmwiki.php/Theatre/Wicked' data-format='VGhlYXRyZS97e1dpY2tlZH19'>Wicked</a></em> has not one but two scary stalkers. Petrifying clingy girl Nessarose, out to enslave her beloved's people in order to keep him with her; and Boq, the beloved in question, who doesn't understand Glinda's just not interested. She doesn't even remember his name but he lives in hope.
+<ul ><li> Boq's far more of a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LoveMartyr' title='/pmwiki/pmwiki.php/Main/LoveMartyr' data-format='TG92ZU1hcnR5cg=='>Love Martyr</a>, considering that while he acts desperately out of hope that Glinda will notice him, he never actually crosses the line into stalking.
+</li></ul></li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder8');">&nbsp;&nbsp;&nbsp;&nbsp;Visual Novels&nbsp;</div><div id="folder8" class="folder" isfolder="true" style="display:block;">
+<ul ><li> Astraeus from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/AstoriaFatesKiss' title='/pmwiki/pmwiki.php/VisualNovel/AstoriaFatesKiss' data-format='VmlzdWFsTm92ZWwvQXN0b3JpYUZhdGVzS2lzcw=='>Astoria: Fate's Kiss</a></em> is one of these. He <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LoveAtFirstSight' title='/pmwiki/pmwiki.php/Main/LoveAtFirstSight' data-format='W1tMb3ZlQXRGaXJzdFNpZ2h0IGluc3RhbnRseSBmYWxscyBpbiBsb3ZlIHdpdGggaGVyXV0='>instantly falls in love with her</a> and tries to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheKindnapper' title='/pmwiki/pmwiki.php/Main/TheKindnapper' data-format='W1tUaGVLaW5kbmFwcGVyIGtpZG5hcCBoZXIgb24gc2V2ZXJhbCBvY2Nhc2lvbnNdXQ=='>kidnap her on several occasions</a> in Hades' season 1 and 2 storyline. In season 3 of the game, he becomes a love interest himself.
+</li><li> The dragon in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/DraKoi' title='/pmwiki/pmwiki.php/VisualNovel/DraKoi' data-format='VmlzdWFsTm92ZWwvRHJhS29p'>Dra+Koi</a></em> falls in love with the protagonist after he hits the reverse scale on her neck, after which she follows him around blowing stuff up until he agrees to date her.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/Deiz' title='/pmwiki/pmwiki.php/VisualNovel/Deiz' data-format='VmlzdWFsTm92ZWwve3tEZWl6fX0='>Deiz</a></em>, the player character is one of these towards the director Iris, to the point that he knows when she will walk by above his classroom.
+</li><li> Miho from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/LiarLiar2014' title='/pmwiki/pmwiki.php/VisualNovel/LiarLiar2014' data-format='VmlzdWFsTm92ZWwvTGlhckxpYXIyMDE0'>Liar Liar (2014)</a></em> was being stalked by Wakabayashi for a while. She feared for her life but the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PoliceAreUseless' title='/pmwiki/pmwiki.php/Main/PoliceAreUseless' data-format='W1tQb2xpY2VBcmVVc2VsZXNzIHBvbGljZSBjb3VsZG4mIzAzOTt0IGRvIGFueXRoaW5nXV0='>police couldn't do anything</a> until he physically harrassed her, the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AdultsAreUseless' title='/pmwiki/pmwiki.php/Main/AdultsAreUseless' data-format='W1tBZHVsdHNBcmVVc2VsZXNzIGFkdWx0c11d'>adults</a> at school didn't believe her, and everyone insisted she was in the wrong for not giving Wakabayashi a chance. She almost hit a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DespairEventHorizon' title='/pmwiki/pmwiki.php/Main/DespairEventHorizon' data-format='RGVzcGFpckV2ZW50SG9yaXpvbg=='>Despair Event Horizon</a> but decided to kill him, though she couldn't get herself to do it so she got <a class='twikilink' href='/pmwiki/pmwiki.php/Main/VillainProtagonist' title='/pmwiki/pmwiki.php/Main/VillainProtagonist' data-format='W1tWaWxsYWluUHJvdGFnb25pc3QgWXVrYXJpXV0='>Yukari</a> to do so. This event was her <a class='twikilink' href='/pmwiki/pmwiki.php/Main/StartOfDarkness' title='/pmwiki/pmwiki.php/Main/StartOfDarkness' data-format='U3RhcnRPZkRhcmtuZXNz'>Start of Darkness</a>.
+</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BrokenAce' title='/pmwiki/pmwiki.php/Main/BrokenAce' data-format='W1tCcm9rZW5BY2UgSGliaWtpXV0='>Hibiki</a> from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/LuxPain' title='/pmwiki/pmwiki.php/VisualNovel/LuxPain' data-format='VmlzdWFsTm92ZWwvTHV4UGFpbg=='>Lux-Pain</a></em> is this <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HoYay' title='/pmwiki/pmwiki.php/Main/HoYay' data-format='W1tIb1lheSB0b3dhcmRdXQ=='>toward</a> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheHero' title='/pmwiki/pmwiki.php/Main/TheHero' data-format='W1tUaGVIZXJvIEF0c3VraV1d'>Atsuki</a> but is mainly played for laughs because of the situation that makes him seem like one mainly getting Atsuki's number because Atsuki isn't going to give him his number anytime soon and Ryo doesn't have a cellphone in order to give Hibiki Atsuki's number.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/ShallWeDateCantSayNo' title='/pmwiki/pmwiki.php/VisualNovel/ShallWeDateCantSayNo' data-format='VmlzdWFsTm92ZWwvU2hhbGxXZURhdGVDYW50U2F5Tm8='>Shall We Date?: Can't Say No</a></em>, Subaru stalks the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PlayerCharacter' title='/pmwiki/pmwiki.php/Main/PlayerCharacter' data-format='W1tQbGF5ZXJDaGFyYWN0ZXIgaGVyb2luZV1d'>heroine</a> for days, and rescues her from a couple of thugs <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AttemptedRape' title='/pmwiki/pmwiki.php/Main/AttemptedRape' data-format='W1tBdHRlbXB0ZWRSYXBlIHdobyB0cnkgdG8gcmFwZSBoZXJdXQ=='>who try to rape her</a>. <span class="spoiler" title="you can set spoilers visible by default on your profile" >It's implied that he later goes back and straight up murders some of the thugs.</span>
+</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RecurringElement' title='/pmwiki/pmwiki.php/Main/RecurringElement' data-format='W1tSZWN1cnJpbmdFbGVtZW50IFRyYWRpdGlvbmFsbHldXQ=='>Traditionally</a>, the three main <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/Danganronpa' title='/pmwiki/pmwiki.php/Franchise/Danganronpa' data-format='RnJhbmNoaXNlL3t7RGFuZ2Fucm9ucGF9fQ=='>Danganronpa</a></em> games have a character that fits this role:
+<ul ><li> In the first game <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/DanganronpaTriggerHappyHavoc' title='/pmwiki/pmwiki.php/VisualNovel/DanganronpaTriggerHappyHavoc' data-format='VmlzdWFsTm92ZWwvRGFuZ2Fucm9ucGFUcmlnZ2VySGFwcHlIYXZvYw=='>Danganronpa: Trigger Happy Havoc</a></em>, Toko Fukawa develops an obsession with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Jerkass' title='/pmwiki/pmwiki.php/Main/Jerkass' data-format='W1t7e0plcmthc3N9fSBCeWFrdXlhIFRvZ2FtaV1d'>Byakuya Togami</a> and seems to be the only person in school who is willing to be next to him, to the point where she even calls him "Master" and is absolutely <em>delighted</em> when he insults her. Byakuya on the other hand finds Toko revolting and states multiple times that he wouldn't really mind if she were to get murdered, but her obsession also allows him to boss her around. <span class="spoiler" title="you can set spoilers visible by default on your profile" >Additionally, Toko's <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SerialKiller' title='/pmwiki/pmwiki.php/Main/SerialKiller' data-format='U2VyaWFsS2lsbGVy'>Serial Killer</a> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SplitPersonality' title='/pmwiki/pmwiki.php/Main/SplitPersonality' data-format='U3BsaXRQZXJzb25hbGl0eQ=='>Split Personality</a>, Genocide Jack, is just as obssesed with Byakuya as Toko is, which does somewhat terrify Byakuya. Despite Genocide Jack murdering every single boy she develops an interest on, she states that Byakuya is probably the only boy she wouldn't be willing to murder</span>.
+</li><li> In the second game, <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/Danganronpa2GoodbyeDespair' title='/pmwiki/pmwiki.php/VisualNovel/Danganronpa2GoodbyeDespair' data-format='VmlzdWFsTm92ZWwvRGFuZ2Fucm9ucGEyR29vZGJ5ZURlc3BhaXI='>Danganronpa 2: Goodbye Despair</a></em>, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HormoneAddledTeenager' title='/pmwiki/pmwiki.php/Main/HormoneAddledTeenager' data-format='W1tIb3Jtb25lQWRkbGVkVGVlbmFnZXIgS2F6dWljaGkgU29kYV1d'>Kazuichi Soda</a> is this to European exchange student Sonia Nevermind because she's a "hot blonde princess". Throughout the game Kazuichi either tries to get Sonia's attention or stalks her in order to admire her, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ShipTease' title='/pmwiki/pmwiki.php/Main/ShipTease' data-format='W1tTaGlwVGVhc2UgZGVzcGl0ZSBTb25pYSBzZWVtaW5nbHkgYmVpbmcgaW50ZXJlc3RlZCBpbiBHdW5kaGFtIChhbmQgdmljZS12ZXJzYSldXQ=='>despite Sonia seemingly being interested in Gundham (and vice-versa)</a>. Another factor is that Kazuichi tends to put Sonia on a pedestal, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/IJustWantToBeNormal' title='/pmwiki/pmwiki.php/Main/IJustWantToBeNormal' data-format='W1tJSnVzdFdhbnRUb0JlTm9ybWFsIHdoZW4gYWxsIHNoZSBldmVyIHdhbnRzIGlzIHRvIGJlIHNlZW4gYXMgYW4gZXF1YWwgdG8gaGVyIGNsYXNzbWF0ZXNdXQ=='>when all she ever wants is to be seen as an equal to her classmates</a>. Sonia tries to be polite with Kazuichi at first, but she eventually ends up getting fed up with him when he is unable to tell that she obviously is not interested.
+</li><li> In the third game, <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/DanganronpaV3KillingHarmony' title='/pmwiki/pmwiki.php/VisualNovel/DanganronpaV3KillingHarmony' data-format='VmlzdWFsTm92ZWwvRGFuZ2Fucm9ucGFWM0tpbGxpbmdIYXJtb255'>Danganronpa V3: Killing Harmony</a></em>, Tenko Chabashira often tries to get Himiko Yumeno's attention, but Himiko often ditches her to hang out with Angie or mistreats her due to Tenko making her uncomfortable. It should also be noted that aside from her crush on her, Tenko also finds Himiko constantly bottling up her emotions to be unhealthy for her, and she tries to convince her to express herself more often. <span class="spoiler" title="you can set spoilers visible by default on your profile" > After Tenko is murdered, Himiko remembers what she told her before she died and decides to stop bottling what she feels. She also expresses regret to having ignored and mistreated Tenko back when she was alive. Tenko is so far the only <a class='twikilink' href='/pmwiki/pmwiki.php/Main/StalkerWithACrush' title='/pmwiki/pmwiki.php/Main/StalkerWithACrush' data-format='U3RhbGtlcldpdGhBQ3J1c2g='>Stalker with a Crush</a> character in the series that actually forms a healthy bond with the one she has a crush on, albeit posthumously</span>.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/DokiDokiLiteratureClub' title='/pmwiki/pmwiki.php/VisualNovel/DokiDokiLiteratureClub' data-format='VmlzdWFsTm92ZWwvRG9raURva2lMaXRlcmF0dXJlQ2x1Yg=='>Doki Doki Literature Club!</a></em>:
+<ul ><li> <span class="spoiler" title="you can set spoilers visible by default on your profile" >Monika</span> is revealed to be one for <span class="spoiler" title="you can set spoilers visible by default on your profile" >the player. Not the character you're playing as, <em><a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheFourthWallWillNotProtectYou' title='/pmwiki/pmwiki.php/Main/TheFourthWallWillNotProtectYou' data-format='W1tUaGVGb3VydGhXYWxsV2lsbE5vdFByb3RlY3RZb3UgdGhlIHBsYXllcl1d'>the player</a></em>.</span> All the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DisguisedHorrorStory' title='/pmwiki/pmwiki.php/Main/DisguisedHorrorStory' data-format='RGlzZ3Vpc2VkSG9ycm9yU3Rvcnk='>Disguised Horror Story</a> elements are from <span class="spoiler" title="you can set spoilers visible by default on your profile" >her tampering with the game so that she's the best romantic option. She <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MindRape' title='/pmwiki/pmwiki.php/Main/MindRape' data-format='W1tNaW5kUmFwZSBlZGl0cyB0aGUgb3RoZXIgZ2lybHMmIzAzOTsgZmlsZXMgc28gdGhlaXIgd29yc3QgdHJhaXRzIGFyZSBleGFnZ2VyYXRlZF1d'>edits the other girls' files so their worst traits are exaggerated</a>, leading to two killing themselves out of <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SanitySlippage' title='/pmwiki/pmwiki.php/Main/SanitySlippage' data-format='U2FuaXR5U2xpcHBhZ2U='>Sanity Slippage</a>. When that doesn't work, she <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Unperson' title='/pmwiki/pmwiki.php/Main/Unperson' data-format='W1t7e1VucGVyc29ufX0gZGVsZXRlcyB0aGVtIGZyb20gdGhlIGdhbWUgZW50aXJlbHldXQ=='>deletes them from the game entirely</a>. She also has a habit of railroading options in her favor, such as making the cursor move towards her name when the player is selecting who to help out with festival preparations in Act 2. By the time of Act 3, Monika is the only girl present in a heavily glitched game, who talks openly about her love for the player.</span>
+</li><li> <span class="spoiler" title="you can set spoilers visible by default on your profile" >Yuri</span> devolves into one in Act 2, <span class="spoiler" title="you can set spoilers visible by default on your profile" >as a result of the aforementioned <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MindRape' title='/pmwiki/pmwiki.php/Main/MindRape' data-format='TWluZFJhcGU='>Mind Rape</a>. When she's first introduced, she comes off as a sweet <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ShrinkingViolet' title='/pmwiki/pmwiki.php/Main/ShrinkingViolet' data-format='U2hyaW5raW5nVmlvbGV0'>Shrinking Violet</a> who has some <a class='twikilink' href='/pmwiki/pmwiki.php/Main/NightmareFetishist' title='/pmwiki/pmwiki.php/Main/NightmareFetishist' data-format='W1tOaWdodG1hcmVGZXRpc2hpc3QgZGFya2VyIGludGVyZXN0c11d'>darker interests</a> but is otherwise harmless. However, Monika tampers with her, making her increasingly more clingy and unstable while obsessing over the player character. While in Act 1 Yuri was simply the type who'd buy two copies of the same book so that she'd give the player character one in an attempt to impress him, in Act 2 she tries to push the other girls away from him, makes creepy and often perverted comments, and even steals things from him. At the height of her <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SanitySlippage' title='/pmwiki/pmwiki.php/Main/SanitySlippage' data-format='U2FuaXR5U2xpcHBhZ2U='>Sanity Slippage</a>, she confesses her love in a crazed manner, only to stab herself to death regardless of the answer. Monika even references the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Yandere' title='/pmwiki/pmwiki.php/Main/Yandere' data-format='e3tZYW5kZXJlfX0='>Yandere</a> trope by name when talking about her in Act 3, despite ironically driving Yuri to that state out of a desire to get closer to the player.</span>
+</li><li> In one of the endings <span class="spoiler" title="you can set spoilers visible by default on your profile" >Sayori also begins going down the same route as Monika: being meta-aware and desiring to have the player all to herself. It's suggested that whoever gets the Club President role gains meta-awareness, which leads them to do irrational things <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GoMadFromTheRevelation' title='/pmwiki/pmwiki.php/Main/GoMadFromTheRevelation' data-format='W1tHb01hZEZyb21UaGVSZXZlbGF0aW9uIG9uY2UgdGhleSBrbm93IHRoZSB0cnV0aC5dXQ=='>once they know the truth.</a> Fortunately, Monika post-<a class='twikilink' href='/pmwiki/pmwiki.php/Main/HeelRealization' title='/pmwiki/pmwiki.php/Main/HeelRealization' data-format='SGVlbFJlYWxpemF0aW9u'>Heel Realization</a> intervenes, blocking Sayori's attempts to take over the game the same way she did.</span> If you get the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GoldenEnding' title='/pmwiki/pmwiki.php/Main/GoldenEnding' data-format='R29sZGVuRW5kaW5n'>Golden Ending</a>, however, this plays out differently: <span class="spoiler" title="you can set spoilers visible by default on your profile" >Sayori will again reveal that she's become aware of the player, but will actually thank them for going for <a class='twikilink' href='/pmwiki/pmwiki.php/Main/OneHundredPercentCompletion' title='/pmwiki/pmwiki.php/Main/OneHundredPercentCompletion' data-format='T25lSHVuZHJlZFBlcmNlbnRDb21wbGV0aW9u'>100% Completion</a> by trying to get as many <span class='esc-seq' title='non-wikiword'>CGs</span> as possible through <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SaveScumming' title='/pmwiki/pmwiki.php/Main/SaveScumming' data-format='U2F2ZVNjdW1taW5n'>Save Scumming</a>: all she wanted deep down was for everyone to be happy, so she was impressed that you'd go to such lengths.</span>
+
+</li></ul></li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheFightingNarcissist' title='/pmwiki/pmwiki.php/Main/TheFightingNarcissist' data-format='W1tUaGVGaWdodGluZ05hcmNpc3Npc3QgQ2FtdXNdXQ=='>Camus</a> O. <a class='twikilink' href='/pmwiki/pmwiki.php/Main/EdibleThemeNaming' title='/pmwiki/pmwiki.php/Main/EdibleThemeNaming' data-format='W1tFZGlibGVUaGVtZU5hbWluZyBMYXBocm9haWddXQ=='>Laphroaig</a>, Milfeulle's <a class='twikilink' href='/pmwiki/pmwiki.php/Main/EvilCounterpart' title='/pmwiki/pmwiki.php/Main/EvilCounterpart' data-format='RXZpbENvdW50ZXJwYXJ0'>Evil Counterpart</a>, from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/GalaxyAngel' title='/pmwiki/pmwiki.php/VideoGame/GalaxyAngel' data-format='VmlkZW9HYW1lL0dhbGF4eUFuZ2Vs'>Galaxy Angel</a></em>. Interestingly, he comes in <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AlternativeCharacterInterpretation' title='/pmwiki/pmwiki.php/Main/AlternativeCharacterInterpretation' data-format='W1tBbHRlcm5hdGl2ZUNoYXJhY3RlckludGVycHJldGF0aW9uIHR3byBkaWZmZXJlbnQgZmxhdm9yc11d'>two different flavors</a> depending on the medium: <a class='twikilink' href='/pmwiki/pmwiki.php/Main/IneffectualSympatheticVillain' title='/pmwiki/pmwiki.php/Main/IneffectualSympatheticVillain' data-format='W1tJbmVmZmVjdHVhbFN5bXBhdGhldGljVmlsbGFpbiBhbm5veWluZ11d'>annoying</a> in the visual novel and creepy in the manga.
+</li><li> <span class="spoiler" title="you can set spoilers visible by default on your profile" >Shion</span> of <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/HigurashiWhenTheyCry' title='/pmwiki/pmwiki.php/VisualNovel/HigurashiWhenTheyCry' data-format='VmlzdWFsTm92ZWwvSGlndXJhc2hpV2hlblRoZXlDcnk='>Higurashi: When They Cry</a></em> has an obsessive crush on <span class="spoiler" title="you can set spoilers visible by default on your profile" > Satoshi, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheWoobie' title='/pmwiki/pmwiki.php/Main/TheWoobie' data-format='W1tUaGVXb29iaWUgU2F0b2tvXV0='>Satoko</a>'s older brother,</span> to the point where she <span class="spoiler" title="you can set spoilers visible by default on your profile" ><a class='twikilink' href='/pmwiki/pmwiki.php/Main/TwinSwitch' title='/pmwiki/pmwiki.php/Main/TwinSwitch' data-format='W1tUd2luU3dpdGNoIHN3aXRjaGVkIHBsYWNlc11d'>switched places</a> with her twin sister, Mion, to be near him</span>. Depending on the arc, she sometimes has a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BigSisterInstinct' title='/pmwiki/pmwiki.php/Main/BigSisterInstinct' data-format='QmlnU2lzdGVySW5zdGluY3Q='>Big Sister Instinct</a> towards Satoko as a result.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/ShinraiBrokenBeyondDespair' title='/pmwiki/pmwiki.php/VisualNovel/ShinraiBrokenBeyondDespair' data-format='VmlzdWFsTm92ZWwvU2hpbnJhaUJyb2tlbkJleW9uZERlc3BhaXI='>Shinrai: Broken Beyond Despair</a></em>, Kotoba Gaikoku is one to Momoko Mori, as while he has been infatuated with girls and boys, he appears to have genuine feelings for her. He constantly sent her letters and followed her around, but was forced to back off when her best friend Kamen Eiga threatened to call the police. <span class="spoiler" title="you can set spoilers visible by default on your profile" >Momoko decides to use him as an additional accomplice in her murder plan, since his feelings for her make him easy to manipulate and she can dispose of him without feeling bad about it</span>.
+</li><li> The main antagonist of Hinata's route of <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/SinceMemoriesOffTheStarrySky' title='/pmwiki/pmwiki.php/VisualNovel/SinceMemoriesOffTheStarrySky' data-format='VmlzdWFsTm92ZWwvU2luY2VNZW1vcmllc09mZlRoZVN0YXJyeVNreQ=='>SINce Memories: Off the Starry Sky</a></em> is a man who starts sending photos and anonymous packages to her and her best friend. Outing him and his identity before he can cause any real damage drives the conflict, especially since both girls belong to prominent political families.
+</li></ul></div>
 </p><p><hr data-format='&#8212;&#8212;' />
 </p></div>
 
@@ -518,28 +630,28 @@
   <div class="video-examples-featured">
     <div class="example_video_box">
       <a href="#video-link"
-         data-video-id="n0aayx"
-         data-video-descrip="The legendary creature from the black lagoon stalks a beautiful woman as she swims."
-         data-video-title="The Gill-Man"
-         data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/n0aayx_640x360p_qvbr.mp4"
-         data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/n0aayx.mpd"
-         data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/n0aayx.m3u8"
-         data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/n0aayx.jpg"
-         data-video-trope="Main/FishPeople"
-         data-video-tropename="Fish People"
+         data-video-id="4t4ve0"
+         data-video-descrip="Yosuke explains his oblivious one-sided crush towards Hanako after continuously stalking her."
+         data-video-title="Yosuke"
+         data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/4t4ve0_640x360p_qvbr.mp4"
+         data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/4t4ve0.mpd"
+         data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/4t4ve0.m3u8"
+         data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/4t4ve0.jpg"
+         data-video-trope="Main/StalkerWithACrush"
+         data-video-tropename="Stalker with a Crush"
          data-video-approval="APPROVED"
          data-video-troper-rating=""
-         data-video-average-rating="4.71"
-         data-video-rating-count="7"
-         data-video-media-sources="Film/CreatureFromTheBlackLagoon,Main/StalkerWithACrush"
+         data-video-average-rating="5.00"
+         data-video-rating-count="2"
+         data-video-media-sources="Manga/GeGeGeNoKitaro"
          class="video-launch-link video-overlay-link featured-widget-vid">
 
           <div class="featured-widget-vid-iframe">
               <div id="tvtropes_no_volume_player" 
-                  data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/n0aayx.jpg" 
-                  data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/n0aayx_640x360p_qvbr.mp4" 
-                  data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/n0aayx.mpd" 
-                  data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/n0aayx.m3u8"
+                  data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/4t4ve0.jpg" 
+                  data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/4t4ve0_640x360p_qvbr.mp4" 
+                  data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/4t4ve0.mpd" 
+                  data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/4t4ve0.m3u8"
               		data-controls="0"
               		data-muted="1">
                   
@@ -549,10 +661,10 @@
       </a>
     </div>
 
-    <h2 class="bold font-l">The Gill-Man</h2>
+    <h2 class="bold font-l">Yosuke</h2>
     <p class="_pmvv-vidbox-descTxt">
-      The legendary creature from the black lagoon stalks a beautiful woman as she swims.    </p>
-    <p class='example_row'>Example of:<br><a href="/pmwiki/pmwiki.php/Main/FishPeople"class='trope-example-link'>Fish People</a></p>
+      Yosuke explains his oblivious one-sided crush towards Hanako after continuously stalking her.    </p>
+    
 
   </div>
 
@@ -560,23 +672,191 @@
 
           
       <a href="#video-link"
-      data-video-id="shk1wx"
-      data-video-descrip="Gabi sings about her obsessive love for Nigel and how she will do anything for him."
-      data-video-title="Poisonous Love"
-      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/shk1wx_640x360p_qvbr.mp4"
-      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/shk1wx.mpd"
-      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/shk1wx.m3u8"
-      data-video-thumbnail="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/615b7199_35d1_4a1b_b0e4_83f35b6a994a.png"
+      data-video-id="mhsj66"
+      data-video-descrip="Koichi uses his Stand to tell Yukako that he hates her (for having kidnapped and psychologically abused him throughout the arc). Unfortunately, she's too obsessed with him to be affected by Echoes Act 1."
+      data-video-title="Koichi vs Yukako"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/mhsj66_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/mhsj66.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/mhsj66.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/mhsj66.jpg"
+      data-video-trope="Main/NoSell"
+      data-video-tropename="No-Sell"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Anime/JoJosBizarreAdventureDiamondIsUnbreakable,Main/StalkerWithACrush,Main/Yandere"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/mhsj66.jpg">
+      <p><span class="bold">Koichi vs Yukako</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="n0aayx"
+      data-video-descrip="The legendary creature from the black lagoon stalks a beautiful woman as she swims."
+      data-video-title="The Gill-Man"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/n0aayx_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/n0aayx.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/n0aayx.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/n0aayx.jpg"
+      data-video-trope="Main/FishPeople"
+      data-video-tropename="Fish People"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Film/CreatureFromTheBlackLagoon,Main/StalkerWithACrush"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/n0aayx.jpg">
+      <p><span class="bold">The Gill-Man</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="9ikgff"
+      data-video-descrip="After unintentionally kidnapping Temacu, James immediately gets stalked by her who thinks he saved her and she wants him to be her boyfriend."
+      data-video-title="Temacu Loves James!"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/9ikgff_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/9ikgff.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/9ikgff.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/9ikgff.jpg"
       data-video-trope="Main/StalkerWithACrush"
       data-video-tropename="Stalker with a Crush"
       data-video-approval="APPROVED"
       data-video-troper-rating=""
       data-video-average-rating=""
       data-video-rating-count=""
-      data-video-media-sources="WesternAnimation/Rio2,Main/PsychoPink,Main/ObsessionSong,Main/InterspeciesRomance"
+      data-video-media-sources="Anime/PokemonTheOriginalSeries,Recap/PokemonS4E41TheHeartbreakOfBrock"
       class="video-launch-link video-overlay-link video-background-image lazy-image"
-      data-src="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/615b7199_35d1_4a1b_b0e4_83f35b6a994a.png">
-      <p><span class="bold">Poisonous Love</span></p>
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/9ikgff.jpg">
+      <p><span class="bold">Temacu Loves Ja...</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="w5y2tn"
+      data-video-descrip="Ayaka Kirisaki is a psychotic spy/assassin who tends to stalk her targets and fall in love with them. She's also nicknamed the &amp;quot;Manhunter Spy&amp;quot; because of it."
+      data-video-title="Ayaka Kirisaki"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/w5y2tn_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/w5y2tn.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/w5y2tn.m3u8"
+      data-video-thumbnail="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/screenshot_2025_04_02_130358.png"
+      data-video-trope="Main/Yandere"
+      data-video-tropename="Yandere"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Main/FlechetteStorm,Main/PalmOnCheekPose,Main/StalkerWithACrush,Manga/MissionYozakuraFamily"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/screenshot_2025_04_02_130358.png">
+      <p><span class="bold">Ayaka Kirisaki</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="3c9605"
+      data-video-descrip="Dominic is the Bazooka Shark's team stalker for the Bazooka Babes and he has a huge obsession with Danuta. But despite his creepy behavior and telling Danuta he plans to &amp;quot;take her away from all this&amp;quot; before her kidnapping, he didn't kidnap her."
+      data-video-title="Dominic, Bazooka Babe Stalker"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/3c9605_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/3c9605.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/3c9605.m3u8"
+      data-video-thumbnail="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/ad_s21e16_dominic_the_team_stalker.png"
+      data-video-trope="Main/LoonyFan"
+      data-video-tropename="Loony Fan"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Main/CreepyRedHerring,Main/NeverTheObviousSuspect,Main/StalkerWithACrush,Recap/AmericanDadS21E16TheMysteryOfTheMissingBazookaSharkBabe,WesternAnimation/AmericanDad"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/ad_s21e16_dominic_the_team_stalker.png">
+      <p><span class="bold">Dominic, Bazook...</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="paqvi6"
+      data-video-descrip="Casper Seeing Kat On His Bed - Casper (1995)"
+      data-video-title="Casper Seeing Kat On His Bed "
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/paqvi6_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/paqvi6.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/paqvi6.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/paqvi6.jpg"
+      data-video-trope="Main/StalkerWithACrush"
+      data-video-tropename="Stalker with a Crush"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Film/Casper"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/paqvi6.jpg">
+      <p><span class="bold">Casper Seeing K...</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="wcunhv"
+      data-video-descrip="Blitzo is quite displeased, to learn that Emberlynn the obsessive weeaboo with a crush on him, has found his place of business and is begging him to lover her."
+      data-video-title="Blitzy-Kun"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/wcunhv_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/wcunhv.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/wcunhv.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/wcunhv.jpg"
+      data-video-trope="Main/OhCrap"
+      data-video-tropename="Oh, Crap!"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Main/StalkerWithACrush,Recap/HelluvaBossShortsE3MissionWeeabooBoo,WebAnimation/HelluvaBoss"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/wcunhv.jpg">
+      <p><span class="bold">Blitzy-Kun</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="g5h23n"
+      data-video-descrip="A 'boy' with a large head has fallen in love with Salad Fingers and begins following him about, which makes the usually chipper Salad Fingers extremely uncomfortable. "
+      data-video-title="Salad Fingers &amp; The Little Boy"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/g5h23n_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/g5h23n.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/g5h23n.m3u8"
+      data-video-thumbnail="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/bigheadboy.png"
+      data-video-trope="Main/StalkerWithACrush"
+      data-video-tropename="Stalker with a Crush"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Main/AbhorrentAdmirer,Main/CardiovascularLove,WebAnimation/SaladFingers"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/bigheadboy.png">
+      <p><span class="bold">Salad Fingers &...</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="b257yo"
+      data-video-descrip="Thomas composes a beautiful poem for Alison, only to discover what a Kyley Min-ouge is."
+      data-video-title="What is a Kyley Min-ouge?"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/b257yo_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/b257yo.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/b257yo.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/b257yo.jpg"
+      data-video-trope="Main/ItsBeenDone"
+      data-video-tropename="It's Been Done"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Main/StalkerWithACrush,Main/StealingTheCredit,Main/ThisIsUnforgivable,Series/GhostsUK"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/b257yo.jpg">
+      <p><span class="bold">What is a Kyley...</span></p>
     </a>
 
           
@@ -665,6 +945,27 @@
 
           
       <a href="#video-link"
+      data-video-id="fylwqi"
+      data-video-descrip="Poisonous Love, sung by the poisonous frog Gabi, is a literal example on this trope where she sings about her love for Nigel and how she will do anything for him"
+      data-video-title="Poisonous Love"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/fylwqi_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/fylwqi.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/fylwqi.m3u8"
+      data-video-thumbnail="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/644439ca_02e9_4866_a9a3_d507f67c145f.png"
+      data-video-trope="Main/VillainLoveSong"
+      data-video-tropename="Villain Love Song"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="WesternAnimation/Rio2,Main/Yandere,Main/AbhorrentAdmirer,Main/CuteAndPsycho,Main/StalkerWithACrush,Main/PsychoPink,Main/ObsessionSong,Main/InterspeciesRomance"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/644439ca_02e9_4866_a9a3_d507f67c145f.png">
+      <p><span class="bold">Poisonous Love</span></p>
+    </a>
+
+          
+      <a href="#video-link"
       data-video-id="5wk0fc"
       data-video-descrip="Mixing this trope with Loony Fan, Beverly has a CRAZY obsession with her biggest idol Hudson Horstachio, much to the latter's discomfort and annoyance. (This video was edited for your convenience)"
       data-video-title="Beverly Badgesicle"
@@ -741,7 +1042,7 @@
       data-video-troper-rating=""
       data-video-average-rating=""
       data-video-rating-count=""
-      data-video-media-sources="WesternAnimation/BugsBunny,WesternAnimation/TheLooneyTunesShow"
+      data-video-media-sources="WesternAnimation/BugsBunny,WesternAnimation/TheLooneyTunesShow,Main/StalkingIsFunnyIfItIsFemaleAfterMale"
       class="video-launch-link video-overlay-link video-background-image lazy-image"
       data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/cjp9yw.jpg">
       <p><span class="bold">We Are in Love</span></p>
@@ -762,7 +1063,7 @@
       data-video-troper-rating=""
       data-video-average-rating=""
       data-video-rating-count=""
-      data-video-media-sources="Recap/CentralParkS1E1EpisodeOne,WesternAnimation/CentralPark"
+      data-video-media-sources="Recap/CentralParkS1E1EpisodeOne,WesternAnimation/CentralPark,Main/SuspiciouslySpecificDenial"
       class="video-launch-link video-overlay-link video-background-image lazy-image"
       data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/cp_molly_stalking_brendan.png">
       <p><span class="bold">Molly Watching ...</span></p>
@@ -822,8 +1123,6 @@
 </div>
 
 
-
-    
         <div class="section-links" itemscope itemtype="http://schema.org/SiteNavigationElement">
 
     
@@ -852,84 +1151,14 @@
             
                 <ul>
                     <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/SissyVillain">Sissy Villain</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/DoubleStandard">Double Standard</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/StalkingIsFunnyIfItIsFemaleAfterMale">Stalking Is Funny if It Is Female After Male</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
                                                     <a href="/pmwiki/pmwiki.php/Main/StacysMom">Stacy's Mom</a>
                                             </li>
                     <li>
-                        <a href="/pmwiki/pmwiki.php/Main/LoveInterests">Love Interests</a>
+                        <a href="/pmwiki/pmwiki.php/Sandbox/LoveInterests">Sandbox/Love Interests</a>
                     </li>
                     <li>
                          
                             <a href="/pmwiki/pmwiki.php/Main/StockLightNovelCalamityPrincess">Stock Light-Novel Calamity Princess</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/SpiesAreLecherous">Spies Are Lecherous</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/TropesAboutPerverts">Tropes About Perverts</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/SuccubiAndIncubi">Succubi and Incubi</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/SmittenTeenageGirl">Smitten Teenage Girl</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/HaremGenre">Harem Genre</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/StoicSpectacles">Stoic Spectacles</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/StairsAreFaster">Stairs Are Faster</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/TruthInTelevision/SToU">TruthInTelevision/S to U</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/StalkingMission">Stalking Mission</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/TheSpymaster">The Spymaster</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/Villains">Villains</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/StalkerWithoutACrush">Stalker without a Crush</a> 
                                             </li>
                 </ul>
 
@@ -950,14 +1179,168 @@
             
                 <ul>
                     <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/ChickMagnet">Chick Magnet</a>
+                                                    <a href="/pmwiki/pmwiki.php/Main/SissyVillain">Sissy Villain</a>
                                             </li>
                     <li>
-                        <a href="/pmwiki/pmwiki.php/Manga/ToukenRanbuAcademy">Manga/Touken Ranbu Academy</a>
+                        <a href="/pmwiki/pmwiki.php/Main/DoubleStandard">Double Standard</a>
                     </li>
                     <li>
                          
-                            <a href="/pmwiki/pmwiki.php/Main/AdaptationalSpeciesChange">Adaptational Species Change</a> 
+                            <a href="/pmwiki/pmwiki.php/Main/StalkingIsFunnyIfItIsFemaleAfterMale">Stalking Is Funny if It Is Female After Male</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/StalkerShrine">Stalker Shrine</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/ObsessionTropes">Obsession Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/StalkerWithATestTube">Stalker with a Test Tube</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/StableTimeLoop">Stable Time Loop</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/JustForFun/TropesOfLegend">JustForFun/Tropes of Legend</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/StatusQuoIsGod">Status Quo Is God</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/SpiesAreLecherous">Spies Are Lecherous</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/TropesAboutPerverts">Tropes About Perverts</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/SuccubiAndIncubi">Succubi and Incubi</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/StableTimeLoop">Stable Time Loop</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/TimeImmemorial/TropesOToS">TimeImmemorial/Tropes O to S</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/StandardSnippet">Standard Snippet</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/SlippingAMickey">Slipping a Mickey</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/SexualHarassmentAndRapeTropes">Sexual Harassment and Rape Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/StalkingIsFunnyIfItIsFemaleAfterMale">Stalking Is Funny if It Is Female After Male</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/StaircaseTumble">Staircase Tumble</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Troperithmetic/TropesLToZ">Troperithmetic/Tropes L to Z</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/TheStarscream">The Starscream</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/StairsAreFaster">Stairs Are Faster</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/TruthInTelevision/SToU">TruthInTelevision/S to U</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/StalkingMission">Stalking Mission</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/StacysMom">Stacy's Mom</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/LoveInterests">Love Interests</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/StockLightNovelCalamityPrincess">Stock Light-Novel Calamity Princess</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/SquaringTheLoveTriangle">Squaring the Love Triangle</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/LoveTropes">Love Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/StalkingIsFunnyIfItIsFemaleAfterMale">Stalking Is Funny if It Is Female After Male</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/Hikikomori">Hikikomori</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/ImageSource/AnimeAndMangaNToZ">ImageSource/Anime & Manga (N to Z)</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/TransferStudentUniforms">Transfer Student Uniforms</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/SociopathicSoldier">Sociopathic Soldier</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/MadnessTropes">Madness Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/Yandere">Yandere</a> 
                                             </li>
                 </ul>
 
@@ -978,10 +1361,38 @@
             
                 <ul>
                     <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/TheSpymaster">The Spymaster</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/Villains">Villains</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/StalkerWithoutACrush">Stalker Without a Crush</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/SmittenTeenageGirl">Smitten Teenage Girl</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/HaremGenre">Harem Genre</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/StoicSpectacles">Stoic Spectacles</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
                                                     <a href="/pmwiki/pmwiki.php/Main/StalkerShrine">Stalker Shrine</a>
                                             </li>
                     <li>
-                        <a href="/pmwiki/pmwiki.php/Main/ObsessionTropes">Obsession Tropes</a>
+                        <a href="/pmwiki/pmwiki.php/NoRealLife/TropesPToS">NoRealLife/Tropes P to S</a>
                     </li>
                     <li>
                          
@@ -1003,124 +1414,10 @@
                                             </li>
                 </ul>
 
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/SociopathicSoldier">Sociopathic Soldier</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/MadnessTropes">Madness Tropes</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/Yandere">Yandere</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/StableTimeLoop">Stable Time Loop</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/JustForFun/TropesOfLegend">JustForFun/Tropes of Legend</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/StatusQuoIsGod">Status Quo Is God</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/StaggeredZoom">Staggered Zoom</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/TimeImmemorial/TropesOToS">TimeImmemorial/Tropes O to S</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/StandardSnippet">Standard Snippet</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/SquaringTheLoveTriangle">Squaring the Love Triangle</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/LoveTropes">Love Tropes</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/StalkingIsFunnyIfItIsFemaleAfterMale">Stalking Is Funny if It Is Female After Male</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/StalkerShrine">Stalker Shrine</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/NoRealLife/TropesPToS">NoRealLife/Tropes P to S</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/StalkerWithATestTube">Stalker with a Test Tube</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/SpurnedIntoSuicide">Spurned into Suicide</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/UnrequitedLoveTropes">Unrequited Love Tropes</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/Starboarding">Starboarding</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/SlippingAMickey">Slipping a Mickey</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/SexualHarassmentAndRapeTropes">Sexual Harassment and Rape Tropes</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/StalkingIsFunnyIfItIsFemaleAfterMale">Stalking Is Funny if It Is Female After Male</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/ShovelStrike">Shovel Strike</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/ImageSource/AnimeAndManga">ImageSource/Anime & Manga</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/TransferStudentUniforms">Transfer Student Uniforms</a> 
-                                            </li>
-                </ul>
-
                     
         
             </div>
 </div>
-
-
 
 
 
@@ -1162,6 +1459,8 @@
             <div class="crucial_browsing_dropdown">
                 <a href="javascript:void(0);" onclick="double_dropdown(); return false;" id="crucial_browsing_dropdown"><span class="new_blue">Crucial Browsing</span><i class="fa fa-angle-down"></i></a>
                 <ul id="main_dropdown">
+                    <li class="first_dropdown"><a href="/pmwiki/index_report.php">Indexes</a>
+
                     <li class="first_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Genre</a>
                         <ul>
                             <li><a href='/pmwiki/pmwiki.php/Main/ActionAdventureTropes' title='Main/ActionAdventureTropes'>Action Adventure</a></li>
@@ -1176,7 +1475,6 @@
                             <li><a href='/pmwiki/pmwiki.php/Main/SpeculativeFictionTropes' title='Main/SpeculativeFictionTropes'>Speculative Fiction</a></li>
                             <li><a href='/pmwiki/pmwiki.php/Main/SportsStoryTropes' title='Main/SportsStoryTropes'>Sports Story</a></li>
                             <li><a href='/pmwiki/pmwiki.php/Main/WarTropes' title='Main/WarTropes'>War</a></li>
-                            <li><a href="/pmwiki/lbs.php" data-modal-target="login">Live Blogs</a></li>
                         </ul>
                     </li>
 
@@ -1196,7 +1494,7 @@
                             <li><a href="/pmwiki/pmwiki.php/Main/Radio" title="Main/Radio">Radio</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/SequentialArt" title="Main/SequentialArt">Sequential Art</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/TabletopGames" title="Main/TabletopGames">Tabletop Games</a></li>
-                            <li><a href="/pmwiki/pmwiki.php/UsefulNotes/Television" title="Main/Television">Television</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/MediaNotes/Television" title="MediaNotes/Television">Television</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/Theater" title="Main/Theater">Theater</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/VideogameTropes" title="Main/VideogameTropes">Videogame</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/Webcomics" title="Main/Webcomics">Webcomics</a></li>
@@ -1268,6 +1566,7 @@
                         <ul>
                             <li><a href="/pmwiki/pmwiki.php/Administrivia/IttyBittyWikiTools">Wiki Tools</a></li>
                             <li><a href="/pmwiki/cutlist.php" data-modal-target="login" rel="nofollow">Cut List</a></li>
+                            <li><a href="/pmwiki/image-fixer.php" data-modal-target="login" rel="nofollow">Image Fixer</a></li>
                             <li><a href="/pmwiki/changes.php">New Edits</a></li>
                             <li><a href="/pmwiki/articles_new.php">New Articles</a></li>
                             <li><a href="/pmwiki/recent_edit_reasons.php">Edit Reasons</a></li>
@@ -1332,7 +1631,7 @@
     </div>
 
         <div id="action-bar-bottom" class="action-bar tablet-off">
-        <a href="#top-of-page" class="scroll-to-top dead-button" onclick="$('html, body').animate({scrollTop : 0},500);">Top</a>
+        <a href="#top-of-page" class="scroll-to-top dead-button" onclick="scroll_to_top(500);">Top</a>
     </div>
     
 </div>    <footer id="main-footer">
@@ -1371,7 +1670,6 @@
                 <li><a href="/pmwiki/tlp_activity.php">Trope Launch Pad</a></li>
                 <li><a href="/pmwiki/query.php?type=tf">Trope Finder</a></li>
                 <li><a href="/pmwiki/query.php?type=ykts">Media Finder</a></li>
-                <li><a href="/pmwiki/lbs.php" data-modal-target="login">Live Blogs</a></li>
                 <li><a href="/pmwiki/query.php?type=wl">Tech Wishlist</a></li>
                 <li><a href="/pmwiki/review_activity.php">Reviews</a></li>
                 <li><a href="/pmwiki/topics.php">Forum</a></li>
@@ -1387,6 +1685,7 @@
                 <li><a href="/pmwiki/changelog.php">Changelog</a></li>
                 <li><a href="/pmwiki/dmca.php">DMCA Notice</a></li>
                 <li><a href="/pmwiki/privacypolicy.php">Privacy Policy</a></li>
+                <li><a href="/pmwiki/termsofservice.php">Terms Of Service</a></li>
 
             </ul>
 
@@ -1397,7 +1696,7 @@
         </div>
 
         <div class="legal">
-            <p>TVTropes is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. <br>Permissions beyond the scope of this license may be available from <a xmlns:cc="http://creativecommons.org/ns#" href="mailto:thestaff@tvtropes.org" rel="cc:morePermissions"> thestaff@tvtropes.org</a>.</p>
+            <p>TVTropes is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. <br>Permissions beyond the scope of this license may be available from <a xmlns:cc="http://creativecommons.org/ns#" href="/cdn-cgi/l/email-protection#cbbfa3aeb8bfaaadad8bbfbdbfb9a4bbaeb8e5a4b9ac" rel="cc:morePermissions"> <span class="__cf_email__" data-cfemail="0a7e626f797e6b6c6c4a7e7c7e78657a6f792465786d">[email&#160;protected]</span></a>.</p>
             <br>
             <div class="privacy_wrapper">
             </div>
@@ -1405,25 +1704,7 @@
     </footer>
     
     
-    <style>
-      div.fc-ccpa-root {
-        position: absolute !important;
-        bottom: 93px !important;
-        margin: auto !important;
-        width: 100% !important;
-        z-index: 9999 !important;
-        overflow: hidden !important;
-      }
-      .fc-ccpa-root .fc-dns-dialog .fc-dns-link p{
-        outline: none !important;
-        text-decoration: underline !important;
-        font-size: .7em !important;
-        font-family: sans-serif !important;
-      }
-      .fc-ccpa-root .fc-dns-dialog .fc-dns-link .fc-button-background {
-        background: none !important;
-      }
-    </style>
+    
 
         <div id="_pm_videoViewer" class="full-screen">
 
@@ -1436,12 +1717,12 @@
         <div id="overlay_outer_player_max">
 	<div id="overlay_outer_player_wrapper">
 		<div id="tvtropes_overlay_player" 
-			data-video-id="tvtropes-videos-n0aayx" 
-			data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/n0aayx.jpg" 
-			data-video-title="The Gill-Man" 
-			data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/n0aayx_640x360p_qvbr.mp4" 
-			data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/n0aayx.mpd" 
-			data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/n0aayx.m3u8"
+			data-video-id="tvtropes-videos-4t4ve0" 
+			data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/4t4ve0.jpg" 
+			data-video-title="Yosuke" 
+			data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/4t4ve0_640x360p_qvbr.mp4" 
+			data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/4t4ve0.mpd" 
+			data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/4t4ve0.m3u8"
 			data-small-player="never"
 			data-track-events="1"
 			data-do-not-loop="1"
@@ -1453,11 +1734,11 @@
 
 <div class="_pmvv-vidbox-desc">
 
-	<h1 id="overlay-title">The Gill-Man</h1>
+	<h1 id="overlay-title">Yosuke</h1>
 	<p id="overlay-descrip" class="_pmvv-vidbox-descTxt">
-	    The legendary creature from the black lagoon stalks a beautiful woman as she swims.	</p>
+	    Yosuke explains his oblivious one-sided crush towards Hanako after continuously stalking her.	</p>
 
-      <div class="rating-row"  data-video-id="n0aayx" >
+      <div class="rating-row"  data-video-id="4t4ve0" >
         <input type="hidden" name="is_logged_in"  value="0" >
         <p>How well does it match the trope?</p>
 				<div id="star-rating-group">
@@ -1475,7 +1756,7 @@
 													</div>
 
                         <div id="star-rating-total">
-                                                            4.71 (7 votes)
+                                                            5 (2 votes)
                                                     </div>
 
 					</div>
@@ -1484,7 +1765,7 @@
 		<div class="example-media-row">
 			<div class="example-overlay">
 				<p>Example of:</p> 
-				<div id="overlay-trope">Main / FishPeople</div>
+				<div id="overlay-trope">Main / StalkerWithACrush</div>
 			</div>
 			<div class="media_second_wrapper">
 				<div class="media-sources-overlay example-overlay">
@@ -1498,7 +1779,7 @@
 			</div>
 		</div>
 	<p class="_pmvv-vidbox-stats text-right font-s" style="padding-top:8px; border-top: solid 1px rgba(255,255,255,0.2)">
-	<!--    <i class="fa fa-eye"></i> 11,241-->
+	
 
 
 			    <a href="#video-feedback" class="float-right" 
@@ -1518,6 +1799,46 @@
 
     <div class="_pmvv-foot-scrollwrapper">
                 <a href="#video-link" 
+             data-video-id="4t4ve0"
+             data-vimeo-id=""
+             data-video-descrip="Yosuke explains his oblivious one-sided crush towards Hanako after continuously stalking her."
+             data-video-title="Yosuke"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/4t4ve0_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/4t4ve0.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/4t4ve0.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/4t4ve0.jpg"
+             data-video-trope="Main/StalkerWithACrush"
+             data-video-tropename="Stalker with a Crush"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="5.00"
+             data-video-rating-count="2"
+             data-video-media-sources="Manga/GeGeGeNoKitaro"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/4t4ve0.jpg">
+            <p><span class="bold">Yosuke</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="mhsj66"
+             data-vimeo-id=""
+             data-video-descrip="Koichi uses his Stand to tell Yukako that he hates her (for having kidnapped and psychologically abused him throughout the arc). Unfortunately, she's too obsessed with him to be affected by Echoes Act 1."
+             data-video-title="Koichi vs Yukako"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/mhsj66_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/mhsj66.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/mhsj66.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/mhsj66.jpg"
+             data-video-trope="Main/NoSell"
+             data-video-tropename="No-Sell"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="4.91"
+             data-video-rating-count="11"
+             data-video-media-sources="Anime/JoJosBizarreAdventureDiamondIsUnbreakable,Main/StalkerWithACrush,Main/Yandere"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/mhsj66.jpg">
+            <p><span class="bold">Koichi vs Yukako</span></p>
+          </a>
+                <a href="#video-link" 
              data-video-id="n0aayx"
              data-vimeo-id=""
              data-video-descrip="The legendary creature from the black lagoon stalks a beautiful woman as she swims."
@@ -1530,32 +1851,152 @@
              data-video-tropename="Fish People"
              data-video-approval="APPROVED"
              data-video-troper-rating=""
-             data-video-average-rating="4.71"
-             data-video-rating-count="7"
+             data-video-average-rating="4.78"
+             data-video-rating-count="9"
              data-video-media-sources="Film/CreatureFromTheBlackLagoon,Main/StalkerWithACrush"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/n0aayx.jpg">
             <p><span class="bold">The Gill-Man</span></p>
           </a>
                 <a href="#video-link" 
-             data-video-id="shk1wx"
+             data-video-id="9ikgff"
              data-vimeo-id=""
-             data-video-descrip="Gabi sings about her obsessive love for Nigel and how she will do anything for him."
-             data-video-title="Poisonous Love"
-             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/shk1wx_640x360p_qvbr.mp4"
-             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/shk1wx.mpd"
-             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/shk1wx.m3u8"
-             data-video-thumbnail="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/615b7199_35d1_4a1b_b0e4_83f35b6a994a.png"
+             data-video-descrip="After unintentionally kidnapping Temacu, James immediately gets stalked by her who thinks he saved her and she wants him to be her boyfriend."
+             data-video-title="Temacu Loves James!"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/9ikgff_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/9ikgff.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/9ikgff.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/9ikgff.jpg"
              data-video-trope="Main/StalkerWithACrush"
              data-video-tropename="Stalker with a Crush"
              data-video-approval="APPROVED"
              data-video-troper-rating=""
              data-video-average-rating="5.00"
-             data-video-rating-count="9"
-             data-video-media-sources="WesternAnimation/Rio2,Main/PsychoPink,Main/ObsessionSong,Main/InterspeciesRomance"
+             data-video-rating-count="2"
+             data-video-media-sources="Anime/PokemonTheOriginalSeries,Recap/PokemonS4E41TheHeartbreakOfBrock"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
-             data-src="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/615b7199_35d1_4a1b_b0e4_83f35b6a994a.png">
-            <p><span class="bold">Poisonous Love</span></p>
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/9ikgff.jpg">
+            <p><span class="bold">Temacu Loves Ja...</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="w5y2tn"
+             data-vimeo-id=""
+             data-video-descrip="Ayaka Kirisaki is a psychotic spy/assassin who tends to stalk her targets and fall in love with them. She's also nicknamed the &amp;quot;Manhunter Spy&amp;quot; because of it."
+             data-video-title="Ayaka Kirisaki"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/w5y2tn_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/w5y2tn.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/w5y2tn.m3u8"
+             data-video-thumbnail="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/screenshot_2025_04_02_130358.png"
+             data-video-trope="Main/Yandere"
+             data-video-tropename="Yandere"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="5.00"
+             data-video-rating-count="1"
+             data-video-media-sources="Main/FlechetteStorm,Main/PalmOnCheekPose,Main/StalkerWithACrush,Manga/MissionYozakuraFamily"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/screenshot_2025_04_02_130358.png">
+            <p><span class="bold">Ayaka Kirisaki</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="3c9605"
+             data-vimeo-id=""
+             data-video-descrip="Dominic is the Bazooka Shark's team stalker for the Bazooka Babes and he has a huge obsession with Danuta. But despite his creepy behavior and telling Danuta he plans to &amp;quot;take her away from all this&amp;quot; before her kidnapping, he didn't kidnap her."
+             data-video-title="Dominic, Bazooka Babe Stalker"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/3c9605_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/3c9605.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/3c9605.m3u8"
+             data-video-thumbnail="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/ad_s21e16_dominic_the_team_stalker.png"
+             data-video-trope="Main/LoonyFan"
+             data-video-tropename="Loony Fan"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="4.67"
+             data-video-rating-count="3"
+             data-video-media-sources="Main/CreepyRedHerring,Main/NeverTheObviousSuspect,Main/StalkerWithACrush,Recap/AmericanDadS21E16TheMysteryOfTheMissingBazookaSharkBabe,WesternAnimation/AmericanDad"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/ad_s21e16_dominic_the_team_stalker.png">
+            <p><span class="bold">Dominic, Bazook...</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="paqvi6"
+             data-vimeo-id=""
+             data-video-descrip="Casper Seeing Kat On His Bed - Casper (1995)"
+             data-video-title="Casper Seeing Kat On His Bed "
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/paqvi6_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/paqvi6.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/paqvi6.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/paqvi6.jpg"
+             data-video-trope="Main/StalkerWithACrush"
+             data-video-tropename="Stalker with a Crush"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="4.43"
+             data-video-rating-count="7"
+             data-video-media-sources="Film/Casper"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/paqvi6.jpg">
+            <p><span class="bold">Casper Seeing K...</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="wcunhv"
+             data-vimeo-id=""
+             data-video-descrip="Blitzo is quite displeased, to learn that Emberlynn the obsessive weeaboo with a crush on him, has found his place of business and is begging him to lover her."
+             data-video-title="Blitzy-Kun"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/wcunhv_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/wcunhv.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/wcunhv.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/wcunhv.jpg"
+             data-video-trope="Main/OhCrap"
+             data-video-tropename="Oh, Crap!"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="5.00"
+             data-video-rating-count="18"
+             data-video-media-sources="Main/StalkerWithACrush,Recap/HelluvaBossShortsE3MissionWeeabooBoo,WebAnimation/HelluvaBoss"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/wcunhv.jpg">
+            <p><span class="bold">Blitzy-Kun</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="g5h23n"
+             data-vimeo-id=""
+             data-video-descrip="A 'boy' with a large head has fallen in love with Salad Fingers and begins following him about, which makes the usually chipper Salad Fingers extremely uncomfortable. "
+             data-video-title="Salad Fingers &amp; The Little Boy"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/g5h23n_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/g5h23n.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/g5h23n.m3u8"
+             data-video-thumbnail="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/bigheadboy.png"
+             data-video-trope="Main/StalkerWithACrush"
+             data-video-tropename="Stalker with a Crush"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="5.00"
+             data-video-rating-count="5"
+             data-video-media-sources="Main/AbhorrentAdmirer,Main/CardiovascularLove,WebAnimation/SaladFingers"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/bigheadboy.png">
+            <p><span class="bold">Salad Fingers &...</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="b257yo"
+             data-vimeo-id=""
+             data-video-descrip="Thomas composes a beautiful poem for Alison, only to discover what a Kyley Min-ouge is."
+             data-video-title="What is a Kyley Min-ouge?"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/b257yo_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/b257yo.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/b257yo.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/b257yo.jpg"
+             data-video-trope="Main/ItsBeenDone"
+             data-video-tropename="It's Been Done"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="5.00"
+             data-video-rating-count="5"
+             data-video-media-sources="Main/StalkerWithACrush,Main/StealingTheCredit,Main/ThisIsUnforgivable,Series/GhostsUK"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/b257yo.jpg">
+            <p><span class="bold">What is a Kyley...</span></p>
           </a>
                 <a href="#video-link" 
              data-video-id="ox9j40"
@@ -1611,7 +2052,7 @@
              data-video-approval="APPROVED"
              data-video-troper-rating=""
              data-video-average-rating="5.00"
-             data-video-rating-count="1"
+             data-video-rating-count="2"
              data-video-media-sources="Animation/TheSnowMaiden,Main/JealousRomanticWitness,Main/StalkerWithACrush,Theatre/TheSnowMaiden"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/7e73zk.jpg">
@@ -1630,12 +2071,32 @@
              data-video-tropename="Imagine Spot"
              data-video-approval="APPROVED"
              data-video-troper-rating=""
-             data-video-average-rating="4.25"
-             data-video-rating-count="4"
+             data-video-average-rating="4.60"
+             data-video-rating-count="5"
              data-video-media-sources="Literature/Durarara,Main/StalkerWithACrush"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/screenshot_2024_02_24_211546.png">
             <p><span class="bold">Anri as a Stalker</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="fylwqi"
+             data-vimeo-id=""
+             data-video-descrip="Poisonous Love, sung by the poisonous frog Gabi, is a literal example on this trope where she sings about her love for Nigel and how she will do anything for him"
+             data-video-title="Poisonous Love"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/fylwqi_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/fylwqi.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/fylwqi.m3u8"
+             data-video-thumbnail="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/644439ca_02e9_4866_a9a3_d507f67c145f.png"
+             data-video-trope="Main/VillainLoveSong"
+             data-video-tropename="Villain Love Song"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="5.00"
+             data-video-rating-count="12"
+             data-video-media-sources="WesternAnimation/Rio2,Main/Yandere,Main/AbhorrentAdmirer,Main/CuteAndPsycho,Main/StalkerWithACrush,Main/PsychoPink,Main/ObsessionSong,Main/InterspeciesRomance"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/644439ca_02e9_4866_a9a3_d507f67c145f.png">
+            <p><span class="bold">Poisonous Love</span></p>
           </a>
                 <a href="#video-link" 
              data-video-id="5wk0fc"
@@ -1711,8 +2172,8 @@
              data-video-approval="APPROVED"
              data-video-troper-rating=""
              data-video-average-rating="5.00"
-             data-video-rating-count="21"
-             data-video-media-sources="WesternAnimation/BugsBunny,WesternAnimation/TheLooneyTunesShow"
+             data-video-rating-count="23"
+             data-video-media-sources="WesternAnimation/BugsBunny,WesternAnimation/TheLooneyTunesShow,Main/StalkingIsFunnyIfItIsFemaleAfterMale"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/cjp9yw.jpg">
             <p><span class="bold">We Are in Love</span></p>
@@ -1732,7 +2193,7 @@
              data-video-troper-rating=""
              data-video-average-rating="5.00"
              data-video-rating-count="3"
-             data-video-media-sources="Recap/CentralParkS1E1EpisodeOne,WesternAnimation/CentralPark"
+             data-video-media-sources="Recap/CentralParkS1E1EpisodeOne,WesternAnimation/CentralPark,Main/SuspiciouslySpecificDenial"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/cp_molly_stalking_brendan.png">
             <p><span class="bold">Molly Watching ...</span></p>
@@ -1750,8 +2211,8 @@
              data-video-tropename="Stalker with a Crush"
              data-video-approval="APPROVED"
              data-video-troper-rating=""
-             data-video-average-rating="4.91"
-             data-video-rating-count="35"
+             data-video-average-rating="4.92"
+             data-video-rating-count="39"
              data-video-media-sources="WesternAnimation/TheAmazingWorldOfGumball,Main/ObsessionSong,Recap/TheAmazingWorldOfGumballS3E2TheFan"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/cgt9p0.jpg">
@@ -1771,7 +2232,7 @@
              data-video-approval="APPROVED"
              data-video-troper-rating=""
              data-video-average-rating="5.00"
-             data-video-rating-count="25"
+             data-video-rating-count="26"
              data-video-media-sources="Recap/MiraculousLadybugS01E03Copycat,WesternAnimation/MiraculousLadybug"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/oof4gc.jpg">
@@ -1797,22 +2258,16 @@
 
 
 
-<!-- Quantcast Tag -->
 
 
-<noscript>
-  <div style="display:none;">
-    <img src="//pixel.quantserve.com/pixel/p-mEzuYq24VEJ-3.gif" border="0" height="1" width="1" alt="Quantcast"/>
-  </div>
-</noscript>
-<!-- End Quantcast tag -->
 
 
-<!-- Begin comScore Tag -->
 
-<noscript>
-  <img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=38282685&amp;cv=3.6.0&amp;cj=1">
-</noscript>
-<!-- End comScore Tag -->
+
+
+
+
+
+
 </body>
 </html>

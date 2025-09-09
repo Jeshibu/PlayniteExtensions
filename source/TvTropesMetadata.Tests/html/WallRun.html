@@ -1,25 +1,11 @@
 <!DOCTYPE html>
 	<html>
 		<head lang="en">
+                        <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=newest_pages" />
+            <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=most_popular" />
+            <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=updated_content" />
+
                         <link rel="preload" href="/images/loading-graphic.png" as="image">
-
-            <!-- Google tag (gtag.js) -->
-            
-            
-
-                        
-			
-						
-
-            
-                        
-
-                        
-
-                        
-			
-			
-											
 						<meta http-equiv="X-UA-Compatible" content="IE=edge">
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
@@ -66,18 +52,28 @@
             <link rel="icon" sizes="192x192" href="https://assets.tvtropes.org/img/icons/favicon-192x192.png" type="image/png">
 
                         
-
+                        
 						<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-                        <link rel="stylesheet" href="https://assets.tvtropes.org/design/assets/bundle.css?rev=f07af95238e025e8213d0b91650cd7e22b0dd7ec" />
+                        <link rel="stylesheet" href="https://assets.tvtropes.org/design/assets/bundle.css?rev=2f4875abe459cab3d315f2f182ddd58516a5737c" />
+
+            <meta name="apple-itunes-app" content="app-id=6738365737, app-argument=tvtropes://home">
 
                                                 
                         
                         
                         						
-                        
-						
                         						
 												
+
+
+                                                
+                        
+
+
+                                                
+
+
+
 
 						        </head>
  <body class="">
@@ -90,35 +86,25 @@
     <div id="modal-box">
         <div class="modal-loading-graphic"></div>
     </div>
-    <style>
-        @keyframes rotate-forever {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+    
 
-        #modal-box > .modal-loading-graphic {
-            display: none; /* Hidden by default */
+    
+    
+<div class="outer-promo-banner" id="outer-promo-banner">
+    <div class="promo-banner">
+        <img src="/images/tvtropes_logo_180x180.png" alt="TVTropes Logo" class="promo-logo">
+        <div class="promo-text-container">
+            <span class="promo-text-top">TVTropes</span>
+            <span class="promo-text">Now available in the app store!</span>
+        </div>
+        <a href="#" class="promo-button" id="promo-app-link">Open</a>
 
-            background: no-repeat center url('/images/loading-graphic.png');
-            background-size: 80px 80px;
+        <a href="#" id="promo-close-button"><i class="fa fa-close"></i></a>
+    </div>
+</div>
 
-            width: 80px;
-            height: 80px;
 
-            border-radius: 50%;
 
-            position: absolute;
-            top: calc(30% - 40px);
-            left: calc(50% - 40px);
-            z-index: 2;
-
-            animation: rotate-forever 0.34s linear infinite;
-
-        }
-        #modal-box.active > .modal-loading-graphic {
-            display: block; /* Show only when modal is active */
-        }
-    </style>
     <header id="main-header-bar" class="headroom-element ">
         <div id="main-header-bar-inner">
 
@@ -134,7 +120,7 @@
                 <a href="/pmwiki/pmwiki.php/Main/Tropes">Tropes</a>
                 <a href="/pmwiki/pmwiki.php/Main/Media">Media</a>
                 <a href="/pmwiki/browse.php" class="nav-browse">Browse</a>
-                <a href="/pmwiki/index_report.php">Indexes</a>
+                <a href="/pmwiki/popular-pages.php">Popular</a>
                 <a href="/pmwiki/topics.php">Forums</a>
                 <a href="/pmwiki/recent_videos.php" class="nav-browse">Videos</a>
             </nav>
@@ -150,9 +136,9 @@
                 </div>
                 
                 <div id="search-box">
-                    <form class="search" action="/pmwiki/search_result.php">
+                    <form class="search" action="/pmwiki/search_result.php" onSubmit="return sendToSiteSearch(this, this.q.value);">
                         <input type="text" name="q" class="search-box" placeholder="Search" value="" required>
-                        <input type="submit" class="submit-button" value="&#xf002;" />
+                        <input id="main_search_submit"type="submit" class="submit-button" value="&#xf002;" />
                                                 <input type="hidden" name="search_type" value="article">
                         <input type="hidden" name="page_type" value="all">
                                                 <input type="hidden" name="cx" value="partner-pub-6610802604051523:amzitfn8e7v">
@@ -166,8 +152,8 @@
                 </div>
 
                 <div id="random-box">
-                    <a href="/pmwiki/pmwiki.php/Main/OfferingAHand" class="button-random-trope" rel="nofollow" onclick="gtag('event', 'trope_random_button_click', {'is_user': 0});"></a>
-                    <a href="/pmwiki/pmwiki.php/ComicBook/TerminalVelocityDCComics" class="button-random-media" rel="nofollow" onclick="gtag('event', 'media_random_button_click', {'is_user': 0});"></a>
+                    <a href="/pmwiki/pmwiki.php/Main/LockAndLoadMontage" class="button-random-trope" rel="nofollow" onclick="gtag('event', 'trope_random_button_click', {'is_user': 0});"></a>
+                    <a href="/pmwiki/pmwiki.php/Manga/MarryingTheDarkKnightForHerMoney" class="button-random-media" rel="nofollow" onclick="gtag('event', 'media_random_button_click', {'is_user': 0});"></a>
                 </div>
 
             </div>
@@ -180,6 +166,7 @@
         <a href="/pmwiki/pmwiki.php/Main/Tropes" class="xl">Tropes</a>
         <a href="/pmwiki/pmwiki.php/Main/Media" class="xl">Media</a>
         <a href="/pmwiki/browse.php" class="xl">Browse</a>
+        <a href="/pmwiki/popular-pages.php" class="xl">Popular</a>
         <a href="/pmwiki/index_report.php" class="xl">Indexes</a>
         <a href="/pmwiki/topics.php" class="xl">Forums</a>
         <a href="/pmwiki/recent_videos.php" class="xl">Videos</a>
@@ -191,7 +178,7 @@
         <a href="/pmwiki/query.php?type=wl">Tech Wishlist</a>
         <a href="/pmwiki/review_activity.php">Reviews</a> 
         
-        <a href="#tools" data-click-toggle="active">Tools <i class="fa fa-chevron-down"></i></a>
+                <a href="#tools" data-click-toggle="active">Tools <i class="fa fa-chevron-down"></i></a>
         <div class="tools-dropdown mobile-dropdown-linkList">
             <a href="/pmwiki/cutlist.php" data-modal-target="login" rel="nofollow">Cut List</a>
             <a href="/pmwiki/image-fixer.php" data-modal-target="login" rel="nofollow">Image Fixer</a>
@@ -215,7 +202,7 @@
                 <a href="/pmwiki/pmwiki.php/Administrivia/TVTropesGlossary?from=Main.TVTropesGlossary">Glossary</a>
                 <a href="/pmwiki/pmwiki.php/Administrivia/EditReasonsAndWhyYouShouldUseThem">Edit Reasons</a>
                 <a href="/pmwiki/pmwiki.php/Administrivia/HandlingSpoilers">Handling Spoilers</a>
-                <a href="/pmwiki/pmwiki.php/Main/WordCruft">Word Cruft</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/WordCruft">Word Cruft</a>
                 <a href="/pmwiki/pmwiki.php/Main/Administrivia">Administrivia</a>
                 <a href="/pmwiki/pmwiki.php/Main/FAQ">FAQ</a>
         </div>
@@ -228,6 +215,7 @@
             <a href="/pmwiki/dmca.php">DMCA Notice</a>
             <a href="/pmwiki/privacypolicy.php">Privacy Policy</a>
             <a href="/pmwiki/query.php?type=bug">Report Bug</a>
+            <a href="/pmwiki/termsofservice.php">Terms Of Service</a>
         </div>
 
         <a href="/pmwiki/ad-free-subscribe.php">Go Ad-Free</a>
@@ -253,7 +241,7 @@
     <div id="homepage-introBox-mobile" class="mobile-on">
                   <a href="/"><img src="/images/logo-white-big.png" class="logo-small" /></a>
         
-        <form class="search" action="/pmwiki/search_result.php" style="margin:10px -5px -6px -5px;">
+        <form class="search" action="/pmwiki/search_result.php" style="margin:10px -5px -6px -5px;" onSubmit="return sendToSiteSearch(this, this.q.value);">
             <input type="text" name="q" class="search-box" placeholder="Search" value="" required>
             <input type="submit" class="submit-button" value="&#xf002;" />
                         <input type="hidden" name="search_type" value="article">
@@ -273,10 +261,7 @@
                     
 
                 <div id="tvtropes_oop_ad_slot" style="display: none;"></div>
-    <div id="header-fad-wrapper" class="fad">
-    <div id="header-fad">
-    <div class="fad-size-970x90" style="height:20px">&nbsp;</div>    </div>
-</div>
+    <div id="top_container_spacing"></div>
 
 <div id="main-container">
 
@@ -320,8 +305,6 @@
         
         
 
-
-<!-- HIDDEN INPUTS FOR JS -->
 <input type="hidden" id="groupname-hidden" value="Main"/>
 <input type="hidden" id="title-hidden" value="WallRun"/>
 <input type="hidden" id="article_id" value="426478" />
@@ -340,7 +323,7 @@
 
 
 
-<a href="#watch" class="watch-button " data-modal-target="login" >Follow<span>ing</span></a>
+
 
 
 
@@ -350,8 +333,31 @@
 
              
 
-                        
-                <h1 itemprop="headline" class="entry-title"> Wall Run </h1>
+                                        <h1 itemprop="headline" class="entry-title" style=""> 
+                    <span class="wrapped_title">
+                        Wall Run 
+                         
+                    </span>
+                    <div class="watch_rank_wrap">
+                    <span 
+            class="thumb-vote-area"
+            data-seq-num="WallRun"
+            data-discussion-id="WallRun"
+            data-subject-trope="Main.WallRun"
+            data-page-type="article"
+        >
+            <a 
+                href="javascript:void(0);" 
+                class="thumb-button up heart-only"
+                data-modal-target="login"            >
+                <span class="thumb-count up-count" style="margin-top: 2px;margin-right: 1px;">2</span>
+                <i class="fa fa-heart-o"></i>
+            </a>
+        </span>
+        <a href="#watch" class="watch-button " data-modal-target="login" >Follow<span>ing</span></a>
+</div>
+                   
+                                    </h1>
 
                         
 
@@ -369,41 +375,27 @@
 
 
 
-<div id="editLockModal" class="modal fade hidden-until-active" >
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit Locked</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="body">
-                        <div class="danger troper_locked_message"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <nav class="body-options" itemscope itemtype="http://schema.org/SiteNavigationElement">
 
     <ul class="subpage-links">
 
                             <li>
-                                <a href="/pmwiki/pmwiki.php/Main/WallRun" class="subpage-link curr-subpage" title="The Main page">
-                <span class="wrapper"><span class="spi main-page"></span>Main</span></a>
+                <a href="/pmwiki/pmwiki.php/Main/WallRun"
+                class="subpage-link curr-subpage"
+                title="The Main page">
+                    <span class="wrapper">
+                        <span class="spi main-page"></span>                        Main                    </span>
+                </a>
             </li>
         
         
+                
                                  
                                 <li>
                     <a href="/pmwiki/pmwiki.php/Laconic/WallRun" class="subpage-link " title="The Laconic page">
                     <span class="wrapper"><span class="spi laconic-icon"></span>Laconic</span></a>
                 </li>
                             
-                
                             <li>
                 <a href="/pmwiki/pmwiki.php/VideoExamples/WallRun" class="subpage-link video-examples-tab  " title="Video Examples">
                     <img src="/images/play-button-logo.png" alt="play" class="">
@@ -422,19 +414,25 @@
                         <option value="">- Create New -</option>
 
                                                 <option value="/pmwiki/pmwiki.php/Analysis/WallRun?action=edit">Analysis</option>
+                                                <option value="/pmwiki/pmwiki.php/Archive/WallRun?action=edit">Archive</option>
                                                 <option value="/pmwiki/pmwiki.php/Awesome/WallRun?action=edit">Awesome</option>
                                                 <option value="/pmwiki/pmwiki.php/Characters/WallRun?action=edit">Characters</option>
-                                                <option value="/pmwiki/pmwiki.php/FanWorks/WallRun?action=edit">FanWorks</option>
+                                                <option value="/pmwiki/pmwiki.php/DerivativeWorks/WallRun?action=edit">DerivativeWork&#8230;</option>
                                                 <option value="/pmwiki/pmwiki.php/FanficRecs/WallRun?action=edit">FanficRecs</option>
+                                                <option value="/pmwiki/pmwiki.php/FanWorks/WallRun?action=edit">FanWorks</option>
                                                 <option value="/pmwiki/pmwiki.php/Fridge/WallRun?action=edit">Fridge</option>
                                                 <option value="/pmwiki/pmwiki.php/Funny/WallRun?action=edit">Funny</option>
                                                 <option value="/pmwiki/pmwiki.php/Haiku/WallRun?action=edit">Haiku</option>
                                                 <option value="/pmwiki/pmwiki.php/Headscratchers/WallRun?action=edit">Headscratchers</option>
                                                 <option value="/pmwiki/pmwiki.php/Heartwarming/WallRun?action=edit">Heartwarming</option>
                                                 <option value="/pmwiki/pmwiki.php/ImageLinks/WallRun?action=edit">ImageLinks</option>
+                                                <option value="/pmwiki/pmwiki.php/ImageSource/WallRun?action=edit">ImageSource</option>
+                                                <option value="/pmwiki/pmwiki.php/MediaNotes/WallRun?action=edit">MediaNotes</option>
+                                                <option value="/pmwiki/pmwiki.php/Newsletter/WallRun?action=edit">Newsletter</option>
                                                 <option value="/pmwiki/pmwiki.php/NightmareFuel/WallRun?action=edit">NightmareFuel</option>
                                                 <option value="/pmwiki/pmwiki.php/PlayingWith/WallRun?action=edit">PlayingWith</option>
                                                 <option value="/pmwiki/pmwiki.php/Quotes/WallRun?action=edit">Quotes</option>
+                                                <option value="/pmwiki/pmwiki.php/QuoteSource/WallRun?action=edit">QuoteSource</option>
                                                 <option value="/pmwiki/pmwiki.php/Recap/WallRun?action=edit">Recap</option>
                                                 <option value="/pmwiki/pmwiki.php/ReferencedBy/WallRun?action=edit">ReferencedBy</option>
                                                 <option value="/pmwiki/pmwiki.php/Shocking/WallRun?action=edit">Shocking</option>
@@ -457,23 +455,28 @@
 
 
 <div id="main-article" class="article-content retro-folders">
-    <p><!-- Image selected per Image Pickin' thread: https://tvtropes.org/pmwiki/posts.php?discussion=1444229749035800500-->
-<!-- Please do not replace or remove without starting a new thread.-->
-<!--&#010;-->
-<div class="quoteright" style="width:350px;" ><a class='twikilink' href='/pmwiki/pmwiki.php/Film/XMenDaysOfFuturePast' title='/pmwiki/pmwiki.php/Film/XMenDaysOfFuturePast' data-format='W1tGaWxtL1hNZW5EYXlzT2ZGdXR1cmVQYXN0IGh0dHBzOi8vc3RhdGljLnR2dHJvcGVzLm9yZy9wbXdpa2kvcHViL2ltYWdlcy9yc3pfMXJzel9xdWlja3NpbHZlcl93YWxsX3J1bm5pbmcuanBnXV0='><div class="lazy_load_img_box" style="padding-top:94.29%"><img src='https://static.tvtropes.org/pmwiki/pub/images/rsz_1rsz_quicksilver_wall_running.jpg' class='embeddedimage' border='0' alt='https://static.tvtropes.org/pmwiki/pub/images/rsz_1rsz_quicksilver_wall_running.jpg' / width=350 height=330></div></a></div><div class="acaptionright" style="width:350px;" >Caution: Do not run when wall is wet.</div>
+
+        
+            <p>
+
+
+<div class="quoteright" style="width:350px;" ><a class='twikilink' href='/pmwiki/pmwiki.php/Film/XMenDaysOfFuturePast' title='/pmwiki/pmwiki.php/Film/XMenDaysOfFuturePast' data-format='W1tGaWxtL1hNZW5EYXlzT2ZGdXR1cmVQYXN0IGh0dHBzOi8vc3RhdGljLnR2dHJvcGVzLm9yZy9wbXdpa2kvcHViL2ltYWdlcy9yc3pfMXJzel9xdWlja3NpbHZlcl93YWxsX3J1bm5pbmcuanBnXV0='><div class="lazy_load_img_box" style="padding-top:94.29%"><img src='https://static.tvtropes.org/pmwiki/pub/images/rsz_1rsz_quicksilver_wall_running.jpg' class='embeddedimage' border='0' alt='Wall Run (trope)'  width=350 height=330></div></a></div><div class="acaptionright" style="width:350px;" >Caution: Do not run when wall is wet.</div>
 </p><p>If you want to climb over a building but cannot fly, you could try several options. If you are a good climber, or a bug, you could <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallCrawl' title='/pmwiki/pmwiki.php/Main/WallCrawl' data-format='V2FsbENyYXds'>Wall Crawl</a> up it. If you are agile enough, you could <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallJump' title='/pmwiki/pmwiki.php/Main/WallJump' data-format='V2FsbEp1bXA='>Wall Jump</a> from wall to wall to slowly but eventually get to the top.
 </p><p>But in this trope, they just run up it! They either have the superhuman strength or speed or ability to simply run up a smooth, flat, vertical surface at high speeds, even if logically they shouldn't be able to.
 </p><p>See <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DrivingUpAWall' title='/pmwiki/pmwiki.php/Main/DrivingUpAWall' data-format='RHJpdmluZ1VwQVdhbGw='>Driving Up a Wall</a> for the vehicular equivalent.
-</p><p><hr data-format='&#8212;&#8212;' />
+<hr data-format='&#8212;&#8212;' />
 <h2>Examples:</h2>
 </p><p><div class="folderlabel" onclick="toggleAllFolders();">&nbsp;&nbsp;&nbsp;&nbsp;open/close all folders&nbsp; </div>
 </p><p><div class="folderlabel" onclick="togglefolder('folder0');">&nbsp;&nbsp;&nbsp;&nbsp;Anime &amp; Manga&nbsp;</div><div id="folder0" class="folder" isfolder="true" style="display:block;">
-<!-- "is able to do this." is not proper contxt.-->
-<!--* In ''Manga/RookiePolicewomanKirukoSan'', Kiruko-->
+
+
 <ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/AttackOnTitan' title='/pmwiki/pmwiki.php/Manga/AttackOnTitan' data-format='TWFuZ2EvQXR0YWNrT25UaXRhbg=='>Attack on Titan</a></em>, Sasha runs down Wall Rose and saves Samuel from falling to his death.
 </li><li> In the anime adaptation of <em><a class='twikilink' href='/pmwiki/pmwiki.php/Literature/ChivalryOfAFailedKnight' title='/pmwiki/pmwiki.php/Literature/ChivalryOfAFailedKnight' data-format='TGl0ZXJhdHVyZS9DaGl2YWxyeU9mQUZhaWxlZEtuaWdodA=='>Chivalry of a Failed Knight</a></em>, the protagonist, Ikki, briefly runs along a wall/glass panels while being shot at.
 </li><li> In an episode of <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/CodeGeass' title='/pmwiki/pmwiki.php/Anime/CodeGeass' data-format='QW5pbWUvQ29kZUdlYXNz'>Code Geass</a></em>, Suzaku runs up a wall <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SuperReflexes' title='/pmwiki/pmwiki.php/Main/SuperReflexes' data-format='W1tTdXBlclJlZmxleGVzIHdoaWxlIGRvZGdpbmcgYnVsbGV0c11d'>while dodging bullets</a> and kicks a machine gun turret off the ceiling.
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/MagicalGirlLyricalNanohaStrikers' title='/pmwiki/pmwiki.php/Anime/MagicalGirlLyricalNanohaStrikers' data-format='QW5pbWUvTWFnaWNhbEdpcmxMeXJpY2FsTmFub2hhU3RyaWtlcnM='>Magical Girl Lyrical Nanoha StrikerS</a></em>, Subaru's Device allows her to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RollerbladeGood' title='/pmwiki/pmwiki.php/Main/RollerbladeGood' data-format='e3tyb2xsZXJibGFkZXxHb29kfX0='>rollerblade</a> on walls by activating the Absorb Grip spell.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/JoJosBizarreAdventure' title='/pmwiki/pmwiki.php/Manga/JoJosBizarreAdventure' data-format='TWFuZ2EvSm9Kb3NCaXphcnJlQWR2ZW50dXJl'>JoJo's Bizarre Adventure</a></em>:
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/JoJosBizarreAdventureBattleTendency' title='/pmwiki/pmwiki.php/Manga/JoJosBizarreAdventureBattleTendency' data-format='W1tNYW5nYS9Kb0pvc0JpemFycmVBZHZlbnR1cmVCYXR0bGVUZW5kZW5jeSBCYXR0bGUgVGVuZGVuY3ldXQ=='>Battle Tendency</a></em>: Santana escapes his containment by running up the wall towards the nearest air vent to force his entire body into it.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/JoJosBizarreAdventureStoneOcean' title='/pmwiki/pmwiki.php/Manga/JoJosBizarreAdventureStoneOcean' data-format='W1tNYW5nYS9Kb0pvc0JpemFycmVBZHZlbnR1cmVTdG9uZU9jZWFuIFN0b25lIE9jZWFuXV0='>Stone Ocean</a></em>: As Jolyne is about to fight against Viviano Westwood, he immediately runs across the prison wall to quickly get the jump on her to attack.
+</li></ul></li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/MagicalGirlLyricalNanohaStrikers' title='/pmwiki/pmwiki.php/Anime/MagicalGirlLyricalNanohaStrikers' data-format='QW5pbWUvTWFnaWNhbEdpcmxMeXJpY2FsTmFub2hhU3RyaWtlcnM='>Magical Girl Lyrical Nanoha StrikerS</a></em>, Subaru's Device allows her to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RollerbladeGood' title='/pmwiki/pmwiki.php/Main/RollerbladeGood' data-format='e3tyb2xsZXJibGFkZXxHb29kfX0='>rollerblade</a> on walls by activating the Absorb Grip spell.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/KillLaKill' title='/pmwiki/pmwiki.php/Anime/KillLaKill' data-format='QW5pbWUvS2lsbExhS2lsbA=='>Kill la Kill</a></em>'s Kiryuin Satsuki can not only run, but <em>walk briskly</em> up a wall while kicking ass.
 </li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/K' title='/pmwiki/pmwiki.php/Anime/K' data-format='QW5pbWUve3tLfX0='>K</a>: Missing Kings</em>, Kuroh and Yukari <em>have a sword fight</em> on the outside of a skyscraper like this. Kuroh appears to fall at first, but Yukari just uses his powers to stand on the side of the building, and Kuroh does the same after a moment.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/GunslingerGirl' title='/pmwiki/pmwiki.php/Manga/GunslingerGirl' data-format='TWFuZ2EvR3Vuc2xpbmdlckdpcmw='>Gunslinger Girl</a></em>. Petra does this to take out a terrorist guarding the corridor to the Turin Nuclear Plant's control room. As an older second generation cyborg she has longer legs than the other cyborg girls and so uses this to her advantage.
@@ -492,8 +495,9 @@
 <ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Fanfic/AmazingFantasy' title='/pmwiki/pmwiki.php/Fanfic/AmazingFantasy' data-format='RmFuZmljL0FtYXppbmdGYW50YXN5'>Amazing Fantasy</a></em>
 <ul ><li> Izuku and Peter are able to do this thanks to their <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallCrawling' title='/pmwiki/pmwiki.php/Main/WallCrawling' data-format='V2FsbENyYXdsaW5n'>Wall Crawling</a> abilities. Peter is first seen doing this in a flashback, while Izuku does it to demonstrate his new powers to his mom.
 </li><li> The Prowler has the ability to manipulate her own gravity, letting her easily run up walls. She can even apply this to her motorcycle, riding along the sides of buildings while chasing after something. Peter lampshades this and declares that he should sue her for copyright infringement.
-</li></ul></li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Fanfic/AnOrdinaryLife' title='/pmwiki/pmwiki.php/Fanfic/AnOrdinaryLife' data-format='RmFuZmljL0FuT3JkaW5hcnlMaWZl'>An ordinary life</a></em>, Eiko has a Quirk that gives her a perfect sense of balance, allowing her to do this. It is still realistic, so she needs to go fast enough if she wants to do it.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Fanfic/HeroAcademiaDxD' title='/pmwiki/pmwiki.php/Fanfic/HeroAcademiaDxD' data-format='RmFuZmljL0hlcm9BY2FkZW1pYUR4RA=='>Hero Academia Dx D</a></em>: Kiba Yuuto has a Quirk that lets him change his gravitational orientation, but only when he's walking on a surface like a wall.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Fanfic/HereComesTheNewBoss' title='/pmwiki/pmwiki.php/Fanfic/HereComesTheNewBoss' data-format='RmFuZmljL0hlcmVDb21lc1RoZU5ld0Jvc3M='>Here Comes the New Boss</a></em>: With Vladimir's <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SuperSpeed' title='/pmwiki/pmwiki.php/Main/SuperSpeed' data-format='U3VwZXJTcGVlZA=='>Super-Speed</a>, Taylor can run several steps up a wall before gravity takes over. (But she can't often use it, because it's both distinctive and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ThePowerOfBlood' title='/pmwiki/pmwiki.php/Main/ThePowerOfBlood' data-format='W1tUaGVQb3dlck9mQmxvb2QgZnVlbGxlZCBieSBibG9vZF1d'>fuelled by blood</a>.)
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Fanfic/AnOrdinaryLife' title='/pmwiki/pmwiki.php/Fanfic/AnOrdinaryLife' data-format='RmFuZmljL0FuT3JkaW5hcnlMaWZl'>An ordinary life</a></em>, Eiko has a Quirk that gives her a perfect sense of balance, allowing her to do this. It is still realistic, so she needs to go fast enough if she wants to do it.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Fanfic/HeroAcademiaDxD' title='/pmwiki/pmwiki.php/Fanfic/HeroAcademiaDxD' data-format='RmFuZmljL0hlcm9BY2FkZW1pYUR4RA=='>Hero Academia D×D</a></em>: Kiba Yuuto has a Quirk that lets him change his gravitational orientation, but only when he's walking on a surface like a wall.
 </li></ul></div>
 </p><p><div class="folderlabel" onclick="togglefolder('folder3');">&nbsp;&nbsp;&nbsp;&nbsp;Films &#8212; Animation&nbsp;</div><div id="folder3" class="folder" isfolder="true" style="display:block;">
 <ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/AstroBoy' title='/pmwiki/pmwiki.php/WesternAnimation/AstroBoy' data-format='V2VzdGVybkFuaW1hdGlvbi9Bc3Ryb0JveQ=='>Astro Boy</a></em> (2009): Astro sprints up a skyscraper while trying to avoid capture, using momentum from his flight.
@@ -523,23 +527,23 @@
 </li></ul></li><li> In the <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Warhammer' title='/pmwiki/pmwiki.php/TabletopGame/Warhammer' data-format='VGFibGV0b3BHYW1lL3t7V2FyaGFtbWVyfX0='>Warhammer</a></em> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GaidenGame' title='/pmwiki/pmwiki.php/Main/GaidenGame' data-format='R2FpZGVuR2FtZQ=='>Gaiden Game</a> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Mordheim' title='/pmwiki/pmwiki.php/TabletopGame/Mordheim' data-format='VGFibGV0b3BHYW1lL3t7TW9yZGhlaW19fQ=='>Mordheim</a>,</em> a model usually has to make an Initiative Test in order to climb a wall and can cover up to their maximum movement distance vertically. The unique Skaven skill Wall Runner however allows a model to climb a wall without the need of a test, while the general Speed skill Scale Sheer Surfaces allows a model to climb up to double their movement distance using this trope without making a test.
 </li></ul></div>
 </p><p><div class="folderlabel" onclick="togglefolder('folder7');">&nbsp;&nbsp;&nbsp;&nbsp;Video Games&nbsp;</div><div id="folder7" class="folder" isfolder="true" style="display:block;">
-<ul ><li> <em>Cloudbuilt</em> and <em><a class='createlink' href='/pmwiki/pmwiki.php/VideoGame/SuperCloudbuilt' title='/pmwiki/pmwiki.php/VideoGame/SuperCloudbuilt' data-format='VmlkZW9HYW1lL1N1cGVyQ2xvdWRidWlsdA=='>Super Cloudbuilt</a></em> has a lot of vertical platforms, so expect to be doing this a lot.
+<ul ><li> <em>Cloudbuilt</em> and <em><a class='createlink' rel='nofollow' href='/pmwiki/pmwiki.php/VideoGame/SuperCloudbuilt' title='/pmwiki/pmwiki.php/VideoGame/SuperCloudbuilt' data-format='VmlkZW9HYW1lL1N1cGVyQ2xvdWRidWlsdA=='>Super Cloudbuilt</a></em> has a lot of vertical platforms, so expect to be doing this a lot.
 </li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TheIncredibleHulkUltimateDestruction' title='/pmwiki/pmwiki.php/VideoGame/TheIncredibleHulkUltimateDestruction' data-format='VmlkZW9HYW1lL1RoZUluY3JlZGlibGVIdWxrVWx0aW1hdGVEZXN0cnVjdGlvbg=='>The Incredible Hulk: Ultimate Destruction</a></em>, Hulk's leg muscles are strong enough to allow him to run up buildings and mountains.
-</li><li> Mario can do this in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioWorld' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioWorld' data-format='VmlkZW9HYW1lL1N1cGVyTWFyaW9Xb3JsZA=='>Super Mario World</a></em> if he runs at a purple incline block first.
-<ul ><li> These purple incline blocks appear in <a class='urllink' href='https://youtu.be/V3f5EYbANC0'>e-reader exclusive level<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> of <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioBros3' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioBros3' data-format='W1tWaWRlb0dhbWUvU3VwZXJNYXJpb0Jyb3MzIFN1cGVyIE1hcmlvIEFkdmFuY2UgNDogU3VwZXIgTWFyaW8gQnJvcy4gM11d'>Super Mario Advance 4: Super Mario Bros. 3</a></em> except now they can be used to have Mario <strong>run on ceilings!</strong>
-</li></ul></li><li> Ever since the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersiaTheSandsOfTime' title='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersiaTheSandsOfTime' data-format='W1tWaWRlb0dhbWUvUHJpbmNlT2ZQZXJzaWFUaGVTYW5kc09mVGltZSBTYW5kcyBvZiBUaW1lXV0='>Sands of Time</a></em> series, this has been a staple of the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersia' title='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersia' data-format='VmlkZW9HYW1lL1ByaW5jZU9mUGVyc2lh'>Prince of Persia</a></em> games, both vertically and horizontally. It's accomplished via <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LeParkour' title='/pmwiki/pmwiki.php/Main/LeParkour' data-format='TGVQYXJrb3Vy'>Le Parkour</a>, so it's less extreme than most examples, but it's still beyond human capabilities.
-<!--* ''VideoGame/DissidiaFinalFantasy''-->
+</li><li> Mario can do this in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioWorld' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioWorld' data-format='VmlkZW9HYW1lL1N1cGVyTWFyaW9Xb3JsZA=='>Super Mario World</a></em> if he runs at a purple incline block first. Purple incline blocks appear in <a class='urllink' href='https://youtu.be/V3f5EYbANC0'>e-reader exclusive level<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> of <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioBros3' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioBros3' data-format='W1tWaWRlb0dhbWUvU3VwZXJNYXJpb0Jyb3MzIFN1cGVyIE1hcmlvIEFkdmFuY2UgNDogU3VwZXIgTWFyaW8gQnJvcy4gM11d'>Super Mario Advance 4: Super Mario Bros. 3</a></em> except now they can be used to have Mario <strong>run on ceilings!</strong>
+</li><li> Ever since the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersiaTheSandsOfTime' title='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersiaTheSandsOfTime' data-format='W1tWaWRlb0dhbWUvUHJpbmNlT2ZQZXJzaWFUaGVTYW5kc09mVGltZSBTYW5kcyBvZiBUaW1lXV0='>Sands of Time</a></em> series, this has been a staple of the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersia' title='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersia' data-format='VmlkZW9HYW1lL1ByaW5jZU9mUGVyc2lh'>Prince of Persia</a></em> games, both vertically and horizontally. It's accomplished via <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LeParkour' title='/pmwiki/pmwiki.php/Main/LeParkour' data-format='TGVQYXJrb3Vy'>Le Parkour</a>, so it's less extreme than most examples; the Prince can only go so far before he starts going down and eventually loses his traction, unless he transitions into a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallJump' title='/pmwiki/pmwiki.php/Main/WallJump' data-format='V2FsbEp1bXA='>Wall Jump</a> first. Still, what he does with it is usually beyond human capabilities.
+
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/SonicTheHedgehog' title='/pmwiki/pmwiki.php/Franchise/SonicTheHedgehog' data-format='RnJhbmNoaXNlL1NvbmljVGhlSGVkZ2Vob2c='>Sonic the Hedgehog</a></em>:
-<ul ><li> Sonic himself, and various other characters, can run on walls in any direction indefinitely, provided they keep going fast enough. And provided the floor leading up to the wall is a ramp of increasing incline. Fortunately, in Sonic's world <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BenevolentArchitecture' title='/pmwiki/pmwiki.php/Main/BenevolentArchitecture' data-format='W1tCZW5ldm9sZW50QXJjaGl0ZWN0dXJlIGl0IGZyZXF1ZW50bHkgaXNdXQ=='>it frequently is</a>. Sonic is capable of doing this when there is water falling down the wall.
+<ul ><li> Sonic and various other characters can run on walls in any direction indefinitely, provided they keep going fast enough. And provided the floor leading up to the wall is a ramp of increasing incline. Fortunately, in Sonic's world <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BenevolentArchitecture' title='/pmwiki/pmwiki.php/Main/BenevolentArchitecture' data-format='W1tCZW5ldm9sZW50QXJjaGl0ZWN0dXJlIGl0IGZyZXF1ZW50bHkgaXNdXQ=='>it frequently is</a>. Sonic is capable of doing this when there is water falling down the wall.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SonicTheHedgehogCD' title='/pmwiki/pmwiki.php/VideoGame/SonicTheHedgehogCD' data-format='W1tWaWRlb0dhbWUvU29uaWNUaGVIZWRnZWhvZ0NEIFNvbmljIENEJiMwMzk7c11d'>Sonic CD's</a></em> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PalmtreePanic' title='/pmwiki/pmwiki.php/Main/PalmtreePanic' data-format='UGFsbXRyZWVQYW5pYw=='>Palmtree Panic</a> stage features pseudo-3D wall runs as its main gimmick.
-</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Prototype' title='/pmwiki/pmwiki.php/VideoGame/Prototype' data-format='VmlkZW9HYW1lL3t7UHJvdG90eXBlfX0='>[PROTOTYPE]</a></em>: Alex Mercer can do it as well. While simply running up or along walls is pretty good, stopping will make him fall... unless the "use" key is pressed while facing the wall which makes him latch on and climb, Spider-Man-style. He can't traverse ceilings, though.
-</li><li> Wallrunning is present in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/CallOfDutyBlackOpsIII' title='/pmwiki/pmwiki.php/VideoGame/CallOfDutyBlackOpsIII' data-format='VmlkZW9HYW1lL0NhbGxPZkR1dHlCbGFja09wc0lJSQ=='>Call of Duty: Black Ops III</a></em> and <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/CallOfDutyInfiniteWarfare' title='/pmwiki/pmwiki.php/VideoGame/CallOfDutyInfiniteWarfare' data-format='VmlkZW9HYW1lL0NhbGxPZkR1dHlJbmZpbml0ZVdhcmZhcmU='>Call Of Duty Infinite Warfare</a></em>.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/PrincessPeachShowtime' title='/pmwiki/pmwiki.php/VideoGame/PrincessPeachShowtime' data-format='VmlkZW9HYW1lL1ByaW5jZXNzUGVhY2hTaG93dGltZQ=='>Princess Peach: Showtime!</a></em>: Along with the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallJump' title='/pmwiki/pmwiki.php/Main/WallJump' data-format='V2FsbEp1bXA='>Wall Jump</a>, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Ninja' title='/pmwiki/pmwiki.php/Main/Ninja' data-format='e3tOaW5qYX19'>Ninja</a> Peach can run along the walls she encounters sideways.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Prototype' title='/pmwiki/pmwiki.php/VideoGame/Prototype' data-format='VmlkZW9HYW1lL3t7UHJvdG90eXBlfX0='>[PROTOTYPE]</a></em>: Alex Mercer can do it as well. While simply running up or along walls is pretty good, stopping will make him fall... unless the "use" key is pressed while facing the wall which makes him latch on and climb, Spider-Man-style. He can't traverse ceilings, though.
+
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TitanFall' title='/pmwiki/pmwiki.php/VideoGame/TitanFall' data-format='VmlkZW9HYW1lL1RpdGFuRmFsbA=='>Titanfall</a> and <a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TitanFall2' title='/pmwiki/pmwiki.php/VideoGame/TitanFall2' data-format='VmlkZW9HYW1lL1RpdGFuRmFsbDI='>Titanfall 2</a></em>: The most common form of movement used to get around for <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AcePilot' title='/pmwiki/pmwiki.php/Main/AcePilot' data-format='W1tBY2VQaWxvdCBQaWxvdHNdXQ=='>Pilots</a>. And not just on specific walls, but on anything that even classifies as a wall.
 </li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MyHeroOnesJustice' title='/pmwiki/pmwiki.php/VideoGame/MyHeroOnesJustice' data-format='VmlkZW9HYW1lL015SGVyb09uZXNKdXN0aWNl'>My Hero One's Justice</a></em>, following up on certain attacks that plant an opponent to the wall will temporarily lead to both players fighting on the wall as if it were the floor.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/KingdomHearts' title='/pmwiki/pmwiki.php/Franchise/KingdomHearts' data-format='RnJhbmNoaXNlL0tpbmdkb21IZWFydHM='>Kingdom Hearts</a></em>:
-<ul ><li> In the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SequelHook' title='/pmwiki/pmwiki.php/Main/SequelHook' data-format='U2VxdWVsSG9vaw=='>Sequel Hook</a> movie of the first game's Final Mix, Roxas runs up <em>a skyscraper</em> as he and Riku fend off Neoshadows together. The exact context for this moment wouldn't be made clear for several years.
+<ul ><li> In the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SequelHook' title='/pmwiki/pmwiki.php/Main/SequelHook' data-format='U2VxdWVsSG9vaw=='>Sequel Hook</a> movie of the first game's Final Mix, Roxas runs up <em>a skyscraper</em> as he and Riku fend off Neoshadows together. The exact context for this moment wouldn't be made clear until <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KingdomHearts358DaysOver2' title='/pmwiki/pmwiki.php/VideoGame/KingdomHearts358DaysOver2' data-format='VmlkZW9HYW1lL0tpbmdkb21IZWFydHMzNThEYXlzT3ZlcjI='>Kingdom Hearts: 358/2 Days</a></em>.
 </li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KingdomHeartsII' title='/pmwiki/pmwiki.php/VideoGame/KingdomHeartsII' data-format='VmlkZW9HYW1lL0tpbmdkb21IZWFydHNJSQ=='>Kingdom Hearts II</a></em>, Sora recreates this moment while fighting Xemnas.
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KingdomHeartsIII' title='/pmwiki/pmwiki.php/VideoGame/KingdomHeartsIII' data-format='VmlkZW9HYW1lL0tpbmdkb21IZWFydHNJSUk='>Kingdom Hearts III</a></em>, Sora can finally run freely across certain walls during gameplay, indicated by a glowing effect
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KingdomHeartsIII' title='/pmwiki/pmwiki.php/VideoGame/KingdomHeartsIII' data-format='VmlkZW9HYW1lL0tpbmdkb21IZWFydHNJSUk='>Kingdom Hearts III</a></em>, Sora can finally run freely across certain walls during gameplay, indicated by a glowing effect coursing down the applicable surface.
 </li></ul></li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ShovelKnight' title='/pmwiki/pmwiki.php/VideoGame/ShovelKnight' data-format='VmlkZW9HYW1lL1Nob3ZlbEtuaWdodA=='>Shovel Knight</a></em> campaign <em>Specter of Torment</em>, by jumping upon certain walls, Specter Knight can run up on them for a few metres before falling down. During that time he can <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallJump' title='/pmwiki/pmwiki.php/Main/WallJump' data-format='W1tXYWxsSnVtcCBqdW1wIG9mZiB0aGVtXV0='>jump off them</a> to get significant horizontal speed.
 </li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/YoNoid2EnterTheVoid' title='/pmwiki/pmwiki.php/VideoGame/YoNoid2EnterTheVoid' data-format='VmlkZW9HYW1lL1lvTm9pZDJFbnRlclRoZVZvaWQ='>Yo! Noid 2: Enter the Void</a></em>, Noid can cross longer horizontal distance by jumping diagonally towards a wall while running, which allows him to briefly run along the wall. Gravity still applies, so this isn't useful for very long unless it's combined with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BuildingSwing' title='/pmwiki/pmwiki.php/Main/BuildingSwing' data-format='QnVpbGRpbmdTd2luZw=='>Building Swing</a> or a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallJump' title='/pmwiki/pmwiki.php/Main/WallJump' data-format='V2FsbEp1bXA='>Wall Jump</a>.
 </li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Sundered' title='/pmwiki/pmwiki.php/VideoGame/Sundered' data-format='VmlkZW9HYW1lL3t7U3VuZGVyZWR9fQ=='>Sundered</a></em>, Eshe can run up sheer walls after obtaining the Gravitational Boots. She needs to start at the base of the wall, and she’ll fall off if she stops moving partway. Corrupting the Gravitational Boots into Atlach-Nacha’s Grip replaces this ability with a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallCrawl' title='/pmwiki/pmwiki.php/Main/WallCrawl' data-format='V2FsbENyYXds'>Wall Crawl</a>.
@@ -555,10 +559,10 @@
 </p><p><div class="folderlabel" onclick="togglefolder('folder8');">&nbsp;&nbsp;&nbsp;&nbsp;Web Comics&nbsp;</div><div id="folder8" class="folder" isfolder="true" style="display:block;">
 <ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Webcomic/ElGoonishShive' title='/pmwiki/pmwiki.php/Webcomic/ElGoonishShive' data-format='V2ViY29taWMvRWxHb29uaXNoU2hpdmU='>El Goonish Shive</a></em>, Elliot needs to return a cell phone a girl dropped, but there's a crowd in the way, so he <a class='urllink' href='http://www.egscomics.com/index.php?id=1731'>runs up the wall of the hallway<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a>. He refers to this as "going around them," and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SelectiveObliviousness' title='/pmwiki/pmwiki.php/Main/SelectiveObliviousness' data-format='W1tTZWxlY3RpdmVPYmxpdmlvdXNuZXNzIHNlZXMgbm90aGluZyBleGNlcHRpb25hbCBhYm91dCBpdF1d'>sees nothing exceptional about it</a>.
 </li></ul></div>
-<!--<div class="folderlabel" onclick="togglefolder('folder9');">&nbsp;&nbsp;&nbsp;&nbsp;Web Videos&nbsp;</div><div id="folder9" class="folder" isfolder="true" style="display:block;">-->
-<!--* Beau of ''WebVideo/CriticalRole'' can do this.-->
-<!--</div>-->
-<!--&#010;-->
+
+
+
+
 </p><p><div class="folderlabel" onclick="togglefolder('folder10');">&nbsp;&nbsp;&nbsp;&nbsp;Western Animation&nbsp;</div><div id="folder10" class="folder" isfolder="true" style="display:block;">
 <ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/CodeLyoko' title='/pmwiki/pmwiki.php/WesternAnimation/CodeLyoko' data-format='V2VzdGVybkFuaW1hdGlvbi9Db2RlTHlva28='>Code Lyoko</a></em>: On Lyoko, Ulrich sometimes also run up vertical surfaces with his <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SuperSpeed' title='/pmwiki/pmwiki.php/Main/SuperSpeed' data-format='W1tTdXBlclNwZWVkIFN1cGVyIFNwcmludF1d'>Super Sprint</a>.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/StevenUniverse' title='/pmwiki/pmwiki.php/WesternAnimation/StevenUniverse' data-format='V2VzdGVybkFuaW1hdGlvbi9TdGV2ZW5Vbml2ZXJzZQ=='>Steven Universe</a></em>: <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LaughablyEvil' title='/pmwiki/pmwiki.php/Main/LaughablyEvil' data-format='W1tMYXVnaGFibHlFdmlsIFBlcmlkb3RdXQ=='>Peridot</a> jogs up a ninety-degree cliff face as casually as running along the ground. As she's a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RubberForeheadAliens' title='/pmwiki/pmwiki.php/Main/RubberForeheadAliens' data-format='W1tSdWJiZXJGb3JlaGVhZEFsaWVucyBHZW1dXQ=='>Gem</a>, it's probable this is just a unique ability of hers- and, keeping with the tradition of Gem abilities, it's revealed with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/NewPowersAsThePlotDemands' title='/pmwiki/pmwiki.php/Main/NewPowersAsThePlotDemands' data-format='W1tOZXdQb3dlcnNBc1RoZVBsb3REZW1hbmRzIHZlcnkgbGl0dGxlIGZhbmZhcmVdXQ=='>very little fanfare</a> and isn't even a successful getaway.
@@ -571,10 +575,10 @@
 </li></ul></div>
 </p><p><div class="folderlabel" onclick="togglefolder('folder11');">&nbsp;&nbsp;&nbsp;&nbsp;Real Life&nbsp;</div><div id="folder11" class="folder" isfolder="true" style="display:block;">
 <ul ><li> Many birds are <a class='urllink' href='https://www.youtube.com/watch?v=Owf2iEwV-gk'>capable of doing this<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> by flapping their wings to increase traction as they run, even while they are <a class='urllink' href='https://www.youtube.com/watch?v=5Rjin-tjOxU'>too young to fly.<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> It has been suggested that this behavior was also <a class='urllink' href='http://qilong.deviantart.com/art/Evolution-of-the-Wing-WAIR-414685961'>present<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> in other feathered dinosaurs.
-</li><li> You can perform a literal wall run in a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SpaceStation' title='/pmwiki/pmwiki.php/Main/SpaceStation' data-format='e3tzcGFjZSBzdGF0aW9ufX0='>space station</a>. Since there's no gravity in the outer space, calling a surface a wall would be <em>redundant</em>. The only question is how you keep your feet on the wall...
+</li><li> You can perform a literal wall run in a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SpaceStation' title='/pmwiki/pmwiki.php/Main/SpaceStation' data-format='e3tzcGFjZSBzdGF0aW9ufX0='>space station</a>. Since there's less gravity in the outer space, calling a surface a wall would be <em>redundant</em>. The only question is how you keep your feet on the wall...
 </li><li> Wall Running is a thing that actually exists that real people can do. Granted, it's for only a few steps, but it still is an actual thing that is done in <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LeParkour' title='/pmwiki/pmwiki.php/Main/LeParkour' data-format='TGVQYXJrb3Vy'>Le Parkour</a> and Freerunning.
-<!-- * Many insects can do this.-->
-<!-- * [[https://www.youtube.com/watch?v=UfNPihoelPM A suitably long stick and a couple friends makes this trope a practical means of wall scaling in the real world]].-->
+
+
 </li></ul></div>
 <hr data-format='&#8212;&#8212;' />
 </p></div>
@@ -598,28 +602,28 @@
   <div class="video-examples-featured">
     <div class="example_video_box">
       <a href="#video-link"
-         data-video-id="w4lm2e"
-         data-video-descrip="Zoro runs up the wall to hack a fishman attacking Luffy during the raid on Arlong's park."
-         data-video-title="Doing the run"
-         data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/w4lm2e_640x360p_qvbr.mp4"
-         data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/w4lm2e.mpd"
-         data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/w4lm2e.m3u8"
-         data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/w4lm2e.jpg"
-         data-video-trope="Main/WallRun"
-         data-video-tropename="Wall Run"
+         data-video-id="afyeya"
+         data-video-descrip="Prince of Persia: The Sands of Time is a 2003 action-adventure game developed by Ubisoft. The game follows the titular Prince as he uses a magical dagger to hunt down a treacherous Vizier, who as turned the Persians into undead sand monsters in a bid to gain immortality. The Sands of Time retains the acrobatic, semi-realistic platforming of the old Prince of Persia games while also incorporating stylish combat and loads of exploration to properly utilize the third dimension. Easily the game's biggest innovation, however, is the Dagger of Time, which allows the Prince&amp;mdash; and by extension, the player&amp;mdash; to rewind time and undo any mistakes during gameplay. "
+         data-video-title="Prince of Persia Sands of Time"
+         data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/afyeya_640x360p_qvbr.mp4"
+         data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/afyeya.mpd"
+         data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/afyeya.m3u8"
+         data-video-thumbnail="https://mediaproxy.tvtropes.org/width/600/https://tvtropes.org/pmwiki/pub/images/img_3954_3.jpeg"
+         data-video-trope="Main/ActionAdventure"
+         data-video-tropename="Action-Adventure"
          data-video-approval="APPROVED"
          data-video-troper-rating=""
          data-video-average-rating="5.00"
-         data-video-rating-count="5"
-         data-video-media-sources="Series/OnePiece2023"
+         data-video-rating-count="4"
+         data-video-media-sources="Main/CinematicPlatformGame,Main/LeParkour,Main/TimeRewindMechanic,Main/WallRun,VideoGame/PrinceOfPersiaTheSandsOfTime,Franchise/PrinceOfPersia"
          class="video-launch-link video-overlay-link featured-widget-vid">
 
           <div class="featured-widget-vid-iframe">
               <div id="tvtropes_no_volume_player" 
-                  data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/w4lm2e.jpg" 
-                  data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/w4lm2e_640x360p_qvbr.mp4" 
-                  data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/w4lm2e.mpd" 
-                  data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/w4lm2e.m3u8"
+                  data-video-image="https://mediaproxy.tvtropes.org/width/600/https://tvtropes.org/pmwiki/pub/images/img_3954_3.jpeg" 
+                  data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/afyeya_640x360p_qvbr.mp4" 
+                  data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/afyeya.mpd" 
+                  data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/afyeya.m3u8"
               		data-controls="0"
               		data-muted="1">
                   
@@ -629,14 +633,35 @@
       </a>
     </div>
 
-    <h2 class="bold font-l">Doing the run</h2>
+    <h2 class="bold font-l">Prince of Persia Sands of Time</h2>
     <p class="_pmvv-vidbox-descTxt">
-      Zoro runs up the wall to hack a fishman attacking Luffy during the raid on Arlong's park.    </p>
-    
+      Prince of Persia: The Sands of Time is a 2003 action-adventure game developed by Ubisoft. The game follows the titular Prince as he uses a magical dagger to hunt down a treacherous Vizier, who as turned the Persians into undead sand monsters in a bid to gain immortality. The Sands of Time retains the acrobatic, semi-realistic platforming of the old Prince of Persia games while also incorporating stylish combat and loads of exploration to properly utilize the third dimension. Easily the game's biggest innovation, however, is the Dagger of Time, which allows the Prince&mdash; and by extension, the player&mdash; to rewind time and undo any mistakes during gameplay.     </p>
+    <p class='example_row'>Example of:<br><a href="/pmwiki/pmwiki.php/Main/ActionAdventure"class='trope-example-link'>Action-Adventure</a></p>
 
   </div>
 
     <div class="video-examples-thumbs">
+
+          
+      <a href="#video-link"
+      data-video-id="w4lm2e"
+      data-video-descrip="Zoro runs up the wall to hack a fishman attacking Luffy during the raid on Arlong's park."
+      data-video-title="Doing the run"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/w4lm2e_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/w4lm2e.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/w4lm2e.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/w4lm2e.jpg"
+      data-video-trope="Main/WallRun"
+      data-video-tropename="Wall Run"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Series/OnePiece2023"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/w4lm2e.jpg">
+      <p><span class="bold">Doing the run</span></p>
+    </a>
 
           
       <a href="#video-link"
@@ -692,8 +717,6 @@
 </div>
 
 
-
-    
         <div class="section-links" itemscope itemtype="http://schema.org/SiteNavigationElement">
 
     
@@ -708,28 +731,14 @@
                     
                 <ul>
                     <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/WalkThisWay">Walk This Way</a>
+                                                    <a href="/pmwiki/pmwiki.php/Main/WallPinOfLove">Wall Pin of Love</a>
                                             </li>
                     <li>
-                        <a href="/pmwiki/pmwiki.php/Main/WalkingTropes">Walking Tropes</a>
+                        <a href="/pmwiki/pmwiki.php/Main/WallTropes">Wall Tropes</a>
                     </li>
                     <li>
                          
-                            <a href="/pmwiki/pmwiki.php/Main/WanderingWalkOfMadness">Wandering Walk of Madness</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/WallJump">Wall Jump</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/DexterityTropes">Dexterity Tropes</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/WeaponTwirling">Weapon Twirling</a> 
+                            <a href="/pmwiki/pmwiki.php/Main/TheWallsAreClosingIn">The Walls Are Closing In</a> 
                                             </li>
                 </ul>
 
@@ -750,14 +759,42 @@
             
                 <ul>
                     <li>
-                                                    <a href="/pmwiki/pmwiki.php/FantasticRacism/LiveActionFilms">Live-Action Films</a>
+                                                    <a href="/pmwiki/pmwiki.php/Main/HeadBlast">Head Blast</a>
                                             </li>
                     <li>
                         <a href="/pmwiki/pmwiki.php/ImageSource/XMen">ImageSource/X-Men</a>
                     </li>
                     <li>
                          
-                            <a href="/pmwiki/pmwiki.php/Film/Deadpool2016">Deadpool (2016)</a> 
+                            <a href="/pmwiki/pmwiki.php/Film/XMenApocalypse">X-Men: Apocalypse</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/WallJump">Wall Jump</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/DexterityTropes">Dexterity Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/WeaponTwirling">Weapon Twirling</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/WalkThisWay">Walk This Way</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/WalkingTropes">Walking Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/WanderingWalkOfMadness">Wandering Walk of Madness</a> 
                                             </li>
                 </ul>
 
@@ -765,8 +802,6 @@
         
             </div>
 </div>
-
-
 
 
 
@@ -808,6 +843,8 @@
             <div class="crucial_browsing_dropdown">
                 <a href="javascript:void(0);" onclick="double_dropdown(); return false;" id="crucial_browsing_dropdown"><span class="new_blue">Crucial Browsing</span><i class="fa fa-angle-down"></i></a>
                 <ul id="main_dropdown">
+                    <li class="first_dropdown"><a href="/pmwiki/index_report.php">Indexes</a>
+
                     <li class="first_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Genre</a>
                         <ul>
                             <li><a href='/pmwiki/pmwiki.php/Main/ActionAdventureTropes' title='Main/ActionAdventureTropes'>Action Adventure</a></li>
@@ -841,7 +878,7 @@
                             <li><a href="/pmwiki/pmwiki.php/Main/Radio" title="Main/Radio">Radio</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/SequentialArt" title="Main/SequentialArt">Sequential Art</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/TabletopGames" title="Main/TabletopGames">Tabletop Games</a></li>
-                            <li><a href="/pmwiki/pmwiki.php/UsefulNotes/Television" title="Main/Television">Television</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/MediaNotes/Television" title="MediaNotes/Television">Television</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/Theater" title="Main/Theater">Theater</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/VideogameTropes" title="Main/VideogameTropes">Videogame</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/Webcomics" title="Main/Webcomics">Webcomics</a></li>
@@ -1032,6 +1069,7 @@
                 <li><a href="/pmwiki/changelog.php">Changelog</a></li>
                 <li><a href="/pmwiki/dmca.php">DMCA Notice</a></li>
                 <li><a href="/pmwiki/privacypolicy.php">Privacy Policy</a></li>
+                <li><a href="/pmwiki/termsofservice.php">Terms Of Service</a></li>
 
             </ul>
 
@@ -1042,7 +1080,7 @@
         </div>
 
         <div class="legal">
-            <p>TVTropes is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. <br>Permissions beyond the scope of this license may be available from <a xmlns:cc="http://creativecommons.org/ns#" href="mailto:thestaff@tvtropes.org" rel="cc:morePermissions"> thestaff@tvtropes.org</a>.</p>
+            <p>TVTropes is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. <br>Permissions beyond the scope of this license may be available from <a xmlns:cc="http://creativecommons.org/ns#" href="/cdn-cgi/l/email-protection#a4d0ccc1d7d0c5c2c2e4d0d2d0d6cbd4c1d78acbd6c3" rel="cc:morePermissions"> <span class="__cf_email__" data-cfemail="cebaa6abbdbaafa8a88ebab8babca1beabbde0a1bca9">[email&#160;protected]</span></a>.</p>
             <br>
             <div class="privacy_wrapper">
             </div>
@@ -1050,25 +1088,7 @@
     </footer>
     
     
-    <style>
-      div.fc-ccpa-root {
-        position: absolute !important;
-        bottom: 93px !important;
-        margin: auto !important;
-        width: 100% !important;
-        z-index: 9999 !important;
-        overflow: hidden !important;
-      }
-      .fc-ccpa-root .fc-dns-dialog .fc-dns-link p{
-        outline: none !important;
-        text-decoration: underline !important;
-        font-size: .7em !important;
-        font-family: sans-serif !important;
-      }
-      .fc-ccpa-root .fc-dns-dialog .fc-dns-link .fc-button-background {
-        background: none !important;
-      }
-    </style>
+    
 
         <div id="_pm_videoViewer" class="full-screen">
 
@@ -1081,12 +1101,12 @@
         <div id="overlay_outer_player_max">
 	<div id="overlay_outer_player_wrapper">
 		<div id="tvtropes_overlay_player" 
-			data-video-id="tvtropes-videos-w4lm2e" 
-			data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/w4lm2e.jpg" 
-			data-video-title="Doing the run" 
-			data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/w4lm2e_640x360p_qvbr.mp4" 
-			data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/w4lm2e.mpd" 
-			data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/w4lm2e.m3u8"
+			data-video-id="tvtropes-videos-afyeya" 
+			data-video-image="https://mediaproxy.tvtropes.org/width/600/https://tvtropes.org/pmwiki/pub/images/img_3954_3.jpeg" 
+			data-video-title="Prince of Persia Sands of Time" 
+			data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/afyeya_640x360p_qvbr.mp4" 
+			data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/afyeya.mpd" 
+			data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/afyeya.m3u8"
 			data-small-player="never"
 			data-track-events="1"
 			data-do-not-loop="1"
@@ -1098,11 +1118,11 @@
 
 <div class="_pmvv-vidbox-desc">
 
-	<h1 id="overlay-title">Doing the run</h1>
+	<h1 id="overlay-title">Prince of Persia Sands of Time</h1>
 	<p id="overlay-descrip" class="_pmvv-vidbox-descTxt">
-	    Zoro runs up the wall to hack a fishman attacking Luffy during the raid on Arlong's park.	</p>
+	    Prince of Persia: The Sands of Time is a 2003 action-adventure game developed by Ubisoft. The game follows the titular Prince as he uses a magical dagger to hunt down a treacherous Vizier, who as turned the Persians into undead sand monsters in a bid to gain immortality. The Sands of Time retains the acrobatic, semi-realistic platforming of the old Prince of Persia games while also incorporating stylish combat and loads of exploration to properly utilize the third dimension. Easily the game's biggest innovation, however, is the Dagger of Time, which allows the Prince&mdash; and by extension, the player&mdash; to rewind time and undo any mistakes during gameplay. 	</p>
 
-      <div class="rating-row"  data-video-id="w4lm2e" >
+      <div class="rating-row"  data-video-id="afyeya" >
         <input type="hidden" name="is_logged_in"  value="0" >
         <p>How well does it match the trope?</p>
 				<div id="star-rating-group">
@@ -1120,7 +1140,7 @@
 													</div>
 
                         <div id="star-rating-total">
-                                                            5 (5 votes)
+                                                            5 (4 votes)
                                                     </div>
 
 					</div>
@@ -1129,7 +1149,7 @@
 		<div class="example-media-row">
 			<div class="example-overlay">
 				<p>Example of:</p> 
-				<div id="overlay-trope">Main / WallRun</div>
+				<div id="overlay-trope">Main / ActionAdventure</div>
 			</div>
 			<div class="media_second_wrapper">
 				<div class="media-sources-overlay example-overlay">
@@ -1143,7 +1163,7 @@
 			</div>
 		</div>
 	<p class="_pmvv-vidbox-stats text-right font-s" style="padding-top:8px; border-top: solid 1px rgba(255,255,255,0.2)">
-	<!--    <i class="fa fa-eye"></i> 11,241-->
+	
 
 
 			    <a href="#video-feedback" class="float-right" 
@@ -1163,6 +1183,26 @@
 
     <div class="_pmvv-foot-scrollwrapper">
                 <a href="#video-link" 
+             data-video-id="afyeya"
+             data-vimeo-id=""
+             data-video-descrip="Prince of Persia: The Sands of Time is a 2003 action-adventure game developed by Ubisoft. The game follows the titular Prince as he uses a magical dagger to hunt down a treacherous Vizier, who as turned the Persians into undead sand monsters in a bid to gain immortality. The Sands of Time retains the acrobatic, semi-realistic platforming of the old Prince of Persia games while also incorporating stylish combat and loads of exploration to properly utilize the third dimension. Easily the game's biggest innovation, however, is the Dagger of Time, which allows the Prince&amp;mdash; and by extension, the player&amp;mdash; to rewind time and undo any mistakes during gameplay. "
+             data-video-title="Prince of Persia Sands of Time"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/afyeya_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/afyeya.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/afyeya.m3u8"
+             data-video-thumbnail="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/img_3954_3.jpeg"
+             data-video-trope="Main/ActionAdventure"
+             data-video-tropename="Action-Adventure"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="5.00"
+             data-video-rating-count="4"
+             data-video-media-sources="Main/CinematicPlatformGame,Main/LeParkour,Main/TimeRewindMechanic,Main/WallRun,VideoGame/PrinceOfPersiaTheSandsOfTime,Franchise/PrinceOfPersia"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/img_3954_3.jpeg">
+            <p><span class="bold">Prince of Persi...</span></p>
+          </a>
+                <a href="#video-link" 
              data-video-id="w4lm2e"
              data-vimeo-id=""
              data-video-descrip="Zoro runs up the wall to hack a fishman attacking Luffy during the raid on Arlong's park."
@@ -1176,7 +1216,7 @@
              data-video-approval="APPROVED"
              data-video-troper-rating=""
              data-video-average-rating="5.00"
-             data-video-rating-count="5"
+             data-video-rating-count="7"
              data-video-media-sources="Series/OnePiece2023"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/w4lm2e.jpg">
@@ -1242,22 +1282,16 @@
 
 
 
-<!-- Quantcast Tag -->
 
 
-<noscript>
-  <div style="display:none;">
-    <img src="//pixel.quantserve.com/pixel/p-mEzuYq24VEJ-3.gif" border="0" height="1" width="1" alt="Quantcast"/>
-  </div>
-</noscript>
-<!-- End Quantcast tag -->
 
 
-<!-- Begin comScore Tag -->
 
-<noscript>
-  <img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=38282685&amp;cv=3.6.0&amp;cj=1">
-</noscript>
-<!-- End comScore Tag -->
+
+
+
+
+
+
 </body>
 </html>

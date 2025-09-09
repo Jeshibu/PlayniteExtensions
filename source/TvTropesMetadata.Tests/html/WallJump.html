@@ -1,25 +1,11 @@
 <!DOCTYPE html>
 	<html>
 		<head lang="en">
+                        <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=newest_pages" />
+            <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=most_popular" />
+            <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=updated_content" />
+
                         <link rel="preload" href="/images/loading-graphic.png" as="image">
-
-            <!-- Google tag (gtag.js) -->
-            
-            
-
-                        
-			
-						
-
-            
-                        
-
-                        
-
-                        
-			
-			
-											
 						<meta http-equiv="X-UA-Compatible" content="IE=edge">
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
@@ -66,18 +52,28 @@
             <link rel="icon" sizes="192x192" href="https://assets.tvtropes.org/img/icons/favicon-192x192.png" type="image/png">
 
                         
-
+                        
 						<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-                        <link rel="stylesheet" href="https://assets.tvtropes.org/design/assets/bundle.css?rev=f07af95238e025e8213d0b91650cd7e22b0dd7ec" />
+                        <link rel="stylesheet" href="https://assets.tvtropes.org/design/assets/bundle.css?rev=2f4875abe459cab3d315f2f182ddd58516a5737c" />
+
+            <meta name="apple-itunes-app" content="app-id=6738365737, app-argument=tvtropes://home">
 
                                                 
                         
                         
                         						
-                        
-						
                         						
 												
+
+
+                                                
+                        
+
+
+                                                
+
+
+
 
 						        </head>
  <body class="">
@@ -90,35 +86,25 @@
     <div id="modal-box">
         <div class="modal-loading-graphic"></div>
     </div>
-    <style>
-        @keyframes rotate-forever {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+    
 
-        #modal-box > .modal-loading-graphic {
-            display: none; /* Hidden by default */
+    
+    
+<div class="outer-promo-banner" id="outer-promo-banner">
+    <div class="promo-banner">
+        <img src="/images/tvtropes_logo_180x180.png" alt="TVTropes Logo" class="promo-logo">
+        <div class="promo-text-container">
+            <span class="promo-text-top">TVTropes</span>
+            <span class="promo-text">Now available in the app store!</span>
+        </div>
+        <a href="#" class="promo-button" id="promo-app-link">Open</a>
 
-            background: no-repeat center url('/images/loading-graphic.png');
-            background-size: 80px 80px;
+        <a href="#" id="promo-close-button"><i class="fa fa-close"></i></a>
+    </div>
+</div>
 
-            width: 80px;
-            height: 80px;
 
-            border-radius: 50%;
 
-            position: absolute;
-            top: calc(30% - 40px);
-            left: calc(50% - 40px);
-            z-index: 2;
-
-            animation: rotate-forever 0.34s linear infinite;
-
-        }
-        #modal-box.active > .modal-loading-graphic {
-            display: block; /* Show only when modal is active */
-        }
-    </style>
     <header id="main-header-bar" class="headroom-element ">
         <div id="main-header-bar-inner">
 
@@ -134,7 +120,7 @@
                 <a href="/pmwiki/pmwiki.php/Main/Tropes">Tropes</a>
                 <a href="/pmwiki/pmwiki.php/Main/Media">Media</a>
                 <a href="/pmwiki/browse.php" class="nav-browse">Browse</a>
-                <a href="/pmwiki/index_report.php">Indexes</a>
+                <a href="/pmwiki/popular-pages.php">Popular</a>
                 <a href="/pmwiki/topics.php">Forums</a>
                 <a href="/pmwiki/recent_videos.php" class="nav-browse">Videos</a>
             </nav>
@@ -150,9 +136,9 @@
                 </div>
                 
                 <div id="search-box">
-                    <form class="search" action="/pmwiki/search_result.php">
+                    <form class="search" action="/pmwiki/search_result.php" onSubmit="return sendToSiteSearch(this, this.q.value);">
                         <input type="text" name="q" class="search-box" placeholder="Search" value="" required>
-                        <input type="submit" class="submit-button" value="&#xf002;" />
+                        <input id="main_search_submit"type="submit" class="submit-button" value="&#xf002;" />
                                                 <input type="hidden" name="search_type" value="article">
                         <input type="hidden" name="page_type" value="all">
                                                 <input type="hidden" name="cx" value="partner-pub-6610802604051523:amzitfn8e7v">
@@ -166,8 +152,8 @@
                 </div>
 
                 <div id="random-box">
-                    <a href="/pmwiki/pmwiki.php/Main/AssimilationAcademy" class="button-random-trope" rel="nofollow" onclick="gtag('event', 'trope_random_button_click', {'is_user': 0});"></a>
-                    <a href="/pmwiki/pmwiki.php/Series/DarkWinds" class="button-random-media" rel="nofollow" onclick="gtag('event', 'media_random_button_click', {'is_user': 0});"></a>
+                    <a href="/pmwiki/pmwiki.php/Main/CriticalExistenceFailure" class="button-random-trope" rel="nofollow" onclick="gtag('event', 'trope_random_button_click', {'is_user': 0});"></a>
+                    <a href="/pmwiki/pmwiki.php/Literature/AStitchInCrime" class="button-random-media" rel="nofollow" onclick="gtag('event', 'media_random_button_click', {'is_user': 0});"></a>
                 </div>
 
             </div>
@@ -180,6 +166,7 @@
         <a href="/pmwiki/pmwiki.php/Main/Tropes" class="xl">Tropes</a>
         <a href="/pmwiki/pmwiki.php/Main/Media" class="xl">Media</a>
         <a href="/pmwiki/browse.php" class="xl">Browse</a>
+        <a href="/pmwiki/popular-pages.php" class="xl">Popular</a>
         <a href="/pmwiki/index_report.php" class="xl">Indexes</a>
         <a href="/pmwiki/topics.php" class="xl">Forums</a>
         <a href="/pmwiki/recent_videos.php" class="xl">Videos</a>
@@ -191,7 +178,7 @@
         <a href="/pmwiki/query.php?type=wl">Tech Wishlist</a>
         <a href="/pmwiki/review_activity.php">Reviews</a> 
         
-        <a href="#tools" data-click-toggle="active">Tools <i class="fa fa-chevron-down"></i></a>
+                <a href="#tools" data-click-toggle="active">Tools <i class="fa fa-chevron-down"></i></a>
         <div class="tools-dropdown mobile-dropdown-linkList">
             <a href="/pmwiki/cutlist.php" data-modal-target="login" rel="nofollow">Cut List</a>
             <a href="/pmwiki/image-fixer.php" data-modal-target="login" rel="nofollow">Image Fixer</a>
@@ -215,7 +202,7 @@
                 <a href="/pmwiki/pmwiki.php/Administrivia/TVTropesGlossary?from=Main.TVTropesGlossary">Glossary</a>
                 <a href="/pmwiki/pmwiki.php/Administrivia/EditReasonsAndWhyYouShouldUseThem">Edit Reasons</a>
                 <a href="/pmwiki/pmwiki.php/Administrivia/HandlingSpoilers">Handling Spoilers</a>
-                <a href="/pmwiki/pmwiki.php/Main/WordCruft">Word Cruft</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/WordCruft">Word Cruft</a>
                 <a href="/pmwiki/pmwiki.php/Main/Administrivia">Administrivia</a>
                 <a href="/pmwiki/pmwiki.php/Main/FAQ">FAQ</a>
         </div>
@@ -228,6 +215,7 @@
             <a href="/pmwiki/dmca.php">DMCA Notice</a>
             <a href="/pmwiki/privacypolicy.php">Privacy Policy</a>
             <a href="/pmwiki/query.php?type=bug">Report Bug</a>
+            <a href="/pmwiki/termsofservice.php">Terms Of Service</a>
         </div>
 
         <a href="/pmwiki/ad-free-subscribe.php">Go Ad-Free</a>
@@ -253,7 +241,7 @@
     <div id="homepage-introBox-mobile" class="mobile-on">
                   <a href="/"><img src="/images/logo-white-big.png" class="logo-small" /></a>
         
-        <form class="search" action="/pmwiki/search_result.php" style="margin:10px -5px -6px -5px;">
+        <form class="search" action="/pmwiki/search_result.php" style="margin:10px -5px -6px -5px;" onSubmit="return sendToSiteSearch(this, this.q.value);">
             <input type="text" name="q" class="search-box" placeholder="Search" value="" required>
             <input type="submit" class="submit-button" value="&#xf002;" />
                         <input type="hidden" name="search_type" value="article">
@@ -273,10 +261,7 @@
                     
 
                 <div id="tvtropes_oop_ad_slot" style="display: none;"></div>
-    <div id="header-fad-wrapper" class="fad">
-    <div id="header-fad">
-    <div class="fad-size-970x90" style="height:20px">&nbsp;</div>    </div>
-</div>
+    <div id="top_container_spacing"></div>
 
 <div id="main-container">
 
@@ -320,8 +305,6 @@
         
         
 
-
-<!-- HIDDEN INPUTS FOR JS -->
 <input type="hidden" id="groupname-hidden" value="Main"/>
 <input type="hidden" id="title-hidden" value="WallJump"/>
 <input type="hidden" id="article_id" value="7686" />
@@ -340,7 +323,7 @@
 
 
 
-<a href="#watch" class="watch-button " data-modal-target="login" >Follow<span>ing</span></a>
+
 
 
 
@@ -350,8 +333,31 @@
 
              
 
-                        
-                <h1 itemprop="headline" class="entry-title"> Wall Jump </h1>
+                                        <h1 itemprop="headline" class="entry-title" style=""> 
+                    <span class="wrapped_title">
+                        Wall Jump 
+                         
+                    </span>
+                    <div class="watch_rank_wrap">
+                    <span 
+            class="thumb-vote-area"
+            data-seq-num="WallJump"
+            data-discussion-id="WallJump"
+            data-subject-trope="Main.WallJump"
+            data-page-type="article"
+        >
+            <a 
+                href="javascript:void(0);" 
+                class="thumb-button up heart-only"
+                data-modal-target="login"            >
+                <span class="thumb-count up-count" style="margin-top: 2px;margin-right: 1px;">5</span>
+                <i class="fa fa-heart-o"></i>
+            </a>
+        </span>
+        <a href="#watch" class="watch-button " data-modal-target="login" >Follow<span>ing</span></a>
+</div>
+                   
+                                    </h1>
 
                         
 
@@ -369,31 +375,17 @@
 
 
 
-<div id="editLockModal" class="modal fade hidden-until-active" >
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit Locked</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="body">
-                        <div class="danger troper_locked_message"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <nav class="body-options" itemscope itemtype="http://schema.org/SiteNavigationElement">
 
     <ul class="subpage-links">
 
                             <li>
-                                <a href="/pmwiki/pmwiki.php/Main/WallJump" class="subpage-link curr-subpage" title="The Main page">
-                <span class="wrapper"><span class="spi main-page"></span>Main</span></a>
+                <a href="/pmwiki/pmwiki.php/Main/WallJump"
+                class="subpage-link curr-subpage"
+                title="The Main page">
+                    <span class="wrapper">
+                        <span class="spi main-page"></span>                        Main                    </span>
+                </a>
             </li>
         
         
@@ -416,20 +408,26 @@
                         <option value="">- Create New -</option>
 
                                                 <option value="/pmwiki/pmwiki.php/Analysis/WallJump?action=edit">Analysis</option>
+                                                <option value="/pmwiki/pmwiki.php/Archive/WallJump?action=edit">Archive</option>
                                                 <option value="/pmwiki/pmwiki.php/Awesome/WallJump?action=edit">Awesome</option>
                                                 <option value="/pmwiki/pmwiki.php/Characters/WallJump?action=edit">Characters</option>
-                                                <option value="/pmwiki/pmwiki.php/FanWorks/WallJump?action=edit">FanWorks</option>
+                                                <option value="/pmwiki/pmwiki.php/DerivativeWorks/WallJump?action=edit">DerivativeWork&#8230;</option>
                                                 <option value="/pmwiki/pmwiki.php/FanficRecs/WallJump?action=edit">FanficRecs</option>
+                                                <option value="/pmwiki/pmwiki.php/FanWorks/WallJump?action=edit">FanWorks</option>
                                                 <option value="/pmwiki/pmwiki.php/Fridge/WallJump?action=edit">Fridge</option>
                                                 <option value="/pmwiki/pmwiki.php/Funny/WallJump?action=edit">Funny</option>
                                                 <option value="/pmwiki/pmwiki.php/Haiku/WallJump?action=edit">Haiku</option>
                                                 <option value="/pmwiki/pmwiki.php/Headscratchers/WallJump?action=edit">Headscratchers</option>
                                                 <option value="/pmwiki/pmwiki.php/Heartwarming/WallJump?action=edit">Heartwarming</option>
                                                 <option value="/pmwiki/pmwiki.php/ImageLinks/WallJump?action=edit">ImageLinks</option>
+                                                <option value="/pmwiki/pmwiki.php/ImageSource/WallJump?action=edit">ImageSource</option>
                                                 <option value="/pmwiki/pmwiki.php/Laconic/WallJump?action=edit">Laconic</option>
+                                                <option value="/pmwiki/pmwiki.php/MediaNotes/WallJump?action=edit">MediaNotes</option>
+                                                <option value="/pmwiki/pmwiki.php/Newsletter/WallJump?action=edit">Newsletter</option>
                                                 <option value="/pmwiki/pmwiki.php/NightmareFuel/WallJump?action=edit">NightmareFuel</option>
                                                 <option value="/pmwiki/pmwiki.php/PlayingWith/WallJump?action=edit">PlayingWith</option>
                                                 <option value="/pmwiki/pmwiki.php/Quotes/WallJump?action=edit">Quotes</option>
+                                                <option value="/pmwiki/pmwiki.php/QuoteSource/WallJump?action=edit">QuoteSource</option>
                                                 <option value="/pmwiki/pmwiki.php/Recap/WallJump?action=edit">Recap</option>
                                                 <option value="/pmwiki/pmwiki.php/ReferencedBy/WallJump?action=edit">ReferencedBy</option>
                                                 <option value="/pmwiki/pmwiki.php/Shocking/WallJump?action=edit">Shocking</option>
@@ -452,45 +450,53 @@
 
 
 <div id="main-article" class="article-content retro-folders">
-    <p><div class="quoteright" style="width:230px;" ><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioSunshine' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioSunshine' data-format='W1tWaWRlb0dhbWUvU3VwZXJNYXJpb1N1bnNoaW5lIGh0dHBzOi8vc3RhdGljLnR2dHJvcGVzLm9yZy9wbXdpa2kvcHViL2ltYWdlcy9tYXJpb193YWxsX2p1bXAucG5nXV0='><div class="lazy_load_img_box" style="padding-top:106%"><img src='https://static.tvtropes.org/pmwiki/pub/images/mario_wall_jump.png' class='embeddedimage' border='0' alt='https://static.tvtropes.org/pmwiki/pub/images/mario_wall_jump.png' / width=350 height=371></div></a></div>
+
+        
+            <p>
+
+
+
+
+</p><p><div class="quoteright" style="width:230px;" ><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioSunshine' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioSunshine' data-format='W1tWaWRlb0dhbWUvU3VwZXJNYXJpb1N1bnNoaW5lIGh0dHBzOi8vc3RhdGljLnR2dHJvcGVzLm9yZy9wbXdpa2kvcHViL2ltYWdlcy9tYXJpb193YWxsX2p1bXAucG5nXV0='><div class="lazy_load_img_box" style="padding-top:106%"><img src='https://static.tvtropes.org/pmwiki/pub/images/mario_wall_jump.png' class='embeddedimage' border='0' alt='Wall Jump (trope)'  width=350 height=371></div></a></div>
 <div class="acaptionright" style="width:230px;" ><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/SuperMarioBros' title='/pmwiki/pmwiki.php/Franchise/SuperMarioBros' data-format='W1tGcmFuY2hpc2UvU3VwZXJNYXJpb0Jyb3MgTWFyaW9dXQ=='>Mario</a>, driving himself up the wall.</div>
 </p><p>In <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RealLife' title='/pmwiki/pmwiki.php/Main/RealLife' data-format='UmVhbExpZmU='>Real Life</a>, if you throw yourself at a wall hard enough and spring off quickly enough, you can just about do a Wall Jump, propelling yourself even higher than your original jump. Once, sure. More if you're fit, or a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LeParkour' title='/pmwiki/pmwiki.php/Main/LeParkour' data-format='TGVQYXJrb3Vy'>Le Parkour</a> expert like <a class='twikilink' href='/pmwiki/pmwiki.php/Creator/JackieChan' title='/pmwiki/pmwiki.php/Creator/JackieChan' data-format='Q3JlYXRvci9KYWNraWVDaGFu'>Jackie Chan</a>.
 </p><p>Some <a class='twikilink' href='/pmwiki/pmwiki.php/Main/VideoGameCharacters' title='/pmwiki/pmwiki.php/Main/VideoGameCharacters' data-format='VmlkZW9HYW1lQ2hhcmFjdGVycw=='>Video Game Characters</a>, however, have the speed, strength and stamina to Wall Jump all day. Give them two walls close enough together and they can wall jump repeatedly to climb up the shaft. Some need only one wall, by steering themselves back onto the wall they jumped off at a higher point, then jumping off again. Some video game characters would rather Wall Jump than use the stairs.
 </p><p>Also known as a "triangle jump", after the path traced during a typical Wall Jump. Part of <a class='twikilink' href='/pmwiki/pmwiki.php/Main/JumpPhysics' title='/pmwiki/pmwiki.php/Main/JumpPhysics' data-format='SnVtcFBoeXNpY3M='>Jump Physics</a>. May be paired with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RunningOnAllFours' title='/pmwiki/pmwiki.php/Main/RunningOnAllFours' data-format='UnVubmluZ09uQWxsRm91cnM='>Running on All Fours</a> and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallCrawl' title='/pmwiki/pmwiki.php/Main/WallCrawl' data-format='V2FsbENyYXds'>Wall Crawl</a>. Compare <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BuildingSwing' title='/pmwiki/pmwiki.php/Main/BuildingSwing' data-format='QnVpbGRpbmdTd2luZw=='>Building Swing</a>.
-</p><p>The <a class='twikilink' href='/pmwiki/pmwiki.php/Main/UrExample' title='/pmwiki/pmwiki.php/Main/UrExample' data-format='e3tVciBFeGFtcGxlfX1z'>Ur Examples</a> of this trope were the <a class='twikilink' href='/pmwiki/pmwiki.php/Platform/SegaMasterSystem' title='/pmwiki/pmwiki.php/Platform/SegaMasterSystem' data-format='UGxhdGZvcm0vU2VnYU1hc3RlclN5c3RlbQ=='>Sega Master System</a> games <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/AlexKidd' title='/pmwiki/pmwiki.php/VideoGame/AlexKidd' data-format='W1tWaWRlb0dhbWUvQWxleEtpZGQgQWxleCBLaWRkIGluIFNoaW5vYmkgV29ybGRdXQ=='>Alex Kidd in Shinobi World</a></em> (1990) and <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/NinjaGaiden' title='/pmwiki/pmwiki.php/VideoGame/NinjaGaiden' data-format='VmlkZW9HYW1lL05pbmphR2FpZGVu'>Ninja Gaiden</a></em> (1992).
+</p><p>The <a class='twikilink' href='/pmwiki/pmwiki.php/Main/UrExample' title='/pmwiki/pmwiki.php/Main/UrExample' data-format='VXJFeGFtcGxl'>Ur-Example</a> of this trope was the <a class='twikilink' href='/pmwiki/pmwiki.php/Platform/SegaMasterSystem' title='/pmwiki/pmwiki.php/Platform/SegaMasterSystem' data-format='UGxhdGZvcm0vU2VnYU1hc3RlclN5c3RlbQ=='>Sega Master System</a> game <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/AlexKidd' title='/pmwiki/pmwiki.php/VideoGame/AlexKidd' data-format='W1tWaWRlb0dhbWUvQWxleEtpZGQgQWxleCBLaWRkIGluIFNoaW5vYmkgV29ybGRdXQ=='>Alex Kidd in Shinobi World</a></em> (1990).
 </p><p><hr data-format='&#8212;&#8212;' />
 <h2>Examples:</h2>
 </p><p><div class="folderlabel" onclick="toggleAllFolders();">&nbsp;&nbsp;&nbsp;&nbsp;open/close all folders&nbsp; </div>
 </p><p><div class="folderlabel" onclick="togglefolder('folder0');">&nbsp;&nbsp;&nbsp;&nbsp;Action Adventure&nbsp;</div><div id="folder0" class="folder" isfolder="true" style="display:block;">
-<ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/GianaSistersTwistedDreams' title='/pmwiki/pmwiki.php/VideoGame/GianaSistersTwistedDreams' data-format='VmlkZW9HYW1lL0dpYW5hU2lzdGVyc1R3aXN0ZWREcmVhbXM='>Giana Sisters: Twisted Dreams</a></em>, Giana can do this albeit only on certain walls.
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/LaMulana' title='/pmwiki/pmwiki.php/VideoGame/LaMulana' data-format='VmlkZW9HYW1lL0xhTXVsYW5h'>La-Mulana</a></em>, after collecting a certain item, Lemeza can cling onto walls and kick off of them to reach platforms below him that he normally cannot reach. However, he doesn't gain height with wall jumps; wall jumping simply increases his horizontal speed when he falls off the wall.
+<ul ><li> Louie the Rabbit from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/BombermanHero' title='/pmwiki/pmwiki.php/VideoGame/BombermanHero' data-format='VmlkZW9HYW1lL0JvbWJlcm1hbkhlcm8='>Bomberman Hero</a></em> can do this.
 </li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/CastlevaniaCircleOfTheMoon' title='/pmwiki/pmwiki.php/VideoGame/CastlevaniaCircleOfTheMoon' data-format='VmlkZW9HYW1lL0Nhc3RsZXZhbmlhQ2lyY2xlT2ZUaGVNb29u'>Castlevania: Circle of the Moon</a></em>, this is one of the after-Boss power-ups you get, each one being some kind of physical ability (mostly), that <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Metroidvania' title='/pmwiki/pmwiki.php/Main/Metroidvania' data-format='W1t7e01ldHJvaWR2YW5pYX19IGhlbHBzIHlvdSBhZHZhbmNlXV0='>helps you advance</a>.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MirrorsEdge' title='/pmwiki/pmwiki.php/VideoGame/MirrorsEdge' data-format='VmlkZW9HYW1lL01pcnJvcnNFZGdl'>Mirror's Edge</a></em> has the wall jump and the wall run as staples of Faith's movement abilities. However, you can only wall jump or wall run once unless the walls are very close together (even then, the second jump really doesn't give you much extra height at all, and there's not much point).
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TotalOverdose' title='/pmwiki/pmwiki.php/VideoGame/TotalOverdose' data-format='VmlkZW9HYW1lL1RvdGFsT3ZlcmRvc2U='>Total Overdose</a>: A Gunslinger's Tale in Mexico</em>: Most of Ram's best-scoring gun kills come from springing off a wall, either by jumping into it and flipping back, or walking sideways up it and wheeling in air. Slow-mo is even slower during these moves, giving a higher rate of fire and more time to headshot more skulls. "King of the Wall!"
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Okami' title='/pmwiki/pmwiki.php/VideoGame/Okami' data-format='VmlkZW9HYW1lL3t7T2thbWl9fQ=='>&#332;kami</a></em>, Amaterasu can gain purchase on any smooth wall to perform a wall-jump. With the appropriate skills, she can do successive leaps.
-</li><li> Used by the protagonist in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/HenryHatsworthInThePuzzlingAdventure' title='/pmwiki/pmwiki.php/VideoGame/HenryHatsworthInThePuzzlingAdventure' data-format='VmlkZW9HYW1lL0hlbnJ5SGF0c3dvcnRoSW5UaGVQdXp6bGluZ0FkdmVudHVyZQ=='>Henry Hatsworth in the Puzzling Adventure</a></em>, perhaps justified by the "legendary pants" he gains the ability from?
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ShadowComplex' title='/pmwiki/pmwiki.php/VideoGame/ShadowComplex' data-format='VmlkZW9HYW1lL1NoYWRvd0NvbXBsZXg='>Shadow Complex</a></em> has this as one of the first upgrades, along with grabbing ledges.
-</li><li> Louie the Rabbit from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/BombermanHero' title='/pmwiki/pmwiki.php/VideoGame/BombermanHero' data-format='VmlkZW9HYW1lL0JvbWJlcm1hbkhlcm8='>Bomberman Hero</a></em> can do this.
-</li><li> Eshe from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Sundered' title='/pmwiki/pmwiki.php/VideoGame/Sundered' data-format='VmlkZW9HYW1lL3t7U3VuZGVyZWR9fQ=='>Sundered</a></em> has this ability, and she will jump further if the player presses in the direction that she’s jumping. She can also perform <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MegaManX' title='/pmwiki/pmwiki.php/VideoGame/MegaManX' data-format='VmlkZW9HYW1lL01lZ2FNYW5Y'>Mega Man X</a></em>-style Wall Kicks in certain windy areas.
 </li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PlayerCharacter' title='/pmwiki/pmwiki.php/Main/PlayerCharacter' data-format='W1tQbGF5ZXJDaGFyYWN0ZXIgTWlzYSBOaWtrb11d'>Misa Nikko</a> from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/FeatheryEars' title='/pmwiki/pmwiki.php/VideoGame/FeatheryEars' data-format='VmlkZW9HYW1lL0ZlYXRoZXJ5RWFycw=='>Feathery Ears</a></em> can jump from wall to wall to get to higher places.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/GianaSistersTwistedDreams' title='/pmwiki/pmwiki.php/VideoGame/GianaSistersTwistedDreams' data-format='VmlkZW9HYW1lL0dpYW5hU2lzdGVyc1R3aXN0ZWREcmVhbXM='>Giana Sisters: Twisted Dreams</a></em>, Giana can do this albeit only on certain walls.
+</li><li> Used by the protagonist in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/HenryHatsworthInThePuzzlingAdventure' title='/pmwiki/pmwiki.php/VideoGame/HenryHatsworthInThePuzzlingAdventure' data-format='VmlkZW9HYW1lL0hlbnJ5SGF0c3dvcnRoSW5UaGVQdXp6bGluZ0FkdmVudHVyZQ=='>Henry Hatsworth in the Puzzling Adventure</a></em>, perhaps justified by the "legendary pants" he gains the ability from?
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/LaMulana' title='/pmwiki/pmwiki.php/VideoGame/LaMulana' data-format='VmlkZW9HYW1lL0xhTXVsYW5h'>La-Mulana</a></em>, after collecting a certain item, Lemeza can cling onto walls and kick off of them to reach platforms below him that he normally cannot reach. However, he doesn't gain height with wall jumps; wall jumping simply increases his horizontal speed when he falls off the wall.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MirrorsEdge' title='/pmwiki/pmwiki.php/VideoGame/MirrorsEdge' data-format='VmlkZW9HYW1lL01pcnJvcnNFZGdl'>Mirror's Edge</a></em> has the wall jump and the wall run as staples of Faith's movement abilities. However, you can only wall jump or wall run once unless the walls are very close together (even then, the second jump really doesn't give you much extra height at all, and there's not much point).
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Okami' title='/pmwiki/pmwiki.php/VideoGame/Okami' data-format='VmlkZW9HYW1lL3t7T2thbWl9fQ=='>&#332;kami</a></em>, Amaterasu can gain purchase on any smooth wall to perform a wall-jump. With the appropriate skills, she can do successive leaps.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/PrincessPeachShowtime' title='/pmwiki/pmwiki.php/VideoGame/PrincessPeachShowtime' data-format='VmlkZW9HYW1lL1ByaW5jZXNzUGVhY2hTaG93dGltZQ=='>Princess Peach: Showtime!</a></em>: <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Ninja' title='/pmwiki/pmwiki.php/Main/Ninja' data-format='e3tOaW5qYX19'>Ninja</a> Peach is well versed in wall jumps and uses them to navigate vertically.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ShadowComplex' title='/pmwiki/pmwiki.php/VideoGame/ShadowComplex' data-format='VmlkZW9HYW1lL1NoYWRvd0NvbXBsZXg='>Shadow Complex</a></em> has this as one of the first upgrades, along with grabbing ledges.
+</li><li> Eshe from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Sundered' title='/pmwiki/pmwiki.php/VideoGame/Sundered' data-format='VmlkZW9HYW1lL3t7U3VuZGVyZWR9fQ=='>Sundered</a></em> has this ability, and she will jump further if the player presses in the direction that she's jumping. She can also perform <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MegaManX' title='/pmwiki/pmwiki.php/VideoGame/MegaManX' data-format='VmlkZW9HYW1lL01lZ2FNYW5Y'>Mega Man X</a></em>-style Wall Kicks in certain windy areas.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TotalOverdose' title='/pmwiki/pmwiki.php/VideoGame/TotalOverdose' data-format='VmlkZW9HYW1lL1RvdGFsT3ZlcmRvc2U='>Total Overdose</a></em>: Most of Ram's best-scoring gun kills come from springing off a wall, either by jumping into it and flipping back, or walking sideways up it and wheeling in air. Slow-mo is even slower during these moves, giving a higher rate of fire and more time to headshot more skulls. "King of the Wall!"
 </li></ul></div>
 </p><p><div class="folderlabel" onclick="togglefolder('folder1');">&nbsp;&nbsp;&nbsp;&nbsp;Action Game&nbsp;</div><div id="folder1" class="folder" isfolder="true" style="display:block;">
-<ul ><li> Ryu from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/NinjaGaiden' title='/pmwiki/pmwiki.php/VideoGame/NinjaGaiden' data-format='VmlkZW9HYW1lL05pbmphR2FpZGVu'>Ninja Gaiden</a></em>. Lots of ninja games. In fact, ninjas love this stuff.
+<ul ><li> The <a class='twikilink' href='/pmwiki/pmwiki.php/Main/UrExample' title='/pmwiki/pmwiki.php/Main/UrExample' data-format='VXJFeGFtcGxl'>Ur-Example</a> of this trope is <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/AlexKidd' title='/pmwiki/pmwiki.php/VideoGame/AlexKidd' data-format='VmlkZW9HYW1lL0FsZXhLaWRk'>Alex Kidd</a> in Shinobi World</em>, released for the <a class='twikilink' href='/pmwiki/pmwiki.php/Platform/SegaMasterSystem' title='/pmwiki/pmwiki.php/Platform/SegaMasterSystem' data-format='UGxhdGZvcm0vU2VnYU1hc3RlclN5c3RlbQ=='>Sega Master System</a> in 1990.
+<ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Shinobi' title='/pmwiki/pmwiki.php/VideoGame/Shinobi' data-format='VmlkZW9HYW1lL3t7U2hpbm9iaX19'>Shinobi</a> III</em>, the player character, Joe Musashi, has this ability. In one of the most <a class='twikilink' href='/pmwiki/pmwiki.php/Main/NintendoHard' title='/pmwiki/pmwiki.php/Main/NintendoHard' data-format='W1tOaW50ZW5kb0hhcmQgZ3J1ZWxpbmcgcGxhdGZvcm1pbmcgc2VjdGlvbnNdXQ=='>grueling platforming sections</a> of the entire <a class='twikilink' href='/pmwiki/pmwiki.php/Platform/SegaGenesis' title='/pmwiki/pmwiki.php/Platform/SegaGenesis' data-format='UGxhdGZvcm0vU2VnYUdlbmVzaXM='>Sega Genesis</a> library, you have to use the wall-jump to cross a series of spires over a bottomless pit. Why not just jump on top of the spires? Because of the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/NoOSHACompliance' title='/pmwiki/pmwiki.php/Main/NoOSHACompliance' data-format='W1tOb09TSEFDb21wbGlhbmNlIGVsZWN0cmljIGZpZWxkcyBvbiB0b3Agb2YgZWFjaCBvbmVdXQ=='>electric fields on top of each one</a>, of course.
+
+</li></ul></li><li> Almost every video game incarnation of <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/Batman' title='/pmwiki/pmwiki.php/Franchise/Batman' data-format='RnJhbmNoaXNlL3t7QmF0bWFufX0='>Batman</a></em>, starting with the <a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/BatmanSunsoft' title='/pmwiki/pmwiki.php/VideoGame/BatmanSunsoft' data-format='W1tWaWRlb0dhbWUvQmF0bWFuU3Vuc29mdCBmaXJzdCBORVMgZ2FtZV1d'>first NES game</a> and the <a class='twikilink' href='/pmwiki/pmwiki.php/Platform/GameBoy' title='/pmwiki/pmwiki.php/Platform/GameBoy' data-format='UGxhdGZvcm0vR2FtZUJveQ=='>Game Boy</a> version of <em>Return of the Joker</em>.
+</li><li> This is officially named "Kick Jump" in the <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/DevilMayCry' title='/pmwiki/pmwiki.php/Franchise/DevilMayCry' data-format='RnJhbmNoaXNlL0RldmlsTWF5Q3J5'>Devil May Cry</a></em> series. While jumping and making contact with walls, the playable characters can bounce off walls by pressing the jump button again. However, this can only be performed once for each attempt; you cannot repeatedly bounce off from the same wall when you're already airborne, though it will fortunately reset when you land. This enables the character to reach higher locations even before the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DoubleJump' title='/pmwiki/pmwiki.php/Main/DoubleJump' data-format='W1tEb3VibGVKdW1wIEFpciBIaWtlXV0='>Air Hike</a> ability is unlocked, but it can still be used alongside the latter.
+</li><li> Your only movement option in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Escape' title='/pmwiki/pmwiki.php/VideoGame/Escape' data-format='VmlkZW9HYW1lL3t7RXNjYXBlfX0='>Escape!</a></em> is to jump between two walls.
+</li><li> The player character from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Ghostrunner' title='/pmwiki/pmwiki.php/VideoGame/Ghostrunner' data-format='VmlkZW9HYW1lL3t7R2hvc3RydW5uZXJ9fQ=='>Ghostrunner</a></em> can run along walls and bounce off them, on to another wall, and then bounce again. This is a key part of navigating Dharma Tower, and at times, you'll have to do this off of moving platforms, disintegrating platforms, and even platforms that you spin around with your <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Technopath' title='/pmwiki/pmwiki.php/Main/Technopath' data-format='e3tUZWNobm9wYXRofX15'>Technopathy</a>.
+
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MarvelVsCapcom' title='/pmwiki/pmwiki.php/VideoGame/MarvelVsCapcom' data-format='VmlkZW9HYW1lL01hcnZlbFZzQ2FwY29t'>Marvel vs. Capcom</a></em>: <a class='twikilink' href='/pmwiki/pmwiki.php/ComicBook/SpiderMan' title='/pmwiki/pmwiki.php/ComicBook/SpiderMan' data-format='Q29taWNCb29rL1NwaWRlck1hbg=='>Spider-Man</a> can naturally jump and stick to walls. His first <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LimitBreak' title='/pmwiki/pmwiki.php/Main/LimitBreak' data-format='W1tMaW1pdEJyZWFrIFN1cGVyXV0='>Super</a> "Maximum Spider", starts off with him jumping against a wall and kicking off, before crossing the opponent up with a one-man wall-jumping <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AirJousting' title='/pmwiki/pmwiki.php/Main/AirJousting' data-format='W1tBaXJKb3VzdGluZyBBaXIgSm91c3RdXQ=='>Air Joust</a>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/TheMatrix' title='/pmwiki/pmwiki.php/Franchise/TheMatrix' data-format='RnJhbmNoaXNlL1RoZU1hdHJpeA=='>The Matrix</a></em> series uses this, both in the games and the movies.
+</li><li> Ryu from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/NinjaGaiden' title='/pmwiki/pmwiki.php/VideoGame/NinjaGaiden' data-format='VmlkZW9HYW1lL05pbmphR2FpZGVu'>Ninja Gaiden</a></em>. Lots of ninja games. In fact, ninjas love this stuff.
 <ul ><li> The original NES trilogy lacks a wall-jump mechanic, having instead a wall-clinging mechanic. The first <em>Ninja Gaiden</em> game with a proper wall-jump mechanic was <em>Ninja Gaiden</em> (1992) for the <a class='twikilink' href='/pmwiki/pmwiki.php/Platform/SegaMasterSystem' title='/pmwiki/pmwiki.php/Platform/SegaMasterSystem' data-format='UGxhdGZvcm0vU2VnYU1hc3RlclN5c3RlbQ=='>Sega Master System</a>. The wall-jump mechanic was then later adopted by the 3D <em>Ninja Gaiden</em> games.
 </li><li> One particularly physics-defying example requires Ryu to scale a square well by wall running, jumping to the next wall, wall running, jumping to the next wall, and so on.
 </li><li> Then there's his ability to scale narrow shafts by repeatedly wall jumping back and forth between the walls.
-</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/AlexKidd' title='/pmwiki/pmwiki.php/VideoGame/AlexKidd' data-format='VmlkZW9HYW1lL0FsZXhLaWRk'>Alex Kidd</a></em>: The <a class='twikilink' href='/pmwiki/pmwiki.php/Main/UrExample' title='/pmwiki/pmwiki.php/Main/UrExample' data-format='VXJFeGFtcGxl'>Ur-Example</a> of this trope is the game, <em>Alex Kidd in Shinobi World</em>, released for the <a class='twikilink' href='/pmwiki/pmwiki.php/Platform/SegaMasterSystem' title='/pmwiki/pmwiki.php/Platform/SegaMasterSystem' data-format='UGxhdGZvcm0vU2VnYU1hc3RlclN5c3RlbQ=='>Sega Master System</a> in 1990.
-</li><li> This is officially named "Kick Jump" in the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/DevilMayCry' title='/pmwiki/pmwiki.php/VideoGame/DevilMayCry' data-format='VmlkZW9HYW1lL0RldmlsTWF5Q3J5'>Devil May Cry</a></em> series. While jumping and making contact with walls, the playable characters can bounce off walls by pressing the jump button again. However, this can only be performed once for each attempt; you cannot repeatedly bounce off from the same wall when you're already airborne, though it will fortunately reset when you land. This enables the character to reach higher locations even before the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DoubleJump' title='/pmwiki/pmwiki.php/Main/DoubleJump' data-format='W1tEb3VibGVKdW1wIEFpciBIaWtlXV0='>Air Hike</a> ability is unlocked, but it can still be used alongside the latter.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/TheMatrix' title='/pmwiki/pmwiki.php/Franchise/TheMatrix' data-format='RnJhbmNoaXNlL1RoZU1hdHJpeA=='>The Matrix</a></em> series uses this, both in the games and the movies.
-</li><li> Almost every video game incarnation of <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/Batman' title='/pmwiki/pmwiki.php/Franchise/Batman' data-format='RnJhbmNoaXNlL3t7QmF0bWFufX0='>Batman</a></em>, starting with the <a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/BatmanSunsoft' title='/pmwiki/pmwiki.php/VideoGame/BatmanSunsoft' data-format='W1tWaWRlb0dhbWUvQmF0bWFuU3Vuc29mdCBmaXJzdCBORVMgZ2FtZV1d'>first NES game</a> and the <a class='twikilink' href='/pmwiki/pmwiki.php/Platform/GameBoy' title='/pmwiki/pmwiki.php/Platform/GameBoy' data-format='UGxhdGZvcm0vR2FtZUJveQ=='>Game Boy</a> version of <em>Return of the Joker</em>.
-</li><li> The <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/GunstarHeroes' title='/pmwiki/pmwiki.php/VideoGame/GunstarHeroes' data-format='VmlkZW9HYW1lL0d1bnN0YXJIZXJvZXM='>Gunstar Heroes</a></em>.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Strider' title='/pmwiki/pmwiki.php/VideoGame/Strider' data-format='VmlkZW9HYW1lL3t7U3RyaWRlcn19'>Strider</a></em>:
-<ul ><li> Strider Hiryu. The <a class='twikilink' href='/pmwiki/pmwiki.php/Manga/Strider' title='/pmwiki/pmwiki.php/Manga/Strider' data-format='W1tNYW5nYS97e1N0cmlkZXJ9fSBORVMgZ2FtZV1d'>NES game</a> has problems with this due to sloppy controls, while the <a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/StriderArcade' title='/pmwiki/pmwiki.php/VideoGame/StriderArcade' data-format='W1tWaWRlb0dhbWUvU3RyaWRlckFyY2FkZSBhcmNhZGUgdmVyc2lvbl1d'>arcade version</a> lets Hiryu cling to the wall with a grappling blade, <em>Ninja Gaiden</em> style. He gets the blade in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MarvelVsCapcom' title='/pmwiki/pmwiki.php/VideoGame/MarvelVsCapcom' data-format='VmlkZW9HYW1lL01hcnZlbFZzQ2FwY29t'>Marvel vs. Capcom</a></em> too, and even uses it for a <em>throw</em>.
-</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/ComicBook/SpiderMan' title='/pmwiki/pmwiki.php/ComicBook/SpiderMan' data-format='Q29taWNCb29rL1NwaWRlck1hbg=='>Spider-Man</a> can naturally jump and stick to walls. His first <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LimitBreak' title='/pmwiki/pmwiki.php/Main/LimitBreak' data-format='W1tMaW1pdEJyZWFrIFN1cGVyXV0='>Super</a> "Maximum Spider", starts off with him jumping against a wall and kicking off, before crossing the opponent up with a one-man wall-jumping <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AirJousting' title='/pmwiki/pmwiki.php/Main/AirJousting' data-format='W1tBaXJKb3VzdGluZyBBaXIgSm91c3RdXQ=='>Air Joust</a>.
-<!--* Lara Croft can do this in ''VideoGame/TombRaiderUnderworld''.-->
-</li></ul></li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Shinobi' title='/pmwiki/pmwiki.php/VideoGame/Shinobi' data-format='VmlkZW9HYW1lL3t7U2hpbm9iaX19'>Shinobi</a> III</em>, the player character, Joe Musashi, has this ability. In one of the most <a class='twikilink' href='/pmwiki/pmwiki.php/Main/NintendoHard' title='/pmwiki/pmwiki.php/Main/NintendoHard' data-format='W1tOaW50ZW5kb0hhcmQgZ3J1ZWxpbmcgcGxhdGZvcm1pbmcgc2VjdGlvbnNdXQ=='>grueling platforming sections</a> of the entire <a class='twikilink' href='/pmwiki/pmwiki.php/Platform/SegaGenesis' title='/pmwiki/pmwiki.php/Platform/SegaGenesis' data-format='UGxhdGZvcm0vU2VnYUdlbmVzaXM='>Sega Genesis</a> library, you have to use the wall-jump to cross a series of spires over a bottomless pit. Why not just jump on top of the spires? Because of the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/NoOSHACompliance' title='/pmwiki/pmwiki.php/Main/NoOSHACompliance' data-format='W1tOb09TSEFDb21wbGlhbmNlIGVsZWN0cmljIGZpZWxkcyBvbiB0b3Agb2YgZWFjaCBvbmVdXQ=='>electric fields on top of each one</a>, of course.
-<!--* In ''VideoGame/ArmoredCore 5'', they added this.-->
-</li><li> The player character from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Ghostrunner' title='/pmwiki/pmwiki.php/VideoGame/Ghostrunner' data-format='VmlkZW9HYW1lL3t7R2hvc3RydW5uZXJ9fQ=='>Ghostrunner</a></em> can run along walls and bounce off them, on to another wall, and then bounce again. This is a key part of navigating Dharma Tower, and at times, you'll have to do this off of moving platforms, disintegrating platforms, and even platforms that you spin around with your <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Technopathy' title='/pmwiki/pmwiki.php/Main/Technopathy' data-format='e3tUZWNobm9wYXRoeX19'>Technopathy</a>.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Strider' title='/pmwiki/pmwiki.php/VideoGame/Strider' data-format='VmlkZW9HYW1lL3t7U3RyaWRlcn19'>Strider</a></em>: Strider Hiryu. The <a class='twikilink' href='/pmwiki/pmwiki.php/Manga/Strider' title='/pmwiki/pmwiki.php/Manga/Strider' data-format='W1tNYW5nYS97e1N0cmlkZXJ9fSBORVMgZ2FtZV1d'>NES game</a> has problems with this due to sloppy controls, while the <a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/StriderArcade' title='/pmwiki/pmwiki.php/VideoGame/StriderArcade' data-format='W1tWaWRlb0dhbWUvU3RyaWRlckFyY2FkZSBhcmNhZGUgdmVyc2lvbl1d'>arcade version</a> lets Hiryu cling to the wall with a grappling blade, <em>Ninja Gaiden</em> style. He gets the blade in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MarvelVsCapcom' title='/pmwiki/pmwiki.php/VideoGame/MarvelVsCapcom' data-format='VmlkZW9HYW1lL01hcnZlbFZzQ2FwY29t'>Marvel vs. Capcom</a></em> too, and even uses it for a <em>throw</em>.
+
 </li></ul></div>
 </p><p><div class="folderlabel" onclick="togglefolder('folder2');">&nbsp;&nbsp;&nbsp;&nbsp;Beat 'em Up&nbsp;</div><div id="folder2" class="folder" isfolder="true" style="display:block;">
 <ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/FinalFight' title='/pmwiki/pmwiki.php/VideoGame/FinalFight' data-format='VmlkZW9HYW1lL0ZpbmFsRmlnaHQ='>Final Fight</a></em>, one of Guy's special attacks is his "Off-the-Wall" jump. Maki in <em>Final Fight 2</em> also has this.
@@ -498,9 +504,10 @@
 </li></ul></div>
 </p><p><div class="folderlabel" onclick="togglefolder('folder3');">&nbsp;&nbsp;&nbsp;&nbsp;Fighting Game&nbsp;</div><div id="folder3" class="folder" isfolder="true" style="display:block;">
 <ul ><li> Felicia in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Darkstalkers' title='/pmwiki/pmwiki.php/VideoGame/Darkstalkers' data-format='VmlkZW9HYW1lL3t7RGFya3N0YWxrZXJzfX0='>Darkstalkers</a></em> can often jump off and cling to walls, but in true cat fashion, will start to slide down the wall if she stays too long.
-</li><li> Much like Felicia, Chipp Zanuff from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/GuiltyGear' title='/pmwiki/pmwiki.php/VideoGame/GuiltyGear' data-format='VmlkZW9HYW1lL0d1aWx0eUdlYXI='>Guilty Gear</a></em> can jump off and cling to wall, but he also can perform certain specials from this position.
+</li><li> Much like Felicia, Chipp Zanuff from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/GuiltyGear' title='/pmwiki/pmwiki.php/VideoGame/GuiltyGear' data-format='VmlkZW9HYW1lL0d1aWx0eUdlYXI='>Guilty Gear</a></em> can jump off and cling to walls, but he also can perform certain specials from this position.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/TheKingOfFighters' title='/pmwiki/pmwiki.php/Franchise/TheKingOfFighters' data-format='RnJhbmNoaXNlL1RoZUtpbmdPZkZpZ2h0ZXJz'>The King of Fighters</a></em>: Similar to <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/StreetFighter' title='/pmwiki/pmwiki.php/Franchise/StreetFighter' data-format='RnJhbmNoaXNlL1N0cmVldEZpZ2h0ZXI='>Street Fighter</a></em> below, many sufficiently nimble characters have this as a part of their moveset (and it functions much the same way). The most notable examples include <a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/FatalFury' title='/pmwiki/pmwiki.php/VideoGame/FatalFury' data-format='W1tWaWRlb0dhbWUvRmF0YWxGdXJ5IE1haSBTaGlyYW51aV1d'>Mai Shiranui</a>, <a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SamuraiShodown' title='/pmwiki/pmwiki.php/VideoGame/SamuraiShodown' data-format='W1tWaWRlb0dhbWUvU2FtdXJhaVNob2Rvd24gTmFrb3J1cnVdXQ=='>Nakoruru</a>, and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WrestlerInAllOfUs' title='/pmwiki/pmwiki.php/Main/WrestlerInAllOfUs' data-format='W1tXcmVzdGxlckluQWxsT2ZVcyBSYW1vbl1d'>Ramon</a>.
-</li><li> Quinn from <a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/PocketRumble' title='/pmwiki/pmwiki.php/VideoGame/PocketRumble' data-format='VmlkZW9HYW1lL1BvY2tldFJ1bWJsZQ=='>Pocket Rumble</a> is able to do this and divebomb his opponents when jumping off.
+</li><li> Quinn from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/PocketRumble' title='/pmwiki/pmwiki.php/VideoGame/PocketRumble' data-format='VmlkZW9HYW1lL1BvY2tldFJ1bWJsZQ=='>Pocket Rumble</a></em> is able to do this and divebomb his opponents when jumping off.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/RivalsOfAether' title='/pmwiki/pmwiki.php/VideoGame/RivalsOfAether' data-format='VmlkZW9HYW1lL1JpdmFsc09mQWV0aGVy'>Rivals of Aether</a></em> has wall jumping as a method to get back on stage, providing a fighter not only with an extra jump, but the ability to use their up special move a second time. Maypul and <a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/OriAndTheBlindForest' title='/pmwiki/pmwiki.php/VideoGame/OriAndTheBlindForest' data-format='W1tWaWRlb0dhbWUvT3JpQW5kVGhlQmxpbmRGb3Jlc3QgT3JpXV0='>Ori</a> can additionally cling to walls for a short period of time. <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/RivalsOfAetherII' title='/pmwiki/pmwiki.php/VideoGame/RivalsOfAetherII' data-format='VmlkZW9HYW1lL1JpdmFsc09mQWV0aGVySUk='>Rivals of Aether II</a></em> nerfs this, so you can no longer use a wall jump after using your Up Special.
 </li><li> Sufficiently nimble characters in the <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/StreetFighter' title='/pmwiki/pmwiki.php/Franchise/StreetFighter' data-format='RnJhbmNoaXNlL1N0cmVldEZpZ2h0ZXI='>Street Fighter</a></em> franchise (Chun-Li and Vega in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/StreetFighterII' title='/pmwiki/pmwiki.php/VideoGame/StreetFighterII' data-format='VmlkZW9HYW1lL1N0cmVldEZpZ2h0ZXJJSQ=='>Street Fighter II</a></em>) have this ability. Curiously, it can be used from either edge of the screen, even when the fighters scroll to one side so that one "edge" is actually empty space.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperSmashBros' title='/pmwiki/pmwiki.php/VideoGame/SuperSmashBros' data-format='VmlkZW9HYW1lL1N1cGVyU21hc2hCcm9z'>Super Smash Bros.</a></em>:
 <ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperSmashBrosMelee' title='/pmwiki/pmwiki.php/VideoGame/SuperSmashBrosMelee' data-format='VmlkZW9HYW1lL1N1cGVyU21hc2hCcm9zTWVsZWU='>Super Smash Bros. Melee</a></em>: Some of the characters can wall-jump. They are: Mario (but not Luigi or Doctor Mario) Fox, Falco, Samus, Captain Falcon, Sheik (but not Zelda) Young Link (but not regular Link) and Pichu (but not Pikachu). However, all characters can wall-tech jump if hit into a wall. This technique is the only way Young Link can even <em>start</em> (and then clear) his Target Test challenge.
@@ -512,161 +519,167 @@
 </li></ul></div>
 </p><p><div class="folderlabel" onclick="togglefolder('folder4');">&nbsp;&nbsp;&nbsp;&nbsp;First-Person Shooter&nbsp;</div><div id="folder4" class="folder" isfolder="true" style="display:block;">
 <ul ><li> The Hunter from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Left4Dead' title='/pmwiki/pmwiki.php/VideoGame/Left4Dead' data-format='VmlkZW9HYW1lL0xlZnQ0RGVhZA=='>Left 4 Dead</a></em> is able to do this, though it takes practice and good timing.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/UnrealTournament2004' title='/pmwiki/pmwiki.php/VideoGame/UnrealTournament2004' data-format='VmlkZW9HYW1lL1VucmVhbFRvdXJuYW1lbnQyMDA0'>Unreal Tournament 2004</a></em> is a then-rare FPS example. A wall-jump is performed by jumping near a wall, then "dodging" in the direction facing away from the wall. This carried on to <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/UnrealChampionship2TheLiandriConflict' title='/pmwiki/pmwiki.php/VideoGame/UnrealChampionship2TheLiandriConflict' data-format='VmlkZW9HYW1lL1VucmVhbENoYW1waW9uc2hpcDJUaGVMaWFuZHJpQ29uZmxpY3Q='>Unreal Championship 2: The Liandri Conflict</a></em> and <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/UnrealTournamentIII' title='/pmwiki/pmwiki.php/VideoGame/UnrealTournamentIII' data-format='VmlkZW9HYW1lL1VucmVhbFRvdXJuYW1lbnRJSUk='>Unreal Tournament III</a></em>, and ups the ante by giving you the ability to <em><a class='twikilink' href='/pmwiki/pmwiki.php/Main/DoubleJump' title='/pmwiki/pmwiki.php/Main/DoubleJump' data-format='RG91YmxlSnVtcA=='>Double Jump</a> from wall-jumping</em>. It's further enhanced by a mutator called multidodge. This allows for unlimited wall-jumping and, with enough frantic button bashing, wall-running
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Portal2' title='/pmwiki/pmwiki.php/VideoGame/Portal2' data-format='VmlkZW9HYW1lL3t7UG9ydGFsIDJ9fQ=='>Portal 2</a></em> has Repulsion Gel, which normally lets you jump high, but if applied on opposite walls (or a wall and a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HardLight' title='/pmwiki/pmwiki.php/Main/HardLight' data-format='SGFyZExpZ2h0'>Hard Light</a> vertical bridge), let you jump off them for greater distance or height (depending on the layout of the walls).
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Warsow' title='/pmwiki/pmwiki.php/VideoGame/Warsow' data-format='VmlkZW9HYW1lL3t7V2Fyc293fX0='>Warsow</a></em>, wall jumping is an ability which is recommended to master.
-</li><li> V1 in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ULTRAKILL' title='/pmwiki/pmwiki.php/VideoGame/ULTRAKILL' data-format='VmlkZW9HYW1lL3t7VUxUUkFLSUxMfX0='>ULTRAKILL</a></em> can wall jump three times before having to land.
-</li><li> Player character in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/REAVER' title='/pmwiki/pmwiki.php/VideoGame/REAVER' data-format='VmlkZW9HYW1lL3t7UkVBVkVSfX0='>REAVER</a></em> has unlimited wall jumps. Wall jumps also increase player's overall movement speed.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Portal2' title='/pmwiki/pmwiki.php/VideoGame/Portal2' data-format='VmlkZW9HYW1lL1BvcnRhbDI='>Portal 2</a></em> has Repulsion Gel, which normally lets you jump high, but if applied on opposite walls (or a wall and a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HardLight' title='/pmwiki/pmwiki.php/Main/HardLight' data-format='SGFyZExpZ2h0'>Hard Light</a> vertical bridge), let you jump off them for greater distance or height (depending on the layout of the walls).
+</li><li> The <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PlayerCharacter' title='/pmwiki/pmwiki.php/Main/PlayerCharacter' data-format='UGxheWVyQ2hhcmFjdGVy'>Player Character</a> in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/REAVER' title='/pmwiki/pmwiki.php/VideoGame/REAVER' data-format='VmlkZW9HYW1lL3t7UkVBVkVSfX0='>REAVER</a></em> has unlimited wall jumps. Wall jumps also increase player's overall movement speed.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TurboOverkill' title='/pmwiki/pmwiki.php/VideoGame/TurboOverkill' data-format='VmlkZW9HYW1lL1R1cmJvT3ZlcmtpbGw='>Turbo Overkill</a></em> features the ability to wall jump, once the player has equipped an augment to do so.
+</li><li> V1 in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ULTRAKILL' title='/pmwiki/pmwiki.php/VideoGame/ULTRAKILL' data-format='VmlkZW9HYW1lL3t7VUxUUkFLSUxMfX0='>ULTRAKILL</a></em> can wall jump three times before having to land.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/UnrealTournament2004' title='/pmwiki/pmwiki.php/VideoGame/UnrealTournament2004' data-format='VmlkZW9HYW1lL1VucmVhbFRvdXJuYW1lbnQyMDA0'>Unreal Tournament 2004</a></em> is a then-rare FPS example. A wall-jump is performed by jumping near a wall, then "dodging" in the direction facing away from the wall. This carried on to <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/UnrealChampionship2TheLiandriConflict' title='/pmwiki/pmwiki.php/VideoGame/UnrealChampionship2TheLiandriConflict' data-format='VmlkZW9HYW1lL1VucmVhbENoYW1waW9uc2hpcDJUaGVMaWFuZHJpQ29uZmxpY3Q='>Unreal Championship 2: The Liandri Conflict</a></em> and <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/UnrealTournamentIII' title='/pmwiki/pmwiki.php/VideoGame/UnrealTournamentIII' data-format='VmlkZW9HYW1lL1VucmVhbFRvdXJuYW1lbnRJSUk='>Unreal Tournament III</a></em>, and ups the ante by giving you the ability to <em><a class='twikilink' href='/pmwiki/pmwiki.php/Main/DoubleJump' title='/pmwiki/pmwiki.php/Main/DoubleJump' data-format='RG91YmxlSnVtcA=='>Double Jump</a> from wall-jumping</em>. It's further enhanced by a mutator called multidodge. This allows for unlimited wall-jumping and, with enough frantic button bashing, wall-running.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Warsow' title='/pmwiki/pmwiki.php/VideoGame/Warsow' data-format='VmlkZW9HYW1lL3t7V2Fyc293fX0='>Warsow</a></em>, wall jumping is an ability which is recommended to master.
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder5');">&nbsp;&nbsp;&nbsp;&nbsp;Platform Game&nbsp;</div><div id="folder5" class="folder" isfolder="true" style="display:block;">
-<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/CastleOnTheCoast' title='/pmwiki/pmwiki.php/VideoGame/CastleOnTheCoast' data-format='VmlkZW9HYW1lL0Nhc3RsZU9uVGhlQ29hc3Q='>Castle on the Coast</a></em>: George can propel himself up walls by kicking them.
+</p><p><div class="folderlabel" onclick="togglefolder('folder5');">&nbsp;&nbsp;&nbsp;&nbsp;Multiplayer Online Battle Arena&nbsp;</div><div id="folder5" class="folder" isfolder="true" style="display:block;">
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Deadlock2024' title='/pmwiki/pmwiki.php/VideoGame/Deadlock2024' data-format='VmlkZW9HYW1lL0RlYWRsb2NrMjAyNA=='>Deadlock (2024)</a></em> lets you wall-jump by attempting a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DoubleJump' title='/pmwiki/pmwiki.php/Main/DoubleJump' data-format='RG91YmxlSnVtcA=='>Double Jump</a> while right next to a wall and pressing the direction away from it. Unlike a normal <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DoubleJump' title='/pmwiki/pmwiki.php/Main/DoubleJump' data-format='RG91YmxlSnVtcA=='>Double Jump</a> or air dash, it does not use any stamina.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder6');">&nbsp;&nbsp;&nbsp;&nbsp;Platform Game&nbsp;</div><div id="folder6" class="folder" isfolder="true" style="display:block;">
+<ul ><li> The protagonist of <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Two' title='/pmwiki/pmwiki.php/VideoGame/Two' data-format='VmlkZW9HYW1lL3t7VHdvfX0='>2</a></em> gains this ability after finding the Banner powerup.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/AkaneTheKunoichi' title='/pmwiki/pmwiki.php/VideoGame/AkaneTheKunoichi' data-format='VmlkZW9HYW1lL0FrYW5lVGhlS3Vub2ljaGk='>Akane the Kunoichi</a></em>, this is necessary for Akane to reach certain areas, including quite a few of the collectables. It's also necessary to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/FlunkyBoss' title='/pmwiki/pmwiki.php/Main/FlunkyBoss' data-format='W1tGbHVua3lCb3NzIGRlZmVhdCB0aGUgZmluYWwgYm9zc11d'>defeat the final boss</a> &#8212; you can't use it to reach her, but you can use it to get high enough to throw kunais at her.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/AndroidHunterA' title='/pmwiki/pmwiki.php/VideoGame/AndroidHunterA' data-format='VmlkZW9HYW1lL0FuZHJvaWRIdW50ZXJB'>Android Hunter A</a></em>: <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PlayerCharacter' title='/pmwiki/pmwiki.php/Main/PlayerCharacter' data-format='W1tQbGF5ZXJDaGFyYWN0ZXIgQV1d'>A</a>, being an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Expy' title='/pmwiki/pmwiki.php/Main/Expy' data-format='e3tFeHB5fX0='>Expy</a> of <a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MegaManX' title='/pmwiki/pmwiki.php/VideoGame/MegaManX' data-format='VmlkZW9HYW1lL01lZ2FNYW5Y'>Mega Man X</a> below, can do his wall kick ability to climb up walls.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/CastleOnTheCoast' title='/pmwiki/pmwiki.php/VideoGame/CastleOnTheCoast' data-format='VmlkZW9HYW1lL0Nhc3RsZU9uVGhlQ29hc3Q='>Castle on the Coast</a></em>: George can propel himself up walls by kicking them.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/CocaColaKid' title='/pmwiki/pmwiki.php/VideoGame/CocaColaKid' data-format='VmlkZW9HYW1lL0NvY2FDb2xhS2lk'>Coca Cola Kid</a>:</em> Cokey can cling to tall walls and jump off them.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/CosmosCosmicAdventure' title='/pmwiki/pmwiki.php/VideoGame/CosmosCosmicAdventure' data-format='VmlkZW9HYW1lL0Nvc21vc0Nvc21pY0FkdmVudHVyZQ=='>Cosmo's Cosmic Adventure</a></em>: The eponymous character is equipped with suction cups in his hands, allowing him to not only jump between walls but also stick to them. Icy walls will slowly make him descend, as will certain metallic setpieces in the last regular level of the first episode. The special magenta walls that appear in the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BonusStage' title='/pmwiki/pmwiki.php/Main/BonusStage' data-format='e3tCb251cyBTdGFnZX19cw=='>Bonus Stages</a> cannot be attached to in any capacity, so the trope is averted in those levels.
+</li><li> The first <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/FancyPantsAdventures' title='/pmwiki/pmwiki.php/VideoGame/FancyPantsAdventures' data-format='VmlkZW9HYW1lL0ZhbmN5UGFudHNBZHZlbnR1cmVz'>Fancy Pants Adventures</a></em> game has the wall jump as an unlockable ability for completing a challenge. The sequels retain that ability as part of normal gameplay.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TheFloorIsJelly' title='/pmwiki/pmwiki.php/VideoGame/TheFloorIsJelly' data-format='VmlkZW9HYW1lL1RoZUZsb29ySXNKZWxseQ=='>The Floor is Jelly</a></em>, the protagonist has this ability and can even do this to climb up walls similar to the <em>Mega Man</em> examples below.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/FunkUnplugged' title='/pmwiki/pmwiki.php/VideoGame/FunkUnplugged' data-format='VmlkZW9HYW1lL0Z1bmtVbnBsdWdnZWQ='>Funk Unplugged</a></em>: Ampy has the power to jump from wall to wall to get up them.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Glam' title='/pmwiki/pmwiki.php/VideoGame/Glam' data-format='VmlkZW9HYW1lL3t7R2xhbX19'>Glam</a></em>: <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PlayerCharacter' title='/pmwiki/pmwiki.php/Main/PlayerCharacter' data-format='W1tQbGF5ZXJDaGFyYWN0ZXIgR2xhbV1d'>Glam</a> can slide down walls, as well as jump off of them.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Shantae' title='/pmwiki/pmwiki.php/VideoGame/Shantae' data-format='VmlkZW9HYW1lL3t7U2hhbnRhZX19'>Shantae</a></em>: The Monkey transformation can cling to walls then jump off from them:
-<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ShantaeRiskysRevenge' title='/pmwiki/pmwiki.php/VideoGame/ShantaeRiskysRevenge' data-format='VmlkZW9HYW1lL1NoYW50YWVSaXNreXNSZXZlbmdl'>Shantae: Risky's Revenge</a></em>
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ShantaeHalfGenieHero' title='/pmwiki/pmwiki.php/VideoGame/ShantaeHalfGenieHero' data-format='VmlkZW9HYW1lL1NoYW50YWVIYWxmR2VuaWVIZXJv'>Shantae: Half-Genie Hero</a></em>
-</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/SuperMarioBros' title='/pmwiki/pmwiki.php/Franchise/SuperMarioBros' data-format='RnJhbmNoaXNlL1N1cGVyTWFyaW9Ccm9z'>Super Mario Bros.</a></em>:
-<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMario64' title='/pmwiki/pmwiki.php/VideoGame/SuperMario64' data-format='VmlkZW9HYW1lL1N1cGVyTWFyaW82NA=='>Super Mario 64</a></em>: Starting from this game, Mario has earned the ability to jump between walls in the 3D installments (and in the Nintendo DS remake of <em>64</em> itself, he's the <em>only</em> character capable of doing so).
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioSunshine' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioSunshine' data-format='VmlkZW9HYW1lL1N1cGVyTWFyaW9TdW5zaGluZQ=='>Super Mario Sunshine</a></em> makes the technique much easier, as Mario will slide down the wall instead of bouncing his head off it, and the quirk was carried over since.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/NewSuperMarioBros' title='/pmwiki/pmwiki.php/VideoGame/NewSuperMarioBros' data-format='VmlkZW9HYW1lL05ld1N1cGVyTWFyaW9Ccm9z'>New Super Mario Bros.</a></em>: The subseries integrated the ability to wall-jump into the 2D <em>Super Mario</em> games, though it was theoretically possible in the earlier installments due to glitchy collision checking.<span class="notelabel" onclick="togglenote('note0zcth');"><sup>note&nbsp;</sup></span><span id="note0zcth" class="inlinefolder" isnote="true" onclick="togglenote('note0zcth');" style="cursor:pointer;font-size:smaller;display:none;">If Mario approaches a wall when his vertical position is just right, he will momentarily land on it, and with quick reflexes, one can jump from it before starting to fall again (due to wall ejection, which is the standard way most 2D games use to compensate for cheap collision checking). They intentionally added it in 3D, and made it much easier.</span> All other playable characters across the subseries (Luigi, all Toads, and Nabbit) can do it as well.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioGalaxy' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioGalaxy' data-format='VmlkZW9HYW1lL1N1cGVyTWFyaW9HYWxheHk='>Super Mario Galaxy</a></em>: The Spring Mushroom makes wall jumping faster, but also more unpredictable (since the spring coil will make Mario and Luigi bounce immediately upon contact with each wall).
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioMaker' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioMaker' data-format='VmlkZW9HYW1lL1N1cGVyTWFyaW9NYWtlcg=='>Super Mario Maker</a></em>: It is possible to perform wall jumps in the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/NewSuperMarioBrosU' title='/pmwiki/pmwiki.php/VideoGame/NewSuperMarioBrosU' data-format='VmlkZW9HYW1lL05ld1N1cGVyTWFyaW9Ccm9zVQ=='>New Super Mario Bros. U</a></em> game style (<em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioMaker2' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioMaker2' data-format='VmlkZW9HYW1lL1N1cGVyTWFyaW9NYWtlcjI='>Super Mario Maker 2</a></em> makes it possible on the added <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMario3DWorld' title='/pmwiki/pmwiki.php/VideoGame/SuperMario3DWorld' data-format='VmlkZW9HYW1lL1N1cGVyTWFyaW8zRFdvcmxk'>Super Mario 3D World</a></em> style as well), but not in the older ones as the ability wasn't present in their respective source materials.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MarioTennis' title='/pmwiki/pmwiki.php/VideoGame/MarioTennis' data-format='VmlkZW9HYW1lL01hcmlvVGVubmlz'>Mario Tennis</a></em>: This is taken further in <em>Mario Tennis Aces</em> as Mario can actually wall jump from thin air during his special shot.
-</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/PrinceOfPersia' title='/pmwiki/pmwiki.php/Franchise/PrinceOfPersia' data-format='RnJhbmNoaXNlL1ByaW5jZU9mUGVyc2lh'>Prince of Persia</a></em>:
-<ul ><li> Taken to an absurd extent in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersia2008' title='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersia2008' data-format='VmlkZW9HYW1lL1ByaW5jZU9mUGVyc2lhMjAwOA=='>Prince of Persia (2008)</a></em>. You rarely run more than 10 feet on any given piece of land; most of your travel is done by wall.
-</li><li> The Prince in the <em>Sands of Time</em> tetralogy can employ the inverse of this trope as well: if two walls are far enough apart, he can Wall Jump <em>down</em> the shaft.
-<!-- * Ratchet from ''[[{{Franchise/RatchetAndClank}} Ratchet &amp; Clank]].''-->
-</li></ul></li><li> <em><a class='twikilink disambiglink' href='/pmwiki/pmwiki.php/VideoGame/Metroid' title='/pmwiki/pmwiki.php/VideoGame/Metroid' data-format='VmlkZW9HYW1lL3t7TWV0cm9pZH19'>Metroid</a></em>:
-<ul ><li> Technically, the wall-jumping ability is taught to Samus Aran (and, by extension, the player) in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMetroid' title='/pmwiki/pmwiki.php/VideoGame/SuperMetroid' data-format='VmlkZW9HYW1lL1N1cGVyTWV0cm9pZA=='>Super Metroid</a></em> by some creatures she finds in the caves, but she can use it from the beginning of the game. In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MetroidZeroMission' title='/pmwiki/pmwiki.php/VideoGame/MetroidZeroMission' data-format='VmlkZW9HYW1lL01ldHJvaWRaZXJvTWlzc2lvbg=='>Metroid: Zero Mission</a></em> she even keeps this ability when she doesn't have her Power suit. In any case, wall jumping is usually 100% optional in the 2D entries<span class="notelabel" onclick="togglenote('note10txy');"><sup>note&nbsp;</sup></span><span id="note10txy" class="inlinefolder" isnote="true" onclick="togglenote('note10txy');" style="cursor:pointer;font-size:smaller;display:none;">The shaft where you learn this technique in <em>Super</em> isn't needed for progression. If you fall down there early game, you can get out by bomb jumping or just resetting your game. If you fall down there late game, you probably have the Space Jump and can just mash your way out.</span>; its main purpose in the aforementioned games is actually to facilitate <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SequenceBreaking' title='/pmwiki/pmwiki.php/Main/SequenceBreaking' data-format='U2VxdWVuY2VCcmVha2luZw=='>Sequence Breaking</a>, as mastery of the technique can allow you to climb up using a single wall indefinitely and break the game wide open. As a result, the mechanics of it differ greatly from most games, with the inputs needing to be sequenced rather than done simultaneously like in, say, <em>Super Mario</em>.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MetroidPrimeTrilogy' title='/pmwiki/pmwiki.php/VideoGame/MetroidPrimeTrilogy' data-format='VmlkZW9HYW1lL01ldHJvaWRQcmltZVRyaWxvZ3k='>Metroid Prime Trilogy</a></em>: In the later entries (namely <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MetroidPrime2Echoes' title='/pmwiki/pmwiki.php/VideoGame/MetroidPrime2Echoes' data-format='VmlkZW9HYW1lL01ldHJvaWRQcmltZTJFY2hvZXM='>Metroid Prime 2: Echoes</a></em> and <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MetroidPrime3Corruption' title='/pmwiki/pmwiki.php/VideoGame/MetroidPrime3Corruption' data-format='VmlkZW9HYW1lL01ldHJvaWRQcmltZTNDb3JydXB0aW9u'>Metroid Prime 3: Corruption</a></em>), the Screw Attack can be used to this effect on special wall surfaces.
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MetroidDread' title='/pmwiki/pmwiki.php/VideoGame/MetroidDread' data-format='VmlkZW9HYW1lL01ldHJvaWREcmVhZA=='>Metroid Dread</a></em>, not only can Samus can jump off walls as usual, but Chozo Soldiers can also jump off a wall before doing a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GroundPound' title='/pmwiki/pmwiki.php/Main/GroundPound' data-format='R3JvdW5kUG91bmQ='>Ground Pound</a> with their spears in an attempt to hit Samus. Fitting, given that Samus was herself <a class='twikilink' href='/pmwiki/pmwiki.php/Main/InterspeciesAdoption' title='/pmwiki/pmwiki.php/Main/InterspeciesAdoption' data-format='W1tJbnRlcnNwZWNpZXNBZG9wdGlvbiByYWlzZWQgYnkgQ2hvem9dXQ=='>raised by Chozo</a>.
-</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/MegaMan' title='/pmwiki/pmwiki.php/Franchise/MegaMan' data-format='RnJhbmNoaXNlL01lZ2FNYW4='>Mega Man</a></em>:
-<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MegaManX' title='/pmwiki/pmwiki.php/VideoGame/MegaManX' data-format='VmlkZW9HYW1lL01lZ2FNYW5Y'>Mega Man X</a></em>: Wall Jump is exploited. Combined with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/JumpPhysics' title='/pmwiki/pmwiki.php/Main/JumpPhysics' data-format='W1tKdW1wUGh5c2ljcyB0aGUgYWJpbGl0eSB0byBjaGFuZ2UgZGlyZWN0aW9uIG1pZC1haXJdXQ=='>the ability to change direction mid-air</a>, X can do something called a wall kick, in which he reverses course back to a wall after a wall jump, allowing him to rapidly ascend a <em>single</em> wall by jumping up it. It is quite handy when dealing with bosses with ground-spamming attacks. Zero can also Wall Kick, as can anyone who can transform in the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MegaManZX' title='/pmwiki/pmwiki.php/VideoGame/MegaManZX' data-format='VmlkZW9HYW1lL01lZ2FNYW5aWA=='>Mega Man ZX</a></em> series.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ProjectXZone' title='/pmwiki/pmwiki.php/VideoGame/ProjectXZone' data-format='VmlkZW9HYW1lL1Byb2plY3RYWm9uZQ=='>Project × Zone</a></em>: One of X's and Zero's <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LimitBreak' title='/pmwiki/pmwiki.php/Main/LimitBreak' data-format='e3tsaW1pdCBicmVha319cw=='>limit breaks</a> in the game has them attack while performing wall jumps... in mid-air, without the wall!
-</li><li> Several bosses in the series use this too, like Sigma from the first game, Flame Stag, Neon Tiger, Split Mushroom, Mattrex, Dark Mantis, etc. And when playing as Cut Man in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MegaManPoweredUp' title='/pmwiki/pmwiki.php/VideoGame/MegaManPoweredUp' data-format='VmlkZW9HYW1lL01lZ2FNYW5Qb3dlcmVkVXA='>Mega Man Powered Up</a></em>, he has the ability to wall jump, though the game doesn't allow you to use like in other <em>Mega Man</em> games and you slide off icy surfaces.
-</li></ul></li><li> This trope is used in various degrees throughout the <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/SonicTheHedgehog' title='/pmwiki/pmwiki.php/Franchise/SonicTheHedgehog' data-format='RnJhbmNoaXNlL1NvbmljVGhlSGVkZ2Vob2c='>Sonic the Hedgehog</a></em> games:
-<ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KnucklesChaotix' title='/pmwiki/pmwiki.php/VideoGame/KnucklesChaotix' data-format='VmlkZW9HYW1lL0tudWNrbGVzQ2hhb3RpeA=='>Knuckles Chaotix</a></em>, this is Mighty's method of scaling.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SonicHeroes' title='/pmwiki/pmwiki.php/VideoGame/SonicHeroes' data-format='VmlkZW9HYW1lL1NvbmljSGVyb2Vz'>Sonic Heroes</a></em> and <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ShadowTheHedgehog' title='/pmwiki/pmwiki.php/VideoGame/ShadowTheHedgehog' data-format='VmlkZW9HYW1lL1NoYWRvd1RoZUhlZGdlaG9n'>Shadow the Hedgehog</a></em> have the Triangle Jump, where Sonic, Shadow, and Espio have the ability to cling to a wall and use that to jump forward from wall to wall. Espio can cling to the wall indefinitely, while Sonic and Shadow fall down if they don't jump within a few seconds. As a result, their teammates can also do it, but only <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SecretAIMoves' title='/pmwiki/pmwiki.php/Main/SecretAIMoves' data-format='W1tTZWNyZXRBSU1vdmVzIHdoZW4gY29udHJvbGxlZCBieSB0aGUgY29tcHV0ZXJdXQ=='>when controlled by the computer</a>.
-</li><li> Starting with <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SonicUnleashed' title='/pmwiki/pmwiki.php/VideoGame/SonicUnleashed' data-format='VmlkZW9HYW1lL1NvbmljVW5sZWFzaGVk'>Sonic Unleashed</a></em>, Sonic can use a more traditional Wall Jump, complete with a Mario Galaxy-esque slide down. Though the Xbox 360/Playstation 3 version requires getting the Wall Jump Shoes to use it, the <a class='twikilink' href='/pmwiki/pmwiki.php/Platform/NintendoWii' title='/pmwiki/pmwiki.php/Platform/NintendoWii' data-format='UGxhdGZvcm0vTmludGVuZG9XaWk='>Nintendo Wii</a> and Playstation 2 version and every other 3D game afterwards has it available from the start. In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SonicGenerations' title='/pmwiki/pmwiki.php/VideoGame/SonicGenerations' data-format='VmlkZW9HYW1lL1NvbmljR2VuZXJhdGlvbnM='>Sonic Generations</a></em>, it can only be done by Modern Sonic, and only from certain surfaces.
-</li></ul></li><li> Used in a rather weird fashion in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Ristar' title='/pmwiki/pmwiki.php/VideoGame/Ristar' data-format='VmlkZW9HYW1lL3t7UmlzdGFyfX0='>Ristar</a></em>. Ristar can grab onto any surface in the game that isn't spiked or otherwise harmful to touch, but he can't hold on unless there are rungs or other handholds; otherwise, he will slam into it and bounce at an upward angle. However, by grabbing a wall over and over again in rapid succession, it is possible to bounce up the wall. Unlike the typical Wall Jump, only one wall is needed for this, although it can be done with two opposing walls as well. This move is impossible on <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SlippySlideyIceWorld' title='/pmwiki/pmwiki.php/Main/SlippySlideyIceWorld' data-format='W1tTbGlwcHlTbGlkZXlJY2VXb3JsZCBQbGFuZXQgRnJlb25dXQ=='>Planet Freon</a>, presumably because the walls are made of cold, slippery ice that causes Ristar to withdraw his hands in discomfort upon touching it.
+</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PlayerCharacter' title='/pmwiki/pmwiki.php/Main/PlayerCharacter' data-format='W1tQbGF5ZXJDaGFyYWN0ZXIgUmVuYV1d'>Rena</a> from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/GrappleForceRena' title='/pmwiki/pmwiki.php/VideoGame/GrappleForceRena' data-format='VmlkZW9HYW1lL0dyYXBwbGVGb3JjZVJlbmE='>Grapple Force Rena</a></em> can jump from wall to wall to get to higher places.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/GreyArea2023' title='/pmwiki/pmwiki.php/VideoGame/GreyArea2023' data-format='VmlkZW9HYW1lL0dyZXlBcmVhMjAyMw=='>Grey Area (2023)</a></em>: Hailey's dive is a lesser version of this. Diving into a wall will cause her to bounce diagonally back and upwards, letting her gain some height, but since she can only dive once per jump, you can only use this to gain a little bit of height, and the backwards momentum you get from this limits where you can land.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/InMomentum' title='/pmwiki/pmwiki.php/VideoGame/InMomentum' data-format='VmlkZW9HYW1lL0luTW9tZW50dW0='>InMomentum</a></em> has wall jumps as a core game mechanic.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/IWannaBeTheGuy' title='/pmwiki/pmwiki.php/VideoGame/IWannaBeTheGuy' data-format='VmlkZW9HYW1lL0lXYW5uYUJlVGhlR3V5'>I Wanna Be the Guy</a></em> has certain walls you can wall jump off, and lots and lots and lots of other walls that kill you in nasty ways.
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/N' title='/pmwiki/pmwiki.php/VideoGame/N' data-format='VmlkZW9HYW1lL3t7Tn19'>N</a></em>, you control a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Ninja' title='/pmwiki/pmwiki.php/Main/Ninja' data-format='e3tOaW5qYX19'>Ninja</a> whose only real ability is this.
-</li><li> The title character in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/CosmosCosmicAdventure' title='/pmwiki/pmwiki.php/VideoGame/CosmosCosmicAdventure' data-format='VmlkZW9HYW1lL0Nvc21vc0Nvc21pY0FkdmVudHVyZQ=='>Cosmo's Cosmic Adventure</a></em> can do this on any wall surface with his suction hands. Walls which happen to be made of ice make it maddeningly difficult, though. Fortunately, those only appear in a few levels.
-<!-- * In Heavy Iron games of ''WesternAnimation/SpongebobSquarepants'' games, you can wall jump in very single game as Spongebob.-->
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Jumper' title='/pmwiki/pmwiki.php/VideoGame/Jumper' data-format='VmlkZW9HYW1lL3t7SnVtcGVyfX0='>Jumper</a></em> series. This has become Ogmo's staple ability since <em>Jumper Two</em>.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Kirby' title='/pmwiki/pmwiki.php/VideoGame/Kirby' data-format='VmlkZW9HYW1lL3t7S2lyYnl9fQ=='>Kirby</a></em>
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Jumper' title='/pmwiki/pmwiki.php/VideoGame/Jumper' data-format='VmlkZW9HYW1lL3t7SnVtcGVyfX0='>Jumper</a></em>: This has become Ogmo's staple ability since <em>Jumper Two</em>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/Kirby' title='/pmwiki/pmwiki.php/Franchise/Kirby' data-format='RnJhbmNoaXNlL3t7S2lyYnl9fQ=='>Kirby</a></em>:
 <ul ><li> Kirby's Ninja ability in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KirbySuperStar' title='/pmwiki/pmwiki.php/VideoGame/KirbySuperStar' data-format='VmlkZW9HYW1lL0tpcmJ5U3VwZXJTdGFy'>Kirby Super Star</a></em> allows him to stick to walls and do a Triangle Jump. Of course, since he has <a class='twikilink' href='/pmwiki/pmwiki.php/Main/VideoGameFlight' title='/pmwiki/pmwiki.php/Main/VideoGameFlight' data-format='W1tWaWRlb0dhbWVGbGlnaHQgdW5saW1pdGVkIGZsaWdodF1d'>unlimited flight</a>, this is rather useless. However, in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KirbysReturnToDreamLand' title='/pmwiki/pmwiki.php/VideoGame/KirbysReturnToDreamLand' data-format='VmlkZW9HYW1lL0tpcmJ5c1JldHVyblRvRHJlYW1MYW5k'>Kirby's Return to Dream Land</a></em>, the Ninja ability returns, and some optional puzzles take advantage of the fact that Ninja Kirby can cling to walls and throw knives from his elevated position.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KirbySqueakSquad' title='/pmwiki/pmwiki.php/VideoGame/KirbySqueakSquad' data-format='VmlkZW9HYW1lL0tpcmJ5U3F1ZWFrU3F1YWQ='>Kirby: Squeak Squad</a></em>: Kirby can throw shuriken while sticking to walls; a much better attack overall than his weak air puffs and helpful in rooms full of flying enemies.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KirbysDreamLand' title='/pmwiki/pmwiki.php/VideoGame/KirbysDreamLand' data-format='VmlkZW9HYW1lL0tpcmJ5c0RyZWFtTGFuZA=='>Kirby's Dream Land</a> 3</em>: <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PowerupMount' title='/pmwiki/pmwiki.php/Main/PowerupMount' data-format='W1tQb3dlcnVwTW91bnQgUmljayB0aGUgSGFtc3Rlcl1d'>Rick the Hamster</a>, to make up for the fact he can't fly, can wall jump indefinitely with any single wall surface.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Kirby64TheCrystalShards' title='/pmwiki/pmwiki.php/VideoGame/Kirby64TheCrystalShards' data-format='VmlkZW9HYW1lL0tpcmJ5NjRUaGVDcnlzdGFsU2hhcmRz'>Kirby 64: The Crystal Shards</a></em>: Rock + Cutter gives the ability for Kirby to carve himself into the shape of his animal friends from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KirbysDreamLand' title='/pmwiki/pmwiki.php/VideoGame/KirbysDreamLand' data-format='VmlkZW9HYW1lL0tpcmJ5c0RyZWFtTGFuZA=='>Kirby's Dream Land</a> 2</em> and 3; in Rick form, he can wall jump.
-</li></ul></li><li> Toad Man, an example of an enemy of having this ability, abuses it in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Rockman4MinusInfinity' title='/pmwiki/pmwiki.php/VideoGame/Rockman4MinusInfinity' data-format='VmlkZW9HYW1lL1JvY2ttYW40TWludXNJbmZpbml0eQ=='>Rockman 4 Minus ∞</a></em>.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/InMomentum' title='/pmwiki/pmwiki.php/VideoGame/InMomentum' data-format='VmlkZW9HYW1lL0luTW9tZW50dW0='>InMomentum</a></em> has wall jumps as a core game mechanic.
-</li><li> The first game of <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/FancyPantsAdventures' title='/pmwiki/pmwiki.php/VideoGame/FancyPantsAdventures' data-format='VmlkZW9HYW1lL0ZhbmN5UGFudHNBZHZlbnR1cmVz'>Fancy Pants Adventures</a></em> has the wall jump as an unlockable ability for completing a challenge. The sequels retain that ability as part of normal gameplay.
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MeatBoy' title='/pmwiki/pmwiki.php/VideoGame/MeatBoy' data-format='W1tWaWRlb0dhbWUvTWVhdEJveSBTdXBlciBNZWF0IEJveV1d'>Super Meat Boy</a></em>, you have so much <a class='twikilink' href='/pmwiki/pmwiki.php/Main/JumpPhysics' title='/pmwiki/pmwiki.php/Main/JumpPhysics' data-format='W1tKdW1wUGh5c2ljcyBhaXIgY29udHJvbF1d'>air control</a>, that you can wall jump on just one wall. Meat Boy can even jump higher from a wall than from the floor. The designers justified it by saying that he "push[es] with his legs AND his arms".
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ZenIntergalacticNinja' title='/pmwiki/pmwiki.php/VideoGame/ZenIntergalacticNinja' data-format='VmlkZW9HYW1lL1plbkludGVyZ2FsYWN0aWNOaW5qYQ=='>Zen: Intergalactic Ninja</a></em>, this is your main mode of travel during the sidescrolling levels, many of which are more vertical than horizontal, and many of your enemies are airborne.
-</li><li> Buster has this ability in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TinyToonAdventuresBustersHiddenTreasure' title='/pmwiki/pmwiki.php/VideoGame/TinyToonAdventuresBustersHiddenTreasure' data-format='VmlkZW9HYW1lL1RpbnlUb29uQWR2ZW50dXJlc0J1c3RlcnNIaWRkZW5UcmVhc3VyZQ=='>Tiny Toon Adventures: Buster's Hidden Treasure</a></em> for the Sega Genesis/Mega Drive. The game's manual refers to this move as the "Super Jump".
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TheFloorIsJelly' title='/pmwiki/pmwiki.php/VideoGame/TheFloorIsJelly' data-format='VmlkZW9HYW1lL1RoZUZsb29ySXNKZWxseQ=='>The Floor is Jelly</a></em>, the protagonist has this ability and can even do this to climb up walls similar to the <em>Mega Man</em> examples above.
-</li><li> Luigi gains the ability to wall jump with the power of the Atheltic Peach in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Something' title='/pmwiki/pmwiki.php/VideoGame/Something' data-format='W1tWaWRlb0dhbWUve3tTb21ldGhpbmd9fSBTb21ldGhpbmcgRWxzZV1d'>Something Else</a></em>
-</li><li> The protagonist of <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Two' title='/pmwiki/pmwiki.php/VideoGame/Two' data-format='W1tWaWRlb0dhbWUve3tUd299fSAyXV0='>2</a></em> gains this ability after finding the Banner powerup.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Kirby64TheCrystalShards' title='/pmwiki/pmwiki.php/VideoGame/Kirby64TheCrystalShards' data-format='VmlkZW9HYW1lL0tpcmJ5NjRUaGVDcnlzdGFsU2hhcmRz'>Kirby 64: The Crystal Shards</a></em>: Rock + Cutter gives the ability for Kirby to carve himself into the shape of his animal friends from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KirbysDreamLand' title='/pmwiki/pmwiki.php/VideoGame/KirbysDreamLand' data-format='VmlkZW9HYW1lL0tpcmJ5c0RyZWFtTGFuZA=='>Kirby's Dream Land</a> 2</em> and <em>3</em>; in Rick form, he can wall jump.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MeatBoy' title='/pmwiki/pmwiki.php/VideoGame/MeatBoy' data-format='VmlkZW9HYW1lL01lYXRCb3k='>Meat Boy</a></em>: In <em>Super Meat Boy</em>, you have so much <a class='twikilink' href='/pmwiki/pmwiki.php/Main/JumpPhysics' title='/pmwiki/pmwiki.php/Main/JumpPhysics' data-format='W1tKdW1wUGh5c2ljcyBhaXIgY29udHJvbF1d'>air control</a>, that you can wall jump on just one wall. Meat Boy can even jump higher from a wall than from the floor. The designers justified it by saying that he "push[es] with his legs AND his arms".
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/MegaMan' title='/pmwiki/pmwiki.php/Franchise/MegaMan' data-format='RnJhbmNoaXNlL01lZ2FNYW4='>Mega Man</a></em>:
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MegaManX' title='/pmwiki/pmwiki.php/VideoGame/MegaManX' data-format='VmlkZW9HYW1lL01lZ2FNYW5Y'>Mega Man X</a></em>: Wall Jump is exploited. Combined with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/JumpPhysics' title='/pmwiki/pmwiki.php/Main/JumpPhysics' data-format='W1tKdW1wUGh5c2ljcyB0aGUgYWJpbGl0eSB0byBjaGFuZ2UgZGlyZWN0aW9uIG1pZC1haXJdXQ=='>the ability to change direction mid-air</a>, X can do something called a wall kick, in which he reverses course back to a wall after a wall jump, allowing him to rapidly ascend a <em>single</em> wall by jumping up it. It is quite handy when dealing with bosses with ground-spamming attacks. Zero can also Wall Kick, as can anyone who can transform in the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MegaManZX' title='/pmwiki/pmwiki.php/VideoGame/MegaManZX' data-format='VmlkZW9HYW1lL01lZ2FNYW5aWA=='>Mega Man ZX</a></em> series.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ProjectXZone' title='/pmwiki/pmwiki.php/VideoGame/ProjectXZone' data-format='VmlkZW9HYW1lL1Byb2plY3RYWm9uZQ=='>Project × Zone</a></em>: One of X's and Zero's <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LimitBreak' title='/pmwiki/pmwiki.php/Main/LimitBreak' data-format='e3tsaW1pdCBicmVha319cw=='>limit breaks</a> in the game has them attack while performing wall jumps... in mid-air, without the wall!
+</li><li> Several bosses in the series use this too, like Sigma from the first game, Flame Stag, Neon Tiger, Split Mushroom, Mattrex, Dark Mantis, etc. And when playing as Cut Man in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MegaManPoweredUp' title='/pmwiki/pmwiki.php/VideoGame/MegaManPoweredUp' data-format='VmlkZW9HYW1lL01lZ2FNYW5Qb3dlcmVkVXA='>Mega Man Powered Up</a></em>, he has the ability to wall jump, though the game doesn't allow you to use like in other <em>Mega Man</em> games and you slide off icy surfaces.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/Metroid' title='/pmwiki/pmwiki.php/Franchise/Metroid' data-format='RnJhbmNoaXNlL3t7TWV0cm9pZH19'>Metroid</a></em>:
+<ul ><li> Technically, the wall-jumping ability is taught to Samus Aran (and, by extension, the player) in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMetroid' title='/pmwiki/pmwiki.php/VideoGame/SuperMetroid' data-format='VmlkZW9HYW1lL1N1cGVyTWV0cm9pZA=='>Super Metroid</a></em> by some creatures she finds in the caves, but she can use it from the beginning of the game. In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MetroidZeroMission' title='/pmwiki/pmwiki.php/VideoGame/MetroidZeroMission' data-format='VmlkZW9HYW1lL01ldHJvaWRaZXJvTWlzc2lvbg=='>Metroid: Zero Mission</a></em> she even keeps this ability when she doesn't have her Power suit. In any case, wall jumping is usually 100% optional in the 2D entries<span class="notelabel" onclick="togglenote('note0qp3p');"><sup>note&nbsp;</sup></span><span id="note0qp3p" class="inlinefolder" isnote="true" onclick="togglenote('note0qp3p');" style="cursor:pointer;font-size:smaller;display:none;">The shaft where you learn this technique in <em>Super</em> isn't needed for progression. If you fall down there early game, you can get out by bomb jumping or just resetting your game. If you fall down there late game, you probably have the Space Jump and can just mash your way out.</span>; its main purpose in the aforementioned games is actually to facilitate <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SequenceBreaking' title='/pmwiki/pmwiki.php/Main/SequenceBreaking' data-format='U2VxdWVuY2VCcmVha2luZw=='>Sequence Breaking</a>, as mastery of the technique can allow you to climb up using a single wall indefinitely and break the game wide open. As a result, the mechanics of it differ greatly from most games, with the inputs needing to be sequenced rather than done simultaneously like in, say, <em>Super Mario</em>.
+</li><li> Wall jumps were heavily <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Nerf' title='/pmwiki/pmwiki.php/Main/Nerf' data-format='W1t7e05lcmZ9fSBuZXJmZWRdXQ=='>nerfed</a> in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MetroidFusion' title='/pmwiki/pmwiki.php/VideoGame/MetroidFusion' data-format='VmlkZW9HYW1lL01ldHJvaWRGdXNpb24='>Metroid Fusion</a></em> due to the game's design favoring a more linear style of gameplay. Samus can no longer shift her direction back to the wall to scale up a single wall, meaning two walls must be used to gain height. This nerfed wall jump was also in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MetroidSamusReturns' title='/pmwiki/pmwiki.php/VideoGame/MetroidSamusReturns' data-format='VmlkZW9HYW1lL01ldHJvaWRTYW11c1JldHVybnM='>Metroid: Samus Returns</a></em> and <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MetroidDread' title='/pmwiki/pmwiki.php/VideoGame/MetroidDread' data-format='VmlkZW9HYW1lL01ldHJvaWREcmVhZA=='>Metroid Dread</a></em>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MetroidPrimeTrilogy' title='/pmwiki/pmwiki.php/VideoGame/MetroidPrimeTrilogy' data-format='VmlkZW9HYW1lL01ldHJvaWRQcmltZVRyaWxvZ3k='>Metroid Prime Trilogy</a></em>: In the later entries (namely <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MetroidPrime2Echoes' title='/pmwiki/pmwiki.php/VideoGame/MetroidPrime2Echoes' data-format='VmlkZW9HYW1lL01ldHJvaWRQcmltZTJFY2hvZXM='>Metroid Prime 2: Echoes</a></em> and <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MetroidPrime3Corruption' title='/pmwiki/pmwiki.php/VideoGame/MetroidPrime3Corruption' data-format='VmlkZW9HYW1lL01ldHJvaWRQcmltZTNDb3JydXB0aW9u'>Metroid Prime 3: Corruption</a></em>), the Screw Attack can be used to this effect on special wall surfaces.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MetroidDread' title='/pmwiki/pmwiki.php/VideoGame/MetroidDread' data-format='VmlkZW9HYW1lL01ldHJvaWREcmVhZA=='>Metroid Dread</a></em>, not only can Samus can jump off walls as usual, but Chozo Soldiers can also jump off a wall before doing a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GroundPound' title='/pmwiki/pmwiki.php/Main/GroundPound' data-format='R3JvdW5kUG91bmQ='>Ground Pound</a> with their spears in an attempt to hit Samus. Fitting, given that Samus was herself <a class='twikilink' href='/pmwiki/pmwiki.php/Main/InterspeciesAdoption' title='/pmwiki/pmwiki.php/Main/InterspeciesAdoption' data-format='W1tJbnRlcnNwZWNpZXNBZG9wdGlvbiByYWlzZWQgYnkgQ2hvem9dXQ=='>raised by Chozo</a>.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MrBree' title='/pmwiki/pmwiki.php/VideoGame/MrBree' data-format='VmlkZW9HYW1lL01yQnJlZQ=='>Mr. Bree</a></em>: Mr. Bree can wall jump after collecting one of the yellow jigsaw pieces.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/N' title='/pmwiki/pmwiki.php/VideoGame/N' data-format='VmlkZW9HYW1lL3t7Tn19'>N</a></em>, you control a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Ninja' title='/pmwiki/pmwiki.php/Main/Ninja' data-format='e3tOaW5qYX19'>Ninja</a> whose only real ability is this.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/PrinceOfPersia' title='/pmwiki/pmwiki.php/Franchise/PrinceOfPersia' data-format='RnJhbmNoaXNlL1ByaW5jZU9mUGVyc2lh'>Prince of Persia</a></em>:
+<ul ><li> Taken to an absurd extent in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersia2008' title='/pmwiki/pmwiki.php/VideoGame/PrinceOfPersia2008' data-format='VmlkZW9HYW1lL1ByaW5jZU9mUGVyc2lhMjAwOA=='>Prince of Persia (2008)</a></em>. You rarely run more than 10 feet on any given piece of land; most of your travel is done by wall.
+</li><li> In the <em>Sands of Time</em> tetralogy, the Prince can employ the inverse of this trope as well: if two walls are far enough apart, he can Wall Jump <em>down</em> the shaft.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Pseudoregalia' title='/pmwiki/pmwiki.php/VideoGame/Pseudoregalia' data-format='VmlkZW9HYW1lL3t7UHNldWRvcmVnYWxpYX19'>Pseudoregalia</a></em>: The Sun Greaves allow Sybil to perform a kick in mid-air that serves as a wall jump should her kick connect with a wall, and can performed three times before touching the ground. Finding the Heliacal Power aspect adds an extra wall kick.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Psychonauts2' title='/pmwiki/pmwiki.php/VideoGame/Psychonauts2' data-format='VmlkZW9HYW1lL1BzeWNob25hdXRzMg=='>Psychonauts 2</a></em> adds a wall jump to Raz's moveset.
 </li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/RabiRibi' title='/pmwiki/pmwiki.php/VideoGame/RabiRibi' data-format='VmlkZW9HYW1lL1JhYmlSaWJp'>Rabi-Ribi</a></em>, the Wall Jump item grants Erina the ability to do up to two wall jumps, with the first upgrade for it granting a third. <span class="spoiler" title="you can set spoilers visible by default on your profile" >Utilizing two hidden techniques, Erina can perform two wall jumps <em>without</em> the item. Mastering these techniques is essential for clearing the game without any items.</span>
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/AkaneTheKunoichi' title='/pmwiki/pmwiki.php/VideoGame/AkaneTheKunoichi' data-format='VmlkZW9HYW1lL0FrYW5lVGhlS3Vub2ljaGk='>Akane the Kunoichi</a></em>, this is necessary for Akane to reach certain areas, including quite a few of the collectables. It's also necessary to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/FlunkyBoss' title='/pmwiki/pmwiki.php/Main/FlunkyBoss' data-format='W1tGbHVua3lCb3NzIGRlZmVhdCB0aGUgZmluYWwgYm9zc11d'>defeat the final boss</a> &#8212; you can't use it to reach her, but you can use it to get high enough to throw kunais at her.
+
+</li><li> Used in a rather weird fashion in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Ristar' title='/pmwiki/pmwiki.php/VideoGame/Ristar' data-format='VmlkZW9HYW1lL3t7UmlzdGFyfX0='>Ristar</a></em>. Ristar can grab onto any surface in the game that isn't spiked or otherwise harmful to touch, but he can't hold on unless there are rungs or other handholds; otherwise, he will slam into it and bounce at an upward angle. However, by grabbing a wall over and over again in rapid succession, it is possible to bounce up the wall. Unlike the typical Wall Jump, only one wall is needed for this, although it can be done with two opposing walls as well. This move is impossible on <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SlippySlideyIceWorld' title='/pmwiki/pmwiki.php/Main/SlippySlideyIceWorld' data-format='W1tTbGlwcHlTbGlkZXlJY2VXb3JsZCBQbGFuZXQgRnJlb25dXQ=='>Planet Freon</a>, presumably because the walls are made of cold, slippery ice that causes Ristar to withdraw his hands in discomfort upon touching it.
+</li><li> Toad Man, an example of an enemy having this ability, abuses it in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Rockman4MinusInfinity' title='/pmwiki/pmwiki.php/VideoGame/Rockman4MinusInfinity' data-format='VmlkZW9HYW1lL1JvY2ttYW40TWludXNJbmZpbml0eQ=='>Rockman 4 Minus ∞</a></em>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Shantae' title='/pmwiki/pmwiki.php/VideoGame/Shantae' data-format='VmlkZW9HYW1lL3t7U2hhbnRhZX19'>Shantae</a></em>: The Monkey transformation can cling to walls then jump off from them:
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ShantaeRiskysRevenge' title='/pmwiki/pmwiki.php/VideoGame/ShantaeRiskysRevenge' data-format='VmlkZW9HYW1lL1NoYW50YWVSaXNreXNSZXZlbmdl'>Shantae: Risky's Revenge</a></em>
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ShantaeHalfGenieHero' title='/pmwiki/pmwiki.php/VideoGame/ShantaeHalfGenieHero' data-format='VmlkZW9HYW1lL1NoYW50YWVIYWxmR2VuaWVIZXJv'>Shantae: Half-Genie Hero</a></em>
+</li></ul></li><li> Luigi gains the ability to wall jump with the power of the Athletic Peach in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Something' title='/pmwiki/pmwiki.php/VideoGame/Something' data-format='W1tWaWRlb0dhbWUve3tTb21ldGhpbmd9fSBTb21ldGhpbmcgRWxzZV1d'>Something Else</a></em>.
+</li><li> This trope is used in various degrees throughout the <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/SonicTheHedgehog' title='/pmwiki/pmwiki.php/Franchise/SonicTheHedgehog' data-format='RnJhbmNoaXNlL1NvbmljVGhlSGVkZ2Vob2c='>Sonic the Hedgehog</a></em> games:
+<ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KnucklesChaotix' title='/pmwiki/pmwiki.php/VideoGame/KnucklesChaotix' data-format='VmlkZW9HYW1lL0tudWNrbGVzQ2hhb3RpeA=='>Knuckles' Chaotix</a></em>, this is Mighty's method of scaling.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SonicHeroes' title='/pmwiki/pmwiki.php/VideoGame/SonicHeroes' data-format='VmlkZW9HYW1lL1NvbmljSGVyb2Vz'>Sonic Heroes</a></em> and <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ShadowTheHedgehog' title='/pmwiki/pmwiki.php/VideoGame/ShadowTheHedgehog' data-format='VmlkZW9HYW1lL1NoYWRvd1RoZUhlZGdlaG9n'>Shadow the Hedgehog</a></em> have the Triangle Jump, where Sonic, Shadow, and Espio have the ability to cling to a wall and use that to jump forward from wall to wall. Espio can cling to the wall indefinitely, while Sonic and Shadow fall down if they don't jump within a few seconds. As a result, their teammates can also do it, but only <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SecretAIMoves' title='/pmwiki/pmwiki.php/Main/SecretAIMoves' data-format='W1tTZWNyZXRBSU1vdmVzIHdoZW4gY29udHJvbGxlZCBieSB0aGUgY29tcHV0ZXJdXQ=='>when controlled by the computer</a>.
+</li><li> Starting with <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SonicUnleashed' title='/pmwiki/pmwiki.php/VideoGame/SonicUnleashed' data-format='VmlkZW9HYW1lL1NvbmljVW5sZWFzaGVk'>Sonic Unleashed</a></em>, Sonic can use a more traditional Wall Jump, complete with a Mario Galaxy-esque slide down. Though the Xbox 360/Playstation 3 version requires getting the Wall Jump Shoes to use it, the <a class='twikilink' href='/pmwiki/pmwiki.php/Platform/NintendoWii' title='/pmwiki/pmwiki.php/Platform/NintendoWii' data-format='UGxhdGZvcm0vTmludGVuZG9XaWk='>Nintendo Wii</a> and Playstation 2 version and every other 3D game afterwards has it available from the start. In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SonicGenerations' title='/pmwiki/pmwiki.php/VideoGame/SonicGenerations' data-format='VmlkZW9HYW1lL1NvbmljR2VuZXJhdGlvbnM='>Sonic Generations</a></em>, it can only be done by Modern Sonic, and only from certain surfaces.
+
+</li></ul></li><li> The titular feline of <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperCatboy' title='/pmwiki/pmwiki.php/VideoGame/SuperCatboy' data-format='VmlkZW9HYW1lL1N1cGVyQ2F0Ym95'>Super Catboy</a></em> has a wall-to-wall jump ability using sprites modelled after the original Mega Man's.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/SuperMarioBros' title='/pmwiki/pmwiki.php/Franchise/SuperMarioBros' data-format='RnJhbmNoaXNlL1N1cGVyTWFyaW9Ccm9z'>Super Mario Bros.</a></em>:
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMario64' title='/pmwiki/pmwiki.php/VideoGame/SuperMario64' data-format='VmlkZW9HYW1lL1N1cGVyTWFyaW82NA=='>Super Mario 64</a></em>: Starting from this game, Mario has earned the ability to jump between walls in the 3D installments (and in the Nintendo DS remake of <em>64</em> itself, he's the <em>only</em> character capable of doing so).
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioSunshine' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioSunshine' data-format='VmlkZW9HYW1lL1N1cGVyTWFyaW9TdW5zaGluZQ=='>Super Mario Sunshine</a></em> makes the technique much easier, as Mario will slide down the wall instead of bouncing his head off it, which allows the player to choose when to spring off the wall rather than forcing them to time it the way the game dictates with a narrow window right when Mario meets the wall.This adjusted mechanic was carried over since.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/NewSuperMarioBros' title='/pmwiki/pmwiki.php/VideoGame/NewSuperMarioBros' data-format='VmlkZW9HYW1lL05ld1N1cGVyTWFyaW9Ccm9z'>New Super Mario Bros.</a></em>: The subseries integrated the ability to wall-jump into the 2D <em>Super Mario</em> games, though it was theoretically possible in the earlier installments due to glitchy collision checking.<span class="notelabel" onclick="togglenote('note1n7n0');"><sup>note&nbsp;</sup></span><span id="note1n7n0" class="inlinefolder" isnote="true" onclick="togglenote('note1n7n0');" style="cursor:pointer;font-size:smaller;display:none;">If Mario approaches a wall when his vertical position is just right, he will momentarily land on it, and with quick reflexes, one can jump from it before starting to fall again (due to wall ejection, which is the standard way most 2D games use to compensate for cheap collision checking). They intentionally added it in 3D, and made it much easier.</span> All other playable characters across the subseries (Luigi, all Toads, and Nabbit) can do it as well.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioGalaxy' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioGalaxy' data-format='VmlkZW9HYW1lL1N1cGVyTWFyaW9HYWxheHk='>Super Mario Galaxy</a></em>: The Spring Mushroom makes wall jumping faster, but also more unpredictable (since the spring coil will make Mario and Luigi bounce immediately upon contact with each wall).
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioMaker' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioMaker' data-format='VmlkZW9HYW1lL1N1cGVyTWFyaW9NYWtlcg=='>Super Mario Maker</a></em>: It is possible to perform wall jumps in the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/NewSuperMarioBrosU' title='/pmwiki/pmwiki.php/VideoGame/NewSuperMarioBrosU' data-format='VmlkZW9HYW1lL05ld1N1cGVyTWFyaW9Ccm9zVQ=='>New Super Mario Bros. U</a></em> game style (<em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMarioMaker2' title='/pmwiki/pmwiki.php/VideoGame/SuperMarioMaker2' data-format='VmlkZW9HYW1lL1N1cGVyTWFyaW9NYWtlcjI='>Super Mario Maker 2</a></em> makes it possible on the added <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperMario3DWorld' title='/pmwiki/pmwiki.php/VideoGame/SuperMario3DWorld' data-format='VmlkZW9HYW1lL1N1cGVyTWFyaW8zRFdvcmxk'>Super Mario 3D World</a></em> style as well), but not in the older ones as the ability wasn't present in their respective source materials.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MarioTennis' title='/pmwiki/pmwiki.php/VideoGame/MarioTennis' data-format='VmlkZW9HYW1lL01hcmlvVGVubmlz'>Mario Tennis</a></em>: This is taken further in <em>Mario Tennis Aces</em> as Mario can actually wall jump from thin air during his special shot.
+</li></ul></li><li> Buster has this ability in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TinyToonAdventuresBustersHiddenTreasure' title='/pmwiki/pmwiki.php/VideoGame/TinyToonAdventuresBustersHiddenTreasure' data-format='VmlkZW9HYW1lL1RpbnlUb29uQWR2ZW50dXJlc0J1c3RlcnNIaWRkZW5UcmVhc3VyZQ=='>Tiny Toon Adventures: Buster's Hidden Treasure</a></em> for the Sega Genesis/Mega Drive. The game's manual refers to this move as the "Super Jump".
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TreasuresOfTheAegean' title='/pmwiki/pmwiki.php/VideoGame/TreasuresOfTheAegean' data-format='VmlkZW9HYW1lL1RyZWFzdXJlc09mVGhlQWVnZWFu'>Treasures of the Aegean</a></em>: <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PlayerCharacter' title='/pmwiki/pmwiki.php/Main/PlayerCharacter' data-format='W1tQbGF5ZXJDaGFyYWN0ZXIgTWFyaWVdXQ=='>Marie</a> can jump off of walls as well as slide down them.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TwinRobots' title='/pmwiki/pmwiki.php/VideoGame/TwinRobots' data-format='VmlkZW9HYW1lL1R3aW5Sb2JvdHM='>Twin Robots</a></em>: The titular robots can hang off walls, and then jump off them.
 </li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/UltimateChickenHorse' title='/pmwiki/pmwiki.php/VideoGame/UltimateChickenHorse' data-format='VmlkZW9HYW1lL1VsdGltYXRlQ2hpY2tlbkhvcnNl'>Ultimate Chicken Horse</a></em>, characters slide down walls and can jump from this state to reach higher ground. The very loose <a class='twikilink' href='/pmwiki/pmwiki.php/Main/JumpPhysics' title='/pmwiki/pmwiki.php/Main/JumpPhysics' data-format='SnVtcFBoeXNpY3M='>Jump Physics</a> mean that you can "climb" walls by wall-jumping, then turning around in mid-air and jumping off the same wall several times.
 </li><li> Wall jumping, combined with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WallRun' title='/pmwiki/pmwiki.php/Main/WallRun' data-format='V2FsbFJ1bg=='>Wall Run</a>, make up the majority of the action in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/YoNoid2EnterTheVoid' title='/pmwiki/pmwiki.php/VideoGame/YoNoid2EnterTheVoid' data-format='VmlkZW9HYW1lL1lvTm9pZDJFbnRlclRoZVZvaWQ='>Yo! Noid 2: Enter the Void</a></em>.
-</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PlayerCharacter' title='/pmwiki/pmwiki.php/Main/PlayerCharacter' data-format='W1tQbGF5ZXJDaGFyYWN0ZXIgUmVuYV1d'>Rena</a> from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/GrappleForceRena' title='/pmwiki/pmwiki.php/VideoGame/GrappleForceRena' data-format='VmlkZW9HYW1lL0dyYXBwbGVGb3JjZVJlbmE='>Grapple Force Rena</a></em> can jump from wall to wall to get to higher places.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/FunkUnplugged' title='/pmwiki/pmwiki.php/VideoGame/FunkUnplugged' data-format='VmlkZW9HYW1lL0Z1bmtVbnBsdWdnZWQ='>Funk Unplugged</a></em>: Ampy has the power to jump from wall to wall to get up them.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/AndroidHunterA' title='/pmwiki/pmwiki.php/VideoGame/AndroidHunterA' data-format='VmlkZW9HYW1lL0FuZHJvaWRIdW50ZXJB'>Android Hunter A</a></em>: <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PlayerCharacter' title='/pmwiki/pmwiki.php/Main/PlayerCharacter' data-format='W1tQbGF5ZXJDaGFyYWN0ZXIgQV1d'>A</a>, being an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Expy' title='/pmwiki/pmwiki.php/Main/Expy' data-format='e3tFeHB5fX0='>Expy</a> of Mega Man X, can do his wall kick ability to climb up walls.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TreasuresOfTheAegean' title='/pmwiki/pmwiki.php/VideoGame/TreasuresOfTheAegean' data-format='VmlkZW9HYW1lL1RyZWFzdXJlc09mVGhlQWVnZWFu'>Treasures Of The Aegean</a></em>: <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PlayerCharacter' title='/pmwiki/pmwiki.php/Main/PlayerCharacter' data-format='W1tQbGF5ZXJDaGFyYWN0ZXIgTWFyaWVdXQ=='>Marie</a> can jump off of walls as well as slide down them.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Psychonauts2' title='/pmwiki/pmwiki.php/VideoGame/Psychonauts2' data-format='VmlkZW9HYW1lL1BzeWNob25hdXRzMg=='>Psychonauts 2</a></em> adds a wall jump to Raz's moveset.
-</li><li> The titular feline of <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SuperCatboy' title='/pmwiki/pmwiki.php/VideoGame/SuperCatboy' data-format='VmlkZW9HYW1lL1N1cGVyQ2F0Ym95'>Super Catboy</a></em> has a wall-to-wall jump ability using sprites modelled after the original Megaman's.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TwinRobots' title='/pmwiki/pmwiki.php/VideoGame/TwinRobots' data-format='VmlkZW9HYW1lL1R3aW5Sb2JvdHM='>Twin Robots</a></em>: The titular robots can hang off walls, and then jump off them.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/GreyArea2023' title='/pmwiki/pmwiki.php/VideoGame/GreyArea2023' data-format='VmlkZW9HYW1lL0dyZXlBcmVhMjAyMw=='>Grey Area (2023)</a></em>: Hailey's dive is a lesser version of this. Diving into a wall will cause her to bounce diagonally back and upwards, letting her gain some height, but since she can only dive once per jump, you can only use this to gain a little bit of height, and the backwards momentum you get from this limits where you can land.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Pseudoregalia' title='/pmwiki/pmwiki.php/VideoGame/Pseudoregalia' data-format='VmlkZW9HYW1lL3t7UHNldWRvcmVnYWxpYX19'>Pseudoregalia</a></em>: The Sun Greaves allow Sybil to perform a kick in mid-air that serves as a wall jump should her kick connect with a wall, and can performed three times before touching the ground. Finding the Heliacal Power aspect adds an extra wall kick.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MrBree' title='/pmwiki/pmwiki.php/VideoGame/MrBree' data-format='VmlkZW9HYW1lL01yQnJlZQ=='>Mr. Bree</a></em>: Mr. Bree can wall jump after collecting one of the yellow jigsaw pieces.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ZenIntergalacticNinja' title='/pmwiki/pmwiki.php/VideoGame/ZenIntergalacticNinja' data-format='VmlkZW9HYW1lL1plbkludGVyZ2FsYWN0aWNOaW5qYQ=='>Zen: Intergalactic Ninja</a></em>, this is your main mode of travel during the sidescrolling levels, many of which are more vertical than horizontal, and many of your enemies are airborne.
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder6');">&nbsp;&nbsp;&nbsp;&nbsp;Role-Playing Game&nbsp;</div><div id="folder6" class="folder" isfolder="true" style="display:block;">
-<ul ><li> In the first <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/MassEffect' title='/pmwiki/pmwiki.php/Franchise/MassEffect' data-format='RnJhbmNoaXNlL01hc3NFZmZlY3Q='>Mass Effect</a></em>, several types of <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MechaMook' title='/pmwiki/pmwiki.php/Main/MechaMook' data-format='W1tNZWNoYU1vb2sgZ2V0aF1d'>geth</a> units (Ghosts, Hoppers, and Sappers) can do this.
-</li><li> <em>Monster Girl Quest</em> has the Demon Skull Beheading technique. The technique is originally used by monsters that can jump very high to perform <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DeathFromAbove' title='/pmwiki/pmwiki.php/Main/DeathFromAbove' data-format='W1tEZWF0aEZyb21BYm92ZSBhIGRvd253YXJkIGp1bXAgY3V0IG9uIGFuIGVuZW15JiMwMzk7cyBoZWFkXV0='>a downward jump cut on an enemy's head</a>. The protagonist, Luka, is a normal human, so he needs to do a jump-kick on a wall or other environments to make his jump high enough. That's to say, the move is totally unusable if Luka's fighting in a wide open area.
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KingdomHearts3DDreamDropDistance' title='/pmwiki/pmwiki.php/VideoGame/KingdomHearts3DDreamDropDistance' data-format='VmlkZW9HYW1lL0tpbmdkb21IZWFydHMzRERyZWFtRHJvcERpc3RhbmNl'>Kingdom Hearts 3D [Dream Drop Distance]</a></em>, this is one of the Flowmotion actions you'll probably be using the most. It's also possible to scale a wall by repeatedly wall jumping up it, <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MegaManX' title='/pmwiki/pmwiki.php/VideoGame/MegaManX' data-format='VmlkZW9HYW1lL01lZ2FNYW5Y'>Mega Man X</a></em> style.
+</p><p><div class="folderlabel" onclick="togglefolder('folder7');">&nbsp;&nbsp;&nbsp;&nbsp;Role-Playing Game&nbsp;</div><div id="folder7" class="folder" isfolder="true" style="display:block;">
+<ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/KingdomHearts3DDreamDropDistance' title='/pmwiki/pmwiki.php/VideoGame/KingdomHearts3DDreamDropDistance' data-format='VmlkZW9HYW1lL0tpbmdkb21IZWFydHMzRERyZWFtRHJvcERpc3RhbmNl'>Kingdom Hearts 3D [Dream Drop Distance]</a></em>, this is one of the Flowmotion actions you'll probably be using the most. It's also possible to scale a wall by repeatedly wall jumping up it, <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MegaManX' title='/pmwiki/pmwiki.php/VideoGame/MegaManX' data-format='VmlkZW9HYW1lL01lZ2FNYW5Y'>Mega Man X</a></em>-style.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MassEffect1' title='/pmwiki/pmwiki.php/VideoGame/MassEffect1' data-format='VmlkZW9HYW1lL01hc3NFZmZlY3Qx'>Mass Effect 1</a></em>, several types of <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MechaMook' title='/pmwiki/pmwiki.php/Main/MechaMook' data-format='W1tNZWNoYU1vb2sgZ2V0aF1d'>geth</a> units (Ghosts, Hoppers, and Sappers) can do this.
+</li><li> <em>Monster Girl Quest</em> has the Demon Skull Beheading technique. The technique is originally used by monsters that can jump very high to perform <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DeathFromAbove' title='/pmwiki/pmwiki.php/Main/DeathFromAbove' data-format='W1tEZWF0aEZyb21BYm92ZSBhIGRvd253YXJkIGp1bXAgY3V0IG9uIGFuIGVuZW15JiMwMzk7cyBoZWFkXV0='>a downward jump cut on an enemy's head</a>. The protagonist, Luka, is a normal human, so he needs to do a jump-kick on a wall or other environments to make his jump high enough. That's to say, the move is totally unusable if Luka's fighting in a wide-open area.
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder7');">&nbsp;&nbsp;&nbsp;&nbsp;Sports Game&nbsp;</div><div id="folder7" class="folder" isfolder="true" style="display:block;">
+</p><p><div class="folderlabel" onclick="togglefolder('folder8');">&nbsp;&nbsp;&nbsp;&nbsp;Sports Game&nbsp;</div><div id="folder8" class="folder" isfolder="true" style="display:block;">
 <ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TonyHawksProSkater' title='/pmwiki/pmwiki.php/VideoGame/TonyHawksProSkater' data-format='VmlkZW9HYW1lL1RvbnlIYXdrc1Byb1NrYXRlcg=='>Tony Hawk's Pro Skater</a></em> calls them Wall Plants where if you directly face the wall and ollie, you can jump against the wall and ride again for some momentum and a few extra points.
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder8');">&nbsp;&nbsp;&nbsp;&nbsp;Stealth-Based Game&nbsp;</div><div id="folder8" class="folder" isfolder="true" style="display:block;">
+</p><p><div class="folderlabel" onclick="togglefolder('folder9');">&nbsp;&nbsp;&nbsp;&nbsp;Stealth-Based Game&nbsp;</div><div id="folder9" class="folder" isfolder="true" style="display:block;">
 <ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/AssassinsCreed' title='/pmwiki/pmwiki.php/Franchise/AssassinsCreed' data-format='RnJhbmNoaXNlL0Fzc2Fzc2luc0NyZWVk'>Assassin's Creed</a></em>:
 <ul ><li> This is one of Altair's moves in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/AssassinsCreedAltairsChronicles' title='/pmwiki/pmwiki.php/VideoGame/AssassinsCreedAltairsChronicles' data-format='VmlkZW9HYW1lL0Fzc2Fzc2luc0NyZWVkQWx0YWlyc0Nocm9uaWNsZXM='>Assassin's Creed: Altaïr's Chronicles</a></em>.
 </li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/AssassinsCreedII' title='/pmwiki/pmwiki.php/VideoGame/AssassinsCreedII' data-format='VmlkZW9HYW1lL0Fzc2Fzc2luc0NyZWVkSUk='>Assassin's Creed II</a></em>, (perhaps only after you get the jump-up-grab ability) you can run up a wall, then jump immediately to your left or right or backwards and grab onto something. It's kinda like an upside down "L".
 </li><li> The first game has this move as well, but only the run-up-wall-and-kick-off-backwards variant.
-</li></ul></li><li> Sam Fisher can do this in the original <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SplinterCell' title='/pmwiki/pmwiki.php/VideoGame/SplinterCell' data-format='VmlkZW9HYW1lL1NwbGludGVyQ2VsbA=='>Splinter Cell</a></em>, either to perform a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GoombaStomp' title='/pmwiki/pmwiki.php/Main/GoombaStomp' data-format='R29vbWJhU3RvbXA='>Goomba Stomp</a> or, more often, as a run-up to a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/CeilingCling' title='/pmwiki/pmwiki.php/Main/CeilingCling' data-format='W1tDZWlsaW5nQ2xpbmcgU3BsaXQgSnVtcF1d'>Split Jump</a>. Later installments simplified the Split Jump into a single integrated manoeuvre.
+</li></ul></li><li> Sam Fisher can do this in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SplinterCell1' title='/pmwiki/pmwiki.php/VideoGame/SplinterCell1' data-format='VmlkZW9HYW1lL1NwbGludGVyQ2VsbDE='>Splinter Cell 1</a></em>, either to perform a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GoombaStomp' title='/pmwiki/pmwiki.php/Main/GoombaStomp' data-format='R29vbWJhU3RvbXA='>Goomba Stomp</a> or, more often, as a run-up to a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/CeilingCling' title='/pmwiki/pmwiki.php/Main/CeilingCling' data-format='W1tDZWlsaW5nQ2xpbmcgU3BsaXQgSnVtcF1d'>Split Jump</a>. <a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SplinterCell' title='/pmwiki/pmwiki.php/VideoGame/SplinterCell' data-format='W1tWaWRlb0dhbWUvU3BsaW50ZXJDZWxsIExhdGVyIGluc3RhbGxtZW50c11d'>Later installments</a> simplified the Split Jump into a single integrated manoeuvre.
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder9');">&nbsp;&nbsp;&nbsp;&nbsp;Third-Person Shooter&nbsp;</div><div id="folder9" class="folder" isfolder="true" style="display:block;">
-<ul ><li> In the <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/GhostInTheShell' title='/pmwiki/pmwiki.php/Franchise/GhostInTheShell' data-format='RnJhbmNoaXNlL0dob3N0SW5UaGVTaGVsbA=='>Ghost in the Shell</a></em> <span class='esc-seq' title='non-wikiword'>PS2</span> game, the major difference in play styles between the two characters is that Major Kusanagi can wall jump, up to twice, and Batou can't.
-</li><li> Used liberally in <em>Double Action: Boogaloo</em> as it's a send up of <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HeroicBloodshed' title='/pmwiki/pmwiki.php/Main/HeroicBloodshed' data-format='SGVyb2ljQmxvb2RzaGVk'>Heroic Bloodshed</a> and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GunFu' title='/pmwiki/pmwiki.php/Main/GunFu' data-format='R3VuRnU='>Gun Fu</a> series. You can jump off of walls... and other players. Players need to jump a lot in order to score "style points" and look badass.
+</p><p><div class="folderlabel" onclick="togglefolder('folder10');">&nbsp;&nbsp;&nbsp;&nbsp;Third-Person Shooter&nbsp;</div><div id="folder10" class="folder" isfolder="true" style="display:block;">
+<ul ><li> Used liberally in <em>Double Action: Boogaloo</em>, as it's a send-up of <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HeroicBloodshed' title='/pmwiki/pmwiki.php/Main/HeroicBloodshed' data-format='SGVyb2ljQmxvb2RzaGVk'>Heroic Bloodshed</a> and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GunFu' title='/pmwiki/pmwiki.php/Main/GunFu' data-format='R3VuRnU='>Gun Fu</a> series. You can jump off of walls... and other players. Players need to jump a lot in order to score "style points" and look badass.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/GhostInTheShell1997' title='/pmwiki/pmwiki.php/VideoGame/GhostInTheShell1997' data-format='VmlkZW9HYW1lL0dob3N0SW5UaGVTaGVsbDE5OTc='>Ghost in the Shell (1997)</a></em>: The major difference in play styles between the two characters is that Major Kusanagi can wall jump, up to twice, and Batou can't.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Splatoon3' title='/pmwiki/pmwiki.php/VideoGame/Splatoon3' data-format='VmlkZW9HYW1lL1NwbGF0b29uMw=='>Splatoon 3</a></em> introduces the squid roll, an ability which allows you to jump backwards by snapping the analog stick in the opposite direction and jumping. While this is mostly used on the ground, it can be used on walls, which can be used to access areas on the map quicker or dodge enemy fire.
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder10');">&nbsp;&nbsp;&nbsp;&nbsp;Wide-Open Sandbox&nbsp;</div><div id="folder10" class="folder" isfolder="true" style="display:block;">
+</p><p><div class="folderlabel" onclick="togglefolder('folder11');">&nbsp;&nbsp;&nbsp;&nbsp;Wide-Open Sandbox&nbsp;</div><div id="folder11" class="folder" isfolder="true" style="display:block;">
 <ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Prototype' title='/pmwiki/pmwiki.php/VideoGame/Prototype' data-format='VmlkZW9HYW1lL3t7UHJvdG90eXBlfX0='>[PROTOTYPE]</a></em> features the Wall Latch ability that allows you to chain jumps upon contact with any wall, even the same one over and over again.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SaintsRowIV' title='/pmwiki/pmwiki.php/VideoGame/SaintsRowIV' data-format='VmlkZW9HYW1lL1NhaW50c1Jvd0lW'>Saints Row IV</a></em> features this as the main way to scale buildings... until you unlock Wall Sprint, that is.
 </li></ul></div>
 </p><p><h2>Non-video game examples:</h2>
-</p><p><div class="folderlabel" onclick="togglefolder('folder11');">&nbsp;&nbsp;&nbsp;&nbsp;Anime and Manga&nbsp;</div><div id="folder11" class="folder" isfolder="true" style="display:block;">
+</p><p><div class="folderlabel" onclick="togglefolder('folder12');">&nbsp;&nbsp;&nbsp;&nbsp;Anime and Manga&nbsp;</div><div id="folder12" class="folder" isfolder="true" style="display:block;">
 <ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/CaptainTsubasa' title='/pmwiki/pmwiki.php/Manga/CaptainTsubasa' data-format='TWFuZ2EvQ2FwdGFpblRzdWJhc2E='>Captain Tsubasa</a></em>:
 <ul ><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RedBaron' title='/pmwiki/pmwiki.php/Main/RedBaron' data-format='W1tSZWRCYXJvbiBTdXBlciBLYXJhdGUgR29hbCBLZWVwZXJdXQ=='>Super Karate Goal Keeper</a> Ken Wakashimazu has a triangle jump ability that he jump-kicks a goal post to launch himself further in the air.
 </li><li> Masao and Kazuo's Triangle Shot.
 </li></ul></li><li> In the second episode of <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/FutariWaPrettyCure' title='/pmwiki/pmwiki.php/Anime/FutariWaPrettyCure' data-format='QW5pbWUvRnV0YXJpV2FQcmV0dHlDdXJl'>Futari wa Pretty Cure</a></em>, Cures Black and White do this to climb back out of the elevator shaft that Pisard had trapped them inside.
-</li><li> In the film <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/KikisDeliveryService' title='/pmwiki/pmwiki.php/Anime/KikisDeliveryService' data-format='QW5pbWUvS2lraXNEZWxpdmVyeVNlcnZpY2U='>Kiki's Delivery Service</a></em>, when Kiki's witch abilities start to fail her, she tries to propel herself into the air by kicking off a few buildings. She flies erratically with her "borrowed" broom, but she still musters enough courage to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/CatchAFallingStar' title='/pmwiki/pmwiki.php/Main/CatchAFallingStar' data-format='W1tDYXRjaEFGYWxsaW5nU3RhciBzYXZlIFRvbWJvIGFmdGVyIGhlIGZhbGxzIG91dCBvZiBhIGNyYXNoZWQgZGlyaWdpYmxlXV0='>save Tombo after he falls out of a crashed dirigible</a>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/GhostInTheShellStandAloneComplex' title='/pmwiki/pmwiki.php/Anime/GhostInTheShellStandAloneComplex' data-format='QW5pbWUvR2hvc3RJblRoZVNoZWxsU3RhbmRBbG9uZUNvbXBsZXg='>Ghost in the Shell: Stand Alone Complex</a></em>: In <em>2nd Gig</em>, the Major is doing a training exercise with some rookies. She evades their surveillance by entering a public bathroom halfway up a skyscraper, opening its two-foot-by-two-foot window, and leaping between the skyscrapers to the roof.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/GunslingerGirl' title='/pmwiki/pmwiki.php/Manga/GunslingerGirl' data-format='TWFuZ2EvR3Vuc2xpbmdlckdpcmw='>Gunslinger Girl</a></em>: Terrorists have seized a nuclear power plant and filled it with booby traps. Sandro realises they need to attack from an unexpected direction, so his cyborg Petra leaps up the outside of the reactor building (while it's snowing) using the rebar that's sticking out of the partially constructed building. Sandro can only think: "Damn it &#8212; what do you expect ME to do?"
+</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/FunSize' title='/pmwiki/pmwiki.php/Main/FunSize' data-format='W1tGdW5TaXplIFJ5b2tvIEFjaGFrdXJhXV0='>Ryoko Achakura</a> attempts this in <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/HaruhiChan' title='/pmwiki/pmwiki.php/Manga/HaruhiChan' data-format='TWFuZ2EvSGFydWhpQ2hhbg=='>Haruhi-chan</a></em> 10.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/Kekkaishi' title='/pmwiki/pmwiki.php/Manga/Kekkaishi' data-format='TWFuZ2Eve3tLZWtrYWlzaGl9fQ=='>Kekkaishi</a></em> has this as a repeated battle tactic by the protagonists, helped by their ability to create walls wherever they desire.
 </li><li> In the supplementary manga set before <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/MagicalGirlLyricalNanohaStrikers' title='/pmwiki/pmwiki.php/Anime/MagicalGirlLyricalNanohaStrikers' data-format='QW5pbWUvTWFnaWNhbEdpcmxMeXJpY2FsTmFub2hhU3RyaWtlcnM='>Magical Girl Lyrical Nanoha StrikerS</a></em>, Subaru performs one to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/CatchAFallingStar' title='/pmwiki/pmwiki.php/Main/CatchAFallingStar' data-format='W1tDYXRjaEFGYWxsaW5nU3RhciBjYXRjaCBhIGZhbGxpbmcgVGVhbmFdXQ=='>catch a falling Teana</a> after <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DoesNotKnowHisOwnStrength' title='/pmwiki/pmwiki.php/Main/DoesNotKnowHisOwnStrength' data-format='W1tEb2VzTm90S25vd0hpc093blN0cmVuZ3RoIHNoZSBhY2NpZGVudGFsbHkgdGhyb3dzIHRoZSBsYXR0ZXIgd2FhYWF5IG92ZXIgdGhlIHdhbGwgKGFuZCB0aGUgc3Vycm91bmRpbmcgcm9jay1mb3JtYXRpb25zKV1d'>she accidentally throws the latter waaaay over the wall (and the surrounding rock-formations)</a> during a wall-climbing exercise.
-</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Literature/HaruhiSuzumiya' title='/pmwiki/pmwiki.php/Literature/HaruhiSuzumiya' data-format='W1tMaXRlcmF0dXJlL0hhcnVoaVN1enVtaXlhIFJ5b2tvXV0='>Ryoko</a> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/FunSize' title='/pmwiki/pmwiki.php/Main/FunSize' data-format='W1tGdW5TaXplIEFjaGFrdXJhXV0='>Achakura</a> attempts this in <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/HaruhiChan' title='/pmwiki/pmwiki.php/Manga/HaruhiChan' data-format='TWFuZ2EvSGFydWhpQ2hhbg=='>Haruhi-chan</a></em> 10.
-</li><li> Nonomiya, the main character of <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/Nononono' title='/pmwiki/pmwiki.php/Manga/Nononono' data-format='TWFuZ2Eve3tOb25vbm9ub319'>Nononono</a></em>, shows off her leg strength by casually Wall Jumping to catch a child's balloon.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/Kekkaishi' title='/pmwiki/pmwiki.php/Manga/Kekkaishi' data-format='TWFuZ2Eve3tLZWtrYWlzaGl9fQ=='>Kekkaishi</a></em>: Repeated battle tactic by the protaganists, helped by their abillity to create walls wherever they desire.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/GhostInTheShellStandAloneComplex' title='/pmwiki/pmwiki.php/Anime/GhostInTheShellStandAloneComplex' data-format='QW5pbWUvR2hvc3RJblRoZVNoZWxsU3RhbmRBbG9uZUNvbXBsZXg='>Ghost in the Shell: Stand Alone Complex</a></em>: In <span class='esc-seq' title='non-wikiword'>2nd Gig</span>, the Major is doing a training exercise with some rookies. She evades their surveillance by entering a public bathroom halfway up a skyscraper, opening its two-foot-by-two-foot window, and leaping between the skyscrapers to the roof.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/GunslingerGirl' title='/pmwiki/pmwiki.php/Manga/GunslingerGirl' data-format='TWFuZ2EvR3Vuc2xpbmdlckdpcmw='>Gunslinger Girl</a></em>: Terrorists have seized a nuclear power plant and filled it with booby traps. Sandro realises they need to attack from an unexpected direction, so his cyborg Petra leaps up the outside of the reactor building (while it's snowing) using the rebar that's sticking out of the partially constructed building. Sandro can only think: "Damn it&#8212;what do you expect ME to do?"
 </li><li> Izuku Midoriya in <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/MyHeroAcademia' title='/pmwiki/pmwiki.php/Manga/MyHeroAcademia' data-format='TWFuZ2EvTXlIZXJvQWNhZGVtaWE='>My Hero Academia</a></em> teaches himself to use One For All to climb by jumping between buildings in an alley. In the manga, he even compares it to <a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MegaManX' title='/pmwiki/pmwiki.php/VideoGame/MegaManX' data-format='VmlkZW9HYW1lL01lZ2FNYW5Y'>Mega Man X</a>. Tensei Ida/Ingenium is shown doing the same using the engines in his arms.
+</li><li> Nonomiya, the main character of <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manga/Nononono' title='/pmwiki/pmwiki.php/Manga/Nononono' data-format='TWFuZ2Eve3tOb25vbm9ub319'>Nononono</a></em>, shows off her leg strength by casually Wall Jumping to catch a child's balloon.
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder12');">&nbsp;&nbsp;&nbsp;&nbsp;Comic Books&nbsp;</div><div id="folder12" class="folder" isfolder="true" style="display:block;">
+</p><p><div class="folderlabel" onclick="togglefolder('folder13');">&nbsp;&nbsp;&nbsp;&nbsp;Comic Books&nbsp;</div><div id="folder13" class="folder" isfolder="true" style="display:block;">
 <ul ><li> Ninjette and other ninjas from <em><a class='twikilink' href='/pmwiki/pmwiki.php/ComicBook/Empowered' title='/pmwiki/pmwiki.php/ComicBook/Empowered' data-format='Q29taWNCb29rL3t7RW1wb3dlcmVkfX0='>Empowered</a></em> can do this.
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder13');">&nbsp;&nbsp;&nbsp;&nbsp;Films &#8212; Animated&nbsp;</div><div id="folder13" class="folder" isfolder="true" style="display:block;">
-<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/WreckItRalph' title='/pmwiki/pmwiki.php/WesternAnimation/WreckItRalph' data-format='V2VzdGVybkFuaW1hdGlvbi9XcmVja0l0UmFscGg='>Wreck-It Ralph</a></em>: Felix does one of these to avoid Calhoun's projectiles on his first trip into <em>Hero's Duty</em>.
+</p><p><div class="folderlabel" onclick="togglefolder('folder14');">&nbsp;&nbsp;&nbsp;&nbsp;Films &#8212; Animation&nbsp;</div><div id="folder14" class="folder" isfolder="true" style="display:block;">
+<ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Anime/KikisDeliveryService' title='/pmwiki/pmwiki.php/Anime/KikisDeliveryService' data-format='QW5pbWUvS2lraXNEZWxpdmVyeVNlcnZpY2U='>Kiki's Delivery Service</a></em>, when Kiki's witch abilities start to fail her, she tries to propel herself into the air by kicking off a few buildings. She flies erratically with her "borrowed" broom, but she still musters enough courage to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/CatchAFallingStar' title='/pmwiki/pmwiki.php/Main/CatchAFallingStar' data-format='W1tDYXRjaEFGYWxsaW5nU3RhciBzYXZlIFRvbWJvIGFmdGVyIGhlIGZhbGxzIG91dCBvZiBhIGNyYXNoZWQgZGlyaWdpYmxlXV0='>save Tombo after he falls out of a crashed dirigible</a>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/WreckItRalph' title='/pmwiki/pmwiki.php/WesternAnimation/WreckItRalph' data-format='V2VzdGVybkFuaW1hdGlvbi9XcmVja0l0UmFscGg='>Wreck-It Ralph</a></em>: Felix does one of these to avoid Calhoun's projectiles on his first trip into <em>Hero's Duty</em>.
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder14');">&nbsp;&nbsp;&nbsp;&nbsp;Films &#8212; Live-Action&nbsp;</div><div id="folder14" class="folder" isfolder="true" style="display:block;">
+</p><p><div class="folderlabel" onclick="togglefolder('folder15');">&nbsp;&nbsp;&nbsp;&nbsp;Films &#8212; Live-Action&nbsp;</div><div id="folder15" class="folder" isfolder="true" style="display:block;">
 <ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Film/CrouchingTigerHiddenDragon' title='/pmwiki/pmwiki.php/Film/CrouchingTigerHiddenDragon' data-format='RmlsbS9Dcm91Y2hpbmdUaWdlckhpZGRlbkRyYWdvbg=='>Crouching Tiger, Hidden Dragon</a></em> (although it demonstrates that Chinese People Can Fly, so partially <a class='twikilink' href='/pmwiki/pmwiki.php/Main/JustifiedTrope' title='/pmwiki/pmwiki.php/Main/JustifiedTrope' data-format='W1tKdXN0aWZpZWRUcm9wZSBqdXN0aWZpZWRdXQ=='>justified</a>.)
-</li><li> This is a regular staple of <a class='twikilink' href='/pmwiki/pmwiki.php/Creator/JackieChan' title='/pmwiki/pmwiki.php/Creator/JackieChan' data-format='Q3JlYXRvci9KYWNraWVDaGFu'>Jackie Chan</a> movies. In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Film/RushHour' title='/pmwiki/pmwiki.php/Film/RushHour' data-format='RmlsbS9SdXNoSG91cg=='>Rush Hour</a></em>, he uses it to break into the Chinese Consulate's home.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Film/RushHour' title='/pmwiki/pmwiki.php/Film/RushHour' data-format='RmlsbS9SdXNoSG91cg=='>Rush Hour</a></em>, Inspector Lee jumps between walls to break into the Chinese Consulate's home.
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder15');">&nbsp;&nbsp;&nbsp;&nbsp;Literature &nbsp;</div><div id="folder15" class="folder" isfolder="true" style="display:block;">
-<ul ><li> This is part of the urban mountaineering and parkour taught in the Guild of Assassins on the <a class='twikilink' href='/pmwiki/pmwiki.php/Literature/Discworld' title='/pmwiki/pmwiki.php/Literature/Discworld' data-format='TGl0ZXJhdHVyZS97e0Rpc2N3b3JsZH19'>Discworld</a>. Specifically, it is taught not so much to ascend, but as a means of slowing one's fall in a controlled descent, as mandated by the Emergency Drop.
+</p><p><div class="folderlabel" onclick="togglefolder('folder16');">&nbsp;&nbsp;&nbsp;&nbsp;Literature&nbsp;</div><div id="folder16" class="folder" isfolder="true" style="display:block;">
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Literature/TheCobraTrilogy' title='/pmwiki/pmwiki.php/Literature/TheCobraTrilogy' data-format='TGl0ZXJhdHVyZS9UaGVDb2JyYVRyaWxvZ3k='>The Cobra Trilogy</a></em>: The Cobras are described training to use this method to descend between buildings, but it's implied that they can do it in the other direction as well.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Literature/Discworld' title='/pmwiki/pmwiki.php/Literature/Discworld' data-format='TGl0ZXJhdHVyZS97e0Rpc2N3b3JsZH19'>Discworld</a></em>: This is part of the urban mountaineering and parkour taught in the Guild of Assassins. Specifically, it is taught not so much to ascend, but as a means of slowing one's fall in a controlled descent, as mandated by the Emergency Drop.
 </li><li> It's revealed in <em><a class='twikilink' href='/pmwiki/pmwiki.php/Literature/Duumvirate' title='/pmwiki/pmwiki.php/Literature/Duumvirate' data-format='TGl0ZXJhdHVyZS97e0R1dW12aXJhdGV9fQ=='>Duumvirate</a></em> that <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LadyOfWar' title='/pmwiki/pmwiki.php/Main/LadyOfWar' data-format='W1tMYWR5T2ZXYXIgU2FyYWhdXQ=='>Sarah</a> can do this between walls <em>ten feet away</em>.
-</li><li> The <a class='twikilink' href='/pmwiki/pmwiki.php/Literature/TheCobraTrilogy' title='/pmwiki/pmwiki.php/Literature/TheCobraTrilogy' data-format='W1tMaXRlcmF0dXJlL1RoZUNvYnJhVHJpbG9neSBDb2JyYXNdXQ=='>Cobras</a> in <a class='twikilink' href='/pmwiki/pmwiki.php/Creator/TimothyZahn' title='/pmwiki/pmwiki.php/Creator/TimothyZahn' data-format='W1tDcmVhdG9yL1RpbW90aHlaYWhuIFRpbW90aHkgWmFobiYjMDM5O3NdXQ=='>Timothy Zahn's</a> eponymous series are described training to use this method to descend between buildings, but it's implied that they can do it in the other direction as well.
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder16');">&nbsp;&nbsp;&nbsp;&nbsp;Live-Action TV&nbsp;</div><div id="folder16" class="folder" isfolder="true" style="display:block;">
-<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Series/Community' title='/pmwiki/pmwiki.php/Series/Community' data-format='U2VyaWVzL3t7Q29tbXVuaXR5fX0='>Community</a></em>: Abed performs a <em><a class='twikilink' href='/pmwiki/pmwiki.php/Film/TheMatrix' title='/pmwiki/pmwiki.php/Film/TheMatrix' data-format='W1tGaWxtL1RoZU1hdHJpeCBNYXRyaXhdXQ=='>Matrix</a></em>-style version during the episode <a class='twikilink' href='/pmwiki/pmwiki.php/Recap/CommunityS1E23ModernWarfare' title='/pmwiki/pmwiki.php/Recap/CommunityS1E23ModernWarfare' data-format='W1tSZWNhcC9Db21tdW5pdHlTMUUyM01vZGVybldhcmZhcmUgTW9kZXJuIFdhcmZhcmVdXQ=='>Modern Warfare</a>.
-</li><li> In the final episode of Season 2 of <em><a class='twikilink' href='/pmwiki/pmwiki.php/Series/TwentyFour' title='/pmwiki/pmwiki.php/Series/TwentyFour' data-format='U2VyaWVzL1R3ZW50eUZvdXI='>24</a></em>, Jack Bauer does this during the fight in the L.A. Coliseum with Peter Kingsley's goons.
+</p><p><div class="folderlabel" onclick="togglefolder('folder17');">&nbsp;&nbsp;&nbsp;&nbsp;Live-Action TV&nbsp;</div><div id="folder17" class="folder" isfolder="true" style="display:block;">
+<ul ><li> In the final episode of Season 2 of <em><a class='twikilink' href='/pmwiki/pmwiki.php/Series/TwentyFour' title='/pmwiki/pmwiki.php/Series/TwentyFour' data-format='U2VyaWVzL1R3ZW50eUZvdXI='>24</a></em>, Jack Bauer does this during the fight in the L.A. Coliseum with Peter Kingsley's goons.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Series/Community' title='/pmwiki/pmwiki.php/Series/Community' data-format='U2VyaWVzL3t7Q29tbXVuaXR5fX0='>Community</a></em>: Abed performs a <em><a class='twikilink' href='/pmwiki/pmwiki.php/Film/TheMatrix' title='/pmwiki/pmwiki.php/Film/TheMatrix' data-format='W1tGaWxtL1RoZU1hdHJpeCBNYXRyaXhdXQ=='>Matrix</a></em>-style version during the episode "<a class='twikilink' href='/pmwiki/pmwiki.php/Recap/CommunityS1E23ModernWarfare' title='/pmwiki/pmwiki.php/Recap/CommunityS1E23ModernWarfare' data-format='W1tSZWNhcC9Db21tdW5pdHlTMUUyM01vZGVybldhcmZhcmUgTW9kZXJuIFdhcmZhcmVdXQ=='>Modern Warfare</a>".
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder17');">&nbsp;&nbsp;&nbsp;&nbsp;Manhwa&nbsp;</div><div id="folder17" class="folder" isfolder="true" style="display:block;">
+</p><p><div class="folderlabel" onclick="togglefolder('folder18');">&nbsp;&nbsp;&nbsp;&nbsp;Manhwa&nbsp;</div><div id="folder18" class="folder" isfolder="true" style="display:block;">
 <ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Manhwa/TheBreaker' title='/pmwiki/pmwiki.php/Manhwa/TheBreaker' data-format='TWFuaHdhL1RoZUJyZWFrZXI='>The Breaker</a></em>, a martial artist attempts this to in order to run away from <span class="spoiler" title="you can set spoilers visible by default on your profile" >Chun Woo</span>, who's out to kill him. Not that it works...
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder18');">&nbsp;&nbsp;&nbsp;&nbsp;Web Animation&nbsp;</div><div id="folder18" class="folder" isfolder="true" style="display:block;">
+</p><p><div class="folderlabel" onclick="togglefolder('folder19');">&nbsp;&nbsp;&nbsp;&nbsp;Web Animation&nbsp;</div><div id="folder19" class="folder" isfolder="true" style="display:block;">
 <ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WebAnimation/BattleForBFDI' title='/pmwiki/pmwiki.php/WebAnimation/BattleForBFDI' data-format='V2ViQW5pbWF0aW9uL0JhdHRsZUZvckJGREk='>Battle for BFDI</a></em>: When team A Better Name Than That found the emerald after digging deep down underground they grab it and all start to come back to the surface by jumping on their tunnel walls in <em>Don't Dig Straight Down</em>.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WebAnimation/DSBTInsaniT' title='/pmwiki/pmwiki.php/WebAnimation/DSBTInsaniT' data-format='V2ViQW5pbWF0aW9uL0RTQlRJbnNhbmlU'>DSBT InsaniT</a></em>: Killer does zig-zag wall jumps off the support beams of a roller coaster in order to place what are essentially energy versions of remote bombs so he can destroy a hunk of the roller coaster in combat.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WebAnimation/Tetrisd' title='/pmwiki/pmwiki.php/WebAnimation/Tetrisd' data-format='V2ViQW5pbWF0aW9uL3t7VGV0cmlzZH19'>T E T R I S ' D</a></em>: The hero often bounds off of the sides of Tetris block towers in order to escape being crushed by the upcoming falling blocks.
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder19');">&nbsp;&nbsp;&nbsp;&nbsp;Webcomics&nbsp;</div><div id="folder19" class="folder" isfolder="true" style="display:block;">
+</p><p><div class="folderlabel" onclick="togglefolder('folder20');">&nbsp;&nbsp;&nbsp;&nbsp;Webcomics&nbsp;</div><div id="folder20" class="folder" isfolder="true" style="display:block;">
 <ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Webcomic/HeroOhHero' title='/pmwiki/pmwiki.php/Webcomic/HeroOhHero' data-format='V2ViY29taWMvSGVyb09oSGVybw=='>Hero Oh Hero</a></em>, Burk does this to get at Logan when the latter starts flying.
 </li><li> Pacem of <em><a class='twikilink' href='/pmwiki/pmwiki.php/Webcomic/LucidSpring' title='/pmwiki/pmwiki.php/Webcomic/LucidSpring' data-format='V2ViY29taWMvTHVjaWRTcHJpbmc='>Lucid Spring</a></em> <a class='urllink' href='http://lucidspring.thecomicseries.com/comics/42'>uses it<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> to get herself up and onto the bear attacking her.
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Webcomic/SleeplessDomain' title='/pmwiki/pmwiki.php/Webcomic/SleeplessDomain' data-format='V2ViY29taWMvU2xlZXBsZXNzRG9tYWlu'>Sleepless Domain</a></em>: Chapter 19 opens with Undine and Heartful Punch on patrol in a narrow alleyway, when a small flying monster attacks them and promptly flees. Once Heartful Punch realizes <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Intangibility' title='/pmwiki/pmwiki.php/Main/Intangibility' data-format='W1t7e0ludGFuZ2liaWxpdHl9fSB3aGF0IHRoZSBtb25zdGVyIGp1c3QgZGlkIHRvIGhlcl1d'>what the monster just did to her</a>, she leaps between the buildings and onto the city rooftops to give chase.
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder20');">&nbsp;&nbsp;&nbsp;&nbsp;Western Animation&nbsp;</div><div id="folder20" class="folder" isfolder="true" style="display:block;">
-<ul ><li> <a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/KimPossible' title='/pmwiki/pmwiki.php/WesternAnimation/KimPossible' data-format='V2VzdGVybkFuaW1hdGlvbi9LaW1Qb3NzaWJsZQ=='>Kim Possible</a> and Shego do it, both in the series itself and in some of the games based on the series.
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/TeenTitans2003' title='/pmwiki/pmwiki.php/WesternAnimation/TeenTitans2003' data-format='V2VzdGVybkFuaW1hdGlvbi9UZWVuVGl0YW5zMjAwMw=='>Teen Titans (2003)</a></em>, Robin does this, and his walls are falling rocks.
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/AvatarTheLastAirbender' title='/pmwiki/pmwiki.php/WesternAnimation/AvatarTheLastAirbender' data-format='V2VzdGVybkFuaW1hdGlvbi9BdmF0YXJUaGVMYXN0QWlyYmVuZGVy'>Avatar: The Last Airbender</a></em>, Aang wall jumps during the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MeleeATrois' title='/pmwiki/pmwiki.php/Main/MeleeATrois' data-format='W1tNZWxlZUFUcm9pcyB0aHJlZS13YXkgZmlnaHRdXQ=='>three-way fight</a> "Chase". Azula demonstrated an even more impressive technique in "Day of The Black Sun: Eclipse" (which gets even more awesome once you remember she is not an airbender).
+</p><p><div class="folderlabel" onclick="togglefolder('folder21');">&nbsp;&nbsp;&nbsp;&nbsp;Western Animation&nbsp;</div><div id="folder21" class="folder" isfolder="true" style="display:block;">
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/AvatarTheLastAirbender' title='/pmwiki/pmwiki.php/WesternAnimation/AvatarTheLastAirbender' data-format='V2VzdGVybkFuaW1hdGlvbi9BdmF0YXJUaGVMYXN0QWlyYmVuZGVy'>Avatar: The Last Airbender</a></em>: Aang wall-jumps during the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MeleeATrois' title='/pmwiki/pmwiki.php/Main/MeleeATrois' data-format='W1tNZWxlZUFUcm9pcyB0aHJlZS13YXkgZmlnaHRdXQ=='>three-way fight</a> in "<a class='twikilink' href='/pmwiki/pmwiki.php/Recap/AvatarTheLastAirbenderTheChase' title='/pmwiki/pmwiki.php/Recap/AvatarTheLastAirbenderTheChase' data-format='W1tSZWNhcC9BdmF0YXJUaGVMYXN0QWlyYmVuZGVyVGhlQ2hhc2UgVGhlIENoYXNlXV0='>The Chase</a>". Azula demonstrates an even more impressive technique in "<a class='twikilink' href='/pmwiki/pmwiki.php/Recap/AvatarTheLastAirbenderTheDayOfBlackSunPart2' title='/pmwiki/pmwiki.php/Recap/AvatarTheLastAirbenderTheDayOfBlackSunPart2' data-format='W1tSZWNhcC9BdmF0YXJUaGVMYXN0QWlyYmVuZGVyVGhlRGF5T2ZCbGFja1N1blBhcnQyIFRoZSBEYXkgb2YgQmxhY2sgU3VuLCBQYXJ0IDI6IFRoZSBFY2xpcHNlXV0='>The Day of Black Sun, Part 2: The Eclipse</a>" (which gets even more awesome given that she is not an airbender).
 </li><li> The title character of <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/JackieChanAdventures' title='/pmwiki/pmwiki.php/WesternAnimation/JackieChanAdventures' data-format='V2VzdGVybkFuaW1hdGlvbi9KYWNraWVDaGFuQWR2ZW50dXJlcw=='>Jackie Chan Adventures</a></em>.
+</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/KimPossible' title='/pmwiki/pmwiki.php/WesternAnimation/KimPossible' data-format='V2VzdGVybkFuaW1hdGlvbi9LaW1Qb3NzaWJsZQ=='>Kim Possible</a> and Shego do this, both in the series itself and in some of the games based on the series.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/WesternAnimation/TeenTitans2003' title='/pmwiki/pmwiki.php/WesternAnimation/TeenTitans2003' data-format='V2VzdGVybkFuaW1hdGlvbi9UZWVuVGl0YW5zMjAwMw=='>Teen Titans (2003)</a></em>, Robin does this, and his walls are falling rocks.
 </li></ul></div>
-</p><p><div class="folderlabel" onclick="togglefolder('folder21');">&nbsp;&nbsp;&nbsp;&nbsp;Real Life&nbsp;</div><div id="folder21" class="folder" isfolder="true" style="display:block;">
-<!--* See [[https://www.youtube.com/watch?v=-amd36SRbJw --this--]] [[LeParkour parkour]] video. Specifically at 3:10 and 4:45.-->
+</p><p><div class="folderlabel" onclick="togglefolder('folder22');">&nbsp;&nbsp;&nbsp;&nbsp;Real Life&nbsp;</div><div id="folder22" class="folder" isfolder="true" style="display:block;">
+
 <ul ><li> Australian Rules Football has the "speccy" (special) &#8212; where you literally Wall Jump <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RugbyIsSlaughter' title='/pmwiki/pmwiki.php/Main/RugbyIsSlaughter' data-format='W1tSdWdieUlzU2xhdWdodGVyIG9mZiBhbm90aGVyIHBsYXllcl1d'>off another player</a> to catch the ball.
-<!--* Chinchillas can wall jump. [[https://www.youtube.com/watch?v=4SH26cWVpXM Check it out]] (first 7 seconds)-->
-<!--* [[https://www.youtube.com/watch?v=TamMqvk4Bb8&amp;t=1m15s A squirrel using a successful wall jump to avoid an obstacle course]].-->
+
+
 </li><li> Cats, given their natural agility and speed, will do this when they feel the need. Or when they're chasing a laser pen.
 </li><li> The <a class='urllink' href='http://en.wikipedia.org/wiki/Ring-tailed_cat'>ringtail<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> (resembles a cat but is actually a member of the raccoon family) can wall jump to climb canyon walls in the American Southwest.
+</li><li> As mentioned above, it is possible to pull this off in <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RealLife' title='/pmwiki/pmwiki.php/Main/RealLife' data-format='UmVhbExpZmU='>Real Life</a>. Effectively you turn the wall into a very poor improvised step ladder and use that to jump off it. Your vertical acceleration (in other words, how much higher you go) is going to be determined by both the contact angle (which determines the vertical component of your velocity) and available friction, with the former also influencing the latter; if you try to jump off at a near vertical angle your foot is only going to have a very small contact point with the wall. Horizontal velocity is there to allow you to keep some friction with the wall by pushing you into it while you jump off, otherwise your foot would slip off.
 </li></ul></div>
 <hr data-format='&#8212;&#8212;' />
 </p></div>
@@ -690,28 +703,28 @@
   <div class="video-examples-featured">
     <div class="example_video_box">
       <a href="#video-link"
-         data-video-id="csxik7"
-         data-video-descrip="Daigo Toake practices parkour by using two brick-based structure to hop from left to right and vice versa. He also does a wall jump."
-         data-video-title="Going up"
-         data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/csxik7_640x360p_qvbr.mp4"
-         data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/csxik7.mpd"
-         data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/csxik7.m3u8"
-         data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/csxik7.jpg"
-         data-video-trope="Main/LeParkour"
-         data-video-tropename="Le Parkour"
+         data-video-id="j9oxck"
+         data-video-descrip="Super Metroid is a 1994 action-adventure game created by Nintendo for the SNES. A direct sequel to Metroid II, Super Metroid once again follows bounty hunter Samus Aran, who returns to her homeworld, Planet Zebes, to rescue a Metroid hatchling from the clutches her archenemy, Ridley, and his army of Space Pirates. Widely considered to be the true start of the Metroidvania genre, Super Metroid takes place in a vast, interconnected world full of secrets, shortcuts, and new abilities that can be used to backtrack and find even more secrets, shortcuts, and abilities. Combining exploration with platforming and fast-paced action, Super Metroid is a masterpiece of game design."
+         data-video-title="Super Metroid"
+         data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/j9oxck_640x360p_qvbr.mp4"
+         data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/j9oxck.mpd"
+         data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/j9oxck.m3u8"
+         data-video-thumbnail="https://mediaproxy.tvtropes.org/width/600/https://tvtropes.org/pmwiki/pub/images/img_3786_0.jpeg"
+         data-video-trope="Main/Metroidvania"
+         data-video-tropename="Metroidvania"
          data-video-approval="APPROVED"
          data-video-troper-rating=""
          data-video-average-rating="5.00"
-         data-video-rating-count="5"
-         data-video-media-sources="Manga/FirefighterDaigoRescuerInOrange,Main/WallJump"
+         data-video-rating-count="4"
+         data-video-media-sources="Main/ActionAdventure,Main/TropeCodifier,Main/TropeNamers,Main/WallJump,VideoGame/SuperMetroid,Franchise/Metroid"
          class="video-launch-link video-overlay-link featured-widget-vid">
 
           <div class="featured-widget-vid-iframe">
               <div id="tvtropes_no_volume_player" 
-                  data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/csxik7.jpg" 
-                  data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/csxik7_640x360p_qvbr.mp4" 
-                  data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/csxik7.mpd" 
-                  data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/csxik7.m3u8"
+                  data-video-image="https://mediaproxy.tvtropes.org/width/600/https://tvtropes.org/pmwiki/pub/images/img_3786_0.jpeg" 
+                  data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/j9oxck_640x360p_qvbr.mp4" 
+                  data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/j9oxck.mpd" 
+                  data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/j9oxck.m3u8"
               		data-controls="0"
               		data-muted="1">
                   
@@ -721,14 +734,56 @@
       </a>
     </div>
 
-    <h2 class="bold font-l">Going up</h2>
+    <h2 class="bold font-l">Super Metroid</h2>
     <p class="_pmvv-vidbox-descTxt">
-      Daigo Toake practices parkour by using two brick-based structure to hop from left to right and vice versa. He also does a wall jump.    </p>
-    <p class='example_row'>Example of:<br><a href="/pmwiki/pmwiki.php/Main/LeParkour"class='trope-example-link'>Le Parkour</a></p>
+      Super Metroid is a 1994 action-adventure game created by Nintendo for the SNES. A direct sequel to Metroid II, Super Metroid once again follows bounty hunter Samus Aran, who returns to her homeworld, Planet Zebes, to rescue a Metroid hatchling from the clutches her archenemy, Ridley, and his army of Space Pirates. Widely considered to be the true start of the Metroidvania genre, Super Metroid takes place in a vast, interconnected world full of secrets, shortcuts, and new abilities that can be used to backtrack and find even more secrets, shortcuts, and abilities. Combining exploration with platforming and fast-paced action, Super Metroid is a masterpiece of game design.    </p>
+    <p class='example_row'>Example of:<br><a href="/pmwiki/pmwiki.php/Main/Metroidvania"class='trope-example-link'>Metroidvania</a></p>
 
   </div>
 
     <div class="video-examples-thumbs">
+
+          
+      <a href="#video-link"
+      data-video-id="ceuug2"
+      data-video-descrip="The game's main menu cycles through prerecorded plays, showing typical mistakes that players make during the game."
+      data-video-title="N"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/ceuug2_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/ceuug2.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/ceuug2.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/ceuug2.jpg"
+      data-video-trope="Main/AttractMode"
+      data-video-tropename="Attract Mode"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Main/TheManyDeathsOfYou,VideoGame/N,Main/WallJump"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/ceuug2.jpg">
+      <p><span class="bold">N</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="csxik7"
+      data-video-descrip="Daigo Toake practices parkour by using two brick-based structure to hop from left to right and vice versa. He also does a wall jump."
+      data-video-title="Going up"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/csxik7_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/csxik7.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/csxik7.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/csxik7.jpg"
+      data-video-trope="Main/LeParkour"
+      data-video-tropename="Le Parkour"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Manga/FirefighterDaigoRescuerInOrange,Main/WallJump"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/csxik7.jpg">
+      <p><span class="bold">Going up</span></p>
+    </a>
 
           
       <a href="#video-link"
@@ -763,8 +818,6 @@
 </div>
 
 
-
-    
         <div class="section-links" itemscope itemtype="http://schema.org/SiteNavigationElement">
 
     
@@ -793,6 +846,20 @@
             
                 <ul>
                     <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/WallCrawl">Wall Crawl</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/WallTropes">Wall Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/WallOfWeapons">Wall of Weapons</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
                                                     <a href="/pmwiki/pmwiki.php/Main/DoubleJump">Double Jump</a>
                                             </li>
                     <li>
@@ -801,34 +868,6 @@
                     <li>
                          
                             <a href="/pmwiki/pmwiki.php/Main/Knockback">Knockback</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/UnnecessaryCombatRoll">Unnecessary Combat Roll</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/DexterityTropes">Dexterity Tropes</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/WallRun">Wall Run</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/WallCrawl">Wall Crawl</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/DangerousHeights">Dangerous Heights</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/WallRun">Wall Run</a> 
                                             </li>
                 </ul>
 
@@ -849,6 +888,34 @@
             
                 <ul>
                     <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/WallCrawl">Wall Crawl</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/DangerousHeights">Dangerous Heights</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/WallRun">Wall Run</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/UnnecessaryCombatRoll">Unnecessary Combat Roll</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/DexterityTropes">Dexterity Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/WallRun">Wall Run</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
                                                     <a href="/pmwiki/pmwiki.php/Main/ItemGet">Item Get!</a>
                                             </li>
                     <li>
@@ -860,12 +927,24 @@
                                             </li>
                 </ul>
 
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/SurpriseJump">Surprise Jump</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/LeapsAndBounds">Leaps and Bounds</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/YeahShot">"YEAH!" Shot</a> 
+                                            </li>
+                </ul>
+
                     
         
             </div>
 </div>
-
-
 
 
 
@@ -907,6 +986,8 @@
             <div class="crucial_browsing_dropdown">
                 <a href="javascript:void(0);" onclick="double_dropdown(); return false;" id="crucial_browsing_dropdown"><span class="new_blue">Crucial Browsing</span><i class="fa fa-angle-down"></i></a>
                 <ul id="main_dropdown">
+                    <li class="first_dropdown"><a href="/pmwiki/index_report.php">Indexes</a>
+
                     <li class="first_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Genre</a>
                         <ul>
                             <li><a href='/pmwiki/pmwiki.php/Main/ActionAdventureTropes' title='Main/ActionAdventureTropes'>Action Adventure</a></li>
@@ -940,7 +1021,7 @@
                             <li><a href="/pmwiki/pmwiki.php/Main/Radio" title="Main/Radio">Radio</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/SequentialArt" title="Main/SequentialArt">Sequential Art</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/TabletopGames" title="Main/TabletopGames">Tabletop Games</a></li>
-                            <li><a href="/pmwiki/pmwiki.php/UsefulNotes/Television" title="Main/Television">Television</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/MediaNotes/Television" title="MediaNotes/Television">Television</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/Theater" title="Main/Theater">Theater</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/VideogameTropes" title="Main/VideogameTropes">Videogame</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/Webcomics" title="Main/Webcomics">Webcomics</a></li>
@@ -1131,6 +1212,7 @@
                 <li><a href="/pmwiki/changelog.php">Changelog</a></li>
                 <li><a href="/pmwiki/dmca.php">DMCA Notice</a></li>
                 <li><a href="/pmwiki/privacypolicy.php">Privacy Policy</a></li>
+                <li><a href="/pmwiki/termsofservice.php">Terms Of Service</a></li>
 
             </ul>
 
@@ -1141,7 +1223,7 @@
         </div>
 
         <div class="legal">
-            <p>TVTropes is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. <br>Permissions beyond the scope of this license may be available from <a xmlns:cc="http://creativecommons.org/ns#" href="mailto:thestaff@tvtropes.org" rel="cc:morePermissions"> thestaff@tvtropes.org</a>.</p>
+            <p>TVTropes is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. <br>Permissions beyond the scope of this license may be available from <a xmlns:cc="http://creativecommons.org/ns#" href="/cdn-cgi/l/email-protection#c2b6aaa7b1b6a3a4a482b6b4b6b0adb2a7b1ecadb0a5" rel="cc:morePermissions"> <span class="__cf_email__" data-cfemail="5a2e323f292e3b3c3c1a2e2c2e28352a3f297435283d">[email&#160;protected]</span></a>.</p>
             <br>
             <div class="privacy_wrapper">
             </div>
@@ -1149,25 +1231,7 @@
     </footer>
     
     
-    <style>
-      div.fc-ccpa-root {
-        position: absolute !important;
-        bottom: 93px !important;
-        margin: auto !important;
-        width: 100% !important;
-        z-index: 9999 !important;
-        overflow: hidden !important;
-      }
-      .fc-ccpa-root .fc-dns-dialog .fc-dns-link p{
-        outline: none !important;
-        text-decoration: underline !important;
-        font-size: .7em !important;
-        font-family: sans-serif !important;
-      }
-      .fc-ccpa-root .fc-dns-dialog .fc-dns-link .fc-button-background {
-        background: none !important;
-      }
-    </style>
+    
 
         <div id="_pm_videoViewer" class="full-screen">
 
@@ -1180,12 +1244,12 @@
         <div id="overlay_outer_player_max">
 	<div id="overlay_outer_player_wrapper">
 		<div id="tvtropes_overlay_player" 
-			data-video-id="tvtropes-videos-csxik7" 
-			data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/csxik7.jpg" 
-			data-video-title="Going up" 
-			data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/csxik7_640x360p_qvbr.mp4" 
-			data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/csxik7.mpd" 
-			data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/csxik7.m3u8"
+			data-video-id="tvtropes-videos-j9oxck" 
+			data-video-image="https://mediaproxy.tvtropes.org/width/600/https://tvtropes.org/pmwiki/pub/images/img_3786_0.jpeg" 
+			data-video-title="Super Metroid" 
+			data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/j9oxck_640x360p_qvbr.mp4" 
+			data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/j9oxck.mpd" 
+			data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/j9oxck.m3u8"
 			data-small-player="never"
 			data-track-events="1"
 			data-do-not-loop="1"
@@ -1197,11 +1261,11 @@
 
 <div class="_pmvv-vidbox-desc">
 
-	<h1 id="overlay-title">Going up</h1>
+	<h1 id="overlay-title">Super Metroid</h1>
 	<p id="overlay-descrip" class="_pmvv-vidbox-descTxt">
-	    Daigo Toake practices parkour by using two brick-based structure to hop from left to right and vice versa. He also does a wall jump.	</p>
+	    Super Metroid is a 1994 action-adventure game created by Nintendo for the SNES. A direct sequel to Metroid II, Super Metroid once again follows bounty hunter Samus Aran, who returns to her homeworld, Planet Zebes, to rescue a Metroid hatchling from the clutches her archenemy, Ridley, and his army of Space Pirates. Widely considered to be the true start of the Metroidvania genre, Super Metroid takes place in a vast, interconnected world full of secrets, shortcuts, and new abilities that can be used to backtrack and find even more secrets, shortcuts, and abilities. Combining exploration with platforming and fast-paced action, Super Metroid is a masterpiece of game design.	</p>
 
-      <div class="rating-row"  data-video-id="csxik7" >
+      <div class="rating-row"  data-video-id="j9oxck" >
         <input type="hidden" name="is_logged_in"  value="0" >
         <p>How well does it match the trope?</p>
 				<div id="star-rating-group">
@@ -1219,7 +1283,7 @@
 													</div>
 
                         <div id="star-rating-total">
-                                                            5 (5 votes)
+                                                            5 (4 votes)
                                                     </div>
 
 					</div>
@@ -1228,7 +1292,7 @@
 		<div class="example-media-row">
 			<div class="example-overlay">
 				<p>Example of:</p> 
-				<div id="overlay-trope">Main / LeParkour</div>
+				<div id="overlay-trope">Main / Metroidvania</div>
 			</div>
 			<div class="media_second_wrapper">
 				<div class="media-sources-overlay example-overlay">
@@ -1242,7 +1306,7 @@
 			</div>
 		</div>
 	<p class="_pmvv-vidbox-stats text-right font-s" style="padding-top:8px; border-top: solid 1px rgba(255,255,255,0.2)">
-	<!--    <i class="fa fa-eye"></i> 11,241-->
+	
 
 
 			    <a href="#video-feedback" class="float-right" 
@@ -1261,6 +1325,46 @@
     <div class="_pmvv-foot">
 
     <div class="_pmvv-foot-scrollwrapper">
+                <a href="#video-link" 
+             data-video-id="j9oxck"
+             data-vimeo-id=""
+             data-video-descrip="Super Metroid is a 1994 action-adventure game created by Nintendo for the SNES. A direct sequel to Metroid II, Super Metroid once again follows bounty hunter Samus Aran, who returns to her homeworld, Planet Zebes, to rescue a Metroid hatchling from the clutches her archenemy, Ridley, and his army of Space Pirates. Widely considered to be the true start of the Metroidvania genre, Super Metroid takes place in a vast, interconnected world full of secrets, shortcuts, and new abilities that can be used to backtrack and find even more secrets, shortcuts, and abilities. Combining exploration with platforming and fast-paced action, Super Metroid is a masterpiece of game design."
+             data-video-title="Super Metroid"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/j9oxck_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/j9oxck.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/j9oxck.m3u8"
+             data-video-thumbnail="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/img_3786_0.jpeg"
+             data-video-trope="Main/Metroidvania"
+             data-video-tropename="Metroidvania"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="5.00"
+             data-video-rating-count="4"
+             data-video-media-sources="Main/ActionAdventure,Main/TropeCodifier,Main/TropeNamers,Main/WallJump,VideoGame/SuperMetroid,Franchise/Metroid"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://mediaproxy.tvtropes.org/width/250/https://tvtropes.org/pmwiki/pub/images/img_3786_0.jpeg">
+            <p><span class="bold">Super Metroid</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="ceuug2"
+             data-vimeo-id=""
+             data-video-descrip="The game's main menu cycles through prerecorded plays, showing typical mistakes that players make during the game."
+             data-video-title="N"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/ceuug2_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/ceuug2.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/ceuug2.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/ceuug2.jpg"
+             data-video-trope="Main/AttractMode"
+             data-video-tropename="Attract Mode"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="4.75"
+             data-video-rating-count="4"
+             data-video-media-sources="Main/TheManyDeathsOfYou,VideoGame/N,Main/WallJump"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/ceuug2.jpg">
+            <p><span class="bold">N</span></p>
+          </a>
                 <a href="#video-link" 
              data-video-id="csxik7"
              data-vimeo-id=""
@@ -1321,22 +1425,16 @@
 
 
 
-<!-- Quantcast Tag -->
 
 
-<noscript>
-  <div style="display:none;">
-    <img src="//pixel.quantserve.com/pixel/p-mEzuYq24VEJ-3.gif" border="0" height="1" width="1" alt="Quantcast"/>
-  </div>
-</noscript>
-<!-- End Quantcast tag -->
 
 
-<!-- Begin comScore Tag -->
 
-<noscript>
-  <img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=38282685&amp;cv=3.6.0&amp;cj=1">
-</noscript>
-<!-- End comScore Tag -->
+
+
+
+
+
+
 </body>
 </html>

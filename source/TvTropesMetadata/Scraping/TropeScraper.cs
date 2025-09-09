@@ -6,14 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Playnite.SDK;
 
 namespace TvTropesMetadata.Scraping;
 
-public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
+public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewFactory)
 {
-    public List<string> VideogameCategoryUrlRoots = ["VideoGame", "VisualNovel"];
-    public List<string> SubcategoryWhitelist = ["VideoGames", "VisualNovels"];
-    public List<string> FolderLabelWhitelist = [
+    private List<string> VideogameCategoryUrlRoots = ["VideoGame", "VisualNovel"];
+
+    private List<string> FolderLabelWhitelist =
+    [
         "Game",
         "Visual Novel",
         "Action-Adventure",
@@ -35,7 +37,12 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
         "Sandbox"
     ];
 
-    public override IEnumerable<TvTropesSearchResult> Search(string query) => Search(query, "trope");
+    public override IEnumerable<TvTropesSearchResult> Search(string query)
+    {
+        var results = Search(query, "trope").ToList();
+        results.RemoveAll(sr => sr.Breadcrumbs.Count != 1 || sr.Breadcrumbs[0] != "Tropes");
+        return results;
+    }
 
     public ParsedTropePage GetGamesForTrope(string url)
     {
@@ -51,7 +58,7 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
         if (pageIsSubsection)
         {
             var breadcrumbLinks = doc.QuerySelectorAll(".entry-title .entry-breadcrumb > a[href]");
-            foreach(var a in breadcrumbLinks)
+            foreach (var a in breadcrumbLinks)
             {
                 var linkUrl = a.GetAttribute("href").GetAbsoluteUrl(url);
                 var linkText = a.TextContent.HtmlDecode();
@@ -67,12 +74,15 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
                 var subcategoryPage = GetGamesForTrope(subcategoryUrl, pageIsSubsection: true);
                 output.Items.AddRange(subcategoryPage.Items);
             }
+
             output.Items.RemoveAll(i => i.Works.Count == 0 || BlacklistedWords.Any(w => i.Text.Contains(w, StringComparison.InvariantCultureIgnoreCase)));
         }
+
         return output;
     }
 
     private bool IsVideogameFolderName(string folderName) => FolderLabelWhitelist.Any(l => folderName.Contains(l, StringComparison.InvariantCultureIgnoreCase));
+
     private bool IsVideogameUrl(string url)
     {
         var linkSegments = GetWikiPathSegments(url);
@@ -99,7 +109,7 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
 
             yield return linkUrl.GetAbsoluteUrl(pageUrl);
 
-            var childUrls = a.ParentElement.QuerySelectorAll("ul > li a.twikilink[href]").Select(x=>x.GetAttribute("href").GetAbsoluteUrl(pageUrl)).ToArray();
+            var childUrls = a.ParentElement.QuerySelectorAll("ul > li a.twikilink[href]").Select(x => x.GetAttribute("href").GetAbsoluteUrl(pageUrl)).ToArray();
             foreach (var childUrl in childUrls)
                 yield return childUrl;
         }
@@ -154,6 +164,7 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
             if (output.Count == 0)
                 AddAllListElementsFromSegments(headerSegments);
         }
+
         return output;
     }
 
@@ -187,6 +198,7 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
                 AddWork(new TvTropesWork { Title = ReverseEngineerGameNameFromUrlSegment(gameUrlName), Urls = [url] });
             }
         }
+
         return output;
     }
 
@@ -216,6 +228,7 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
                 i++;
             }
         }
+
         return new string(str.ToArray());
     }
 }
