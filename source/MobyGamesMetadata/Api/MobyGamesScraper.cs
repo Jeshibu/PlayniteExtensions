@@ -16,13 +16,13 @@ public class MobyGamesScraper(IPlatformUtility platformUtility, IWebViewFactory 
     private IWebView _webView;
     private IWebView WebView => _webView ??= webViewFactory.CreateOffscreenView();
 
-    public static string GetSearchUrl(string query, string objectType)
+    private static string GetSearchUrl(string query, string objectType)
     {
         query = Uri.EscapeDataString(query);
         return $"https://www.mobygames.com/search/?q={query}&type={objectType}&adult=true";
     }
 
-    public static string GetGameDetailsUrl(int id)
+    private static string GetGameDetailsUrl(int id)
     {
         return $"https://www.mobygames.com/game/{id}";
     }
@@ -47,7 +47,7 @@ public class MobyGamesScraper(IPlatformUtility platformUtility, IWebViewFactory 
         return GetGameDetails(url);
     }
 
-    public GameDetails GetGameDetails(string url)
+    private GameDetails GetGameDetails(string url)
     {
         var pageSource = GetPageSource(url);
         return ParseGameDetailsHtml(pageSource);

@@ -15,7 +15,7 @@ public class MobyGamesMetadata : MetadataPlugin
 {
     private readonly ILogger logger = LogManager.GetLogger();
     private MobyGamesApiClient apiClient;
-    public MobyGamesApiClient ApiClient { get { return apiClient ??= new MobyGamesApiClient(settings?.Settings?.ApiKey); } }
+    private MobyGamesApiClient ApiClient { get { return apiClient ??= new(settings?.Settings?.ApiKey); } }
 
     private MobyGamesMetadataSettingsViewModel settings { get; set; }
 
@@ -62,7 +62,7 @@ public class MobyGamesMetadata : MetadataPlugin
         }
     }
 
-    public override string Name { get; } = "MobyGames";
+    public override string Name => "MobyGames";
 
     public MobyGamesMetadata(IPlayniteAPI api) : base(api)
     {
@@ -95,7 +95,7 @@ public class MobyGamesMetadata : MetadataPlugin
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
         if (settings.Settings.DataSource.HasFlag(DataSource.Api))
-            yield return new MainMenuItem { Description = "Import MobyGames genre/group", MenuSection = "@MobyGames", Action = _ => ImportGameProperty() };
+            yield return new() { Description = "Import MobyGames genre/group", MenuSection = "@MobyGames", Action = _ => ImportGameProperty() };
     }
 
     public override IEnumerable<TopPanelItem> GetTopPanelItems()
@@ -104,7 +104,7 @@ public class MobyGamesMetadata : MetadataPlugin
             yield break;
 
         var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-        var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation), "icon.png");
+        var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation)!, "icon.png");
         yield return new TopPanelItem()
         {
             Icon = iconPath,
