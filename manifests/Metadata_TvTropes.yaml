@@ -38,9 +38,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/TvTropesMetadata_0_4_7.pext
     Changelog:
       - "Fixed platform matching failing to match some platforms if they'd been renamed"
-  - Version: "0.5"
+  - Version: 0.4.8
     RequiredApiVersion: 6.11.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: "https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/TvTropesMetadata_0_5.pext"
+    ReleaseDate: 2025-09-09
+    PackageUrl: "https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-09-09/TvTropesMetadata_0_4_8.pext"
     Changelog:
-      - "Fixed no results after site redesign"
+      - "Fixed nothing working after site redesign"

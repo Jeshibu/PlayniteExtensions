@@ -70,9 +70,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/IgnMetadata_0_4_1.pext
     Changelog:
       - "Fixed platform matching failing to match some platforms if they'd been renamed"
-  - Version: 0.5.0
+  - Version: "0.5"
     RequiredApiVersion: 6.4.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/IgnMetadata_0_5_0.pext
+    ReleaseDate: 2025-09-09
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-09-09/IgnMetadata_0_5.pext
     Changelog:
       - "New: Download backgrounds (screenshots only)"

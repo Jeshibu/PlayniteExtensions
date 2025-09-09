@@ -84,7 +84,7 @@ public class LaunchBoxMetadata : MetadataPlugin
             yield break;
 
         var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-        var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation), "icon.png");
+        var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation)!, "icon.png");
         yield return new TopPanelItem()
         {
             Icon = iconPath,
@@ -101,7 +101,7 @@ public class LaunchBoxMetadata : MetadataPlugin
 
         var launchBoxDatabase = new LaunchBoxDatabase(GetPluginUserDataPath());
         var searchProvider = new GenreSearchProvider(launchBoxDatabase, platformUtility);
-        var bulkImport = new GenreBulkImport(PlayniteApi, searchProvider, platformUtility);
+        var bulkImport = new GenreBulkImport(PlayniteApi, searchProvider, platformUtility, Settings.Settings);
         bulkImport.ImportGameProperty();
     }
 

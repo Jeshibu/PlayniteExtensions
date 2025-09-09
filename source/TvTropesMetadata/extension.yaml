@@ -1,7 +1,7 @@
 ﻿Id: TvTropesMetadata
 Name: TV Tropes Metadata
 Author: Jeshibu
-Version: 0.5
+Version: 0.4.8
 Module: TvTropesMetadata.dll
 Type: MetadataProvider
 Icon: icon.png
