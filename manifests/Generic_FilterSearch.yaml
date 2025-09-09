@@ -9,7 +9,7 @@ Packages:
   - Version: 1.0
     RequiredApiVersion: 6.12.0
     ReleaseDate: 2025-09-09
-    PackageUrl: "https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-09-09/FilterSearch_1_0.pext"
+    PackageUrl: "https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-09-09/FilterSearch_1.pext"
     Changelog:
       - Rename from Metadata Search to Filter Search
       - Added settings
