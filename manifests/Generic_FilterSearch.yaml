@@ -18,6 +18,6 @@ Packages:
   - Version: '1.0.1'
     RequiredApiVersion: 6.12.0
     ReleaseDate: 2025-09-11
-    PackageUrl: "https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-09-11/FilterSearch_1_0_1.pext"
+    PackageUrl: "https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-09-09/FilterSearch_1_0_1.pext"
     Changelog:
       - 'Fixed broken settings'
