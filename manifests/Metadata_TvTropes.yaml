@@ -46,7 +46,7 @@ Packages:
       - "Fixed nothing working after site redesign"
   - Version: 0.4.9
     RequiredApiVersion: 6.11.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/TvTropesMetadata_0_4_9.pext'
+    ReleaseDate: 2025-09-11
+    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-09-11/TvTropesMetadata_0_4_9.pext'
     Changelog:
       - "Really actually fixed search returning nothing this time"
