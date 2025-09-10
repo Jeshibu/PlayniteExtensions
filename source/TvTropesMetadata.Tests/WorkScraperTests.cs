@@ -43,7 +43,6 @@ public class WorkScraperTests
         Assert.Contains("Hercules (Disney)", result.Franchises);
     }
     
-    
     [Fact]
     public void SearchProducesResults()
     {
