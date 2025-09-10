@@ -39,8 +39,13 @@ public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewF
 
     public override IEnumerable<TvTropesSearchResult> Search(string query)
     {
-        var results = Search(query, "trope").ToList();
+        var directUrlResult = GetBasicPageInfo(query);
+        if (directUrlResult != null)
+            return [directUrlResult];
+        
+        var results = GoogleSearch(query).Result.ToList();
         results.RemoveAll(sr => sr.Breadcrumbs.Count != 1 || sr.Breadcrumbs[0] != "Tropes");
+        
         return results;
     }
 

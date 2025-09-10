@@ -37,7 +37,7 @@ public class TropeScraperTests
         { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/VisualNovels", "html/MultipleEndings-VisualNovels.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ClassOf09", "html/MultipleEndings-ClassOf09.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/NeedyStreamerOverload", "html/MultipleEndings-NeedyStreamerOverload.html" },
-        { BaseScraper.GetSearchUrl("multiple endings"), "html/Search-multiple-endings.html" },
+        { BaseScraper.GetGoogleSearchUrl("endings"), "html/google-endings.html" },
     });
 
     [Fact]
@@ -161,11 +161,13 @@ public class TropeScraperTests
         var scraper = new TropeScraper(webViewFactory);
         var sp = new TropeSearchProvider(scraper, new());
         
-        var searchResults = sp.Search("multiple endings").ToList();
+        var searchResults = sp.Search("endings").ToList();
         
-        Assert.Equal(2, searchResults.Count);
+        Assert.Equal(7, searchResults.Count);
         Assert.Equal("Multiple Endings", searchResults[0].Name);
-        Assert.Equal("Golden Ending", searchResults[1].Name);
+        Assert.Equal("https://tvtropes.org/pmwiki/pmwiki.php/Main/MultipleEndings", searchResults[0].Url);
+        Assert.Equal("Multiple Endings are the most commonly seen form of Story Branching in video games, used primarily to increase their Replay Value.", searchResults[0].Description);
+        Assert.Equal("Tropes", searchResults[0].Breadcrumbs.Single());
     }
 
     private void ContainsGame(ParsedTropePage tropePage, string title, string url)

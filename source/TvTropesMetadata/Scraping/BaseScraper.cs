@@ -2,13 +2,17 @@
 using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
+using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace TvTropesMetadata.Scraping;
@@ -19,6 +23,7 @@ public abstract class BaseScraper(IWebViewFactory webViewFactory)
     protected IWebView WebView => _webView ??= webViewFactory.CreateOffscreenView();
     protected readonly ILogger logger = LogManager.GetLogger();
     protected List<string> CategoryWhitelist = ["VideoGame", "VisualNovel"];
+    protected const string articleBaseUrl = "https://tvtropes.org/pmwiki/pmwiki.php/";
 
     protected List<string> BlacklistedWords =
     [
@@ -26,58 +31,67 @@ public abstract class BaseScraper(IWebViewFactory webViewFactory)
         "deconstructs", "averts", "inverts", "subverts"
     ];
 
-    public static string GetSearchUrl(string query)
+    public static string GetGoogleSearchUrl(string query)
     {
-        return $"https://tvtropes.org/pmwiki/search_result.php#gsc.tab=0&gsc.q={HttpUtility.UrlEncode(query)}&gsc.sort=";
+        var escapedQuery = HttpUtility.UrlEncode($"site:tvtropes.org {query}");
+        return $"https://www.google.com/search?hl=en&q={escapedQuery}";
+    }
+
+    protected async Task<IEnumerable<TvTropesSearchResult>> GoogleSearch(string query)
+    {
+        var url = GetGoogleSearchUrl(query);
+
+        WebView.NavigateAndWait(url);
+        if (WebView.GetCurrentAddress().StartsWith("https://consent.google.com", StringComparison.OrdinalIgnoreCase))
+        {
+            // This rejects Google's consent form for cookies
+            await WebView.EvaluateScriptAsync("document.getElementsByTagName('form')[0].submit();");
+            await Task.Delay(3000);
+            WebView.NavigateAndWait(url);
+        }
+
+        var pageSource = await WebView.GetPageSourceAsync();
+        var doc = await new HtmlParser().ParseAsync(pageSource);
+        var resultElements = doc.QuerySelectorAll("#search [lang=en]").ToList();
+        var output = new List<TvTropesSearchResult>();
+        foreach (var result in resultElements)
+        {
+            var a = result.QuerySelector("a[href]");
+            var h3 = a?.QuerySelector("h3");
+            var breadCrumbElement = a?.QuerySelector("cite > span");
+            var lastSpan = result.QuerySelectorAll("span")?.LastOrDefault();
+            if (a == null || h3 == null)
+                continue;
+
+            var name = h3.TextContent.HtmlDecode().TrimEnd([" (trope)", " (Video Game)"]);
+            
+            output.Add(new()
+            {
+                Name = name,
+                Title = name,
+                Url = a.GetAttribute("href"),
+                Breadcrumbs = GetBreadCrumbSegments(breadCrumbElement?.TextContent.HtmlDecode()),
+                Description = lastSpan?.TextContent.HtmlDecode(),
+            });
+        }
+        return output;
+    }
+
+    private static List<string> GetBreadCrumbSegments(string breadCrumbs)
+    {
+        if (breadCrumbs == null)
+            return [];
+        
+        // › pmwiki › pmwiki.php › Main › E...
+        return breadCrumbs.Split('›').Select(x => x.Trim())
+                          .Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
     }
 
     public abstract IEnumerable<TvTropesSearchResult> Search(string query);
 
-    protected IEnumerable<TvTropesSearchResult> Search(string query, string type)
+    protected TvTropesSearchResult GetBasicPageInfo(string url)
     {
-        var directUrlResult = GetBasicPageInfo(query);
-        if (directUrlResult != null)
-        {
-            yield return directUrlResult;
-            yield break;
-        }
-
-        string url = GetSearchUrl(query);
-        var doc = GetDocument(url);
-        var searchResults = doc.QuerySelectorAll("div.gs-result");
-        var skipBreadcrumbs = new[] { "TV Tropes", "pmwiki", "pmwiki.php" };
-
-        foreach (var div in searchResults)
-        {
-            var a = div.QuerySelector("a.gs-title[href]");
-            if (a == null)
-                continue;
-
-            var absoluteUrl = a.GetAttribute("href").GetAbsoluteUrl(url);
-            var title = a.TextContent;
-            var imgUrl = div.QuerySelector("img[src]")?.GetAttribute("src");
-            var description = div.QuerySelector("div.gs-snippet")?.TextContent;
-            var breadCrumbs = div.QuerySelectorAll("div.gs-visibleUrl-breadcrumb > span")
-                                 .Select(x => x.TextContent.TrimStart('›', ' '))
-                                 .SkipWhile(skipBreadcrumbs.Contains)
-                                 .ToList();
-
-            yield return new()
-            {
-                Description = description,
-                ImageUrl = imgUrl,
-                Name = title,
-                Title = title.TrimEnd(" (Video Game)").TrimEnd(" (Visual Novel)"),
-                Url = absoluteUrl,
-                Breadcrumbs = breadCrumbs,
-            };
-        }
-    }
-
-    private TvTropesSearchResult GetBasicPageInfo(string url)
-    {
-        var urlBase = "https://tvtropes.org/pmwiki/pmwiki.php/";
-        if (url == null || !url.StartsWith(urlBase))
+        if (url == null || !url.StartsWith(articleBaseUrl))
             return null;
 
         try
@@ -145,9 +159,12 @@ public abstract class BaseScraper(IWebViewFactory webViewFactory)
 
     private readonly Regex PathSplitter = new(@"pmwiki\.php(/(?<segment>\w+))+", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
-    protected IHtmlDocument GetDocument(string url)
+    protected IHtmlDocument GetDocument(string url, int delay = 0)
     {
         WebView.NavigateAndWait(url);
+        if (delay > 0)
+            Thread.Sleep(delay);
+
         var pageSource = WebView.GetPageSource();
         var doc = new HtmlParser().Parse(pageSource);
         return doc;

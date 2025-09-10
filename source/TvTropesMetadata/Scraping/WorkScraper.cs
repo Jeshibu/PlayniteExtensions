@@ -11,10 +11,17 @@ public class WorkScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewFa
 {
     private readonly List<string> VideogameBreadCrumbs = ["Video Games", "Video Game", "VideoGame", "Visual Novel", "Franchise"];
 
+    private bool MatchesBreadCrumbs(TvTropesSearchResult sr) => sr.Breadcrumbs.Count == 1 && VideogameBreadCrumbs.Contains(sr.Breadcrumbs[0]);
+    private bool MatchesUrlCategory(TvTropesSearchResult sr) => CategoryWhitelist.Any(cat => sr.Url.StartsWith(articleBaseUrl + cat));
+
     public override IEnumerable<TvTropesSearchResult> Search(string query)
     {
-        var results = Search(query, "work").ToList();
-        results.RemoveAll(sr => sr.Breadcrumbs.Count != 1 || !VideogameBreadCrumbs.Contains(sr.Breadcrumbs[0]));
+        var directUrlResult = GetBasicPageInfo(query);
+        if (directUrlResult != null)
+            return [directUrlResult];
+        
+        var results = GoogleSearch(query).Result.ToList();
+        results.RemoveAll(sr => !MatchesBreadCrumbs(sr) && !MatchesUrlCategory(sr));
         return results.OrderByDescending(sr => UrlBelongsToWhitelistedWorkCategory(sr.Url));
     }
 

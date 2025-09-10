@@ -54,7 +54,7 @@ public class FakeWebView(Dictionary<string, string> sourceFilesByUrl) : IWebView
 
     public List<HttpCookie> GetCookies() => throw new NotImplementedException();
 
-    public string GetCurrentAddress() => throw new NotImplementedException();
+    public string GetCurrentAddress() => Url;
 
     public string GetPageSource()
     {

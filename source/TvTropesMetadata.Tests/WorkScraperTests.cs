@@ -14,7 +14,7 @@ public class WorkScraperTests
         { "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/KingdomHeartsII", "html/KingdomHeartsII.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/KingdomHeartsII/TropesAToL", "html/KingdomHeartsII-TropesAToL.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/KingdomHeartsII/TropesMToZ", "html/KingdomHeartsII-TropesMToZ.html" },
-        { BaseScraper.GetSearchUrl("hellblade"), "html/Search-hellblade.html" },
+        { BaseScraper.GetGoogleSearchUrl("hellblade"), "html/google-hellblade.html" },
     });
 
     [Fact]
@@ -55,9 +55,8 @@ public class WorkScraperTests
         Assert.Single(searchResults);
         
         var result = searchResults[0];
-        Assert.Equal("Hellblade: Senua's Sacrifice", result.Title);
+        Assert.Equal("Hellblade: Senua's Sacrifice", result.Name);
         Assert.Equal("https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/HellbladeSenuasSacrifice", result.Url);
         Assert.Contains("The game tells the story of the eponymous Senua, a warrior traumatized by a Viking invasion, as she embarks on a very personal journey through a hellish", result.Description);
-        Assert.Single(result.Breadcrumbs, "Video Games");
     }
 }
