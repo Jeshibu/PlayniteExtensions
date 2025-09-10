@@ -146,3 +146,9 @@ Packages:
       - "⚠ This update will once again require you to re-initialize the database."
       - "New: import genres to your games. Optionally add Wikipedia and/or video links."
       - "Fix: PC-98 games would not match platforms not named exactly PC-9801."
+  - Version: "0.9.1"
+    RequiredApiVersion: 6.8.0
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/LaunchBoxMetadata_0_9_1.pext
+    Changelog:
+      - "Fixed bulk genre import settings missing"
