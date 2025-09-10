@@ -1,17 +1,23 @@
 AddonId: FilterSearch
 Packages:
-  - Version: 0.1
+  - Version: '0.1'
     RequiredApiVersion: 6.12.0
-    ReleaseDate: 2025-08-20
+    ReleaseDate: '2025-08-20'
     PackageUrl: "https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/MetadataSearch_0_1.pext"
     Changelog:
       - Initial release
-  - Version: 1.0
+  - Version: '1.0'
     RequiredApiVersion: 6.12.0
-    ReleaseDate: 2025-09-09
+    ReleaseDate: '2025-09-09'
     PackageUrl: "https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-09-09/FilterSearch_1.pext"
     Changelog:
       - Rename from Metadata Search to Filter Search
       - Added settings
       - Fixed database updates not being reflected in search
       - Added platform icons
+  - Version: '1.0.1'
+    RequiredApiVersion: 6.12.0
+    ReleaseDate: '{NEWDATE}'
+    PackageUrl: "https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/FilterSearch_1_0_1.pext"
+    Changelog:
+      - 'Fixed broken settings'
