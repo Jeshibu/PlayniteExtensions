@@ -1,5 +1,6 @@
-﻿using Barnite.Scrapers;
-using HtmlAgilityPack;
+﻿using AngleSharp.Dom;
+using AngleSharp.Parser.Html;
+using Barnite.Scrapers;
 using MobyGamesMetadata.Api.V2;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -8,6 +9,8 @@ using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace MobyGamesMetadata.Api;
 
@@ -15,6 +18,7 @@ public class MobyGamesScraper(IPlatformUtility platformUtility, IWebViewFactory 
 {
     private IWebView _webView;
     private IWebView WebView => _webView ??= webViewFactory.CreateOffscreenView();
+    private readonly MobyGamesIdUtility _mobyGamesIdUtility = new();
 
     private static string GetSearchUrl(string query, string objectType)
     {
@@ -47,10 +51,81 @@ public class MobyGamesScraper(IPlatformUtility platformUtility, IWebViewFactory 
         return GetGameDetails(url);
     }
 
+    public IEnumerable<GameDetails> GetGamesFromGroup(int id, GlobalProgressActionArgs progress = null) => GetGamesFromGroup($"https://www.mobygames.com/group/{id}/", progress);
+
+    public IEnumerable<GameDetails> GetGamesFromGroup(string firstPageUrl, GlobalProgressActionArgs progress = null)
+    {
+        var url = firstPageUrl;
+        var htmlParser = new HtmlParser();
+        var pageNumberRegex = new Regex(@"\bPage (?<current>\d+) of (?<total>\d+)\b");
+        var random = new Random();
+        do
+        {
+            var doc = htmlParser.Parse(GetPageSource(url));
+
+            var paginationElement = doc.QuerySelector("main > p:last-child");
+            if (paginationElement != null && progress != null)
+            {
+                var match = pageNumberRegex.Match(paginationElement.TextContent);
+                if (match.Success)
+                {
+                    progress.CurrentProgressValue = int.Parse(match.Groups["current"].Value);
+                    progress.ProgressMaxValue = int.Parse(match.Groups["total"].Value);
+                }
+            }
+
+            var nextPageUrl = paginationElement?.QuerySelector("a[href]:last-of-type")?.GetAttribute("href").GetAbsoluteUrl(url);
+
+            if (nextPageUrl != null && string.Compare(nextPageUrl, url, StringComparison.InvariantCultureIgnoreCase) > 0)
+                url = nextPageUrl;
+            else
+                url = null;
+
+            var rows = doc.QuerySelectorAll("table.mb > tbody > tr");
+            foreach (var row in rows)
+            {
+                var cells = row.QuerySelectorAll("> td");
+                if (cells.Length < 3)
+                    continue;
+
+                var titleLink = cells[0].QuerySelector("a[href]:last-of-type");
+                if (titleLink == null)
+                    continue;
+
+                var gameUrl = titleLink.GetAttribute("href");
+
+                var gameDetails = new GameDetails
+                {
+                    Names = [titleLink.TextContent],
+                    Url = gameUrl,
+                    Id = _mobyGamesIdUtility.GetIdFromUrl(gameUrl).Id
+                };
+
+                if (titleLink.TextContent.EndsWith("..."))
+                    gameDetails.Names = [gameDetails.Url.Split(['/'], StringSplitOptions.RemoveEmptyEntries).Last()];
+
+                var releaseYearString = cells[1].TextContent;
+                if (int.TryParse(releaseYearString, out var releaseYear))
+                    gameDetails.ReleaseDate = new(releaseYear);
+
+                var platformLinks = cells[2].QuerySelectorAll("a[href]");
+                if (!platformLinks.Any(l => l.GetAttribute("href").Contains("mobygames.com/game/"))) // (+x more) link - platform list cannot be exhaustive, so leave it blank
+                    gameDetails.Platforms.AddRange(platformLinks.Select(l => l.TextContent).SelectMany(platformUtility.GetPlatforms));
+
+                yield return gameDetails;
+            }
+
+            if (url != null)
+                Thread.Sleep(random.Next(1000, 4000));
+        } while (url != null);
+    }
+
     private GameDetails GetGameDetails(string url)
     {
         var pageSource = GetPageSource(url);
-        return ParseGameDetailsHtml(pageSource);
+        var details = ParseGameDetailsHtml(pageSource);
+        details.Url = url;
+        return details;
     }
 
     private string GetPageSource(string url)
@@ -61,30 +136,32 @@ public class MobyGamesScraper(IPlatformUtility platformUtility, IWebViewFactory 
 
     private IEnumerable<GameSearchResult> ParseGameSearchResultHtml(string html)
     {
-        var page = new HtmlDocument();
-        page.LoadHtml(html);
+        var doc = new HtmlParser().Parse(html);
 
-        var cells = page.DocumentNode.SelectNodes("//table[@class='table mb']/tbody/tr/td[last()]");
+        var cells = doc.QuerySelectorAll("table.table.mb > tbody > tr > td:last-of-type");
         if (cells == null)
             yield break;
 
         foreach (var td in cells)
         {
-            var a = td.SelectSingleNode(".//a[@href]");
+            var a = td.QuerySelector("a[href]");
             if (a == null)
                 continue;
 
-            var releaseDateString = td.SelectSingleNode(".//span[starts-with(text(), '(')]")?.InnerText.HtmlDecode().Trim('(', ')');
-            var platforms = td.SelectSingleNode(".//small[last()]")?.ChildNodes
-                            .Where(n => n.NodeType == HtmlNodeType.Text)
-                            .Select(n => n.InnerText.HtmlDecode())
-                            .Where(n => !string.IsNullOrWhiteSpace(n))
-                            .ToList();
+            var releaseDateString = td.QuerySelectorAll("> span")
+                                      .Select(span => span.TextContent.HtmlDecode())
+                                      .FirstOrDefault(s => s.StartsWith("("));
 
-            var alternateNames = td.ChildNodes.FirstOrDefault(n => n.InnerText.StartsWith("AKA: "))
-                ?.InnerText.TrimStart("AKA: ")
-                .Split([", "], StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => x.Trim());
+            var platforms = td.QuerySelector("small:last-of-type").ChildNodes
+                              .Where(n => n.NodeType == NodeType.Text)
+                              .Select(n => n.TextContent.HtmlDecode())
+                              .Where(str => !string.IsNullOrWhiteSpace(str))
+                              .ToList();
+
+            var alternateNames = td.Children.FirstOrDefault(n => n.TextContent.StartsWith("AKA: "))
+                                   ?.TextContent.TrimStart("AKA: ")
+                                   .Split([", "], StringSplitOptions.RemoveEmptyEntries)
+                                   .Select(x => x.Trim());
 
             var sr = new GameSearchResult
             {
@@ -92,7 +169,7 @@ public class MobyGamesScraper(IPlatformUtility platformUtility, IWebViewFactory 
                 ReleaseDate = MobyGamesHelper.ParseReleaseDate(releaseDateString),
             };
             sr.SetUrlAndId(a.Attributes["href"].Value);
-            sr.SetName(a.InnerText.HtmlDecode(), alternateNames);
+            sr.SetName(a.TextContent.HtmlDecode(), alternateNames);
             sr.SetDescription(releaseDateString, platforms);
             yield return sr;
         }
@@ -100,23 +177,22 @@ public class MobyGamesScraper(IPlatformUtility platformUtility, IWebViewFactory 
 
     private IEnumerable<GroupSearchResult> ParseGroupSearchResultHtml(string html)
     {
-        var page = new HtmlDocument();
-        page.LoadHtml(html);
+        var doc = new HtmlParser().Parse(html);
 
-        var cells = page.DocumentNode.SelectNodes("//table[@class='table mb']/tbody/tr/td[last()]");
+        var cells = doc.QuerySelectorAll("table.table.mb > tbody > tr > td:last-of-type");
         if (cells == null)
             yield break;
 
         foreach (var td in cells)
         {
-            var a = td.SelectSingleNode(".//a[@href]");
+            var a = td.QuerySelector("a[href]");
             if (a == null)
                 continue;
 
-            var description = td.SelectSingleNode("./span[last()]")?.InnerText.HtmlDecode();
+            var description = td.QuerySelector("> span:last-of-type")?.TextContent.HtmlDecode();
 
-            var sr = new GroupSearchResult { Name = a.InnerText.HtmlDecode(), Description = description };
-            sr.SetUrlAndId(a.Attributes["href"].Value);
+            var sr = new GroupSearchResult { Name = a.TextContent.HtmlDecode(), Description = description };
+            sr.SetUrlAndId(a.GetAttribute("href"));
             yield return sr;
         }
     }
@@ -141,7 +217,7 @@ public class MobyGamesScraper(IPlatformUtility platformUtility, IWebViewFactory 
     }
 }
 
-public class SearchResult : Playnite.SDK.GenericItemOption, IHasName
+public class SearchResult : GenericItemOption, IHasName
 {
     public string Url { get; set; }
     public int Id { get; set; }
@@ -156,7 +232,9 @@ public class SearchResult : Playnite.SDK.GenericItemOption, IHasName
     }
 }
 
-public class GroupSearchResult : SearchResult { }
+public class GroupSearchResult : SearchResult
+{
+}
 
 public class GameSearchResult : SearchResult, IGameSearchResult
 {
@@ -193,7 +271,9 @@ public class GameSearchResult : SearchResult, IGameSearchResult
         Description = string.Join(" | ", descriptionElements);
     }
 
-    public GameSearchResult() { }
+    public GameSearchResult()
+    {
+    }
 
     public GameSearchResult(MobyGame game)
     {

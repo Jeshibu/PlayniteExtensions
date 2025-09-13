@@ -1,14 +1,16 @@
 ﻿using Barnite.Scrapers;
 using MobyGamesMetadata.Api;
 using Playnite.SDK;
+using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MobyGamesMetadata;
 
-public class MobyGamesBulkGroupAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
-    : BulkGamePropertyAssigner<SearchResult, GamePropertyImportViewModel>(playniteAPI, dataSource, platformUtility, new MobyGamesIdUtility(), ExternalDatabase.MobyGames, maxDegreeOfParallelism)
+public class MobyGamesBulkGroupAssigner(IPlayniteAPI playniteApi, ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
+    : BulkGamePropertyAssigner<SearchResult, GamePropertyImportViewModel>(playniteApi, dataSource, platformUtility, new MobyGamesIdUtility(), ExternalDatabase.MobyGames, maxDegreeOfParallelism)
 {
     public override string MetadataProviderName => "MobyGames";
 
@@ -23,8 +25,15 @@ public class MobyGamesBulkGroupAssigner(IPlayniteAPI playniteAPI, ISearchableDat
 
     protected override PropertyImportSetting GetPropertyImportSetting(SearchResult searchItem, out string propName)
     {
-        var importTarget = MobyGamesHelper.GetGroupImportTarget(searchItem.Name, out propName);
+        return new() { ImportTarget = MobyGamesHelper.GetGroupImportTarget(searchItem.Name, out propName) };
+    }
 
-        return new PropertyImportSetting { ImportTarget = importTarget };
+    protected override IEnumerable<PotentialLink> GetPotentialLinks(SearchResult searchItem) => [new(MetadataProviderName, game => game.Url, IsAlreadyLinked)];
+
+    private bool IsAlreadyLinked(IEnumerable<Link> links, string url)
+    {
+        var dbId = DatabaseIdUtility.GetIdFromUrl(url);
+        
+        return links?.Any(l => DatabaseIdUtility.GetIdFromUrl(l.Url) == dbId) ?? false;
     }
 }

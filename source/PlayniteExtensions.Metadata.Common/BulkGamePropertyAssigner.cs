@@ -20,7 +20,7 @@ public interface IHasName
 }
 
 public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewModel>(
-    IPlayniteAPI playniteAPI,
+    IPlayniteAPI playniteApi,
     ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource,
     IPlatformUtility platformUtility,
     IExternalDatabaseIdUtility databaseIdUtility,
@@ -31,7 +31,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
 {
     protected readonly ILogger logger = LogManager.GetLogger();
     protected readonly ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource = dataSource;
-    protected readonly IPlayniteAPI playniteApi = playniteAPI;
+    protected readonly IPlayniteAPI playniteApi = playniteApi;
     public abstract string MetadataProviderName { get; }
     public bool AllowEmptySearchQuery { get; set; } = false;
     public IExternalDatabaseIdUtility DatabaseIdUtility { get; } = databaseIdUtility;
@@ -204,7 +204,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
         }, new GlobalProgressOptions($"Matching {gamesToMatch.Count} games…", true) { IsIndeterminate = false });
 
         if (!loopCompleted)
-            return Enumerable.Empty<GameCheckboxViewModel>();
+            return [];
 
         var matchingGames = proposedMatches.Values.OrderBy(g => string.IsNullOrWhiteSpace(g.Game.SortingName) ? g.Game.Name : g.Game.SortingName).ThenBy(g => g.Game.ReleaseDate).ToList();
         return matchingGames;
@@ -216,9 +216,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
     {
         if (windowSizedDown) return;
 
-        var window = sender as Window;
-
-        if (window == null) return;
+        if (sender is not Window window) return;
 
         var screen = System.Windows.Forms.Screen.AllScreens.OrderBy(s => s.WorkingArea.Height).First();
         var dpi = VisualTreeHelper.GetDpi(window);
@@ -266,7 +264,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
                         if (string.IsNullOrWhiteSpace(url) || potentialLink.IsAlreadyLinked(g.Game.Links, url))
                             continue;
 
-                        g.Game.Links.Add(new Link(potentialLink.Name, url));
+                        g.Game.Links.Add(new(potentialLink.Name, url));
                         update = true;
                     }
                 }
@@ -308,10 +306,10 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
 
     protected virtual IEnumerable<CheckboxFilter> GetCheckboxFilters(GamePropertyImportViewModel viewModel)
     {
-        yield return new CheckboxFilter("Check all", viewModel, x => true);
-        yield return new CheckboxFilter("Uncheck all", viewModel, x => false);
-        yield return new CheckboxFilter("Only filtered games", viewModel, x => playniteApi.MainView.FilteredGames.Contains(x.Game));
-        yield return new CheckboxFilter("Only matching platforms", viewModel, PlatformsOverlap);
+        yield return new("Check all", viewModel, x => true);
+        yield return new("Uncheck all", viewModel, x => false);
+        yield return new("Only filtered games", viewModel, x => playniteApi.MainView.FilteredGames.Contains(x.Game));
+        yield return new("Only matching platforms", viewModel, PlatformsOverlap);
     }
 
     private bool PlatformsOverlap(GameCheckboxViewModel checkbox)

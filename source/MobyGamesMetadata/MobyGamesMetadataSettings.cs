@@ -224,6 +224,8 @@ public class MobyGamesMetadataSettingsViewModel : PluginSettingsViewModel<MobyGa
 
     private void UpgradeSettings()
     {
+        #pragma warning disable CS0612 // Type or member is obsolete
+        
         if (Settings.Version < 1)
             Settings.MaxDegreeOfParallelism = BulkImportPluginSettings.GetDefaultMaxDegreeOfParallelism();
 
@@ -232,7 +234,9 @@ public class MobyGamesMetadataSettingsViewModel : PluginSettingsViewModel<MobyGa
 
         if (Settings.Version < 3 && Settings.DataSource == DataSource.ApiAndScraping)
             Settings.DataSource = DataSource.Api;
-
+        
+        #pragma warning restore CS0612 // Type or member is obsolete
+        
         Settings.Version = 3;
     }
 }

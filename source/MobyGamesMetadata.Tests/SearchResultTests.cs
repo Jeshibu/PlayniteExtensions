@@ -22,7 +22,7 @@ public class SearchResultTests
     {
         var webViewFactory = new FakeWebViewFactory(new()
         {
-            { "https://www.mobygames.com/search/?q=Phantom%20Breaker%20Omnia&type=game&adult=true", "GameSearch.html" }
+            { "https://www.mobygames.com/search/?q=Phantom%20Breaker%20Omnia&type=game&adult=true", "html/search-phantom-breaker-omnia.html" }
         });
         MobyGamesScraper scraper = new(new PlatformUtility([]), webViewFactory);
         var searchResults = scraper.GetGameSearchResults("Phantom Breaker Omnia").ToList();
