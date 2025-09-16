@@ -6,14 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace FilterSearch;
+namespace FilterSearch.SearchContexts;
 
 public class DbObjFilterSearchContext<TDatabaseObject> : SearchContext
     where TDatabaseObject : DatabaseObject
 {
     private readonly IEnumerable<TDatabaseObject> objects;
     private readonly Func<TDatabaseObject, SearchItem> toSearchItem;
-    private static readonly PropertyInfo CacheProperty = typeof(SearchContext).GetProperty("AutoSearchCache", BindingFlags.NonPublic | BindingFlags.Instance);
+    private static readonly PropertyInfo CacheProperty = typeof(SearchContext).GetProperty("AutoSearchCache", BindingFlags.NonPublic | BindingFlags.Instance)!;
 
     public DbObjFilterSearchContext(IEnumerable<TDatabaseObject> objects, Func<TDatabaseObject, SearchItem> toSearchItem)
     {

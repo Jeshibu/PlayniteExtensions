@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FilterSearch.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,16 +10,13 @@ using Playnite.SDK.Plugins;
 
 namespace FilterSearch.SearchItems.Base;
 
-public abstract class MetadataFilterSearchItem<T> : SearchItem where T : DatabaseObject
+public abstract class MetadataFilterSearchItem<T> : BaseFilterSearchItem where T : DatabaseObject
 {
-    private IMainViewAPI MainView { get; }
     protected T DatabaseObject { get; }
 
-    protected MetadataFilterSearchItem(IMainViewAPI mainViewApi, T databaseObject, string type, bool appendFilterIsPrimary = true) : base(databaseObject.Name, null)
+    protected MetadataFilterSearchItem(IMainViewAPI mainViewApi, T databaseObject, string type, bool appendFilterIsPrimary = true) : base(databaseObject.Name, type, mainViewApi)
     {
-        MainView = mainViewApi;
         DatabaseObject = databaseObject;
-        Description = type;
 
         var appendAction = new SearchItemAction("Append to filter", AppendToCurrentFilter);
         var exclusiveAction = new SearchItemAction("Filter exclusively", ReplaceFilter);
@@ -29,15 +27,12 @@ public abstract class MetadataFilterSearchItem<T> : SearchItem where T : Databas
 
     private void AppendToCurrentFilter()
     {
-        var fp = new FilterPreset
-        {
-            Settings = MainView.GetCurrentFilterSettings(),
-            GroupingOrder = MainView.Grouping,
-            SortingOrder = MainView.SortOrder,
-            SortingOrderDirection = MainView.SortOrderDirection
-        };
+        var fp = MainView.GetFilterPreset();
+        
         ApplyFilterImpl(fp);
         MainView.ApplyFilterPreset(fp);
+        
+        ShowLibraryView();
     }
 
     private void ReplaceFilter()
@@ -48,10 +43,12 @@ public abstract class MetadataFilterSearchItem<T> : SearchItem where T : Databas
         }
         else
         {
-            var fp = new FilterPreset { Settings = new() };
+            var fp = MainView.GetFilterPreset(new FilterPresetSettings());
             ApplyFilterImpl(fp);
             MainView.ApplyFilterPreset(fp);
         }
+        
+        ShowLibraryView();
     }
 
     protected abstract void ApplyFilterImpl(FilterPreset fp);

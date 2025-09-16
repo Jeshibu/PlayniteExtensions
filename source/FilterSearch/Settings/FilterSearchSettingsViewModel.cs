@@ -1,3 +1,4 @@
+using FilterSearch.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 using Playnite.SDK;
@@ -12,11 +13,7 @@ public class FilterSearchSettingsViewModel : PluginSettingsViewModel<FilterSearc
         InitializeSearchPropertySettings();
     }
 
-    public Dictionary<FilterActionType, string> ActionTypeOptions => new()
-    {
-        { FilterActionType.ApplyExclusively, "Filter exclusively" },
-        { FilterActionType.Append, "Append to filter" }
-    };
+    public Dictionary<FilterActionType, string> ActionTypeOptions => EnumHelper.GetEnumValuesWithDescription<FilterActionType>();
 
     private void InitializeSearchPropertySettings()
     {
