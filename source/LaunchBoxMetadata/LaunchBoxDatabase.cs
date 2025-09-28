@@ -19,10 +19,7 @@ public class LaunchBoxDatabase
         UserDataDirectory = userDataDirectory;
     }
 
-    public static string GetFilePath(string userDataFolder)
-    {
-        return Path.Combine(userDataFolder, "LBGDB.sqlite");
-    }
+    public static string GetFilePath(string userDataFolder) => Path.Combine(userDataFolder, "LBGDB.sqlite");
 
     private string DatabasePath => GetFilePath(UserDataDirectory);
 
@@ -144,7 +141,7 @@ public class LaunchBoxDatabase
     {
         using var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY);
 
-        return db.Load<LaunchBoxGame>($"""
+        return db.Load<LaunchBoxGame>("""
                                        SELECT g.*
                                        FROM Games g
                                        JOIN GameGenres gg on g.DatabaseID=gg.GameId
