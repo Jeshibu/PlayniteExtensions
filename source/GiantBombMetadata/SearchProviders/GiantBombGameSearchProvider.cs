@@ -135,7 +135,7 @@ public class GiantBombGameSearchProvider(IGiantBombApiClient apiClient, GiantBom
         output.Tags.AddRange(GetValues(PropertyImportTarget.Tags, details));
         if (details.Franchises != null)
         {
-            output.Series.AddRange(details.Franchises.Select(f => f.Name.Trim()));
+            output.Series.AddRange(GetValues(PropertyImportTarget.Series, details));
 
             switch (settings.FranchiseSelectionMode)
             {
@@ -187,6 +187,8 @@ public class GiantBombGameSearchProvider(IGiantBombApiClient apiClient, GiantBom
         output.AddRange(GetValues(settings.Objects, target, data.Objects));
         output.AddRange(GetValues(settings.People, target, data.People));
         output.AddRange(GetValues(settings.Themes, target, data.Themes));
+        output.AddRange(GetValues(settings.Genres, target, data.Genres));
+        output.AddRange(GetValues(settings.Franchises, target, data.Franchises));
         return output.OrderBy(x => x).ToList();
     }
 

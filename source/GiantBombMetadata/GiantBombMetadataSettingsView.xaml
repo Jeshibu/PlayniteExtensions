@@ -40,9 +40,9 @@
                 </TextBlock>
 
                 <CheckBox Grid.Row="5" Grid.Column="1" Margin="10,0" IsChecked="{Binding Settings.ShowTopPanelButton}" Grid.ColumnSpan="2">
-                    <AccessText TextWrapping="Wrap">
+                    <TextBlock TextWrapping="Wrap">
                         Show top panel button to add metadata to multiple games (requires restart)
-                    </AccessText>
+                    </TextBlock>
                 </CheckBox>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1" Margin="10" Grid.ColumnSpan="2">
@@ -89,6 +89,10 @@
                     <RowDefinition x:Name="Row5" Height="auto"/>
                     <RowDefinition x:Name="Spacer5" Height="10"/>
                     <RowDefinition x:Name="Row6" Height="auto"/>
+                    <RowDefinition x:Name="Spacer6" Height="10"/>
+                    <RowDefinition x:Name="Row7" Height="auto"/>
+                    <RowDefinition x:Name="Spacer7" Height="10"/>
+                    <RowDefinition x:Name="Row8" Height="auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="Import as" Grid.Column="1" Margin="12,0"/>
                 <TextBlock Text="Prefix with" Grid.Column="2" Margin="12,0"/>
@@ -99,6 +103,8 @@
                 <TextBlock Text="Objects:" Grid.Column="0" Grid.Row="7"/>
                 <TextBlock Text="People:" Grid.Column="0" Grid.Row="9"/>
                 <TextBlock Text="Themes:" Grid.Column="0" Grid.Row="11"/>
+                <TextBlock Text="Genres:" Grid.Column="0" Grid.Row="12"/>
+                <TextBlock Text="Franchises:" Grid.Column="0" Grid.Row="13"/>
 
                 <ComboBox Grid.Row="1" SelectedItem="{Binding Settings.Characters.ImportTarget}"/>
                 <TextBox Grid.Row="1" Text="{Binding Settings.Characters.Prefix}"/>
@@ -117,6 +123,12 @@
 
                 <ComboBox Grid.Row="11" SelectedItem="{Binding Settings.Themes.ImportTarget}"/>
                 <TextBox Grid.Row="11" Text="{Binding Settings.Themes.Prefix}"/>
+                
+                <ComboBox Grid.Row="12" SelectedItem="{Binding Settings.Genres.ImportTarget}"/>
+                <TextBox Grid.Row="12" Text="{Binding Settings.Genres.Prefix}"/>
+                
+                <ComboBox Grid.Row="13" SelectedItem="{Binding Settings.Franchises.ImportTarget}"/>
+                <TextBox Grid.Row="13" Text="{Binding Settings.Franchises.Prefix}"/>
             </Grid>
         </StackPanel>
     </ScrollViewer>

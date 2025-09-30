@@ -3,7 +3,6 @@ using PlayniteExtensions.Common;
 using SqlNado;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,119 +14,152 @@ public class LaunchBoxDatabase
     public LaunchBoxDatabase(string userDataDirectory)
     {
         if (string.IsNullOrWhiteSpace(userDataDirectory))
-        {
             throw new ArgumentException($"'{nameof(userDataDirectory)}' cannot be null or whitespace.", nameof(userDataDirectory));
-        }
 
         UserDataDirectory = userDataDirectory;
     }
 
-    public static string GetFilePath(string userDataFolder)
-    {
-        return Path.Combine(userDataFolder, "LBGDB.sqlite");
-    }
+    public static string GetFilePath(string userDataFolder) => Path.Combine(userDataFolder, "LBGDB.sqlite");
 
     private string DatabasePath => GetFilePath(UserDataDirectory);
 
-    public string UserDataDirectory { get; }
+    private string UserDataDirectory { get; }
 
-    private SQLiteDatabase GetConnection(SQLiteOpenOptions? openOptions = null)
-    {
-        SQLiteDatabase db;
-        if (openOptions.HasValue)
-            db = new SQLiteDatabase(DatabasePath, openOptions.Value);
-        else
-            db = new SQLiteDatabase(DatabasePath);
-
-        //db.EnableLoadExtension(true);
-        //db.LoadExtension("System.Data.SQLite.dll", "sqlite3_fts5_init");
-
-        return db;
-    }
+    private SQLiteDatabase GetConnection(SQLiteOpenOptions openOptions) => new(DatabasePath, openOptions);
 
     public void CreateDatabase(LaunchBoxXmlParser xmlSource, GlobalProgressActionArgs args = null)
     {
         if (args != null)
         {
             args.IsIndeterminate = false;
-            args.ProgressMaxValue = 4;
+            args.ProgressMaxValue = 8;
         }
 
-        if (File.Exists(DatabasePath))
-            File.Delete(DatabasePath);
+        void AdvanceProgress()
+        {
+            if (args != null)
+                args.CurrentProgressValue++;
+        }
+
+        DeleteDatabase();
 
         var data = xmlSource.GetData();
-        if (args != null) args.CurrentProgressValue++;
+        AdvanceProgress();
+        
+        AddAliasesToGames(data.Games, data.GameAlternateNames);
+        AdvanceProgress();
+        
+        using var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_CREATE | SQLiteOpenOptions.SQLITE_OPEN_READWRITE);
+        db.BeginTransaction();
+        db.Save(data.Games);
+        AdvanceProgress();
 
-        using (var db = GetConnection())
+        var gameNames = data.Games.Select(g => new LaunchBoxGameName { DatabaseID = g.DatabaseID, Name = g.Name }).ToList();
+        gameNames.AddRange(data.GameAlternateNames);
+        var gameNameDeduplicatedDictionary = gameNames.ToDictionarySafe(n => $"{n.DatabaseID}|{n.Name}", StringComparer.InvariantCultureIgnoreCase);
+
+        db.Save(gameNameDeduplicatedDictionary.Values);
+        AdvanceProgress();
+
+        db.Save(data.GameImages);
+        AdvanceProgress();
+
+        db.Save(data.GameImages.GroupBy(gi => gi.Type).Select(x => new ImageType { Name = x.Key, Count = x.Count() }));
+        AdvanceProgress();
+
+        db.Save(data.GameImages.GroupBy(gi => gi.Region).Select(x => new ImageRegion { Name = x.Key, Count = x.Count() }));
+        AdvanceProgress();
+        
+        var genres = db.LoadAll<LaunchBoxGame>()
+            .SelectMany(g => g.Genres.SplitLaunchBox())
+            .GroupBy(g => g)
+            .Select(gr => new Genre { Name = gr.Key, Count = gr.Count() }).ToList();
+
+        db.Save(genres);
+        AdvanceProgress();
+
+        genres = db.LoadAll<Genre>().ToList(); // populate generated database IDs
+
+        var genreIds = genres.ToDictionary(g => g.Name, g => g.Id);
+        var gameGenres = db.LoadAll<LaunchBoxGame>()
+            .SelectMany(g => g.Genres.SplitLaunchBox().Select(x => new GameGenre { GameId = g.DatabaseID, GenreId = genreIds[x] }))
+            .ToList();
+
+        db.Save(gameGenres);
+        AdvanceProgress();
+
+        db.Commit();
+    }
+
+    public void DeleteDatabase()
+    {
+        if (File.Exists(DatabasePath))
+            File.Delete(DatabasePath);
+    }
+
+    private static void AddAliasesToGames(ICollection<LaunchBoxGame> games, ICollection<LaunchBoxGameName> aliases)
+    {
+        var gameIdDictionary = games.ToDictionary(g => g.DatabaseID);
+        foreach (var a in aliases)
         {
-            db.BeginTransaction();
-            db.Save(data.Games);
-            if (args != null) args.CurrentProgressValue++;
+            if (!gameIdDictionary.TryGetValue(a.DatabaseID, out var game))
+                continue;
 
-            var gameNames = data.Games.Select(g => new LaunchBoxGameName { DatabaseID = g.DatabaseID, Name = g.Name }).ToList();
-            gameNames.AddRange(data.GameAlternateNames);
-            var gameNameDeduplicatedDictionary = gameNames.ToDictionarySafe(n => $"{n.DatabaseID}|{n.Name}", StringComparer.InvariantCultureIgnoreCase);
-
-            db.Save(gameNameDeduplicatedDictionary.Values);
-            if (args != null) args.CurrentProgressValue++;
-
-            db.Save(data.GameImages);
-            if (args != null) args.CurrentProgressValue++;
-
-            db.Commit();
+            if (string.IsNullOrEmpty(game.Aliases))
+                game.Aliases = a.Name;
+            else
+                game.Aliases += LaunchBoxHelper.AliasSeparator + a.Name;
         }
     }
 
-    public IEnumerable<LaunchboxGameSearchResult> SearchGames(string search, int? limit = null)
+    public IEnumerable<LaunchboxGameSearchResult> SearchGames(string search, int limit = 1000)
     {
         if (string.IsNullOrWhiteSpace(search))
             return [];
 
         var matchStr = GetMatchStringFromSearchString(search);
 
-        var query = @"
-select gn.Name MatchedName, g.*
-from GameNames gn
-join Games g on gn.DatabaseID=g.DatabaseID
-where gn.Name match ?
-order by rank";
-        if (limit.HasValue)
-            query += $@"
-limit {limit.Value}";
-
-
-        using (var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY))
-        {
-            return db.Load<LaunchboxGameSearchResult>(query, matchStr).ToList();
-        }
+        using var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY);
+        return db.Load<LaunchboxGameSearchResult>("""
+                                                   select gn.Name MatchedName, g.*
+                                                   from GameNames gn
+                                                   join Games g on gn.DatabaseID=g.DatabaseID
+                                                   where gn.Name match ?
+                                                   order by rank
+                                                   limit ?
+                                                   """, matchStr, limit).ToList();
     }
 
-    public IEnumerable<string> GetGameImageTypes()
+    public IEnumerable<Genre> GetGenres()
     {
-        var query = @"
-select distinct Type
-from GameImages
-order by Type asc";
-        using (var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY))
-        {
-            return db.Load<LaunchBoxGameImage>(query).Select(i => i.Type).ToList();
-        }
-    }
-    public IEnumerable<string> GetRegions()
-    {
-        var query = @"
-select Region
-from GameImages
-group by Region
-order by count(1) desc";
-        using (var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY))
-        {
-            return db.Load<LaunchBoxGameImage>(query).Select(i => i.Region).ToList();
-        }
+        using var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY);
+
+        return db.LoadAll<Genre>().ToList();
     }
 
-    public static string GetMatchStringFromSearchString(string searchString)
+    public IEnumerable<LaunchBoxGame> GetGamesForGenre(long genreId)
+    {
+        using var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY);
+
+        return db.Load<LaunchBoxGame>("""
+                                       SELECT g.*
+                                       FROM Games g
+                                       JOIN GameGenres gg on g.DatabaseID=gg.GameId
+                                       WHERE gg.GenreID = ?
+                                       """, genreId).ToList();
+    }
+
+
+    private IEnumerable<ItemCount> GetItemCounts<T>() where T : ItemCount
+    {
+        using var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY);
+        return db.LoadAll<T>().ToList();
+    }
+
+    public IEnumerable<string> GetGameImageTypes() => GetItemCounts<ImageType>().Select(x => x.Name);
+    public IEnumerable<string> GetRegions() => GetItemCounts<ImageRegion>().Select(x => x.Name);
+
+    private static string GetMatchStringFromSearchString(string searchString)
     {
         var segments = searchString.Split(' ');
         var matchStr = new StringBuilder();
@@ -136,9 +168,10 @@ order by count(1) desc";
             var preppedSeg = seg.Trim(':', '-').Replace("\"", "\"\"");
             if (preppedSeg.Length == 0)
                 continue;
-            preppedSeg = "\"" + preppedSeg + "\" ";
-            matchStr.Append(preppedSeg);
+
+            matchStr.Append($"\"{preppedSeg}\" ");
         }
+
         matchStr.Append("*");
         return matchStr.ToString();
     }

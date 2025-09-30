@@ -3,8 +3,8 @@
     <ProjectGuid>{0FC7F312-402B-4466-9E05-721CE2638268}</ProjectGuid>
     <AssemblyTitle>itchioBundleTagger</AssemblyTitle>
     <Product>itchioBundleTagger</Product>
-    <AssemblyVersion>0.11.0.0</AssemblyVersion>
-    <FileVersion>0.11.0.0</FileVersion>
+    <AssemblyVersion>0.14.2</AssemblyVersion>
+    <FileVersion>0.14.2</FileVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -14,12 +14,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="IndexRange" Version="1.0.2" />
-    <PackageReference Include="Linguini.Bundle" Version="0.3.2" />
-    <PackageReference Include="Linguini.Shared" Version="0.3.0" />
-    <PackageReference Include="Linguini.Syntax" Version="0.3.0" />
+    <PackageReference Include="Linguini.Bundle" Version="0.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="PlayniteSDK" Version="6.2.2" />
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />

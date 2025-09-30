@@ -15,13 +15,13 @@ public class LegacyGamesLibrary : LibraryPlugin
 {
     private static readonly ILogger logger = LogManager.GetLogger();
     private static readonly string iconPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "icon.png");
-    public override string LibraryIcon { get; } = iconPath;
+    public override string LibraryIcon => iconPath;
 
     private LegacyGamesLibrarySettingsViewModel settings { get; set; }
 
     public override Guid Id { get; } = Guid.Parse("34c3178f-6e1d-4e27-8885-99d4f031b168");
 
-    public override string Name { get; } = "Legacy Games";
+    public override string Name => "Legacy Games";
 
     public override LibraryClient Client
     {
@@ -98,6 +98,7 @@ public class LegacyGamesLibrary : LibraryPlugin
         {
             logger.Debug($"No install data found for {args.Game.Name}, ID: {args.Game.GameId}");
             PlayniteApi.Dialogs.ShowErrorMessage("No install data found.", "Legacy Games launch error");
+            yield break;
         }
 
         string path = Path.Combine(installData.InstDir, installData.GameExe);

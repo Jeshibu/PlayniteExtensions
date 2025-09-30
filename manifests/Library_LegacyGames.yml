@@ -5,70 +5,76 @@ Packages:
     ReleaseDate: 2022-04-03
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.1/LegacyGamesLibrary_0_1.pext
     Changelog:
-     - Initial release
+      - Initial release
   - Version: 0.1.1
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-06-23
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.1.1/LegacyGamesLibrary_0_1_1.pext
     Changelog:
-     - Fixed games not being able to launch if installed after import
+      - Fixed games not being able to launch if installed after import
   - Version: 0.2
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-08-03
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.2/LegacyGamesLibrary_0_2.pext
     Changelog:
-     - Added Legacy Games client launching from Playnite
-     - Made fetching installed games even more exception-proof
+      - Added Legacy Games client launching from Playnite
+      - Made fetching installed games even more exception-proof
   - Version: 0.2.1
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-08-27
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.2.1/LegacyGamesLibrary_0_2_1.pext
     Changelog:
-     - Fixed exception when user owns bundles that have no games field
+      - Fixed exception when user owns bundles that have no games field
   - Version: 0.3
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2022-10-04
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.3/LegacyGamesLibrary_0_3.pext
     Changelog:
-     - Updated to the new Legacy Games client (1.6.4) file structure. The old file structure can also still be read.
-     - Added install size metadata
-     - Added option to not supply Legacy Games covers (square) before metadata collection
+      - Updated to the new Legacy Games client (1.6.4) file structure. The old file structure can also still be read.
+      - Added install size metadata
+      - Added option to not supply Legacy Games covers (square) before metadata collection
   - Version: 0.3.1
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2022-10-04
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.3.1/LegacyGamesLibrary_0_3_1.pext
     Changelog:
-     - Fixed recent giveaway games sometimes not being imported
+      - Fixed recent giveaway games sometimes not being imported
   - Version: 0.4
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2022-11-01
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.4/LegacyGamesLibrary_0_4.pext
     Changelog:
-     - Fixed purchased games not importing if you had any giveaway games
-     - Normalize game titles for better metadata matching (CE -> Collector's Edition)
+      - Fixed purchased games not importing if you had any giveaway games
+      - Normalize game titles for better metadata matching (CE -> Collector's Edition)
   - Version: 0.5
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2022-11-15
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.5/LegacyGamesLibrary_0_5.pext
     Changelog:
-     - Implemented uninstalling games (installing still isn't in)
-     - Added library icon
+      - Implemented uninstalling games (installing still isn't in)
+      - Added library icon
   - Version: 0.6
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2022-11-23
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2022-11-23/LegacyGamesLibrary_0_6.pext
     Changelog:
-     - Fixed uninstall option being available for non Legacy Games games
-     - Implemented installing games
+      - Fixed uninstall option being available for non Legacy Games games
+      - Implemented installing games
   - Version: 0.6.1
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2023-09-24
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-09-24/LegacyGamesLibrary_0_6_1.pext
     Changelog:
-     - Fixed game import breaking on incomplete catalog data
+      - Fixed game import breaking on incomplete catalog data
   - Version: 0.6.2
     RequiredApiVersion: 6.4.0
     ReleaseDate: 2024-05-20
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-05-20/LegacyGamesLibrary_0_6_2.pext
     Changelog:
-     - Fixed installed game import breaking on some registry entries
+      - Fixed installed game import breaking on some registry entries
+  - Version: 0.6.3
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2025-08-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/LegacyGamesLibrary_0_6_3.pext
+    Changelog:
+      - "Fixed platform matching failing to match some platforms if they'd been renamed"

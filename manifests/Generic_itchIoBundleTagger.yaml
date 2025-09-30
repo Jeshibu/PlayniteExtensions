@@ -5,107 +5,119 @@ Packages:
     ReleaseDate: 2022-04-09
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.3/itchIoBundleTagger_0_3.pext
     Changelog:
-    - Initial release
+      - Initial release
   - Version: 0.4
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-05-24
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.4/itchIoBundleTagger_0_4.pext
     Changelog:
-    - Added option to change the [itch.io] tag prefix
-    - Added option to not add the "Also available on Steam" tag
-    - Added option to add link to Steam store page where applicable
+      - Added option to change the [itch.io] tag prefix
+      - Added option to not add the "Also available on Steam" tag
+      - Added option to add link to Steam store page where applicable
   - Version: 0.5
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-06-09
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.5/itchIoBundleTagger_0_5.pext
     Changelog:
-    - Added support for Queer Games Bundle 2022
-    - Tags are now only added to the database as needed
+      - Added support for Queer Games Bundle 2022
+      - Tags are now only added to the database as needed
   - Version: 0.6
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-06-21
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.6/itchIoBundleTagger_0_6.pext
     Changelog:
-    - Added optional "Free" tags to games that are free
-    - Added Dutch localization
-    - Tags are now sticky - if you change the tag prefix or Playnite's language, the tags will be renamed rather than recreated. This requires one new run before changing anything to lock in the tag IDs.
+      - Added optional "Free" tags to games that are free
+      - Added Dutch localization
+      - Tags are now sticky - if you change the tag prefix or Playnite's language, the tags will be renamed rather than recreated. This requires one new run before changing anything to lock in the tag IDs.
   - Version: 0.7
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-07-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.7/itchIoBundleTagger_0_7.pext
     Changelog:
-    - Added support for new bundle - Worthy of Better, Stronger Together for Reproductive Rights
-    - Added support for new bundle - Indie Bundle for Abortion Funds
-    - Added Spanish localization (thanks BanCrash!)
-    - Fixed unknown new bundles causing exceptions
-    - Added main menu option to run for all games
+      - Added support for new bundle - Worthy of Better, Stronger Together for Reproductive Rights
+      - Added support for new bundle - Indie Bundle for Abortion Funds
+      - Added Spanish localization (thanks BanCrash!)
+      - Fixed unknown new bundles causing exceptions
+      - Added main menu option to run for all games
   - Version: 0.8
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-08-19
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.8/itchIoBundleTagger_0_8.pext
     Changelog:
-    - Added Simplified Chinese localization (thanks castpower!)
-    - Added option to remove right-click (game) menu option
-    - Added option to run after every library import
+      - Added Simplified Chinese localization (thanks castpower!)
+      - Added option to remove right-click (game) menu option
+      - Added option to run after every library import
   - Version: 0.8.1
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-09-01
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.8.1/itchIoBundleTagger_0_8_1.pext
     Changelog:
-    - Made Game.Update call only when games are actually updated (fixes possible performance issues in other extensions listening for game updates)
+      - Made Game.Update call only when games are actually updated (fixes possible performance issues in other extensions listening for game updates)
   - Version: 0.8.2
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-09-01
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.8.2/itchIoBundleTagger_0_8_2.pext
     Changelog:
-    - Fixed "Run after every library import" setting being ignored
+      - Fixed "Run after every library import" setting being ignored
   - Version: 0.9
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2023-05-16
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-05-16/itchIoBundleTagger_0_9.pext
     Changelog:
-    - Added support for new bundle - Türkiye & Syria Earthquake Relief Mega Bundle
+      - Added support for new bundle - Türkiye & Syria Earthquake Relief Mega Bundle
   - Version: 0.10
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2023-07-26
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-07-26/itchIoBundleTagger_0_10.pext
     Changelog:
-    - Added support for new bundle - Queer Games Bundle 2023
+      - Added support for new bundle - Queer Games Bundle 2023
   - Version: 0.10.1
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2023-08-26
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-08-26/itchIoBundleTagger_0_10_1.pext
     Changelog:
-    - Added Galician localization
+      - Added Galician localization
   - Version: 0.11
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2023-10-29
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-10-29/itchIoBundleTagger_0_11.pext
     Changelog:
-    - Added options to disable bundles for tagging
-    - Added support for new bundle - Games for Gaza
-    - Games that get tags/links added now have their Date Modified field updated
+      - Added options to disable bundles for tagging
+      - Added support for new bundle - Games for Gaza
+      - Games that get tags/links added now have their Date Modified field updated
   - Version: 0.12
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2024-05-20
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-05-20/itchIoBundleTagger_0_12.pext
     Changelog:
-    - Added support for new bundle - Palestinian Relief Bundle 2024
+      - Added support for new bundle - Palestinian Relief Bundle 2024
   - Version: 0.13
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2024-06-22
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-06-22/itchIoBundleTagger_0_13.pext
     Changelog:
-    - Added support for new bundle - TTRPGs for Trans Rights - West Virginia
-    - Added support for new bundle - TTRPGs for Palestine
-    - Added support for new bundle - Queer Games Bundle 2024
+      - Added support for new bundle - TTRPGs for Trans Rights - West Virginia
+      - Added support for new bundle - TTRPGs for Palestine
+      - Added support for new bundle - Queer Games Bundle 2024
   - Version: 0.14
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2025-05-03
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/itchiobundletagger0.14/itchIoBundleTagger_0_14.pext
     Changelog:
-    - "Fixed Steam link sometimes being added to games that already had one if the URLs didn't match exactly"
-    - "Added support for new bundle - California Fire Relief Bundle"
-    - "Added support for new bundle - Amor per Valencia / Love for Valencia"
-    - "Added support for new bundle - TTRPGs for Trans Rights - Ohio"
-    - "Added support for new bundle - Crips for eSims for Gaza Bundle"
+      - "Fixed Steam link sometimes being added to games that already had one if the URLs didn't match exactly"
+      - "Added support for new bundle - California Fire Relief Bundle"
+      - "Added support for new bundle - Amor per Valencia / Love for Valencia"
+      - "Added support for new bundle - TTRPGs for Trans Rights - Ohio"
+      - "Added support for new bundle - Crips for eSims for Gaza Bundle"
+  - Version: 0.14.1
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2025-08-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/itchIoBundleTagger_0_14_1.pext
+    Changelog:
+      - "Fixed platform matching failing to match some platforms if they'd been renamed"
+  - Version: 0.14.2
+    RequiredApiVersion: 6.2.2
+    ReleaseDate: 2025-08-22
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/itchIoBundleTagger_0_14_2.pext
+    Changelog:
+      - "Fixed plugin failing to load (and taking Ludusavi with it)"

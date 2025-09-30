@@ -31,7 +31,7 @@ public class MetadataZipFileHandler(IPlayniteAPI playniteAPI, LaunchBoxMetadataS
         }
     }
 
-    public string DownloadMetadataZipFile(string url = "https://gamesdb.launchbox-app.com/Metadata.zip")
+    public string DownloadMetadataZipFile(string url = "https://gamesdb.launchbox-app.com/Metadata.zip", bool warnOnSameVersion = true)
     {
         var zipPath = Path.GetTempFileName() + ".zip";
 
@@ -48,7 +48,7 @@ public class MetadataZipFileHandler(IPlayniteAPI playniteAPI, LaunchBoxMetadataS
                 var lastModified = response.Content.Headers.LastModified;
                 var contentLength = response.Content.Headers.ContentLength;
 
-                if (etag != null && oldEtag == etag)
+                if (warnOnSameVersion && etag != null && oldEtag == etag)
                 {
                     string lastUpdatedString = lastModified.HasValue ? $" (last updated {lastModified.Value:g})" : "";
                     var dialogResult = playniteAPI.Dialogs.ShowMessage($"Downloadable LaunchBox metadata{lastUpdatedString} has not changed since you last updated your local LaunchBox metadata database. Update anyway?", "Force update?", System.Windows.MessageBoxButton.YesNo);
@@ -131,13 +131,11 @@ public class MetadataZipFileHandler(IPlayniteAPI playniteAPI, LaunchBoxMetadataS
     {
         var hexEntityRegex = new Regex(@"&#x[0-9A-F]{1,2};", RegexOptions.Compiled);
 
-        using (var writer = new StreamWriter(outputFilePath))
+        using var writer = new StreamWriter(outputFilePath);
+        foreach (var line in File.ReadLines(inputFilePath))
         {
-            foreach (var line in File.ReadLines(inputFilePath))
-            {
-                var cleanLine = hexEntityRegex.Replace(line, string.Empty);
-                writer.WriteLine(cleanLine);
-            }
+            var cleanLine = hexEntityRegex.Replace(line, string.Empty);
+            writer.WriteLine(cleanLine);
         }
     }
 }

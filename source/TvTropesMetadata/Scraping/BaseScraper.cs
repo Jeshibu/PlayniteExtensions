@@ -2,72 +2,96 @@
 using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
 using Playnite.SDK;
+using Playnite.SDK.Data;
 using Playnite.SDK.Models;
+using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace TvTropesMetadata.Scraping;
 
-public abstract class BaseScraper(IWebDownloader downloader)
+public abstract class BaseScraper(IWebViewFactory webViewFactory)
 {
-    protected readonly IWebDownloader downloader = downloader;
+    private IWebView _webView;
+    protected IWebView WebView => _webView ??= webViewFactory.CreateOffscreenView();
     protected readonly ILogger logger = LogManager.GetLogger();
-    public List<string> CategoryWhitelist = ["VideoGame", "VisualNovel"];
-    public List<string> BlacklistedWords =
+    protected List<string> CategoryWhitelist = ["VideoGame", "VisualNovel"];
+    protected const string articleBaseUrl = "https://tvtropes.org/pmwiki/pmwiki.php/";
+
+    protected List<string> BlacklistedWords =
     [
         "deconstructed", "averted", "inverted", "subverted",
         "deconstructs", "averts", "inverts", "subverts"
     ];
 
-    public abstract IEnumerable<TvTropesSearchResult> Search(string query);
-
-    protected IEnumerable<TvTropesSearchResult> Search(string query, string type)
+    public static string GetGoogleSearchUrl(string query)
     {
-        var directUrlResult = GetBasicPageInfo(query);
-        if (directUrlResult != null)
-        {
-            yield return directUrlResult;
-            yield break;
-        }
-
-        string url = $"https://tvtropes.org/pmwiki/elastic_search_result.php?q={HttpUtility.UrlEncode(query)}&page_type={type}&search_type=article";
-        var doc = GetDocument(url);
-        var searchResults = doc.QuerySelectorAll("a.search-result[href]");
-        foreach (var a in searchResults)
-        {
-            var absoluteUrl = a.GetAttribute("href").GetAbsoluteUrl(url);
-            var imgUrl = a.QuerySelector("img[src]")?.GetAttribute("src");
-            var title = a.FirstElementChild.TextContent;
-            string description = null;
-            var descriptionElement = a.QuerySelector("div");
-            if (descriptionElement != null)
-            {
-                var childrenToRemove = descriptionElement.Children.Where(c => c.ClassName == "img-wrapper" || c.ClassName == "more-button");
-                foreach (var child in childrenToRemove)
-                    descriptionElement.RemoveChild(child);
-
-                description = descriptionElement.TextContent.Trim();
-            }
-            yield return new TvTropesSearchResult
-            {
-                Description = description,
-                ImageUrl = imgUrl,
-                Name = title,
-                Title = title.TrimEnd(" (VideoGame)").TrimEnd(" (VisualNovel)"),
-                Url = absoluteUrl,
-            };
-        }
+        var escapedQuery = HttpUtility.UrlEncode($"site:tvtropes.org {query}");
+        return $"https://www.google.com/search?hl=en&q={escapedQuery}";
     }
 
-    private TvTropesSearchResult GetBasicPageInfo(string url)
+    protected async Task<IEnumerable<TvTropesSearchResult>> GoogleSearch(string query)
     {
-        var urlBase = "https://tvtropes.org/pmwiki/pmwiki.php/";
-        if (url == null || !url.StartsWith(urlBase))
+        var url = GetGoogleSearchUrl(query);
+
+        WebView.NavigateAndWait(url);
+        if (WebView.GetCurrentAddress().StartsWith("https://consent.google.com", StringComparison.OrdinalIgnoreCase))
+        {
+            // This rejects Google's consent form for cookies
+            await WebView.EvaluateScriptAsync("document.getElementsByTagName('form')[0].submit();");
+            await Task.Delay(3000);
+            WebView.NavigateAndWait(url);
+        }
+
+        var pageSource = await WebView.GetPageSourceAsync();
+        var doc = await new HtmlParser().ParseAsync(pageSource);
+        var resultElements = doc.QuerySelectorAll("#search [lang=en]").ToList();
+        var output = new List<TvTropesSearchResult>();
+        foreach (var result in resultElements)
+        {
+            var a = result.QuerySelector("a[href]");
+            var h3 = a?.QuerySelector("h3");
+            var breadCrumbElement = a?.QuerySelector("cite > span");
+            var lastSpan = result.QuerySelectorAll("span")?.LastOrDefault();
+            if (a == null || h3 == null)
+                continue;
+
+            var name = h3.TextContent.HtmlDecode().TrimEnd([" (trope)", " (Video Game)"]);
+            
+            output.Add(new()
+            {
+                Name = name,
+                Title = name,
+                Url = a.GetAttribute("href"),
+                Breadcrumbs = GetBreadCrumbSegments(breadCrumbElement?.TextContent.HtmlDecode()),
+                Description = lastSpan?.TextContent.HtmlDecode(),
+            });
+        }
+        return output;
+    }
+
+    private static List<string> GetBreadCrumbSegments(string breadCrumbs)
+    {
+        if (breadCrumbs == null)
+            return [];
+        
+        // › pmwiki › pmwiki.php › Main › E...
+        return breadCrumbs.Split('›').Select(x => x.Trim())
+                          .Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+    }
+
+    public abstract IEnumerable<TvTropesSearchResult> Search(string query);
+
+    protected TvTropesSearchResult GetBasicPageInfo(string url)
+    {
+        if (url == null || !url.StartsWith(articleBaseUrl))
             return null;
 
         try
@@ -122,7 +146,7 @@ public abstract class BaseScraper(IWebDownloader downloader)
             var segmentContent = headerAndContent.Length == 2 ? headerAndContent[1] : segment;
 
             if (!string.IsNullOrWhiteSpace(segmentContent))
-                yield return new Tuple<string, string>(segmentHeader, segmentContent);
+                yield return new(segmentHeader, segmentContent);
         }
     }
 
@@ -135,9 +159,13 @@ public abstract class BaseScraper(IWebDownloader downloader)
 
     private readonly Regex PathSplitter = new(@"pmwiki\.php(/(?<segment>\w+))+", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
-    protected IHtmlDocument GetDocument(string url)
+    protected IHtmlDocument GetDocument(string url, int delay = 0)
     {
-        var pageSource = downloader.DownloadString(url).ResponseContent;
+        WebView.NavigateAndWait(url);
+        if (delay > 0)
+            Thread.Sleep(delay);
+
+        var pageSource = WebView.GetPageSource();
         var doc = new HtmlParser().Parse(pageSource);
         return doc;
     }
@@ -148,9 +176,10 @@ public abstract class BaseScraper(IWebDownloader downloader)
         if (titleElement == null)
             return null;
 
-        var strong = titleElement.QuerySelector("strong");
-        if (strong != null)
-            strong.Remove();
+        titleElement = titleElement.QuerySelector("strong, span.wrapped_title") ?? titleElement;
+        var removeElements = titleElement.QuerySelectorAll(".ns_parts, div.watch_rank_wrap");
+        foreach (var r in removeElements)
+            titleElement.RemoveChild(r);
 
         return titleElement.TextContent.HtmlDecode();
     }
@@ -166,12 +195,13 @@ public class TvTropesSearchResult : IHasName, IGameSearchResult
     public string Description { get; set; }
     public string Url { get; set; }
     public string ImageUrl { get; set; }
+    public List<string> Breadcrumbs { get; set; }
 
     public string Name { get; set; }
 
-    public IEnumerable<string> AlternateNames => Enumerable.Empty<string>();
+    public IEnumerable<string> AlternateNames => [];
 
-    public IEnumerable<string> Platforms => Enumerable.Empty<string>();
+    public IEnumerable<string> Platforms => [];
 
     public ReleaseDate? ReleaseDate => null;
 
@@ -180,6 +210,6 @@ public class TvTropesSearchResult : IHasName, IGameSearchResult
         var id = Url.TrimStart("https://tvtropes.org/pmwiki/pmwiki.php/");
         var description = $"{id} | {Description}";
 
-        return new GenericItemOption<TvTropesSearchResult>(this) { Description = description, Name = Name };
+        return new(this) { Description = description, Name = Name };
     }
 }

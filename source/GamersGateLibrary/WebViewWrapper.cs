@@ -60,10 +60,8 @@ public class WebViewWrapper : IWebViewWrapper
 
                 return source;
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
     }
 

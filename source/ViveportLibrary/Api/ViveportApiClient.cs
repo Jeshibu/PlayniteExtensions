@@ -49,7 +49,7 @@ public class ViveportApiClient : IViveportApiClient
     {
         var request = new RestRequest("api/cms/v4/products/a/all", Method.Post)
                             .AddQueryParameter("uKey", appId)
-                            .AddJsonBody(new Dictionary<string, object>
+                            .AddJsonBody2(new Dictionary<string, object>
                             {
                                 { "app_ids", new[]{ appId } },
                                 { "locale", "en-US" },
@@ -64,7 +64,7 @@ public class ViveportApiClient : IViveportApiClient
 
     public async Task<GetCustomAttributeResponseRoot> GetAttributesAsync(CancellationToken cancellationToken = default)
     {
-        var request = new RestRequest("graphql", Method.Post).AddJsonBody(new Dictionary<string, object>
+        var request = new RestRequest("graphql", Method.Post).AddJsonBody2(new Dictionary<string, object>
         {
             { "operationName", "GetCustomAttribute" },
             { "variables", new Dictionary<string,object>() },
@@ -72,5 +72,14 @@ public class ViveportApiClient : IViveportApiClient
         });
 
         return await Execute<GetCustomAttributeResponseRoot>(request, cancellationToken);
+    }
+}
+
+internal static class RestHelpers
+{
+    internal static RestRequest AddJsonBody2(this RestRequest request, object obj)
+    {
+        var body = JsonConvert.SerializeObject(obj);
+        return request.AddBody(body);
     }
 }

@@ -1,14 +1,15 @@
-﻿using Playnite.SDK;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using IgnMetadata.Api;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 
 namespace IgnMetadata;
 
-public class IgnGameSearchProvider(IgnClient client, IPlatformUtility platformUtility) : IGameSearchProvider<IgnGame>
+public class IgnGameSearchProvider(IgnApiClient client, IPlatformUtility platformUtility) : IGameSearchProvider<IgnGame>
 {
     public GameDetails GetDetails(IgnGame searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
@@ -40,6 +41,10 @@ public class IgnGameSearchProvider(IgnClient client, IPlatformUtility platformUt
 
         if (ignDetails?.PrimaryImage?.Url != null)
             gameDetails.CoverOptions.Add(new BasicImage(ignDetails.PrimaryImage.Url));
+
+        var backgrounds = client.GetImages(searchResult.Slug)?.Select(i => new BasicImage(i));
+        if (backgrounds != null)
+            gameDetails.BackgroundOptions.AddRange(backgrounds);
 
         return gameDetails;
     }

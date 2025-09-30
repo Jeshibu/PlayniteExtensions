@@ -142,7 +142,7 @@ public class RawgApiClient
             { "is_private", isPrivate },
         };
 
-        var request = new RestRequest("collections", Method.Post).AddToken(token).AddJsonBody(body);
+        var request = new RestRequest("collections", Method.Post).AddToken(token).AddJsonBody2(body);
         return Execute<RawgCollection>(request);
     }
 
@@ -151,7 +151,7 @@ public class RawgApiClient
         var body = new { games = gameIds.Select(i => i.ToString()).ToArray() };
 
         var request = new RestRequest($"collections/{collectionSlugOrId}/games", Method.Post)
-                          .AddToken(token).AddJsonBody(body);
+                          .AddToken(token).AddJsonBody2(body);
         var result = Execute<Dictionary<string, object>>(request);
         return result.ContainsKey("games");
     }
@@ -180,7 +180,7 @@ public class RawgApiClient
     {
         var request = new RestRequest("users/current/games", Method.Post)
                         .AddToken(token)
-                        .AddJsonBody(new Dictionary<string, object>
+                        .AddJsonBody2(new Dictionary<string, object>
                         {
                             { "game", gameId },
                             { "status", completionStatus },
@@ -241,7 +241,7 @@ public class RawgApiClient
     {
         var request = new RestRequest($"users/current/games/{gameId}", Method.Patch)
                         .AddToken(token)
-                        .AddJsonBody(new Dictionary<string, object>
+                        .AddJsonBody2(new Dictionary<string, object>
                         {
                             { "status", completionStatus },
                         });
@@ -268,7 +268,7 @@ public class RawgApiClient
     {
         var request = new RestRequest("reviews", Method.Post)
                         .AddToken(token)
-                        .AddJsonBody(new Dictionary<string, object> {
+                        .AddJsonBody2(new Dictionary<string, object> {
                             { "game", gameId },
                             { "rating", rating },
                             { "add_to_library", addToLibrary },
@@ -305,10 +305,17 @@ internal static class RawgApiClientHelpers
         request.AddHeader("token", $"Token {token}");
         return request;
     }
+
     internal static RestRequest AddKey(this RestRequest request, string key)
     {
         request.AddQueryParameter("key", key);
         return request;
+    }
+
+    internal static RestRequest AddJsonBody2(this RestRequest request, object obj)
+    {
+        var body = JsonConvert.SerializeObject(obj);
+        return request.AddBody(body);
     }
 }
 

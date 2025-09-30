@@ -11,9 +11,11 @@ namespace TvTropesMetadata.SearchProviders;
 
 public class TropeSearchProvider(TropeScraper scraper, TvTropesMetadataSettings settings) : ISearchableDataSourceWithDetails<TvTropesSearchResult, IEnumerable<GameDetails>>
 {
-    public IEnumerable<GameDetails> GetDetails(TvTropesSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
+    public IEnumerable<GameDetails> GetDetails(TvTropesSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null) => GetDetails(searchResult.Url);
+    
+    public IEnumerable<GameDetails> GetDetails(string searchResultUrl)
     {
-        var page = scraper.GetGamesForTrope(searchResult.Url);
+        var page = scraper.GetGamesForTrope(searchResultUrl);
         var worksByName = new Dictionary<string, HashSet<string>>(StringComparer.InvariantCultureIgnoreCase);
         foreach (var item in page.Items)
         {

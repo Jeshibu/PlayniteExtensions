@@ -5,24 +5,48 @@ Packages:
     ReleaseDate: 2024-06-22
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-06-22/TvTropesMetadata_0_4_2.pext
     Changelog:
-    - Initial release
+      - Initial release
   - Version: 0.4.3
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-08-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/TvTropesMetadata_0_4_3.pext
     Changelog:
-    - Improvement in connection handling; less likely to run out of connections
+      - Improvement in connection handling; less likely to run out of connections
   - Version: 0.4.4
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-01-18
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/TvTropesMetadata_0_4_4.pext
     Changelog:
-    - Improved game matching speed for bulk property import
-    - Slightly improved title matching using URLs where capital letters follow each other like in TheElderScrollsVSkyrim
+      - Improved game matching speed for bulk property import
+      - Slightly improved title matching using URLs where capital letters follow each other like in TheElderScrollsVSkyrim
   - Version: 0.4.5
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-02-15
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/TvTropesMetadata_0_4_5.pext
     Changelog:
-    - Improved property bulk import title matching with regard to editions in braces and roman numerals
-    - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them
+      - Improved property bulk import title matching with regard to editions in braces and roman numerals
+      - Property bulk import can now match multiple games per game in your Playnite database and add links for all of them
+  - Version: 0.4.6
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-08-16
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-16/TvTropesMetadata_0_4_6.pext
+    Changelog:
+      - Improved property bulk import for tropes with subcategory pages
+  - Version: 0.4.7
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-08-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/TvTropesMetadata_0_4_7.pext
+    Changelog:
+      - "Fixed platform matching failing to match some platforms if they'd been renamed"
+  - Version: 0.4.8
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-09-09
+    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-09-09/TvTropesMetadata_0_4_8.pext'
+    Changelog:
+      - "Fixed nothing working after site redesign"
+  - Version: 0.4.9
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-09-11
+    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-09-09/TvTropesMetadata_0_4_9.pext'
+    Changelog:
+      - "Really actually fixed search returning nothing this time"

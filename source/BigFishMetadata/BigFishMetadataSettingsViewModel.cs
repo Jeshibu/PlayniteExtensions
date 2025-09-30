@@ -10,13 +10,6 @@ public class BigFishMetadataSettingsViewModel : PluginSettingsViewModel<BigFishM
         var savedSettings = plugin.LoadPluginSettings<BigFishMetadataSettings>();
 
         // LoadPluginSettings returns null if no saved data is available.
-        if (savedSettings != null)
-        {
-            Settings = savedSettings;
-        }
-        else
-        {
-            Settings = new BigFishMetadataSettings();
-        }
+        Settings = savedSettings ?? new();
     }
 }

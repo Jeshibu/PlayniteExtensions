@@ -61,8 +61,8 @@ public class PCGamingWikiMetadata : MetadataPlugin
             yield break;
 
         var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-        var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation), "icon.png");
-        yield return new TopPanelItem()
+        var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation)!, "icon.png");
+        yield return new()
         {
             Icon = iconPath,
             Visible = true,
@@ -73,7 +73,7 @@ public class PCGamingWikiMetadata : MetadataPlugin
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
-        yield return new MainMenuItem
+        yield return new()
         {
             MenuSection = "@PCGamingWiki",
             Description = "Import PCGamingWiki property",

@@ -1,0 +1,12 @@
+﻿Id: FilterSearch
+Name: Filter Search
+Author: Jeshibu
+Version: '1.1.1'
+Module: FilterSearch.dll
+Type: GenericPlugin
+Icon: icon.png
+Links:
+  - Name: GitHub repository
+    Url: https://github.com/Jeshibu/PlayniteExtensions
+  - Name: Donate via Ko-fi
+    Url: https://ko-fi.com/Jeshibu

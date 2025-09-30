@@ -203,11 +203,11 @@ public class RawgLibrary : LibraryPlugin
 
         if (string.IsNullOrWhiteSpace(settings.Settings.UserToken))
         {
-            PlayniteApi.Notifications.Add(new NotificationMessage("rawg-library-no-token", "Not authenticated. Please log in in the RAWG Library extension settings. (click this notification)", NotificationType.Error, OpenSettings));
+            PlayniteApi.Notifications.Add(new("rawg-library-no-token", "Not authenticated. Please log in in the RAWG Library extension settings. (click this notification)", NotificationType.Error, OpenSettings));
             return null;
         }
 
-        return rawgApiClient ??= new RawgApiClient(settings.Settings.User?.ApiKey);
+        return rawgApiClient ??= new(settings.Settings.User?.ApiKey);
     }
 
     public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
@@ -225,7 +225,7 @@ public class RawgLibrary : LibraryPlugin
             {
                 if (string.IsNullOrWhiteSpace(settings.Settings.UserToken))
                 {
-                    PlayniteApi.Notifications.Add(new NotificationMessage("rawg-library-no-token", "Not authenticated. Please log in in the RAWG Library extension settings. (click this notification)", NotificationType.Error, OpenSettings));
+                    PlayniteApi.Notifications.Add(new("rawg-library-no-token", "Not authenticated. Please log in in the RAWG Library extension settings. (click this notification)", NotificationType.Error, OpenSettings));
                     return output;
                 }
 
@@ -272,10 +272,10 @@ public class RawgLibrary : LibraryPlugin
 
     public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
     {
-        yield return new GameMenuItem { MenuSection = "RAWG", Description = "Sync to RAWG library", Action = SyncGamesToRawg };
-        yield return new GameMenuItem { MenuSection = "RAWG", Description = "Delete from RAWG library", Action = a => DeleteGamesFromRawgLibrary(a.Games) };
-        yield return new GameMenuItem { MenuSection = "RAWG", Description = "Add to new private collection", Action = a => AddToNewCollection(a.Games, isPrivate: true) };
-        yield return new GameMenuItem { MenuSection = "RAWG", Description = "Add to new public collection", Action = a => AddToNewCollection(a.Games, isPrivate: false) };
+        yield return new() { MenuSection = "RAWG", Description = "Sync to RAWG library", Action = SyncGamesToRawg };
+        yield return new() { MenuSection = "RAWG", Description = "Delete from RAWG library", Action = a => DeleteGamesFromRawgLibrary(a.Games) };
+        yield return new() { MenuSection = "RAWG", Description = "Add to new private collection", Action = a => AddToNewCollection(a.Games, isPrivate: true) };
+        yield return new() { MenuSection = "RAWG", Description = "Add to new public collection", Action = a => AddToNewCollection(a.Games, isPrivate: false) };
 
         var collections = settings?.Settings?.Collections;
         if (collections == null)
@@ -322,19 +322,13 @@ public class RawgLibrary : LibraryPlugin
             logger.Warn($"No RAWG status configured for Playnite completion status {game.CompletionStatus.Name}");
             return false;
         }
-        else
-        {
-            logger.Info($"Updating RAWG game {game.Name}");
-            if (client.UpdateGameCompletionStatus(token, rawgId, rawgStatus))
-            {
-                return true;
-            }
-            else
-            {
-                logger.Info($"Adding RAWG game {game.Name}");
-                return client.AddGameToLibrary(token, rawgId, rawgStatus);
-            }
-        }
+
+        logger.Info($"Updating RAWG game {game.Name}");
+        if (client.UpdateGameCompletionStatus(token, rawgId, rawgStatus))
+            return true;
+
+        logger.Info($"Adding RAWG game {game.Name}");
+        return client.AddGameToLibrary(token, rawgId, rawgStatus);
     }
 
     private void SyncUserScore(Game game, int rawgId, RawgApiClient client, string token)
@@ -393,7 +387,7 @@ public class RawgLibrary : LibraryPlugin
         if (id.HasValue)
             return id;
 
-        client = client ?? GetApiClient();
+        client ??= GetApiClient();
         if (client == null)
             return null;
 

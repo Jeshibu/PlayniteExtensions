@@ -93,6 +93,12 @@ public class MutualGamesSettingsViewModel : PluginSettingsViewModel<MutualGamesS
                 existingSettings.PlayniteApi = PlayniteApi;
             }
         }
+
+        var sources = Clients.Select(c=>c.Source).ToList();
+        var friendSourcesToRemove = Settings.FriendSources.Where(fs => !sources.Contains(fs.Source)).ToList();
+
+        foreach(var fs in friendSourcesToRemove)
+            Settings.FriendSources.Remove(fs);
     }
 
     public override bool VerifySettings(out List<string> errors)

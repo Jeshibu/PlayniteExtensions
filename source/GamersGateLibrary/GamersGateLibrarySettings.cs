@@ -121,9 +121,9 @@ public class GamersGateLibrarySettingsViewModel : PluginSettingsViewModel<Gamers
         UpgradeSettings();
     }
 
-    public RelayCommand<object> LoginCommand => new(a => Login());
+    public RelayCommand<object> LoginCommand => new(_ => Login());
 
-    public RelayCommand<object> ClearKnownOrderIdsCommand => new(a => Settings.ClearKnownOrderIds());
+    public RelayCommand<object> ClearKnownOrderIdsCommand => new(_ => Settings.ClearKnownOrderIds());
 
     private void Login()
     {
@@ -133,7 +133,7 @@ public class GamersGateLibrarySettingsViewModel : PluginSettingsViewModel<Gamers
             var cookies = new List<Cookie>();
             using (var view = PlayniteApi.WebViews.CreateView(675, 540, Colors.Black))
             {
-                view.LoadingChanged += async (s, e) =>
+                view.LoadingChanged += async (_, _) =>
                 {
                     try
                     {

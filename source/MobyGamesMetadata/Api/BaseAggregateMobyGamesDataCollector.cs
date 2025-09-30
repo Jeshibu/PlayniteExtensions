@@ -26,23 +26,28 @@ public abstract class BaseAggregateMobyGamesDataCollector(MobyGamesApiClient api
         apiDetails.CriticScore = scraperDetails.CriticScore;
         apiDetails.Tags.AddMissing(scraperDetails.Tags);
         apiDetails.Series.AddMissing(scraperDetails.Series);
-        AddCompanies(apiDetails.Developers, scraperDetails.Developers);
-        AddCompanies(apiDetails.Publishers, scraperDetails.Publishers);
+        MergeCompanies(apiDetails.Developers, scraperDetails.Developers);
+        MergeCompanies(apiDetails.Publishers, scraperDetails.Publishers);
         apiDetails.Description ??= scraperDetails.Description;
-
-        foreach (var scraperLink in scraperDetails.Links)
-            if (!apiDetails.Links.Any(l => l.Url == scraperLink.Url))
-                apiDetails.Links.Add(scraperLink);
+        MergeLinks(apiDetails.Links, scraperDetails.Links);
 
         return apiDetails;
     }
 
-    protected List<string> AddCompanies(List<string> companies, IEnumerable<string> companiesToAdd)
+    protected List<Link> MergeLinks(List<Link> apiLinks, List<Link> scraperLinks)
+    {
+        if (scraperLinks == null) return apiLinks;
+
+        apiLinks?.AddRange(scraperLinks.Where(sl => !apiLinks.Any(al => sl.Url == al.Url)));
+
+        return apiLinks;
+    }
+
+    protected List<string> MergeCompanies(List<string> companies, IEnumerable<string> companiesToAdd)
     {
         if (companiesToAdd == null) return companies;
 
-
-        companies.AddMissing(companiesToAdd.Select(FixCompanyName));
+        companies?.AddMissing(companiesToAdd.Select(FixCompanyName));
 
         return companies;
     }

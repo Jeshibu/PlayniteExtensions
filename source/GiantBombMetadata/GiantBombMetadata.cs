@@ -3,6 +3,7 @@ using GiantBombMetadata.SearchProviders;
 using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
+using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -77,7 +78,7 @@ public class GiantBombMetadata : MetadataPlugin
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
-        yield return new MainMenuItem { Description = "Import Giant Bomb game property", MenuSection = "@Giant Bomb", Action = a => ImportGameProperty() };
+        yield return new MainMenuItem { Description = "Import Giant Bomb game property", MenuSection = "@Giant Bomb", Action = _ => ImportGameProperty() };
     }
 
     public override IEnumerable<TopPanelItem> GetTopPanelItems()
@@ -96,13 +97,35 @@ public class GiantBombMetadata : MetadataPlugin
         };
     }
 
-    public void ImportGameProperty()
+    private void ImportGameProperty()
     {
         if (BlockMissingApiKey())
             return;
 
-        var searchProvider = new GiantBombGamePropertySearchProvider(ApiClient, new GiantBombScraper(downloader, PlatformUtility));
+        var genreOption = new MessageBoxOption("Genres or Themes");
+        var otherOption = new MessageBoxOption("Other", isDefault: true);
+        var cancelOption = new MessageBoxOption("Cancel", isCancel: true);
+
+        var chosenOption = PlayniteApi.Dialogs.ShowMessage("Assign one of the following to all your matching games:", "Bulk property import",
+                    System.Windows.MessageBoxImage.Question, [genreOption, otherOption, cancelOption]);
+
+        if (chosenOption == null || chosenOption == cancelOption) return;
+
+        var scraper = new GiantBombScraper(downloader, PlatformUtility);
+        ISearchableDataSourceWithDetails<GiantBombSearchResultItem, IEnumerable<GameDetails>> searchProvider;
+
+        if (chosenOption == otherOption)
+            searchProvider = new GiantBombGamePropertySearchProvider(ApiClient, new GiantBombScraper(downloader, PlatformUtility));
+        else if (chosenOption == genreOption)
+            searchProvider = new GiantBombGameThemeOrGenreSearchProvider(ApiClient, new GiantBombScraper(downloader, PlatformUtility));
+        else
+            return;
+
         var extra = new GiantBombBulkPropertyAssigner(PlayniteApi, Settings.Settings, searchProvider, new PlatformUtility(PlayniteApi), Settings.Settings.MaxDegreeOfParallelism);
+
+        if (chosenOption == genreOption)
+            extra.AllowEmptySearchQuery = true;
+
         extra.ImportGameProperty();
     }
 

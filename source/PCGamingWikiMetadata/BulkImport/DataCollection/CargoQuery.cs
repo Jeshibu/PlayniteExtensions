@@ -38,7 +38,7 @@ internal class CargoQuery : ICargoQuery
                 .AddQueryParameter("having", having);
 
         var result = Execute<CargoResultRoot<ItemCount>>(request);
-        return result?.CargoQuery.Select(t => t.Title) ?? Enumerable.Empty<ItemCount>();
+        return result?.CargoQuery.Select(t => t.Title) ?? [];
     }
 
     public CargoResultRoot<CargoResultGame> GetGamesByHolds(string table, string field, string holds, int offset)
@@ -70,11 +70,11 @@ internal class CargoQuery : ICargoQuery
         return Execute<CargoResultRoot<CargoResultGame>>(request);
     }
 
-    private RestRequest GetBaseGameRequest(string table, string field)
+    private static RestRequest GetBaseGameRequest(string table, string field)
     {
         var baseTable = CargoTables.GameInfoBoxTableName;
 
-        RestRequest request = new RestRequest()
+        var request = new RestRequest()
                 .AddQueryParameter("fields", $"{baseTable}._pageName=Name,{baseTable}.Released,{baseTable}.Available_on=OS,{baseTable}.Steam_AppID=SteamID,{baseTable}.GOGcom_ID=GOGID,{table}.{field}=Value");
 
         if (table == baseTable)

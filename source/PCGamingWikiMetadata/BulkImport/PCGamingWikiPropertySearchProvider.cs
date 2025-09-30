@@ -77,7 +77,7 @@ public class PCGamingWikiPropertySearchProvider(ICargoQuery cargoQuery, IPlatfor
 
     public GenericItemOption<PCGamingWikiSelectedValues> ToGenericItemOption(PCGamingWikiSelectedValues item)
     {
-        return new GenericItemOption<PCGamingWikiSelectedValues>(item) { Name = item.FieldInfo.FieldDisplayName };
+        return new(item) { Name = item.FieldInfo.FieldDisplayName };
     }
 
     public IEnumerable<ItemCount> GetCounts(CargoFieldInfo field, string searchString)

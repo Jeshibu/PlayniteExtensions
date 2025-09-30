@@ -6,15 +6,48 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Playnite.SDK;
 
 namespace TvTropesMetadata.Scraping;
 
-public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
+public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewFactory)
 {
-    public List<string> SubcategoryWhitelist = ["VideoGames", "VisualNovels"];
-    public List<string> FolderLabelWhitelist = ["Video Game", "Videogame", "Visual Novel"];
+    private List<string> VideogameCategoryUrlRoots = ["VideoGame", "VisualNovel"];
 
-    public override IEnumerable<TvTropesSearchResult> Search(string query) => Search(query, "trope");
+    private List<string> FolderLabelWhitelist =
+    [
+        "Game",
+        "Visual Novel",
+        "Action-Adventure",
+        "Fighting",
+        "First-Person Shooter",
+        "Music/Rhythm",
+        "Platform",
+        "Real-Time Strategy",
+        "Role-Playing",
+        "RPG",
+        "Roguelike",
+        "Simulation",
+        " Sim",
+        "Stealth-Based Game",
+        "Strategy",
+        "Survival Horror",
+        "Third-Person Shooter",
+        "Turn-Based Strategy",
+        "Sandbox"
+    ];
+
+    public override IEnumerable<TvTropesSearchResult> Search(string query)
+    {
+        var directUrlResult = GetBasicPageInfo(query);
+        if (directUrlResult != null)
+            return [directUrlResult];
+        
+        var results = GoogleSearch(query).Result.ToList();
+        results.RemoveAll(sr => sr.Breadcrumbs.Count != 1 || sr.Breadcrumbs[0] != "Tropes");
+        
+        return results;
+    }
 
     public ParsedTropePage GetGamesForTrope(string url)
     {
@@ -27,7 +60,18 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
         var output = new ParsedTropePage { Title = GetTitle(doc) };
         var articleContent = doc.QuerySelector(".article-content")?.InnerHtml;
         output.Items.AddRange(GetTropePageListElements(articleContent, getAllUnfiltered: pageIsSubsection).Select(ParseTropePageListItem));
-        if (!pageIsSubsection)
+        if (pageIsSubsection)
+        {
+            var breadcrumbLinks = doc.QuerySelectorAll(".entry-title .entry-breadcrumb > a[href]");
+            foreach (var a in breadcrumbLinks)
+            {
+                var linkUrl = a.GetAttribute("href").GetAbsoluteUrl(url);
+                var linkText = a.TextContent.HtmlDecode();
+                if (IsVideogameUrl(linkUrl))
+                    output.Items.Add(new() { Text = "", Works = [new() { Title = linkText, Urls = [linkUrl] }] });
+            }
+        }
+        else
         {
             var subcategoryUrls = GetSubcategoryUrls(doc, url);
             foreach (var subcategoryUrl in subcategoryUrls)
@@ -35,27 +79,44 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
                 var subcategoryPage = GetGamesForTrope(subcategoryUrl, pageIsSubsection: true);
                 output.Items.AddRange(subcategoryPage.Items);
             }
-            output.Items.RemoveAll(i => i.Works.Count == 0 || BlacklistedWords.Any(w => i.Text.Contains(w)));
+
+            output.Items.RemoveAll(i => i.Works.Count == 0 || BlacklistedWords.Any(w => i.Text.Contains(w, StringComparison.InvariantCultureIgnoreCase)));
         }
+
         return output;
+    }
+
+    private bool IsVideogameFolderName(string folderName) => FolderLabelWhitelist.Any(l => folderName.Contains(l, StringComparison.InvariantCultureIgnoreCase));
+
+    private bool IsVideogameUrl(string url)
+    {
+        var linkSegments = GetWikiPathSegments(url);
+        return linkSegments.Length == 2 && VideogameCategoryUrlRoots.Contains(linkSegments[0]);
     }
 
     private IEnumerable<string> GetSubcategoryUrls(IHtmlDocument doc, string pageUrl)
     {
         var lastUrlSegment = GetWikiPathSegments(pageUrl).Last();
         var links = doc.QuerySelectorAll(".article-content > ul > li > a.twikilink[href]");
+
+        bool IsSubcategoryUrl(string subcategoryUrl)
+        {
+            var linkSegments = GetWikiPathSegments(subcategoryUrl);
+            return linkSegments.Length == 2 && linkSegments[0].Equals(lastUrlSegment, StringComparison.InvariantCultureIgnoreCase);
+        }
+
         foreach (var a in links)
         {
             var linkUrl = a.GetAttribute("href");
-            var linkSegments = GetWikiPathSegments(linkUrl);
-            if (linkSegments.Length != 2)
+            var linkText = a.TextContent.HtmlDecode();
+            if (!IsSubcategoryUrl(linkUrl) || !IsVideogameFolderName(linkText))
                 continue;
 
-            foreach (var sub in SubcategoryWhitelist)
-            {
-                if (linkSegments[0].Equals(lastUrlSegment, StringComparison.InvariantCultureIgnoreCase) && linkSegments[1].Contains(sub, StringComparison.InvariantCultureIgnoreCase))
-                    yield return linkUrl.GetAbsoluteUrl(pageUrl);
-            }
+            yield return linkUrl.GetAbsoluteUrl(pageUrl);
+
+            var childUrls = a.ParentElement.QuerySelectorAll("ul > li a.twikilink[href]").Select(x => x.GetAttribute("href").GetAbsoluteUrl(pageUrl)).ToArray();
+            foreach (var childUrl in childUrls)
+                yield return childUrl;
         }
     }
 
@@ -77,15 +138,14 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
                     continue;
 
                 var segmentContent = segment.Item2;
-                if (FolderLabelWhitelist.Any(l => segmentHeader.Contains(l, StringComparison.InvariantCultureIgnoreCase)))
+                if (IsVideogameFolderName(segmentHeader))
                     AddListElementsFromSourceString(segmentContent);
 
-                var segmentDoc = htmlParser.Parse(segmentContent);
-                var folderLabels = segmentDoc.QuerySelectorAll(".folderlabel[onclick^=\"togglefolder(\"]");
+                var folderLabels = htmlParser.Parse(segmentContent).QuerySelectorAll(".folderlabel[onclick^=\"togglefolder(\"]");
                 foreach (var folderLabel in folderLabels)
                 {
                     var label = folderLabel.TextContent.HtmlDecode();
-                    if (FolderLabelWhitelist.Any(l => label.Contains(l, StringComparison.InvariantCultureIgnoreCase)))
+                    if (IsVideogameFolderName(label))
                         output.AddRange(folderLabel.NextElementSibling.QuerySelectorAll("ul > li:has(em)"));
                 }
             }
@@ -109,6 +169,7 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
             if (output.Count == 0)
                 AddAllListElementsFromSegments(headerSegments);
         }
+
         return output;
     }
 
@@ -116,8 +177,6 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
     {
         var output = new TropePageListItem { Text = element.InnerHtml.Split(["<ul>"], StringSplitOptions.RemoveEmptyEntries).First() };
         var liChildren = element.Children.Where(c => c.TagName == "EM" || IsVideoGameLink(c));
-        if (liChildren == null)
-            return output;
 
         var workNamesDeflated = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
 
@@ -144,6 +203,7 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
                 AddWork(new TvTropesWork { Title = ReverseEngineerGameNameFromUrlSegment(gameUrlName), Urls = [url] });
             }
         }
+
         return output;
     }
 
@@ -161,7 +221,7 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
         {
             char a = str[i];
             char b = str[i + 1];
-            char? c = str.Count > i + 2 ? str[i + 2] : (char?)null;
+            char? c = str.Count > i + 2 ? str[i + 2] : null;
 
             bool upperAfterLower = char.IsUpper(b) && !char.IsUpper(a);
             bool digitAfterNonDigit = char.IsDigit(b) && !char.IsDigit(a);
@@ -173,6 +233,7 @@ public class TropeScraper(IWebDownloader downloader) : BaseScraper(downloader)
                 i++;
             }
         }
+
         return new string(str.ToArray());
     }
 }

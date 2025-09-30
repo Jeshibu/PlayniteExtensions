@@ -12,35 +12,21 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
-    <DebugType>pdbonly</DebugType>
-  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.9.9" />
     <PackageReference Include="gong-wpf-dragdrop" Version="2.4.1" />
-    <PackageReference Include="Magick.NET.Core" Version="12.3.0" />
-    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="12.3.0" />
+    <PackageReference Include="Magick.NET-Q8-x86" Version="14.8.2" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="PlayniteSDK" Version="6.8.0" />
-    <PackageReference Include="SqlNado" Version="1.3.3" />
-    <PackageReference Include="System.Buffers" Version="4.5.1" />
+    <PackageReference Include="SqlNado" Version="2.0.4" />
     <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
-    <PackageReference Include="System.Memory" Version="4.5.5" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
-    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,12 +47,20 @@
     <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs" Link="Common\StringExtensions.cs" />
     <Compile Include="..\PlayniteExtensions.Common\TitleComparer.cs" Link="Common\TitleComparer.cs" />
     <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs" Link="Common\WebDownloader.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkGamePropertyAssigner.cs" Link="Common\Metadata\BulkGamePropertyAssigner.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkImportPluginSettings.cs" Link="Common\Metadata\BulkImportPluginSettings.cs" />
     <Compile Include="..\PlayniteExtensions.Metadata.Common\GameDetails.cs" Link="Common\Metadata\GameDetails.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GameMatchingHelper.cs" Link="Common\Metadata\GameMatchingHelper.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\GamePropertyImportViewModel.cs" Link="Common\Metadata\GamePropertyImportViewModel.cs" />
     <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericItemOption.cs" Link="Common\Metadata\GenericItemOption.cs" />
     <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericMetadataProvider.cs" Link="Common\Metadata\GenericMetadataProvider.cs" />
     <Compile Include="..\PlayniteExtensions.Metadata.Common\IGameSearchResult.cs" Link="Common\Metadata\IGameSearchResult.cs" />
     <Compile Include="..\PlayniteExtensions.Metadata.Common\IImageData.cs" Link="Common\Metadata\IImageData.cs" />
     <Compile Include="..\PlayniteExtensions.Metadata.Common\ISearchableDataSource.cs" Link="Common\Metadata\ISearchableDataSource.cs" />
+    <Compile Include="..\PlayniteExtensions.Metadata.Common\Settings.cs" Link="Common\Metadata\Settings.cs" />
+    <Compile Update="Common\Metadata\GamePropertyImportView.xaml.cs">
+      <DependentUpon>GamePropertyImportView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="LaunchBoxMetadataSettingsView.xaml.cs">
       <DependentUpon>LaunchBoxMetadataSettingsView.xaml</DependentUpon>
     </Compile>
@@ -95,10 +89,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Common\Metadata\GamePropertyImportView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="sqlite3.x86.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="xcopy &quot;$(SolutionDir)PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*&quot; &quot;$(ProjectDir)Common\Metadata&quot; /Y /I" />
+  </Target>
 </Project>

@@ -22,7 +22,7 @@ public class GameMatchingHelper(IExternalDatabaseIdUtility externalDatabaseIdUti
 
     public HashSet<string> GetDeflatedNames(IEnumerable<string> names)
     {
-        return new HashSet<string>(names.Select(GetDeflatedName), StringComparer.InvariantCultureIgnoreCase);
+        return new(names.Select(GetDeflatedName), StringComparer.InvariantCultureIgnoreCase);
     }
 
     public string GetDeflatedName(string name)
@@ -47,7 +47,7 @@ public class GameMatchingHelper(IExternalDatabaseIdUtility externalDatabaseIdUti
 
     private void AddGame(Game game)
     {
-        var dbIDs = ExternalDatabaseIdUtility.GetIdsFromGame(game).ToList();
+        var dbIDs = ExternalDatabaseIdUtility?.GetIdsFromGame(game).ToList() ?? [];
 
         if (dbIDs.Any())
             foreach (var dbID in dbIDs)

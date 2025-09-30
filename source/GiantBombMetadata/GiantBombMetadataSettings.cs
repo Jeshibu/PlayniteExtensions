@@ -15,15 +15,17 @@ public class GiantBombMetadataSettings : BulkImportPluginSettings
         set
         {
             apiKey = value?.Trim();
-            OnPropertyChanged(nameof(ApiKey));
+            OnPropertyChanged();
         }
     }
-    public PropertyImportSetting Characters { get; set; } = new PropertyImportSetting { Prefix = "Character: ", ImportTarget = PropertyImportTarget.Ignore };
-    public PropertyImportSetting Concepts { get; set; } = new PropertyImportSetting { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
-    public PropertyImportSetting Locations { get; set; } = new PropertyImportSetting { Prefix = "Location: ", ImportTarget = PropertyImportTarget.Tags };
-    public PropertyImportSetting Objects { get; set; } = new PropertyImportSetting { Prefix = "Object: ", ImportTarget = PropertyImportTarget.Ignore };
-    public PropertyImportSetting Themes { get; set; } = new PropertyImportSetting { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
-    public PropertyImportSetting People { get; set; } = new PropertyImportSetting { Prefix = "Person: ", ImportTarget = PropertyImportTarget.Ignore };
+    public PropertyImportSetting Characters { get; set; } = new() { Prefix = "Character: ", ImportTarget = PropertyImportTarget.Ignore };
+    public PropertyImportSetting Concepts { get; set; } = new() { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
+    public PropertyImportSetting Locations { get; set; } = new() { Prefix = "Location: ", ImportTarget = PropertyImportTarget.Tags };
+    public PropertyImportSetting Objects { get; set; } = new() { Prefix = "Object: ", ImportTarget = PropertyImportTarget.Ignore };
+    public PropertyImportSetting Themes { get; set; } = new() { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
+    public PropertyImportSetting People { get; set; } = new() { Prefix = "Person: ", ImportTarget = PropertyImportTarget.Ignore };
+    public PropertyImportSetting Franchises { get; set; } = new() { Prefix = "", ImportTarget = PropertyImportTarget.Series };
+    public PropertyImportSetting Genres { get; set; } = new() { Prefix = "", ImportTarget = PropertyImportTarget.Genres };
     public MultiValuedPropertySelectionMode FranchiseSelectionMode { get; set; } = MultiValuedPropertySelectionMode.All;
     public bool ShowTopPanelButton { get; set; } = true;
 }
@@ -50,17 +52,11 @@ public class GiantBombMetadataSettingsViewModel : PluginSettingsViewModel<GiantB
         }
         else
         {
-            Settings = new GiantBombMetadataSettings { Version = 1 };
+            Settings = new() { Version = 1 };
         }
     }
 
-    public RelayCommand<object> GetApiKeyCommand
-    {
-        get => new((a) =>
-        {
-            Process.Start(@"https://www.giantbomb.com/api/");
-        });
-    }
+    public RelayCommand<object> GetApiKeyCommand => new(_ => { Process.Start(@"https://www.giantbomb.com/api/"); });
 
     public PropertyImportTarget[] ImportTargets { get; } =
     [

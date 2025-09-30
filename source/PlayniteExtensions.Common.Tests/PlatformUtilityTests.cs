@@ -8,6 +8,8 @@ public class PlatformUtilityTests
 {
     [Theory]
     [InlineData("Sony PSP", "sony_psp")]
+    [InlineData("Sony Playstation Portable", "sony_psp")]
+    [InlineData("Sony Playstation 2", "sony_playstation2")]
     public static void MatchSinglePlatformDefinition(string input, string expectedPlatformDefinition)
     {
         var platformUtility = new PlatformUtility((string)null);

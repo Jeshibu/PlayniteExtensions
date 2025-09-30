@@ -5,72 +5,78 @@ Packages:
     ReleaseDate: 2022-03-26
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/barnite0.1/Barnite_0_1.pext
     Changelog:
-    - Initial release
-    - MobyGames and PriceCharting support
-    - English only
-    - Manual entry only
+      - Initial release
+      - MobyGames and PriceCharting support
+      - English only
+      - Manual entry only
   - Version: 0.2
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-03-31
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/barnite0.2/Barnite_0_2.pext
     Changelog:
-    - Added Play-Asia and OGDB as data source
-    - Added link to games pointing to the details page that the game was found on
+      - Added Play-Asia and OGDB as data source
+      - Added link to games pointing to the details page that the game was found on
   - Version: 0.3
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-04-22
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/barnite0.3/Barnite_0_3.pext
     Changelog:
-    - Added settings
-    - Added bol.com as data source
+      - Added settings
+      - Added bol.com as data source
   - Version: 0.4
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-04-23
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/barnite0.4/Barnite_0_4.pext
     Changelog:
-    - Fixed bol.com NullReferenceException when there are no results
-    - Added retroplace as data source
+      - Fixed bol.com NullReferenceException when there are no results
+      - Added retroplace as data source
   - Version: 0.5
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2022-05-24
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/barnite0.5/Barnite_0_5.pext
     Changelog:
-    - Added RF Generation scraper
-    - Added VGCollect scraper
-    - Added text in settings suggesting use of Barcode to PC
+      - Added RF Generation scraper
+      - Added VGCollect scraper
+      - Added text in settings suggesting use of Barcode to PC
   - Version: 0.6
     RequiredApiVersion: 6.2.2
     ReleaseDate: 2023-03-11
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-03-11/Barnite_0_6.pext
     Changelog:
-    - Added company form trimming (remove LTD, LLC, SA etc from developers and publishers)
+      - Added company form trimming (remove LTD, LLC, SA etc from developers and publishers)
   - Version: 0.6.1
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2023-04-16
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-04-16/Barnite_0_6_1.pext
     Changelog:
-    - Fixed MobyGames and Play-Asia sourcing to account for website updates
+      - Fixed MobyGames and Play-Asia sourcing to account for website updates
   - Version: 0.6.2
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2023-05-16
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-05-16/Barnite_0_6_2.pext
     Changelog:
-    - Small platform matching improvements
+      - Small platform matching improvements
   - Version: 0.6.3
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2023-07-26
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-07-26/Barnite_0_6_3.pext
     Changelog:
-    - Small platform matching improvements
+      - Small platform matching improvements
   - Version: 0.6.4
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2024-08-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/Barnite_0_6_4.pext
     Changelog:
-    - Improvement in connection handling; less likely to run out of connections
+      - Improvement in connection handling; less likely to run out of connections
   - Version: 0.7
     RequiredApiVersion: 6.9.0
     ReleaseDate: 2025-01-18
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/Barnite_0_7.pext
     Changelog:
-    - Input now accepts comma-separated batches - contributed by pennstatephil
+      - Input now accepts comma-separated batches - contributed by pennstatephil
+  - Version: 0.7.1
+    RequiredApiVersion: 6.9.0
+    ReleaseDate: 2025-08-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/Barnite_0_7_1.pext
+    Changelog:
+      - "Fixed platform matching failing to match some platforms if they'd been renamed"

@@ -182,11 +182,11 @@ public class RawgLibrarySettingsViewModel : PluginSettingsViewModel<RawgLibraryS
                 var client = GetApiClient();
                 var user = client.GetCurrentUser(Settings.UserToken);
                 Settings.User = user;
-                string output = $"✔ Authenticated as {user.Username}\n";
+                string output = $"✅ Authenticated as {user.Username}\n";
                 if (string.IsNullOrEmpty(user.ApiKey))
                     output += "❌ API key not present";
                 else
-                    output += "✔ API key present";
+                    output += "✅ API key present";
                 return output;
             }
             catch (Exception ex)

@@ -5,11 +5,23 @@ Packages:
     ReleaseDate: 2024-08-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/MutualGames_0_3.pext
     Changelog:
-    - Initial release
+      - Initial release
   - Version: 0.3.1
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-08-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/MutualGames_0_3_1.pext
     Changelog:
-    - Fixed categories/tags using account name instead of friend name
-    - Added IDs to settings accounts lists
+      - Fixed categories/tags using account name instead of friend name
+      - Added IDs to settings accounts lists
+  - Version: 0.4
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-08-16
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-16/MutualGames_0_4.pext
+    Changelog:
+      - "Removed EA functionality. It might return at some point, but the API that this plugin used is permanently gone."
+  - Version: 0.4.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2025-08-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/MutualGames_0_4_1.pext
+    Changelog:
+      - "Fixed platform matching failing to match some platforms if they'd been renamed"

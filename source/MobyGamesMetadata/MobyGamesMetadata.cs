@@ -15,7 +15,7 @@ public class MobyGamesMetadata : MetadataPlugin
 {
     private readonly ILogger logger = LogManager.GetLogger();
     private MobyGamesApiClient apiClient;
-    public MobyGamesApiClient ApiClient { get { return apiClient ??= new MobyGamesApiClient(settings?.Settings?.ApiKey); } }
+    private MobyGamesApiClient ApiClient { get { return apiClient ??= new(settings?.Settings?.ApiKey); } }
 
     private MobyGamesMetadataSettingsViewModel settings { get; set; }
 
@@ -62,7 +62,7 @@ public class MobyGamesMetadata : MetadataPlugin
         }
     }
 
-    public override string Name { get; } = "MobyGames";
+    public override string Name => "MobyGames";
 
     public MobyGamesMetadata(IPlayniteAPI api) : base(api)
     {
@@ -94,18 +94,18 @@ public class MobyGamesMetadata : MetadataPlugin
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
-        if (settings.Settings.DataSource.HasFlag(DataSource.Api))
-            yield return new MainMenuItem { Description = "Import MobyGames genre/group", MenuSection = "@MobyGames", Action = a => ImportGameProperty() };
+        if (settings.Settings.DataSource.HasFlag(DataSource.Api) || settings.Settings.DataSource.HasFlag(DataSource.Scraping))
+            yield return new() { Description = "Import MobyGames genre/group", MenuSection = "@MobyGames", Action = _ => ImportGameProperty() };
     }
 
     public override IEnumerable<TopPanelItem> GetTopPanelItems()
     {
-        if (!settings.Settings.ShowTopPanelButton || !settings.Settings.DataSource.HasFlag(DataSource.Api))
+        if (!settings.Settings.ShowTopPanelButton)
             yield break;
 
         var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-        var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation), "icon.png");
-        yield return new TopPanelItem()
+        var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation)!, "icon.png");
+        yield return new()
         {
             Icon = iconPath,
             Visible = true,
@@ -114,7 +114,7 @@ public class MobyGamesMetadata : MetadataPlugin
         };
     }
 
-    public void ImportGameProperty()
+    private void ImportGameProperty()
     {
         if (BlockMissingApiKey())
             return;
@@ -123,20 +123,14 @@ public class MobyGamesMetadata : MetadataPlugin
         var groupOption = new MessageBoxOption("Groups");
         var cancelOption = new MessageBoxOption("Cancel", isCancel: true);
 
-        MessageBoxOption chosenOption;
-
-        switch (settings.Settings.DataSource)
+        var chosenOption = settings.Settings.DataSource switch
         {
-            case DataSource.Api:
-                chosenOption = genreOption;
-                break;
-            case DataSource.ApiAndScraping:
-                chosenOption = PlayniteApi.Dialogs.ShowMessage("Assign one of the following to all your matching games:", "Bulk property import",
-                    System.Windows.MessageBoxImage.Question, [genreOption, groupOption, cancelOption]);
-                break;
-            default:
-                return;
-        }
+            DataSource.Api => genreOption,
+            DataSource.Scraping => groupOption,
+            DataSource.ApiAndScraping => PlayniteApi.Dialogs.ShowMessage("Assign one of the following to all your matching games:", "Bulk property import",
+                                                                         System.Windows.MessageBoxImage.Question, [genreOption, groupOption, cancelOption]),
+            _ => null
+        };
         if (chosenOption == null || chosenOption == cancelOption) return;
 
         var platformUtility = new PlatformUtility(PlayniteApi);
@@ -157,13 +151,11 @@ public class MobyGamesMetadata : MetadataPlugin
 
     private bool BlockMissingApiKey()
     {
-        if (settings.Settings.DataSource.HasFlag(DataSource.Api) && string.IsNullOrWhiteSpace(settings.Settings.ApiKey))
-        {
-            var notification = new NotificationMessage("mobygames-missing-api-key", "Missing MobyGames API key. Click here to add it.",
-                                                       NotificationType.Error, () => OpenSettingsView());
-            PlayniteApi.Notifications.Add(notification);
-            return true;
-        }
-        return false;
+        if (!settings.Settings.DataSource.HasFlag(DataSource.Api) || !string.IsNullOrWhiteSpace(settings.Settings.ApiKey))
+            return false;
+        
+        PlayniteApi.Notifications.Add(new("mobygames-missing-api-key", "Missing MobyGames API key. Click here to add it.",
+                                          NotificationType.Error, () => OpenSettingsView()));
+        return true;
     }
 }

@@ -12,8 +12,8 @@ function Get-ReleaseData {
         [string]$tagName
     )
 
-    $newrelease = $true
-    $releasetag = $tagName
+    $newRelease = $true
+    $releaseTag = $tagName
 
     if ($tagName -match '^(?<Date>[0-9]{4}(-[0-9]{2}){2})(-addto-(?<AddToTag>.+))?$') {
         $all = $true
@@ -28,9 +28,9 @@ function Get-ReleaseData {
         throw "No name + version match found for $t"
     }
 
-    if ($Matches.AddToTag -ne $null) {
-        $newrelease = $false
-        $releasetag = $Matches.AddToTag
+    if ($null -ne $Matches.AddToTag) {
+        $newRelease = $false
+        $releaseTag = $Matches.AddToTag
     }
 
     $manifests = @($projectNames | % { $_ | Get-ManifestData })
@@ -53,8 +53,8 @@ function Get-ReleaseData {
     $testProjectNames = Get-TestProjectNames $filteredProjectNames
 
     $output = @(
-        "newrelease=$newrelease"
-        "releasetag=$releasetag"
+        "newrelease=$newRelease"
+        "releasetag=$releaseTag"
         "releasetitle=$releaseTitle"
         "projects=$($manifests | ConvertTo-Json -Compress)"
         "testprojects=$($testProjectNames | ConvertTo-Json -Compress)"
@@ -75,6 +75,7 @@ function Get-ProjectNames {
         "bigfishlibrary"        = @("BigFishLibrary")
         "bigfishmetadata"       = @("BigFishMetadata")
         "extraemulatorprofiles" = @("ExtraEmulatorProfiles")
+        "filtersearch"          = @("FilterSearch")
         "gamersgate"            = @("GamersGateLibrary")
         "gamessizecalculator"   = @("GamesSizeCalculator")
         "giantbomb"             = @("GiantBombMetadata")
@@ -112,18 +113,18 @@ function Get-TestProjectNames {
         [Array]$projects
     )
 
-    $testprojects = @("PlayniteExtensions.Common.Tests")
+    $testProjects = @("PlayniteExtensions.Common.Tests")
         
     foreach ($p in $projects) {
         if (Test-Path ".\source\$p.Tests" -PathType Container) {
-            Write-Host "Found testproject for $p in .\source\$p.Tests"
-            $testprojects += "$p.Tests"
+            Write-Host "Found test project for $p in .\source\$p.Tests"
+            $testProjects += "$p.Tests"
         }
         else {
             Write-Host "No test project found at .\source\$p.Tests"
         }
     }
-    return $testprojects
+    return $testProjects
 }
 
 function Get-ManifestData {

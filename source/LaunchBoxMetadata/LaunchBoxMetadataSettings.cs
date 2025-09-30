@@ -5,58 +5,62 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
+using PlayniteExtensions.Metadata.Common;
 
 namespace LaunchBoxMetadata;
 
-public class LaunchBoxMetadataSettings : ObservableObject
+public class LaunchBoxMetadataSettings : BulkImportPluginSettings
 {
     public bool UseLaunchBoxLink { get; set; } = true;
     public bool UseWikipediaLink { get; set; } = true;
     public bool UseVideoLink { get; set; } = true;
     public string MetadataZipEtag { get; set; }
     public DateTimeOffset? MetadataZipLastModified { get; set; }
-    public LaunchBoxImageSourceSettings Icon { get; set; }
-    public LaunchBoxImageSourceSettings Cover { get; set; }
-    public LaunchBoxImageSourceSettings Background { get; set; }
+    public LaunchBoxImageSourceSettings Icon { get; set; } = new()
+    {
+        AspectRatio = AspectRatio.AnyExtendToSquare,
+        MaxHeight = 256,
+        MaxWidth = 256,
+        MinHeight = 32,
+        MinWidth = 32,
+    };
+
+    public LaunchBoxImageSourceSettings Cover { get; set; } = new()
+    {
+        AspectRatio = AspectRatio.Vertical,
+        MaxHeight = 900,
+        MaxWidth = 600,
+        MinHeight = 300,
+        MinWidth = 200,
+    };
+
+    public LaunchBoxImageSourceSettings Background { get; set; } = new()
+    {
+        AspectRatio = AspectRatio.Horizontal,
+        MaxHeight = 1440,
+        MaxWidth = 2560,
+        MinHeight = 500,
+        MinWidth = 1000,
+    };
+
     public ObservableCollection<RegionSetting> Regions { get; set; } = [];
     public bool PreferGameRegion { get; set; } = true;
+    public bool ShowTopPanelButton { get; set; } = true;
 
-    public LaunchBoxMetadataSettings()
-    {
-        Icon = new LaunchBoxImageSourceSettings
-        {
-            AspectRatio = AspectRatio.AnyExtendToSquare,
-            MaxHeight = 256,
-            MaxWidth = 256,
-            MinHeight = 32,
-            MinWidth = 32,
-        };
-        Cover = new LaunchBoxImageSourceSettings
-        {
-            AspectRatio = AspectRatio.Vertical,
-            MaxHeight = 900,
-            MaxWidth = 600,
-            MinHeight = 300,
-            MinWidth = 200,
-        };
-        Background = new LaunchBoxImageSourceSettings
-        {
-            AspectRatio = AspectRatio.Horizontal,
-            MaxHeight = 1440,
-            MaxWidth = 2560,
-            MinHeight = 500,
-            MinWidth = 1000,
-        };
-    }
+    public int AdviseDatabaseUpdateAfterDays { get; set; } = 30;
+
+    public int DatabaseVersion { get; set; } = 1;
+
+    public const int CurrentDatabaseVersion = 3;
 }
 
 public class LaunchBoxImageSourceSettings
 {
     public ObservableCollection<CheckboxSetting> ImageTypes { get; set; } = [];
-    public int MaxHeight { get; set; }
-    public int MaxWidth { get; set; }
-    public int MinHeight { get; set; }
-    public int MinWidth { get; set; }
+    public uint MaxHeight { get; set; }
+    public uint MaxWidth { get; set; }
+    public uint MinHeight { get; set; }
+    public uint MinWidth { get; set; }
     public AspectRatio AspectRatio { get; set; }
 }
 
@@ -90,7 +94,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
 {
     public LaunchBoxMetadataSettingsViewModel(LaunchBoxMetadata plugin) : base(plugin, plugin.PlayniteApi)
     {
-        Settings = LoadSavedSettings() ?? new LaunchBoxMetadataSettings();
+        Settings = LoadSavedSettings() ?? new LaunchBoxMetadataSettings() {  DatabaseVersion = LaunchBoxMetadataSettings.CurrentDatabaseVersion };
         InitializeDatabaseLists();
     }
 
@@ -124,7 +128,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
         {
             var database = GetDatabase();
             var types = database.GetGameImageTypes().ToList();
-            InitializeImageTypeList(types, Settings.Icon, "Clear Logo");
+            InitializeImageTypeList(types, Settings.Icon, "Icon", "Clear Logo");
             InitializeImageTypeList(types, Settings.Cover, "Box - Front", "Box - Front - Reconstructed", "Fanart - Box - Front");
             InitializeImageTypeList(types, Settings.Background, "Fanart - Background", "Screenshot - Gameplay", "Screenshot - Game Title", "Banner");
         }
@@ -187,16 +191,16 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
 
     private void DownloadMetadata()
     {
-        MetadataZipFileHandler zipfileHandler = null;
+        MetadataZipFileHandler zipFileHandler = null;
         try
         {
-            zipfileHandler = new MetadataZipFileHandler(PlayniteApi, Settings);
+            zipFileHandler = new MetadataZipFileHandler(PlayniteApi, Settings);
 
-            var zipFilePath = zipfileHandler.DownloadMetadataZipFile();
+            var zipFilePath = zipFileHandler.DownloadMetadataZipFile(warnOnSameVersion: Settings.DatabaseVersion == LaunchBoxMetadataSettings.CurrentDatabaseVersion);
             if (zipFilePath == null || !File.Exists(zipFilePath))
                 return;
 
-            var xmlPath = zipfileHandler.ExtractMetadataXmlFromZipFile(zipFilePath);
+            var xmlPath = zipFileHandler.ExtractMetadataXmlFromZipFile(zipFilePath);
             if (xmlPath == null || !File.Exists(xmlPath))
                 return;
 
@@ -220,11 +224,13 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
 
             if (exception != null)
             {
-                PlayniteApi.Dialogs.ShowMessage($"Failed to initialize local Launchbox metadata database: {exception.Message}", "LaunchBox database", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                PlayniteApi.Dialogs.ShowMessage($"Failed to initialize local LaunchBox metadata database: {exception.Message}", "LaunchBox database", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
             else
             {
                 InitializeDatabaseLists();
+                Settings.DatabaseVersion = LaunchBoxMetadataSettings.CurrentDatabaseVersion;
+                base.Plugin.SavePluginSettings(Settings);
                 PlayniteApi.Dialogs.ShowMessage("Local LaunchBox metadata database successfully initialized!", "LaunchBox database", System.Windows.MessageBoxButton.OK);
             }
         }
@@ -235,7 +241,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
         }
         finally
         {
-            zipfileHandler?.Dispose();
+            zipFileHandler?.Dispose();
         }
     }
 
@@ -258,6 +264,8 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
 
             OnPropertyChanged(nameof(StatusText));
             InitializeDatabaseLists();
+            Settings.DatabaseVersion = LaunchBoxMetadataSettings.CurrentDatabaseVersion;
+            base.Plugin.SavePluginSettings(Settings);
         }
         catch (Exception ex)
         {

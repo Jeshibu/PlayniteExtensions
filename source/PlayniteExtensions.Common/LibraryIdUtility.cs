@@ -2,7 +2,9 @@ using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
+using System.Web;
 
 namespace PlayniteExtensions.Common;
 
@@ -16,26 +18,20 @@ public enum ExternalDatabase
     GiantBomb,
     TvTropes,
     RAWG,
-    // if you add an 8 value here, update the bit shift in DbId.GetHashCode() to 4 instead of 3
+    Wikipedia,
+    // if you add a 16 value here, update the bit shift in DbId.GetHashCode() to 5 instead of 4
 }
 
-public struct DbId(ExternalDatabase database, string id)
+public readonly struct DbId(ExternalDatabase database, string id) : IEquatable<DbId>
 {
     public readonly ExternalDatabase Database = database;
     public readonly string Id = id?.ToLowerInvariant();
 
-    public override bool Equals(object obj)
-    {
-        if (!(obj is DbId otherId))
-            return false;
-
-        return Database == otherId.Database && Id == otherId.Id;
-    }
-
-    public override int GetHashCode()
-    {
-        return (int)Database ^ Id.GetHashCode() << 3;
-    }
+    public override bool Equals(object obj) => obj is DbId otherId && this == otherId;
+    public bool Equals(DbId other) => this == other;
+    public static bool operator ==(DbId left, DbId right) => left.Database == right.Database && left.Id == right.Id;
+    public static bool operator !=(DbId left, DbId right) => !(left == right);
+    public override int GetHashCode() => (int)Database ^ Id.GetHashCode() << 4;
 
     public static DbId NoDb(string id) => new(ExternalDatabase.None, id);
     public static DbId Steam(string id) => new(ExternalDatabase.Steam, id);
@@ -44,6 +40,9 @@ public struct DbId(ExternalDatabase database, string id)
     public static DbId Moby(string id) => new(ExternalDatabase.MobyGames, id);
     public static DbId GiantBomb(string id) => new(ExternalDatabase.GiantBomb, id);
     public static DbId TvTropes(string id) => new(ExternalDatabase.TvTropes, id);
+    public static DbId RAWG(string id) => new(ExternalDatabase.RAWG, id);
+    public static DbId Wikipedia(string id) => new(ExternalDatabase.Wikipedia, id);
+
 }
 
 public interface IExternalDatabaseIdUtility
@@ -80,8 +79,6 @@ public abstract class SingleExternalDatabaseIdUtility : ISingleExternalDatabaseI
 
     public IEnumerable<DbId> GetIdsFromGame(Game game)
     {
-        var output = new List<(ExternalDatabase, string)>();
-
         if (LibraryIds.Contains(game.PluginId))
             yield return new DbId(Database, game.GameId);
 
@@ -94,9 +91,10 @@ public abstract class SingleExternalDatabaseIdUtility : ISingleExternalDatabaseI
 
 public class SteamIdUtility : SingleExternalDatabaseIdUtility
 {
-    public readonly Regex SteamUrlRegex = new(@"^(steam://openurl/)?https?://(store\.steampowered\.com|steamcommunity\.com|steamdb\.info)/app/(?<id>[0-9]+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+    public readonly Regex SteamUrlRegex = new(@"^(steam://openurl/)?https?://(store\.steampowered\.com|steamcommunity\.com|steamdb\.info)/app/(?<id>[0-9]+)",
+                                               RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
-    public override ExternalDatabase Database { get; } = ExternalDatabase.Steam;
+    public override ExternalDatabase Database => ExternalDatabase.Steam;
 
     public override IEnumerable<Guid> LibraryIds { get; } = [Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB")];
 
@@ -117,7 +115,7 @@ public class GOGIdUtility : SingleExternalDatabaseIdUtility
 {
     private readonly Regex GOGUrlRegex = new(@"^https://www\.gogdb\.org/product/(?<id>[0-9]+)");
 
-    public override ExternalDatabase Database { get; } = ExternalDatabase.GOG;
+    public override ExternalDatabase Database => ExternalDatabase.GOG;
 
     public override IEnumerable<Guid> LibraryIds => [
         Guid.Parse("AEBE8B7C-6DC3-4A66-AF31-E7375C6B5E9E"), // GOG
@@ -141,7 +139,7 @@ public class MobyGamesIdUtility : SingleExternalDatabaseIdUtility
 {
     private readonly Regex UrlIdRegex = new(@"\bmobygames\.com/game/(?<id>[0-9]+)(/|$)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
-    public override ExternalDatabase Database { get; } = ExternalDatabase.MobyGames;
+    public override ExternalDatabase Database => ExternalDatabase.MobyGames;
 
     public override IEnumerable<Guid> LibraryIds { get; } = [];
 
@@ -153,6 +151,27 @@ public class MobyGamesIdUtility : SingleExternalDatabaseIdUtility
         if (!match.Success) return default;
         var idString = match.Groups["id"].Value;
         return DbId.Moby(idString);
+    }
+}
+
+public class WikipediaIdUtility : SingleExternalDatabaseIdUtility
+{
+    private readonly Regex idRegex = new(@"https?://(?<lang>[a-z]+)\.wikipedia\.org/wiki/(?<article>[^?]+)", RegexOptions.Compiled);
+    
+    public override ExternalDatabase Database => ExternalDatabase.Wikipedia;
+    public override IEnumerable<Guid> LibraryIds => [];
+    public override DbId GetIdFromUrl(string url)
+    {
+        if(string.IsNullOrWhiteSpace(url))
+            return default;
+        
+        var match =  idRegex.Match(url);
+        if(!match.Success)
+            return default;
+        
+        var idString = WebUtility.UrlDecode(match.Groups["id"].Value);
+        var lang = match.Groups["lang"].Value;
+        return DbId.Wikipedia($"{lang}/{idString}");
     }
 }
 

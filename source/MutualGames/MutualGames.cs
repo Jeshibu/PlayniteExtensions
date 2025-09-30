@@ -19,12 +19,12 @@ public class MutualGames : GenericPlugin
     private MutualGamesSettingsViewModel _settings;
     private IWebDownloader _downloader;
 
-    private MutualGamesSettingsViewModel Settings { get => _settings ??= new MutualGamesSettingsViewModel(this); set => _settings = value; }
+    private MutualGamesSettingsViewModel Settings { get => _settings ??= new(this); set => _settings = value; }
     private IWebDownloader Downloader => _downloader ??= new WebDownloader();
 
     public override Guid Id { get; } = Guid.Parse("c615a8d1-c262-430a-b74b-6302d3328466");
 
-    public string Name { get; } = "Mutual Games";
+    public string Name => "Mutual Games";
 
     public MutualGames(IPlayniteAPI api) : base(api)
     {
@@ -37,9 +37,9 @@ public class MutualGames : GenericPlugin
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
         var section = $"@{Name}";
-        yield return new MainMenuItem { Description = "Import mutual games from friend accounts", Action = ImportAccounts, MenuSection = section };
-        yield return new MainMenuItem { Description = "Import mutual games from friend's exported file", Action = ImportFile, MenuSection = section };
-        yield return new MainMenuItem { Description = "Export games file to send to friends", Action = ExportFile, MenuSection = section };
+        yield return new() { Description = "Import mutual games from friend accounts", Action = ImportAccounts, MenuSection = section };
+        yield return new() { Description = "Import mutual games from friend's exported file", Action = ImportFile, MenuSection = section };
+        yield return new() { Description = "Export games file to send to friends", Action = ExportFile, MenuSection = section };
     }
 
     private void ImportAccounts(MainMenuItemActionArgs args)
@@ -67,7 +67,6 @@ public class MutualGames : GenericPlugin
     public IEnumerable<IFriendsGamesClient> GetClients()
     {
         var webView = new OffScreenWebViewWrapper(PlayniteApi);
-        yield return new EaClient(webView, Downloader);
         yield return new GogClient(webView);
         yield return new SteamClient(webView);
     }

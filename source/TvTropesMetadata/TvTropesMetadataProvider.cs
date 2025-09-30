@@ -9,7 +9,7 @@ namespace TvTropesMetadata;
 
 public class TvTropesMetadataProvider(IGameSearchProvider<TvTropesSearchResult> dataSource, MetadataRequestOptions options, IPlayniteAPI playniteApi, IPlatformUtility platformUtility) : GenericMetadataProvider<TvTropesSearchResult>(dataSource, options, playniteApi, platformUtility)
 {
-    public static List<MetadataField> Fields =
+    public static readonly List<MetadataField> Fields =
     [
         MetadataField.Name,
         MetadataField.Description,
@@ -20,5 +20,5 @@ public class TvTropesMetadataProvider(IGameSearchProvider<TvTropesSearchResult> 
 
     public override List<MetadataField> AvailableFields => Fields;
 
-    protected override string ProviderName { get; } = "TV Tropes";
+    protected override string ProviderName => "TV Tropes";
 }

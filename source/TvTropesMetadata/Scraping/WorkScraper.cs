@@ -1,17 +1,28 @@
 ﻿using AngleSharp.Dom.Html;
-using AngleSharp.Extensions;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Playnite.SDK;
 
 namespace TvTropesMetadata.Scraping;
 
-public class WorkScraper(IWebDownloader downloader) : BaseScraper(downloader)
+public class WorkScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewFactory)
 {
+    private readonly List<string> VideogameBreadCrumbs = ["Video Games", "Video Game", "VideoGame", "Visual Novel", "Franchise"];
+
+    private bool MatchesBreadCrumbs(TvTropesSearchResult sr) => sr.Breadcrumbs.Count == 1 && VideogameBreadCrumbs.Contains(sr.Breadcrumbs[0]);
+    private bool MatchesUrlCategory(TvTropesSearchResult sr) => CategoryWhitelist.Any(cat => sr.Url.StartsWith(articleBaseUrl + cat));
+
     public override IEnumerable<TvTropesSearchResult> Search(string query)
     {
-        return Search(query, "work").OrderByDescending(sr => UrlBelongsToWhitelistedWorkCategory(sr.Url));
+        var directUrlResult = GetBasicPageInfo(query);
+        if (directUrlResult != null)
+            return [directUrlResult];
+        
+        var results = GoogleSearch(query).Result.ToList();
+        results.RemoveAll(sr => !MatchesBreadCrumbs(sr) && !MatchesUrlCategory(sr));
+        return results.OrderByDescending(sr => UrlBelongsToWhitelistedWorkCategory(sr.Url));
     }
 
     public ParsedWorkPage GetTropesForGame(string url)
@@ -37,6 +48,7 @@ public class WorkScraper(IWebDownloader downloader) : BaseScraper(downloader)
                 output.Tropes.AddRange(subcategoryPage.Tropes);
             }
         }
+
         return output;
     }
 

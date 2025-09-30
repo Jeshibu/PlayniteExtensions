@@ -23,7 +23,7 @@ public class ViveportLibrary : LibraryPlugin
 
     public override Guid Id { get; } = Guid.Parse("97d85dbd-ad52-4834-bf4b-f6681f1445cc");
 
-    public override string Name { get; } = "Viveport";
+    public override string Name => "Viveport";
 
     public override LibraryClient Client { get; } = new ViveportLibraryClient();
 
@@ -160,9 +160,9 @@ public class ViveportLibrary : LibraryPlugin
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
         if(!string.IsNullOrWhiteSpace(settings?.Settings?.SubscriptionTagName))
-            yield return new MainMenuItem { MenuSection = "@Viveport", Description = $"Tag all Viveport Infinity games as {settings?.Settings?.SubscriptionTagName}", Action = a => SetSubscriptionTags() };
+            yield return new() { MenuSection = "@Viveport", Description = $"Tag all Viveport Infinity games as {settings?.Settings?.SubscriptionTagName}", Action = _ => SetSubscriptionTags() };
 
-        yield return new MainMenuItem { MenuSection = "@Viveport", Description = "Set Viveport game sources based on Viveport Infinity depending on license", Action = a => SetSubscriptionSources() };
+        yield return new() { MenuSection = "@Viveport", Description = "Set Viveport game sources based on Viveport Infinity depending on license", Action = _ => SetSubscriptionSources() };
     }
 
     public override LibraryMetadataProvider GetMetadataDownloader()
@@ -180,7 +180,7 @@ public class ViveportLibrary : LibraryPlugin
 
         var subscriptionTag = PlayniteApi.Database.Tags.Add(settings.Settings.SubscriptionTagName);
 
-        ChangeMetadataBasedOnSubscriptionStatus((Game game, bool subscription) =>
+        bool UpdateFunc(Game game, bool subscription)
         {
             bool gameHasTag = game.TagIds?.Contains(subscriptionTag.Id) ?? false;
 
@@ -195,8 +195,11 @@ public class ViveportLibrary : LibraryPlugin
             {
                 return game.TagIds.Remove(subscriptionTag.Id);
             }
+
             return false;
-        });
+        }
+
+        ChangeMetadataBasedOnSubscriptionStatus(UpdateFunc);
     }
 
 
@@ -205,7 +208,7 @@ public class ViveportLibrary : LibraryPlugin
         var viveportSource = PlayniteApi.Database.Sources.Add("Viveport");
         var subscriptionSource = PlayniteApi.Database.Sources.Add("Viveport Infinity");
 
-        ChangeMetadataBasedOnSubscriptionStatus((Game game, bool subscription) =>
+        bool UpdateFunc(Game game, bool subscription)
         {
             var source = subscription ? subscriptionSource : viveportSource;
 
@@ -216,7 +219,9 @@ public class ViveportLibrary : LibraryPlugin
             }
 
             return false;
-        });
+        }
+
+        ChangeMetadataBasedOnSubscriptionStatus(UpdateFunc);
     }
 
     private delegate bool UpdateGameMetadataBasedOnSubscriptionStatus(Game game, bool subscription);

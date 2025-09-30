@@ -23,9 +23,9 @@ public class AppDataReader(string appStatePath = null, string contentMetadataPat
     private static readonly string DefaultLicenseDataPath = Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\HTC\Viveport\content_licensing2.pref");
     private readonly ILogger logger = LogManager.GetLogger();
 
-    public string AppStatePath { get; } = appStatePath ?? DefaultAppStatePath;
-    public string ContentMetadataPath { get; } = contentMetadataPath ?? DefaultContentMetadataPath;
-    public string LicenseDataPath { get; } = licenseDataPath ?? DefaultLicenseDataPath;
+    private string AppStatePath { get; } = appStatePath ?? DefaultAppStatePath;
+    private string ContentMetadataPath { get; } = contentMetadataPath ?? DefaultContentMetadataPath;
+    private string LicenseDataPath { get; } = licenseDataPath ?? DefaultLicenseDataPath;
 
     public IEnumerable<InstalledAppData> GetInstalledApps()
     {

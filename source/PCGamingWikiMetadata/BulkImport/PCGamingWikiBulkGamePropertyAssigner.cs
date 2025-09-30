@@ -18,8 +18,8 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
     private readonly PCGamingWikiMetadataSettings settings;
     private readonly PCGamingWikiPropertySearchProvider pcgwDataSource;
 
-    public PCGamingWikiBulkGamePropertyAssigner(IPlayniteAPI playniteAPI, PCGamingWikiMetadataSettings settings, IExternalDatabaseIdUtility databaseIdUtility, PCGamingWikiPropertySearchProvider dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
-        : base(playniteAPI, dataSource, platformUtility, databaseIdUtility, ExternalDatabase.PCGamingWiki, maxDegreeOfParallelism)
+    public PCGamingWikiBulkGamePropertyAssigner(IPlayniteAPI playniteApi, PCGamingWikiMetadataSettings settings, IExternalDatabaseIdUtility databaseIdUtility, PCGamingWikiPropertySearchProvider dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
+        : base(playniteApi, dataSource, platformUtility, databaseIdUtility, ExternalDatabase.PCGamingWiki, maxDegreeOfParallelism)
     {
         this.settings = settings;
         this.pcgwDataSource = dataSource;
@@ -109,7 +109,7 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
 
     protected override IEnumerable<PotentialLink> GetPotentialLinks(PCGamingWikiSelectedValues searchItem)
     {
-        yield return new PotentialLink(MetadataProviderName, gameDetails => gameDetails.Url, ContainsUrl);
+        yield return new(MetadataProviderName, gameDetails => gameDetails.Url, ContainsUrl);
     }
 
     private bool ContainsUrl(IEnumerable<Link> links, string url)
@@ -140,7 +140,7 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
         var p = settings.AddTagPrefix ? GetPrefix(searchItem.FieldInfo) : null;
         var n = GetTagName(searchItem);
         name = $"{p} {n}".Trim();
-        return new PropertyImportSetting { ImportTarget = searchItem.FieldInfo.PreferredField };
+        return new() { ImportTarget = searchItem.FieldInfo.PreferredField };
     }
 
     private string GetTagName(PCGamingWikiSelectedValues searchItem)

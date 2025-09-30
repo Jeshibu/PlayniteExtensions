@@ -1,303 +1,11 @@
 <!DOCTYPE html>
 	<html>
 		<head lang="en">
+                        <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=newest_pages" />
+            <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=most_popular" />
+            <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=updated_content" />
+
                         <link rel="preload" href="/images/loading-graphic.png" as="image">
-
-            <!-- Google tag (gtag.js) -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-XPPLXMRF6Z"></script>
-            <script>
-                var pbjs = pbjs || {};
-
-                // Used for Video players on Tropes
-                var tropes_videos_commands = tropes_videos_commands || [];
-
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'G-XPPLXMRF6Z');
-
-                window.googletag = window.googletag || {cmd: []};
-            </script>
-
-                        <script>
-                function object(objectId) {
-                    if (document.getElementById && document.getElementById(objectId)) {
-                        return document.getElementById(objectId);
-                    } else if (document.all && document.all(objectId)) {
-                        return document.all(objectId);
-                    } else if (document.layers && document.layers[objectId]) {
-                        return document.layers[objectId];
-                    } else {
-                        return false;
-                    }
-                }
-
-                // JAVASCRIPT COOKIES CODE: for getting and setting user viewing preferences
-                var cookies = {
-                    create: function (name, value, days2expire, path) {
-                        var date = new Date();
-                        date.setTime(date.getTime() + (days2expire * 24 * 60 * 60 * 1000));
-                        var expires = date.toUTCString();
-                        document.cookie = name + '=' + value + ';' + 'expires=' + expires + ';domain=.tvtropes.org;' + 'path=' + path + ';';
-                    },
-										createWithExpire: function(name, value, expires, path) {
-												document.cookie = name + '=' + value + ';' + 'expires=' + expires + ';domain=.tvtropes.org;' + 'path=' + path + ';';
-										},
-                    read: function (name) {
-                        var cookie_value = "",
-                            current_cookie = "",
-                            name_expr = name + "=",
-                            all_cookies = document.cookie.split(';'),
-                            n = all_cookies.length;
-
-                        for (var i = 0; i < n; i++) {
-                            current_cookie = all_cookies[i].trim();
-                            if (current_cookie.indexOf(name_expr) === 0) {
-                                cookie_value = current_cookie.substring(name_expr.length, current_cookie.length);
-                                break;
-                            }
-                        }
-                        return cookie_value;
-                    },
-                    update: function (name, val) {
-                        this.create(name, val, 300, "/");
-                    },
-                    remove: function (name) {
-                        //delete cookie with and without domain setting
-                        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.tvtropes.org; path=/;";
-                        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
-                    }
-                };
-
-                function updateUserPrefs() {
-                    //GENERAL: detect and set browser, if not cookied (will be treated like a user-preference and added to the #user-pref element)
-                    if( !cookies.read('user-browser') ){
-                        var broswer = '';
-
-                        if(navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) ){
-                            browser = 'iOS';
-                        } else if (/Opera[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
-                            browser = 'opera';
-                        } else if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
-                            browser = 'MSIE';
-                        } else if (/Navigator[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
-                            browser = 'netscape';
-                        } else if (/Chrome[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
-                            browser = 'chrome';
-                        } else if (/Safari[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
-                            browser = 'safari';
-                            /Version[\/\s](\d+\.\d+)/.test(navigator.userAgent);
-                            browserVersion = new Number(RegExp.$1);
-                        } else if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
-                            browser = 'firefox';
-                        } else {
-                            browser = 'internet_explorer';
-                        }
-                        cookies.create('user-browser',browser,1,'/');
-                        document.getElementById('user-prefs').classList.add('browser-' + browser);
-                    } else {
-                        document.getElementById('user-prefs').classList.add('browser-' + cookies.read('user-browser'));
-                    }
-                    //update user preference settings
-                    if (cookies.read('wide-load') !== '') document.getElementById('user-prefs').classList.add('wide-load');
-                    if (cookies.read('mono-font') !== '') document.getElementById('user-prefs').classList.add('mono-font');
-                    if (cookies.read('night-vision') !== '') document.getElementById('user-prefs').classList.add('night-vision');
-                    if (cookies.read('sticky-header') !== '') document.getElementById('user-prefs').classList.add('sticky-header');
-                    if (cookies.read('show-spoilers') !== '') document.getElementById('user-prefs').classList.add('show-spoilers');
-                    if (cookies.read('tvtropes-editor-on') !== '') document.getElementById('user-prefs').classList.add('tvtropes-editor-on');
-                    if (cookies.read('folders-open') !== '') document.getElementById('user-prefs').classList.add('folders-open');
-                    if (cookies.read('lefthand-sidebar') !== '') document.getElementById('user-prefs').classList.add('lefthand-sidebar');
-                    if (cookies.read('highlight-links') !== '') document.getElementById('user-prefs').classList.add('highlight-links');
-                    if (cookies.read('forum-gingerbread') !== '') document.getElementById('user-prefs').classList.add('forum-gingerbread');
-                    //if the user is logged in, update cookies based on their database settings
-                                        //updates element
-                    if(cookies.read('shared-avatars') !== '') document.getElementById('user-prefs').classList.add('shared-avatars');
-                    if(cookies.read('new-search') !== '') document.getElementById('user-prefs').classList.add('new-search');
-                    if(cookies.read('stop-auto-play-video') !== '') document.getElementById('user-prefs').classList.add('stop-auto-play-video');
-                    //desktop view on mobile
-                    if (cookies.read('desktop-on-mobile') !== ''){
-                        document.getElementById('user-prefs').classList.add('desktop-on-mobile');
-
-                        var viewport = document.querySelector("meta[name=viewport]");
-                        viewport.setAttribute('content', 'width=1000');
-                    }
-
-                }
-
-                function updateDesktopPrefs() {
-                    if (cookies.read('wide-load') !== '') document.getElementById('sidebar-toggle-wideload').classList.add('active');
-                    if (cookies.read('night-vision') !== '') document.getElementById('sidebar-toggle-nightvision').classList.add('active');
-                    if (cookies.read('sticky-header') !== '') document.getElementById('sidebar-toggle-stickyheader').classList.add('active');
-                    if (cookies.read('show-spoilers') !== '') document.getElementById('sidebar-toggle-showspoilers').classList.add('active');
-
-                }
-
-                function updateMobilePrefs() {
-                    if (cookies.read('show-spoilers') !== '') document.getElementById('mobile-toggle-showspoilers').classList.add('active');
-                    if (cookies.read('night-vision') !== '') document.getElementById('mobile-toggle-nightvision').classList.add('active');
-                    if (cookies.read('sticky-header') !== '') document.getElementById('mobile-toggle-stickyheader').classList.add('active');
-                    if (cookies.read('highlight-links') !== '') document.getElementById('mobile-toggle-highlightlinks').classList.add('active');
-
-                }
-
-                function is_mobile() {
-	                if(document.body.clientWidth && document.body.clientWidth<=768) return true;
-	                else return false;
-                }
-
-            </script>
-			
-						<script type="text/javascript">
-                var country_code_list = ['AT','BE','BG','CH','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GF','GP','GR','HR','HU','IC','IE','IS','IT','LI','LT','LU','LV','MF','MQ','MT','NL','NO','PL','PT','RE','RO','SE','SI','SK','SX','YT'];
-                
-                var site_htl_settings = {
-                        "adx"              : "yes", // yes/no if we should include adx on page
-                        "groupname"        : "Main", // track groupname in htl/gam
-                        "has_folders"      : "yes", // track folder pages in htl/gam
-                        "user_type"        : "guest", // track member/guest in htl/gam
-                        "is_testing"       : "no", // yes/no if in testing mode
-                        "split_testing"    : "1", // 0/1, 0=control, 1=test, for a/b testing
-                        "send_reports"     : "1", // true/false if reports should be sent for logging in DataBricks
-                        "report_url"       : "https://analytics.tvtropes.org/analytics-data/tvtropes/", // Endpoint for logging (data stream)
-                        "logging_turned_on": "1", // true/false if console logging should be turned on
-                        "site_name"        : "tvtropes", // Site name for display in logging
-                        "sticky_slot_names": ["tvtropes_dt_sticky", "tvtropes_m_sticky"], // Possible slot names for the sticky slot
-                }
-			</script>
-
-            
-                        <script>
-                // Create the ad project
-var ads_project = (function(sent_in_settings){
-    //default settings
-    var setting_defaults = {
-        "adx"              : "yes",
-        "groupname"        : "",
-        "has_folders"      : "unknown",
-        "user_type"        : "guest",
-        "is_testing"       : "no",
-        "split_testing"    : "0",
-        "send_reports"     : "0",
-        "logging_turned_on": "false",
-        "site_name"        : "site_name",
-        "report_url"       : "",
-        "page_template"    : "",
-        "sticky_slot_names": []
-    }
-
-    // Combine defaults with sent in parameters
-    var project_settings = {...setting_defaults, ...sent_in_settings};
-
-    /***************************************
-    --------------- AD CODE ---------------
-    ***************************************/
-    window.BCLighthouseTag = window.BCLighthouseTag || {};
-    window.BCLighthouseTag.cmd = window.BCLighthouseTag.cmd || [];
-
-    // If user type is a member
-    if(project_settings.user_type == "member"){
-        // Check for UID2 cookie
-        var uid2_cookie = cookies.read('uid2_identity');
-        var json_cookie = (uid2_cookie) ? JSON.parse(uid2_cookie) : "";
-        
-        // If UID2 cookie exists and it's not in the banned country list, set UID2
-        if(!uid2_cookie || (json_cookie && json_cookie.response)){
-            var request = new XMLHttpRequest();
-        
-            request.open("post", "/ajax/uid2_creation.php", 1);
-
-            request.setRequestHeader("Content-Type", "application/json; charset=UTF-8")
-
-            request.onload = function(){
-                if(request.status == 200){
-                    var json = JSON.parse(request.responseText);
-                    // Create cookie with response from request
-                    cookies.create('uid2_identity', json.response, 7, '/');
-
-                    output_logging("UID2 cookie created");
-
-                    // Refresh specific modules
-                    pbjs.refreshUserIds({ submoduleNames: ['uid2'] });
-                }
-                else output_logging("Failed to create UID2 cookie");
-            }
-
-            request.send();
-        }
-    }
-
-    BCLighthouseTag.cmd.push(function() {
-        // Only set these if given in settings
-        if(project_settings.groupname != "") BCLighthouseTag.setTargeting("groupname", project_settings.groupname);
-        if(project_settings.page_template != "") BCLighthouseTag.setTargeting("page_template", project_settings.page_template);
-
-        BCLighthouseTag.setTargeting("adx", project_settings.adx);
-        BCLighthouseTag.setTargeting('website', project_settings.site_name);
-        BCLighthouseTag.setTargeting('user_type', project_settings.user_type);
-        BCLighthouseTag.setTargeting('has_folders', project_settings.has_folders);
-    });
-    
-    // Logging
-    function output_logging(content){
-        if(project_settings.logging_turned_on){
-            if(typeof content == "string") console.log(project_settings.site_name + " Ads: " + content);
-            else console.log(content);
-        }
-    }
-})(site_htl_settings);            </script>
-
-                        <script>
-                // Add second script to the head
-                var htl_script = document.createElement('script');
-                htl_script.async = "async";
-
-                // Add the fundingchoices script to the head
-                var script = document.createElement('script');
-                    script.src = "https://fundingchoicesmessages.google.com/i/pub-6608306193529351?ers=1";
-                    script.async = true;
-                    script.nonce = "rczD8qB5ececf2fL1Vj9XQ";
-                
-                // Add second script to the head
-                var script2 = document.createElement('script');
-                    script2.nonce = "rczD8qB5ececf2fL1Vj9XQ";
-                    script2.innerHTML = "(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();";
-                
-                // Add both scripts to head
-                document.head.appendChild(script);
-                document.head.appendChild(script2);
-                
-                htl_script.src = "https://dev-lh.bigcrunch.com/main.js";
-                htl_script.id = "bigcrunchtag";
-                htl_script.setAttribute('data-property-id', '34a5ddec-697b-424e-81d2-e6bb46a1b83e');
-                                    
-                // Add both scripts to head
-                document.head.appendChild(htl_script);
-            </script>
-
-                        <script>
-                // Add HTL script to head
-                document.head.appendChild(htl_script);
-            </script>
-			
-			
-											<script>(function(){/*
-							 Copyright The Closure Library Authors.
-							 SPDX-License-Identifier: Apache-2.0
-							*/
-							'use strict';var aa=function(a){var b=0;return function(){return b<a.length?{done:!1,value:a[b++]}:{done:!0}}},ba="function"==typeof Object.create?Object.create:function(a){var b=function(){};b.prototype=a;return new b},k;if("function"==typeof Object.setPrototypeOf)k=Object.setPrototypeOf;else{var m;a:{var ca={a:!0},n={};try{n.__proto__=ca;m=n.a;break a}catch(a){}m=!1}k=m?function(a,b){a.__proto__=b;if(a.__proto__!==b)throw new TypeError(a+" is not extensible");return a}:null}
-							var p=k,q=function(a,b){a.prototype=ba(b.prototype);a.prototype.constructor=a;if(p)p(a,b);else for(var c in b)if("prototype"!=c)if(Object.defineProperties){var d=Object.getOwnPropertyDescriptor(b,c);d&&Object.defineProperty(a,c,d)}else a[c]=b[c];a.v=b.prototype},r=this||self,da=function(){},t=function(a){return a};var u;var w=function(a,b){this.g=b===v?a:""};w.prototype.toString=function(){return this.g+""};var v={},x=function(a){if(void 0===u){var b=null;var c=r.trustedTypes;if(c&&c.createPolicy){try{b=c.createPolicy("goog#html",{createHTML:t,createScript:t,createScriptURL:t})}catch(d){r.console&&r.console.error(d.message)}u=b}else u=b}a=(b=u)?b.createScriptURL(a):a;return new w(a,v)};var A=function(){return Math.floor(2147483648*Math.random()).toString(36)+Math.abs(Math.floor(2147483648*Math.random())^Date.now()).toString(36)};var B={},C=null;var D="function"===typeof Uint8Array;function E(a,b,c){return"object"===typeof a?D&&!Array.isArray(a)&&a instanceof Uint8Array?c(a):F(a,b,c):b(a)}function F(a,b,c){if(Array.isArray(a)){for(var d=Array(a.length),e=0;e<a.length;e++){var f=a[e];null!=f&&(d[e]=E(f,b,c))}Array.isArray(a)&&a.s&&G(d);return d}d={};for(e in a)Object.prototype.hasOwnProperty.call(a,e)&&(f=a[e],null!=f&&(d[e]=E(f,b,c)));return d}
-							function ea(a){return F(a,function(b){return"number"===typeof b?isFinite(b)?b:String(b):b},function(b){var c;void 0===c&&(c=0);if(!C){C={};for(var d="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split(""),e=["+/=","+/","-_=","-_.","-_"],f=0;5>f;f++){var h=d.concat(e[f].split(""));B[f]=h;for(var g=0;g<h.length;g++){var l=h[g];void 0===C[l]&&(C[l]=g)}}}c=B[c];d=Array(Math.floor(b.length/3));e=c[64]||"";for(f=h=0;h<b.length-2;h+=3){var y=b[h],z=b[h+1];l=b[h+2];g=c[y>>2];y=c[(y&3)<<
-							4|z>>4];z=c[(z&15)<<2|l>>6];l=c[l&63];d[f++]=""+g+y+z+l}g=0;l=e;switch(b.length-h){case 2:g=b[h+1],l=c[(g&15)<<2]||e;case 1:b=b[h],d[f]=""+c[b>>2]+c[(b&3)<<4|g>>4]+l+e}return d.join("")})}var fa={s:{value:!0,configurable:!0}},G=function(a){Array.isArray(a)&&!Object.isFrozen(a)&&Object.defineProperties(a,fa);return a};var H;var J=function(a,b,c){var d=H;H=null;a||(a=d);d=this.constructor.u;a||(a=d?[d]:[]);this.j=d?0:-1;this.h=null;this.g=a;a:{d=this.g.length;a=d-1;if(d&&(d=this.g[a],!(null===d||"object"!=typeof d||Array.isArray(d)||D&&d instanceof Uint8Array))){this.l=a-this.j;this.i=d;break a}void 0!==b&&-1<b?(this.l=Math.max(b,a+1-this.j),this.i=null):this.l=Number.MAX_VALUE}if(c)for(b=0;b<c.length;b++)a=c[b],a<this.l?(a+=this.j,(d=this.g[a])?G(d):this.g[a]=I):(d=this.l+this.j,this.g[d]||(this.i=this.g[d]={}),(d=this.i[a])?
-							G(d):this.i[a]=I)},I=Object.freeze(G([])),K=function(a,b){if(-1===b)return null;if(b<a.l){b+=a.j;var c=a.g[b];return c!==I?c:a.g[b]=G([])}if(a.i)return c=a.i[b],c!==I?c:a.i[b]=G([])},M=function(a,b){var c=L;if(-1===b)return null;a.h||(a.h={});if(!a.h[b]){var d=K(a,b);d&&(a.h[b]=new c(d))}return a.h[b]};J.prototype.toJSON=function(){var a=N(this,!1);return ea(a)};
-							var N=function(a,b){if(a.h)for(var c in a.h)if(Object.prototype.hasOwnProperty.call(a.h,c)){var d=a.h[c];if(Array.isArray(d))for(var e=0;e<d.length;e++)d[e]&&N(d[e],b);else d&&N(d,b)}return a.g},O=function(a,b){H=b=b?JSON.parse(b):null;a=new a(b);H=null;return a};J.prototype.toString=function(){return N(this,!1).toString()};var P=function(a){J.call(this,a)};q(P,J);function ha(a){var b,c=(a.ownerDocument&&a.ownerDocument.defaultView||window).document,d=null===(b=c.querySelector)||void 0===b?void 0:b.call(c,"script[nonce]");(b=d?d.nonce||d.getAttribute("nonce")||"":"")&&a.setAttribute("nonce",b)};var Q=function(a,b){b=String(b);"application/xhtml+xml"===a.contentType&&(b=b.toLowerCase());return a.createElement(b)},R=function(a){this.g=a||r.document||document};R.prototype.appendChild=function(a,b){a.appendChild(b)};var S=function(a,b,c,d,e,f){try{var h=a.g,g=Q(a.g,"SCRIPT");g.async=!0;g.src=b instanceof w&&b.constructor===w?b.g:"type_error:TrustedResourceUrl";ha(g);h.head.appendChild(g);g.addEventListener("load",function(){e();d&&h.head.removeChild(g)});g.addEventListener("error",function(){0<c?S(a,b,c-1,d,e,f):(d&&h.head.removeChild(g),f())})}catch(l){f()}};var ia=r.atob("aHR0cHM6Ly93d3cuZ3N0YXRpYy5jb20vaW1hZ2VzL2ljb25zL21hdGVyaWFsL3N5c3RlbS8xeC93YXJuaW5nX2FtYmVyXzI0ZHAucG5n"),ja=r.atob("WW91IGFyZSBzZWVpbmcgdGhpcyBtZXNzYWdlIGJlY2F1c2UgYWQgb3Igc2NyaXB0IGJsb2NraW5nIHNvZnR3YXJlIGlzIGludGVyZmVyaW5nIHdpdGggdGhpcyBwYWdlLg=="),ka=r.atob("RGlzYWJsZSBhbnkgYWQgb3Igc2NyaXB0IGJsb2NraW5nIHNvZnR3YXJlLCB0aGVuIHJlbG9hZCB0aGlzIHBhZ2Uu"),la=function(a,b,c){this.h=a;this.j=new R(this.h);this.g=null;this.i=[];this.l=!1;this.o=b;this.m=c},V=function(a){if(a.h.body&&!a.l){var b=
-							function(){T(a);r.setTimeout(function(){return U(a,3)},50)};S(a.j,a.o,2,!0,function(){r[a.m]||b()},b);a.l=!0}},T=function(a){for(var b=W(1,5),c=0;c<b;c++){var d=X(a);a.h.body.appendChild(d);a.i.push(d)}b=X(a);b.style.bottom="0";b.style.left="0";b.style.position="fixed";b.style.width=W(100,110).toString()+"%";b.style.zIndex=W(2147483544,2147483644).toString();b.style["background-color"]=ma(249,259,242,252,219,229);b.style["box-shadow"]="0 0 12px #888";b.style.color=ma(0,10,0,10,0,10);b.style.display=
-							"flex";b.style["justify-content"]="center";b.style["font-family"]="Roboto, Arial";c=X(a);c.style.width=W(80,85).toString()+"%";c.style.maxWidth=W(750,775).toString()+"px";c.style.margin="24px";c.style.display="flex";c.style["align-items"]="flex-start";c.style["justify-content"]="center";d=Q(a.j.g,"IMG");d.className=A();d.src=ia;d.style.height="24px";d.style.width="24px";d.style["padding-right"]="16px";var e=X(a),f=X(a);f.style["font-weight"]="bold";f.textContent=ja;var h=X(a);h.textContent=ka;Y(a,
-							e,f);Y(a,e,h);Y(a,c,d);Y(a,c,e);Y(a,b,c);a.g=b;a.h.body.appendChild(a.g);b=W(1,5);for(c=0;c<b;c++)d=X(a),a.h.body.appendChild(d),a.i.push(d)},Y=function(a,b,c){for(var d=W(1,5),e=0;e<d;e++){var f=X(a);b.appendChild(f)}b.appendChild(c);c=W(1,5);for(d=0;d<c;d++)e=X(a),b.appendChild(e)},W=function(a,b){return Math.floor(a+Math.random()*(b-a))},ma=function(a,b,c,d,e,f){return"rgb("+W(Math.max(a,0),Math.min(b,255)).toString()+","+W(Math.max(c,0),Math.min(d,255)).toString()+","+W(Math.max(e,0),Math.min(f,
-							255)).toString()+")"},X=function(a){a=Q(a.j.g,"DIV");a.className=A();return a},U=function(a,b){0>=b||null!=a.g&&0!=a.g.offsetHeight&&0!=a.g.offsetWidth||(na(a),T(a),r.setTimeout(function(){return U(a,b-1)},50))},na=function(a){var b=a.i;var c="undefined"!=typeof Symbol&&Symbol.iterator&&b[Symbol.iterator];b=c?c.call(b):{next:aa(b)};for(c=b.next();!c.done;c=b.next())(c=c.value)&&c.parentNode&&c.parentNode.removeChild(c);a.i=[];(b=a.g)&&b.parentNode&&b.parentNode.removeChild(b);a.g=null};var pa=function(a,b,c,d,e){var f=oa(c),h=function(l){l.appendChild(f);r.setTimeout(function(){f?(0!==f.offsetHeight&&0!==f.offsetWidth?b():a(),f.parentNode&&f.parentNode.removeChild(f)):a()},d)},g=function(l){document.body?h(document.body):0<l?r.setTimeout(function(){g(l-1)},e):b()};g(3)},oa=function(a){var b=document.createElement("div");b.className=a;b.style.width="1px";b.style.height="1px";b.style.position="absolute";b.style.left="-10000px";b.style.top="-10000px";b.style.zIndex="-10000";return b};var L=function(a){J.call(this,a)};q(L,J);var qa=function(a){J.call(this,a)};q(qa,J);var ra=function(a,b){this.l=a;this.m=new R(a.document);this.g=b;this.i=K(this.g,1);b=M(this.g,2);this.o=x(K(b,4)||"");this.h=!1;b=M(this.g,13);b=x(K(b,4)||"");this.j=new la(a.document,b,K(this.g,12))};ra.prototype.start=function(){sa(this)};
-							var sa=function(a){ta(a);S(a.m,a.o,3,!1,function(){a:{var b=a.i;var c=r.btoa(b);if(c=r[c]){try{var d=O(P,r.atob(c))}catch(e){b=!1;break a}b=b===K(d,1)}else b=!1}b?Z(a,K(a.g,14)):(Z(a,K(a.g,8)),V(a.j))},function(){pa(function(){Z(a,K(a.g,7));V(a.j)},function(){return Z(a,K(a.g,6))},K(a.g,9),K(a.g,10),K(a.g,11))})},Z=function(a,b){a.h||(a.h=!0,a=new a.l.XMLHttpRequest,a.open("GET",b,!0),a.send())},ta=function(a){var b=r.btoa(a.i);a.l[b]&&Z(a,K(a.g,5))};(function(a,b){r[a]=function(c){for(var d=[],e=0;e<arguments.length;++e)d[e-0]=arguments[e];r[a]=da;b.apply(null,d)}})("__h82AlnkH6D91__",function(a){"function"===typeof window.atob&&(new ra(window,O(qa,window.atob(a)))).start()});}).call(this);
-
-							window.__h82AlnkH6D91__("WyJwdWItMjU3NTc4ODY5MDc5ODI4MiIsW251bGwsbnVsbCxudWxsLCJodHRwczovL2Z1bmRpbmdjaG9pY2VzbWVzc2FnZXMuZ29vZ2xlLmNvbS9iL3B1Yi0yNTc1Nzg4NjkwNzk4MjgyIl0sbnVsbCxudWxsLCJodHRwczovL2Z1bmRpbmdjaG9pY2VzbWVzc2FnZXMuZ29vZ2xlLmNvbS9lbC9BR1NLV3hWV0tMOXhFeS1ZVk1sOTdzcC10MW5mbkxvWmZweWVjaGRJdUxJU244LXpjbUwxM1R5Mlhhb2RoQTJFU3VNS3ljQm1kVHgxSUNlMVBrX2hIeUxHa1ZZNHJ3XHUwMDNkXHUwMDNkP3RlXHUwMDNkVE9LRU5fRVhQT1NFRCIsImh0dHBzOi8vZnVuZGluZ2Nob2ljZXNtZXNzYWdlcy5nb29nbGUuY29tL2VsL0FHU0tXeFZCeVhDdDlWajY1eXNrMWFHVW9LUUpLdktrTlh4WVdlRDBhYnhmS3RVUi00eDZfRTNWOXpqSm5vYkFfVzIxeGNDb3F3M1RmN1dYRmxXZFZaazVMMFlQQ2dcdTAwM2RcdTAwM2Q/YWJcdTAwM2QxXHUwMDI2c2JmXHUwMDNkMSIsImh0dHBzOi8vZnVuZGluZ2Nob2ljZXNtZXNzYWdlcy5nb29nbGUuY29tL2VsL0FHU0tXeFV4bEsxQ0dxcEpGY3lvcXZXZ0ZnWWRBRjhMMzBOU0Y1ci1paGZSd1VRNzV4YmF6NGxydWVfRUhoWmU1ai00UUhRYXc4MUVZREFkQ2pBN21Tb1BxUUsxaFFcdTAwM2RcdTAwM2Q/YWJcdTAwM2QyXHUwMDI2c2JmXHUwMDNkMSIsImh0dHBzOi8vZnVuZGluZ2Nob2ljZXNtZXNzYWdlcy5nb29nbGUuY29tL2VsL0FHU0tXeFZJUWxpOV9jN0NuWWlHWkU3S2xIV2JWVi10NlpYQ2hQTnlHVTRobGhmSjdLQnJnNjllSFhHYm9aSXRqRm42MDViNWpuaG5KYkxCcU1ySURyY2lLVEk0VmdcdTAwM2RcdTAwM2Q/c2JmXHUwMDNkMiIsImRpdi1ncHQtYWQiLDIwLDEwMCwiY0hWaUxUSTFOelUzT0RnMk9UQTNPVGd5T0RJXHUwMDNkIixbbnVsbCxudWxsLG51bGwsImh0dHBzOi8vd3d3LmdzdGF0aWMuY29tLzBlbW4vZi9wL3B1Yi0yNTc1Nzg4NjkwNzk4MjgyLmpzP3VzcXBcdTAwM2RDQkEiXSwiaHR0cHM6Ly9mdW5kaW5nY2hvaWNlc21lc3NhZ2VzLmdvb2dsZS5jb20vZWwvQUdTS1d4V1hNUEJXZjVaNURyT1VGdDZwVVR5eGh1YzBFNlVGQnJJZUhuUUNCMVlUOWVtYlJTbGxYQ3F6NDV5ODdqT3RVWC1SX3JkcmdudFdjejdtazA2WkZYWDQyd1x1MDAzZFx1MDAzZCJd");
-					</script>
 						<meta http-equiv="X-UA-Compatible" content="IE=edge">
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
@@ -325,6 +33,8 @@ var ads_project = (function(sent_in_settings){
 			<meta property="og:image" content="https://static.tvtropes.org/pmwiki/pub/images/atoner.png" />
 			<meta property="og:description" content="Once, there was a major villain named Bob. He committed every crime one could think of, and he did it with a song in his heart and a skip in his step. Then, something happened to make him see the horror of what he was doing. He realized how much &hellip;" />
 
+                        <meta name="robots" content="max-image-preview:large">
+
 						
 
 			            <link rel="apple-touch-icon" sizes="57x57" href="https://assets.tvtropes.org/img/icons/apple-icon-57x57.png" type="image/png">
@@ -341,90 +51,60 @@ var ads_project = (function(sent_in_settings){
             <link rel="icon" sizes="96x96" href="https://assets.tvtropes.org/img/icons/favicon-96x96.png" type="image/png">
             <link rel="icon" sizes="192x192" href="https://assets.tvtropes.org/img/icons/favicon-192x192.png" type="image/png">
 
-                                    
-
+                        
+                        
 						<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-                        <link rel="stylesheet" href="https://assets.tvtropes.org/design/assets/bundle.css?rev=671f9ba8e4afc81c41f31b56ffd024a629f38e87" />
+                        <link rel="stylesheet" href="https://assets.tvtropes.org/design/assets/bundle.css?rev=2f4875abe459cab3d315f2f182ddd58516a5737c" />
+
+            <meta name="apple-itunes-app" content="app-id=6738365737, app-argument=tvtropes://home">
 
                                                 
                         
                         
                         						
-                        <script type="text/javascript">
-
-                var tvtropes_config = {
-                    asteri_stream_enabled : "1",
-                    is_logged_in         : "",
-                    handle               : "",
-                    email_popup          : "0",
-                    troper_email         : "",
-                    get_asteri_stream     : "",
-                    revnum               : "671f9ba8e4afc81c41f31b56ffd024a629f38e87",
-                    img_domain           : "https://static.tvtropes.org",
-                    adblock              : "1",
-                    adblock_url          : "propermessage.io",
-                    universal_page_type  : "Article",
-                    pause_editing        : "0",
-                    pause_editing_msg    : "",
-                    pause_site_changes   : "0",
-                    assets_domain        : "https://assets.tvtropes.org"
-                };
-
-                // This will track the total number of ads inserted over time
-                var globalAdInsertionCount = 0;
-            </script>
-						
                         						
-												<script type="text/javascript">
-						  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-						  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-						  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-						  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+												
 
-						  ga('create', 'UA-3821842-1', 'auto');
-						  ga('send', 'pageview');
-						</script>
+
+                                                
+                        
+
+
+                                                
+
+
+
 
 						        </head>
  <body class="">
 
         <i id="user-prefs"></i>
-    <script>updateUserPrefs();</script>
+    
 
     <div id="fb-root"></div>
 
     <div id="modal-box">
         <div class="modal-loading-graphic"></div>
     </div>
-    <style>
-        @keyframes rotate-forever {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+    
 
-        #modal-box > .modal-loading-graphic {
-            display: none; /* Hidden by default */
+    
+    
+<div class="outer-promo-banner" id="outer-promo-banner">
+    <div class="promo-banner">
+        <img src="/images/tvtropes_logo_180x180.png" alt="TVTropes Logo" class="promo-logo">
+        <div class="promo-text-container">
+            <span class="promo-text-top">TVTropes</span>
+            <span class="promo-text">Now available in the app store!</span>
+        </div>
+        <a href="#" class="promo-button" id="promo-app-link">Open</a>
 
-            background: no-repeat center url('/images/loading-graphic.png');
-            background-size: 80px 80px;
+        <a href="#" id="promo-close-button"><i class="fa fa-close"></i></a>
+    </div>
+</div>
 
-            width: 80px;
-            height: 80px;
 
-            border-radius: 50%;
 
-            position: absolute;
-            top: calc(30% - 40px);
-            left: calc(50% - 40px);
-            z-index: 2;
-
-            animation: rotate-forever 0.34s linear infinite;
-
-        }
-        #modal-box.active > .modal-loading-graphic {
-            display: block; /* Show only when modal is active */
-        }
-    </style>
     <header id="main-header-bar" class="headroom-element ">
         <div id="main-header-bar-inner">
 
@@ -440,7 +120,7 @@ var ads_project = (function(sent_in_settings){
                 <a href="/pmwiki/pmwiki.php/Main/Tropes">Tropes</a>
                 <a href="/pmwiki/pmwiki.php/Main/Media">Media</a>
                 <a href="/pmwiki/browse.php" class="nav-browse">Browse</a>
-                <a href="/pmwiki/index_report.php">Indexes</a>
+                <a href="/pmwiki/popular-pages.php">Popular</a>
                 <a href="/pmwiki/topics.php">Forums</a>
                 <a href="/pmwiki/recent_videos.php" class="nav-browse">Videos</a>
             </nav>
@@ -456,9 +136,9 @@ var ads_project = (function(sent_in_settings){
                 </div>
                 
                 <div id="search-box">
-                    <form class="search" action="/pmwiki/search_result.php">
+                    <form class="search" action="/pmwiki/search_result.php" onSubmit="return sendToSiteSearch(this, this.q.value);">
                         <input type="text" name="q" class="search-box" placeholder="Search" value="" required>
-                        <input type="submit" class="submit-button" value="&#xf002;" />
+                        <input id="main_search_submit"type="submit" class="submit-button" value="&#xf002;" />
                                                 <input type="hidden" name="search_type" value="article">
                         <input type="hidden" name="page_type" value="all">
                                                 <input type="hidden" name="cx" value="partner-pub-6610802604051523:amzitfn8e7v">
@@ -472,8 +152,8 @@ var ads_project = (function(sent_in_settings){
                 </div>
 
                 <div id="random-box">
-                    <a href="/pmwiki/pmwiki.php/Main/ImAHumanitarian" class="button-random-trope" rel="nofollow" onclick="ga('send', 'event', 'button', 'click', 'random trope');"></a>
-                    <a href="/pmwiki/pmwiki.php/Creator/MelanieScrofano" class="button-random-media" rel="nofollow" onclick="ga('send', 'event', 'button', 'click', 'random media');"></a>
+                    <a href="/pmwiki/pmwiki.php/Main/NoBadassToHisValet" class="button-random-trope" rel="nofollow" onclick="gtag('event', 'trope_random_button_click', {'is_user': 0});"></a>
+                    <a href="/pmwiki/pmwiki.php/Creator/SaffronBurrows" class="button-random-media" rel="nofollow" onclick="gtag('event', 'media_random_button_click', {'is_user': 0});"></a>
                 </div>
 
             </div>
@@ -486,6 +166,7 @@ var ads_project = (function(sent_in_settings){
         <a href="/pmwiki/pmwiki.php/Main/Tropes" class="xl">Tropes</a>
         <a href="/pmwiki/pmwiki.php/Main/Media" class="xl">Media</a>
         <a href="/pmwiki/browse.php" class="xl">Browse</a>
+        <a href="/pmwiki/popular-pages.php" class="xl">Popular</a>
         <a href="/pmwiki/index_report.php" class="xl">Indexes</a>
         <a href="/pmwiki/topics.php" class="xl">Forums</a>
         <a href="/pmwiki/recent_videos.php" class="xl">Videos</a>
@@ -497,14 +178,15 @@ var ads_project = (function(sent_in_settings){
         <a href="/pmwiki/query.php?type=wl">Tech Wishlist</a>
         <a href="/pmwiki/review_activity.php">Reviews</a> 
         
-        <a href="#tools" data-click-toggle="active">Tools <i class="fa fa-chevron-down"></i></a>
+                <a href="#tools" data-click-toggle="active">Tools <i class="fa fa-chevron-down"></i></a>
         <div class="tools-dropdown mobile-dropdown-linkList">
-            <a href="/pmwiki/cutlist.php">Cut List</a>
+            <a href="/pmwiki/cutlist.php" data-modal-target="login" rel="nofollow">Cut List</a>
+            <a href="/pmwiki/image-fixer.php" data-modal-target="login" rel="nofollow">Image Fixer</a>
             <a href="/pmwiki/changes.php">New Edits</a>
             <a href="/pmwiki/articles_new.php">New Articles</a>
             <a href="/pmwiki/recent_edit_reasons.php">Edit Reasons</a>
-            <a href="/pmwiki/launches.php">Launches</a>
-            <a href="/pmwiki/img_list.php">Images List</a>
+            <a href="/pmwiki/launches.php" data-modal-target="login" rel="nofollow">Launches</a>
+            <a href="/pmwiki/img_list.php" data-modal-target="login" rel="nofollow">Images List</a>
             <a href="/pmwiki/crown_activity.php">Crowner Activity</a>
             <a href="/pmwiki/no_types.php">Un-typed Pages</a>
             <a href="/pmwiki/page_type_audit.php">Recent Page Type Changes</a>
@@ -520,7 +202,7 @@ var ads_project = (function(sent_in_settings){
                 <a href="/pmwiki/pmwiki.php/Administrivia/TVTropesGlossary?from=Main.TVTropesGlossary">Glossary</a>
                 <a href="/pmwiki/pmwiki.php/Administrivia/EditReasonsAndWhyYouShouldUseThem">Edit Reasons</a>
                 <a href="/pmwiki/pmwiki.php/Administrivia/HandlingSpoilers">Handling Spoilers</a>
-                <a href="/pmwiki/pmwiki.php/Main/WordCruft">Word Cruft</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/WordCruft">Word Cruft</a>
                 <a href="/pmwiki/pmwiki.php/Main/Administrivia">Administrivia</a>
                 <a href="/pmwiki/pmwiki.php/Main/FAQ">FAQ</a>
         </div>
@@ -533,6 +215,7 @@ var ads_project = (function(sent_in_settings){
             <a href="/pmwiki/dmca.php">DMCA Notice</a>
             <a href="/pmwiki/privacypolicy.php">Privacy Policy</a>
             <a href="/pmwiki/query.php?type=bug">Report Bug</a>
+            <a href="/pmwiki/termsofservice.php">Terms Of Service</a>
         </div>
 
         <a href="/pmwiki/ad-free-subscribe.php">Go Ad-Free</a>
@@ -545,7 +228,7 @@ var ads_project = (function(sent_in_settings){
                 <li>Sticky Header <div id="mobile-toggle-stickyheader" class="display-toggle sticky-header"></div></li>
                 <li>Highlight Links <div id="mobile-toggle-highlightlinks" class="display-toggle highlight-links"></div></li>
             </ul>
-            <script>updateMobilePrefs();</script>
+            
         </div>
 
     </div>
@@ -558,7 +241,7 @@ var ads_project = (function(sent_in_settings){
     <div id="homepage-introBox-mobile" class="mobile-on">
                   <a href="/"><img src="/images/logo-white-big.png" class="logo-small" /></a>
         
-        <form class="search" action="/pmwiki/search_result.php" style="margin:10px -5px -6px -5px;">
+        <form class="search" action="/pmwiki/search_result.php" style="margin:10px -5px -6px -5px;" onSubmit="return sendToSiteSearch(this, this.q.value);">
             <input type="text" name="q" class="search-box" placeholder="Search" value="" required>
             <input type="submit" class="submit-button" value="&#xf002;" />
                         <input type="hidden" name="search_type" value="article">
@@ -573,584 +256,12 @@ var ads_project = (function(sent_in_settings){
 
             </div>
 
-    <script>
-                // Get device type
-function get_device_type(){
-    var ua = navigator.userAgent.toLowerCase();
-    var device_type = "";
     
-    // This is usually "tablet", but for this case we are going to call it mobile
-    if(/(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(ua)) device_type = "mobile";
-    // This is mobile
-    else if(/(mobi|ipod|phone|blackberry|opera mini|fennec|minimo|symbian|psp|nintendo ds|archos|skyfire|puffin|blazer|bolt|gobrowser|iris|maemo|semc|teashark|uzard)/.test(ua)) device_type = "mobile";
-    // Otherwise desktop
-    else device_type = "desktop";
-
-    return device_type;
-}
-
-var show_modal_loaded = false;
-
-//// MOBILE MENU TOGGLE FUNCTIONS ////
-function show_modal(type, message, confirmation_url, call_back, fb_token, groupname, title, video_id) {
-    console.log("showing modal " + type);
     
-    const modalBox = document.getElementById('modal-box');
-    const childDivs = modalBox.querySelectorAll(':scope > div');
-
-    // Check if there are more than one child divs in the modal box, indicating a modal is already there
-    if (childDivs.length > 1) {
-        kill_modal();
-    }
-    // Show the modal and the loading graphic
-    modalBox.classList.add('active');
-
-    let alert = '';
-    if (typeof message === 'object' && message !== null) {
-        Object.keys(message).forEach(function(key) {
-            alert += '&' + key + '=' + encodeURIComponent(message[key]);
-        });
-    } else {
-        alert = '&message=' + encodeURIComponent(message);
-    }
-
-    // Construct the URL with parameters
-    const url = '/design/parts/component-modalBox.php?window=' + type + alert + 
-                (confirmation_url ? '&curl=' + encodeURIComponent(confirmation_url) : "") + 
-                (fb_token ? '&fb_token=' + encodeURIComponent(fb_token) : "") + 
-                (video_id ? '&video_id=' + encodeURIComponent(video_id) : "");
-
-    fetch(url)
-        .then(response => response.text())
-        .then(html => {
-            modalBox.innerHTML = html;
-
-            // Find and execute scripts
-            const scripts = modalBox.querySelectorAll('script');
-            scripts.forEach(script => {
-                const newScript = document.createElement('script');
-                newScript.type = 'text/javascript';
-                
-                if (script.src) {
-                    newScript.src = script.src;
-
-                    // Wait for Dropzone.js to load before adding the imguploader.js
-                    if(newScript.src.includes('/design/js/dropzone.js')) {
-                        newScript.onload = function() {
-                            
-                            // Now load the imguploader.js script
-                            const img_uploader_script = document.createElement('script');
-                            img_uploader_script.type = 'text/javascript';
-                            img_uploader_script.src = "/design/js/imguploader.js";
-
-                            img_uploader_script.onload = function (){
-                                myAwesomeDropzone = new Dropzone("#myAwesomeDropzone", { url: "/ajax/uploadImg.php" });
-                            }
-                            document.body.appendChild(img_uploader_script);
-                        }
-                    }
-                } else {
-                    newScript.textContent = script.textContent;
-                }
-
-                // Remove the old script and add the new one
-                script.parentNode.removeChild(script);
-                modalBox.appendChild(newScript);
-            });
-
-            if(call_back) { 
-                call_back(); 
-            }
-        });
-
-    if(show_modal_loaded == false){
-        // Kill modal if blackout is clicked
-        modalBox.addEventListener('click', function(e) { 
-            if (e.target === e.currentTarget) { 
-                kill_modal(); 
-            } 
-        });
-    }
-    show_modal_loaded = true;
-}
-
-// Modal kill function
-function kill_modal() {
-    console.log("killing modal");
-    const modalBox = document.getElementById('modal-box');
-    modalBox.classList.remove('active');
-
-    // Replace the content directly with the new loading graphic
-    modalBox.innerHTML = '<div class="modal-loading-graphic"></div>';
-}
-
-// Modal "loading" mode, without killing
-function pause_modal() {
-    var modal = document.querySelector('#modal-box > div.modal');
-    if(!modal) modal = document.querySelector('#modal-box');
-    modal.classList.add('hidden');
-
-    const modalBox = document.getElementById('modal-box');
-    modalBox.classList.add('paused');
-
-    const loadingGraphic = document.createElement('div');
-    loadingGraphic.className = 'modal-loading-graphic';
-    modalBox.appendChild(loadingGraphic);
-}
-
-function unpause_modal() {
-    const modalBox = document.getElementById('modal-box');
-    modalBox.classList.remove('paused');
-
-    var modal = document.querySelector('#modal-box > div.modal');
-    if(!modal) modal = document.querySelector('#modal-box');
-    modal.classList.remove('hidden');
-
-    const loadingGraphic = document.querySelector('#modal-box > div.modal-loading-graphic');
-    if (loadingGraphic) {
-        modalBox.removeChild(loadingGraphic);
-    }
-}
-
-// COMPONENT: LOAD GRAPHIC
-function show_loader() {
-    console.log("Displaying loading graphic");
-    
-    kill_modal();
-    const modalBox = document.getElementById('modal-box');
-    modalBox.classList.add('active');
-
-    const loadingGraphic = document.createElement('div');
-    loadingGraphic.className = 'modal-loading-graphic';
-    modalBox.appendChild(loadingGraphic);
-}
-// TOGGLE NOTES
-function togglenote(id){
-    var ele=object(id);
-    var state = ele.style.display;
-    if(state=='none') ele.style.display='inline';
-    if(state=='inline')ele.style.display='none';
-}
-// Toggle more menu
-function toggle_more_menu(position){
-    var more_menu = document.getElementById(position+"_more_list");
-
-    more_menu.classList.toggle("hidden_more_list");
-    more_menu.classList.toggle("display");
-
-    var menu_button = document.getElementById(position+"_more_button");
-
-    menu_button.classList.toggle("is-open");
-}
-
-// FOLDER BUTTONS (unused) - declared to prevent console errors.
-function toggleAllFolders() {}
-function togglefolder(id) {}
-
-var device_type = get_device_type();
-
-const mobile_menu_button = document.querySelector('.mobile-menu-toggle-button');
-
-if (mobile_menu_button) {
-    mobile_menu_button.addEventListener('click', function(e) {
-        e.preventDefault();
-        const header = document.querySelector('header#main-header-bar');
-        if (header.classList.contains('mobile-menu-active')) {
-            header.classList.remove('mobile-menu-active');
-        } else {
-            header.classList.add('mobile-menu-active');
-        }
-    });
-}
-
-// MODAL - FOLDER - SPOILER BUTTONS
-document.body.addEventListener('click', function(e) {
-    // WATCH / FOLLOW BUTTONS
-    const target = e.target.closest('.watch-button');
-    const loggedInElement = document.getElementById('logged_in');
-    const loggedIn = loggedInElement ? loggedInElement.value : null;
-
-    //special code for the desktop-on-mobile-toggle cookie link
-    if (e.target.closest('#desktop-on-mobile-toggle > a')) {
-        e.preventDefault();
-        var body_class = "desktop-on-mobile";
-        var userPrefs = document.getElementById('user-prefs');
-
-        if (userPrefs.classList.contains(body_class)) {
-            cookies.remove(body_class);
-        } else {
-            cookies.create(body_class, 'true', 300, '/');
-        }
-
-        location.reload();
-    }
-
-    // Display toggle buttons for user preferences
-    if (e.target.closest('.display-toggles > li')) {
-        var toggle = e.target;
-        if(toggle.tagName.toLowerCase() === 'li') toggle = toggle.children[0];
-
-        var body_class = '';
-        var pref = '';
-        var val = 0;
-
-        // SIDEBAR AND MOBILE MENU OPTIONS
-        if (toggle.classList.contains('wide-load')) {
-            body_class = "wide-load";
-        } else if (toggle.classList.contains('sticky-header')) {
-            body_class = "sticky-header";
-        } else if (toggle.classList.contains('night-vision')) {
-            body_class = "night-vision";
-        } else if (toggle.classList.contains('show-spoilers')) {
-            body_class = "show-spoilers";
-        } else if (toggle.classList.contains('tvtropes-editor-on')) {
-            body_class = "tvtropes-editor-on";
-        }
-
-        // PROFILE PAGE OPTIONS
-        else if (toggle.classList.contains('folders-open')) {
-            body_class = "folders-open";
-        } else if (toggle.classList.contains('wysiwyg-toggle')) {
-            body_class = "wysiwyg-toggle";
-        } else if (toggle.classList.contains('mono-font')) {
-            body_class = "mono-font";
-        } else if (toggle.classList.contains('lefthand-sidebar')) {
-            body_class = "lefthand-sidebar";
-        } else if (toggle.classList.contains('highlight-links')) {
-            body_class = "highlight-links";
-        } else if (toggle.classList.contains('forum-gingerbread')) {
-            body_class = "forum-gingerbread";
-        } else if (toggle.classList.contains('shared-avatars')) {
-            body_class = "shared-avatars";
-            pref = 'accept_share';
-            val = toggle.classList.contains('active') ? 0 : 1;
-        } else if (toggle.classList.contains('new-search')) {
-            body_class = "new-search";
-            pref = 'new_search';
-            val = toggle.classList.contains('active') ? 0 : 1;
-        } else if (toggle.classList.contains('stop-auto-play-video')) {
-            body_class = "stop-auto-play-video";
-            pref = 'stop_auto_play_video';
-            val = toggle.classList.contains('active') ? 0 : 1;
-        } else if (toggle.classList.contains('notification-pm')) {
-            body_class = 'notification-pm';
-            pref = 'toggle_notification_pm';
-            val = toggle.classList.contains('active') ? 0 : 1;
-        } else if (toggle.classList.contains('notification-video')) {
-            body_class = 'notification-video';
-            pref = 'toggle_notification_video';
-            val = toggle.classList.contains('active') ? 0 : 1;
-        } else if (toggle.classList.contains('notification-query')) {
-            body_class = 'notification-query';
-            pref = 'toggle_notification_query';
-            val = toggle.classList.contains('active') ? 0 : 1;
-        }
-
-        if (pref === 'accept_share' || pref === 'new_search' || pref === 'stop_auto_play_video' || pref === 'toggle_notification_query' || pref === 'toggle_notification_pm' || pref === 'toggle_notification_video') {
-            if (pref === 'new_search' && document.querySelector('#new-search-toggle')) show_loader();
-        
-            fetch('/ajax/toggle_user_prefs.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'pref=' + encodeURIComponent(pref) + '&value=' + encodeURIComponent(val)
-            })
-            .then(response => response.json())
-            .then(json => {
-                if (pref === 'new_search') {
-                    const newSearchToggle = document.querySelector('#new-search-toggle');
-                    const searchInput = document.getElementById('srch-term').value;
-                    const pageType = document.getElementsByName('page_type')[0].value;
-                    if (newSearchToggle && newSearchToggle.classList.contains('active')) {
-                        kill_modal();
-                        window.location.href = '/pmwiki/elastic_search_result.php?new_search=true&q=' + encodeURIComponent(searchInput) + '&page_type=' + encodeURIComponent(pageType);
-                    } else if (newSearchToggle) {
-                        kill_modal();
-                        window.location.href = '/pmwiki/search_result.php?new_search=false&q=' + encodeURIComponent(searchInput);
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        
-            document.querySelector('form.search').addEventListener('submit', function(e) {
-                if (cookies.read('new-search') === 'true') {
-                    e.preventDefault();
-                    this.setAttribute('action', "/pmwiki/elastic_search_result.php");
-                }
-            });
-        }
-
-        // Toggle 'active' class based on body_class
-        var displayToggles = document.querySelectorAll('.display-toggle.' + body_class);
-        displayToggles.forEach(item_to_toggle => {
-            item_to_toggle.classList.toggle('active');
-        });
-        
-        var userPrefs = document.getElementById('user-prefs');
-        userPrefs.classList.toggle(body_class);
-
-        console.log('BODY CLASS:',body_class);
-
-        if (userPrefs.classList.contains(body_class)) {
-            cookies.create(body_class, 'true', 300, '/');
-        } else {
-            cookies.remove(body_class);
-    
-            // Specific logic for 'show-spoilers' class
-            if (body_class === "show-spoilers") {
-                document.querySelectorAll('.spoiler').forEach(spoiler => {
-                    spoiler.classList.remove('off');
-                });
-            }
-        }
-    }
-
-    if (target && loggedIn !== null) {
-        e.preventDefault();
-
-        if (loggedIn === 'true') {
-            target.classList.add('processing');
-        }
-
-        // Article
-        if (target.getAttribute('data-watch-info')) {
-            var data = target.dataset.watchInfo.split(',');
-
-            if (!data.length) return;
-
-            var addOrDrop = target.classList.contains('watching') || target.parentElement.classList.contains('watching') ? 'drop' : 'add';
-
-            handleWatchItem(addOrDrop, data[0], data[1], target);
-
-        // Discussion page
-        } else if (target.getAttribute('data-watch-discussion-info')) {
-            var data = target.dataset.watchDiscussionInfo.split(',');
-
-            if (!data.length) return;
-
-            var addOrDrop = target.classList.contains('watching') || target.parentElement.classList.contains('watching') ? 'drop' : 'add';
-            var pageType = 'Discussion';
-
-            handleWatchItem(addOrDrop, data[0], data[1], target, pageType);
-
-        // Forum thread
-        } else if (target.getAttribute('data-watch-thread-id')) {
-            var threadId = target.getAttribute('data-watch-thread-id');
-            var url = target.classList.contains('watching') || target.parentElement.classList.contains('watching') ? '/pmwiki/thread_watch_drop.php?thread=' : '/pmwiki/setthreadwatch.php?d_id=';
-            url += threadId;
-
-            handleWatchThread(url, target);
-        }
-    }
-    // Check for kill modal button click
-    if (e.target.classList.contains('kill-modal-button')) {
-        e.preventDefault();
-        kill_modal();
-    }
-
-    // Check for data-click-toggle without data-click-toggle-target
-    const targetWithoutToggleTarget = e.target.closest('*[data-click-toggle]:not([data-click-toggle-target])');
-    if (targetWithoutToggleTarget) {
-        e.preventDefault();
-        const toggleClass = targetWithoutToggleTarget.getAttribute('data-click-toggle');
-        targetWithoutToggleTarget.classList.toggle(toggleClass);
-    }
-
-    // Check for data-click-toggle with data-click-toggle-target
-    const targetWithToggleTarget = e.target.closest('*[data-click-toggle][data-click-toggle-target]');
-    if (targetWithToggleTarget) {
-        e.preventDefault();
-        e.stopPropagation();
-        const toggleTarget = targetWithToggleTarget.getAttribute('data-click-toggle-target');
-        const toggleClass = targetWithToggleTarget.getAttribute('data-click-toggle');
-        if (toggleTarget.indexOf(',') > -1) {
-            const targets = toggleTarget.split(",");
-            targets.forEach(t => {
-                document.querySelectorAll('#' + t).forEach(el => {
-                    el.classList.toggle(toggleClass);
-                });
-            });
-        } else {
-            document.querySelectorAll('#' + toggleTarget).forEach(el => {
-                el.classList.toggle(toggleClass);
-            });
-        }
-    }
-    // initiate all modals
-    const modalTarget = e.target.closest('*[data-modal-target]');
-    if(modalTarget) {
-        if (!modalTarget) {
-            return; // Skip, if no target found with the specified attribute
-        }
-
-        // Get modal details
-        let modal = modalTarget.getAttribute('data-modal-target');
-        let msg = modalTarget.getAttribute('data-modal-vars');
-        let url = modalTarget.getAttribute('data-modal-confirmation-url');
-
-        // convert to json if possible
-        try {
-            var obj = JSON.parse(msg);
-            if (obj && typeof obj === "object") {
-                msg = obj;
-            }
-        } 
-        catch (e) {
-        }
-
-        // Skip modal and go straight to the link
-        if (modal === "allow") return;
-
-        // Don't allow link since we are showing a modal instead
-        e.preventDefault();
-
-        // Add support for alert tags
-        if (modal.substring(0, 6) === "alert-") {
-            // Message array
-            const msgArr = {
-                "alert-banned": "Your permissions for this area have been suspended. Please visit <a href='/pmwiki/pmwiki.php/Administrivia/WhatToDoIfYouAreSuspended'>this page</a> for more details.",
-                "alert-bounced": "This account has committed severe or repeated violations of our rules and is permanently denied access to many of the account features of the site. If you feel that this may be an error, please <a href=\"/pmwiki/contact.php\">contact the mods</a>.",
-                "alert-denied": "Your account was denied by a moderator. If you believe this was done in error please <a href=\"/pmwiki/contact.php\">contact the mods</a>.",
-                "alert-verify": "You must verify your email address before doing this. Check your email for a link.",
-                "alert-approval": "Your account must be approved by a moderator before you can do this. If you still have this problem in a couple hours try <a href=\"/pmwiki/contact.php\">contacting the mods</a>.",
-                "alert-age": "Your account is not old enough. Give it a little more time.",
-                "alert-mod": "This page is only for moderators. Try something else.",
-                "alert-db": "We are currently updating our database systems to UTF-8MB4. Please try again in 10-12 hours."
-            };
-
-            if (modal in msgArr) {
-                msg = msgArr[modal];
-            } else {
-                msg = "Unknown error. Please <a href=\"/pmwiki/contact.php\">Contact us</a> if the problem persists.";
-            }
-
-            modal = "alert";
-        }
-
-        // Bring up modal now
-        show_modal(modal, msg, url);
-    }
-
-    // SPOILERS
-    const spoilers = e.target.closest('.spoiler');
-    if (spoilers) {
-        spoilers.classList.toggle('off');
-    }
-    
-    // OPEN INDIVIDUAL FOLDERS
-    const folders = e.target.closest('.folderlabel');
-    if (folders && e.target.getAttribute('onclick') !== "toggleAllFolders();") {
-        e.preventDefault();
-
-        folders.classList.toggle('is-open');
-        let folder = folders.nextElementSibling;
-
-        if (folders.classList.contains('is-open')) {
-            gtag('event', 'folder_click', {'device_type': device_type});
-        }
-
-        if (folder && folders.classList.contains('is-open') && live_ads == 1 && (document.body.clientWidth && document.body.clientWidth<=768) 
-        && tvtropes_config.universal_page_type == 'Article') {
-            if (folder.querySelectorAll('.tvtropes-ad-unit').length === 0) {
-                insert_ads_in_content(folder, globalAdInsertionCount);
-            }
-        }
-    }
-
-    // OPEN ALL FOLDERS
-    const allFolders = e.target.closest('div[onclick*="toggleAllFolders()"]');
-    
-    if (allFolders) {
-        let parentElement = allFolders.parentNode;
-        // If the button is inside an H2, select the parent div of it
-        if (parentElement.tagName === 'H2') parentElement = parentElement.parentNode;
-        let isCurrentlyOpen = e.target.classList.contains('is-open');
-        // Select only folder labels that are inside the same parent div as the clicked button
-        let foldersAndButtons = parentElement.querySelectorAll('.folderlabel, .toggle-all-folders-button');
-
-        foldersAndButtons.forEach(function(element) {
-            if (isCurrentlyOpen) {
-                element.classList.remove('is-open');
-            } else {
-                element.classList.add('is-open');
-            }
-        });
-
-        if (!isCurrentlyOpen) {
-            gtag('event', 'all_folders_click', {'device_type': device_type});
-            // Also target only .folder elements within the same parent div
-            parentElement.querySelectorAll('.folder').forEach(function(folder) {
-                if (!folder.querySelector('.tvtropes-ad-unit') && live_ads == 1 && (document.body.clientWidth && document.body.clientWidth<=768) 
-                && tvtropes_config.universal_page_type == 'Article') {
-                    insert_ads_in_content(folder, globalAdInsertionCount);
-                }
-            });
-        }
-    }
-
-});
-// Add/remove watched article
-var handleWatchItem = function(addOrDrop, groupname, title, obj, pageType = '') {
-    fetch("/ajax/watchlist.php", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-        },
-        body: `groupname=${encodeURIComponent(groupname)}&title=${encodeURIComponent(title)}&type=${encodeURIComponent(addOrDrop)}&json=1&pageType=${encodeURIComponent(pageType)}`
-    })
-    .then(response => response.json())
-    .then(data => {
-        obj.classList.remove('processing');
-
-        if (obj.classList.contains('tile-watch-button')) {
-            obj.parentNode.classList.toggle('watching');
-        } else {
-            obj.classList.toggle('watching');
-        }
-    })
-    .catch(error => {
-        obj.classList.remove('processing');
-        show_modal('alert-red', 'Whoops, something went wrong. Please try adding again.');
-    });
-}
-
-// add/remove watched forum thread
-var handleWatchThread = function(url, obj) {
-    fetch(url)
-    .then(response => response.text()) // assuming the server responds with plain text
-    .then(data => {
-        obj.classList.remove('processing');
-
-        if (obj.classList.contains('tile-watch-button')) {
-            obj.parentNode.classList.toggle('watching');
-        } else {
-            obj.classList.toggle('watching');
-        }
-    })
-    .catch(error => {
-        obj.classList.remove('processing');
-        show_modal('alert-red', 'Whoops, something went wrong. Please try adding again.');
-    });
-}
-    </script>
-    
-                    <script>
-                if(is_mobile()) {
-                    document.write("<div class=\"htlad-tvtropes_m_sticky\"></div>");
-                }
-                else {
-                    document.write("<div class=\"htlad-tvtropes_dt_sticky\"></div>");
-                }
-            </script>
+                    
 
                 <div id="tvtropes_oop_ad_slot" style="display: none;"></div>
-    <div id="header-fad-wrapper" class="fad">
-    <div id="header-fad">
-    <div class="fad-size-970x90" style="height:20px">&nbsp;</div>    </div>
-</div>
+    <div id="top_container_spacing"></div>
 
 <div id="main-container">
 
@@ -1194,8 +305,6 @@ var handleWatchThread = function(url, obj) {
         
         
 
-
-<!-- HIDDEN INPUTS FOR JS -->
 <input type="hidden" id="groupname-hidden" value="Main"/>
 <input type="hidden" id="title-hidden" value="TheAtoner"/>
 <input type="hidden" id="article_id" value="6611" />
@@ -1214,97 +323,87 @@ var handleWatchThread = function(url, obj) {
 
 
 
-<a href="#watch" class="watch-button " data-modal-target="login" >Follow<span>ing</span></a>
 
 
-<h1 itemprop="headline" class="entry-title">
+
+
+        
 
     
-        
-        The Atoner
-    
-        
-</h1>
 
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [{
-                "@type": "ListItem",
-                "position": 1,
-                "name": "tvtropes.org",
-                "item": "https://tvtropes.org"
-            },{
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Tropes",
-                "item": "https://tvtropes.org/pmwiki/pmwiki.php/Main/Tropes"
-            },{
-                "@type": "ListItem",
-                "position": 3,
-                "name": "The Atoner"            }]
-        }
-    </script>
+             
+
+                                        <h1 itemprop="headline" class="entry-title" style=""> 
+                    <span class="wrapped_title">
+                        The Atoner 
+                         
+                    </span>
+                    <div class="watch_rank_wrap">
+                    <span 
+            class="thumb-vote-area"
+            data-seq-num="TheAtoner"
+            data-discussion-id="TheAtoner"
+            data-subject-trope="Main.TheAtoner"
+            data-page-type="article"
+        >
+            <a 
+                href="javascript:void(0);" 
+                class="thumb-button up heart-only"
+                data-modal-target="login"            >
+                <span class="thumb-count up-count" style="margin-top: 2px;margin-right: 1px;">13</span>
+                <i class="fa fa-heart-o"></i>
+            </a>
+        </span>
+        <a href="#watch" class="watch-button " data-modal-target="login" >Follow<span>ing</span></a>
+</div>
+                   
+                                    </h1>
+
+                        
+
+
+    
+
+
+        
+        
+
 
 <a href="#mobile-actions-toggle" id="mobile-actionbar-toggle" class="mobile-actionbar-toggle mobile-on" data-click-toggle="active" >
 <p class="tiny-off">Go To</p><span></span><span></span><span></span><i class="fa fa-pencil"></i></a>
 <nav id="mobile-actions-bar" class="mobile-actions-wrapper mobile-on"></nav>
-<script>
-    //duplicate action bar to the mobile-action-bar holder
-    if (document.getElementById("mobile-actions-bar")) {
-        // Clone the main list
-        var top_main_list = document.getElementById('top_main_list');
-        var top_main_list_cln = top_main_list.cloneNode(true);
-        // Clone the more list
-        var top_more_list = document.getElementById('top_more_list');
-        var top_more_list_cln = top_more_list.cloneNode(true);
-
-        top_more_list_cln.querySelectorAll("li").forEach(function(child){
-            top_main_list_cln.appendChild(child);
-        });
-
-        document.getElementById("mobile-actions-bar").appendChild(top_main_list_cln);
-    }
-</script>
 
 
-<div id="editLockModal" class="modal fade hidden-until-active" >
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Edit Locked</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="body">
-                        <div class="danger troper_locked_message"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <nav class="body-options" itemscope itemtype="http://schema.org/SiteNavigationElement">
 
     <ul class="subpage-links">
 
-                    <li>
-                <a href="/pmwiki/pmwiki.php/Main/TheAtoner" class="subpage-link curr-subpage" title="The Main page">
-                <span class="wrapper"><span class="spi main-page"></span>Main</span></a>
+                            <li>
+                <a href="/pmwiki/pmwiki.php/Main/TheAtoner"
+                class="subpage-link curr-subpage"
+                title="The Main page">
+                    <span class="wrapper">
+                        <span class="spi main-page"></span>                        Main                    </span>
+                </a>
             </li>
         
-                                        <li>
+        
+                
+                                 
+                                <li>
                     <a href="/pmwiki/pmwiki.php/Laconic/TheAtoner" class="subpage-link " title="The Laconic page">
                     <span class="wrapper"><span class="spi laconic-icon"></span>Laconic</span></a>
                 </li>
-                                                                                        <li>
+                            
+                                 
+                                <li>
                     <a href="/pmwiki/pmwiki.php/Quotes/TheAtoner" class="subpage-link " title="The Quotes page">
                     <span class="wrapper"><span class="spi quotes"></span>Quotes</span></a>
                 </li>
-                                                            <li>
+                            
+                                 
+                                <li>
                     <a href="/pmwiki/pmwiki.php/PlayingWith/TheAtoner" class="subpage-link " title="The PlayingWith page">
                     <span class="wrapper">PlayingWith</span></a>
                 </li>
@@ -1319,7 +418,7 @@ var handleWatchThread = function(url, obj) {
 
                             <li class="create-subpage dropdown">
                                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                    <span class="wrapper">Create New <i class="fa fa-plus-circle"></i></span>
+                    <span class="wrapper">Create Subpage <i class="fa fa-plus-circle"></i></span>
                     </a>
 
 
@@ -1327,17 +426,23 @@ var handleWatchThread = function(url, obj) {
                         <option value="">- Create New -</option>
 
                                                 <option value="/pmwiki/pmwiki.php/Analysis/TheAtoner?action=edit">Analysis</option>
+                                                <option value="/pmwiki/pmwiki.php/Archive/TheAtoner?action=edit">Archive</option>
                                                 <option value="/pmwiki/pmwiki.php/Awesome/TheAtoner?action=edit">Awesome</option>
                                                 <option value="/pmwiki/pmwiki.php/Characters/TheAtoner?action=edit">Characters</option>
-                                                <option value="/pmwiki/pmwiki.php/FanWorks/TheAtoner?action=edit">FanWorks</option>
+                                                <option value="/pmwiki/pmwiki.php/DerivativeWorks/TheAtoner?action=edit">DerivativeWork&#8230;</option>
                                                 <option value="/pmwiki/pmwiki.php/FanficRecs/TheAtoner?action=edit">FanficRecs</option>
+                                                <option value="/pmwiki/pmwiki.php/FanWorks/TheAtoner?action=edit">FanWorks</option>
                                                 <option value="/pmwiki/pmwiki.php/Fridge/TheAtoner?action=edit">Fridge</option>
                                                 <option value="/pmwiki/pmwiki.php/Funny/TheAtoner?action=edit">Funny</option>
                                                 <option value="/pmwiki/pmwiki.php/Haiku/TheAtoner?action=edit">Haiku</option>
                                                 <option value="/pmwiki/pmwiki.php/Headscratchers/TheAtoner?action=edit">Headscratchers</option>
                                                 <option value="/pmwiki/pmwiki.php/Heartwarming/TheAtoner?action=edit">Heartwarming</option>
                                                 <option value="/pmwiki/pmwiki.php/ImageLinks/TheAtoner?action=edit">ImageLinks</option>
+                                                <option value="/pmwiki/pmwiki.php/ImageSource/TheAtoner?action=edit">ImageSource</option>
+                                                <option value="/pmwiki/pmwiki.php/MediaNotes/TheAtoner?action=edit">MediaNotes</option>
+                                                <option value="/pmwiki/pmwiki.php/Newsletter/TheAtoner?action=edit">Newsletter</option>
                                                 <option value="/pmwiki/pmwiki.php/NightmareFuel/TheAtoner?action=edit">NightmareFuel</option>
+                                                <option value="/pmwiki/pmwiki.php/QuoteSource/TheAtoner?action=edit">QuoteSource</option>
                                                 <option value="/pmwiki/pmwiki.php/Recap/TheAtoner?action=edit">Recap</option>
                                                 <option value="/pmwiki/pmwiki.php/ReferencedBy/TheAtoner?action=edit">ReferencedBy</option>
                                                 <option value="/pmwiki/pmwiki.php/Shocking/TheAtoner?action=edit">Shocking</option>
@@ -1360,22 +465,25 @@ var handleWatchThread = function(url, obj) {
 
 
 <div id="main-article" class="article-content retro-folders">
-    <p><!-- Trope was declared Administrivia/NoRealLifeExamplesPlease via crowner by the Real Life Maintenance thread.-->
-<!-- Image picked per Image Pickin' thread: https://tvtropes.org/pmwiki/posts.php?discussion=1372288835063266300-->
-<!-- Please do not replace of remove without starting a new thread.-->
-<!--&#010;-->
-<div class="quoteright" style="width:269px;" ><a class='twikilink' href='/pmwiki/pmwiki.php/Webcomic/ElGoonishShive' title='/pmwiki/pmwiki.php/Webcomic/ElGoonishShive' data-format='W1tXZWJjb21pYy9FbEdvb25pc2hTaGl2ZSBodHRwczovL3N0YXRpYy50dnRyb3Blcy5vcmcvcG13aWtpL3B1Yi9pbWFnZXMvYXRvbmVyLnBuZ11d'><div class="lazy_load_img_box" style="padding-top:88.85%"><img src='https://static.tvtropes.org/pmwiki/pub/images/atoner.png' class='embeddedimage' border='0' alt='https://static.tvtropes.org/pmwiki/pub/images/atoner.png' / width=269 height=239></div></a></div>
+
+        
+            <p>
+
+
+
+<div class="quoteright" style="width:269px;" ><a class='twikilink' href='/pmwiki/pmwiki.php/Webcomic/ElGoonishShive' title='/pmwiki/pmwiki.php/Webcomic/ElGoonishShive' data-format='W1tXZWJjb21pYy9FbEdvb25pc2hTaGl2ZSBodHRwczovL3N0YXRpYy50dnRyb3Blcy5vcmcvcG13aWtpL3B1Yi9pbWFnZXMvYXRvbmVyLnBuZ11d'><div class="lazy_load_img_box" style="padding-top:88.85%"><img src='https://static.tvtropes.org/pmwiki/pub/images/atoner.png' class='embeddedimage' border='0' alt='The Atoner (trope)'  width=269 height=239></div></a></div>
 <div class="acaptionright" style="width:269px;" >This is why you don't want to take the Atoner <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TakenForGranite' title='/pmwiki/pmwiki.php/Main/TakenForGranite' data-format='W1tUYWtlbkZvckdyYW5pdGUgZm9yIGdyYW5pdGVdXQ=='>for granite</a>.</div>
 </p><p><div class='indent'><em>"Long is the way, and hard, that out of Hell leads up to Light."</em>
 <div class='indent'>&#8212; <strong><a class='twikilink' href='/pmwiki/pmwiki.php/Creator/JohnMilton' title='/pmwiki/pmwiki.php/Creator/JohnMilton' data-format='Q3JlYXRvci9Kb2huTWlsdG9u'>John Milton</a></strong>, <em><a class='twikilink' href='/pmwiki/pmwiki.php/Literature/ParadiseLost' title='/pmwiki/pmwiki.php/Literature/ParadiseLost' data-format='TGl0ZXJhdHVyZS9QYXJhZGlzZUxvc3Q='>Paradise Lost</a></em>
-</div></div></p><p>Once, there was a major villain named Bob. He committed every crime one could think of, and he did it with a song in his heart and a skip in his step. Then, something happened to make him <em>see</em> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PersonalHorror' title='/pmwiki/pmwiki.php/Main/PersonalHorror' data-format='W1tQZXJzb25hbEhvcnJvciB0aGUgaG9ycm9yIG9mIHdoYXQgaGUgd2FzIGRvaW5nXV0='>the horror of what he was doing</a>. He realized how much pain he had caused, and he set out on a personal quest to try to make it right.
+</div></div></p><p>Once, there was a major villain named Bob. He committed every crime one could think of, and he did it with a song in his heart and a skip in his step. Then, something happened to make him <em>see</em> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PersonalHorror' title='/pmwiki/pmwiki.php/Main/PersonalHorror' data-format='W1tQZXJzb25hbEhvcnJvciB0aGUgaG9ycm9yIG9mIHdoYXQgaGUgd2FzIGRvaW5nXV0='>the horror of what he was doing</a>. He realized how much pain he had caused, and he set out on a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RedemptionQuest' title='/pmwiki/pmwiki.php/Main/RedemptionQuest' data-format='UmVkZW1wdGlvblF1ZXN0'>Redemption Quest</a> to try to make it right.
 </p><p>The Atoner is an evil character who has <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HeelRealization' title='/pmwiki/pmwiki.php/Main/HeelRealization' data-format='W1tIZWVsUmVhbGl6YXRpb24gcmVhbGl6ZWQgdGhlIGVycm9yIG9mIGhpcyB3YXlzXV0='>realized the error of his ways</a>, possibly wants to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MustMakeAmends' title='/pmwiki/pmwiki.php/Main/MustMakeAmends' data-format='W1tNdXN0TWFrZUFtZW5kcyBtYWtlIGFtZW5kc11d'>make amends</a>, and has decided that they will do so via heroic deeds. <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GetOutOfJailFreeCard' title='/pmwiki/pmwiki.php/Main/GetOutOfJailFreeCard' data-format='W1tHZXRPdXRPZkphaWxGcmVlQ2FyZCBTaW1wbGUgaW1wcmlzb25tZW50IHdvbiYjMDM5O3QgZG9dXQ=='>Simple imprisonment won't do</a>, because it does nothing to make recompense for what he's done wrong. Besides, he still has all these amazing skills and resources from the Bad Old Days — wouldn't it be better to use them for good?
 </p><p>The problem is, Bob often has to wrestle with the temptation to return to his old ways, along with the massive guilt built up over years of carefree evil. Also, said previous villain skills usually involve <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BadPowersBadPeople' title='/pmwiki/pmwiki.php/Main/BadPowersBadPeople' data-format='W1tCYWRQb3dlcnNCYWRQZW9wbGUga2lsbGluZyBwZW9wbGUgaW4gdmVyeSBtZXNzeSB3YXlzXV0='>killing people in very messy ways</a>, which can result in <a class='twikilink' href='/pmwiki/pmwiki.php/Main/KarmaMeter' title='/pmwiki/pmwiki.php/Main/KarmaMeter' data-format='W1tLYXJtYU1ldGVyIGthcm1pY2FsbHkgaGFybWZ1bF1d'>karmically harmful</a> situations. Other times Bob's evil side won't go down without a fight, and manifests itself as an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/EnemyWithin' title='/pmwiki/pmwiki.php/Main/EnemyWithin' data-format='RW5lbXlXaXRoaW4='>Enemy Within</a>. Ultimately, it comes down to the fact that morality isn't a book that can be balanced &#8212; no amount of babies saved now will bring Bob's past victims back to life. The Atoner usually realizes that "Redemption is the path, not the destination" thanks to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheRedeemer' title='/pmwiki/pmwiki.php/Main/TheRedeemer' data-format='VGhlUmVkZWVtZXI='>The Redeemer</a> and continues for the rest of his life.
 </p><p>Sometimes 'the rest of his life' is short because <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RedemptionEqualsDeath' title='/pmwiki/pmwiki.php/Main/RedemptionEqualsDeath' data-format='UmVkZW1wdGlvbkVxdWFsc0RlYXRo'>Redemption Equals Death</a>. Generally the only Atoners who avoid this are main characters who are already in the atoning stage by the series' start. Atoners often end up as <a class='twikilink' href='/pmwiki/pmwiki.php/Main/KnightInSourArmor' title='/pmwiki/pmwiki.php/Main/KnightInSourArmor' data-format='W1tLbmlnaHRJblNvdXJBcm1vciBLbmlnaHRzIGluIFNvdXIgQXJtb3JdXQ=='>Knights in Sour Armor</a>. Those who believe redemption <em><a class='twikilink' href='/pmwiki/pmwiki.php/Main/InvokedTrope' title='/pmwiki/pmwiki.php/Main/InvokedTrope' data-format='W1tJbnZva2VkVHJvcGUgaW5oZXJlbnRseV1d'>inherently</a></em> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RedemptionEqualsDeath' title='/pmwiki/pmwiki.php/Main/RedemptionEqualsDeath' data-format='W1tSZWRlbXB0aW9uRXF1YWxzRGVhdGggZXF1YWxzIGRlYXRoXV0='>equals death</a> may well become <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DeathSeeker' title='/pmwiki/pmwiki.php/Main/DeathSeeker' data-format='e3tEZWF0aCBTZWVrZXJ9fXM='>Death Seekers</a>.
 </p><p>A subtrope of this is "<a class='twikilink' href='/pmwiki/pmwiki.php/Main/HitmanWithAHeart' title='/pmwiki/pmwiki.php/Main/HitmanWithAHeart' data-format='W1tIaXRtYW5XaXRoQUhlYXJ0IEFzc2Fzc2luIFdhbnRzIHRvIFF1aXRdXQ=='>Assassin Wants to Quit</a>". Stories involving them allow us to cheer on the assassin as they battle their former employers using the same murderous skills they honed during their previous career. Atoners sometimes go on a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RedemptionQuest' title='/pmwiki/pmwiki.php/Main/RedemptionQuest' data-format='UmVkZW1wdGlvblF1ZXN0'>Redemption Quest</a> in order to atone. If their deed of atonement is especially painful, it may overlap with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ThePenance' title='/pmwiki/pmwiki.php/Main/ThePenance' data-format='VGhlUGVuYW5jZQ=='>The Penance</a>.
 </p><p>Would-be Atoners who are not sincere are trying to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BuyThemOff' title='/pmwiki/pmwiki.php/Main/BuyThemOff' data-format='QnV5VGhlbU9mZg=='>Buy Them Off</a>. Not to be confused with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheAloner' title='/pmwiki/pmwiki.php/Main/TheAloner' data-format='VGhlQWxvbmVy'>The Aloner</a>, though they can both coincide if the character is trying to atone for killing off everyone else on the planet. And <em>especially</em> not to be confused with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheStoner' title='/pmwiki/pmwiki.php/Main/TheStoner' data-format='VGhlU3RvbmVy'>The Stoner</a> (unless they turned to drugs to cope with their guilt). The Atoner may face rejection and hatred from <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AccuserOfTheBrethren' title='/pmwiki/pmwiki.php/Main/AccuserOfTheBrethren' data-format='W1tBY2N1c2VyT2ZUaGVCcmV0aHJlbiB0aG9zZSB3aG8gZG9uJiMwMzk7dCBiZWxpZXZlIGhlJiMwMzk7cyByZWZvcm1lZF1d'>those who don't believe he's reformed</a>, which is <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ReformedButRejected' title='/pmwiki/pmwiki.php/Main/ReformedButRejected' data-format='UmVmb3JtZWRCdXRSZWplY3RlZA=='>Reformed, but Rejected</a>, and more importantly, he must be careful not to run into the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HeelFaceDoorSlam' title='/pmwiki/pmwiki.php/Main/HeelFaceDoorSlam' data-format='SGVlbEZhY2VEb29yU2xhbQ=='>Heel–Face Door-Slam</a>. In some instances, however, there are characters who will acknowledge The Atoner's change of heart, but <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ForgivenButNotForgotten' title='/pmwiki/pmwiki.php/Main/ForgivenButNotForgotten' data-format='W1tGb3JnaXZlbkJ1dE5vdEZvcmdvdHRlbiBkbyBzbyBpbiBhIGdydWRnaW5nIG1hbm5lcl1d'>do so in a grudging manner</a>. The Atoner must also beware of <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AccuserOfTheBrethren' title='/pmwiki/pmwiki.php/Main/AccuserOfTheBrethren' data-format='W1tBY2N1c2VyT2ZUaGVCcmV0aHJlbiBvbmUgY2hhcmFjdGVyIHdobyBhY3RpdmVseSBzZWVrcyB0byBlbmQgaGlzIHBhdGggdG8gcmVkZW1wdGlvbl1d'>one character who actively seeks to end his path to redemption</a>.
-</p><p>The success rate of atoners depends on where the work sits on the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SlidingScaleOfIdealismVersusCynicism' title='/pmwiki/pmwiki.php/Main/SlidingScaleOfIdealismVersusCynicism' data-format='U2xpZGluZ1NjYWxlT2ZJZGVhbGlzbVZlcnN1c0N5bmljaXNt'>Sliding Scale of Idealism Versus Cynicism</a>. In more idealistic works, or at least ones that posit that people can change for the better, atoners may have a greater chance of success, as proof that no matter one's actions may have been in the past, it's always possible to change for the better and do good.
-</p><p>Genuine atoners have a high chance of becoming <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheWoobie' title='/pmwiki/pmwiki.php/Main/TheWoobie' data-format='VGhlV29vYmll'>The Woobie</a>, especially if they were an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AntiVillain' title='/pmwiki/pmwiki.php/Main/AntiVillain' data-format='QW50aVZpbGxhaW4='>Anti-Villain</a> in the first place. See also, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BeAllMySinsRemembered' title='/pmwiki/pmwiki.php/Main/BeAllMySinsRemembered' data-format='QmVBbGxNeVNpbnNSZW1lbWJlcmVk'>Be All My Sins Remembered</a>, where they continue to suffer a guilt complex over their past misdeeds. Contrast with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MyGreatestFailure' title='/pmwiki/pmwiki.php/Main/MyGreatestFailure' data-format='TXlHcmVhdGVzdEZhaWx1cmU='>My Greatest Failure</a> — instead of a formerly evil character turning from their past, a good character feels the need to atone for not preventing a bad outcome (regardless of whether they could have changed anything), and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RetiredMonster' title='/pmwiki/pmwiki.php/Main/RetiredMonster' data-format='UmV0aXJlZE1vbnN0ZXI='>Retired Monster</a> — a villain who has retired from their villainy but hasn't shown any regret or remorse for their misdeeds nor has made any attempt to redeem themselves. The Atoner may have experienced <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GoAndSinNoMore' title='/pmwiki/pmwiki.php/Main/GoAndSinNoMore' data-format='R29BbmRTaW5Ob01vcmU='>Go and Sin No More</a>, and may enact a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SelfPunishmentOverFailure' title='/pmwiki/pmwiki.php/Main/SelfPunishmentOverFailure' data-format='U2VsZlB1bmlzaG1lbnRPdmVyRmFpbHVyZQ=='>Self-Punishment Over Failure</a> or have a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GuiltInducedNightmare' title='/pmwiki/pmwiki.php/Main/GuiltInducedNightmare' data-format='R3VpbHRJbmR1Y2VkTmlnaHRtYXJl'>Guilt-Induced Nightmare</a>.
+</p><p>The success rate of atoners depends on where the work sits on the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SlidingScaleOfIdealismVersusCynicism' title='/pmwiki/pmwiki.php/Main/SlidingScaleOfIdealismVersusCynicism' data-format='U2xpZGluZ1NjYWxlT2ZJZGVhbGlzbVZlcnN1c0N5bmljaXNt'>Sliding Scale of Idealism Versus Cynicism</a>. In more idealistic works, or at least ones that posit that people can change for the better, atoners may have a greater chance of success, as proof that no matter what one's actions may have been in the past, it's always possible to change for the better and do good.
+</p><p>Genuine atoners have a high chance of becoming <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheWoobie' title='/pmwiki/pmwiki.php/Main/TheWoobie' data-format='VGhlV29vYmll'>The Woobie</a>, especially if they were an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AntiVillain' title='/pmwiki/pmwiki.php/Main/AntiVillain' data-format='QW50aVZpbGxhaW4='>Anti-Villain</a> in the first place. See also, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BeAllMySinsRemembered' title='/pmwiki/pmwiki.php/Main/BeAllMySinsRemembered' data-format='QmVBbGxNeVNpbnNSZW1lbWJlcmVk'>Be All My Sins Remembered</a>, where they continue to suffer a guilt complex over their past misdeeds. Contrast with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MyGreatestFailure' title='/pmwiki/pmwiki.php/Main/MyGreatestFailure' data-format='TXlHcmVhdGVzdEZhaWx1cmU='>My Greatest Failure</a> — instead of a formerly evil character turning from their past, a good character feels the need to atone for not preventing a bad outcome (regardless of whether they could have changed anything), and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RetiredMonster' title='/pmwiki/pmwiki.php/Main/RetiredMonster' data-format='UmV0aXJlZE1vbnN0ZXI='>Retired Monster</a> — a villain who has retired from their villainy but hasn't shown any regret or remorse for their misdeeds nor has made any attempt to redeem themselves. The Atoner may have experienced <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GoAndSinNoMore' title='/pmwiki/pmwiki.php/Main/GoAndSinNoMore' data-format='R29BbmRTaW5Ob01vcmU='>Go and Sin No More</a>, and may enact a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SelfPunishmentOverFailure' title='/pmwiki/pmwiki.php/Main/SelfPunishmentOverFailure' data-format='U2VsZlB1bmlzaG1lbnRPdmVyRmFpbHVyZQ=='>Self-Punishment Over Failure</a> or have a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GuiltInducedNightmare' title='/pmwiki/pmwiki.php/Main/GuiltInducedNightmare' data-format='R3VpbHRJbmR1Y2VkTmlnaHRtYXJl'>Guilt-Induced Nightmare</a>. Often a reason why they <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DoesntMindABeating' title='/pmwiki/pmwiki.php/Main/DoesntMindABeating' data-format='W1tEb2VzbnRNaW5kQUJlYXRpbmcgZG9u4oCZdCBtaW5kIGEgYmVhdGluZ11d'>don’t mind a beating</a> and why the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/KillerIncapacitatesInstead' title='/pmwiki/pmwiki.php/Main/KillerIncapacitatesInstead' data-format='S2lsbGVySW5jYXBhY2l0YXRlc0luc3RlYWQ='>Killer Incapacitates Instead</a>. See also <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ApologyTour' title='/pmwiki/pmwiki.php/Main/ApologyTour' data-format='QXBvbG9neVRvdXI='>Apology Tour</a>, where we see them go make amends to everyone on their list.
+</p><p>Compare and contrast <a class='twikilink' href='/pmwiki/pmwiki.php/Main/WhiteSheep' title='/pmwiki/pmwiki.php/Main/WhiteSheep' data-format='V2hpdGVTaGVlcA=='>White Sheep</a>, when the misdeeds the Atoner is trying to make amends for were committed by their family rather than themselves.
 </p><p><hr data-format='&#8212;&#8212;' />
 <h2>Example subpages:</h2>
 <!&#8212;index&#8212;>
@@ -1400,7 +508,7 @@ var handleWatchThread = function(url, obj) {
 </div></li><li> "What I've Done" by <em>Linkin Park</em>
 <div class='indent'> I'll face myself<span class='esc-seq' title='non-wikiword'>/</span>To cross out what I've become<span class='esc-seq' title='non-wikiword'>/</span>Erase myself<span class='esc-seq' title='non-wikiword'>/</span>And let go of what I've done
 </div></li><li> "Working My Way Back To You" by The Four Seasons, about an abusive ex-boyfriend who sees the error of his ways too late and is now trying to win the girl back, unsuccessfully to date.
-</li><li> <a class='urllink' href='https://www.youtube.com/watch?v=ytKvgLuy7ng'>"Awoken"<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> by H8_Seed and <a class='twikilink' href='/pmwiki/pmwiki.php/Music/WoodenToaster' title='/pmwiki/pmwiki.php/Music/WoodenToaster' data-format='W1tNdXNpYy9Xb29kZW5Ub2FzdGVyIEdsYXplXV0='>Glaze</a>.
+</li><li> <a class='urllink' href='https://www.youtube.com/watch?v=ytKvgLuy7ng'>"Awoken"<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> by <a class='createlink' rel='nofollow' href='/pmwiki/pmwiki.php/Main/H8_Seed' title='/pmwiki/pmwiki.php/Main/H8_Seed' data-format='SDhfU2VlZA=='>H8_Seed</a> and <a class='twikilink' href='/pmwiki/pmwiki.php/Music/WoodenToaster' title='/pmwiki/pmwiki.php/Music/WoodenToaster' data-format='W1tNdXNpYy9Xb29kZW5Ub2FzdGVyIEdsYXplXV0='>Glaze</a>.
 <div class='indent'> I've stoked the fire, seen more pain than you can know/The tears of the broken have washed away my soul/Pushed by desire to change the way my stream will flow/Now I've awoken, and I'm taking back control
 </div></li><li> The song "Cat's in the Cradle" by Harry Chapin focuses on a father who is far too busy with his work to connect with his son. By the time the father has the time (i.e. the son has grown up), he tries to reach out to his son and atone, but by then, his son is, like his father, far too busy.
 </li><li> "I'll Be Good" by Jaymes Young is about a man who wishes to atone for his bad behavior in the past.
@@ -1436,21 +544,24 @@ var handleWatchThread = function(url, obj) {
 </li><li> Converted Lamanites often felt this way.
 <ul ><li> The people of Ammon, acutely aware of their history of violence, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ActualPacifist' title='/pmwiki/pmwiki.php/Main/ActualPacifist' data-format='W1tBY3R1YWxQYWNpZmlzdCBzd2VhciB0aGF0IHRoZXkgd2lsbCBuZXZlciBzaGVkIGJsb29kIGFnYWluXV0='>swear that they will never shed blood again</a>, being willing to die rather than continue to hurt anyone else.
 </li><li> Later groups of converted Lamanites actually move en masse out of lands they'd conquered so the Nephites can return.
-</li></ul></li></ul></li></ul></div>
+</li></ul></li></ul></li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/Literature/TheTalmud' title='/pmwiki/pmwiki.php/Literature/TheTalmud' data-format='TGl0ZXJhdHVyZS9UaGVUYWxtdWQ='>The Talmud</a> (Makkot 5b) describes how Rabbi Yehudah ben Tabbai accidentally executed someone against proper procedure. For the rest of his life he would visit the grave, lying prostrate and asking the dead man's forgiveness, to the point where locals mistook his cries for the dead man's ghost.
+</li></ul></div>
 </p><p><div class="folderlabel" onclick="togglefolder('folder6');">&nbsp;&nbsp;&nbsp;&nbsp;Tabletop Games&nbsp;</div><div id="folder6" class="folder" isfolder="true" style="display:block;">
 <ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/ArkhamHorror' title='/pmwiki/pmwiki.php/TabletopGame/ArkhamHorror' data-format='VGFibGV0b3BHYW1lL0Fya2hhbUhvcnJvcg=='>Arkham Horror</a></em>'s "Dunwich Horror" expansion adds Diana Stanley as a playable character. She joined the city's exclusive <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Cult' title='/pmwiki/pmwiki.php/Main/Cult' data-format='W1t7e0N1bHR9fSBTaWx2ZXIgVHdpbGlnaHQgTG9kZ2VdXQ=='>Silver Twilight Lodge</a> and learned to her horror that they plan to awaken an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/EldritchAbomination' title='/pmwiki/pmwiki.php/Main/EldritchAbomination' data-format='RWxkcml0Y2hBYm9taW5hdGlvbg=='>Eldritch Abomination</a> into the world. Diana is now the mole in the cult planning on thwarting them&#8212;granting her bonuses <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RaceAgainstTheClock' title='/pmwiki/pmwiki.php/Main/RaceAgainstTheClock' data-format='W1tSYWNlQWdhaW5zdFRoZUNsb2NrIHRoZSBjbG9zZXIgdGhleSBnZXQgdG8gc3VjY2VlZGluZ11d'>the closer they get to succeeding</a>.
 </li><li> Every player character in <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/DemonTheFallen' title='/pmwiki/pmwiki.php/TabletopGame/DemonTheFallen' data-format='VGFibGV0b3BHYW1lL0RlbW9uVGhlRmFsbGVu'>Demon: The Fallen</a></em> is a demon, one of those who fought against God and the angels in the War of Wrath. In modern times, there's a faction called the Reconcilers, who have asked themselves, "What if we really <em>were</em> the bad guys?" They work to either undo their sins and return to Heaven, or, if that's impossible, to at least fix the damage they did to the world all those years ago.
 </li><li> The <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/DungeonsAndDragons' title='/pmwiki/pmwiki.php/TabletopGame/DungeonsAndDragons' data-format='VGFibGV0b3BHYW1lL0R1bmdlb25zQW5kRHJhZ29ucw=='>Dungeons & Dragons</a></em> sourcebook <em>Fiendish Codex II</em> introduces the Hellbred, former evildoers who repented of their actions before they were condemned to Hell, but too late to gain entry to the heavens. The good deities reincarnate them into <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DarkIsNotEvil' title='/pmwiki/pmwiki.php/Main/DarkIsNotEvil' data-format='W1tEYXJrSXNOb3RFdmlsIGZpZW5kaXNoLWxvb2tpbmddXQ=='>fiendish-looking</a> bodies to give them one last chance to prove their search for redemption is genuine, and since only the greatest of heroic deeds will free their souls from damnation, the Hellbred throw themselves into their quests with zeal and desperation.
-</li><li> The Loyalists of Thule in <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/HunterTheVigil' title='/pmwiki/pmwiki.php/TabletopGame/HunterTheVigil' data-format='VGFibGV0b3BHYW1lL0h1bnRlclRoZVZpZ2ls'>Hunter: The Vigil</a></em> have an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AncientConspiracy' title='/pmwiki/pmwiki.php/Main/AncientConspiracy' data-format='QW5jaWVudENvbnNwaXJhY3k='>Ancient Conspiracy</a>-wide <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GuiltComplex' title='/pmwiki/pmwiki.php/Main/GuiltComplex' data-format='R3VpbHRDb21wbGV4'>Guilt Complex</a>, and it rubs off on its members. Why? Oh, nothing, they just <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ThoseWackyNazis' title='/pmwiki/pmwiki.php/Main/ThoseWackyNazis' data-format='W1tUaG9zZVdhY2t5TmF6aXMgaGVscGVkIHRoZSBOYXppc11d'>helped the Nazis</a> in <a class='twikilink' href='/pmwiki/pmwiki.php/UsefulNotes/WorldWarII' title='/pmwiki/pmwiki.php/UsefulNotes/WorldWarII' data-format='VXNlZnVsTm90ZXMvV29ybGRXYXJJSQ=='>World War II</a> and they largely believe themselves responsible for <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MoralEventHorizon' title='/pmwiki/pmwiki.php/Main/MoralEventHorizon' data-format='W1tNb3JhbEV2ZW50SG9yaXpvbiB0aGUgSG9sb2NhdXN0XV0='>the Holocaust</a> as a result. Yeah, they have issues.
 </li><li> One of the two main paths for Abyssal <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Exalted' title='/pmwiki/pmwiki.php/TabletopGame/Exalted' data-format='e3tUYWJsZXRvcEdhbWUvRXhhbHRlZH19'>Exalted</a></em> is to become this, make up for their dark deeds in the service of the Void and work their asses off to avoid spontaneously combusting from Resonance. If they can pull it off, they become Solars, without the Great Curse that messed up so very much of the First Age. The potential impact of this remains to be seen.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/FabulaUltima' title='/pmwiki/pmwiki.php/TabletopGame/FabulaUltima' data-format='VGFibGV0b3BHYW1lL0ZhYnVsYVVsdGltYQ=='>Fabula Ultima</a></em>, the Repentant Enforcer quirk represents a character who had previously worked for a villainous organization, only to turn their back on the group once they realized the full extent of its evil. The character now seeks to make things right by helping to bring their former organization down, with the quirk granting mechanical benefits for thwarting the organization's activities or redressing its wrongs.
+</li><li> The Loyalists of Thule in <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/HunterTheVigil' title='/pmwiki/pmwiki.php/TabletopGame/HunterTheVigil' data-format='VGFibGV0b3BHYW1lL0h1bnRlclRoZVZpZ2ls'>Hunter: The Vigil</a></em> have an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AncientConspiracy' title='/pmwiki/pmwiki.php/Main/AncientConspiracy' data-format='QW5jaWVudENvbnNwaXJhY3k='>Ancient Conspiracy</a>-wide <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GuiltComplex' title='/pmwiki/pmwiki.php/Main/GuiltComplex' data-format='R3VpbHRDb21wbGV4'>Guilt Complex</a>, and it rubs off on its members. Why? Oh, nothing, they just <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ThoseWackyNazis' title='/pmwiki/pmwiki.php/Main/ThoseWackyNazis' data-format='W1tUaG9zZVdhY2t5TmF6aXMgaGVscGVkIHRoZSBOYXppc11d'>helped the Nazis</a> in <a class='twikilink' href='/pmwiki/pmwiki.php/UsefulNotes/WorldWarII' title='/pmwiki/pmwiki.php/UsefulNotes/WorldWarII' data-format='VXNlZnVsTm90ZXMvV29ybGRXYXJJSQ=='>World War II</a> and they largely believe themselves responsible for <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MoralEventHorizon' title='/pmwiki/pmwiki.php/Main/MoralEventHorizon' data-format='W1tNb3JhbEV2ZW50SG9yaXpvbiB0aGUgSG9sb2NhdXN0XV0='>the Holocaust</a> as a result. Yeah, they have issues.
 </li><li> In the world of <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/InNomine' title='/pmwiki/pmwiki.php/TabletopGame/InNomine' data-format='VGFibGV0b3BHYW1lL0luTm9taW5l'>In Nomine</a></em> (an ongoing War between Heaven and Hell), it is possible for a demon to redeem and join the ranks of the angels, fighting to undo the evil they once supported. Just remember that old habits can be hard to break...
+</li><li> In the world of <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/TheLostCitadel' title='/pmwiki/pmwiki.php/TabletopGame/TheLostCitadel' data-format='VGFibGV0b3BHYW1lL1RoZUxvc3RDaXRhZGVs'>The Lost Citadel</a></em>, many humans of the Surinzan and Venmir are wracked with guilt over the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DirtyBusiness' title='/pmwiki/pmwiki.php/Main/DirtyBusiness' data-format='RGlydHlCdXNpbmVzcw=='>Dirty Business</a> of their ancestors. The Surinzan in particular have to all practical effects split into two factions; those who believe their race <em>needs</em> to find some way to make amends for their sins, and those who doing everything they can to deny that they did anything wrong in the first place.
 </li><li> This is the background of <a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/MagicTheGathering' title='/pmwiki/pmwiki.php/TabletopGame/MagicTheGathering' data-format='VGFibGV0b3BHYW1lL01hZ2ljVGhlR2F0aGVyaW5n'>Magic: The Gathering</a> <em>Legends</em> card <a class='urllink' href='http://gatherer.wizards.com/pages/card/Details.aspx?multiverseid=1674'>Pavel Maliki<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a>.
 <ul ><li> There's a similar effect with <a class='urllink' href='http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=29945'>Repentant Vampire<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a>.
-</li></ul></li><li> The Apok class from the Wormwood setting from <a class='twikilink' href='/pmwiki/pmwiki.php/Creator/PalladiumBooks' title='/pmwiki/pmwiki.php/Creator/PalladiumBooks' data-format='Q3JlYXRvci9QYWxsYWRpdW1Cb29rcw=='>Palladium Books</a> centers on people who were thoroughly evil who nevertheless realized the depths of their evil and due to that devotion to atoning for their past evil (and immersion in a Lifeforce Cauldron) they become transformed into powerful agents of good who're 100% devoted to good and cannot be corrupted by any means and are immune to the most horrific of sights and corrupting influences due to their unbreakable devotion to good.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Pathfinder' title='/pmwiki/pmwiki.php/TabletopGame/Pathfinder' data-format='VGFibGV0b3BHYW1lL3t7UGF0aGZpbmRlcn19'>Pathfinder</a></em>
+</li></ul></li><li> The Apok class from the Wormwood setting from <a class='twikilink' href='/pmwiki/pmwiki.php/Creator/PalladiumBooks' title='/pmwiki/pmwiki.php/Creator/PalladiumBooks' data-format='Q3JlYXRvci9QYWxsYWRpdW1Cb29rcw=='>Palladium Books</a> centers on people who were thoroughly evil, but who realized the depths of their evil and felt a powerful urge to repent, immersing themselves in a Lifeforce Cauldron to cement this recantation of their sins. As a result, they are among the most powerful agents of good on Wormwood, completely immune to supernatural corruption and feeling no fear at horrific sights. Their devotion to good is unquestionable, but they usually work alone, as they know people still remember their evil days and are probably not in a rush to forgive them.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Pathfinder' title='/pmwiki/pmwiki.php/TabletopGame/Pathfinder' data-format='VGFibGV0b3BHYW1lL3t7UGF0aGZpbmRlcn19'>Pathfinder</a></em>:
 <ul ><li> Here's a canonical tale: Some years before the setting's current time, a fourteen-year-old <a class='twikilink' href='/pmwiki/pmwiki.php/Main/StreetUrchin' title='/pmwiki/pmwiki.php/Main/StreetUrchin' data-format='U3RyZWV0VXJjaGlu'>Street Urchin</a> named Seelah stole a paladin's helm, intending to pawn it for food money. The paladin, Acemi, was so kind she let Seelah get away with it, thinking the girl's poverty was such that she needed the helm more than Acemi. Of course, Acemi was there as part of a force fighting to save Seelah's home town from gnolls; Acemi died in the fighting from blow to the head. Seelah, consumed with guilt, returned the helm with the intent to commit suicide on the paladin's funeral pyre. Instead, she was taken in by the order and became <a class='twikilink' href='/pmwiki/pmwiki.php/Characters/Pathfinder' title='/pmwiki/pmwiki.php/Characters/Pathfinder' data-format='W1tDaGFyYWN0ZXJzL3t7UGF0aGZpbmRlcn19IHRoZSBpY29uaWMgcGFsYWRpbl1d'>the iconic paladin</a>.
 </li><li> The <em>Wrath of the Righteous</em> Adventure Path features a succubus called Arueshalae who decided to peek in a dying priestess of Desna's dreams and got caught red-handed by Desna, who decided to give her a chance and awakened her soul, and ever since she's been struggling to change her nature to become a force of good - her first action was to save a child that found themselves in the Worldwound, and which might eventually become one of the <span class='esc-seq' title='non-wikiword'>AP's</span> heroes. When the <span class='esc-seq' title='non-wikiword'>PCs</span> find her, Arueshalae is a few tasks away from full redemption.
-</li></ul></li><li> The Asilos of <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/TheSplinter' title='/pmwiki/pmwiki.php/TabletopGame/TheSplinter' data-format='VGFibGV0b3BHYW1lL3t7VGhlIFNwbGludGVyfX0='>The Splinter</a></em> are an entire race of atoners. They're incapable of letting go of their past and are primarily driven by the desire to repent for their sins by doing good.
+</li></ul></li><li> The Asilos of <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/TheSplinter' title='/pmwiki/pmwiki.php/TabletopGame/TheSplinter' data-format='VGFibGV0b3BHYW1lL1RoZVNwbGludGVy'>The Splinter</a></em> are an entire race of atoners. They're incapable of letting go of their past and are primarily driven by the desire to repent for their sins by doing good.
 </li><li> Some <a class='twikilink' href='/pmwiki/pmwiki.php/Main/OurDwarvesAreAllTheSame' title='/pmwiki/pmwiki.php/Main/OurDwarvesAreAllTheSame' data-format='W1tPdXJEd2FydmVzQXJlQWxsVGhlU2FtZSBEd2FyZnNdXQ=='>Dwarfs</a> in <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Warhammer' title='/pmwiki/pmwiki.php/TabletopGame/Warhammer' data-format='VGFibGV0b3BHYW1lL3t7V2FyaGFtbWVyfX0='>Warhammer</a></em> may find themselves unable to fulfill an oath, and so to assuage their honor join the Slayer cult, dyeing their hair red, eschewing armor, grabbing an axe, and throwing themselves at the worst monster they can find to either kill it <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DeathSeeker' title='/pmwiki/pmwiki.php/Main/DeathSeeker' data-format='W1tEZWF0aFNlZWtlciBvciBiZSBraWxsZWQgYnkgaXRdXQ=='>or be killed by it</a>. (Un)successful ones may graduate from Troll Slayers to become Giant Slayers, Dragon Slayer, or even Daemon Slayers.
 </li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Warhammer40000' title='/pmwiki/pmwiki.php/TabletopGame/Warhammer40000' data-format='VGFibGV0b3BHYW1lL1dhcmhhbW1lcjQwMDAw'>Warhammer 40,000</a></em>:
 <ul ><li> The Dark Angels are a Space Marines chapter that refers to themselves as the Unforgiven, because during the <a class='twikilink' href='/pmwiki/pmwiki.php/Literature/HorusHeresy' title='/pmwiki/pmwiki.php/Literature/HorusHeresy' data-format='TGl0ZXJhdHVyZS9Ib3J1c0hlcmVzeQ=='>Horus Heresy</a> a portion of their force turned traitor out of pride or confusion. This being <a class='twikilink' href='/pmwiki/pmwiki.php/Main/CrapsackWorld' title='/pmwiki/pmwiki.php/Main/CrapsackWorld' data-format='W1tDcmFwc2Fja1dvcmxkIDQwa11d'>40k</a>, their method of atonement is to hunt down these Fallen Angels and "redeem" them by torturing them to death, and it's hinted that perhaps the original Dark Angels were traitors themselves who were sitting out the Horus Heresy until a winner emerged.
@@ -1469,23 +580,28 @@ var handleWatchThread = function(url, obj) {
 <ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/Toys/Bionicle' title='/pmwiki/pmwiki.php/Toys/Bionicle' data-format='VG95cy97e0Jpb25pY2xlfX0='>BIONICLE</a></em>, Brutaka is treated as one: sent to the highest security prison in this verse, sent to a suicide mission as probation, then welcomed back in the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/HeroSecretService' title='/pmwiki/pmwiki.php/Main/HeroSecretService' data-format='SGVyb1NlY3JldFNlcnZpY2U='>Hero Secret Service</a>. The big surprise is that his best friend Axonn, who had to stop him when he betrayed, is another, according to the Atlas.
 </li></ul></div>
 </p><p><div class="folderlabel" onclick="togglefolder('folder9');">&nbsp;&nbsp;&nbsp;&nbsp;Visual Novels&nbsp;</div><div id="folder9" class="folder" isfolder="true" style="display:block;">
-<ul ><li> Downplayed with the protagonist of <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/DoubleHomework' title='/pmwiki/pmwiki.php/VisualNovel/DoubleHomework' data-format='VmlzdWFsTm92ZWwvRG91YmxlSG9tZXdvcms='>Double Homework</a></em>. He killed 12 people by starting an avalanche, but that was an accident. And he made enemies of many jealous classmates, but not because he intended to be mean. And he has plenty of opportunities for self-gratification during his atonement.
+<ul ><li> Deconstructed with Valerian Trifa from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/DiesIrae' title='/pmwiki/pmwiki.php/VisualNovel/DiesIrae' data-format='VmlzdWFsTm92ZWwvRGllc0lyYWU='>Dies Irae</a></em>. Back when he was just a kindly priest, he attempted to run away from the madness of the Longinus Dreizehn Orden alongside the orphan children he cared for. Unfortunately, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BigBad' title='/pmwiki/pmwiki.php/Main/BigBad' data-format='W1tCaWdCYWQgUmVpbmhhcmRdXQ=='>Reinhard</a> found him and as punishment forced Trifa to pick ten of the children to be executed right in front of him. This lead to him blaming himself for their deaths due to being weak and unable to protect them in the face of adversity and vows to make amends. This vow however becomes an obsession and ends up making him blind to just how wicked he has become by the start of the story and to how flawed and nonsensical his idea of atonement really is.
+</li><li> Downplayed with the protagonist of <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/DoubleHomework' title='/pmwiki/pmwiki.php/VisualNovel/DoubleHomework' data-format='VmlzdWFsTm92ZWwvRG91YmxlSG9tZXdvcms='>Double Homework</a></em>. He killed 12 people by starting an avalanche, but that was an accident. And he made enemies of many jealous classmates, but not because he intended to be mean. And he has plenty of opportunities for self-gratification during his atonement.
 </li><li> In the second <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/FragmentsNote' title='/pmwiki/pmwiki.php/VisualNovel/FragmentsNote' data-format='VmlzdWFsTm92ZWwvRnJhZ21lbnRzTm90ZQ=='>Fragment's Note</a></em>, this is what inspires Yukitsuki to go into psychology and to a lesser extent help Kyoichi with his own psychological problems.
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/HatofulBoyfriend' title='/pmwiki/pmwiki.php/VisualNovel/HatofulBoyfriend' data-format='VmlzdWFsTm92ZWwvSGF0b2Z1bEJveWZyaWVuZA=='>Hatoful Boyfriend</a></em> <span class="spoiler" title="you can set spoilers visible by default on your profile" > Sakazaki Yuuya</span> is midway between this point and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MyGreatestFailure' title='/pmwiki/pmwiki.php/Main/MyGreatestFailure' data-format='TXlHcmVhdGVzdEZhaWx1cmU='>My Greatest Failure</a>. When he was very young someone killed his father to marry his mother, and would have <span class="spoiler" title="you can set spoilers visible by default on your profile" > killed his unhatched brother. Yuuya hung on to it and switched it with his new half-brother's egg so his brother would survive, then smashed the new egg</span>. This action weighs heavily on him years later and is something he's unable to ever forget, though he's fully accepted it and what it means, and so he tries endlessly to do good and save people.
-</li><li> Mamiya Shinzo in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/KaraNoShoujo' title='/pmwiki/pmwiki.php/VisualNovel/KaraNoShoujo' data-format='VmlzdWFsTm92ZWwvS2FyYU5vU2hvdWpv'>Kara no Shoujo</a></em>. <span class="spoiler" title="you can set spoilers visible by default on your profile" >He went insane and turned his lover int a model for a fresco by cutting off all her limbs and putting her into a large black egg. When he regained his sanity, he absolutely repented and felt the fresco was a horrible horrible thing, but by then it was too late and worse, there was no real way to atone for it</span>.
-</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/KissOfRevenge' title='/pmwiki/pmwiki.php/VisualNovel/KissOfRevenge' data-format='VmlzdWFsTm92ZWwvS2lzc09mUmV2ZW5nZQ=='>Kiss of Revenge</a></em>, <span class="spoiler" title="you can set spoilers visible by default on your profile" >Issei Sezaki</span> is haunted by a mistake he made during a during a routine operation which led to the death of his patient. He's spent the more than ten years since the incident devoting himself to the patients of his hospital and doing everything humanly possible to give them and their families the best of care; the nurses are used to seeing him pulling all-night research sessions when not on call, and he keeps a notebook filled with the details of every patient he fails to save, keeping the guilt fresh. <span class="spoiler" title="you can set spoilers visible by default on your profile" >When confronted by the daughter of the patient he accidentally killed, he takes it even further, making a public confession of the mistake and deciding to quit medicine entirely, and going so far as to offer to kill himself if that's what it will take to make amends</span>.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/LittleBusters' title='/pmwiki/pmwiki.php/VisualNovel/LittleBusters' data-format='VmlzdWFsTm92ZWwvTGl0dGxlQnVzdGVycw=='>Little Busters!</a></em>: <span class="spoiler" title="you can set spoilers visible by default on your profile" >Mio holds a huge guilt complex for forgetting Midori, her imaginary friend turned real from childhood, after her parents sent her to therapy and gave her medication. Her route even involves her giving up her entire existence so that Midori can live instead of her. It's even sadder in that in the real world, Midori doesn't actually exist&#8212;she only appears in the game because that's part of the world Mio had the boys create</span>.
-</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/MonsterProm' title='/pmwiki/pmwiki.php/VisualNovel/MonsterProm' data-format='VmlzdWFsTm92ZWwvTW9uc3RlclByb20='>Monster Prom</a></em>: Coach took his job as a PE teacher and coach at a high school to break with his father, who earned a fortune as a spokesman for <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ChocolateFrostedSugarBombs' title='/pmwiki/pmwiki.php/Main/ChocolateFrostedSugarBombs' data-format='W1tDaG9jb2xhdGVGcm9zdGVkU3VnYXJCb21icyBudXRyaXRpb25hbGx5LWJhbmtydXB0IGJyZWFrZmFzdCBjZXJlYWxdXQ=='>nutritionally-bankrupt breakfast cereal</a>.
-</li><li> This is a running theme in the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/ParascientificEscape' title='/pmwiki/pmwiki.php/VisualNovel/ParascientificEscape' data-format='VmlzdWFsTm92ZWwvUGFyYXNjaWVudGlmaWNFc2NhcGU='>Parascientific Escape</a></em> series. The villain of each game realizes their evil and attempts to make up for it. In fact, the villains of the first two games turn themselves in to jail and do go on trial! <span class="spoiler" title="you can set spoilers visible by default on your profile" > Misaki, villain of the first game, is found Not Guilty due to coercion and is allowed to go free. Tsukiko, villain of the second, is guilty but is eventually allowed to live under house arrest on the grounds she serves as a spy for Yukiya.</span>
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/TheFruitOfGrisaia' title='/pmwiki/pmwiki.php/VisualNovel/TheFruitOfGrisaia' data-format='VmlzdWFsTm92ZWwvVGhlRnJ1aXRPZkdyaXNhaWE='>The Fruit of Grisaia</a></em>:
 <ul ><li> Yuuyi has quite a few things that haunts him from his past, and it's obvious he has done things he regrets to this day. Throughout the novell he wonders numerous times whether he even deserves a peaceful life, let alone happiness.
 </li><li> <span class="spoiler" title="you can set spoilers visible by default on your profile" >Amane</span> feels this especially towards <span class="spoiler" title="you can set spoilers visible by default on your profile" >Yuuji</span>. She has this in general, living with survivors guilt as the sole survivor of a terrible accident. However when the same person's <span class="spoiler" title="you can set spoilers visible by default on your profile" >brother shows up in her school, whom she was force to leave behind</span>, that feeling quadruples.
 </li><li> <span class="spoiler" title="you can set spoilers visible by default on your profile" >Yumiko's father Michiaki</span> becomes this after being defeated, wondering where his life went utterly wrong and realising that he can no longer feel empathy for the people he hurt.
-</li></ul></li><li> Deconstructed with Valerian Trifa from <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/DiesIrae' title='/pmwiki/pmwiki.php/VisualNovel/DiesIrae' data-format='VmlzdWFsTm92ZWwvRGllc0lyYWU='>Dies Irae</a></em>. Back when he was just a kindly priest, he attempted to run away from the madness of the Longinus Dreizehn Orden alongside the orphan children he cared for. Unfortunately, <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BigBad' title='/pmwiki/pmwiki.php/Main/BigBad' data-format='W1tCaWdCYWQgUmVpbmhhcmRdXQ=='>Reinhard</a> found him and as punishment forced Trifa to pick ten of the children to be executed right in front of him. This lead to him blaming himself for their deaths due to being weak and unable to protect them in the face of adversity and vows to make amends. This vow however becomes an obsession and ends up making him blind to just how wicked he has become by the start of the story and to how flawed and nonsensical his idea of atonement really is.
+</li></ul></li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/HatofulBoyfriend' title='/pmwiki/pmwiki.php/VisualNovel/HatofulBoyfriend' data-format='VmlzdWFsTm92ZWwvSGF0b2Z1bEJveWZyaWVuZA=='>Hatoful Boyfriend</a></em> <span class="spoiler" title="you can set spoilers visible by default on your profile" > Sakazaki Yuuya</span> is midway between this point and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MyGreatestFailure' title='/pmwiki/pmwiki.php/Main/MyGreatestFailure' data-format='TXlHcmVhdGVzdEZhaWx1cmU='>My Greatest Failure</a>. When he was very young someone killed his father to marry his mother, and would have <span class="spoiler" title="you can set spoilers visible by default on your profile" > killed his unhatched brother. Yuuya hung on to it and switched it with his new half-brother's egg so his brother would survive, then smashed the new egg</span>. This action weighs heavily on him years later and is something he's unable to ever forget, though he's fully accepted it and what it means, and so he tries endlessly to do good and save people.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/KissOfRevenge' title='/pmwiki/pmwiki.php/VisualNovel/KissOfRevenge' data-format='VmlzdWFsTm92ZWwvS2lzc09mUmV2ZW5nZQ=='>Kiss of Revenge</a></em>, <span class="spoiler" title="you can set spoilers visible by default on your profile" >Issei Sezaki</span> is haunted by a mistake he made during a during a routine operation which led to the death of his patient. He's spent the more than ten years since the incident devoting himself to the patients of his hospital and doing everything humanly possible to give them and their families the best of care; the nurses are used to seeing him pulling all-night research sessions when not on call, and he keeps a notebook filled with the details of every patient he fails to save, keeping the guilt fresh. <span class="spoiler" title="you can set spoilers visible by default on your profile" >When confronted by the daughter of the patient he accidentally killed, he takes it even further, making a public confession of the mistake and deciding to quit medicine entirely, and going so far as to offer to kill himself if that's what it will take to make amends</span>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/LittleBusters' title='/pmwiki/pmwiki.php/VisualNovel/LittleBusters' data-format='VmlzdWFsTm92ZWwvTGl0dGxlQnVzdGVycw=='>Little Busters!</a></em>: <span class="spoiler" title="you can set spoilers visible by default on your profile" >Mio holds a huge guilt complex for forgetting Midori, her imaginary friend turned real from childhood, after her parents sent her to therapy and gave her medication. Her route even involves her giving up her entire existence so that Midori can live instead of her. It's even sadder in that in the real world, Midori doesn't actually exist&#8212;she only appears in the game because that's part of the world Mio had the boys create</span>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/LoveBakudan' title='/pmwiki/pmwiki.php/VisualNovel/LoveBakudan' data-format='VmlzdWFsTm92ZWwvTG92ZUJha3VkYW4='>Love Bakudan</a></em> has <span class="spoiler" title="you can set spoilers visible by default on your profile" >Ayame Tokugawa. Ayame</span> is implied to have done many terrible things to people when she was growing up, before she (presumably) hit a point in her life that made her stop. It's unclear what the catalyst for this was, but she now spends her life trying to make amends for the things she caused.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/MonsterProm' title='/pmwiki/pmwiki.php/VisualNovel/MonsterProm' data-format='VmlzdWFsTm92ZWwvTW9uc3RlclByb20='>Monster Prom</a></em>: Coach took his job as a PE teacher and coach at a high school to break with his father, who earned a fortune as a spokesman for <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ChocolateFrostedSugarBombs' title='/pmwiki/pmwiki.php/Main/ChocolateFrostedSugarBombs' data-format='W1tDaG9jb2xhdGVGcm9zdGVkU3VnYXJCb21icyBudXRyaXRpb25hbGx5LWJhbmtydXB0IGJyZWFrZmFzdCBjZXJlYWxdXQ=='>nutritionally-bankrupt breakfast cereal</a>.
+</li><li> This is a running theme in the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/ParascientificEscape' title='/pmwiki/pmwiki.php/VisualNovel/ParascientificEscape' data-format='VmlzdWFsTm92ZWwvUGFyYXNjaWVudGlmaWNFc2NhcGU='>Parascientific Escape</a></em> series. The villain of each game realizes their evil and attempts to make up for it. In fact, the villains of the first two games turn themselves in to jail and do go on trial! <span class="spoiler" title="you can set spoilers visible by default on your profile" > Misaki, villain of the first game, is found Not Guilty due to coercion and is allowed to go free. Tsukiko, villain of the second, is guilty but is eventually allowed to live under house arrest on the grounds she serves as a spy for Yukiya.</span>
 </li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/PiofioreFatedMemories' title='/pmwiki/pmwiki.php/VisualNovel/PiofioreFatedMemories' data-format='VmlzdWFsTm92ZWwvUGlvZmlvcmVGYXRlZE1lbW9yaWVz'>Piofiore: Fated Memories</a></em> As an otome game about the mafia, this trope is rampant.
 <ul ><li> Henri Lambert struggles greatly over the murders he has committed and the implication of what it means for him to continue to live. He does not believe he can ever be forgiven for his crimes and believes he should continue to suffer because of what he has done in the past. He does feel great guilt over subjecting the heroine to a life with him, and this serves as one of the main reasons he tries to push the heroine away from him romantically.
 </li><li> Orlok, though he has only killed on the Church's orders (for most of the first game, depending on the ending) he believes he will never go to Heaven. He believes the murders he has committed in the past were necessary and he continues to believe in his role as a Disciple of the Church, but also believes that he can never be forgiven.
 </li><li> Dante Falzone, as the capo of the Falzone family, has committed many crimes and does not believe he will find salvation. However, he does not believe he should change the way he lives.
+</li></ul></li><li> Mamiya Shinzo in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/TheShell' title='/pmwiki/pmwiki.php/VisualNovel/TheShell' data-format='VmlzdWFsTm92ZWwvVGhlU2hlbGw='>The Shell</a></em>. <span class="spoiler" title="you can set spoilers visible by default on your profile" >He went insane and turned his lover into a model for a fresco by cutting off all her limbs and putting her into a large black egg. When he regained his sanity, he absolutely repented and felt the fresco was a horrible horrible thing, but by then it was too late and worse, there was no real way to atone for it</span>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VisualNovel/UminekoWhenTheyCry' title='/pmwiki/pmwiki.php/VisualNovel/UminekoWhenTheyCry' data-format='VmlzdWFsTm92ZWwvVW1pbmVrb1doZW5UaGV5Q3J5'>Umineko: When They Cry</a></em>:
+<ul ><li> In Episode 7, we learn that <span class="spoiler" title="you can set spoilers visible by default on your profile" > he was responsible for the maintenance of Beatrice II's <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GildedCage' title='/pmwiki/pmwiki.php/Main/GildedCage' data-format='R2lsZGVkQ2FnZQ=='>Gilded Cage</a>. Unable to forgive himself for allowing her to be abused by her father, and terrified that Kinzo would inflict the same suffering on Sayo, he faked Sayo's death and passed the child off as an orphan. Alas, making Sayo work as a servant in the Ushiromiya estate just in the hope that she and Kinzo could be reunited one day was yet another mistake&#8212;one that, according to "Confession of the Golden Witch", he was willing to atone for by knowingly assisting Sayo in her murder-suicide plot.</span>
+</li><li> In the end, it turns out Kinzō is all too aware of the tragic extent of his failings towards his entirely family. It turns out the whole deal with the epitaph was actually his wild gamble to <span class="spoiler" title="you can set spoilers visible by default on your profile" >establish contact with Sayo, grant her the headship, and try to somehow make up for what he did to his daughter Beatrice</span>.
+</li><li> In <span class='esc-seq' title='non-wikiword'>EP8</span>, Eva acknowledges her guilt for the suffering of her niece Ange and openly tries to remedy this with the help of Battler <span class="spoiler" title="you can set spoilers visible by default on your profile" >who creates a final game where the family can make good memories with Ange. Eva is assigned as Ange's main helper to make up for her failure at amending their relationship during life.</span>
 </li></ul></li></ul></div>
 </p><p><hr data-format='&#8212;&#8212;' />
 </p></div>
@@ -1509,47 +625,129 @@ var handleWatchThread = function(url, obj) {
   <div class="video-examples-featured">
     <div class="example_video_box">
       <a href="#video-link"
-         data-video-id="06xpi1"
-         data-video-descrip="A Mercenary who worked for Vilgax, only to watch as his Homeworld and entire species was destroyed because of his actions"
-         data-video-title="Tetrax Shard"
-         data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/06xpi1_640x360p_qvbr.mp4"
-         data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/06xpi1.mpd"
-         data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/06xpi1.m3u8"
-         data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/06xpi1.jpg"
+         data-video-id="7s7xqa"
+         data-video-descrip="Once, Tobita tried and failed to be a hero, which led him down the path to becoming the villain known as Gentle Criminal. Now, thanks to Midoriya's influence, he is ready to become the hero he was always destined to be!"
+         data-video-title="Tobita's Redemption"
+         data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/7s7xqa_640x360p_qvbr.mp4"
+         data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/7s7xqa.mpd"
+         data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/7s7xqa.m3u8"
+         data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/7s7xqa.jpg"
          data-video-trope="Main/TheAtoner"
          data-video-tropename="The Atoner"
          data-video-approval="APPROVED"
          data-video-troper-rating=""
          data-video-average-rating="5.00"
-         data-video-rating-count="12"
-         data-video-media-sources="Main/LastOfHisKind,Main/MyGodWhatHaveIDone,WesternAnimation/Ben10,WesternAnimation/Ben10SecretOfTheOmnitrix"
+         data-video-rating-count="2"
+         data-video-media-sources="Main/BarrierWarrior,Main/BigDamnHeroes,Main/HellYesMoment,Main/MyGreatestSecondChance,Main/ReformedCriminal,Main/ThePowerOfLove,Manga/MyHeroAcademia,Recap/MyHeroAcademiaS7E16TheChainThusFar"
          class="video-launch-link video-overlay-link featured-widget-vid">
 
           <div class="featured-widget-vid-iframe">
               <div id="tvtropes_no_volume_player" 
-                  data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/06xpi1.jpg" 
-                  data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/06xpi1_640x360p_qvbr.mp4" 
-                  data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/06xpi1.mpd" 
-                  data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/06xpi1.m3u8"
+                  data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/7s7xqa.jpg" 
+                  data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/7s7xqa_640x360p_qvbr.mp4" 
+                  data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/7s7xqa.mpd" 
+                  data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/7s7xqa.m3u8"
               		data-controls="0"
               		data-muted="1">
-                  <script>
-                      tropes_videos_commands.push(function(){ new_video_project.load_video("tvtropes_no_volume_player", false); });
-                  </script>
+                  
               </div>
 
           </div>
       </a>
     </div>
 
-    <h2 class="bold font-l">Tetrax Shard</h2>
+    <h2 class="bold font-l">Tobita's Redemption</h2>
     <p class="_pmvv-vidbox-descTxt">
-      A Mercenary who worked for Vilgax, only to watch as his Homeworld and entire species was destroyed because of his actions    </p>
+      Once, Tobita tried and failed to be a hero, which led him down the path to becoming the villain known as Gentle Criminal. Now, thanks to Midoriya's influence, he is ready to become the hero he was always destined to be!    </p>
     
 
   </div>
 
     <div class="video-examples-thumbs">
+
+          
+      <a href="#video-link"
+      data-video-id="n6u1cy"
+      data-video-descrip="When she was held captive by the Iron Kingdom, Jill was forced to commit all manner of atrocity, the guilt from which continues to weigh upon her..."
+      data-video-title="&quot;I Had Become a Monster&quot;"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/n6u1cy_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/n6u1cy.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/n6u1cy.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/n6u1cy.jpg"
+      data-video-trope="Main/IAmAMonster"
+      data-video-tropename="I Am a Monster"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Main/TheAtoner,VideoGame/FinalFantasyXVI"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/n6u1cy.jpg">
+      <p><span class="bold">"I Had Become a...</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="ie3bsj"
+      data-video-descrip="If Shepard doesn't tell anyone about the sabotage and only later points out Mordin's change in opinion on the Genophage cure, Mordin admits that he was wrong to support it before going to cure it, dying in the process."
+      data-video-title="I MADE A MISTAKE!"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/ie3bsj_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/ie3bsj.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/ie3bsj.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/ie3bsj.jpg"
+      data-video-trope="Main/TheAtoner"
+      data-video-tropename="The Atoner"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Main/HeroicSacrifice,Main/MyGreatestFailure,Main/MyGreatestSecondChance,Main/RedemptionEqualsDeath,VideoGame/MassEffect3"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/ie3bsj.jpg">
+      <p><span class="bold">I MADE A MISTAKE!</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="77a6a6"
+      data-video-descrip="Rtas Vadum gives an imposing speech to his troops about combating a heresy, but makes clear to Thel' Vadam that the safety of his troops take priority over the disgraced Elite. Vadam concurs. "
+      data-video-title="On the Blood of Our Fathers"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/77a6a6_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/77a6a6.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/77a6a6.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/77a6a6.jpg"
+      data-video-trope="Main/AFatherToHisMen"
+      data-video-tropename="A Father to His Men"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Main/BadassBoast,Main/DeathSeeker,Main/TheAtoner,VideoGame/Halo2,Main/BadassCreed"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/77a6a6.jpg">
+      <p><span class="bold">On the Blood of...</span></p>
+    </a>
+
+          
+      <a href="#video-link"
+      data-video-id="06xpi1"
+      data-video-descrip="A Mercenary who worked for Vilgax, only to watch as his Homeworld and entire species was destroyed because of his actions"
+      data-video-title="Tetrax Shard"
+      data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/06xpi1_640x360p_qvbr.mp4"
+      data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/06xpi1.mpd"
+      data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/06xpi1.m3u8"
+      data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/06xpi1.jpg"
+      data-video-trope="Main/TheAtoner"
+      data-video-tropename="The Atoner"
+      data-video-approval="APPROVED"
+      data-video-troper-rating=""
+      data-video-average-rating=""
+      data-video-rating-count=""
+      data-video-media-sources="Main/LastOfHisKind,Main/MyGodWhatHaveIDone,WesternAnimation/Ben10,WesternAnimation/Ben10SecretOfTheOmnitrix"
+      class="video-launch-link video-overlay-link video-background-image lazy-image"
+      data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/06xpi1.jpg">
+      <p><span class="bold">Tetrax Shard</span></p>
+    </a>
 
           
       <a href="#video-link"
@@ -1608,7 +806,7 @@ var handleWatchThread = function(url, obj) {
       data-video-troper-rating=""
       data-video-average-rating=""
       data-video-rating-count=""
-      data-video-media-sources="Film/AvengersEndgame,Film/AvengersInfinityWar,Film/CaptainAmericaTheFirstAvenger,Film/DoctorStrangeInTheMultiverseOfMadness,Film/IronMan1,Film/ShangChiAndTheLegendOfTheTenRings,Film/SpiderManNoWayHome,Film/Thor,Franchise/MarvelCinematicUniverse,Main/JumpingOnAGrenade,Main/TheAtoner,WebVideo/GameTheory"
+      data-video-media-sources="Film/AvengersEndgame,Film/AvengersInfinityWar,Film/CaptainAmericaTheFirstAvenger,Film/DoctorStrangeInTheMultiverseOfMadness,Film/IronMan1,Film/ShangChiAndTheLegendOfTheTenRings,Film/SpiderManNoWayHome,Film/Thor2011,Main/JumpingOnAGrenade,Main/TheAtoner,WebVideo/GameTheory"
       class="video-launch-link video-overlay-link video-background-image lazy-image"
       data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/2kygz3.jpg">
       <p><span class="bold">The MCU's 3rd F...</span></p>
@@ -1647,8 +845,6 @@ var handleWatchThread = function(url, obj) {
 </div>
 
 
-
-    
         <div class="section-links" itemscope itemtype="http://schema.org/SiteNavigationElement">
 
     
@@ -1661,34 +857,6 @@ var handleWatchThread = function(url, obj) {
 
     <div class="links">
                     
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AscendedDemon">Ascended Demon</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/IndexWithAHeartOfGold">Index with a Heart of Gold</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/BadPowersGoodPeople">Bad Powers, Good People</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AttentionWhore">Attention Whore</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/BeingInThisIndexSucks">Being in This Index Sucks</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/BeingEvilSucks">Being Evil Sucks</a> 
-                                            </li>
-                </ul>
-
-            
                 <ul>
                     <li>
                                                     <a href="/pmwiki/pmwiki.php/Main/AchillesInHisTent">Achilles in His Tent</a>
@@ -1705,70 +873,42 @@ var handleWatchThread = function(url, obj) {
             
                 <ul>
                     <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AccompliceByInaction">Accomplice by Inaction</a>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AllergicToRoutine">Allergic to Routine</a>
                                             </li>
                     <li>
-                        <a href="/pmwiki/pmwiki.php/Main/ResponsibilityTropes">Responsibility Tropes</a>
+                        <a href="/pmwiki/pmwiki.php/Main/BeingInThisIndexSucks">Being in This Index Sucks</a>
                     </li>
                     <li>
                          
-                            <a href="/pmwiki/pmwiki.php/Main/BeingGodIsHard">Being God Is Hard</a> 
+                            <a href="/pmwiki/pmwiki.php/Main/AttentionWhore">Attention Whore</a> 
                                             </li>
                 </ul>
 
             
                 <ul>
                     <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AccidentalChildKillerBackstory">Accidental Child-Killer Backstory</a>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AscendedDemon">Ascended Demon</a>
                                             </li>
                     <li>
-                        <a href="/pmwiki/pmwiki.php/Main/IRegretThisIndex">I Regret This Index</a>
+                        <a href="/pmwiki/pmwiki.php/Main/IndexWithAHeartOfGold">Index with a Heart of Gold</a>
                     </li>
                     <li>
                          
-                            <a href="/pmwiki/pmwiki.php/Main/BloodyHallucinationsOfGuilt">Bloody Hallucinations of Guilt</a> 
+                            <a href="/pmwiki/pmwiki.php/Main/BadPowersGoodPeople">Bad Powers, Good People</a> 
                                             </li>
                 </ul>
 
             
                 <ul>
                     <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AntiVillain">Anti-Villain</a>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AscendedDemon">Ascended Demon</a>
                                             </li>
                     <li>
-                        <a href="/pmwiki/pmwiki.php/Main/MaturityTropes">Maturity Tropes</a>
+                        <a href="/pmwiki/pmwiki.php/Main/HeelFaceIndex">Heel/Face Index</a>
                     </li>
                     <li>
                          
-                            <a href="/pmwiki/pmwiki.php/Main/BenevolentBoss">Benevolent Boss</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AthleticallyChallenged">Athletically Challenged</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/NoRealLife/Tropes0ToC">NoRealLife/Tropes 0 to C</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/AttackOfThePoliticalAd">Attack of the Political Ad</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AtomicFBomb">Atomic F-Bomb</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/TruthInTelevision/AToC">TruthInTelevision/A to C</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/AttractiveBentGender">Attractive Bent-Gender</a> 
+                            <a href="/pmwiki/pmwiki.php/Main/BecauseYouWereNiceToMe">Because You Were Nice to Me</a> 
                                             </li>
                 </ul>
 
@@ -1789,14 +929,14 @@ var handleWatchThread = function(url, obj) {
             
                 <ul>
                     <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AtLeastIAdmitIt">At Least I Admit It</a>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AlwaysNeedWhatYouGaveUp">Always Need What You Gave Up</a>
                                             </li>
                     <li>
-                        <a href="/pmwiki/pmwiki.php/Main/MoralityTropes">Morality Tropes</a>
+                        <a href="/pmwiki/pmwiki.php/Main/IRegretThisIndex">I Regret This Index</a>
                     </li>
                     <li>
                          
-                            <a href="/pmwiki/pmwiki.php/Main/AvengingTheVillain">Avenging the Villain</a> 
+                            <a href="/pmwiki/pmwiki.php/Main/BloodyHallucinationsOfGuilt">Bloody Hallucinations of Guilt</a> 
                                             </li>
                 </ul>
 
@@ -1817,6 +957,34 @@ var handleWatchThread = function(url, obj) {
             
                 <ul>
                     <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/ATeamMontage">A-Team Montage</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/TimeImmemorial/TropesAToG">TimeImmemorial/Tropes A to G</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/AttackOfThe50FootWhatever">Attack of the 50-Foot Whatever</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AccompliceByInaction">Accomplice by Inaction</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/ResponsibilityTropes">Responsibility Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/BeingGodIsHard">Being God Is Hard</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
                                                     <a href="/pmwiki/pmwiki.php/Main/AfterTheEnd">After the End</a>
                                             </li>
                     <li>
@@ -1825,6 +993,34 @@ var handleWatchThread = function(url, obj) {
                     <li>
                          
                             <a href="/pmwiki/pmwiki.php/Main/BecameTheirOwnAntithesis">Became Their Own Antithesis</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AntiVillain">Anti-Villain</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/MaturityTropes">Maturity Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/BenevolentBoss">Benevolent Boss</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AtomicFBomb">Atomic F-Bomb</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/TruthInTelevision/AToC">TruthInTelevision/A–C</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/AttractiveBentGender">Attractive Bent-Gender</a> 
                                             </li>
                 </ul>
 
@@ -1859,34 +1055,6 @@ var handleWatchThread = function(url, obj) {
             
                 <ul>
                     <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/AscendedDemon">Ascended Demon</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/Main/HeelFaceIndex">Heel/Face Index</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/BecauseYouWereNiceToMe">Because You Were Nice to Me</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
-                                                    <a href="/pmwiki/pmwiki.php/Main/ATeamMontage">A-Team Montage</a>
-                                            </li>
-                    <li>
-                        <a href="/pmwiki/pmwiki.php/TimeImmemorial/TropesAToG">TimeImmemorial/Tropes A to G</a>
-                    </li>
-                    <li>
-                         
-                            <a href="/pmwiki/pmwiki.php/Main/AttackOfThe50FootWhatever">Attack of the 50-Foot Whatever</a> 
-                                            </li>
-                </ul>
-
-            
-                <ul>
-                    <li>
                                                     <a href="/pmwiki/pmwiki.php/Literature/ParadiseLost">Paradise Lost</a>
                                             </li>
                     <li>
@@ -1895,6 +1063,48 @@ var handleWatchThread = function(url, obj) {
                     <li>
                          
                             <a href="/pmwiki/pmwiki.php/Main/BadIsGoodAndGoodIsBad">Bad Is Good and Good Is Bad</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AthleticallyChallenged">Athletically Challenged</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/NoRealLife/Tropes0ToC">NoRealLife/Tropes 0 to C</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/AttackOfThePoliticalAd">Attack of the Political Ad</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AtLeastIAdmitIt">At Least I Admit It</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/MoralityTropes">Morality Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/AvengingTheVillain">Avenging the Villain</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AnguishedDeclarationOfLove">Anguished Declaration of Love</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/SugarWiki/HeartwarmingMoments">SugarWiki/Heartwarming Moments</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/ArsonMurderAndLifesaving">Arson, Murder, and Lifesaving</a> 
                                             </li>
                 </ul>
 
@@ -1908,203 +1118,8 @@ var handleWatchThread = function(url, obj) {
 
 
 
-<script>
-    if( document.getElementById('user-prefs').classList.contains('folders-open') ){
-        console.log('open all folders');
-        var elements = document.querySelectorAll('.folderlabel, .toggle-all-folders-button');
-        elements.forEach((element) => {
-          element.classList.add('is-open');
-        });
-    }
-</script>
 
 
-<script>
-function insert_ad(adCount, paragraph, adName, folder = 0){
-
-        var ad_count = adCount < 10 ? "0"+adCount : adCount;
-        var inside_folder = folder ? "1" : "0";
-
-        // Create element for ad unit
-        var adUnit = document.createElement('div');
-        adUnit.setAttribute("class", `htlad-${adName}`);
-        adUnit.setAttribute("id", `${adName}_${adCount}`);
-        adUnit.setAttribute("data-targeting", `{"slot_number": "${ad_count}", "in_folder": "${inside_folder}"}`);
-
-        // Add Advertisement label
-        var adLabel = document.createElement("span");
-        adLabel.innerHTML = "Advertisement:"
-        adLabel.setAttribute("class","ad-caption");
-
-        var adWrapper = document.createElement("div");
-        adWrapper.setAttribute("class","tvtropes-ad-unit mobile-fad square_fad mobile_unit_scroll");
-        adWrapper.setAttribute("id","mobile_"+adCount);
-
-        // Merge all pieces
-        adWrapper.appendChild(adLabel);
-        adWrapper.appendChild(adUnit);
-
-        // Insert into DOM
-        paragraph.parentNode.insertBefore(adWrapper, paragraph.nextSibling);
-
-        // for getting correct ad count even when ones are deleted
-        globalAdInsertionCount++;
-}
-
-function insert_ads_in_content(folder = 0, totalAdsCount = 0) {
-
-    if(folder) var node = folder.firstElementChild; // Get the first traversable element of the folder
-    else var node = document.getElementById("main-article").firstElementChild;
-
-    var pHeight = 0;
-    var pCount = 0;
-    var adCount = totalAdsCount + 1;
-    var nodeCount = 0;
-    var nodeLevel = 0;
-    var x = 0;
-
-    //loop through elements of content
-    while(x<300) {
-        x++; nodeCount++;
-
-        //traverse to the next element (if exists)
-        if(nodeCount>1) {
-            if(!node.nextElementSibling) {
-                console.log('adparser: no next element');
-
-                if(nodeLevel>0) {
-                    nodeLevel--;
-                    node = node.parentElement;
-                    console.log('adparser: we were down a level, go back up ('+nodeLevel+')');
-                    continue;
-                }
-                else {
-                    break; 
-                }
-            }
-
-            node = node.nextElementSibling;
-        }
-
-
-        //skip inserted ads or empty nodes
-        if(!node || node==="null" || typeof node !== "object") continue;
-        if(!node.offsetHeight || node.offsetHeight==0) continue;
-        if(node.className && node.className.includes('tvtropes-ad-unit')) continue;
-
-        //skip if image block that has a caption after it
-        if(node.className && node.className.includes('quoteright')) {
-            if(node.nextElementSibling && node.nextElementSibling.className && node.nextElementSibling.className.includes('acaptionright')) {
-                pHeight += node.offsetHeight;
-                continue;
-            }
-        } 
-
-        //if very large element, loop through elements inside
-        if(node.offsetHeight>700 && node.firstElementChild) {
-            nodeLevel++;
-            console.log('adparser: traverse through large element='+node.nodeName+', height='+node.offsetHeight+' level='+nodeLevel);
-            node = node.firstElementChild;
-            nodeCount = 0;
-            continue;
-        }
-
-        // Skip if after a folder label or if the current node is a folder label itself
-        if ((node.previousElementSibling && node.previousElementSibling.className && node.previousElementSibling.className.includes("folderlabel")) || (node.className && node.className.includes("folderlabel"))) {
-            console.log('adparser: skipping ad insertion related to folder label');
-            if (!node.className || !node.className.includes("folderlabel")) { // If it's not the folder label itself, skip the insertion
-                continue;
-            } else {
-                pHeight += node.offsetHeight; // If it is the folder label, just add its height to pHeight and continue
-                continue;
-            }
-        }
-
-        //paragraph counter
-        if(node.nodeName=="P") pCount++;
-
-        //add height of node to counter
-        pHeight += node.offsetHeight;
-
-        //add margin of node to counter if available
-        try {
-            var nodeStyle = getComputedStyle(node);
-            if(nodeStyle.marginTop && parseInt(nodeStyle.marginTop)>0) pHeight+=parseInt(nodeStyle.marginTop);
-            if(nodeStyle.marginBottom && parseInt(nodeStyle.marginBottom)>0) pHeight+=parseInt(nodeStyle.marginBottom);
-            //console.log(nodeStyle.marginTop+','+nodeStyle.marginBottom);
-        } catch(e) { }
-
-        //debug logging
-        console.log('adparser: name='+node.nodeName+', height='+node.offsetHeight+' =>'+pHeight);
-        //console.log(node.className);
-
-        // check if user is logged in
-        var logged_in = 0;
-
-        // Calculate the required height based on the user's logged-in status or ad count
-        var requiredHeight           = globalAdInsertionCount > 15 ? 1500 : 750;
-        if(logged_in) requiredHeight=2250;
-
-        // only inserts an ad if the total height and paragraph count conditions are met
-        if ((adCount === 1 && pCount >= 1 && pHeight >= 400) || pHeight >= requiredHeight) {
-            // after 50 ads, stop inserting. Or after 20 ads if the user is logged in
-            if (adCount > 50 || (adCount > 20 && logged_in)) {
-                break;
-            }
-
-            console.log('adparser: insert ad '+adCount);
-            insert_ad(adCount, node, "tvtropes_m_incontent_dynamic", folder);
-            adCount++;
-            pHeight = 0;
-            pCount = 0;
-        }
-    }
-
-    //insert one at end if room
-    var maxpHeight = 500; if(logged_in) maxpHeight=1500;
-    if(pHeight>=maxpHeight && folder==0) {
-        console.log('adparser: insert ad');
-
-        insert_ad(adCount, document.getElementById("main-article").lastElementChild, "tvtropes_m_incontent_dynamic");
-    }
-
-    // delete ads after the 8th one to reduce load times
-    BCLighthouseTag.cmd.push(function() {
-        googletag.cmd.push(function() {
-            googletag.pubads().addEventListener('slotRequested', function(event) {
-                const slot = event.slot;
-                const slotName = slot.getAdUnitPath().split('/').pop() || slot.getAdUnitPath();
-
-                if(slotName === 'tvtropes_m_incontent_dynamic') {
-                    const slotNumber = parseInt(slot.getTargeting('slot_number')[0]);
-                    console.log(slotName+' = '+slotNumber);
-
-                    // Determine the ad slot that needs to be deleted.
-                    const adNumberToDelete = slotNumber - 8;
-
-                    if(adNumberToDelete > 0) {
-                        const adToDelete = document.getElementById(`mobile_${adNumberToDelete}`);
-                        if(adToDelete) {
-                            var adHeight = window.pageYOffset + adToDelete.getBoundingClientRect().top;
-                            var windowHeight = window.scrollY;
-
-                            // Check if the ad element exists and is above the current viewport (above the fold).
-                            if (adHeight < windowHeight) {
-                                console.log('ad delete = '+adNumberToDelete);
-                                adToDelete.remove(); 
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    });
-}
-
-if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
-    insert_ads_in_content();
-}
-</script>
 
 
                 
@@ -2120,7 +1135,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
     <li>Sticky Header <div id="sidebar-toggle-stickyheader" class="display-toggle sticky-header"></div></li>
     <li>Wide Load <div id="sidebar-toggle-wideload" class="display-toggle wide-load"></div></li>
   </ul>
-  <script>updateDesktopPrefs();</script>
+  
 </div>
 
         <div class="sidebar-item quick-links" itemtype="http://schema.org/SiteNavigationElement">
@@ -2138,6 +1153,8 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
             <div class="crucial_browsing_dropdown">
                 <a href="javascript:void(0);" onclick="double_dropdown(); return false;" id="crucial_browsing_dropdown"><span class="new_blue">Crucial Browsing</span><i class="fa fa-angle-down"></i></a>
                 <ul id="main_dropdown">
+                    <li class="first_dropdown"><a href="/pmwiki/index_report.php">Indexes</a>
+
                     <li class="first_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Genre</a>
                         <ul>
                             <li><a href='/pmwiki/pmwiki.php/Main/ActionAdventureTropes' title='Main/ActionAdventureTropes'>Action Adventure</a></li>
@@ -2152,7 +1169,6 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
                             <li><a href='/pmwiki/pmwiki.php/Main/SpeculativeFictionTropes' title='Main/SpeculativeFictionTropes'>Speculative Fiction</a></li>
                             <li><a href='/pmwiki/pmwiki.php/Main/SportsStoryTropes' title='Main/SportsStoryTropes'>Sports Story</a></li>
                             <li><a href='/pmwiki/pmwiki.php/Main/WarTropes' title='Main/WarTropes'>War</a></li>
-                            <li><a href="/pmwiki/lbs.php" data-modal-target="login">Live Blogs</a></li>
                         </ul>
                     </li>
 
@@ -2172,7 +1188,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
                             <li><a href="/pmwiki/pmwiki.php/Main/Radio" title="Main/Radio">Radio</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/SequentialArt" title="Main/SequentialArt">Sequential Art</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/TabletopGames" title="Main/TabletopGames">Tabletop Games</a></li>
-                            <li><a href="/pmwiki/pmwiki.php/UsefulNotes/Television" title="Main/Television">Television</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/MediaNotes/Television" title="MediaNotes/Television">Television</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/Theater" title="Main/Theater">Theater</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/VideogameTropes" title="Main/VideogameTropes">Videogame</a></li>
                             <li><a href="/pmwiki/pmwiki.php/Main/Webcomics" title="Main/Webcomics">Webcomics</a></li>
@@ -2244,6 +1260,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
                         <ul>
                             <li><a href="/pmwiki/pmwiki.php/Administrivia/IttyBittyWikiTools">Wiki Tools</a></li>
                             <li><a href="/pmwiki/cutlist.php" data-modal-target="login" rel="nofollow">Cut List</a></li>
+                            <li><a href="/pmwiki/image-fixer.php" data-modal-target="login" rel="nofollow">Image Fixer</a></li>
                             <li><a href="/pmwiki/changes.php">New Edits</a></li>
                             <li><a href="/pmwiki/articles_new.php">New Articles</a></li>
                             <li><a href="/pmwiki/recent_edit_reasons.php">Edit Reasons</a></li>
@@ -2291,15 +1308,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
             <p style="margin-top: 20px;" class="sidebar-item-title" data-title="Advertisement">Advertisement:</p>
             <div id="asteri_cont"></div>
         </div>
-        <script>
-            //asteri enabled
-            if((tvtropes_config.asteri_stream_enabled || tvtropes_config.get_asteri_stream == 'live')) {
-                //aster stream currently live and not a logged-in troper
-                if(!tvtropes_config.is_logged_in && cookies.read('asteri_event_active') != '') {
-                    document.getElementById('asteri-sidebar').style.display="";
-                }
-            }
-        </script>
+        
 
     </div>
 
@@ -2308,37 +1317,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
 
     
         
-            <script>
-    if(!is_mobile()) {
-
-        //don't insert if content is too small on page
-        var tropes_insert_side_ad=true;
-        if(document.getElementById("main-article") && document.getElementById("main-article").clientHeight) {
-            var sidebar_height=document.getElementById("main-article").clientHeight;
-            if(sidebar_height>0 && sidebar_height<500) {
-                tropes_insert_side_ad=false;
-                console.log('ad parser: content too small for sidebar ad');
-            }
-        }
-
-        if(tropes_insert_side_ad) {
-
-       document.write(`
-        <div id="stick-cont"  class="sidebar-item sb-fad-unit">
-            <p class="sidebar-item-title" data-title="Advertisement">Advertisement:</p>
-            <div id="stick-bar" class="sidebar-section">
-                <div class="square_fad fad-size-300x600 fad-section text-center">
-                    <div class='tvtropes-ad-unit '>
-                      <div id='tvtropes_dt_inview' class='htlad-tvtropes_dt_inview'></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        `);
-        }
-
-    }
-    </script>
+            
     
 
 </div>
@@ -2346,7 +1325,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
     </div>
 
         <div id="action-bar-bottom" class="action-bar tablet-off">
-        <a href="#top-of-page" class="scroll-to-top dead-button" onclick="$('html, body').animate({scrollTop : 0},500);">Top</a>
+        <a href="#top-of-page" class="scroll-to-top dead-button" onclick="scroll_to_top(500);">Top</a>
     </div>
     
 </div>    <footer id="main-footer">
@@ -2385,7 +1364,6 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
                 <li><a href="/pmwiki/tlp_activity.php">Trope Launch Pad</a></li>
                 <li><a href="/pmwiki/query.php?type=tf">Trope Finder</a></li>
                 <li><a href="/pmwiki/query.php?type=ykts">Media Finder</a></li>
-                <li><a href="/pmwiki/lbs.php" data-modal-target="login">Live Blogs</a></li>
                 <li><a href="/pmwiki/query.php?type=wl">Tech Wishlist</a></li>
                 <li><a href="/pmwiki/review_activity.php">Reviews</a></li>
                 <li><a href="/pmwiki/topics.php">Forum</a></li>
@@ -2401,6 +1379,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
                 <li><a href="/pmwiki/changelog.php">Changelog</a></li>
                 <li><a href="/pmwiki/dmca.php">DMCA Notice</a></li>
                 <li><a href="/pmwiki/privacypolicy.php">Privacy Policy</a></li>
+                <li><a href="/pmwiki/termsofservice.php">Terms Of Service</a></li>
 
             </ul>
 
@@ -2411,7 +1390,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
         </div>
 
         <div class="legal">
-            <p>TVTropes is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. <br>Permissions beyond the scope of this license may be available from <a xmlns:cc="http://creativecommons.org/ns#" href="mailto:thestaff@tvtropes.org" rel="cc:morePermissions"> thestaff@tvtropes.org</a>.</p>
+            <p>TVTropes is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. <br>Permissions beyond the scope of this license may be available from <a xmlns:cc="http://creativecommons.org/ns#" href="/cdn-cgi/l/email-protection#7a0e121f090e1b1c1c3a0e0c0e08150a1f095415081d" rel="cc:morePermissions"> <span class="__cf_email__" data-cfemail="780c101d0b0c191e1e380c0e0c0a17081d0b56170a1f">[email&#160;protected]</span></a>.</p>
             <br>
             <div class="privacy_wrapper">
             </div>
@@ -2419,25 +1398,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
     </footer>
     
     
-    <style>
-      div.fc-ccpa-root {
-        position: absolute !important;
-        bottom: 93px !important;
-        margin: auto !important;
-        width: 100% !important;
-        z-index: 9999 !important;
-        overflow: hidden !important;
-      }
-      .fc-ccpa-root .fc-dns-dialog .fc-dns-link p{
-        outline: none !important;
-        text-decoration: underline !important;
-        font-size: .7em !important;
-        font-family: sans-serif !important;
-      }
-      .fc-ccpa-root .fc-dns-dialog .fc-dns-link .fc-button-background {
-        background: none !important;
-      }
-    </style>
+    
 
         <div id="_pm_videoViewer" class="full-screen">
 
@@ -2450,12 +1411,12 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
         <div id="overlay_outer_player_max">
 	<div id="overlay_outer_player_wrapper">
 		<div id="tvtropes_overlay_player" 
-			data-video-id="tvtropes-videos-06xpi1" 
-			data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/06xpi1.jpg" 
-			data-video-title="Tetrax Shard" 
-			data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/06xpi1_640x360p_qvbr.mp4" 
-			data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/06xpi1.mpd" 
-			data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/06xpi1.m3u8"
+			data-video-id="tvtropes-videos-7s7xqa" 
+			data-video-image="https://static.tvtropes.org/trope_videos_transcoded/images/sd/7s7xqa.jpg" 
+			data-video-title="Tobita's Redemption" 
+			data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/7s7xqa_640x360p_qvbr.mp4" 
+			data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/7s7xqa.mpd" 
+			data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/7s7xqa.m3u8"
 			data-small-player="never"
 			data-track-events="1"
 			data-do-not-loop="1"
@@ -2467,11 +1428,11 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
 
 <div class="_pmvv-vidbox-desc">
 
-	<h1 id="overlay-title">Tetrax Shard</h1>
+	<h1 id="overlay-title">Tobita's Redemption</h1>
 	<p id="overlay-descrip" class="_pmvv-vidbox-descTxt">
-	    A Mercenary who worked for Vilgax, only to watch as his Homeworld and entire species was destroyed because of his actions	</p>
+	    Once, Tobita tried and failed to be a hero, which led him down the path to becoming the villain known as Gentle Criminal. Now, thanks to Midoriya's influence, he is ready to become the hero he was always destined to be!	</p>
 
-      <div class="rating-row"  data-video-id="06xpi1" >
+      <div class="rating-row"  data-video-id="7s7xqa" >
         <input type="hidden" name="is_logged_in"  value="0" >
         <p>How well does it match the trope?</p>
 				<div id="star-rating-group">
@@ -2489,7 +1450,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
 													</div>
 
                         <div id="star-rating-total">
-                                                            5 (12 votes)
+                                                            5 (2 votes)
                                                     </div>
 
 					</div>
@@ -2512,7 +1473,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
 			</div>
 		</div>
 	<p class="_pmvv-vidbox-stats text-right font-s" style="padding-top:8px; border-top: solid 1px rgba(255,255,255,0.2)">
-	<!--    <i class="fa fa-eye"></i> 11,241-->
+	
 
 
 			    <a href="#video-feedback" class="float-right" 
@@ -2532,6 +1493,86 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
 
     <div class="_pmvv-foot-scrollwrapper">
                 <a href="#video-link" 
+             data-video-id="7s7xqa"
+             data-vimeo-id=""
+             data-video-descrip="Once, Tobita tried and failed to be a hero, which led him down the path to becoming the villain known as Gentle Criminal. Now, thanks to Midoriya's influence, he is ready to become the hero he was always destined to be!"
+             data-video-title="Tobita's Redemption"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/7s7xqa_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/7s7xqa.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/7s7xqa.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/7s7xqa.jpg"
+             data-video-trope="Main/TheAtoner"
+             data-video-tropename="The Atoner"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="5.00"
+             data-video-rating-count="2"
+             data-video-media-sources="Main/BarrierWarrior,Main/BigDamnHeroes,Main/HellYesMoment,Main/MyGreatestSecondChance,Main/ReformedCriminal,Main/ThePowerOfLove,Manga/MyHeroAcademia,Recap/MyHeroAcademiaS7E16TheChainThusFar"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/7s7xqa.jpg">
+            <p><span class="bold">Tobita's Redemp...</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="n6u1cy"
+             data-vimeo-id=""
+             data-video-descrip="When she was held captive by the Iron Kingdom, Jill was forced to commit all manner of atrocity, the guilt from which continues to weigh upon her..."
+             data-video-title="&quot;I Had Become a Monster&quot;"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/n6u1cy_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/n6u1cy.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/n6u1cy.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/n6u1cy.jpg"
+             data-video-trope="Main/IAmAMonster"
+             data-video-tropename="I Am a Monster"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="5.00"
+             data-video-rating-count="3"
+             data-video-media-sources="Main/TheAtoner,VideoGame/FinalFantasyXVI"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/n6u1cy.jpg">
+            <p><span class="bold">"I Had Become a...</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="ie3bsj"
+             data-vimeo-id=""
+             data-video-descrip="If Shepard doesn't tell anyone about the sabotage and only later points out Mordin's change in opinion on the Genophage cure, Mordin admits that he was wrong to support it before going to cure it, dying in the process."
+             data-video-title="I MADE A MISTAKE!"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/ie3bsj_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/ie3bsj.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/ie3bsj.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/ie3bsj.jpg"
+             data-video-trope="Main/TheAtoner"
+             data-video-tropename="The Atoner"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="4.90"
+             data-video-rating-count="10"
+             data-video-media-sources="Main/HeroicSacrifice,Main/MyGreatestFailure,Main/MyGreatestSecondChance,Main/RedemptionEqualsDeath,VideoGame/MassEffect3"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/ie3bsj.jpg">
+            <p><span class="bold">I MADE A MISTAKE!</span></p>
+          </a>
+                <a href="#video-link" 
+             data-video-id="77a6a6"
+             data-vimeo-id=""
+             data-video-descrip="Rtas Vadum gives an imposing speech to his troops about combating a heresy, but makes clear to Thel' Vadam that the safety of his troops take priority over the disgraced Elite. Vadam concurs. "
+             data-video-title="On the Blood of Our Fathers"
+             data-video-url="https://d1w6li7s85ibls.cloudfront.net/qvbr/77a6a6_640x360p_qvbr.mp4"
+             data-mpd-url="https://d1w6li7s85ibls.cloudfront.net/dash/77a6a6.mpd"
+             data-hls-url="https://d1w6li7s85ibls.cloudfront.net/hls/77a6a6.m3u8"
+             data-video-thumbnail="https://static.tvtropes.org/trope_videos_transcoded/images/sd/77a6a6.jpg"
+             data-video-trope="Main/AFatherToHisMen"
+             data-video-tropename="A Father to His Men"
+             data-video-approval="APPROVED"
+             data-video-troper-rating=""
+             data-video-average-rating="4.67"
+             data-video-rating-count="6"
+             data-video-media-sources="Main/BadassBoast,Main/DeathSeeker,Main/TheAtoner,VideoGame/Halo2,Main/BadassCreed"
+             class="video-launch-link video-overlay-link video-background-image lazy-image" 
+             data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/77a6a6.jpg">
+            <p><span class="bold">On the Blood of...</span></p>
+          </a>
+                <a href="#video-link" 
              data-video-id="06xpi1"
              data-vimeo-id=""
              data-video-descrip="A Mercenary who worked for Vilgax, only to watch as his Homeworld and entire species was destroyed because of his actions"
@@ -2545,7 +1586,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
              data-video-approval="APPROVED"
              data-video-troper-rating=""
              data-video-average-rating="5.00"
-             data-video-rating-count="12"
+             data-video-rating-count="21"
              data-video-media-sources="Main/LastOfHisKind,Main/MyGodWhatHaveIDone,WesternAnimation/Ben10,WesternAnimation/Ben10SecretOfTheOmnitrix"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/06xpi1.jpg">
@@ -2565,7 +1606,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
              data-video-approval="APPROVED"
              data-video-troper-rating=""
              data-video-average-rating="5.00"
-             data-video-rating-count="9"
+             data-video-rating-count="11"
              data-video-media-sources="Anime/DigimonAdventure02,Main/Forgiveness,Main/TheAtoner,Main/ThePromise,Main/UsedToBeASweetKid,Recap/DigimonAdventure02E23GenesisOfEvil"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/qrqjv9.jpg">
@@ -2584,8 +1625,8 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
              data-video-tropename="The Atoner"
              data-video-approval="APPROVED"
              data-video-troper-rating=""
-             data-video-average-rating="5.00"
-             data-video-rating-count="7"
+             data-video-average-rating="4.88"
+             data-video-rating-count="8"
              data-video-media-sources="Anime/YuGiOh5Ds,Main/MustMakeAmends,Main/WhatHaveIBecome"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/rlhwtn.jpg">
@@ -2605,8 +1646,8 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
              data-video-approval="APPROVED"
              data-video-troper-rating=""
              data-video-average-rating="5.00"
-             data-video-rating-count="9"
-             data-video-media-sources="Film/AvengersEndgame,Film/AvengersInfinityWar,Film/CaptainAmericaTheFirstAvenger,Film/DoctorStrangeInTheMultiverseOfMadness,Film/IronMan1,Film/ShangChiAndTheLegendOfTheTenRings,Film/SpiderManNoWayHome,Film/Thor,Franchise/MarvelCinematicUniverse,Main/JumpingOnAGrenade,Main/TheAtoner,WebVideo/GameTheory"
+             data-video-rating-count="14"
+             data-video-media-sources="Film/AvengersEndgame,Film/AvengersInfinityWar,Film/CaptainAmericaTheFirstAvenger,Film/DoctorStrangeInTheMultiverseOfMadness,Film/IronMan1,Film/ShangChiAndTheLegendOfTheTenRings,Film/SpiderManNoWayHome,Film/Thor2011,Main/JumpingOnAGrenade,Main/TheAtoner,WebVideo/GameTheory"
              class="video-launch-link video-overlay-link video-background-image lazy-image" 
              data-src="https://static.tvtropes.org/trope_videos_transcoded/images/sd/2kygz3.jpg">
             <p><span class="bold">The MCU's 3rd F...</span></p>
@@ -2639,22 +1680,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
 
         
     
-        <script type="text/javascript">
-
-        var cleanCreativeEnabled = "";
-        var donation = "";
-        var live_ads = "1";
-        var img_domain = "https://static.tvtropes.org";
-        var snoozed = cookies.read('snoozedabm');
-        var elem = document.createElement('script');
-        elem.async = true;
-
-        elem.src = 'https://assets.tvtropes.org/design/assets/bundle.js?rev=671f9ba8e4afc81c41f31b56ffd024a629f38e87';
-
-        elem.onload = function() {
-                                 }
-        document.getElementsByTagName('head')[0].appendChild(elem);
-    </script>
+        
 
 
     
@@ -2662,71 +1688,20 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
 
     
     
-  <script type="text/javascript">
-      function send_analytics_event(user_type, donation){
-          // if(user_type == 'uncached' || user_type == 'cached'){
-          //   ga('send', 'event', 'caching', 'load', user_type, {'nonInteraction': 1});
-          //   return;
-          // }
-          var event_name = user_type;
-
-          if(donation == 'true'){
-              event_name += "_donation"
-          }else if(typeof(valid_user) == 'undefined'){
-              event_name += "_blocked"
-          }else if(valid_user == true){
-              event_name += "_unblocked";
-          }else{
-              event_name = "_unknown"
-          }
-          ga('send', 'event', 'ads', 'load', event_name, {'nonInteraction': 1});
-      }
-
-    
-    send_analytics_event("guest", "false");
-      </script>
+  
 
 
 
-<!-- Quantcast Tag -->
-<script type="text/javascript">
-  window._qevents = window._qevents || [];
-
-  (function() {
-    var elem = document.createElement('script');
-    elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
-    elem.async = true;
-    elem.type = "text/javascript";
-    var scpt = document.getElementsByTagName('script')[0];
-    scpt.parentNode.insertBefore(elem, scpt);
-  })();
-
-  window._qevents.push({
-      qacct:"p-mEzuYq24VEJ-3"
-  });
-</script>
-
-<noscript>
-  <div style="display:none;">
-    <img src="//pixel.quantserve.com/pixel/p-mEzuYq24VEJ-3.gif" border="0" height="1" width="1" alt="Quantcast"/>
-  </div>
-</noscript>
-<!-- End Quantcast tag -->
 
 
-<!-- Begin comScore Tag -->
-<script>
-  var _comscore = _comscore || [];
-  _comscore.push({ c1: "2", c2: "38282685" });
-  (function() {
-    var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
-    s.src = "https://sb.scorecardresearch.com/cs/38282685/beacon.js";
-    el.parentNode.insertBefore(s, el);
-  })();
-</script>
-<noscript>
-  <img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=38282685&amp;cv=3.6.0&amp;cj=1">
-</noscript>
-<!-- End comScore Tag -->
+
+
+
+
+
+
+
+
+
 </body>
 </html>

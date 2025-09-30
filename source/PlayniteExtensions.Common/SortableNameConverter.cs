@@ -7,7 +7,6 @@ namespace PlayniteExtensions.Common;
 
 public class SortableNameConverter
 {
-    private readonly string[] articles;
     private readonly string[] removeFromStart;
     private readonly string[] removeFromEnd;
     private readonly int numberLength;
@@ -18,7 +17,7 @@ public class SortableNameConverter
     /// </summary>
     private static readonly string[] excludedRomanNumerals = ["XL", "XD", "DX", "XXX", "L", "C", "D", "M", "MII", "MIX", "MX", "MC", "DC"];
 
-    //Haven't observed game titles with zero, or four and above that would benefit from making those words sortable numbers. If you change this, be sure to change the regex too.
+    /// Haven't observed game titles with zero, or four and above that would benefit from making those words sortable numbers. If you change this, be sure to change the regex too.
     private static readonly Dictionary<string, int> numberWordValues = new(StringComparer.InvariantCultureIgnoreCase) { { "one", 1 }, { "two", 2 }, { "three", 3 } };
 
     private static readonly Dictionary<char, int> romanNumeralValues = new()
@@ -32,18 +31,18 @@ public class SortableNameConverter
         {'ↀ', 1000}, {'ↁ', 5000}, {'ↂ', 10000}, {'Ↄ', 100}, {'ↄ', 100}, {'ↅ', 6}, {'ↆ', 50}, {'ↇ', 50000}, {'ↈ', 100000}
     };
 
-    //(?<![\w.]|^) prevents the numerical matches from happening at the start of the string (for example for X-COM or XIII) or attached to a word or . (to avoid S.T.A.L.K.E.R. -> S.T.A.50.K.E.R.)
-    //(?!\.) prevents matching roman numerals with a period right after (again for cases like abbreviations with periods, but that start with a roman numeral character)
-    //\u2160-\u2188 is the unicode range of roman numerals listed in RomanNumeralValues
-    //using [0-9] here instead of \d because \d also matches ٠١٢٣٤٥٦٧٨٩ and I don't know what to do with those
-    //the (?i) is a modifier that makes the rest of the regex (to the right of it) case insensitive
-    //see https://www.regular-expressions.info/modifiers.html
+    // (?<![\w.]|^) prevents the numerical matches from happening at the start of the string (for example for X-COM or XIII) or attached to a word or . (to avoid S.T.A.L.K.E.R. -> S.T.A.50.K.E.R.)
+    // (?!\.) prevents matching roman numerals with a period right after (again for cases like abbreviations with periods, but that start with a roman numeral character)
+    // \u2160-\u2188 is the Unicode range of roman numerals listed in RomanNumeralValues
+    // using [0-9] here instead of \d because \d also matches ٠١٢٣٤٥٦٧٨٩ and I don't know what to do with those
+    // the (?i) is a modifier that makes the rest of the regex (to the right of it) case-insensitive
+    // see https://www.regular-expressions.info/modifiers.html
     private static readonly Regex numberRegex = new(@"(?<![\w.]|^)((?<roman>[IVXLCDM\u2160-\u2188]+(?!\.))|(?<arabic>[0-9]+))(?=\W|$)|(?i)\b(?<numberword>one|two|three)\b", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
-    //The unicode characters in the first group here are all kinds of hyphens
-    //The 'a', 'b', '-a' and '-b' groups are balancing groups used to optionally match an arbitrary number of [] or () braces around the edition string
-    //(?(a)(?!)) is a conditional that fails if the 'a' capturing group has any matches - the '-a' group removes a match for every match it finds
-    //For a more thorough explanation, see https://www.regular-expressions.info/balancing.html
+    /// The Unicode characters in the first group here are all kinds of hyphens.
+    /// The 'a', 'b', '-a' and '-b' groups are balancing groups used to optionally match an arbitrary number of [] or () braces around the edition string.
+    /// (?(a)(?!)) is a conditional that fails if the 'a' capturing group has any matches - the '-a' group removes a match for every match it finds.
+    /// For a more thorough explanation, see https://www.regular-expressions.info/balancing.html
     private static readonly Regex ignoredEndWordsRegex = new(@"(\s*[-:\u2010-\u2014\uFE58\uFE63\uFF0D])?(\s+(?<a>\()*(?<b>\[)*((the\s+)?\S+\s+(edition|cut)|deluxe|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the( year)?|goty|enhanced|ce))+(?<-b>\])*(?<-a>\))*(?(a)(?!))(?(b)(?!))$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
     /// <summary>
@@ -56,9 +55,8 @@ public class SortableNameConverter
     {
         articles ??= ["the", "a", "an"];
 
-        this.articles = articles.ToArray();
-        this.removeFromStart = this.articles.Select(a => a + " ").ToArray();
-        this.removeFromEnd = this.articles.Select(a => ", " + a).ToArray();
+        this.removeFromStart = articles.Select(a => a + " ").ToArray();
+        this.removeFromEnd = articles.Select(a => ", " + a).ToArray();
         this.numberLength = numberLength;
         this.removeEditions = removeEditions;
     }
@@ -77,48 +75,34 @@ public class SortableNameConverter
         {
             if (match.Groups["roman"].Success)
             {
-                if (match.Value == "I")
+                switch (match.Value)
                 {
-                    if (MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match) || MatchComesBeforeConnectingCharacter(input, match))
+                    case "I" when MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match) || MatchComesBeforeConnectingCharacter(input, match):
                         return "1".PadLeft(numberLength, '0');
-                    else
-                        return match.Value;
-                }
-                else if (match.Value == "X")
-                {
-                    if (MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match, maxDistanceFromEnd: 4) && !MatchComesBeforeDashAndWord(input, match))
+                    case "X" when MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match, maxDistanceFromEnd: 4) && !MatchComesBeforeDashAndWord(input, match):
                         return "10".PadLeft(numberLength, '0');
-                    else
+                    case "I":
+                    case "X":
                         return match.Value;
+                    default:
+                        return excludedRomanNumerals.Contains(match.Value)
+                            ? match.Value
+                            : ConvertRomanNumeralToInt(match.Value)?.ToString(new string('0', numberLength)) ?? match.Value;
                 }
-                else if (excludedRomanNumerals.Contains(match.Value))
-                {
-                    return match.Value;
-                }
-                return ConvertRomanNumeralToInt(match.Value)?.ToString(new string('0', numberLength)) ?? match.Value;
             }
-            else if (match.Groups["arabic"].Success)
-            {
+            if (match.Groups["arabic"].Success)
                 return match.Value.PadLeft(numberLength, '0');
-            }
-            else if (match.Groups["article"].Success)
-            {
+
+            if (match.Groups["article"].Success)
                 return string.Empty;
-            }
-            else if (match.Groups["numberword"].Success)
-            {
-                if (MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match))
-                    return numberWordValues[match.Value].ToString(new string('0', numberLength));
-                else
-                    return match.Value;
-            }
+
+            if (match.Groups["numberword"].Success && MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match))
+                return numberWordValues[match.Value].ToString(new string('0', numberLength));
+            
             return match.Value;
         });
 
-        if (removeEditions)
-            return output;
-        else
-            return output + edition;
+        return removeEditions ? output : output + edition;
     }
 
     private string StripArticles(string input)

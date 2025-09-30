@@ -1,5 +1,6 @@
 ﻿using SqlNado;
 using System;
+using PlayniteExtensions.Metadata.Common;
 
 namespace LaunchBoxMetadata;
 
@@ -7,7 +8,7 @@ namespace LaunchBoxMetadata;
 public class LaunchBoxGame : IDatabaseObject
 {
     [SQLiteColumn(IsPrimaryKey = true)]
-    public string DatabaseID { get; set; }
+    public long DatabaseID { get; set; }
     public string Name { get; set; }
     public DateTime? ReleaseDate { get; set; }
     public int ReleaseYear { get; set; }
@@ -24,37 +25,64 @@ public class LaunchBoxGame : IDatabaseObject
     public string Genres { get; set; }
     public string Developer { get; set; }
     public string Publisher { get; set; }
+    
+    /// <summary>
+    /// Computed after XML parsing, not part of the original XML spec
+    /// </summary>
+    public string Aliases { get; set; }
 }
 
 [SQLiteTable(Name = "GameNames", Module = "fts5", ModuleArguments = nameof(DatabaseID) + "," + nameof(Name))]
 public class LaunchBoxGameName : IDatabaseObject
 {
-    public string DatabaseID { get; set; }
+    public long DatabaseID { get; set; }
     public string Name { get; set; }
 }
 
 [SQLiteTable(Name = "GameImages")]
 public class LaunchBoxGameImage : IDatabaseObject
 {
-    public string DatabaseID { get; set; }
+    public long DatabaseID { get; set; }
 
     public string FileName { get; set; }
 
-    [SQLiteIndex("IX_ImageType")]
     public string Type { get; set; }
 
-    [SQLiteIndex("IX_ImageRegion")]
     public string Region { get; set; }
 
     public uint CRC32 { get; set; }
 
-    string IDatabaseObject.Name => FileName;
+    string IHasName.Name => FileName;
 }
 
-public interface IDatabaseObject
+public class ItemCount: IHasName
 {
-    string DatabaseID { get; }
-    string Name { get; }
+    
+    [SQLiteColumn(IsPrimaryKey = true, AutoIncrements = true)]
+    public long Id { get; set; }
+    public string Name { get; set; }
+    public int Count { get; set; }
+}
+
+[SQLiteTable(Name = "ImageTypes")]
+public class ImageType : ItemCount { }
+
+[SQLiteTable(Name = "ImageRegions")]
+public class ImageRegion : ItemCount { }
+
+[SQLiteTable(Name = "Genres")]
+public class Genre : ItemCount { }
+
+[SQLiteTable(Name = "GameGenres")]
+public class GameGenre
+{
+    public long GameId { get; set; }
+    public long GenreId { get; set; }
+}
+
+public interface IDatabaseObject: IHasName
+{
+    long DatabaseID { get; }
 }
 
 public class LaunchboxGameSearchResult : LaunchBoxGame

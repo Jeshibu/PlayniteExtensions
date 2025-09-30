@@ -17,7 +17,7 @@ public class RawgLibraryMetadataProvider(RawgLibrarySettings settings, RawgApiCl
         var data = client.GetGame(game.GameId);
 
         if (data == null)
-            return new GameMetadata();
+            return new();
 
         return ToGameMetadata(data, logger, languageCode, settings);
     }
