@@ -3,29 +3,17 @@
     <ProjectGuid>{C8D3E73F-8236-4B04-8456-095FF702FABA}</ProjectGuid>
     <AssemblyTitle>EaLibrary</AssemblyTitle>
     <Product>EaLibrary</Product>
-    <Description>EA library support plugin for Playnite</Description>
-    <Deterministic>false</Deterministic>
-    <AssemblyVersion>3.0</AssemblyVersion>
-    <FileVersion>3.0</FileVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" NoWarn="NU1903" />
     <PackageReference Include="PlayniteSDK" Version="6.4.0" />
     <PackageReference Include="RestSharp" Version="108.0.2" NoWarn="NU1902" />
+    <PackageReference Include="SHA3" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System.Management" />
-    <Reference Include="System.Management.Automation" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,8 +33,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Localization\*.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Page Include="App.xaml">

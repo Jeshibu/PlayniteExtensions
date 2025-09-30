@@ -91,4 +91,26 @@ public class Kernel32
         out uint lpBytesPerSector,
         out uint lpNumberOfFreeClusters,
         out uint lpTotalNumberOfClusters);
+
+    [DllImport(dllName, SetLastError = true, CharSet = CharSet.Unicode)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public extern static bool GetVolumeInformationW(
+        string rootPathName,
+        StringBuilder volumeNameBuffer,
+        int volumeNameSize,
+        out uint volumeSerialNumber,
+        out uint maximumComponentLength,
+        out uint fileSystemFlags,
+        StringBuilder fileSystemNameBuffer,
+        int nFileSystemNameSize);
+
+    //public static extern bool GetVolumeInformationW(
+    //    [In] string lpRootPathName,                                                 //[in, optional] LPCWSTR lpRootPathName,
+    //    [Out, MarshalAs(UnmanagedType.LPWStr)] out string lpVolumeNameBuffer,       //[out, optional] LPWSTR lpVolumeNameBuffer,
+    //    uint nVolumeNameSize,                                                       //[in] DWORD nVolumeNameSize,
+    //    out uint lpVolumeSerialNumber,                                              //[out, optional] LPDWORD lpVolumeSerialNumber,
+    //    out uint lpMaximumComponentLength,                                          //[out, optional] LPDWORD lpMaximumComponentLength,
+    //    out uint lpFileSystemFlags,                                                 //[out, optional] LPDWORD lpFileSystemFlags,
+    //    [Out, MarshalAs(UnmanagedType.LPWStr)] out string lpFileSystemNameBuffer,   //[out, optional] LPWSTR lpFileSystemNameBuffer,
+    //    uint nFileSystemNameSize);                                                  //[in] DWORD nFileSystemNameSize
 }

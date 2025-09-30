@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Playnite.Native;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -59,10 +60,10 @@ public class HardwareInfo
     public static HardwareInfo Get()
     {
         var output = new HardwareInfo(
-            bsn: GetWmiProperty("Win32_BIOS", "SerialNumber").Single(),
+            bsn: GetWmiProperty("Win32_BIOS", "SerialNumber"),
             gid: GetGpuId(),
-            hsn: GetWmiProperty("Win32_DiskDrive", "SerialNumber").First(),
-            msn: GetWmiProperty("Win32_BaseBoard", "SerialNumber").First().Trim(),
+            hsn: GetWmiProperty("Win32_DiskDrive", "SerialNumber"),
+            msn: GetWmiProperty("Win32_BaseBoard", "SerialNumber").Trim(),
             mac: GetMacAddress()
         );
 
@@ -85,16 +86,19 @@ public class HardwareInfo
         mid = offset.ToString();
     }
 
-    private static IEnumerable<string> GetWmiProperty(string className, string propertyName)
+    private static IEnumerable<string> GetAllWmiPropertyValues(string className, string propertyName)
     {
         using var searcher = new ManagementObjectSearcher($"SELECT {propertyName} FROM {className}");
         foreach (var obj in searcher.Get())
             yield return obj.GetPropertyValue(propertyName).ToString();
     }
 
+    public static string GetWmiProperty(string className, string propertyName) => GetAllWmiPropertyValues(className, propertyName).First();
+
+
     private static int GetGpuId()
     {
-        var pnpIds = GetWmiProperty("Win32_VideoController", "PNPDeviceID");
+        var pnpIds = GetAllWmiPropertyValues("Win32_VideoController", "PNPDeviceID");
         foreach (var pnpId in pnpIds)
         {
             if (!pnpId.Contains("DEV_"))
@@ -121,4 +125,14 @@ public class HardwareInfo
     }
 
     private static string GetTimeStampString() => DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss:fff");
+
+    public static uint GetVolumeSerialNumber(string volumePath)
+    {
+        var result = Kernel32.GetVolumeInformationW(volumePath, null, 0, out uint serialNumber, out uint _, out uint _, null, 0);
+
+        if (result)
+            return serialNumber;
+
+        throw new Exception($"Error getting serial number for {volumePath}");
+    }
 }

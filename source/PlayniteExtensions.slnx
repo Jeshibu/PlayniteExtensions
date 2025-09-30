@@ -8,6 +8,8 @@
   <Project Path="Barnite/Barnite.csproj" />
   <Project Path="BigFishLibrary/BigFishLibrary.csproj" />
   <Project Path="BigFishMetadata/BigFishMetadata.csproj" />
+  <Project Path="EaLibrary.Tests\EaLibrary.Tests.csproj" />
+  <Project Path="EaLibrary\EaLibrary.csproj" />
   <Project Path="ExtraEmulatorProfiles/ExtraEmulatorProfiles.csproj" />
   <Project Path="FilterSearch\FilterSearch.csproj" />
   <Project Path="GamersGateLibrary.Tests/GamersGateLibrary.Tests.csproj" />
