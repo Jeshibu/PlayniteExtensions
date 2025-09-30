@@ -29,3 +29,10 @@ Packages:
       - 'Activating search items now focuses the Playnite window and library view'
       - 'Added global search items to change the filter settings for installed/hidden/favorite/match all filters, and to clear all filters'
       - 'Added search contexts to change the library sorting order and grouping'
+  - Version: '1.1.1'
+    RequiredApiVersion: 6.12.0
+    ReleaseDate: {NEWDATE}
+    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/filtersearch1.1.1/FilterSearch_1_1_1.pext'
+    Changelog:
+      - 'Fixed library plugins only showing the ones loaded in before the Filter Search plugin was loaded in'
+      - 'Default keyword for the library search context is now "lib"'

@@ -1,6 +1,7 @@
 ﻿using FilterSearch.SearchItems.Base;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using Playnite.SDK.Plugins;
 
 namespace FilterSearch.SearchItems;
 
@@ -81,8 +82,8 @@ public sealed class SourceFilterSearchItem(IMainViewAPI mainViewApi, GameSource 
     protected override void ApplyFilterImpl(FilterPreset fp) => Append(fp, DatabaseObject, fs => fs.Source);
 }
 
-public sealed class LibraryFilterSearchItem(IMainViewAPI mainViewApi, DatabaseObject databaseObject, bool appendFilterIsPrimary)
-    : SingleFilterSearchItem<DatabaseObject>(mainViewApi, databaseObject, "Library", appendFilterIsPrimary)
+public sealed class LibraryFilterSearchItem(IMainViewAPI mainViewApi, LibraryPlugin plugin, bool appendFilterIsPrimary)
+    : SingleFilterSearchItem<DatabaseObject>(mainViewApi, new() { Id = plugin.Id, Name = plugin.Name }, "Library", appendFilterIsPrimary)
 {
     protected override void ApplyFilterImpl(FilterPreset fp) => Append(fp, DatabaseObject, fs => fs.Library);
 }

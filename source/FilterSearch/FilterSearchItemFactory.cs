@@ -1,12 +1,10 @@
 using FilterSearch.SearchContexts;
 using FilterSearch.SearchItems;
-using FilterSearch.SearchItems.Base;
 using FilterSearch.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace FilterSearch;
 
@@ -78,7 +76,7 @@ public class FilterSearchItemFactory(IPlayniteAPI playniteApi, FilterSearchSetti
     private static SearchContext GetSearchContext(FilterProperty prop, IPlayniteAPI playniteApi, bool appendFilterIsPrimary) => prop switch
     {
         FilterProperty.FilterPreset => new DbObjFilterSearchContext<FilterPreset>(playniteApi.Database.FilterPresets, x => new FilterPresetSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
-        FilterProperty.Library => new DbObjFilterSearchContext<DatabaseObject>(GetPlugins(playniteApi), x => new LibraryFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
+        FilterProperty.Library => new LibraryFilterSearchContext(playniteApi, appendFilterIsPrimary),
         FilterProperty.AgeRating => new DbObjFilterSearchContext<AgeRating>(playniteApi.Database.AgeRatings, x => new AgeRatingFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
         FilterProperty.Category => new DbObjFilterSearchContext<Category>(playniteApi.Database.Categories, x => new CategoryFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
         FilterProperty.CompletionStatus => new DbObjFilterSearchContext<CompletionStatus>(playniteApi.Database.CompletionStatuses, x => new CompletionStatusFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
@@ -92,11 +90,6 @@ public class FilterSearchItemFactory(IPlayniteAPI playniteApi, FilterSearchSetti
         FilterProperty.Source => new DbObjFilterSearchContext<GameSource>(playniteApi.Database.Sources, x => new SourceFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
         FilterProperty.Tag => new DbObjFilterSearchContext<Tag>(playniteApi.Database.Tags, x => new TagFilterSearchItem(playniteApi.MainView, x, appendFilterIsPrimary)),
     };
-
-    private static IEnumerable<DatabaseObject> GetPlugins(IPlayniteAPI playniteApi)
-    {
-        return playniteApi.Addons.Plugins.OfType<LibraryPlugin>().Select(p => new DatabaseObject { Id = p.Id, Name = p.Name });
-    }
 
     private static string GetSearchContextDescription(FilterProperty prop)
     {
@@ -118,6 +111,7 @@ public class FilterSearchItemFactory(IPlayniteAPI playniteApi, FilterSearchSetti
     {
         FilterProperty.FilterPreset => "fp",
         FilterProperty.CompletionStatus => "completion",
+        FilterProperty.Library => "lib",
         _ => prop.ToString().ToLowerInvariant()
     };
 }
