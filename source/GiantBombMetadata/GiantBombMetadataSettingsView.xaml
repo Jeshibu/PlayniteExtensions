@@ -40,9 +40,9 @@
                 </TextBlock>
 
                 <CheckBox Grid.Row="5" Grid.Column="1" Margin="10,0" IsChecked="{Binding Settings.ShowTopPanelButton}" Grid.ColumnSpan="2">
-                    <AccessText TextWrapping="Wrap">
+                    <TextBlock TextWrapping="Wrap">
                         Show top panel button to add metadata to multiple games (requires restart)
-                    </AccessText>
+                    </TextBlock>
                 </CheckBox>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1" Margin="10" Grid.ColumnSpan="2">

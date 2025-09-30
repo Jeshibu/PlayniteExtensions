@@ -18,8 +18,8 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
     private readonly PCGamingWikiMetadataSettings settings;
     private readonly PCGamingWikiPropertySearchProvider pcgwDataSource;
 
-    public PCGamingWikiBulkGamePropertyAssigner(IPlayniteAPI playniteAPI, PCGamingWikiMetadataSettings settings, IExternalDatabaseIdUtility databaseIdUtility, PCGamingWikiPropertySearchProvider dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
-        : base(playniteAPI, dataSource, platformUtility, databaseIdUtility, ExternalDatabase.PCGamingWiki, maxDegreeOfParallelism)
+    public PCGamingWikiBulkGamePropertyAssigner(IPlayniteAPI playniteApi, PCGamingWikiMetadataSettings settings, IExternalDatabaseIdUtility databaseIdUtility, PCGamingWikiPropertySearchProvider dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
+        : base(playniteApi, dataSource, platformUtility, databaseIdUtility, ExternalDatabase.PCGamingWiki, maxDegreeOfParallelism)
     {
         this.settings = settings;
         this.pcgwDataSource = dataSource;
