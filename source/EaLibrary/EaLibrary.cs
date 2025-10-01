@@ -1,6 +1,5 @@
-﻿using Microsoft.Win32;
-using EaLibrary.Models;
-using EaLibrary.Services;
+﻿using EaLibrary.Models;
+using Microsoft.Win32;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Data;
@@ -8,9 +7,9 @@ using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
@@ -57,7 +56,7 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
         Guid.Parse("85DD7072-2F20-4E76-A007-41035E390724"),
         new LibraryPluginProperties { CanShutdownClient = true, HasSettings = true },
         new EaClient(),
-        Origin.Icon,
+        EaApp.Icon,
         (_) => new EaLibrarySettingsView(),
         api)
     {
@@ -125,7 +124,7 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
         return resultPath;
     }
 
-    private System.Collections.Specialized.NameValueCollection ParseOriginManifest(string path)
+    private NameValueCollection ParseOriginManifest(string path)
     {
         var text = File.ReadAllText(path);
         var data = HttpUtility.UrlDecode(text);
@@ -176,7 +175,7 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
 
     internal GameLocalDataResponse GetLocalInstallerManifest(string id)
     {
-        GameLocalDataResponse manifest = null;
+        GameLocalDataResponse manifest;
         var manifestCacheFile = Path.Combine(installManifestCacheDir, Paths.GetSafePathName(id) + ".json");
         if (File.Exists(manifestCacheFile))
         {
@@ -194,23 +193,15 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
             }
         }
 
-        string origContent = null;
-        try
+        // There was a call to the Origin API here, but we can never get installer manifests again since the API was killed
+        manifest = new GameLocalDataResponse
         {
-            manifest = OriginApiClient.GetGameLocalData(id, out origContent);
-        }
-        catch (WebException exc) when ((exc.Response as HttpWebResponse)?.StatusCode == HttpStatusCode.NotFound)
-        {
-            logger.Warn($"EA manifest {id} not found on EA server, generating fake manifest.");
-            manifest = new GameLocalDataResponse
-            {
-                offerId = id,
-                offerType = fakeOfferType
-            };
-        }
+            offerId = id,
+            offerType = fakeOfferType
+        };
 
         FileSystem.PrepareSaveFile(manifestCacheFile);
-        File.WriteAllText(manifestCacheFile, origContent ?? Serialization.ToJson(manifest));
+        File.WriteAllText(manifestCacheFile, Serialization.ToJson(manifest));
         return manifest;
     }
 
@@ -245,7 +236,7 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
             }
 
             var paths = GetPathFromPlatformPath(launcher.filePath);
-            if (paths.CompletePath.Contains(@"://"))
+            if (paths.CompletePath.Contains("://"))
             {
                 return new GameAction
                 {
@@ -279,12 +270,12 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
     {
         var platform = manifest.publishing.softwareList.software.FirstOrDefault(a => a.softwarePlatform == "PCWIN");
         var playAction = new GameAction();
-        if (string.IsNullOrEmpty(platform.fulfillmentAttributes.executePathOverride))
+        if (string.IsNullOrEmpty(platform?.fulfillmentAttributes?.executePathOverride))
         {
             return null;
         }
 
-        if (platform.fulfillmentAttributes.executePathOverride.Contains(@"://"))
+        if (platform.fulfillmentAttributes.executePathOverride.Contains("://"))
         {
             playAction.Type = GameActionType.URL;
             playAction.Path = platform.fulfillmentAttributes.executePathOverride;
@@ -323,7 +314,7 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
             return new GameAction
             {
                 Type = GameActionType.URL,
-                Path = Origin.LibraryOpenUri
+                Path = EaApp.LibraryOpenUri
             };
         }
         else
@@ -415,79 +406,27 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
 
     public List<GameMetadata> GetLibraryGames(CancellationToken cancelToken)
     {
-        using (var view = PlayniteApi.WebViews.CreateOffscreenView())
+        var games = new List<GameMetadata>();
+        var manifests = new EaInstallerDataScanner().GetManifests(cancelToken);
+        
+        foreach (var manifest in manifests)
         {
-            var api = new OriginAccountClient(view);
-
-            if (!api.GetIsUserLoggedIn())
+            throw new NotImplementedException();
+            
+            /*
+            games.Add(new GameMetadata()
             {
-                throw new Exception("User is not logged in.");
-            }
-
-            var token = api.GetAccessToken();
-            if (token == null)
-            {
-                throw new Exception("Failed to get access to user account.");
-            }
-
-            if (!string.IsNullOrEmpty(token.error))
-            {
-                throw new Exception("Access error: " + token.error);
-            }
-
-            var info = api.GetAccountInfo(token);
-            if (!string.IsNullOrEmpty(info.error))
-            {
-                throw new Exception("Access error: " + info.error);
-            }
-
-            var games = new List<GameMetadata>();
-
-            foreach (var game in api.GetOwnedGames(info.pid.pidId, token).Where(a => a.offerType == "basegame"))
-            {
-                if (cancelToken.IsCancellationRequested)
-                {
-                    break;
-                }
-
-                UsageResponse usage = null;
-                try
-                {
-                    usage = api.GetUsage(info.pid.pidId, game.offerId, token);
-                }
-                catch (Exception e)
-                {
-                    Logger.Error(e, $"Failed to get usage data for {game.offerId}");
-                }
-
-                var gameName = game.offerId;
-                try
-                {
-                    var localData = GetLocalInstallerManifest(game.offerId);
-                    if (localData != null)
-                    {
-                        gameName = StringExtensions.NormalizeGameName(localData.localizableAttributes?.displayName ?? localData.i18n?.displayName ?? localData.itemName);
-                    }
-                }
-                catch (Exception e) when (!Environment.IsDebugBuild)
-                {
-                    Logger.Error(e, $"Failed to get Origin manifest for a {game.offerId}");
-                    continue;
-                }
-
-                games.Add(new GameMetadata()
-                {
-                    Source = new MetadataNameProperty("EA app"),
-                    GameId = game.offerId,
-                    Name = gameName,
-                    LastActivity = usage?.lastSessionEndTimeStamp,
-                    Playtime = (ulong)(usage?.total ?? 0),
-                    Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") }
-                });
-            }
-
-            return games;
+                Source = new MetadataNameProperty("EA app"),
+                GameId = game.offerId,
+                Name = gameName,
+                LastActivity = usage?.lastSessionEndTimeStamp,
+                Playtime = (ulong)(usage?.total ?? 0),
+                Platforms = new HashSet<MetadataProperty> { new MetadataSpecProperty("pc_windows") }
+            });
+            */
         }
+
+        return games;
     }
 
     public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
@@ -545,11 +484,11 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
         if (importError != null)
         {
             PlayniteApi.Notifications.Add(new NotificationMessage(
-                ImportErrorMessageId,
-                string.Format(PlayniteApi.Resources.GetString("LOCLibraryImportError"), Name) +
-                System.Environment.NewLine + importError.Message,
-                NotificationType.Error,
-                () => OpenSettingsView()));
+                                              ImportErrorMessageId,
+                                              string.Format(PlayniteApi.Resources.GetString("LOCLibraryImportError"), Name) +
+                                              System.Environment.NewLine + importError.Message,
+                                              NotificationType.Error,
+                                              () => OpenSettingsView()));
         }
         else
         {
@@ -587,10 +526,5 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
         }
 
         yield return new EaPlayController(args.Game, this);
-    }
-
-    public override LibraryMetadataProvider GetMetadataDownloader()
-    {
-        return new OriginMetadataProvider(PlayniteApi);
     }
 }

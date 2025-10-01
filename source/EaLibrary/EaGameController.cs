@@ -31,7 +31,7 @@ public class EaInstallController : InstallController
     public override void Install(InstallActionArgs args)
     {
         Dispose();
-        ProcessStarter.StartUrl(Origin.LibraryOpenUri);
+        ProcessStarter.StartUrl(EaApp.LibraryOpenUri);
         StartInstallWatcher();
     }
 
@@ -96,7 +96,7 @@ public class EaUninstallController : UninstallController
     public override void Uninstall(UninstallActionArgs args)
     {
         Dispose();
-        ProcessStarter.StartUrl(Origin.LibraryOpenUri);
+        ProcessStarter.StartUrl(EaApp.LibraryOpenUri);
         StartUninstallWatcher();
     }
 
@@ -167,7 +167,7 @@ public class EaPlayController : PlayController
             procMon.TreeDestroyed += ProcMon_TreeDestroyed;
             procMon.TreeStarted += ProcMon_TreeStarted;
             var startAction = eaLibrary.GetGamePlayTaskForGameId(Game.GameId);
-            if (Origin.GetGameUsesEasyAntiCheat(Game.InstallDirectory))
+            if (EaApp.GetGameUsesEasyAntiCheat(Game.InstallDirectory))
             {
                 var eac = EasyAntiCheat.GetLauncherSettings(Game.InstallDirectory);
                 if (!eac.parameters.IsNullOrEmpty() && eac.use_cmdline_parameters == "1")
@@ -210,7 +210,7 @@ public class EaPlayController : PlayController
     public async void StartRunningWatcher()
     {
         // Solves issues with game process being started/shutdown multiple times during startup via Origin
-        if (Origin.GetGameRequiresOrigin(Game.InstallDirectory) || Origin.GetGameUsesEasyAntiCheat(Game.InstallDirectory))
+        if (EaApp.GetGameRequiresOrigin(Game.InstallDirectory) || EaApp.GetGameUsesEasyAntiCheat(Game.InstallDirectory))
         {
             await Task.Delay(40_000);
         }

@@ -10,7 +10,7 @@ using System.Reflection;
 
 namespace EaLibrary;
 
-public class Origin
+public class EaApp
 {
     private static readonly ILogger logger = LogManager.GetLogger();
     public static readonly string LibraryOpenUri = "origin2://library/open";

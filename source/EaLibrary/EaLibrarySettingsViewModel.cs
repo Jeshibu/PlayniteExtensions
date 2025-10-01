@@ -1,6 +1,4 @@
-﻿using EaLibrary.Services;
-using Playnite.SDK;
-using System;
+﻿using Playnite.SDK;
 
 namespace EaLibrary;
 
@@ -14,26 +12,6 @@ public class EaLibrarySettings
 
 public class EaLibrarySettingsViewModel : PluginSettingsViewModel<EaLibrarySettings, EaLibrary>
 {
-    public bool IsUserLoggedIn
-    {
-        get
-        {
-            using (var view = PlayniteApi.WebViews.CreateOffscreenView())
-            {
-                var api = new OriginAccountClient(view);
-                return api.GetIsUserLoggedIn();
-            }
-        }
-    }
-
-    public RelayCommand<object> LoginCommand
-    {
-        get => new RelayCommand<object>((a) =>
-        {
-            Login();
-        });
-    }
-
     public EaLibrarySettingsViewModel(EaLibrary library, IPlayniteAPI api) : base(library, api)
     {
         var savedSettings = LoadSavedSettings();
@@ -41,7 +19,7 @@ public class EaLibrarySettingsViewModel : PluginSettingsViewModel<EaLibrarySetti
         {
             if (savedSettings.Version == 0)
             {
-                Logger.Debug("Updating Origin settings from version 0.");
+                Logger.Debug("Updating EA settings from version 0.");
                 if (savedSettings.ImportUninstalledGames)
                 {
                     savedSettings.ConnectAccount = true;
@@ -54,24 +32,6 @@ public class EaLibrarySettingsViewModel : PluginSettingsViewModel<EaLibrarySetti
         else
         {
             Settings = new EaLibrarySettings { Version = 1 };
-        }
-    }
-
-    private void Login()
-    {
-        try
-        {
-            using (var view = PlayniteApi.WebViews.CreateView(490, 670))
-            {
-                var api = new OriginAccountClient(view);
-                api.Login();
-            }
-
-            OnPropertyChanged(nameof(IsUserLoggedIn));
-        }
-        catch (Exception e) when (!Environment.IsDebugBuild)
-        {
-            Logger.Error(e, "Failed to authenticate user.");
         }
     }
 }

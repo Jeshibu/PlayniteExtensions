@@ -9,13 +9,13 @@ public class EaClient : LibraryClient
 {
     private static readonly ILogger logger = LogManager.GetLogger();
 
-    public override string Icon => Origin.Icon;
+    public override string Icon => EaApp.Icon;
 
-    public override bool IsInstalled => Origin.IsInstalled;
+    public override bool IsInstalled => EaApp.IsInstalled;
 
     public override void Open()
     {
-        Origin.StartClient();
+        EaApp.StartClient();
     }
 
     public override void Shutdown()
