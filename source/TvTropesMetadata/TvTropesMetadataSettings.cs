@@ -14,8 +14,7 @@ public class TvTropesMetadataSettingsViewModel : PluginSettingsViewModel<TvTrope
 {
     public TvTropesMetadataSettingsViewModel(TvTropesMetadata plugin) : base(plugin, plugin.PlayniteApi)
     {
-        Settings = plugin.LoadPluginSettings<TvTropesMetadataSettings>();
-        Settings ??= new TvTropesMetadataSettings()
+        Settings = LoadSavedSettings() ?? new()
         {
             MaxDegreeOfParallelism = BulkImportPluginSettings.GetDefaultMaxDegreeOfParallelism(),
             TropePrefix = "Trope: ",

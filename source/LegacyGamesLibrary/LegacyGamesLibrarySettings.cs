@@ -13,10 +13,6 @@ public class LegacyGamesLibrarySettingsViewModel : PluginSettingsViewModel<Legac
 {
     public LegacyGamesLibrarySettingsViewModel(LegacyGamesLibrary plugin) : base(plugin, plugin.PlayniteApi)
     {
-        // Load saved settings.
-        var savedSettings = plugin.LoadPluginSettings<LegacyGamesLibrarySettings>();
-
-        // LoadPluginSettings returns null if not saved data is available.
-        Settings = savedSettings ?? new();
+        Settings = LoadSavedSettings() ?? new();
     }
 }

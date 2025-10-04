@@ -1,7 +1,7 @@
 using FilterSearch.Helpers;
+using Playnite.SDK;
 using System.Collections.Generic;
 using System.Linq;
-using Playnite.SDK;
 
 namespace FilterSearch.Settings;
 
@@ -9,7 +9,7 @@ public class FilterSearchSettingsViewModel : PluginSettingsViewModel<FilterSearc
 {
     public FilterSearchSettingsViewModel(FilterSearch plugin, IPlayniteAPI playniteApi) : base(plugin, playniteApi)
     {
-        Settings = plugin.LoadPluginSettings<FilterSearchSettings>() ?? new();
+        Settings = LoadSavedSettings() ?? new();
         InitializeSearchPropertySettings();
     }
 

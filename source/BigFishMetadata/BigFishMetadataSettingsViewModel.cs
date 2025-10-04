@@ -6,10 +6,6 @@ public class BigFishMetadataSettingsViewModel : PluginSettingsViewModel<BigFishM
 {
     public BigFishMetadataSettingsViewModel(BigFishMetadata plugin, IPlayniteAPI playniteAPI) : base(plugin, playniteAPI)
     {
-        // Load saved settings.
-        var savedSettings = plugin.LoadPluginSettings<BigFishMetadataSettings>();
-
-        // LoadPluginSettings returns null if no saved data is available.
-        Settings = savedSettings ?? new();
+        Settings = LoadSavedSettings() ?? new();
     }
 }

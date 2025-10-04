@@ -58,13 +58,13 @@ public class MutualGamesSettingsViewModel : PluginSettingsViewModel<MutualGamesS
 
     public void InitializeSettings()
     {
-        Settings = Plugin.LoadPluginSettings<MutualGamesSettings>();
+        Settings = LoadSavedSettings();
 
         var firstRun = Settings == null;
 
         if (firstRun)
         {
-            Settings = new MutualGamesSettings();
+            Settings = new();
         }
 
         if (Settings.ImportCrossLibraryFeatureId == default)

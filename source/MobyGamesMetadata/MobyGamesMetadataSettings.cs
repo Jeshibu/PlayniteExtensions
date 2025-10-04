@@ -117,17 +117,16 @@ public class MobyGamesMetadataSettingsViewModel : PluginSettingsViewModel<MobyGa
     public MobyGamesMetadataSettingsViewModel(MobyGamesMetadata plugin) : base(plugin, plugin.PlayniteApi)
     {
         // Load saved settings.
-        var savedSettings = plugin.LoadPluginSettings<MobyGamesMetadataSettings>();
+        Settings = LoadSavedSettings();
 
         // LoadPluginSettings returns null if no saved data is available.
-        if (savedSettings != null)
+        if (Settings != null)
         {
-            Settings = savedSettings;
             UpgradeSettings();
         }
         else
         {
-            Settings = new MobyGamesMetadataSettings() { Version = 1 };
+            Settings = new() { Version = 1 };
         }
         InitializeGenres();
     }

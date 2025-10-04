@@ -5,14 +5,14 @@ using System.Collections.Generic;
 namespace Playnite.SDK;
 
 //Shamelessly stolen from https://github.com/JosefNemec/PlayniteExtensions/blob/master/source/Generic/PlayniteExtensions.Common/PluginSettingsViewModel.cs
-public class PluginSettingsViewModel<TSettings, TPlugin>(TPlugin plugin, IPlayniteAPI playniteApi) : ObservableObject, ISettings
+public abstract class PluginSettingsViewModel<TSettings, TPlugin>(TPlugin plugin, IPlayniteAPI playniteApi) : ObservableObject, ISettings
     where TSettings : class
     where TPlugin : Plugin
 {
-    public readonly ILogger Logger = LogManager.GetLogger();
+    protected readonly ILogger Logger = LogManager.GetLogger();
     public IPlayniteAPI PlayniteApi { get; set; } = playniteApi;
-    public TPlugin Plugin { get; set; } = plugin;
-    public TSettings EditingClone { get; set; }
+    protected TPlugin Plugin { get; set; } = plugin;
+    protected TSettings EditingClone { get; set; }
 
     private TSettings settings;
     public TSettings Settings
@@ -40,7 +40,7 @@ public class PluginSettingsViewModel<TSettings, TPlugin>(TPlugin plugin, IPlayni
         Plugin.SavePluginSettings(Settings);
     }
 
-    public TSettings LoadSavedSettings()
+    protected TSettings LoadSavedSettings()
     {
         return Plugin.LoadPluginSettings<TSettings>();
     }

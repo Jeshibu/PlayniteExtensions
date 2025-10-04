@@ -91,17 +91,7 @@ public class XboxMetadataSettingsViewModel : PluginSettingsViewModel<XboxMetadat
 {
     public XboxMetadataSettingsViewModel(XboxMetadata plugin) : base(plugin, plugin.PlayniteApi)
     {
-        // Load saved settings.
-        var savedSettings = plugin.LoadPluginSettings<XboxMetadataSettings>();
-
-        if (savedSettings == null)
-        {
-            Settings = XboxMetadataSettings.GetInitialSettings();
-        }
-        else
-        {
-            Settings = savedSettings;
-        }
+        Settings = LoadSavedSettings() ?? XboxMetadataSettings.GetInitialSettings();
     }
 
     public List<AspectRatio> AspectRatios { get; } = [AspectRatio.Any, AspectRatio.Vertical, AspectRatio.Horizontal, AspectRatio.Square];

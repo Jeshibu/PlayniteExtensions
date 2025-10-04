@@ -31,7 +31,7 @@ public class ExtraEmulatorProfilesSettingsViewModel : PluginSettingsViewModel<Ex
 
     public ExtraEmulatorProfilesSettingsViewModel(ExtraEmulatorProfiles plugin) : base(plugin, plugin.PlayniteApi)
     {
-        Settings = plugin.LoadPluginSettings<ExtraEmulatorProfilesSettings>() ?? new ExtraEmulatorProfilesSettings();
+        Settings = LoadSavedSettings() ?? new ExtraEmulatorProfilesSettings();
 
         var assembly = Assembly.GetExecutingAssembly();
 

@@ -36,12 +36,8 @@ public class itchioBundleTaggerSettingsViewModel : PluginSettingsViewModel<itchi
     public itchioBundleTaggerSettingsViewModel(itchioBundleTagger plugin, itchIoTranslator translator) : base(plugin, plugin.PlayniteApi)
     {
         Labels = new Labels(translator);
-
-        // Load saved settings.
-        var savedSettings = plugin.LoadPluginSettings<itchioBundleTaggerSettings>();
-
-        // LoadPluginSettings returns null if no saved data is available.
-        Settings = savedSettings ?? new itchioBundleTaggerSettings();
+        
+        Settings = LoadSavedSettings() ?? new itchioBundleTaggerSettings();
 
         InstantiateCheckboxes();
     }

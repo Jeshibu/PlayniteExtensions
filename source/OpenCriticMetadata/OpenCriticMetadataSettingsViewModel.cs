@@ -10,7 +10,7 @@ public class OpenCriticMetadataSettingsViewModel : PluginSettingsViewModel<OpenC
 {
     public OpenCriticMetadataSettingsViewModel(OpenCriticMetadata plugin) : base(plugin, plugin.PlayniteApi)
     {
-        Settings = plugin.LoadPluginSettings<OpenCriticMetadataSettings>() ?? new OpenCriticMetadataSettings();
+        Settings = LoadSavedSettings() ?? new OpenCriticMetadataSettings();
         InitializeImageSourceList(Settings.CoverSources, [new(Box, true), new(Square, true), new(Masthead), new(Banner), new(Screenshots)]);
         InitializeImageSourceList(Settings.BackgroundSources, [new(Masthead, true), new(Screenshots, true), new(Banner), new(Box), new(Square)]);
     }

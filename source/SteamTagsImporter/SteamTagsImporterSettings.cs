@@ -58,14 +58,14 @@ public class SteamTagsImporterSettingsViewModel : PluginSettingsViewModel<SteamT
     public SteamTagsImporterSettingsViewModel(SteamTagsImporter plugin) : base(plugin, plugin.PlayniteApi)
     {
         // Load saved settings.
-        Settings = plugin.LoadPluginSettings<SteamTagsImporterSettings>() ?? new SteamTagsImporterSettings
+        Settings = LoadSavedSettings() ?? new SteamTagsImporterSettings
         {
             LastAutomaticTagUpdate = DateTime.Now,
             MaxDegreeOfParallelism = BulkImportPluginSettings.GetDefaultMaxDegreeOfParallelism()
         };
 
-        Settings.OkayTags = new ObservableCollection<string>(Settings.OkayTags.OrderBy(a => a));
-        Settings.BlacklistedTags = new ObservableCollection<string>(Settings.BlacklistedTags.OrderBy(a => a));
+        Settings.OkayTags = new(Settings.OkayTags.OrderBy(a => a));
+        Settings.BlacklistedTags = new(Settings.BlacklistedTags.OrderBy(a => a));
     }
 
     private readonly Dictionary<string, string> _languages = new()
