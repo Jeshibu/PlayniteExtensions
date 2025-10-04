@@ -1,4 +1,4 @@
-on: 
+on:
   push:
     tags:
       - '*' # any tag
@@ -21,25 +21,25 @@ jobs:
 
       - name: Copy shared xaml for bulk import projects
         run: |
-            $bulkImportProjects = @('GiantBombMetadata', 'LaunchBoxMetadata', 'MobyGamesMetadata', 'PCGamingWikiMetadata', 'SteamTagsImporter', 'TvTropesMetadata')
-            foreach ($proj in $bulkImportProjects){
-              xcopy "$Env:GITHUB_WORKSPACE\source\PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$Env:GITHUB_WORKSPACE\source\$proj\Common\Metadata" /Y /I
-            }
+          $bulkImportProjects = @('GiantBombMetadata', 'LaunchBoxMetadata', 'MobyGamesMetadata', 'PCGamingWikiMetadata', 'SteamTagsImporter', 'TvTropesMetadata')
+          foreach ($proj in $bulkImportProjects){
+            xcopy "$Env:GITHUB_WORKSPACE\source\PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" "$Env:GITHUB_WORKSPACE\source\$proj\Common\Metadata" /Y /I
+          }
 
       - name: Setup Playnite
         run: |
-           Invoke-WebRequest -Uri "https://github.com/JosefNemec/Playnite/releases/download/10.40/Playnite1040.zip" -OutFile "$Env:GITHUB_WORKSPACE\Playnite.zip"
-           Expand-Archive "$Env:GITHUB_WORKSPACE\Playnite.zip" -DestinationPath "$Env:GITHUB_WORKSPACE\Playnite"
+          Invoke-WebRequest -Uri "https://github.com/JosefNemec/Playnite/releases/download/10.40/Playnite1040.7z" -OutFile "$Env:GITHUB_WORKSPACE\Playnite.7z"
+          & "$env:ProgramFiles\7-Zip\7z.exe" x "$env:GITHUB_WORKSPACE\Playnite.7z" "-o$env:GITHUB_WORKSPACE\Playnite"
 
       - name: Copy Playnite Emulation directory to ExtraEmulatorProfiles
         run: |
-           xcopy "$Env:GITHUB_WORKSPACE\Playnite\Emulation\*.yaml" "$Env:GITHUB_WORKSPACE\source\ExtraEmulatorProfiles\EmulationFiles\Original" /Y /I
-           xcopy "$Env:GITHUB_WORKSPACE\Playnite\Emulation\Emulators" "$Env:GITHUB_WORKSPACE\source\ExtraEmulatorProfiles\EmulationFiles\Original\Emulators" /Y /I /E
+          xcopy "$Env:GITHUB_WORKSPACE\Playnite\Emulation\*.yaml" "$Env:GITHUB_WORKSPACE\source\ExtraEmulatorProfiles\EmulationFiles\Original" /Y /I
+          xcopy "$Env:GITHUB_WORKSPACE\Playnite\Emulation\Emulators" "$Env:GITHUB_WORKSPACE\source\ExtraEmulatorProfiles\EmulationFiles\Original\Emulators" /Y /I /E
 
       - name: Build entire solution
         run: |
-           cd "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\"
-           .\MSBuild.exe "$Env:GITHUB_WORKSPACE\source\PlayniteExtensions.slnx" -p:Configuration=Release -restore -clp:ErrorsOnly
+          cd "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\"
+          .\MSBuild.exe "$Env:GITHUB_WORKSPACE\source\PlayniteExtensions.slnx" -p:Configuration=Release -restore -clp:ErrorsOnly
 
       - name: Run unit tests
         run: |
@@ -78,7 +78,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-            $files = Get-ChildItem -Path *.pext -Name
-            foreach ($file in $files) {
-              gh release upload ${{ steps.projectselection.outputs.releasetag }} $file
-            }
+          $files = Get-ChildItem -Path *.pext -Name
+          foreach ($file in $files) {
+            gh release upload ${{ steps.projectselection.outputs.releasetag }} $file
+          }
