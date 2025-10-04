@@ -76,3 +76,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-09-09/IgnMetadata_0_5.pext
     Changelog:
       - "New: Download backgrounds (screenshots only)"
+  - Version: "0.5.1"
+    RequiredApiVersion: 6.4.0
+    ReleaseDate: 2025-10-04
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-10-04/IgnMetadata_0_5_1.pext
+    Changelog:
+      - "Fixed no results being found since Playnite 10.37"
