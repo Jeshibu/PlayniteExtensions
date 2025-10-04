@@ -74,8 +74,8 @@
                 </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True" Header="Type" Binding="{Binding Property}" />
-                    <DataGridCheckBoxColumn Header="Add search context" Binding="{Binding EnableSearchContext}" ElementStyle="{StaticResource CB}"/>
-                    <DataGridCheckBoxColumn Header="In global search" Binding="{Binding AddItemsToGlobalSearch}" ElementStyle="{StaticResource CB}" />
+                    <DataGridCheckBoxColumn Header="Add search context" Binding="{Binding EnableSearchContext, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource CB}"/>
+                    <DataGridCheckBoxColumn Header="In global search" Binding="{Binding AddItemsToGlobalSearch, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource CB}" />
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>

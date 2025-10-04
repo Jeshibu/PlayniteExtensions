@@ -13,18 +13,7 @@ public class RawgMetadataSettingsViewModel : PluginSettingsViewModel<RawgMetadat
 
     public RawgMetadataSettingsViewModel(RawgMetadata plugin) : base(plugin, plugin.PlayniteApi)
     {
-        // Load saved settings.
-        var savedSettings = plugin.LoadPluginSettings<RawgMetadataSettings>();
-
-        // LoadPluginSettings returns null if no saved data is available.
-        if (savedSettings != null)
-        {
-            Settings = savedSettings;
-        }
-        else
-        {
-            Settings = new RawgMetadataSettings();
-        }
+        Settings = LoadSavedSettings() ?? new RawgMetadataSettings();
     }
 
     public RelayCommand<object> LoginCommand

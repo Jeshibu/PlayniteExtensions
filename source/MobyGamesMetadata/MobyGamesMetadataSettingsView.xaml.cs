@@ -15,8 +15,8 @@ public partial class MobyGamesMetadataSettingsView : UserControl
 
     private void SetImportTarget_Click(object sender, RoutedEventArgs e)
     {
-        if (!(DataContext is MobyGamesMetadataSettingsViewModel viewModel)
-            || !(e.Source is MenuItem menuItem)
+        if (DataContext is not MobyGamesMetadataSettingsViewModel viewModel
+            || e.Source is not MenuItem menuItem
             || !Enum.TryParse<PropertyImportTarget>(menuItem.Header.ToString(), out var target))
             return;
 

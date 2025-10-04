@@ -60,18 +60,7 @@ public class RawgLibrarySettingsViewModel : PluginSettingsViewModel<RawgLibraryS
 {
     public RawgLibrarySettingsViewModel(RawgLibrary plugin) : base(plugin, plugin.PlayniteApi)
     {
-        // Load saved settings.
-        var savedSettings = plugin.LoadPluginSettings<RawgLibrarySettings>();
-
-        // LoadPluginSettings returns null if no saved data is available.
-        if (savedSettings != null)
-        {
-            Settings = savedSettings;
-        }
-        else
-        {
-            Settings = new RawgLibrarySettings();
-        }
+        Settings = LoadSavedSettings() ?? new RawgLibrarySettings();
     }
 
     public override void BeginEdit()

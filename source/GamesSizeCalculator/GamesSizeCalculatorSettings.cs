@@ -77,17 +77,6 @@ public class GamesSizeCalculatorSettingsViewModel : PluginSettingsViewModel<Game
 
     public GamesSizeCalculatorSettingsViewModel(GamesSizeCalculator plugin):base(plugin, plugin.PlayniteApi)
     {
-        // Load saved settings.
-        var savedSettings = plugin.LoadPluginSettings<GamesSizeCalculatorSettings>();
-
-        // LoadPluginSettings returns null if not saved data is available.
-        if (savedSettings != null)
-        {
-            Settings = savedSettings;
-        }
-        else
-        {
-            Settings = new GamesSizeCalculatorSettings();
-        }
+        Settings = LoadSavedSettings() ?? new GamesSizeCalculatorSettings();
     }
 }

@@ -13,17 +13,12 @@ public class GOGMetadataSettingsViewModel : PluginSettingsViewModel<GOGMetadataS
 {
     public GOGMetadataSettingsViewModel(GOGMetadata plugin, IPlayniteAPI playniteApi) : base(plugin, playniteApi)
     {
-        // Load saved settings.
-        var savedSettings = plugin.LoadPluginSettings<GOGMetadataSettings>();
-
-        // LoadPluginSettings returns null if not saved data is available.
-        if (savedSettings != null)
+        Settings = LoadSavedSettings();
+        
+        // LoadSavedSettings returns null if not saved data is available.
+        if (Settings == null)
         {
-            Settings = savedSettings;
-        }
-        else
-        {
-            Settings = new GOGMetadataSettings();
+            Settings = new();
             SetMetadataLanguageByPlayniteLanguage();
         }
     }

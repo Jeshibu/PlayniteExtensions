@@ -24,11 +24,7 @@ public class BigFishLibrarySettingsViewModel : PluginSettingsViewModel<BigFishLi
 {
     public BigFishLibrarySettingsViewModel(BigFishLibrary plugin) : base(plugin, plugin.PlayniteApi)
     {
-        // Load saved settings.
-        var savedSettings = plugin.LoadPluginSettings<BigFishLibrarySettings>();
-
-        // LoadPluginSettings returns null if no saved data is available.
-        Settings = savedSettings ?? new BigFishLibrarySettings();
+        Settings = LoadSavedSettings() ?? new BigFishLibrarySettings();
     }
 
     public AuthStatus AuthStatus

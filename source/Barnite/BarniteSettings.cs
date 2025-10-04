@@ -36,18 +36,7 @@ public class BarniteSettingsViewModel : PluginSettingsViewModel<BarniteSettings,
 {
     public BarniteSettingsViewModel(Barnite plugin, IPlayniteAPI playniteAPI) : base(plugin, playniteAPI)
     {
-        // Load saved settings.
-        var savedSettings = plugin.LoadPluginSettings<BarniteSettings>();
-
-        // LoadPluginSettings returns null if not saved data is available.
-        if (savedSettings != null)
-        {
-            Settings = savedSettings;
-        }
-        else
-        {
-            Settings = new BarniteSettings();
-        }
+        Settings = LoadSavedSettings() ?? new BarniteSettings();
     }
 
     private ICollectionView scrapersView;

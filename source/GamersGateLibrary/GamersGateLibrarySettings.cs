@@ -112,11 +112,7 @@ public class GamersGateLibrarySettingsViewModel : PluginSettingsViewModel<Gamers
 
     public GamersGateLibrarySettingsViewModel(GamersGateLibrary plugin, IPlayniteAPI playniteAPI) : base(plugin, playniteAPI)
     {
-        // Load saved settings.
-        var savedSettings = plugin.LoadPluginSettings<GamersGateLibrarySettings>();
-
-        // LoadPluginSettings returns null if not saved data is available.
-        Settings = savedSettings ?? new GamersGateLibrarySettings() { Version = CurrentVersion };
+        Settings = LoadSavedSettings() ?? new GamersGateLibrarySettings { Version = CurrentVersion };
 
         UpgradeSettings();
     }

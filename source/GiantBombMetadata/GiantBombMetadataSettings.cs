@@ -42,9 +42,9 @@ public class GiantBombMetadataSettingsViewModel : PluginSettingsViewModel<GiantB
     public GiantBombMetadataSettingsViewModel(GiantBombMetadata plugin) : base(plugin, plugin.PlayniteApi)
     {
         // Load saved settings.
-        var savedSettings = plugin.LoadPluginSettings<GiantBombMetadataSettings>();
+        var savedSettings = LoadSavedSettings();
 
-        // LoadPluginSettings returns null if no saved data is available.
+        // LoadSavedSettings returns null if no saved data is available.
         if (savedSettings != null)
         {
             Settings = savedSettings;

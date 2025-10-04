@@ -128,14 +128,8 @@ public class PCGamingWikiMetadataSettings: BulkImportPluginSettings
 
 public class PCGamingWikiMetadataSettingsViewModel : PluginSettingsViewModel<PCGamingWikiMetadataSettings, PCGamingWikiMetadata>
 {
-    private readonly PCGamingWikiMetadata plugin;
-
-    public PCGamingWikiMetadataSettingsViewModel(PCGamingWikiMetadata plugin):base(plugin, plugin.PlayniteApi)
+    public PCGamingWikiMetadataSettingsViewModel(PCGamingWikiMetadata plugin) : base(plugin, plugin.PlayniteApi)
     {
-        // Injecting your plugin instance is required for Save/Load method because Playnite saves data to a location based on what plugin requested the operation.
-        this.plugin = plugin;
-
-        // Load saved settings.
-        Settings = plugin.LoadPluginSettings<PCGamingWikiMetadataSettings>() ?? new PCGamingWikiMetadataSettings();
+        Settings = LoadSavedSettings() ?? new PCGamingWikiMetadataSettings();
     }
 }
