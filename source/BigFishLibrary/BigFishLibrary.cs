@@ -12,9 +12,10 @@ using BigFishMetadata;
 
 namespace BigFishLibrary;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public class BigFishLibrary : LibraryPlugin
 {
-    private static readonly string iconPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "icon.png");
+    private static readonly string iconPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "icon.png");
 
     private static readonly ILogger logger = LogManager.GetLogger();
 
@@ -22,7 +23,7 @@ public class BigFishLibrary : LibraryPlugin
 
     public override Guid Id { get; } = Guid.Parse("37995df7-2ce2-4f7c-83a3-618138ae745d");
 
-    public static string PluginName = "Big Fish Games";
+    public const string PluginName = "Big Fish Games";
 
     public override string Name => PluginName;
 
@@ -62,27 +63,32 @@ public class BigFishLibrary : LibraryPlugin
             SetUninstalledStatus();
 
             var metadataProvider = MetadataProvider;
-            var games = metadataProvider.GetOnlineGames().ToDictionary(g => g.GameId);
-            foreach (var offlineGame in metadataProvider.GetOfflineGames())
+            var onlineGames = metadataProvider.GetOnlineGames().ToDictionary(g => g.GameId);
+            logger.Info($"Found {onlineGames.Count} online games");
+            
+            var offlineGames = metadataProvider.GetOfflineGames().ToList();
+            logger.Info($"Found {offlineGames.Count} offline games");
+            
+            foreach (var offlineGame in offlineGames)
             {
-                if (games.TryGetValue(offlineGame.GameId, out var onlineGame))
-                    games[offlineGame.GameId] = BigFishMetadataProvider.Merge(offlineGame, onlineGame);
+                if (onlineGames.TryGetValue(offlineGame.GameId, out var onlineGame))
+                    onlineGames[offlineGame.GameId] = BigFishMetadataProvider.Merge(offlineGame, onlineGame);
                 else
-                    games[offlineGame.GameId] = offlineGame;
+                    onlineGames[offlineGame.GameId] = offlineGame;
             }
-            return games.Values;
+            return onlineGames.Values;
         }
         catch (NotAuthenticatedException)
         {
             logger.Error("Not authenticated");
-            PlayniteApi.Notifications.Add(new NotificationMessage("bigfish-notauthenticated", "Big Fish library isn't authenticated. Click here to authenticate.", NotificationType.Info, () => OpenSettingsView()));
-            return Enumerable.Empty<GameMetadata>();
+            PlayniteApi.Notifications.Add(new("bigfish-notauthenticated", "Big Fish library isn't authenticated. Click here to authenticate.", NotificationType.Info, () => OpenSettingsView()));
+            return [];
         }
         catch (Exception ex)
         {
             logger.Error(ex, "Error getting games");
             PlayniteApi.Notifications.Add("bigfish-error", $"Big Fish library error: {ex.Message}", NotificationType.Error);
-            return Enumerable.Empty<GameMetadata>();
+            return [];
         }
     }
 
@@ -104,7 +110,6 @@ public class BigFishLibrary : LibraryPlugin
                 {
                     game.IsInstalled = false;
                     PlayniteApi.Database.Games.Update(game);
-                    continue;
                 }
             }
         }

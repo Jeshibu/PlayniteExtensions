@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace FilterSearch.Settings;
 
-public class FilterSearchSettings : ObservableObject
+public class FilterSearchSettings
 {
     public FilterActionType PrimaryAction { get; set; } = FilterActionType.Append;
     
