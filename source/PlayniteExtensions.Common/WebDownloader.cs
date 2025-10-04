@@ -170,7 +170,9 @@ public static class HttpRequestHeaderExtensionMethods
 
     public static void AddInvalid(this HttpRequestHeaders headers, string header, string value)
     {
-        var invalidHeadersField = typeof(HttpHeaders).GetField("_invalidHeaders", BindingFlags.NonPublic | BindingFlags.Instance);
+        FieldInfo GetPrivateField(string name) => typeof(HttpHeaders).GetField(name, BindingFlags.NonPublic | BindingFlags.Instance);
+        
+        var invalidHeadersField = GetPrivateField("_invalidHeaders") ?? GetPrivateField("invalidHeaders");
         var invalidHeaders = (HashSet<string>)invalidHeadersField.GetValue(headers);
         invalidHeaders?.Remove(header);
         headers.Add(header, value);
