@@ -12,7 +12,7 @@ public class EasyAntiCheatLauncherSettings
     public string working_directory { get; set; }
 }
 
-public class EasyAntiCheat
+public static class EasyAntiCheat
 {
     public static EasyAntiCheatLauncherSettings GetLauncherSettings(string gameDirectory)
     {

@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using EaLibrary.Services;
+using Playnite.SDK;
 
 namespace EaLibrary;
 
@@ -12,8 +13,11 @@ public class EaLibrarySettings
 
 public class EaLibrarySettingsViewModel : PluginSettingsViewModel<EaLibrarySettings, EaLibrary>
 {
+    private EaWebsite website;
+    
     public EaLibrarySettingsViewModel(EaLibrary library, IPlayniteAPI api) : base(library, api)
     {
+        website = new EaWebsite(PlayniteApi.WebViews, Plugin.Downloader);
         var savedSettings = LoadSavedSettings();
         if (savedSettings != null)
         {
@@ -34,4 +38,12 @@ public class EaLibrarySettingsViewModel : PluginSettingsViewModel<EaLibrarySetti
             Settings = new EaLibrarySettings { Version = 1 };
         }
     }
+
+    public bool IsUserLoggedIn => website.IsAuthenticated();
+
+    public RelayCommand<object> LoginCommand => new(_ =>
+    {
+        website.Login();
+        OnPropertyChanged(nameof(IsUserLoggedIn));
+    });
 }

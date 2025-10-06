@@ -5,6 +5,7 @@ using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -24,6 +25,8 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
     private static readonly ILogger logger = LogManager.GetLogger();
     private readonly string installManifestCacheDir;
     private static readonly string fakeOfferType = "none";
+    private IWebDownloader _downloader;
+    public IWebDownloader Downloader => _downloader ??= new WebDownloader();
 
     public class InstallPackage
     {
@@ -57,13 +60,13 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
         new LibraryPluginProperties { CanShutdownClient = true, HasSettings = true },
         new EaClient(),
         EaApp.Icon,
-        (_) => new EaLibrarySettingsView(),
+        _ => new EaLibrarySettingsView(),
         api)
     {
         SettingsViewModel = new EaLibrarySettingsViewModel(this, PlayniteApi);
         installManifestCacheDir = Path.Combine(GetPluginUserDataPath(), "installmanifests");
     }
-
+    
     internal PlatformPath GetPathFromPlatformPath(string path, RegistryView platformView)
     {
         if (!path.StartsWith("["))
@@ -381,7 +384,7 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
                     continue;
                 }
 
-                newGame.Name = StringExtensions.NormalizeGameName(localData.localizableAttributes?.displayName ?? localData.i18n?.displayName ?? localData.itemName);
+                newGame.Name = (localData.localizableAttributes?.displayName ?? localData.i18n?.displayName ?? localData.itemName).NormalizeGameName();
                 var installDir = GetInstallDirectory(localData);
                 if (installDir.IsNullOrEmpty())
                 {
@@ -390,7 +393,7 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
 
                 newGame.InstallDirectory = installDir;
                 // Games can be duplicated if user has EA Play sub and also bought the game.
-                if (!games.TryGetValue(newGame.GameId, out var _))
+                if (!games.ContainsKey(newGame.GameId))
                 {
                     games.Add(newGame.GameId, newGame);
                 }

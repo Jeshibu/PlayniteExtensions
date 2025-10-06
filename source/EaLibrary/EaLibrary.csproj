@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" NoWarn="NU1903" />
-    <PackageReference Include="PlayniteSDK" Version="6.4.0" />
+    <PackageReference Include="PlayniteSDK" Version="6.13.0" />
     <PackageReference Include="RestSharp" Version="108.0.2" NoWarn="NU1902" />
     <PackageReference Include="SHA3" Version="1.0.0" />
   </ItemGroup>
@@ -20,6 +20,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
     <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs" Link="Common\StringExtensions.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs" Link="Common\WebDownloader.cs" />      
   </ItemGroup>
   <ItemGroup>
     <Compile Update="EaLibrarySettingsView.xaml.cs">
