@@ -30,7 +30,7 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
         var legacyOffers = GetLegacyOffers(ownedGames.Select(o => o.originOfferId));
 
         foreach (var game in ownedGames)
-            yield return ToGameMetadata(game, legacyOffers[game.originOfferId]);
+            yield return ToGameMetadata(game, legacyOffers);
     }
 
     public LegacyOffer GetLegacyOffer(string offerId)
@@ -70,7 +70,7 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
         return JsonConvert.DeserializeObject<Dictionary<string, LegacyOffer>>(strContent);
     }
 
-    private GameMetadata ToGameMetadata(OwnedGameProduct game, LegacyOffer offer)
+    private GameMetadata ToGameMetadata(OwnedGameProduct game, IDictionary<string,LegacyOffer> offers)
     {
         var output = new GameMetadata
         {
@@ -80,11 +80,15 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
             Source = GetGameSource(game),
         };
 
-        var install = GetInstallDirectory(offer.installCheckOverride);
-        if (install != null)
+        if (offers.TryGetValue(game.originOfferId, out var offer))
         {
-            var installCheckFile = Path.Combine(install.InstallDirectory, install.RelativeFilePath);
-            output.IsInstalled = File.Exists(installCheckFile);
+            var install = GetInstallDirectory(offer.installCheckOverride);
+            if (install != null)
+            {
+                output.InstallDirectory = install.InstallDirectory;
+                var installCheckFile = Path.Combine(install.InstallDirectory, install.RelativeFilePath);
+                output.IsInstalled = File.Exists(installCheckFile);
+            }
         }
 
         return output;
@@ -133,10 +137,18 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
             "HKEY_CURRENT_USER" => RegistryHive.CurrentUser,
             "HKEY_USERS" => RegistryHive.Users,
             "HKEY_CURRENT_CONFIG" => RegistryHive.CurrentConfig,
+            _ => throw new ArgumentOutOfRangeException(regSplit[0]),
         };
         var path = string.Join(@"\", regSplit.Skip(1).Take(regSplit.Length - 2));
         var keyName = regSplit.Last();
         var installDirectory = registry.GetValueForPath(hive, path, keyName);
+
+        if (string.IsNullOrWhiteSpace(installDirectory))
+        {
+            _logger.Info($"Install directory not found in registry: {registryPath}");
+            return null;
+        }
+
         return new(installDirectory, match.Groups["exe"].Value);
     }
 

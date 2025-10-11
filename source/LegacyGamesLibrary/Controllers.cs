@@ -108,7 +108,7 @@ public class LegacyGamesInstallController : InstallController
         StartInstallWatcher();
     }
 
-    public async void StartInstallWatcher()
+    private async Task StartInstallWatcher()
     {
         watcherToken = new CancellationTokenSource();
 

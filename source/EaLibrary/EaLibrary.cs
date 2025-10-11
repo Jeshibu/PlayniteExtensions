@@ -37,16 +37,15 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
 
     public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)
     {
-        var allGames = new List<GameMetadata>();
         if (!SettingsViewModel.Settings.ConnectAccount)
             return [];
 
-        var installedGames = new Dictionary<string, GameMetadata>();
+        var allGames = new List<GameMetadata>();
         Exception importError = null;
 
         try
         {
-            allGames = _dataGatherer.GetGames().ToList();
+            allGames = DataGatherer.GetGames().ToList();
             Logger.Debug($"Found {allGames.Count} library EA games.");
         }
         catch (Exception e)

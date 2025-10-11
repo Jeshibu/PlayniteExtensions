@@ -48,7 +48,7 @@ public class LegacyOffer
     public string installerPath { get; set; }
     public string processorArchitecture { get; set; }
     public string macBundleID { get; set; }
-    public int gameEditionTypeFacetKeyRankDesc { get; set; }
+    public int? gameEditionTypeFacetKeyRankDesc { get; set; }
     public string appliedCountryCode { get; set; }
     public string cloudSaveConfigurationOverride { get; set; }
     public FirstParties[] firstParties { get; set; }

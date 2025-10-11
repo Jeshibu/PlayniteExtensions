@@ -74,6 +74,7 @@ function Get-ProjectNames {
         "bigfish"               = @("BigFishLibrary", "BigFishMetadata")
         "bigfishlibrary"        = @("BigFishLibrary")
         "bigfishmetadata"       = @("BigFishMetadata")
+        "ea"                    = @("EaLibrary")
         "extraemulatorprofiles" = @("ExtraEmulatorProfiles")
         "filtersearch"          = @("FilterSearch")
         "gamersgate"            = @("GamersGateLibrary")

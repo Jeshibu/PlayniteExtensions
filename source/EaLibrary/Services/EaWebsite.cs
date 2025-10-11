@@ -2,11 +2,14 @@ using EaLibrary.Models;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using PlayniteExtensions.Common;
+using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
+
+// ReSharper disable MethodSupportsCancellation
 
 namespace EaLibrary.Services;
 
@@ -21,16 +24,19 @@ public interface IEaWebsite
 
 public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader) : IEaWebsite
 {
+    private const string HomeUrl = "https://www.ea.com/";
+    private const string LoginUrl = "https://www.ea.com/login";
+    private const string DealsUrl = "https://www.ea.com/sales/deals";
     private const string AccountUrl = "https://myaccount.ea.com/am/ui/account-information";
     private const string GraphQlBaseUrl = "https://service-aggregation-layer.juno.ea.com/graphql";
+    private readonly ILogger _logger = LogManager.GetLogger();
 
     public bool Login()
     {
         var success = false;
         using var webView = webViewFactory.CreateView(500, 700, Colors.DarkBlue);
-        webView.DeleteDomainCookies(".ea.com");
-        webView.DeleteDomainCookies(".myaccount.ea.com");
-        webView.Navigate(AccountUrl);
+        webView.DeleteDomainCookiesRegex(@".*\.ea\.com");
+        webView.Navigate(LoginUrl);
 
         webView.LoadingChanged += (_, args) =>
         {
@@ -38,7 +44,7 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
                 return;
 
             var url = webView.GetCurrentAddress();
-            if (url == AccountUrl)
+            if (url == HomeUrl)
             {
                 success = true;
                 webView.Close();
@@ -66,14 +72,21 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
                 cancellationTokenSource.Cancel();
             }
 
-            if (url.Contains("/login"))
+            if (url.Contains("/login", StringComparison.OrdinalIgnoreCase))
             {
                 authenticated = false;
                 cancellationTokenSource.Cancel();
             }
         };
         webView.Navigate(AccountUrl);
-        Task.Delay(5000, cancellationTokenSource.Token).Wait(cancellationTokenSource.Token);
+        try
+        {
+            Task.Delay(5000, cancellationTokenSource.Token).Wait();
+        }
+        catch when (cancellationTokenSource.IsCancellationRequested)
+        {
+        }
+
         return authenticated;
     }
 
@@ -84,21 +97,37 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
         var webviewSettings = new WebViewSettings
         {
             JavaScriptEnabled = true,
-            ResourceLoadedCallback = callback =>
+            PassResourceContentStreamToCallback = false,
+            ResourceLoadedCallback = resource =>
             {
-                if (!cancellationTokenSource.IsCancellationRequested
-                    && callback.Request.Headers.TryGetValue("Authorization", out var authHeader)
-                    && authHeader.StartsWith("Bearer "))
+                if (cancellationTokenSource.IsCancellationRequested || !resource.Request.Url.StartsWith(GraphQlBaseUrl))
+                    return;
+
+                _logger.Info(resource.Request.Url);
+
+                if (resource.Request.Headers.TryGetValue("authorization", out string authHeader))
                 {
+                    _logger.Info($"Auth header: {authHeader}");
                     auth = authHeader.TrimStart("Bearer ");
                     cancellationTokenSource.Cancel();
+                }
+                else
+                {
+                    _logger.Warn($"No auth header found for {resource.Request.Url}, other headers: {string.Join(", ", resource.Request.Headers.Keys)}");
                 }
             }
         };
 
         using var webView = webViewFactory.CreateOffscreenView(webviewSettings);
-        webView.Navigate("https://www.ea.com/sales/deals");
-        Task.Delay(5000, cancellationTokenSource.Token).Wait(cancellationTokenSource.Token);
+        webView.Navigate(DealsUrl);
+        try
+        {
+            Task.Delay(5000, cancellationTokenSource.Token).Wait();
+        }
+        catch when (cancellationTokenSource.IsCancellationRequested)
+        {
+        }
+
         return auth;
     }
 
@@ -106,17 +135,16 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
     {
         void HeaderSetter(HttpRequestHeaders headers) => headers.Authorization = new("Bearer", auth);
         List<OwnedGameProduct> output = [];
-        const int pageSize = 100;
         string offset = "0";
 
         do
         {
-            var response = downloader.DownloadString(GetGamesUrl(pageSize, offset), headerSetter: HeaderSetter);
+            var response = downloader.DownloadString(GetGamesUrl(DefaultLimit, offset), headerSetter: HeaderSetter);
 
             var root = JsonConvert.DeserializeObject<GraphQlResponseRoot<OwnedGamesData>>(response.ResponseContent);
             var ownedGames = root?.data?.me?.ownedGameProducts;
 
-            if (ownedGames != null)
+            if (ownedGames?.items != null)
             {
                 output.AddRange(ownedGames.items);
                 offset = ownedGames.next;
@@ -130,7 +158,9 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
         return output;
     }
 
-    public static string GetGamesUrl(int limit = 100, string offset = "0") =>
+    public const int DefaultLimit = 500;
+
+    public static string GetGamesUrl(int limit = DefaultLimit, string offset = "0") =>
         $$$"""{{{GraphQlBaseUrl}}}?operationName=getPreloadedOwnedGames&variables={"isMac":false,"addFieldsToPreloadGames":true, "locale":"en","limit":{{{limit}}},"next":"{{{offset}}}","type":["DIGITAL_FULL_GAME","PACKAGED_FULL_GAME"],"entitlementEnabled":true,"storefronts":["EA","STEAM","EPIC"],"ownershipMethods":["UNKNOWN","ASSOCIATION","PURCHASE","REDEMPTION","GIFT_RECEIPT","ENTITLEMENT_GRANT","DIRECT_ENTITLEMENT","PRE_ORDER_PURCHASE","VAULT","XGP_VAULT","STEAM","STEAM_VAULT","STEAM_SUBSCRIPTION","EPIC","EPIC_VAULT","EPIC_SUBSCRIPTION"],"platforms":["PC"]}&extensions={"persistedQuery":{"version":1,"sha256Hash":"5de4178ee7e1f084ce9deca856c74a9e03547a67dfafc0cb844d532fb54ae73d"}}""";
 
     public IEnumerable<LegacyOffer> GetLegacyOffers(string[] offerIds)
@@ -203,7 +233,7 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
 
         var data = new { query, operationName = "getLegacyCatalogDefs", variables = new { locale = "DEFAULT", offerIds } };
         var dataString = JsonConvert.SerializeObject(data);
-        var response = downloader.PostAsync(GraphQlBaseUrl,dataString, contentType: "application/json").Result;
+        var response = downloader.PostAsync(GraphQlBaseUrl, dataString, contentType: "application/json").Result;
         var responseObj = JsonConvert.DeserializeObject<GraphQlResponseRoot<LegacyOffersData>>(response.ResponseContent);
         return responseObj.data.legacyOffers;
     }

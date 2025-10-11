@@ -176,11 +176,6 @@ public static class StringExtensions
         return Regex.Replace(path, @"(\.[A-Za-z0-9]+)+$", "");
     }
 
-    public static bool Contains(this string str, string value, StringComparison comparisonType)
-    {
-        return str?.IndexOf(value, 0, comparisonType) != -1;
-    }
-
     public static bool ContainsAny(this string str, char[] chars)
     {
         return str?.IndexOfAny(chars) >= 0;
