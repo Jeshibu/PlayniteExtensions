@@ -2,7 +2,6 @@ using EaLibrary.Models;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using PlayniteExtensions.Common;
-using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -11,11 +10,19 @@ using System.Windows.Media;
 
 namespace EaLibrary.Services;
 
-public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader)
+public interface IEaWebsite
+{
+    bool Login();
+    bool IsAuthenticated();
+    string GetAuthToken();
+    List<OwnedGameProduct> GetOwnedGames(string auth);
+    IEnumerable<LegacyOffer> GetLegacyOffers(string[] offerIds);
+}
+
+public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader) : IEaWebsite
 {
     private const string AccountUrl = "https://myaccount.ea.com/am/ui/account-information";
     private const string GraphQlBaseUrl = "https://service-aggregation-layer.juno.ea.com/graphql";
-    private static string[] SubscriptionTypes = ["VAULT", "XGP_VAULT", "STEAM", "STEAM_VAULT", "STEAM_SUBSCRIPTION", "EPIC", "EPIC_VAULT", "EPIC_SUBSCRIPTION"];
 
     public bool Login()
     {
@@ -95,28 +102,109 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
         return auth;
     }
 
-    public List<Items> GetOwnedGames(string auth)
+    public List<OwnedGameProduct> GetOwnedGames(string auth)
     {
-        List<Items> output = [];
+        void HeaderSetter(HttpRequestHeaders headers) => headers.Authorization = new("Bearer", auth);
+        List<OwnedGameProduct> output = [];
+        const int pageSize = 100;
         string offset = "0";
 
         do
         {
-            var response = downloader.DownloadString(GetGamesUrl(100, offset), headerSetter: HeaderSetter);
-            var root = JsonConvert.DeserializeObject<OwnedGamesRoot>(response.ResponseContent);
+            var response = downloader.DownloadString(GetGamesUrl(pageSize, offset), headerSetter: HeaderSetter);
+
+            var root = JsonConvert.DeserializeObject<GraphQlResponseRoot<OwnedGamesData>>(response.ResponseContent);
             var ownedGames = root?.data?.me?.ownedGameProducts;
+
             if (ownedGames != null)
             {
                 output.AddRange(ownedGames.items);
                 offset = ownedGames.next;
             }
+            else
+            {
+                offset = null;
+            }
         } while (offset != null);
 
         return output;
-        
-        void HeaderSetter(HttpRequestHeaders headers) => headers.Authorization = new("Bearer", auth);
     }
 
     public static string GetGamesUrl(int limit = 100, string offset = "0") =>
-        $$"""{{GraphQlBaseUrl}}?operationName=getPreloadedOwnedGames&variables={"isMac":false,"addFieldsToPreloadGames":true, "locale":"en","limit":{{limit}},"next":"{{offset}}","type":["DIGITAL_FULL_GAME","PACKAGED_FULL_GAME"],"entitlementEnabled":true,"storefronts":["EA","STEAM","EPIC"],"ownershipMethods":["UNKNOWN","ASSOCIATION","PURCHASE","REDEMPTION","GIFT_RECEIPT","ENTITLEMENT_GRANT","DIRECT_ENTITLEMENT","PRE_ORDER_PURCHASE","VAULT","XGP_VAULT","STEAM","STEAM_VAULT","STEAM_SUBSCRIPTION","EPIC","EPIC_VAULT","EPIC_SUBSCRIPTION"],"platforms":["PC"]}&extensions={"persistedQuery":{"version":1,"sha256Hash":"5de4178ee7e1f084ce9deca856c74a9e03547a67dfafc0cb844d532fb54ae73d"}}""";
+        $$$"""{{{GraphQlBaseUrl}}}?operationName=getPreloadedOwnedGames&variables={"isMac":false,"addFieldsToPreloadGames":true, "locale":"en","limit":{{{limit}}},"next":"{{{offset}}}","type":["DIGITAL_FULL_GAME","PACKAGED_FULL_GAME"],"entitlementEnabled":true,"storefronts":["EA","STEAM","EPIC"],"ownershipMethods":["UNKNOWN","ASSOCIATION","PURCHASE","REDEMPTION","GIFT_RECEIPT","ENTITLEMENT_GRANT","DIRECT_ENTITLEMENT","PRE_ORDER_PURCHASE","VAULT","XGP_VAULT","STEAM","STEAM_VAULT","STEAM_SUBSCRIPTION","EPIC","EPIC_VAULT","EPIC_SUBSCRIPTION"],"platforms":["PC"]}&extensions={"persistedQuery":{"version":1,"sha256Hash":"5de4178ee7e1f084ce9deca856c74a9e03547a67dfafc0cb844d532fb54ae73d"}}""";
+
+    public IEnumerable<LegacyOffer> GetLegacyOffers(string[] offerIds)
+    {
+        const string query = """
+                             query getLegacyCatalogDefs($offerIds: [String!]!, $locale: Locale) {
+                               legacyOffers(offerIds: $offerIds, locale: $locale) {
+                                 offerId: id
+                                 contentId
+                                 basePlatform
+                                 primaryMasterTitleId
+                                 mdmProjectNumber
+                                 achievementSetOverride
+                                 gameLauncherURL
+                                 gameLauncherURLClientID
+                                 stagingKeyPath
+                                 mdmTitleIds
+                                 multiplayerId
+                                 executePathOverride
+                                 installationDirectory
+                                 installCheckOverride
+                                 monitorPlay
+                                 displayName
+                                 displayType
+                                 igoBrowserDefaultUrl
+                                 executeParameters
+                                 softwareLocales
+                                 dipManifestRelativePath
+                                 metadataInstallLocation
+                                 distributionSubType
+                                 downloads {
+                                   igoApiEnabled
+                                   downloadType
+                                   version
+                                   executeElevated
+                                   buildReleaseVersion
+                                   buildLiveDate
+                                   buildMetaData
+                                   gameVersion
+                                   treatUpdatesAsMandatory
+                                   enableDifferentialUpdate
+                                 }
+                                 locale
+                                 greyMarketControls
+                                 isDownloadable
+                                 isPreviewDownload
+                                 downloadStartDate
+                                 releaseDate
+                                 useEndDate
+                                 subscriptionUnlockDate
+                                 subscriptionUseEndDate
+                                 softwarePlatform
+                                 softwareId
+                                 downloadPackageType
+                                 installerPath
+                                 processorArchitecture
+                                 macBundleID
+                                 gameEditionTypeFacetKeyRankDesc
+                                 appliedCountryCode
+                                 cloudSaveConfigurationOverride
+                                 firstParties{
+                                     partner
+                                     partnerId
+                                     partnerIdType
+                                 }
+                                 suppressedOfferIds
+                               }
+                             }
+                             """;
+
+        var data = new { query, operationName = "getLegacyCatalogDefs", variables = new { locale = "DEFAULT", offerIds } };
+        var dataString = JsonConvert.SerializeObject(data);
+        var response = downloader.PostAsync(GraphQlBaseUrl,dataString, contentType: "application/json").Result;
+        var responseObj = JsonConvert.DeserializeObject<GraphQlResponseRoot<LegacyOffersData>>(response.ResponseContent);
+        return responseObj.data.legacyOffers;
+    }
 }

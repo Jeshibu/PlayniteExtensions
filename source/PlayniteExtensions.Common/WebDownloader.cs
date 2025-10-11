@@ -13,14 +13,22 @@ using System.Threading.Tasks;
 namespace PlayniteExtensions.Common;
 
 public delegate void DownloadProgressCallback(long downloadedBytes, long totalBytes);
+
 public interface IWebDownloader
 {
     /// <summary>
     /// The total collection of cookies used both as input for requests and output for responses
     /// </summary>
     CookieContainer Cookies { get; }
-    DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null, bool getContent = true);
-    Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null, bool getContent = true);
+
+    DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null,
+        string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken cancellationToken = default, bool getContent = true);
+
+    Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null,
+        string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken cancellationToken = default, bool getContent = true);
+
+    Task<DownloadStringResponse> PostAsync(string url, string body, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true,
+        CancellationToken cancellationToken = default, bool getContent = true);
 }
 
 public class DownloadStringResponse(string responseUrl, string responseContent, HttpStatusCode statusCode)
@@ -47,7 +55,8 @@ public class WebDownloader : IWebDownloader
         httpClient = new HttpClient(cookieContainer, false);
     }
 
-    public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null, bool getContent = true)
+    public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null,
+        string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken cancellationToken = default, bool getContent = true)
     {
         var sw = System.Diagnostics.Stopwatch.StartNew();
         var output = DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType, throwExceptionOnErrorResponse, maxRedirectDepth, 0, cancellationToken, getContent).Result;
@@ -56,7 +65,8 @@ public class WebDownloader : IWebDownloader
         return output;
     }
 
-    public async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken? cancellationToken = null, bool getContent = true)
+    public async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null,
+        Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken cancellationToken = default, bool getContent = true)
     {
         var sw = System.Diagnostics.Stopwatch.StartNew();
         var output = await DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType, throwExceptionOnErrorResponse, maxRedirectDepth, 0, cancellationToken, getContent);
@@ -65,7 +75,59 @@ public class WebDownloader : IWebDownloader
         return output;
     }
 
-    private async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc, Func<string, CookieCollection> jsCookieGetFunc, string referer, Action<HttpRequestHeaders> headerSetter, string contentType, bool throwExceptionOnErrorResponse, int maxRedirectDepth, int depth, CancellationToken? cancellationToken, bool getContent)
+    public async Task<DownloadStringResponse> PostAsync(string url, string body, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true,
+        CancellationToken cancellationToken = default, bool getContent = true)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Post, url) { Content = new StringContent(body) };
+
+        if (UserAgent != null)
+            request.Headers.UserAgent.TryParseAdd(UserAgent);
+
+        if (Accept != null)
+            request.Headers.Accept.TryParseAdd(Accept);
+
+        headerSetter?.Invoke(request.Headers);
+
+        if (contentType != null)
+            request.Headers.AddInvalid("Content-Type", contentType);
+
+        HttpStatusCode statusCode;
+        string responseUrl;
+        string responseContent = null;
+
+        HttpResponseMessage response;
+        try
+        {
+            response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken);
+        }
+        catch (HttpRequestException webex)
+        {
+            logger.Info(webex, "Error getting response from " + url);
+
+            if (throwExceptionOnErrorResponse)
+                throw;
+
+            return null;
+        }
+
+        using (response)
+        {
+            statusCode = response.StatusCode;
+            responseUrl = response.RequestMessage.RequestUri.ToString();
+
+            if (getContent)
+            {
+                using var stream = await response.Content.ReadAsStreamAsync();
+                using var reader = new StreamReader(stream);
+                responseContent = await reader.ReadToEndAsync();
+            }
+        }
+
+        return new DownloadStringResponse(responseUrl, responseContent, statusCode);
+    }
+
+    private async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc, Func<string, CookieCollection> jsCookieGetFunc, string referer, Action<HttpRequestHeaders> headerSetter,
+        string contentType, bool throwExceptionOnErrorResponse, int maxRedirectDepth, int depth, CancellationToken cancellationToken, bool getContent)
     {
         var request = new HttpRequestMessage(HttpMethod.Get, url);
 
@@ -91,10 +153,7 @@ public class WebDownloader : IWebDownloader
         HttpResponseMessage response;
         try
         {
-            if (cancellationToken.HasValue)
-                response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken.Value);
-            else
-                response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead);
+            response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken);
         }
         catch (HttpRequestException webex)
         {
@@ -171,7 +230,7 @@ public static class HttpRequestHeaderExtensionMethods
     public static void AddInvalid(this HttpRequestHeaders headers, string header, string value)
     {
         FieldInfo GetPrivateField(string name) => typeof(HttpHeaders).GetField(name, BindingFlags.NonPublic | BindingFlags.Instance);
-        
+
         var invalidHeadersField = GetPrivateField("_invalidHeaders") ?? GetPrivateField("invalidHeaders");
         var invalidHeaders = (HashSet<string>)invalidHeadersField.GetValue(headers);
         invalidHeaders?.Remove(header);

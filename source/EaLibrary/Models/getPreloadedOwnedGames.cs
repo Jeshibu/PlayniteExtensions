@@ -1,9 +1,6 @@
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable InconsistentNaming
 namespace EaLibrary.Models;
-
-public class OwnedGamesRoot
-{
-    public OwnedGamesData data { get; set; }
-}
 
 public class OwnedGamesData
 {
@@ -13,19 +10,19 @@ public class OwnedGamesData
 public class Me
 {
     public string id { get; set; }
-    public OwnedGameProducts ownedGameProducts { get; set; }
+    public OwnedGameListCursor ownedGameProducts { get; set; }
     public string __typename { get; set; }
 }
 
-public class OwnedGameProducts
+public class OwnedGameListCursor
 {
     public string next { get; set; }
     public int totalCount { get; set; }
-    public Items[] items { get; set; }
+    public OwnedGameProduct[] items { get; set; }
     public string __typename { get; set; }
 }
 
-public class Items
+public class OwnedGameProduct
 {
     public string id { get; set; }
     public string originOfferId { get; set; }

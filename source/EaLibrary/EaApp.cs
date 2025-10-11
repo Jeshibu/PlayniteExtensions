@@ -74,7 +74,7 @@ public class EaApp
         }
     }
 
-    public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Resources\originicon.png");
+    public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, @"Resources\originicon.png");
 
     public static void StartClient()
     {
@@ -89,7 +89,7 @@ public class EaApp
         }
 
         var fileEnumerator = new SafeFileEnumerator(installDir, "Activation.*", SearchOption.AllDirectories);
-        return fileEnumerator.Any() == true;
+        return fileEnumerator.Any();
     }
 
     public static bool GetGameUsesEasyAntiCheat(string installDir)
@@ -100,6 +100,6 @@ public class EaApp
         }
 
         var fileEnumerator = new SafeFileEnumerator(installDir, "EasyAntiCheat*.dll", SearchOption.AllDirectories);
-        return fileEnumerator.Any() == true;
+        return fileEnumerator.Any();
     }
 }

@@ -6,18 +6,15 @@ namespace EaLibrary;
 public class EaLibrarySettings
 {
     public int Version { get; set; }
+    public bool ConnectAccount { get; set; } = true;
     public bool ImportInstalledGames { get; set; } = true;
-    public bool ConnectAccount { get; set; } = false;
-    public bool ImportUninstalledGames { get; set; } = false;
+    public bool ImportUninstalledGames { get; set; } = true;
 }
 
 public class EaLibrarySettingsViewModel : PluginSettingsViewModel<EaLibrarySettings, EaLibrary>
 {
-    private EaWebsite website;
-    
     public EaLibrarySettingsViewModel(EaLibrary library, IPlayniteAPI api) : base(library, api)
     {
-        website = new EaWebsite(PlayniteApi.WebViews, Plugin.Downloader);
         var savedSettings = LoadSavedSettings();
         if (savedSettings != null)
         {
@@ -39,11 +36,11 @@ public class EaLibrarySettingsViewModel : PluginSettingsViewModel<EaLibrarySetti
         }
     }
 
-    public bool IsUserLoggedIn => website.IsAuthenticated();
+    public bool IsUserLoggedIn => Plugin.Website.IsAuthenticated();
 
     public RelayCommand<object> LoginCommand => new(_ =>
     {
-        website.Login();
+        Plugin.Website.Login();
         OnPropertyChanged(nameof(IsUserLoggedIn));
     });
 }

@@ -12,14 +12,12 @@ public interface IRegistryValueProvider
 
 public class RegistryValueProvider : IRegistryValueProvider
 {
-    public RegistryValueProvider() { }
-
     public string[] GetSubKeysForPath(
         RegistryView platform,
         RegistryHive hive,
         string path)
     {
-        RegistryKey rootKey = RegistryKey.OpenBaseKey(hive, platform);
+        var rootKey = RegistryKey.OpenBaseKey(hive, platform);
 
         return rootKey
                 .OpenSubKey(path)
@@ -32,12 +30,9 @@ public class RegistryValueProvider : IRegistryValueProvider
         string path,
         string keyName)
     {
-        RegistryKey rootKey = RegistryKey.OpenBaseKey(hive, platform);
+        var rootKey = RegistryKey.OpenBaseKey(hive, platform);
 
-        return rootKey
-                    .OpenSubKey(path)
-                    ?.GetValue(keyName)
-                    ?.ToString();
+        return rootKey.OpenSubKey(path)?.GetValue(keyName)?.ToString();
     }
 
     public string[] GetSubKeysForPath(RegistryHive hive, string path)

@@ -29,14 +29,14 @@ public static class StringExtensions
         }
     }
 
-    public static string RemoveTrademarks(this string str, string remplacement = "")
+    public static string RemoveTrademarks(this string str, string replacement = "")
     {
         if (str.IsNullOrEmpty())
         {
             return str;
         }
 
-        return Regex.Replace(str, @"[™©®]", remplacement);
+        return Regex.Replace(str, @"[™©®]", replacement);
     }
 
     public static bool IsNullOrEmpty(this string source)

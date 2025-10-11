@@ -113,7 +113,7 @@ public class PlatformUtility : IPlatformUtility
         TryAddPlatformByName(output, "Nintendo", ["Wii U", "WiiU"], "nintendo_wiiu");
         TryAddPlatformByName(output, ["PC (DOS)", "DOS", "MS-DOS"], "pc_dos");
         TryAddPlatformByName(output, ["PC (Linux)", "Linux", "LIN"], "pc_linux");
-        TryAddPlatformByName(output, ["PC (Windows)", "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM", "Windows Apps", "win", "Windows 3.x"], "pc_windows");
+        TryAddPlatformByName(output, ["PC (Windows)", "Windows", "PC", "PC CD-ROM", "PC DVD", "PC DVD-ROM", "Windows Apps", "win", "PCWIN", "Windows 3.x"], "pc_windows");
         TryAddPlatformByName(output, "Sega", ["32X"], "sega_32x");
         TryAddPlatformByName(output, "Sega CD", "sega_cd");
         TryAddPlatformByName(output, "Sega", ["Dreamcast", "DC"], "sega_dreamcast");
