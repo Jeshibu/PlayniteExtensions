@@ -1,5 +1,6 @@
 ﻿using EaLibrary.ActionControllers;
 using EaLibrary.Services;
+using EaLibrary.Settings;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;

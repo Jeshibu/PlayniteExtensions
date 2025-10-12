@@ -4,6 +4,10 @@
         <AssemblyTitle>EaLibrary</AssemblyTitle>
         <Product>EaLibrary</Product>
     </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DebugType>full</DebugType>
+        <DefineConstants>TRACE;DEBUG;</DefineConstants>
+    </PropertyGroup>
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
             <_Parameter1>EaLibrary.Tests</_Parameter1>
@@ -43,11 +47,6 @@
         <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs" Link="Common\WebDownloader.cs"/>
     </ItemGroup>
     <ItemGroup>
-        <Compile Update="EaLibrarySettingsView.xaml.cs">
-            <DependentUpon>EaLibrarySettingsView.xaml</DependentUpon>
-        </Compile>
-    </ItemGroup>
-    <ItemGroup>
         <None Include="extension.yaml">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
@@ -60,7 +59,7 @@
             <Generator>MSBuild:Compile</Generator>
             <SubType>Designer</SubType>
         </Page>
-        <Page Include="EaLibrarySettingsView.xaml">
+        <Page Include="Settings\EaLibrarySettingsView.xaml">
             <SubType>Designer</SubType>
             <Generator>MSBuild:Compile</Generator>
         </Page>

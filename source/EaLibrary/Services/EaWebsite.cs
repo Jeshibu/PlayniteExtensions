@@ -55,40 +55,7 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
         return success;
     }
 
-    public bool IsAuthenticated()
-    {
-        bool authenticated = false;
-        var cancellationTokenSource = new CancellationTokenSource();
-        using var webView = webViewFactory.CreateOffscreenView();
-        webView.LoadingChanged += (_, args) =>
-        {
-            if (args.IsLoading || cancellationTokenSource.IsCancellationRequested)
-                return;
-
-            var url = webView.GetCurrentAddress();
-            if (url == AccountUrl)
-            {
-                authenticated = true;
-                cancellationTokenSource.Cancel();
-            }
-
-            if (url.Contains("/login", StringComparison.OrdinalIgnoreCase))
-            {
-                authenticated = false;
-                cancellationTokenSource.Cancel();
-            }
-        };
-        webView.Navigate(AccountUrl);
-        try
-        {
-            Task.Delay(5000, cancellationTokenSource.Token).Wait();
-        }
-        catch when (cancellationTokenSource.IsCancellationRequested)
-        {
-        }
-
-        return authenticated;
-    }
+    public bool IsAuthenticated() => GetAuthToken() != null;
 
     public string GetAuthToken()
     {

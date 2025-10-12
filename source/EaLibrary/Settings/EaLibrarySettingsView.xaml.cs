@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace EaLibrary;
+namespace EaLibrary.Settings;
 
 /// <summary>
 /// Interaction logic for OriginLibrarySettingsView.xaml

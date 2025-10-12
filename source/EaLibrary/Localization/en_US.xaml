@@ -19,4 +19,6 @@
   <sys:String x:Key="LOCOriginImportPlaytime">Import play time</sys:String>
   <sys:String x:Key="LOCOriginAccountID">Account ID</sys:String>
   <sys:String x:Key="LOCOriginMetadataLanguageLabel">Metadata language:</sys:String>
+  <sys:String x:Key="LOCEaAccountSyncNotice">The duration of login sessions is quite short. 
+It's recommended that you disable the "Connect account" checkbox above once you've imported your EA games.</sys:String>
 </ResourceDictionary>

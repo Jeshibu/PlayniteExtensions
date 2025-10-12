@@ -15,13 +15,7 @@ public class EaApp
     private static readonly ILogger logger = LogManager.GetLogger();
     public static readonly string LibraryOpenUri = "origin2://library/open";
 
-    public static bool IsRunning
-    {
-        get
-        {
-            return Process.GetProcessesByName(Path.GetFileNameWithoutExtension(ClientExecPath))?.Any() == true;
-        }
-    }
+    public static bool IsRunning => Process.GetProcessesByName(Path.GetFileNameWithoutExtension(ClientExecPath)).Any();
 
     public static string ClientExecPath
     {
@@ -59,20 +53,7 @@ public class EaApp
         }
     }
 
-    public static bool IsInstalled
-    {
-        get
-        {
-            if (string.IsNullOrEmpty(ClientExecPath) || !File.Exists(ClientExecPath))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-    }
+    public static bool IsInstalled => !string.IsNullOrEmpty(ClientExecPath) && File.Exists(ClientExecPath);
 
     public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, @"Resources\originicon.png");
 
@@ -84,9 +65,7 @@ public class EaApp
     public static bool GetGameRequiresOrigin(string installDir)
     {
         if (string.IsNullOrEmpty(installDir) || !Directory.Exists(installDir))
-        {
             return false;
-        }
 
         var fileEnumerator = new SafeFileEnumerator(installDir, "Activation.*", SearchOption.AllDirectories);
         return fileEnumerator.Any();
@@ -95,9 +74,7 @@ public class EaApp
     public static bool GetGameUsesEasyAntiCheat(string installDir)
     {
         if (string.IsNullOrEmpty(installDir) || !Directory.Exists(installDir))
-        {
             return false;
-        }
 
         var fileEnumerator = new SafeFileEnumerator(installDir, "EasyAntiCheat*.dll", SearchOption.AllDirectories);
         return fileEnumerator.Any();
