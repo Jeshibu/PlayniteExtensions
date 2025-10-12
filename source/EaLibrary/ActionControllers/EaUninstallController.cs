@@ -2,7 +2,6 @@ using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,34 +28,25 @@ public class EaUninstallController : UninstallController
     {
         Dispose();
         ProcessStarter.StartUrl(EaApp.LibraryOpenUri);
+        
+        #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         StartUninstallWatcher();
     }
 
-    public async void StartUninstallWatcher()
+    private async Task StartUninstallWatcher()
     {
-        _watcherToken = new CancellationTokenSource();
-        var manifest = _library.DataGatherer.GetLegacyOffer(Game.GameId);
-        if (manifest?.installCheckOverride == null)
-        {
-            logger.Error($"No install check found for EA game {Game.GameId}, stopping installation check.");
-            return;
-        }
+        _watcherToken = new();
 
         await Task.Run(async () =>
         {
             while (true)
             {
                 if (_watcherToken.IsCancellationRequested)
-                {
                     return;
-                }
 
-                var installData = _library.DataGatherer.GetInstallDirectory(manifest.installCheckOverride);
-                var executablePath = Path.Combine(installData.InstallDirectory, installData.RelativeFilePath);
-
-                if (!File.Exists(executablePath))
+                if (!_library.DataGatherer.GameIsInstalled(Game.GameId, out _))
                 {
-                    InvokeOnUninstalled(new GameUninstalledEventArgs());
+                    InvokeOnUninstalled(new());
                     return;
                 }
 

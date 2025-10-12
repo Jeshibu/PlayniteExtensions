@@ -42,6 +42,27 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
         return null;
     }
 
+    public bool GameIsInstalled(string offerId, out string installDirectory)
+    {
+        var manifest = GetLegacyOffer(offerId);
+
+        if (manifest?.installCheckOverride == null)
+        {
+            _logger.Error($"No install data found for EA game {offerId}, stopping installation check.");
+            installDirectory = null;
+            return false;
+        }
+
+        var installData = GetInstallDirectory(manifest.installCheckOverride);
+        installDirectory = installData?.InstallDirectory;
+
+        if (installData == null)
+            return false;
+
+        var executablePath = Path.Combine(installData.InstallDirectory, installData.RelativeFilePath);
+        return File.Exists(executablePath);
+    }
+
     private Dictionary<string, LegacyOffer> GetLegacyOffers(IEnumerable<string> offerIds)
     {
         var offers = GetCachedLegacyOffers();
@@ -70,7 +91,7 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
         return JsonConvert.DeserializeObject<Dictionary<string, LegacyOffer>>(strContent);
     }
 
-    private GameMetadata ToGameMetadata(OwnedGameProduct game, IDictionary<string,LegacyOffer> offers)
+    private GameMetadata ToGameMetadata(OwnedGameProduct game, IDictionary<string, LegacyOffer> offers)
     {
         var output = new GameMetadata
         {
@@ -149,7 +170,7 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
             return null;
         }
 
-        return new(installDirectory, match.Groups["exe"].Value);
+        return new(installDirectory, match.Groups["exe"].Value.TrimStart('\\', '/'));
     }
 
     public class InstallPath(string installDirectory, string relativePath)
