@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Authentication;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace EaLibrary;
 
@@ -33,37 +34,42 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
             yield return ToGameMetadata(game, legacyOffers);
     }
 
-    public LegacyOffer GetLegacyOffer(string offerId)
+    public async Task<LegacyOffer> GetLegacyOfferAsync(string offerId)
     {
-        var offers = GetLegacyOffers([offerId]);
+        var offers = await GetLegacyOffersAsync([offerId]);
         if (offers.TryGetValue(offerId, out var offer))
             return offer;
 
         return null;
     }
 
-    public bool GameIsInstalled(string offerId, out string installDirectory)
+    public async Task<EaInstallationStatus> GetGameInstallationStatusAsync(string offerId)
     {
-        var manifest = GetLegacyOffer(offerId);
+        var manifest = await GetLegacyOfferAsync(offerId);
 
         if (manifest?.installCheckOverride == null)
         {
             _logger.Error($"No install data found for EA game {offerId}, stopping installation check.");
-            installDirectory = null;
-            return false;
+            return new();
         }
 
         var installData = GetInstallDirectory(manifest.installCheckOverride);
-        installDirectory = installData?.InstallDirectory;
 
         if (installData == null)
-            return false;
+            return new();
 
         var executablePath = Path.Combine(installData.InstallDirectory, installData.RelativeFilePath);
-        return File.Exists(executablePath);
+        return new()
+        {
+            IsInstalled = File.Exists(executablePath),
+            InstallDirectory = installData.InstallDirectory,
+            ExePath = executablePath,
+        };
     }
 
-    private Dictionary<string, LegacyOffer> GetLegacyOffers(IEnumerable<string> offerIds)
+    private Dictionary<string, LegacyOffer> GetLegacyOffers(IEnumerable<string> offerIds) => GetLegacyOffersAsync(offerIds).Result;
+
+    private async Task<Dictionary<string, LegacyOffer>> GetLegacyOffersAsync(IEnumerable<string> offerIds)
     {
         var offers = GetCachedLegacyOffers();
 
@@ -71,7 +77,7 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
 
         if (missingOfferIds.Any())
         {
-            var missingOffers = website.GetLegacyOffers(missingOfferIds);
+            var missingOffers = await website.GetLegacyOffersAsync(missingOfferIds);
             foreach (var offer in missingOffers)
                 offers[offer.offerId] = offer;
 

@@ -19,7 +19,7 @@ public interface IEaWebsite
     bool IsAuthenticated();
     string GetAuthToken();
     List<OwnedGameProduct> GetOwnedGames(string auth);
-    IEnumerable<LegacyOffer> GetLegacyOffers(string[] offerIds);
+    Task<LegacyOffer[]> GetLegacyOffersAsync(string[] offerIds);
 }
 
 public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader) : IEaWebsite
@@ -74,7 +74,7 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
 
                 if (resource.Request.Headers.TryGetValue("authorization", out string authHeader))
                 {
-                    _logger.Info($"Auth header: {authHeader}");
+                    _logger.Info("Auth header found");
                     auth = authHeader.TrimStart("Bearer ");
                     cancellationTokenSource.Cancel();
                 }
@@ -130,7 +130,7 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
     public static string GetGamesUrl(int limit = DefaultLimit, string offset = "0") =>
         $$$"""{{{GraphQlBaseUrl}}}?operationName=getPreloadedOwnedGames&variables={"isMac":false,"addFieldsToPreloadGames":true, "locale":"en","limit":{{{limit}}},"next":"{{{offset}}}","type":["DIGITAL_FULL_GAME","PACKAGED_FULL_GAME"],"entitlementEnabled":true,"storefronts":["EA","STEAM","EPIC"],"ownershipMethods":["UNKNOWN","ASSOCIATION","PURCHASE","REDEMPTION","GIFT_RECEIPT","ENTITLEMENT_GRANT","DIRECT_ENTITLEMENT","PRE_ORDER_PURCHASE","VAULT","XGP_VAULT","STEAM","STEAM_VAULT","STEAM_SUBSCRIPTION","EPIC","EPIC_VAULT","EPIC_SUBSCRIPTION"],"platforms":["PC"]}&extensions={"persistedQuery":{"version":1,"sha256Hash":"5de4178ee7e1f084ce9deca856c74a9e03547a67dfafc0cb844d532fb54ae73d"}}""";
 
-    public IEnumerable<LegacyOffer> GetLegacyOffers(string[] offerIds)
+    public async Task<LegacyOffer[]> GetLegacyOffersAsync(string[] offerIds)
     {
         const string query = """
                              query getLegacyCatalogDefs($offerIds: [String!]!, $locale: Locale) {
@@ -200,7 +200,7 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
 
         var data = new { query, operationName = "getLegacyCatalogDefs", variables = new { locale = "DEFAULT", offerIds } };
         var dataString = JsonConvert.SerializeObject(data);
-        var response = downloader.PostAsync(GraphQlBaseUrl, dataString, contentType: "application/json").Result;
+        var response = await downloader.PostAsync(GraphQlBaseUrl, dataString, contentType: "application/json");
         var responseObj = JsonConvert.DeserializeObject<GraphQlResponseRoot<LegacyOffersData>>(response.ResponseContent);
         return responseObj.data.legacyOffers;
     }

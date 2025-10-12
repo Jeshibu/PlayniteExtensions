@@ -2,6 +2,7 @@ using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,7 +29,7 @@ public class EaUninstallController : UninstallController
     {
         Dispose();
         ProcessStarter.StartUrl(EaApp.LibraryOpenUri);
-        
+
         #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         StartUninstallWatcher();
     }
@@ -44,9 +45,18 @@ public class EaUninstallController : UninstallController
                 if (_watcherToken.IsCancellationRequested)
                     return;
 
-                if (!_library.DataGatherer.GameIsInstalled(Game.GameId, out _))
+                try
                 {
-                    InvokeOnUninstalled(new());
+                    var status = await _library.DataGatherer.GetGameInstallationStatusAsync(Game.GameId);
+                    if (!status.IsInstalled)
+                    {
+                        InvokeOnUninstalled(new());
+                        return;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, $"Error while installing EA game {Game.GameId})");
                     return;
                 }
 

@@ -47,9 +47,10 @@ public class EaInstallController : InstallController
 
                 try
                 {
-                    if (_library.DataGatherer.GameIsInstalled(Game.GameId, out string installDirectory))
+                    var status = await _library.DataGatherer.GetGameInstallationStatusAsync(Game.GameId); 
+                    if (status.IsInstalled)
                     {
-                        InvokeOnInstalled(new(new() { InstallDirectory = installDirectory }));
+                        InvokeOnInstalled(new(new() { InstallDirectory = status.InstallDirectory }));
                         return;
                     }
                 }

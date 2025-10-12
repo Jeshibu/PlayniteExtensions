@@ -11,6 +11,7 @@ using System.Linq;
 
 namespace EaLibrary;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 [LoadPlugin]
 public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
 {
@@ -94,28 +95,7 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
 
     public override IEnumerable<PlayController> GetPlayActions(GetPlayActionsArgs args)
     {
-        if (args.Game.PluginId != Id)
-            yield break;
-
-        var legacyOffer = DataGatherer.GetLegacyOffer(args.Game.GameId);
-        if (string.IsNullOrWhiteSpace(legacyOffer?.contentId))
-        {
-            logger.Warn($"No content ID found for game {args.Game.GameId} ({args.Game.Name})");
-            yield break;
-        }
-        
-        logger.Info($"Starting EA content {legacyOffer.contentId} ({args.Game.Name})");
-
-        var installDir = DataGatherer.GetInstallDirectory(legacyOffer.installCheckOverride).InstallDirectory;
-
-        yield return new AutomaticPlayController(args.Game)
-        {
-            Type = AutomaticPlayActionType.Url,
-            Path = "origin2://game/launch/?offerIds=" + legacyOffer.contentId,
-            TrackingPath = installDir,
-            TrackingMode = TrackingMode.Directory,
-            Name = $"EA: {legacyOffer.displayName}",
-            InitialTrackingDelay = 40_000,
-        };
+        if (args.Game.PluginId == Id)
+            yield return new EaPlayController(args.Game, this);
     }
 }
