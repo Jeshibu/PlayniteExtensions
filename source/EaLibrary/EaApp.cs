@@ -55,7 +55,7 @@ public class EaApp
 
     public static bool IsInstalled => !string.IsNullOrEmpty(ClientExecPath) && File.Exists(ClientExecPath);
 
-    public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, @"Resources\originicon.png");
+    public static string Icon => Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, @"Resources\ea_icon.png");
 
     public static void StartClient()
     {
