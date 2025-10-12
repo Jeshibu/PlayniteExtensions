@@ -382,7 +382,7 @@ public class PCGamingWikiHTMLParser
 
     private DateTime? ParseWikiDate(string dateString)
     {
-        if (DateTime.TryParse(dateString, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date) == true)
+        if (DateTime.TryParse(dateString, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
         {
             return date;
         }

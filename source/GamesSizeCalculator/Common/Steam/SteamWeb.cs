@@ -99,7 +99,7 @@ class SteamWeb
             if (parsedData.Keys?.Any() == true)
             {
                 var response = parsedData[parsedData.Keys.First()];
-                if (response.success == true && response.data != null)
+                if (response.success && response.data != null)
                 {
                     return response;
                 }
