@@ -23,7 +23,7 @@ public class LegacyOffer
     public string executePathOverride { get; set; }
     public string installationDirectory { get; set; }
     public string installCheckOverride { get; set; }
-    public bool monitorPlay { get; set; }
+    public bool? monitorPlay { get; set; }
     public string displayName { get; set; }
     public string displayType { get; set; }
     public string igoBrowserDefaultUrl { get; set; }
