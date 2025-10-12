@@ -28,7 +28,7 @@ jobs:
 
       - name: Setup Playnite
         run: |
-          Invoke-WebRequest -Uri "https://github.com/JosefNemec/Playnite/releases/download/10.40/Playnite1040.7z" -OutFile "$Env:GITHUB_WORKSPACE\Playnite.7z"
+          Invoke-WebRequest -Uri "https://github.com/JosefNemec/Playnite/releases/download/10.41/10.41.7z" -OutFile "$Env:GITHUB_WORKSPACE\Playnite.7z"
           & "$env:ProgramFiles\7-Zip\7z.exe" x "$env:GITHUB_WORKSPACE\Playnite.7z" "-o$env:GITHUB_WORKSPACE\Playnite"
 
       - name: Copy Playnite Emulation directory to ExtraEmulatorProfiles
