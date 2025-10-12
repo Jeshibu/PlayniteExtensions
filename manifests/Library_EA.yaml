@@ -90,7 +90,7 @@ Packages:
   - Version: '3.0'
     RequiredApiVersion: 6.13.0
     ReleaseDate: 2025-10-12
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ea3.0/OriginLibrary_Builtin_3_0.pext
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ea3.0/EaLibrary_3_0.pext
     Changelog:
       - "Converted from Origin API to EA's new backend - huge thanks to rast1234 for pointing out the APIs necessary"
       - "Due to technical restrictions, it is no longer possible to import EA games without signing in"
