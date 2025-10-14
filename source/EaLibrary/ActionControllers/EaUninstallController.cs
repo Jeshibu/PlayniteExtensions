@@ -28,18 +28,18 @@ public class EaUninstallController : UninstallController
     public override void Uninstall(UninstallActionArgs args)
     {
         Dispose();
-        ProcessStarter.StartUrl(EaApp.LibraryOpenUri);
 
-        #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-        StartUninstallWatcher();
+        Task.Run(StartUninstallWatcher);
     }
 
     private async Task StartUninstallWatcher()
     {
-        _watcherToken = new();
-
-        await Task.Run(async () =>
+        try
         {
+            ProcessStarter.StartUrl(EaApp.LibraryOpenUri);
+            
+            _watcherToken = new();
+
             while (true)
             {
                 if (_watcherToken.IsCancellationRequested)
@@ -62,6 +62,10 @@ public class EaUninstallController : UninstallController
 
                 await Task.Delay(2000);
             }
-        });
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex, $"Error while uninstalling EA game {Game.Name} ({Game.GameId})");
+        }
     }
 }

@@ -1,3 +1,4 @@
+using EaLibrary.Models;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -22,43 +23,51 @@ public class EaPlayController : PlayController
         eaLibrary = library;
     }
 
+    public override void Play(PlayActionArgs args)
+    {
+        Dispose();
+        
+        Task.Run(PlayAsync);
+    }
+    
     public override void Dispose()
     {
         procMon?.Dispose();
     }
 
-    private async Task ActuallyPlay()
+    private async Task PlayAsync()
     {
-        if (!Directory.Exists(Game.InstallDirectory))
+        try
         {
-            var error = $"Game install directory doesn't exist: {Game.InstallDirectory}";
-            logger.Warn(error);
-            eaLibrary.PlayniteApi.Notifications.Add($"ea-launch-{Game.GameId}-failed", error, NotificationType.Error);
-            InvokeOnStopped(new());
-            return;
+            if (!Directory.Exists(Game.InstallDirectory))
+            {
+                var error = $"Game install directory doesn't exist: {Game.InstallDirectory}";
+                logger.Warn(error);
+                eaLibrary.PlayniteApi.Notifications.Add($"ea-launch-{Game.GameId}-failed", error, NotificationType.Error);
+                InvokeOnStopped(new());
+                return;
+            }
+
+            var legacyOffer = await EaControllerHelper.LaunchGame(Game, logger, eaLibrary);
+            if (legacyOffer == null)
+            {
+                InvokeOnStopped(new());
+                return;
+            }
+
+            procMon = new ProcessMonitor();
+            procMon.TreeDestroyed += ProcMon_TreeDestroyed;
+            procMon.TreeStarted += ProcMon_TreeStarted;
+
+            // Solves issues with game process being started/shutdown multiple times during startup via Origin
+            var delaySeconds = EaApp.GetGameUsesEasyAntiCheat(Game.InstallDirectory) ? 40 : 2;
+
+            procMon.WatchDirectoryProcesses(Game.InstallDirectory, false, trackingDelay: delaySeconds * 1000);
         }
-        
-        var legacyOffer = await eaLibrary.DataGatherer.GetLegacyOfferAsync(Game.GameId);
-        if (string.IsNullOrWhiteSpace(legacyOffer?.contentId))
+        catch (Exception ex)
         {
-            logger.Warn($"No content ID found for game {Game.GameId} ({Game.Name})");
-            eaLibrary.PlayniteApi.Notifications.Add($"ea-launch-{Game.GameId}-failed", $"Failed to get content ID for {Game.Name}", NotificationType.Error);
-            InvokeOnStopped(new());
-            return;
+            logger.Error(ex, $"Error while running EA game {Game.Name} ({Game.GameId})");
         }
-        
-        logger.Info($"Starting EA content {legacyOffer.contentId} ({Game.Name})");
-
-        ProcessStarter.StartUrl("origin2://game/launch/?offerIds=" + legacyOffer.contentId);
-        
-        procMon = new ProcessMonitor();
-        procMon.TreeDestroyed += ProcMon_TreeDestroyed;
-        procMon.TreeStarted += ProcMon_TreeStarted;
-        
-        // Solves issues with game process being started/shutdown multiple times during startup via Origin
-        var delaySeconds = EaApp.GetGameUsesEasyAntiCheat(Game.InstallDirectory) ? 40 : 2;
-
-        procMon.WatchDirectoryProcesses(Game.InstallDirectory, false, trackingDelay: delaySeconds * 1000);
     }
 
     private void ProcMon_TreeStarted(object sender, ProcessMonitor.TreeStartedEventArgs args)
@@ -71,13 +80,5 @@ public class EaPlayController : PlayController
     {
         stopWatch?.Stop();
         InvokeOnStopped(new GameStoppedEventArgs(Convert.ToUInt64(stopWatch?.Elapsed.TotalSeconds ?? 0)));
-    }
-    
-    public override void Play(PlayActionArgs args)
-    {
-        Dispose();
-
-        #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-        ActuallyPlay();
     }
 }

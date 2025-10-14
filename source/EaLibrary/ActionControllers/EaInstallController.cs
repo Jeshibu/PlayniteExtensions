@@ -1,4 +1,3 @@
-using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
@@ -20,48 +19,45 @@ public class EaInstallController : InstallController
         Name = "Install using EA app";
     }
 
+    public override void Install(InstallActionArgs args)
+    {
+        Dispose();
+
+        Task.Run(StartInstallWatcher);
+    }
+
     public override void Dispose()
     {
         _watcherToken?.Cancel();
     }
 
-    public override void Install(InstallActionArgs args)
-    {
-        Dispose();
-        ProcessStarter.StartUrl(EaApp.LibraryOpenUri);
-        
-        #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-        StartInstallWatcher();
-    }
-
     private async Task StartInstallWatcher()
     {
-        _watcherToken = new();
-        
-        await Task.Run(async () =>
+        try
         {
+            _watcherToken = new();
+
+            // opens install dialog for uninstalled games
+            await EaControllerHelper.LaunchGame(Game, logger, _library);
+
             while (true)
             {
                 if (_watcherToken.IsCancellationRequested)
                     return;
 
-                try
+                var status = await _library.DataGatherer.GetGameInstallationStatusAsync(Game.GameId);
+                if (status.IsInstalled)
                 {
-                    var status = await _library.DataGatherer.GetGameInstallationStatusAsync(Game.GameId); 
-                    if (status.IsInstalled)
-                    {
-                        InvokeOnInstalled(new(new() { InstallDirectory = status.InstallDirectory }));
-                        return;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex, $"Error while installing EA game {Game.GameId})");
+                    InvokeOnInstalled(new(new() { InstallDirectory = status.InstallDirectory }));
                     return;
                 }
 
                 await Task.Delay(10000);
             }
-        });
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex, $"Error while installing EA game {Game.Name} ({Game.GameId})");
+        }
     }
 }
