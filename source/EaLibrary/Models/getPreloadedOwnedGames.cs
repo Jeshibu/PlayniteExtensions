@@ -71,7 +71,7 @@ public class AvailableInSubscription
 
 public class TrialDetails
 {
-    public int trialDurationHours { get; set; }
+    public int? trialDurationHours { get; set; }
     public string trialType { get; set; }
     public string __typename { get; set; }
 }
