@@ -2,7 +2,6 @@ using EaLibrary.Models;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using PlayniteExtensions.Common;
-using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Threading;
@@ -27,7 +26,6 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
     private const string HomeUrl = "https://www.ea.com/";
     private const string LoginUrl = "https://www.ea.com/login";
     private const string DealsUrl = "https://www.ea.com/sales/deals";
-    private const string AccountUrl = "https://myaccount.ea.com/am/ui/account-information";
     private const string GraphQlBaseUrl = "https://service-aggregation-layer.juno.ea.com/graphql";
     private readonly ILogger _logger = LogManager.GetLogger();
 
@@ -70,17 +68,15 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
                 if (cancellationTokenSource.IsCancellationRequested || !resource.Request.Url.StartsWith(GraphQlBaseUrl))
                     return;
 
-                _logger.Info(resource.Request.Url);
-
                 if (resource.Request.Headers.TryGetValue("authorization", out string authHeader))
                 {
-                    _logger.Info("Auth header found");
+                    _logger.Info($"Auth header nabbed from {resource.Request.Url}");
                     auth = authHeader.TrimStart("Bearer ");
                     cancellationTokenSource.Cancel();
                 }
                 else
                 {
-                    _logger.Warn($"No auth header found for {resource.Request.Url}, other headers: {string.Join(", ", resource.Request.Headers.Keys)}");
+                    _logger.Info($"No auth header found for {resource.Request.Url}, other headers: {string.Join(", ", resource.Request.Headers.Keys)}");
                 }
             }
         };

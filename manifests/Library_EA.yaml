@@ -15,3 +15,12 @@ Packages:
       - "Fixed error when reading monitorPlay null values"
       - "Fixed missing icon"
       - "Improved game startup handling"
+  - Version: '3.1'
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2025-10-14
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ea3.1/EaLibrary_3_1.pext
+    Changelog:
+      - "Fixed error when reading trialDurationHours null values"
+      - "Improved play and install actions to never halt the user interface"
+      - "Installing a game now prompts to install the game in the EA app instead of opening the EA app library view"
+      - "Login prompt window background color now matches login page background"
