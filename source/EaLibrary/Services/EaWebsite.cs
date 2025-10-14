@@ -34,7 +34,7 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
     public bool Login()
     {
         var success = false;
-        using var webView = webViewFactory.CreateView(500, 700, Colors.DarkBlue);
+        using var webView = webViewFactory.CreateView(500, 700, Color.FromRgb(29, 32, 51));
         webView.DeleteDomainCookiesRegex(@".*\.ea\.com");
         webView.Navigate(LoginUrl);
 
