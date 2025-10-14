@@ -12,7 +12,6 @@ using System.Linq;
 namespace EaLibrary;
 
 // ReSharper disable once ClassNeverInstantiated.Global
-[LoadPlugin]
 public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
 {
     private static readonly ILogger logger = LogManager.GetLogger();

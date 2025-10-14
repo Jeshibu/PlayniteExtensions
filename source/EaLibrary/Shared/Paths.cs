@@ -9,11 +9,10 @@ using Playnite.Native;
 
 namespace Playnite.Common;
 
-public class Paths
+public static class Paths
 {
     private const string longPathPrefix = @"\\?\";
     private const string longPathUncPrefix = @"\\?\UNC\";
-    public static readonly char[] DirectorySeparators = new char[] { '\\', '/' };
 
     public static string GetFinalPathName(string path)
     {
@@ -132,7 +131,7 @@ public class Paths
         }
         catch
         {
-            // this shound't happen
+            // this shouldn't happen
         }
 
         return Path.GetFullPath(formatted).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar).ToUpperInvariant();
@@ -215,7 +214,7 @@ public class Paths
         }
     }
 
-    public static bool MathcesFilePattern(string filePath, string pattern)
+    public static bool MatchesFilePattern(string filePath, string pattern)
     {
         if (filePath.IsNullOrEmpty() || pattern.IsNullOrEmpty())
         {
