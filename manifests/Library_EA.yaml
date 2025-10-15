@@ -32,3 +32,9 @@ Packages:
       - "Fixed Playnite crash when launching Battlefield 6"
       - "Fixed error when reading trialDurationHours null values"
       - "Added debug game import button to the settings"
+  - Version: '3.1.2'
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2025-10-15
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ea3.1/EaLibrary_3_1_2.pext
+    Changelog:
+      - "Fixed settings not displaying"
