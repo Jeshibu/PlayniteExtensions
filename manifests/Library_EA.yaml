@@ -29,6 +29,6 @@ Packages:
     ReleaseDate: 2025-10-15
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ea3.1/EaLibrary_3_1_1.pext
     Changelog:
-      - "Fixed error when reading trialDurationHours null values"
-      - "Added debug game import button to the settings in order to speed up this game of whack-a-mole with properties that can be null unexpectedly"
       - "Fixed Playnite crash when launching Battlefield 6"
+      - "Fixed error when reading trialDurationHours null values"
+      - "Added debug game import button to the settings"
