@@ -306,11 +306,11 @@ public class ProcessMonitor : IDisposable
 
     private void OnTreeStarted(int processId)
     {
-        execContext.Post((a) => TreeStarted?.Invoke(this, new TreeStartedEventArgs { StartedId = processId }), null);
+        TreeStarted?.Invoke(this, new TreeStartedEventArgs { StartedId = processId });
     }
 
     private void OnTreeDestroyed()
     {
-        execContext.Post((a) => TreeDestroyed?.Invoke(this, EventArgs.Empty), null);
+        TreeDestroyed?.Invoke(this, EventArgs.Empty);
     }
 }

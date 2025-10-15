@@ -32,7 +32,13 @@ public class EaPlayController : PlayController
     
     public override void Dispose()
     {
+        if (procMon != null)
+        {
+            procMon.TreeDestroyed -= ProcMon_TreeDestroyed;
+            procMon.TreeStarted -= ProcMon_TreeStarted;
+        }
         procMon?.Dispose();
+        procMon = null;
     }
 
     private async Task PlayAsync()
