@@ -106,7 +106,7 @@ public class GameProductUser
 
 public class GameProductUserTrial
 {
-    public int trialTimeRemainingSeconds { get; set; }
+    public int? trialTimeRemainingSeconds { get; set; }
     public string __typename { get; set; }
 }
 
