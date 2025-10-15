@@ -24,3 +24,11 @@ Packages:
       - "Improved play and install actions to never halt the user interface"
       - "Installing a game now prompts to install the game in the EA app instead of opening the EA app library view"
       - "Login prompt window background color now matches login page background"
+  - Version: '3.1.1'
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: 2025-10-15
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ea3.1/EaLibrary_3_1_1.pext
+    Changelog:
+      - "Fixed error when reading trialDurationHours null values"
+      - "Added debug game import button to the settings in order to speed up this game of whack-a-mole with properties that can be null unexpectedly"
+      - "Fixed Playnite crash when launching Battlefield 6"

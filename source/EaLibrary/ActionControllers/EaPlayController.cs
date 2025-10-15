@@ -26,10 +26,10 @@ public class EaPlayController : PlayController
     public override void Play(PlayActionArgs args)
     {
         Dispose();
-        
+
         Task.Run(PlayAsync);
     }
-    
+
     public override void Dispose()
     {
         if (procMon != null)

@@ -68,7 +68,7 @@ public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
             PlayniteApi.Notifications.Add(new NotificationMessage(
                                               ImportErrorMessageId,
                                               string.Format(PlayniteApi.Resources.GetString("LOCLibraryImportError"), Name) +
-                                              System.Environment.NewLine + importError.Message,
+                                              Environment.NewLine + importError.Message,
                                               NotificationType.Error,
                                               () => OpenSettingsView()));
         }

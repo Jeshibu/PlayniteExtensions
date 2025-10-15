@@ -3,6 +3,7 @@
         <ProjectGuid>{C8D3E73F-8236-4B04-8456-095FF702FABA}</ProjectGuid>
         <AssemblyTitle>EaLibrary</AssemblyTitle>
         <Product>EaLibrary</Product>
+        <VersionPrefix>3.1.1</VersionPrefix>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <DebugType>full</DebugType>
