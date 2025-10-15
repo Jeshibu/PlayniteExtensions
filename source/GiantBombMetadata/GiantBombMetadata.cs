@@ -87,7 +87,7 @@ public class GiantBombMetadata : MetadataPlugin
             yield break;
 
         var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-        var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation), "icon.png");
+        var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation)!, "icon.png");
         yield return new TopPanelItem()
         {
             Icon = iconPath,

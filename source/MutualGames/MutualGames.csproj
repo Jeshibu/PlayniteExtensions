@@ -31,6 +31,7 @@
     <Compile Include="..\PlayniteExtensions.Common\IgnoreScrollBehavior.cs" Link="Common\IgnoreScrollBehavior.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Common\IPlatformUtility.cs" />
     <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="Common\LibraryIdUtility.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\NotAuthenticatedException.cs" Link="Common\NotAuthenticatedException.cs"/>
     <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs" Link="Common\PlatformUtility.cs" />
     <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs" Link="Common\PluginSettingsViewModel.cs" />
     <Compile Include="..\PlayniteExtensions.Common\SortableNameConverter.cs" Link="Common\SortableNameConverter.cs" />

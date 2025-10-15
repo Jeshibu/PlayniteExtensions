@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Authentication;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -26,7 +25,9 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
     public IEnumerable<GameMetadata> GetGames()
     {
         var token = website.GetAuthToken();
-        if (token == null) throw new AuthenticationException();
+        if (token == null)
+            throw new NotAuthenticatedException();
+
         var ownedGames = website.GetOwnedGames(token);
         var legacyOffers = GetLegacyOffers(ownedGames.Select(o => o.originOfferId));
 

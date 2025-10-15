@@ -1,4 +1,5 @@
 ﻿using GamesSizeCalculator.Models;
+using GamesSizeCalculator.SteamSizeCalculation;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using Playnite.SDK.Models;
@@ -7,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace GamesSizeCalculator.SteamSizeCalculation;
+namespace GamesSizeCalculator.Steam;
 
 public class SteamAppIdUtility(ICachedFile steamAppList) : ISteamAppIdUtility
 {
@@ -21,8 +22,6 @@ public class SteamAppIdUtility(ICachedFile steamAppList) : ISteamAppIdUtility
     {
         get { return _steamIds ??= GetSteamIdsByTitle(); }
     }
-
-    public ICachedFile SteamAppList { get; } = steamAppList;
 
     private static string NormalizeTitle(string title)
     {
@@ -58,7 +57,7 @@ public class SteamAppIdUtility(ICachedFile steamAppList) : ISteamAppIdUtility
 
     private Dictionary<string, int> GetSteamIdsByTitle()
     {
-        var jsonStr = SteamAppList.GetFileContents();
+        var jsonStr = steamAppList.GetFileContents();
         var jsonContent = Serialization.FromJson<SteamAppListRoot>(jsonStr);
         Dictionary<string, int> output = [];
         foreach (var app in jsonContent.Applist.Apps)

@@ -1,4 +1,5 @@
 ﻿using GamesSizeCalculator.PS3;
+using GamesSizeCalculator.Steam;
 using GamesSizeCalculator.SteamSizeCalculation;
 using Playnite.SDK;
 using Playnite.SDK.Plugins;

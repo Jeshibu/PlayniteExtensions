@@ -23,16 +23,12 @@ public class CachedFileDownloader(string onlinePath, string localPath, TimeSpan 
     private bool CopyFileFromPackagedFallback()
     {
         if (PackagedFallbackPath.IsNullOrWhiteSpace())
-        {
             return false;
-        }
 
         FileInfo packagedFallbackFile = new(PackagedFallbackPath);
 
         if (!packagedFallbackFile.Exists)
-        {
             return false;
-        }
 
         FileSystem.CopyFile(PackagedFallbackPath, LocalPath, true);
         return true;
@@ -41,15 +37,11 @@ public class CachedFileDownloader(string onlinePath, string localPath, TimeSpan 
     private bool PackagedFallbackIsNewerThan(FileInfo f)
     {
         if (PackagedFallbackPath.IsNullOrWhiteSpace())
-        {
             return false;
-        }
 
         FileInfo packagedFallbackFile = new(PackagedFallbackPath);
         if (!packagedFallbackFile.Exists || !f.Exists)
-        {
             return false;
-        }
 
         return packagedFallbackFile.LastWriteTime > f.LastWriteTime;
     }
@@ -58,22 +50,15 @@ public class CachedFileDownloader(string onlinePath, string localPath, TimeSpan 
     {
         var f = new FileInfo(LocalPath);
         if ((!f.Exists || PackagedFallbackIsNewerThan(f)) && CopyFileFromPackagedFallback())
-        {
             f.Refresh();
-        }
 
         if (!f.Exists || f.LastWriteTime + MaxCacheAge < DateTime.Now)
-        {
             RefreshCache();
-        }
+        
         if (Encoding == null)
-        {
             return FileSystem.ReadStringFromFile(LocalPath);
-        }
-        else
-        {
-            return File.ReadAllText(LocalPath, Encoding);
-        }
+
+        return File.ReadAllText(LocalPath, Encoding);
     }
 
     public void RefreshCache()

@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)IntegerFormatConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IPlatformUtility.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LibraryIdUtility.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NotAuthenticatedException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlatformUtility.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PlayniteConvert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PluginSettingsViewModel.cs" />
