@@ -73,5 +73,10 @@
         <Border BorderBrush="#fa9066" BorderThickness="2" CornerRadius="2" Margin="25">
             <TextBlock TextWrapping="Wrap" Margin="5" Text="{DynamicResource LOCEaAccountSyncNotice}" />
         </Border>
+        
+        <Button Width="*" Padding="5" HorizontalAlignment="Left"
+                Command="{Binding DebugCommand}">
+            Debug game import
+        </Button>
     </StackPanel>
 </UserControl>

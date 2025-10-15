@@ -2,8 +2,12 @@ using EaLibrary.Models;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using PlayniteExtensions.Common;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -19,6 +23,9 @@ public interface IEaWebsite
     string GetAuthToken();
     List<OwnedGameProduct> GetOwnedGames(string auth);
     Task<LegacyOffer[]> GetLegacyOffersAsync(string[] offerIds);
+    
+    bool DebugRequests { get; set; }
+    List<string> DebugFilePaths { get; }
 }
 
 public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader) : IEaWebsite
@@ -28,6 +35,9 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
     private const string DealsUrl = "https://www.ea.com/sales/deals";
     private const string GraphQlBaseUrl = "https://service-aggregation-layer.juno.ea.com/graphql";
     private readonly ILogger _logger = LogManager.GetLogger();
+    private readonly string _version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+    public bool DebugRequests { get; set; }
+    public List<string> DebugFilePaths { get; } = [];
 
     public bool Login()
     {
@@ -103,6 +113,7 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
         do
         {
             var response = downloader.DownloadString(GetGamesUrl(DefaultLimit, offset), headerSetter: HeaderSetter);
+            SaveResponse(response, $"ea-{_version}-owned-games-{offset}.json");
 
             var root = JsonConvert.DeserializeObject<GraphQlResponseRoot<OwnedGamesData>>(response.ResponseContent);
             var ownedGames = root?.data?.me?.ownedGameProducts;
@@ -197,7 +208,19 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
         var data = new { query, operationName = "getLegacyCatalogDefs", variables = new { locale = "DEFAULT", offerIds } };
         var dataString = JsonConvert.SerializeObject(data);
         var response = await downloader.PostAsync(GraphQlBaseUrl, dataString, contentType: "application/json");
+        SaveResponse(response, $"ea-{_version}-legacy-offers.json");
         var responseObj = JsonConvert.DeserializeObject<GraphQlResponseRoot<LegacyOffersData>>(response.ResponseContent);
         return responseObj.data.legacyOffers;
+    }
+
+    private void SaveResponse(DownloadStringResponse response, string fileName)
+    {
+        if(!DebugRequests)
+            return;
+        
+        var myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments, Environment.SpecialFolderOption.Create);
+        var filePath = Path.Combine(myDocuments, fileName);
+        File.WriteAllText(filePath, response.ResponseContent);
+        DebugFilePaths.Add(filePath);
     }
 }

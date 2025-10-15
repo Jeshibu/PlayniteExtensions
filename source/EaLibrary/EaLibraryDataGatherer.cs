@@ -7,6 +7,7 @@ using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -33,6 +34,32 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
 
         foreach (var game in ownedGames)
             yield return ToGameMetadata(game, legacyOffers);
+    }
+
+    public string DebugGetGames()
+    {
+        try
+        {
+            website.DebugRequests = true;
+            var games = GetGames().ToList();
+            return $"Successfully fetched {games.Count} games";
+        }
+        catch (NotAuthenticatedException)
+        {
+            return "Please authenticate first.";
+        }
+        catch (Exception ex)
+        {
+            _logger.Error(ex, "Error getting games (debug)");
+            if (website.DebugFilePaths.Any())
+                Process.Start("explorer.exe", $@"/select,""{website.DebugFilePaths.First()}""");
+
+            return "Error getting games. Please attach the files in a bug report.";
+        }
+        finally
+        {
+            website.DebugRequests = false;
+        }
     }
 
     public async Task<LegacyOffer> GetLegacyOfferAsync(string offerId)

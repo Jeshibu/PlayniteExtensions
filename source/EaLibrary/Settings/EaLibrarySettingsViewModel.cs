@@ -34,4 +34,13 @@ public class EaLibrarySettingsViewModel : PluginSettingsViewModel<EaLibrarySetti
         Plugin.Website.Login();
         OnPropertyChanged(nameof(IsUserLoggedIn));
     });
+
+    public RelayCommand<object> DebugCommand => new(_ =>
+    {
+        Plugin.PlayniteApi.Dialogs.ActivateGlobalProgress(_ =>
+        {
+            var message = Plugin.DataGatherer.DebugGetGames();
+            Plugin.PlayniteApi.Dialogs.ShowMessage(message);
+        }, new("Getting games..."));
+    });
 }
