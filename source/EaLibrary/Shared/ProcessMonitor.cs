@@ -20,15 +20,9 @@ public class ProcessMonitor : IDisposable
     public event EventHandler<TreeStartedEventArgs> TreeStarted;
     public event EventHandler TreeDestroyed;
 
-    private SynchronizationContext execContext;
-    private CancellationTokenSource watcherToken;
-    private static ILogger logger = LogManager.GetLogger();
+    private CancellationTokenSource _watcherToken;
+    private static readonly ILogger logger = LogManager.GetLogger();
     private const int maxFailCount = 5;
-
-    public ProcessMonitor()
-    {
-        execContext = SynchronizationContext.Current;
-    }
 
     public void Dispose()
     {
@@ -42,10 +36,10 @@ public class ProcessMonitor : IDisposable
 
     public async void WatchSingleProcess(Process process)
     {
-        watcherToken = new CancellationTokenSource();
+        _watcherToken = new CancellationTokenSource();
         while (!process.HasExited)
         {
-            if (watcherToken.IsCancellationRequested)
+            if (_watcherToken.IsCancellationRequested)
             {
                 break;
             }
@@ -82,8 +76,8 @@ public class ProcessMonitor : IDisposable
 
     public void StopWatching()
     {
-        watcherToken?.Cancel();
-        watcherToken?.Dispose();
+        _watcherToken?.Cancel();
+        _watcherToken?.Dispose();
     }
 
     public static bool IsWatchableByProcessNames(string directory)
@@ -118,7 +112,7 @@ public class ProcessMonitor : IDisposable
 
         var procNames = executables.Select(a => Path.GetFileName(a)).ToList();
         var procNamesNoExt = executables.Select(a => Path.GetFileNameWithoutExtension(a)).ToList();
-        watcherToken = new CancellationTokenSource();
+        _watcherToken = new CancellationTokenSource();
         var startedCalled = false;
         var processStarted = false;
         var foundProcessId = 0;
@@ -126,7 +120,7 @@ public class ProcessMonitor : IDisposable
 
         while (true)
         {
-            if (watcherToken.IsCancellationRequested)
+            if (_watcherToken.IsCancellationRequested)
             {
                 return;
             }
@@ -192,7 +186,7 @@ public class ProcessMonitor : IDisposable
             throw new DirectoryNotFoundException($"Cannot watch directory processes, {directory} not found.");
         }
 
-        watcherToken = new CancellationTokenSource();
+        _watcherToken = new CancellationTokenSource();
         var startedCalled = false;
         var processStarted = false;
         var foundProcessId = 0;
@@ -200,7 +194,7 @@ public class ProcessMonitor : IDisposable
 
         while (true)
         {
-            if (watcherToken.IsCancellationRequested)
+            if (_watcherToken.IsCancellationRequested)
             {
                 return;
             }
@@ -254,13 +248,13 @@ public class ProcessMonitor : IDisposable
 
     private async Task WatchProcess(Process process)
     {
-        watcherToken = new CancellationTokenSource();
+        _watcherToken = new CancellationTokenSource();
         var ids = new List<int>() { process.Id };
         var failCount = 0;
 
         while (true)
         {
-            if (watcherToken.IsCancellationRequested)
+            if (_watcherToken.IsCancellationRequested)
             {
                 return;
             }
