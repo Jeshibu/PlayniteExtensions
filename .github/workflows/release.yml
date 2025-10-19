@@ -55,11 +55,16 @@ jobs:
           mkdir "PackingOutput"
           Write-Host '${{ steps.projectselection.outputs.projects }}'
           $projects = ConvertFrom-Json '${{ steps.projectselection.outputs.projects }}'
+          $playniteDlls = Get-ChildItem "$env:GITHUB_WORKSPACE\Playnite" -Filter *.dll -Name
 
           foreach ($p in $projects) {
             Write-Host "Packing project $p"
             $ver = $p.Version -replace '\.', '_'
-            & "$Env:GITHUB_WORKSPACE\Playnite\Toolbox.exe" pack "$Env:GITHUB_WORKSPACE\source\$($p.Name)\bin\Release\net462" "$Env:GITHUB_WORKSPACE\PackingOutput"
+            $pluginBuildOutputDir = "$env:GITHUB_WORKSPACE\source\$($p.Name)\bin\Release\net462"
+          
+            Remove-Item "$pluginBuildOutputDir\*" -Include $playniteDlls
+          
+            & "$Env:GITHUB_WORKSPACE\Playnite\Toolbox.exe" pack $pluginBuildOutputDir "$Env:GITHUB_WORKSPACE\PackingOutput"
             Get-ChildItem "$Env:GITHUB_WORKSPACE\PackingOutput" -Filter *.pext | Rename-Item -NewName "$($p.Name)_${ver}.pext"
             Move-Item -Path "$Env:GITHUB_WORKSPACE\PackingOutput\*.pext" -Destination $Env:GITHUB_WORKSPACE
           }
