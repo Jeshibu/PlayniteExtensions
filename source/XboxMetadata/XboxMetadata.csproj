@@ -3,6 +3,7 @@
     <ProjectGuid>{092F32E3-7FD4-470A-9658-9E8CDF123C99}</ProjectGuid>
     <AssemblyTitle>XboxMetadata</AssemblyTitle>
     <Product>XboxMetadata</Product>
+    <Version>0.4.1</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

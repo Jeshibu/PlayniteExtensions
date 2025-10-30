@@ -3,8 +3,7 @@
     <ProjectGuid>{AC1B23EE-BDC9-4273-9F4B-4F414482541B}</ProjectGuid>
     <AssemblyTitle>IgnMetadata</AssemblyTitle>
     <Product>IgnMetadata</Product>
-    <AssemblyVersion>0.1.0.0</AssemblyVersion>
-    <FileVersion>0.1.0.0</FileVersion>
+    <Version>0.5.1</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

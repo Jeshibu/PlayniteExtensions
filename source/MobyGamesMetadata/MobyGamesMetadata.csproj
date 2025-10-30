@@ -3,7 +3,7 @@
     <ProjectGuid>{22577C83-FCF9-49F2-9957-6C67D59FCBD6}</ProjectGuid>
     <AssemblyTitle>MobyGamesMetadata</AssemblyTitle>
     <Product>MobyGamesMetadata</Product>
-    <Version>0.7</Version>
+    <Version>0.7.3</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.9.9" />

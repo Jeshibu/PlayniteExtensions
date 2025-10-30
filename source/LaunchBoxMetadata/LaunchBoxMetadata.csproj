@@ -3,8 +3,7 @@
     <ProjectGuid>{B59FB65D-3C86-41D5-B3E6-EA4EAC476FEC}</ProjectGuid>
     <AssemblyTitle>LaunchBoxMetadata</AssemblyTitle>
     <Product>LaunchBoxMetadata</Product>
-    <AssemblyVersion>0.6.4.0</AssemblyVersion>
-    <FileVersion>0.6.4.0</FileVersion>
+    <Version>0.9.2</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

@@ -3,8 +3,7 @@
     <ProjectGuid>{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}</ProjectGuid>
     <AssemblyTitle>RawgMetadata</AssemblyTitle>
     <Product>RawgMetadata</Product>
-    <AssemblyVersion>0.3.1.0</AssemblyVersion>
-    <FileVersion>0.3.1.0</FileVersion>
+    <Version>0.4.2</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

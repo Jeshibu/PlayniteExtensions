@@ -3,6 +3,7 @@
     <ProjectGuid>{A54423D1-8E7A-4339-B0D5-24E7CEFE469B}</ProjectGuid>
     <AssemblyTitle>OpenCriticMetadata</AssemblyTitle>
     <Product>OpenCriticMetadata</Product>
+    <Version>0.2.3</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

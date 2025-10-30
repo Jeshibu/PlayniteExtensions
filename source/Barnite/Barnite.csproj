@@ -3,6 +3,7 @@
     <ProjectGuid>{AFA8DE86-101B-4449-A237-2030D7F74CE2}</ProjectGuid>
     <AssemblyTitle>Barnite</AssemblyTitle>
     <Product>Barnite</Product>
+    <Version>0.7.1</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

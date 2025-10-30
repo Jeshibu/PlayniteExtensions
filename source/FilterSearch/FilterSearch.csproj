@@ -2,8 +2,7 @@
   <PropertyGroup>
     <AssemblyTitle>FilterSearch</AssemblyTitle>
     <Product>FilterSearch</Product>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.1.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="PlayniteSDK" Version="6.12.0" />

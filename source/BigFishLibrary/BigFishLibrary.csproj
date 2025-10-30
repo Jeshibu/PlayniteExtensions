@@ -3,6 +3,7 @@
     <ProjectGuid>{DFAF4815-513B-483E-AB4D-C753F5B50C55}</ProjectGuid>
     <AssemblyTitle>BigFishLibrary</AssemblyTitle>
     <Product>BigFishLibrary</Product>
+    <Version>0.4.4</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>

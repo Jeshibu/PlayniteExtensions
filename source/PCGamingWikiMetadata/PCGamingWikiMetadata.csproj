@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
     <UseWPF>true</UseWPF>
+    <Version>1.5.2</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
