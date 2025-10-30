@@ -9,6 +9,7 @@ using System.Windows.Controls;
 
 namespace ExtraEmulatorProfiles;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public class ExtraEmulatorProfiles : GenericPlugin
 {
     private static readonly ILogger logger = LogManager.GetLogger();
