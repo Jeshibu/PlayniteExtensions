@@ -1,14 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{2C136C16-C708-4668-A9DD-B5AD9F00D3FC}</ProjectGuid>
-    <AssemblyTitle>SteamTagsImporterTests</AssemblyTitle>
-    <Product>SteamTagsImporterTests</Product>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <TestProjectType>UnitTest</TestProjectType>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.TestPlatform.ObjectModel" Version="17.10.0" />
@@ -35,28 +27,11 @@
     <Compile Include="..\PlayniteExtensions.Tests.Common\FakeWebDownloader.cs" Link="Common\FakeWebDownloader.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="applist.json">
+    <None Include="*.json;*.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="football000.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="football050.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="football100.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="search.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SteamTagsImporter\SteamTagsImporter.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="hl2.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 </Project>

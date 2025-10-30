@@ -1,13 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <ProjectGuid>{C8D3E73F-8236-4B04-8456-095FF702FABA}</ProjectGuid>
-        <AssemblyTitle>EaLibrary</AssemblyTitle>
-        <Product>EaLibrary</Product>
         <Version>3.1.1</Version>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-        <DebugType>full</DebugType>
-        <DefineConstants>TRACE;DEBUG;</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">

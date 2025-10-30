@@ -1,15 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{0FC7F312-402B-4466-9E05-721CE2638268}</ProjectGuid>
-    <AssemblyTitle>itchioBundleTagger</AssemblyTitle>
-    <Product>itchioBundleTagger</Product>
     <Version>0.14.2</Version>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="IndexRange" Version="1.0.2" />

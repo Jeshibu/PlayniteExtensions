@@ -1,23 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{B2BE4CBD-25A7-41F3-BB78-6BD3BC510323}</ProjectGuid>
-    <AssemblyTitle>LaunchBoxMetadata.Tests</AssemblyTitle>
-    <Product>LaunchBoxMetadata.Tests</Product>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
-    <DebugType>pdbonly</DebugType>
+    <TestProjectType>UnitTest</TestProjectType>
   </PropertyGroup>
   <Import Project="..\PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems" Label="Shared" />
   <ItemGroup>
@@ -43,13 +26,10 @@
     <ProjectReference Include="..\LaunchBoxMetadata\LaunchBoxMetadata.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Metadata.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <None Update="Mario &amp; Luigi Superstar Saga Details.html">
+    <None Include="Metadata.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Resident Evil 4 Details.html">
+    <None Update="*.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

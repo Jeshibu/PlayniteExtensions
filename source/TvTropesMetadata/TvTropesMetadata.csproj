@@ -1,8 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{46C08BCD-F3AF-4F8E-86C6-67913A028A22}</ProjectGuid>
-    <AssemblyTitle>TvTropesMetadata</AssemblyTitle>
-    <Product>TvTropesMetadata</Product>
     <Version>0.4.9</Version>
   </PropertyGroup>
   <ItemGroup>

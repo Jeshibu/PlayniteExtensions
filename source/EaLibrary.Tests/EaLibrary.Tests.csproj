@@ -1,9 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{CC048B24-8130-4194-ADB4-8983E18ACFF2}</ProjectGuid>
     <TestProjectType>UnitTest</TestProjectType>
-    <AssemblyTitle>EaLibrary.Tests</AssemblyTitle>
-    <Product>EaLibrary.Tests</Product>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\EaLibrary\EaLibrary.csproj" />

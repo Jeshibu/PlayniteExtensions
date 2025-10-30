@@ -1,14 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{EBA8F49F-AA6F-4329-985B-A6ED6E9F8490}</ProjectGuid>
-    <AssemblyTitle>PlayniteExtensions.Common.Tests</AssemblyTitle>
-    <Product>PlayniteExtensions.Common.Tests</Product>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <TestProjectType>UnitTest</TestProjectType>
   </PropertyGroup>
   <Import Project="..\PlayniteExtensions.Common\PlayniteExtensions.Common.projitems" Label="Shared" />
   <Import Project="..\PlayniteExtensions.Metadata.Common\PlayniteExtensions.Metadata.Common.projitems" Label="Shared" />

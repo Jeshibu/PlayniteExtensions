@@ -1,8 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{D6730A45-D8D5-48FB-818E-5C277E230DF4}</ProjectGuid>
-    <AssemblyTitle>GiantBombMetadata</AssemblyTitle>
-    <Product>GiantBombMetadata</Product>
     <Version>0.10</Version>
   </PropertyGroup>
   <ItemGroup>

@@ -1,7 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyTitle>FilterSearch</AssemblyTitle>
-    <Product>FilterSearch</Product>
     <Version>1.1.1</Version>
   </PropertyGroup>
   <ItemGroup>

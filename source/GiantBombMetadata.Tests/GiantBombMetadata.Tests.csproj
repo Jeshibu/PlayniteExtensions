@@ -1,34 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{3BB55E9F-8962-4DE2-AE1D-AEE6530034C8}</ProjectGuid>
-    <AssemblyTitle>GiantBombMetadata.Tests</AssemblyTitle>
-    <Product>GiantBombMetadata.Tests</Product>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <TestProjectType>UnitTest</TestProjectType>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="html\genres.json" />
-    <None Remove="html\theme-vietnam1.html" />
-    <None Remove="html\theme-vietnam2.html" />
-    <None Remove="html\themes.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="html\genres.json">
+    <None Include="html\*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="html\theme-vietnam1.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="html\theme-vietnam2.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="html\themes.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

@@ -1,15 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{9E96D1DD-7223-4948-A297-D0F731CBE9B6}</ProjectGuid>
-    <AssemblyTitle>ExtraEmulatorProfiles</AssemblyTitle>
-    <Product>ExtraEmulatorProfiles</Product>
     <Version>1.6</Version>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="PlayniteSDK" Version="6.2.0" />

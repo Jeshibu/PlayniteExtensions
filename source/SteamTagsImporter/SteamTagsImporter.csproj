@@ -1,8 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{4FDF1E89-5BC3-4C72-8FDA-0D580E7A5D5F}</ProjectGuid>
-    <AssemblyTitle>SteamTagsImporter</AssemblyTitle>
-    <Product>SteamTagsImporter</Product>
     <Version>4.2.7</Version>
   </PropertyGroup>
   <ItemGroup>

@@ -1,8 +1,18 @@
 <Project>
-  <PropertyGroup>
-    <TargetFramework>net462</TargetFramework>
-    <Copyright>Copyright © 2025</Copyright>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <LangVersion>13</LangVersion>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net462</TargetFramework>
+        <Copyright>Copyright © 2025</Copyright>
+        <OutputPath>bin\$(Configuration)\</OutputPath>
+        <LangVersion>13</LangVersion>
+        <Authors>Jeshibu</Authors>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DebugType>full</DebugType>
+        <DefineConstants>TRACE;DEBUG;</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DebugType>pdbonly</DebugType>
+        <DefineConstants>TRACE</DefineConstants>
+        <Optimize>true</Optimize>
+    </PropertyGroup>
 </Project>
