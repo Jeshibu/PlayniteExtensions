@@ -31,9 +31,10 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
 
         var ownedGames = website.GetOwnedGames(token);
         var legacyOffers = GetLegacyOffers(ownedGames.Select(o => o.originOfferId));
+        var playTimes = website.GetGamePlayTimes(token, ownedGames.Select(g => g.product.gameSlug).Distinct());
 
         foreach (var game in ownedGames)
-            yield return ToGameMetadata(game, legacyOffers);
+            yield return ToGameMetadata(game, legacyOffers, playTimes);
     }
 
     public string DebugGetGames()
@@ -125,7 +126,7 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
         return JsonConvert.DeserializeObject<Dictionary<string, LegacyOffer>>(strContent);
     }
 
-    private GameMetadata ToGameMetadata(OwnedGameProduct game, IDictionary<string, LegacyOffer> offers)
+    private GameMetadata ToGameMetadata(OwnedGameProduct game, IDictionary<string, LegacyOffer> offers, List<GamePlayTime> playTimes)
     {
         var output = new GameMetadata
         {
@@ -144,6 +145,14 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
                 var installCheckFile = Path.Combine(install.InstallDirectory, install.RelativeFilePath);
                 output.IsInstalled = File.Exists(installCheckFile);
             }
+        }
+
+        var playtime = playTimes.FirstOrDefault(pt => pt.gameSlug == game.product.gameSlug);
+        if (playtime != null)
+        {
+            output.Playtime = playtime.totalPlayTimeSeconds ?? 0UL;
+            if (DateTime.TryParse(playtime.lastSessionEndDate, out var sessionEndDate))
+                output.LastActivity = sessionEndDate;
         }
 
         return output;

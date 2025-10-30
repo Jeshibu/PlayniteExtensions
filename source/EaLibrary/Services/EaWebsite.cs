@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading;
@@ -22,6 +24,7 @@ public interface IEaWebsite
     bool IsAuthenticated();
     string GetAuthToken();
     List<OwnedGameProduct> GetOwnedGames(string auth);
+    List<GamePlayTime> GetGamePlayTimes(string auth, IEnumerable<string> slugs);
     Task<LegacyOffer[]> GetLegacyOffersAsync(string[] offerIds);
     
     bool DebugRequests { get; set; }
@@ -112,7 +115,7 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
 
         do
         {
-            var response = downloader.DownloadString(GetGamesUrl(DefaultLimit, offset), headerSetter: HeaderSetter);
+            var response = downloader.DownloadString(GetGamesUrl(offset), headerSetter: HeaderSetter);
             SaveResponse(response, $"ea-{_version}-owned-games-{offset}.json");
 
             var root = JsonConvert.DeserializeObject<GraphQlResponseRoot<OwnedGamesData>>(response.ResponseContent);
@@ -132,10 +135,44 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
         return output;
     }
 
-    public const int DefaultLimit = 500;
+    public List<GamePlayTime> GetGamePlayTimes(string auth, IEnumerable<string> slugs)
+    {
+        void HeaderSetter(HttpRequestHeaders headers) => headers.Authorization = new("Bearer", auth);
+        var response = downloader.DownloadString(GetPlayTimesUrl(slugs), headerSetter: HeaderSetter);
+        var root = JsonConvert.DeserializeObject<GraphQlResponseRoot<GetGamesPlayTimesRoot>>(response.ResponseContent);
+        return root?.data?.me?.recentGames?.items.ToList();
+    }
 
-    public static string GetGamesUrl(int limit = DefaultLimit, string offset = "0") =>
-        $$$"""{{{GraphQlBaseUrl}}}?operationName=getPreloadedOwnedGames&variables={"isMac":false,"addFieldsToPreloadGames":true, "locale":"en","limit":{{{limit}}},"next":"{{{offset}}}","type":["DIGITAL_FULL_GAME","PACKAGED_FULL_GAME"],"entitlementEnabled":true,"storefronts":["EA","STEAM","EPIC"],"ownershipMethods":["UNKNOWN","ASSOCIATION","PURCHASE","REDEMPTION","GIFT_RECEIPT","ENTITLEMENT_GRANT","DIRECT_ENTITLEMENT","PRE_ORDER_PURCHASE","VAULT","XGP_VAULT","STEAM","STEAM_VAULT","STEAM_SUBSCRIPTION","EPIC","EPIC_VAULT","EPIC_SUBSCRIPTION"],"platforms":["PC"]}&extensions={"persistedQuery":{"version":1,"sha256Hash":"5de4178ee7e1f084ce9deca856c74a9e03547a67dfafc0cb844d532fb54ae73d"}}""";
+    public static string GetGamesUrl(string offset = "0", int limit = 500)
+    {
+        var variables = new
+        {
+            isMac = false,
+            addFieldsToPreloadGames = true,
+            locale = "en",
+            limit,
+            next = offset,
+            type = new[] { "DIGITAL_FULL_GAME", "PACKAGED_FULL_GAME" },
+            entitlementEnabled = true,
+            storefronts = new[] { "EA", "STEAM", "EPIC" },
+            ownershipMethods = new[]
+            {
+                "UNKNOWN", "ASSOCIATION", "PURCHASE", "REDEMPTION", "GIFT_RECEIPT", "ENTITLEMENT_GRANT", "DIRECT_ENTITLEMENT", "PRE_ORDER_PURCHASE",
+                "VAULT", "XGP_VAULT", "STEAM", "STEAM_VAULT", "STEAM_SUBSCRIPTION", "EPIC", "EPIC_VAULT", "EPIC_SUBSCRIPTION"
+            },
+            platforms = new[] { "PC" }
+        };
+        return GetPersistedQueryUrl("getPreloadedOwnedGames", variables, "5de4178ee7e1f084ce9deca856c74a9e03547a67dfafc0cb844d532fb54ae73d");
+    }
+
+    public static string GetPlayTimesUrl(IEnumerable<string> gameSlugs) => GetPersistedQueryUrl("GetGamePlayTimes", new { gameSlugs }, "3f09b35e06b75c74d8ec3e520a598ebb5e2992b1e1268b6dd3b8ed99b9fafb29");
+
+    private static string GetPersistedQueryUrl(string operation, object variables, string hash)
+    {
+        var variablesJson = JsonConvert.SerializeObject(variables);
+        var variablesQueryString = WebUtility.UrlEncode(variablesJson);
+        return $$$"""{{{GraphQlBaseUrl}}}?operationName={{{operation}}}&variables={{{variablesQueryString}}}&extensions={"persistedQuery":{"version":1,"sha256Hash":"{{{hash}}}"}}""";
+    }
 
     public async Task<LegacyOffer[]> GetLegacyOffersAsync(string[] offerIds)
     {
