@@ -10,10 +10,10 @@ namespace ExtraEmulatorProfiles;
 
 public class ExtraEmulatorProfilesSettings : ObservableObject
 {
-    private Version installedPatchVersion = new(0, 0);
+    private Version _installedPatchVersion = new(0, 0);
 
     [DontSerialize]
-    public Version InstalledPatchVersion { get => installedPatchVersion; set => SetValue(ref installedPatchVersion, value); }
+    public Version InstalledPatchVersion { get => _installedPatchVersion; set => SetValue(ref _installedPatchVersion, value); }
 
     public string InstalledPatchVersionString
     {
@@ -24,14 +24,14 @@ public class ExtraEmulatorProfilesSettings : ObservableObject
 
 public class ExtraEmulatorProfilesSettingsViewModel : PluginSettingsViewModel<ExtraEmulatorProfilesSettings, ExtraEmulatorProfiles>
 {
-    public Version PluginVersion { get; private set; }
-    public string PlayniteEmulationDirectory { get; private set; }
-    public string PatchDirectory { get; private set; }
-    public string OriginalsDirectory { get; private set; }
+    public Version PluginVersion { get; }
+    private string PlayniteEmulationDirectory { get; }
+    private string PatchDirectory { get; }
+    private string OriginalsDirectory { get; }
 
     public ExtraEmulatorProfilesSettingsViewModel(ExtraEmulatorProfiles plugin) : base(plugin, plugin.PlayniteApi)
     {
-        Settings = LoadSavedSettings() ?? new ExtraEmulatorProfilesSettings();
+        Settings = LoadSavedSettings() ?? new();
 
         var assembly = Assembly.GetExecutingAssembly();
 
@@ -62,7 +62,7 @@ public class ExtraEmulatorProfilesSettingsViewModel : PluginSettingsViewModel<Ex
         {
             var relativePath = file.TrimStart(baseDirectory);
             var targetPath = PlayniteEmulationDirectory + relativePath;
-            Directory.CreateDirectory(Path.GetDirectoryName(targetPath));
+            Directory.CreateDirectory(Path.GetDirectoryName(targetPath)!);
             File.Copy(file, targetPath, overwrite: true);
         }
 
@@ -76,7 +76,7 @@ public class ExtraEmulatorProfilesSettingsViewModel : PluginSettingsViewModel<Ex
             System.Windows.MessageBoxImage.Information);
     }
 
-    private void DeleteFiles(string directory, string filter = "*", SearchOption searchOption = SearchOption.TopDirectoryOnly)
+    private static void DeleteFiles(string directory, string filter = "*", SearchOption searchOption = SearchOption.TopDirectoryOnly)
     {
         var files = Directory.GetFiles(directory, filter, searchOption);
         foreach (var f in files)

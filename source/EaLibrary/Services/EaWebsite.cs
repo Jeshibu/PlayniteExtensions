@@ -139,6 +139,7 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
     {
         void HeaderSetter(HttpRequestHeaders headers) => headers.Authorization = new("Bearer", auth);
         var response = downloader.DownloadString(GetPlayTimesUrl(slugs), headerSetter: HeaderSetter);
+        SaveResponse(response, $"ea-{_version}-playtimes.json");
         var root = JsonConvert.DeserializeObject<GraphQlResponseRoot<GetGamesPlayTimesRoot>>(response.ResponseContent);
         return root?.data?.me?.recentGames?.items.ToList();
     }
