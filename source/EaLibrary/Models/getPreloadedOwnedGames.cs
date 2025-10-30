@@ -1,13 +1,15 @@
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable InconsistentNaming
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable UnusedMember.Global
 namespace EaLibrary.Models;
 
 public class OwnedGamesData
 {
-    public Me me { get; set; }
+    public OwnedGamesUser me { get; set; }
 }
 
-public class Me
+public class OwnedGamesUser
 {
     public string id { get; set; }
     public OwnedGameListCursor ownedGameProducts { get; set; }

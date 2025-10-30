@@ -1,5 +1,7 @@
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable InconsistentNaming
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable UnusedMember.Global
 using System.Collections.Generic;
 
 namespace EaLibrary.Models;
@@ -28,4 +30,3 @@ public class ErrorExtensions
 {
     public string code { get; set; }
 }
-

@@ -26,7 +26,7 @@ public interface IEaWebsite
     List<OwnedGameProduct> GetOwnedGames(string auth);
     List<GamePlayTime> GetGamePlayTimes(string auth, IEnumerable<string> slugs);
     Task<LegacyOffer[]> GetLegacyOffersAsync(string[] offerIds);
-    
+
     bool DebugRequests { get; set; }
     List<string> DebugFilePaths { get; }
 }
@@ -252,9 +252,9 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
 
     private void SaveResponse(DownloadStringResponse response, string fileName)
     {
-        if(!DebugRequests)
+        if (!DebugRequests)
             return;
-        
+
         var myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments, Environment.SpecialFolderOption.Create);
         var filePath = Path.Combine(myDocuments, fileName);
         File.WriteAllText(filePath, response.ResponseContent);
