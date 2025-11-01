@@ -31,7 +31,9 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
 
         var ownedGames = website.GetOwnedGames(token);
         var legacyOffers = GetLegacyOffers(ownedGames.Select(o => o.originOfferId));
-        var playTimes = website.GetGamePlayTimes(token, ownedGames.Select(g => g.product.gameSlug).Distinct());
+
+        var slugs = ownedGames.Select(g => g.product.gameSlug).Distinct().ToList();
+        var playTimes = slugs.SelectMany(s => website.GetGamePlayTimes(token, [s])).AsParallel().ToList();
 
         foreach (var game in ownedGames)
             yield return ToGameMetadata(game, legacyOffers, playTimes);

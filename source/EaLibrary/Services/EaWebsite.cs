@@ -24,7 +24,7 @@ public interface IEaWebsite
     bool IsAuthenticated();
     string GetAuthToken();
     List<OwnedGameProduct> GetOwnedGames(string auth);
-    List<GamePlayTime> GetGamePlayTimes(string auth, IEnumerable<string> slugs);
+    List<GamePlayTime> GetGamePlayTimes(string auth, string[] slugs);
     Task<LegacyOffer[]> GetLegacyOffersAsync(string[] offerIds);
 
     bool DebugRequests { get; set; }
@@ -135,11 +135,11 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
         return output;
     }
 
-    public List<GamePlayTime> GetGamePlayTimes(string auth, IEnumerable<string> slugs)
+    public List<GamePlayTime> GetGamePlayTimes(string auth, string[] slugs)
     {
         void HeaderSetter(HttpRequestHeaders headers) => headers.Authorization = new("Bearer", auth);
         var response = downloader.DownloadString(GetPlayTimesUrl(slugs), headerSetter: HeaderSetter);
-        SaveResponse(response, $"ea-{_version}-playtimes.json");
+        SaveResponse(response, $"ea-{_version}-playtimes-{string.Join("_", "slugs")}.json");
         var root = JsonConvert.DeserializeObject<GraphQlResponseRoot<GetGamesPlayTimesRoot>>(response.ResponseContent);
         return root?.data?.me?.recentGames?.items.ToList();
     }
