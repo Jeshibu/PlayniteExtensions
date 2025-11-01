@@ -38,3 +38,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ea3.1/EaLibrary_3_1_2.pext
     Changelog:
       - "Fixed settings not displaying"
+  - Version: '3.2'
+    RequiredApiVersion: 6.13.0
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/EaLibrary_3_2.pext
+    Changelog:
+      - "Added playtime and last-played-date import"

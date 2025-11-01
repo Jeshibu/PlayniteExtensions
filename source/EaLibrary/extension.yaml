@@ -1,7 +1,7 @@
 ﻿Id: OriginLibrary_Builtin
 Name: EA app library
 Author: Jeshibu
-Version: '3.1.2'
+Version: '3.2'
 Module: EaLibrary.dll
 Type: GameLibrary
 Icon: Resources\ea_icon.png
