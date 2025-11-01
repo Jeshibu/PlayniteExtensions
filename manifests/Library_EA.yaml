@@ -40,7 +40,7 @@ Packages:
       - "Fixed settings not displaying"
   - Version: '3.2'
     RequiredApiVersion: 6.13.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/EaLibrary_3_2.pext
+    ReleaseDate: 2025-11-01
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-11-01/EaLibrary_3_2.pext
     Changelog:
       - "Added playtime and last-played-date import"

@@ -18,10 +18,10 @@ namespace EaLibrary;
 public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider registry, IPlatformUtility platformUtility, string pluginUserDataPath)
 {
     private readonly string _legacyOfferCacheFilePath = Path.Combine(pluginUserDataPath, "legacy-offers.json");
-    private readonly string[] _realOwnershipMethods = ["UNKNOWN", "ASSOCIATION", "PURCHASE", "REDEMPTION", "GIFT_RECEIPT", "ENTITLEMENT_GRANT", "DIRECT_ENTITLEMENT", "PRE_ORDER_PURCHASE", "STEAM", "EPIC"];
-    private readonly string[] _eaPlayOwnershipMethods = ["VAULT", "STEAM_VAULT", "STEAM_SUBSCRIPTION", "EPIC_VAULT", "EPIC_SUBSCRIPTION"];
+    private static readonly string[] RealOwnershipMethods = ["UNKNOWN", "ASSOCIATION", "PURCHASE", "REDEMPTION", "GIFT_RECEIPT", "ENTITLEMENT_GRANT", "DIRECT_ENTITLEMENT", "PRE_ORDER_PURCHASE", "STEAM", "EPIC"];
+    private static readonly string[] EaPlayOwnershipMethods = ["VAULT", "STEAM_VAULT", "STEAM_SUBSCRIPTION", "EPIC_VAULT", "EPIC_SUBSCRIPTION"];
     private const string XboxGamePassOwnershipMethod = "XGP_VAULT";
-    private readonly ILogger _logger = LogManager.GetLogger();
+    private static readonly ILogger logger = LogManager.GetLogger();
 
     public IEnumerable<GameMetadata> GetGames()
     {
@@ -53,7 +53,7 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
         }
         catch (Exception ex)
         {
-            _logger.Error(ex, "Error getting games (debug)");
+            logger.Error(ex, "Error getting games (debug)");
             if (website.DebugFilePaths.Any())
                 Process.Start("explorer.exe", $@"/select,""{website.DebugFilePaths.First()}""");
 
@@ -80,7 +80,7 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
 
         if (manifest?.installCheckOverride == null)
         {
-            _logger.Error($"No install data found for EA game {offerId}, stopping installation check.");
+            logger.Error($"No install data found for EA game {offerId}, stopping installation check.");
             return new();
         }
 
@@ -160,19 +160,19 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
         return output;
     }
 
-    private MetadataNameProperty GetGameSource(OwnedGameProduct game)
+    private static MetadataNameProperty GetGameSource(OwnedGameProduct game)
     {
         var ownershipMethods = game.product.gameProductUser.ownershipMethods;
-        if (ownershipMethods.IntersectsPartiallyWith(_realOwnershipMethods))
+        if (ownershipMethods.IntersectsPartiallyWith(RealOwnershipMethods))
             return new("EA app");
 
         if (ownershipMethods.Contains(XboxGamePassOwnershipMethod))
             return new("Xbox Game Pass");
 
-        if (ownershipMethods.IntersectsPartiallyWith(_eaPlayOwnershipMethods))
+        if (ownershipMethods.IntersectsPartiallyWith(EaPlayOwnershipMethods))
             return new("EA Play");
 
-        _logger.Warn($"Unknown ownership methods: {string.Join(", ", ownershipMethods)}");
+        logger.Warn($"Unknown ownership methods: {string.Join(", ", ownershipMethods)}");
         return new("EA app");
     }
 
@@ -211,7 +211,7 @@ public class EaLibraryDataGatherer(IEaWebsite website, IRegistryValueProvider re
 
         if (string.IsNullOrWhiteSpace(installDirectory))
         {
-            _logger.Info($"Install directory not found in registry: {registryPath}");
+            logger.Info($"Install directory not found in registry: {registryPath}");
             return null;
         }
 

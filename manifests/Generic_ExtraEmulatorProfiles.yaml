@@ -52,7 +52,8 @@ Packages:
       - "Added rom, dsk, and m3u as ROM file extensions for ares MSX and MSX 2 profiles"
   - Version: '1.7'
     RequiredApiVersion: 6.2.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/ExtraEmulatorProfiles_1_7.pext
+    ReleaseDate: 2025-11-01
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-11-01/ExtraEmulatorProfiles_1_7.pext
     Changelog:
       - "Added TeknoParrot profile (contributed by fresbii)"
+      - "Updated shadPS4 profile to use the default emulator instance (contributed by Aladore)"
