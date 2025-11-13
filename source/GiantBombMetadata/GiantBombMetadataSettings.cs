@@ -7,17 +7,8 @@ namespace GiantBombMetadata;
 
 public class GiantBombMetadataSettings : BulkImportPluginSettings
 {
-    private string apiKey;
+    public string ApiKey { get; set => SetValue(ref field, value); }
 
-    public string ApiKey
-    {
-        get { return apiKey; }
-        set
-        {
-            apiKey = value?.Trim();
-            OnPropertyChanged();
-        }
-    }
     public PropertyImportSetting Characters { get; set; } = new() { Prefix = "Character: ", ImportTarget = PropertyImportTarget.Ignore };
     public PropertyImportSetting Concepts { get; set; } = new() { Prefix = "", ImportTarget = PropertyImportTarget.Tags };
     public PropertyImportSetting Locations { get; set; } = new() { Prefix = "Location: ", ImportTarget = PropertyImportTarget.Tags };

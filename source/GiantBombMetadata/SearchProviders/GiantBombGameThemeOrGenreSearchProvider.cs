@@ -46,7 +46,7 @@ public class GiantBombGameThemeOrGenreSearchProvider(IGiantBombApiClient apiClie
 
     public GenericItemOption<GiantBombSearchResultItem> ToGenericItemOption(GiantBombSearchResultItem item)
     {
-        item.ResourceType = item.ApiDetailUrl.Split(['/'], StringSplitOptions.RemoveEmptyEntries).Reverse().Skip(1).First();
+        item.ResourceType = item.ApiDetailUrl.Split(['/'], StringSplitOptions.RemoveEmptyEntries).AsEnumerable().Reverse().Skip(1).First();
 
         var output = new GenericItemOption<GiantBombSearchResultItem>(item);
         output.Name = item.Name;

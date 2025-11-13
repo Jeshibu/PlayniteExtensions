@@ -12,14 +12,10 @@ namespace MobyGamesMetadata;
 
 public class MobyGamesMetadataSettings : BulkImportPluginSettings
 {
-    private string apiKey;
-
     public DataSource DataSource { get; set; } = DataSource.Api;
-    public string ApiKey
-    {
-        get => apiKey;
-        set => SetValue(ref apiKey, value?.Trim());
-    }
+
+    public string ApiKey { get; set => SetValue(ref field, value?.Trim()); }
+
     public bool ShowTopPanelButton { get; set; } = true;
 
     public ObservableCollection<MobyGamesGenreSetting> Genres { get; set; } = [];
@@ -48,9 +44,6 @@ public class MobyGamesMetadataSettings : BulkImportPluginSettings
 
 public class MobyGamesGenreSetting : ObservableObject, IHasName
 {
-    private string nameOverride;
-    private PropertyImportTarget importTarget = PropertyImportTarget.Genres;
-
     [JsonProperty("genre_category_id")]
     public int CategoryId { get; set; }
 
@@ -63,17 +56,9 @@ public class MobyGamesGenreSetting : ObservableObject, IHasName
     [JsonProperty("genre_name")]
     public string Name { get; set; }
 
-    public string NameOverride
-    {
-        get { return nameOverride; }
-        set { SetValue(ref nameOverride, value); }
-    }
+    public string NameOverride { get; set => SetValue(ref field, value); }
 
-    public PropertyImportTarget ImportTarget
-    {
-        get { return importTarget; }
-        set { SetValue(ref importTarget, value); }
-    }
+    public PropertyImportTarget ImportTarget { get; set => SetValue(ref field, value); } = PropertyImportTarget.Genres;
 }
 
 internal class MobyGamesGenresRoot

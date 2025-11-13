@@ -14,16 +14,7 @@ public abstract class PluginSettingsViewModel<TSettings, TPlugin>(TPlugin plugin
     protected TPlugin Plugin { get; set; } = plugin;
     protected TSettings EditingClone { get; set; }
 
-    private TSettings settings;
-    public TSettings Settings
-    {
-        get => settings;
-        set
-        {
-            settings = value;
-            OnPropertyChanged();
-        }
-    }
+    public TSettings Settings { get; set => SetValue(ref field, value); }
 
     public virtual void BeginEdit()
     {

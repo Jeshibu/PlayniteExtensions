@@ -4,31 +4,15 @@ using System.Collections.Generic;
 
 namespace Playnite.SDK;
 
-public class PluginSettingsViewModel<TSettings, TPlugin> : ObservableObject, ISettings
+public abstract class PluginSettingsViewModel<TSettings, TPlugin>(TPlugin plugin, IPlayniteAPI playniteApi) : ObservableObject, ISettings
     where TSettings : class
     where TPlugin : Plugin
 {
-    public readonly ILogger Logger = LogManager.GetLogger();
-    public IPlayniteAPI PlayniteApi { get; set; }
-    public TPlugin Plugin { get; set; }
-    public TSettings EditingClone { get; set; }
-
-    private TSettings settings;
-    public TSettings Settings
-    {
-        get => settings;
-        set
-        {
-            settings = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public PluginSettingsViewModel(TPlugin plugin, IPlayniteAPI playniteApi)
-    {
-        Plugin = plugin;
-        PlayniteApi = playniteApi;
-    }
+    protected readonly ILogger Logger = LogManager.GetLogger();
+    public IPlayniteAPI PlayniteApi { get; set; } = playniteApi;
+    protected TPlugin Plugin { get; set; } = plugin;
+    protected TSettings EditingClone { get; set; }
+    public TSettings Settings { get; set => SetValue(ref field, value); }
 
     public virtual void BeginEdit()
     {
@@ -45,14 +29,11 @@ public class PluginSettingsViewModel<TSettings, TPlugin> : ObservableObject, ISe
         Plugin.SavePluginSettings(Settings);
     }
 
-    public TSettings LoadSavedSettings()
-    {
-        return Plugin.LoadPluginSettings<TSettings>();
-    }
+    protected TSettings LoadSavedSettings() => Plugin.LoadPluginSettings<TSettings>();
 
     public virtual bool VerifySettings(out List<string> errors)
     {
-        errors = new List<string>();
+        errors = [];
         return true;
     }
 }

@@ -16,8 +16,7 @@ public class SteamAppIdUtility(ICachedFile steamAppList) : ISteamAppIdUtility
 
     private static readonly Regex NonLetterOrDigitCharacterRegex = new(@"[^\p{L}\p{Nd}]", RegexOptions.Compiled);
 
-    private Dictionary<string, int> _steamIds;
-    private Dictionary<string, int> SteamIdsByTitle => _steamIds ??= GetSteamIdsByTitle();
+    private Dictionary<string, int> SteamIdsByTitle => field ??= GetSteamIdsByTitle();
 
     public ICachedFile SteamAppList { get; } = steamAppList;
 

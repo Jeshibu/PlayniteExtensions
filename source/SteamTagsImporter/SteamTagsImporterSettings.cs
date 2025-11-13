@@ -11,38 +11,27 @@ namespace SteamTagsImporter;
 public class SteamTagsImporterSettings : BulkImportPluginSettings
 {
     private readonly SteamTagsImporter plugin;
-    private bool _limitTagsToFixedAmount = false;
-    private int _fixedTagCount = 5;
-    private bool _limitTaggingToPcGames = true;
-    private bool _automaticallyAddTagsToNewGames = true;
-    private bool _useTagPrefix = false;
-    private string _tagPrefix = string.Empty;
-    private bool _tagDelistedGames = false;
-    private string _delistedTagName = "Delisted";
-    private DateTime _lastAutomaticTagUpdate = default;
-    private string _languageKey = string.Empty;
 
 
+    public bool LimitTagsToFixedAmount { get; set => SetValue(ref field, value); } = false;
 
-    public bool LimitTagsToFixedAmount { get { return _limitTagsToFixedAmount; } set { SetValue(ref _limitTagsToFixedAmount, value); } }
+    public int FixedTagCount { get; set => SetValue(ref field, value); } = 5;
 
-    public int FixedTagCount { get { return _fixedTagCount; } set { SetValue(ref _fixedTagCount, value); } }
+    public bool LimitTaggingToPcGames { get; set => SetValue(ref field, value); } = true;
 
-    public bool LimitTaggingToPcGames { get { return _limitTaggingToPcGames; } set { SetValue(ref _limitTaggingToPcGames, value); } }
+    public bool AutomaticallyAddTagsToNewGames { get; set => SetValue(ref field, value); } = true;
 
-    public bool AutomaticallyAddTagsToNewGames { get { return _automaticallyAddTagsToNewGames; } set { SetValue(ref _automaticallyAddTagsToNewGames, value); } }
+    public bool UseTagPrefix { get; set => SetValue(ref field, value); } = false;
 
-    public bool UseTagPrefix { get { return _useTagPrefix; } set { SetValue(ref _useTagPrefix, value); } }
+    public string TagPrefix { get; set => SetValue(ref field, value); } = string.Empty;
 
-    public string TagPrefix { get { return _tagPrefix; } set { SetValue(ref _tagPrefix, value); } }
+    public bool TagDelistedGames { get; set => SetValue(ref field, value); } = false;
 
-    public bool TagDelistedGames { get { return _tagDelistedGames; } set { SetValue(ref _tagDelistedGames, value); } }
+    public string DelistedTagName { get; set => SetValue(ref field, value); } = "Delisted";
 
-    public string DelistedTagName { get { return _delistedTagName; } set { SetValue(ref _delistedTagName, value); } }
+    public DateTime LastAutomaticTagUpdate { get; set => SetValue(ref field, value); } = default;
 
-    public DateTime LastAutomaticTagUpdate { get { return _lastAutomaticTagUpdate; } set { SetValue(ref _lastAutomaticTagUpdate, value); } }
-
-    public string LanguageKey { get { return _languageKey; } set { SetValue(ref _languageKey, value); } }
+    public string LanguageKey { get; set => SetValue(ref field, value); } = string.Empty;
 
     public ObservableCollection<string> OkayTags { get; set; } = [];
 
@@ -68,7 +57,8 @@ public class SteamTagsImporterSettingsViewModel : PluginSettingsViewModel<SteamT
         Settings.BlacklistedTags = new(Settings.BlacklistedTags.OrderBy(a => a));
     }
 
-    private readonly Dictionary<string, string> _languages = new()
+    [DontSerialize]
+    public Dictionary<string, string> Languages { get; } = new()
     {
         {string.Empty,"Don't specify (results are region dependent)"},
         {"schinese","简体中文 (Simplified Chinese)"},
@@ -101,12 +91,6 @@ public class SteamTagsImporterSettingsViewModel : PluginSettingsViewModel<SteamT
         {"vietnamese","Tiếng Việt (Vietnamese)"},
         {"ukrainian","Українська (Ukrainian)"},
     };
-
-    [DontSerialize]
-    public Dictionary<string, string> Languages
-    {
-        get { return _languages; }
-    }
 
     [DontSerialize]
     public RelayCommand<IList<object>> WhitelistCommand

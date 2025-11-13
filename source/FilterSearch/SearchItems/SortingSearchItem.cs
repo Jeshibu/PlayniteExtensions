@@ -10,8 +10,7 @@ namespace FilterSearch.SearchItems;
 public class SortingSearchItem : BaseFilterSearchItem
 {
     private SortOrder SortOrder { get; }
-    private static Dictionary<SortOrderDirection, string> _sortDirections;
-    private static Dictionary<SortOrderDirection, string> SortDirections => _sortDirections ??= EnumHelper.GetEnumValuesWithDescription<SortOrderDirection>();
+    private static Dictionary<SortOrderDirection, string> SortDirections => field ??= EnumHelper.GetEnumValuesWithDescription<SortOrderDirection>();
     
     public SortingSearchItem(string name, SortOrder sortOrder, IMainViewAPI mainViewApi)
         : base(name, "Sort by", mainViewApi)

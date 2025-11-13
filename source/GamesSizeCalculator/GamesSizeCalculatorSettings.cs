@@ -9,18 +9,16 @@ namespace GamesSizeCalculator;
 
 public class GamesSizeCalculatorSettings : ObservableObject
 {
-    private bool getUninstalledGameSizeFromSteam = true;
-    public bool GetUninstalledGameSizeFromSteam { get => getUninstalledGameSizeFromSteam; set => SetValue(ref getUninstalledGameSizeFromSteam, value); }
+    public bool GetUninstalledGameSizeFromSteam { get; set => SetValue(ref field, value); } = true;
     public bool GetSizeFromSteamNonSteamGames { get; set; }
     public bool IncludeDlcInSteamCalculation { get; set; }
     public bool IncludeOptionalInSteamCalculation { get; set; }
 
-    private ObservableCollection<string> depotRegionWords = ["eu", "europe", "row", "en", "english", "ww"];
+    [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
+    public ObservableCollection<string> DepotRegionWords { get; set => SetValue(ref field, DeduplicateStrings(value)); } = ["eu", "europe", "row", "en", "english", "ww"];
 
     [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
-    public ObservableCollection<string> DepotRegionWords { get => depotRegionWords; set => SetValue(ref depotRegionWords, DeduplicateStrings(value)); }
-
-    private ObservableCollection<string> depotRegionWordsBlacklist =
+    public ObservableCollection<string> DepotRegionWordsBlacklist { get; set => SetValue(ref field, DeduplicateStrings(value)); } =
     [
         "asia",
         "aus",
@@ -48,9 +46,6 @@ public class GamesSizeCalculatorSettings : ObservableObject
         "sea",
         "tw"
     ];
-
-    [JsonProperty(ObjectCreationHandling = ObjectCreationHandling.Replace)]
-    public ObservableCollection<string> DepotRegionWordsBlacklist { get => depotRegionWordsBlacklist; set => SetValue(ref depotRegionWordsBlacklist, DeduplicateStrings(value)); }
 
     private static ObservableCollection<string> DeduplicateStrings(IEnumerable<string> strings)
     {

@@ -34,8 +34,6 @@ public class GamePropertyImportViewModel
 
 public class GameCheckboxViewModel : ObservableObject
 {
-    private bool isChecked;
-
     public GameCheckboxViewModel(Game game, GameDetails gameDetails, bool isChecked = true)
     {
         Game = game;
@@ -45,7 +43,7 @@ public class GameCheckboxViewModel : ObservableObject
 
     public Game Game { get; set; }
     public List<GameDetails> GameDetails { get; } = [];
-    public bool IsChecked { get => isChecked; set => SetValue(ref isChecked, value); }
+    public bool IsChecked { get; set => SetValue(ref field, value); }
     public string DisplayName
     {
         get

@@ -19,8 +19,7 @@ namespace TvTropesMetadata.Scraping;
 
 public abstract class BaseScraper(IWebViewFactory webViewFactory)
 {
-    private IWebView _webView;
-    protected IWebView WebView => _webView ??= webViewFactory.CreateOffscreenView();
+    protected IWebView WebView => field ??= webViewFactory.CreateOffscreenView();
     protected readonly ILogger logger = LogManager.GetLogger();
     protected List<string> CategoryWhitelist = ["VideoGame", "VisualNovel"];
     protected const string articleBaseUrl = "https://tvtropes.org/pmwiki/pmwiki.php/";
