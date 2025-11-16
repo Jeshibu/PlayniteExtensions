@@ -2,6 +2,7 @@
   <Folder Name="/Build/">
     <File Path="../.github/workflows/release.yml" />
     <File Path="../publish/Get-ReleaseData.ps1" />
+    <File Path=".editorconfig" />
     <File Path="Directory.Build.Props" />
   </Folder>
   <Folder Name="/Tests/">

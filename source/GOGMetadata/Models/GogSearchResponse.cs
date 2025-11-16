@@ -1,8 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Playnite.SDK.Models;
 using PlayniteExtensions.Metadata.Common;
-using Playnite.SDK.Models;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
+
+namespace GOGMetadata.Models;
 
 public class GogSearchResponse
 {

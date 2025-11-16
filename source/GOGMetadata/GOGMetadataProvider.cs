@@ -1,4 +1,5 @@
-﻿using Playnite.SDK;
+﻿using GOGMetadata.Models;
+using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;

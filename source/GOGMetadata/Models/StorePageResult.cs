@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+namespace GOGMetadata.Models;
+
 public class StorePageResult
 {
     public class ProductDetails

@@ -5,10 +5,6 @@ using System.Linq;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Metadata.Common;
 
-// ReSharper disable UnassignedField.Global
-// ReSharper disable ClassNeverInstantiated.Global
-// ReSharper disable FieldCanBeMadeReadOnly.Global
-
 namespace IgnMetadata.Api;
 
 public class IgnResponseRoot<T>

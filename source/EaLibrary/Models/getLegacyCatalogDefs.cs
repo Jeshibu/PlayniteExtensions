@@ -1,7 +1,3 @@
-// ReSharper disable ClassNeverInstantiated.Global
-// ReSharper disable InconsistentNaming
-// ReSharper disable UnusedMember.Global
-// ReSharper disable UnusedAutoPropertyAccessor.Global
 namespace EaLibrary.Models;
 
 public class LegacyOffersData

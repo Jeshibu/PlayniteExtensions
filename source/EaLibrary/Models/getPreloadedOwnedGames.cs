@@ -1,7 +1,3 @@
-// ReSharper disable ClassNeverInstantiated.Global
-// ReSharper disable InconsistentNaming
-// ReSharper disable UnusedAutoPropertyAccessor.Global
-// ReSharper disable UnusedMember.Global
 namespace EaLibrary.Models;
 
 public class OwnedGamesData
