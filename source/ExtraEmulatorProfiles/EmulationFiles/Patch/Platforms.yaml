@@ -22,7 +22,7 @@
 - Name: Arcade
   Id: arcade
   IgdbId: 52
-  Emulators: [mame, fbneo, flycast, retroarch, teknoparrot]
+  Emulators: [mame, fbneo, flycast, model2emulator, retroarch, supermodel, teknoparrot, visualpinballx]
 
 - Name: Arduboy
   Id: arduboy
