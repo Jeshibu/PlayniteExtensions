@@ -33,4 +33,14 @@ public class StringExtensionsTests
         foreach (var company in expectedCompanies)
             Assert.True(output.Contains(company), $"||{string.Join(", ", output)}|| doesn't contain expected company {company}");
     }
+
+    [Theory]
+    [InlineData("5KB", 5 * 1024)]
+    [InlineData("Should be able to pick 99.1 MB out of a string too", 103913882)]
+    [InlineData("2 GiB", 2UL * 1024 * 1024 * 1024)]
+    public void ParseInstallSize(string input, ulong expectedResult)
+    {
+        var result = input.ParseInstallSize();
+        Assert.Equal(expectedResult, result);
+    }
 }

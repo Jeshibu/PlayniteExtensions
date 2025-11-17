@@ -45,11 +45,11 @@ public class PathReplacer : GenericPlugin
 
     private void ReplacePaths(ICollection<Game> games)
     {
-        var findDialogResult = PlayniteApi.Dialogs.SelectString(@"Enter the path you want replaced. Only matches at the start of a path will be replaced, so include drive letters and the like.", "Enter path to be replaced", "");
+        var findDialogResult = PlayniteApi.Dialogs.SelectString("Enter the path you want replaced. Only matches at the start of a path will be replaced, so include drive letters and the like.", "Enter path to be replaced", "");
         if (!findDialogResult.Result || string.IsNullOrWhiteSpace(findDialogResult.SelectedString))
             return;
 
-        var replaceDialogResult = PlayniteApi.Dialogs.SelectString($@"Enter the full path you want to replace {findDialogResult.SelectedString} with.", "Enter new path", "");
+        var replaceDialogResult = PlayniteApi.Dialogs.SelectString($"Enter the full path you want to replace {findDialogResult.SelectedString} with.", "Enter new path", "");
         if (!replaceDialogResult.Result || string.IsNullOrWhiteSpace(replaceDialogResult.SelectedString))
             return;
 
@@ -217,12 +217,12 @@ public class PathReplacer : GenericPlugin
         return updated;
     }
 
-    public static string NormalizePath(string path)
+    private static string NormalizePath(string path)
     {
         return path?.Replace('/', '\\');
     }
 
-    public static bool ShouldReplace(string currentPath, string normalizedFind, string replace, out string newValue)
+    private static bool ShouldReplace(string currentPath, string normalizedFind, string replace, out string newValue)
     {
         string normalizedCurrentPath = NormalizePath(currentPath);
         if (normalizedCurrentPath != null && normalizedCurrentPath.StartsWith(normalizedFind, StringComparison.InvariantCultureIgnoreCase))

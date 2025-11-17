@@ -12,9 +12,9 @@ namespace PlayniteExtensions.Common;
 
 public static class StringExtensions
 {
-    private static readonly Regex CompanyFormRegex = new(@",?\s+((co[,.\s]+)?ltd|(l\.)?inc|s\.?l|a[./]?s|limited|l\.?l\.?(c|p)|s\.?a(\.?r\.?l)?|s\.?r\.?o|gmbh|ab)\.?\s*$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-    private static readonly Regex DeflateRegex = new(@"[^\p{L}\p{N}]+", RegexOptions.Compiled);
-    private static readonly Regex InstallSizeRegex = new(@"\b(?<number>[0-9.]+)\s+(?<scale>[KMGT]i?B)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    private static Regex CompanyFormRegex => field ??= new(@",?\s+((co[,.\s]+)?ltd|(l\.)?inc|s\.?l|a[./]?s|limited|l\.?l\.?(c|p)|s\.?a(\.?r\.?l)?|s\.?r\.?o|gmbh|ab)\.?\s*$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    private static Regex DeflateRegex => field ??= new(@"[^\p{L}\p{N}]+", RegexOptions.Compiled);
+    private static Regex InstallSizeRegex => field ??= new(@"\b(?<number>[0-9.]+)\s*(?<scale>[KMGT]i?B)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
     /// <param name="input"></param>
     extension(string input)
@@ -157,7 +157,9 @@ public static class StringExtensions
             return input?.IndexOf(value, 0, comparisonType) != -1;
         }
 
-        public ulong? ParseInstallSize(CultureInfo culture = null)
+        public ulong? ParseInstallSize() => input.ParseInstallSize(CultureInfo.InvariantCulture);
+
+        public ulong? ParseInstallSize(CultureInfo culture)
         {
             var match = InstallSizeRegex.Match(input);
             if (!match.Success)
@@ -166,7 +168,6 @@ public static class StringExtensions
             string number = match.Groups["number"].Value;
             string scale = match.Groups["scale"].Value.ToUpperInvariant();
 
-            culture ??= CultureInfo.InvariantCulture;
             if (!double.TryParse(number, NumberStyles.Number | NumberStyles.AllowDecimalPoint, culture, out double n))
                 return null;
 
