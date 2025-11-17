@@ -15,14 +15,11 @@ namespace EaLibrary;
 public class EaLibrary : LibraryPluginBase<EaLibrarySettingsViewModel>
 {
     private static readonly ILogger logger = LogManager.GetLogger();
-    private IWebDownloader _downloader;
     private PlatformUtility _platformUtility;
-    private IEaWebsite _website;
-    private EaLibraryDataGatherer _dataGatherer;
-    private IWebDownloader Downloader => _downloader ??= new WebDownloader();
+    private IWebDownloader Downloader => field ??= new WebDownloader();
     private IPlatformUtility PlatformUtility => _platformUtility ??= new();
-    public IEaWebsite Website => _website ??= new EaWebsite(PlayniteApi.WebViews, Downloader);
-    public EaLibraryDataGatherer DataGatherer => _dataGatherer ??= new(Website, new RegistryValueProvider(), PlatformUtility, GetPluginUserDataPath());
+    public IEaWebsite Website => field ??= new EaWebsite(PlayniteApi.WebViews, Downloader);
+    public EaLibraryDataGatherer DataGatherer => field ??= new(Website, new RegistryValueProvider(), PlatformUtility, GetPluginUserDataPath());
 
     public EaLibrary(IPlayniteAPI api) : base(
         "EA app",

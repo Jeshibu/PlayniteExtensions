@@ -10,10 +10,8 @@ namespace ExtraEmulatorProfiles;
 
 public class ExtraEmulatorProfilesSettings : ObservableObject
 {
-    private Version _installedPatchVersion = new(0, 0);
-
     [DontSerialize]
-    public Version InstalledPatchVersion { get => _installedPatchVersion; set => SetValue(ref _installedPatchVersion, value); }
+    public Version InstalledPatchVersion { get; set => SetValue(ref field, value); } = new(0, 0);
 
     public string InstalledPatchVersionString
     {

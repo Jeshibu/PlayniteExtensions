@@ -17,17 +17,7 @@ public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
     private readonly PCGWGameController gameController;
     private static readonly ILogger logger = LogManager.GetLogger();
 
-    private List<MetadataField> availableFields;
-
-    public override List<MetadataField> AvailableFields
-    {
-        get
-        {
-            availableFields ??= GetAvailableFields();
-
-            return availableFields;
-        }
-    }
+    public override List<MetadataField> AvailableFields => field ??= GetAvailableFields();
 
     private List<MetadataField> GetAvailableFields()
     {

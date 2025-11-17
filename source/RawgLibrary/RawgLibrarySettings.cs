@@ -12,24 +12,14 @@ namespace RawgLibrary;
 
 public class RawgLibrarySettings : RawgBaseSettings
 {
-    private string userToken;
-    private bool importUserLibrary = true;
-    private List<RawgCollectionSetting> collections = [];
-    private Dictionary<string, Guid?> rawgToPlayniteStatuses;
-    private Dictionary<int, int> rawgToPlayniteRatings;
-    private Dictionary<Guid, string> playniteToRawgStatuses;
-    private Dictionary<int, Range> playniteToRawgRatings;
-    private RawgUser user;
-
-
-    public string UserToken { get => userToken; set => SetValue(ref userToken, value); }
-    public bool ImportUserLibrary { get => importUserLibrary; set => SetValue(ref importUserLibrary, value); }
-    public List<RawgCollectionSetting> Collections { get => collections; set => SetValue(ref collections, value); }
-    public Dictionary<string, Guid?> RawgToPlayniteStatuses { get => rawgToPlayniteStatuses; set => SetValue(ref rawgToPlayniteStatuses, value); }
-    public Dictionary<int, int> RawgToPlayniteRatings { get => rawgToPlayniteRatings; set => SetValue(ref rawgToPlayniteRatings, value); }
-    public Dictionary<Guid, string> PlayniteToRawgStatuses { get => playniteToRawgStatuses; set => SetValue(ref playniteToRawgStatuses, value); }
-    public Dictionary<int, Range> PlayniteToRawgRatings { get => playniteToRawgRatings; set => SetValue(ref playniteToRawgRatings, value); }
-    public RawgUser User { get => user; set => SetValue(ref user, value); }
+    public string UserToken { get; set => SetValue(ref field, value); }
+    public bool ImportUserLibrary { get; set => SetValue(ref field, value); } = true;
+    public List<RawgCollectionSetting> Collections { get; set => SetValue(ref field, value); } = [];
+    public Dictionary<string, Guid?> RawgToPlayniteStatuses { get; set => SetValue(ref field, value); }
+    public Dictionary<int, int> RawgToPlayniteRatings { get; set => SetValue(ref field, value); }
+    public Dictionary<Guid, string> PlayniteToRawgStatuses { get; set => SetValue(ref field, value); }
+    public Dictionary<int, Range> PlayniteToRawgRatings { get; set => SetValue(ref field, value); }
+    public RawgUser User { get; set => SetValue(ref field, value); }
     public bool AutoSyncCompletionStatus { get; set; }
     public bool AutoSyncUserScore { get; set; }
     public bool AutoSyncNewGames { get; set; }
@@ -190,25 +180,18 @@ public class RawgLibrarySettingsViewModel : PluginSettingsViewModel<RawgLibraryS
         return new RawgApiClient(Settings.User?.ApiKey);
     }
 
-    private ObservableCollection<RawgToPlayniteStatus> rawgToPlayniteStatuses;
-    private ObservableCollection<RawgToPlayniteRating> rawgToPlayniteRatings;
-    private ObservableCollection<PlayniteToRawgStatus> playniteToRawgStatuses;
-    private ObservableCollection<PlayniteToRawgRating> playniteToRawgRatings;
-    private ICollection<CompletionStatus> playniteCompletionStatuses;
-    private Dictionary<string, string> rawgCompletionStatuses;
-
-    public ObservableCollection<RawgToPlayniteStatus> RawgToPlayniteStatuses { get => rawgToPlayniteStatuses; set => SetValue(ref rawgToPlayniteStatuses, value); }
-    public ObservableCollection<RawgToPlayniteRating> RawgToPlayniteRatings { get => rawgToPlayniteRatings; set => SetValue(ref rawgToPlayniteRatings, value); }
-    public ObservableCollection<PlayniteToRawgStatus> PlayniteToRawgStatuses { get => playniteToRawgStatuses; set => SetValue(ref playniteToRawgStatuses, value); }
-    public ObservableCollection<PlayniteToRawgRating> PlayniteToRawgRatings { get => playniteToRawgRatings; set => SetValue(ref playniteToRawgRatings, value); }
-    public ICollection<CompletionStatus> PlayniteCompletionStatuses { get => playniteCompletionStatuses; set => SetValue(ref playniteCompletionStatuses, value); }
-    public Dictionary<string, string> RawgCompletionStatuses { get => rawgCompletionStatuses; set => SetValue(ref rawgCompletionStatuses, value); }
+    public ObservableCollection<RawgToPlayniteStatus> RawgToPlayniteStatuses{ get; set => SetValue(ref field, value); }
+    public ObservableCollection<RawgToPlayniteRating> RawgToPlayniteRatings{ get; set => SetValue(ref field, value); }
+    public ObservableCollection<PlayniteToRawgStatus> PlayniteToRawgStatuses{ get; set => SetValue(ref field, value); }
+    public ObservableCollection<PlayniteToRawgRating> PlayniteToRawgRatings{ get; set => SetValue(ref field, value); }
+    public ICollection<CompletionStatus> PlayniteCompletionStatuses { get; set => SetValue(ref field, value); }
+    public Dictionary<string, string> RawgCompletionStatuses{ get; set => SetValue(ref field, value); }
 
     private void InitializeCollections()
     {
         PlayniteCompletionStatuses = PlayniteApi.Database.CompletionStatuses.ToList();
-        PlayniteCompletionStatuses.Add(new CompletionStatus { Id = Guid.Empty, Name = "Default (configure in Library > Library Manager)" });
-        playniteCompletionStatuses.Add(new CompletionStatus { Id = RawgMapping.DoNotImportId, Name = "Do not import" });
+        PlayniteCompletionStatuses.Add(new() { Id = Guid.Empty, Name = "Default (configure in Library > Library Manager)" });
+        PlayniteCompletionStatuses.Add(new() { Id = RawgMapping.DoNotImportId, Name = "Do not import" });
         RawgCompletionStatuses = RawgMapping.RawgCompletionStatuses;
         RawgToPlayniteStatuses = RawgMapping.GetRawgToPlayniteCompletionStatuses(PlayniteApi, Settings).ToObservable();
         RawgToPlayniteRatings = RawgMapping.GetRawgToPlayniteRatings(Settings).ToObservable();

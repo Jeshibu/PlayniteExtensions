@@ -10,20 +10,18 @@ namespace MutualGames.Models.Settings;
 
 public class MutualGamesSettingsViewModel : PluginSettingsViewModel<MutualGamesSettings, MutualGames>
 {
-    private List<GameFeature> gameFeatures;
-    private IFriendsGamesClient[] clients;
-    public IFriendsGamesClient[] Clients => clients ??= Plugin.GetClients().ToArray();
+    public IFriendsGamesClient[] Clients => field ??= Plugin.GetClients().ToArray();
     public GameField[] ImportFieldOptions { get; } = [GameField.Categories, GameField.Tags];
     public List<GameFeature> Features
     {
         get
         {
-            if (gameFeatures != null)
-                return gameFeatures;
+            if (field != null)
+                return field;
 
             var output = new List<GameFeature> { new() { Id = Guid.Empty, Name = "None" } };
             output.AddRange(PlayniteApi.Database.Features.OrderBy(f => f.Name));
-            return gameFeatures = output;
+            return field = output;
         }
     }
 

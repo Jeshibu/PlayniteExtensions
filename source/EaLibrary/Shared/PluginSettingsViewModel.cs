@@ -13,16 +13,7 @@ public class PluginSettingsViewModel<TSettings, TPlugin> : ObservableObject, ISe
     public TPlugin Plugin { get; set; }
     public TSettings EditingClone { get; set; }
 
-    private TSettings settings;
-    public TSettings Settings
-    {
-        get => settings;
-        set
-        {
-            settings = value;
-            OnPropertyChanged();
-        }
-    }
+    public TSettings Settings { get; set => SetValue(ref field, value); }
 
     public PluginSettingsViewModel(TPlugin plugin, IPlayniteAPI playniteApi)
     {
@@ -52,7 +43,7 @@ public class PluginSettingsViewModel<TSettings, TPlugin> : ObservableObject, ISe
 
     public virtual bool VerifySettings(out List<string> errors)
     {
-        errors = new List<string>();
+        errors = [];
         return true;
     }
 }

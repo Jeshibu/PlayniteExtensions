@@ -54,7 +54,7 @@ public class GameDetails
 
     public GameMetadata ToMetadata(IPlayniteAPI playniteAPI = null)
     {
-        var metadata = new GameMetadata()
+        var metadata = new GameMetadata
         {
             Name = Names.FirstOrDefault(),
             Description = Description,

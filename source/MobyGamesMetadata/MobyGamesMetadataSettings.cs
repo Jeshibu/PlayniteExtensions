@@ -12,16 +12,9 @@ namespace MobyGamesMetadata;
 
 public class MobyGamesMetadataSettings : BulkImportPluginSettings
 {
-    private string apiKey;
-
     public DataSource DataSource { get; set; } = DataSource.Api;
-    public string ApiKey
-    {
-        get => apiKey;
-        set => SetValue(ref apiKey, value?.Trim());
-    }
+    public string ApiKey { get; set => SetValue(ref field, value?.Trim()); }
     public bool ShowTopPanelButton { get; set; } = true;
-
     public ObservableCollection<MobyGamesGenreSetting> Genres { get; set; } = [];
 
     public MobyGamesImageSourceSettings Cover { get; set; } = new()
@@ -48,9 +41,6 @@ public class MobyGamesMetadataSettings : BulkImportPluginSettings
 
 public class MobyGamesGenreSetting : ObservableObject, IHasName
 {
-    private string nameOverride;
-    private PropertyImportTarget importTarget = PropertyImportTarget.Genres;
-
     [JsonProperty("genre_category_id")]
     public int CategoryId { get; set; }
 
@@ -63,17 +53,9 @@ public class MobyGamesGenreSetting : ObservableObject, IHasName
     [JsonProperty("genre_name")]
     public string Name { get; set; }
 
-    public string NameOverride
-    {
-        get { return nameOverride; }
-        set { SetValue(ref nameOverride, value); }
-    }
+    public string NameOverride{ get; set => SetValue(ref field, value); }
 
-    public PropertyImportTarget ImportTarget
-    {
-        get { return importTarget; }
-        set { SetValue(ref importTarget, value); }
-    }
+    public PropertyImportTarget ImportTarget{ get; set => SetValue(ref field, value); } = PropertyImportTarget.Genres;
 }
 
 internal class MobyGamesGenresRoot
@@ -224,7 +206,7 @@ public class MobyGamesMetadataSettingsViewModel : PluginSettingsViewModel<MobyGa
     private void UpgradeSettings()
     {
         #pragma warning disable CS0612 // Type or member is obsolete
-        
+
         if (Settings.Version < 1)
             Settings.MaxDegreeOfParallelism = BulkImportPluginSettings.GetDefaultMaxDegreeOfParallelism();
 
@@ -233,9 +215,9 @@ public class MobyGamesMetadataSettingsViewModel : PluginSettingsViewModel<MobyGa
 
         if (Settings.Version < 3 && Settings.DataSource == DataSource.ApiAndScraping)
             Settings.DataSource = DataSource.Api;
-        
+
         #pragma warning restore CS0612 // Type or member is obsolete
-        
+
         Settings.Version = 3;
     }
 }

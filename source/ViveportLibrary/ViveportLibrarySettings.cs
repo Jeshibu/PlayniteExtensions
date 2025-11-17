@@ -5,13 +5,9 @@ namespace ViveportLibrary;
 
 public class ViveportLibrarySettings : ObservableObject
 {
-    private bool importHeadsetsAsPlatforms = true;
-    private bool tagSubscriptionGames = false;
-    private string subscriptionTagName = "Subscription";
-
-    public bool ImportHeadsetsAsPlatforms { get => importHeadsetsAsPlatforms; set => SetValue(ref importHeadsetsAsPlatforms, value); }
-    public bool TagSubscriptionGames { get => tagSubscriptionGames; set => SetValue(ref tagSubscriptionGames, value); }
-    public string SubscriptionTagName { get => subscriptionTagName; set => SetValue(ref subscriptionTagName, value); }
+    public bool ImportHeadsetsAsPlatforms{ get; set => SetValue(ref field, value); } = true;
+    public bool TagSubscriptionGames{ get; set => SetValue(ref field, value); } = false;
+    public string SubscriptionTagName{ get; set => SetValue(ref field, value); } = "Subscription";
     public bool ImportInputMethodsAsFeatures { get; set; } = false;
     public CoverPreference CoverPreference { get; set; } = CoverPreference.VerticalOrSquare;
 }

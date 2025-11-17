@@ -9,27 +9,15 @@ namespace Barnite;
 
 public class BarniteSettings : ObservableObject
 {
-    private ObservableCollection<ScraperSettings> scrapers;
-
-    public ObservableCollection<ScraperSettings> Scrapers { get => scrapers; set => SetValue(ref scrapers, value); }
-
-    public BarniteSettings()
-    {
-        scrapers = [];
-    }
+    public ObservableCollection<ScraperSettings> Scrapers { get; set => SetValue(ref field, value); } = [];
 }
 
 public class ScraperSettings : ObservableObject
 {
-    private bool enabled;
-    private string name;
-    private string websiteUrl;
-    private int order;
-
-    public bool Enabled { get => enabled; set => SetValue(ref enabled, value); }
-    public string Name { get => name; set => SetValue(ref name, value); }
-    public string WebsiteUrl { get => websiteUrl; set => SetValue(ref websiteUrl, value); }
-    public int Order { get => order; set => SetValue(ref order, value); }
+    public bool Enabled{ get; set => SetValue(ref field, value); }
+    public string Name{ get; set => SetValue(ref field, value); }
+    public string WebsiteUrl{ get; set => SetValue(ref field, value); }
+    public int Order{ get; set => SetValue(ref field, value); }
 }
 
 public class BarniteSettingsViewModel : PluginSettingsViewModel<BarniteSettings, Barnite>
@@ -39,27 +27,25 @@ public class BarniteSettingsViewModel : PluginSettingsViewModel<BarniteSettings,
         Settings = LoadSavedSettings() ?? new BarniteSettings();
     }
 
-    private ICollectionView scrapersView;
     public ICollectionView ScrapersView
     {
         get
         {
-            if (scrapersView == null)
+            if (field == null)
             {
-                scrapersView = CollectionViewSource.GetDefaultView(Settings.Scrapers);
-                scrapersView.SortDescriptions.Add(new SortDescription("Order", ListSortDirection.Ascending));
+                field = CollectionViewSource.GetDefaultView(Settings.Scrapers);
+                field.SortDescriptions.Add(new SortDescription("Order", ListSortDirection.Ascending));
             }
 
-            return scrapersView;
+            return field;
         }
     }
 
-    private RelayCommand<ScraperSettings> visitWebsiteCommand;
     public RelayCommand<ScraperSettings> VisitWebsiteCommand
     {
         get
         {
-            return visitWebsiteCommand ??= new RelayCommand<ScraperSettings>((ss) =>
+            return field ??= new RelayCommand<ScraperSettings>((ss) =>
             {
                 try
                 {
@@ -70,12 +56,11 @@ public class BarniteSettingsViewModel : PluginSettingsViewModel<BarniteSettings,
         }
     }
 
-    private RelayCommand<ScraperSettings> moveUpCommand;
     public RelayCommand<ScraperSettings> MoveUpCommand
     {
         get
         {
-            return moveUpCommand ??= new RelayCommand<ScraperSettings>((ss) =>
+            return field ??= new RelayCommand<ScraperSettings>((ss) =>
             {
                 var items = ScrapersView.Cast<ScraperSettings>().ToList();
                 var index = items.IndexOf(ss);
@@ -92,12 +77,11 @@ public class BarniteSettingsViewModel : PluginSettingsViewModel<BarniteSettings,
         }
     }
 
-    private RelayCommand<ScraperSettings> moveDownCommand;
     public RelayCommand<ScraperSettings> MoveDownCommand
     {
         get
         {
-            return moveDownCommand ??= new RelayCommand<ScraperSettings>((ss) =>
+            return field ??= new RelayCommand<ScraperSettings>((ss) =>
             {
                 var items = ScrapersView.Cast<ScraperSettings>().ToList();
                 var index = items.IndexOf(ss);

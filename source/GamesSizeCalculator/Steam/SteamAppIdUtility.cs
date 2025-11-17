@@ -17,16 +17,9 @@ public class SteamAppIdUtility(ICachedFile steamAppList) : ISteamAppIdUtility
     private static readonly Regex NonLetterOrDigitCharacterRegex = new(@"[^\p{L}\p{Nd}]", RegexOptions.Compiled);
     private static readonly ILogger logger = LogManager.GetLogger();
 
-    private Dictionary<string, int> _steamIds;
-    private Dictionary<string, int> SteamIdsByTitle
-    {
-        get { return _steamIds ??= GetSteamIdsByTitle(); }
-    }
+    private Dictionary<string, int> SteamIdsByTitle => field ??= GetSteamIdsByTitle();
 
-    private static string NormalizeTitle(string title)
-    {
-        return NonLetterOrDigitCharacterRegex.Replace(title, string.Empty).ToLower();
-    }
+    private static string NormalizeTitle(string title) => NonLetterOrDigitCharacterRegex.Replace(title, string.Empty).ToLower();
 
     public string GetSteamGameId(Game game)
     {

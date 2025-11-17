@@ -13,17 +13,7 @@ public abstract class PluginSettingsViewModel<TSettings, TPlugin>(TPlugin plugin
     public IPlayniteAPI PlayniteApi { get; set; } = playniteApi;
     protected TPlugin Plugin { get; set; } = plugin;
     protected TSettings EditingClone { get; set; }
-
-    private TSettings settings;
-    public TSettings Settings
-    {
-        get => settings;
-        set
-        {
-            settings = value;
-            OnPropertyChanged();
-        }
-    }
+    public TSettings Settings { get; protected set => SetValue(ref field, value); }
 
     public virtual void BeginEdit()
     {

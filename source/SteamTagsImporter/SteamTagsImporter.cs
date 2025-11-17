@@ -21,11 +21,10 @@ public class SteamTagsImporter : MetadataPlugin
     private readonly Func<ISteamTagScraper> getTagScraper;
     private readonly IWebDownloader downloader = new WebDownloader();
 
-    private SteamTagsImporterSettingsViewModel _settings;
     public SteamTagsImporterSettingsViewModel Settings
     {
-        get { return _settings ??= new SteamTagsImporterSettingsViewModel(this); }
-        set { _settings = value; }
+        get => field ??= new SteamTagsImporterSettingsViewModel(this);
+        set;
     }
 
     public override Guid Id { get; } = Guid.Parse("01b67948-33a1-42d5-bd39-e4e8a226d215");
@@ -163,7 +162,7 @@ public class SteamTagsImporter : MetadataPlugin
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="settings"></param>
     /// <param name="game"></param>

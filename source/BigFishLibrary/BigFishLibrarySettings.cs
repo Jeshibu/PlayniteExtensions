@@ -7,9 +7,7 @@ namespace BigFishLibrary;
 
 public class BigFishLibrarySettings : BigFishMetadataSettings
 {
-    private bool importFromOnline = false;
-
-    public bool ImportFromOnline { get => importFromOnline; set => SetValue(ref importFromOnline, value); }
+    public bool ImportFromOnline{ get; set => SetValue(ref field, value); } = false;
 }
 
 public enum AuthStatus

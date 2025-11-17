@@ -11,23 +11,12 @@ namespace GamersGateLibrary;
 
 public class GamersGateLibrarySettings : ObservableObject
 {
-    private Dictionary<string, GameInstallInfo> installData = [];
-    private bool useCoverImages = true;
-    private int minimumDelay = 2000;
-    private int maximumDelay = 4000;
-    private OnImportAction importAction = OnImportAction.ImportOffscreen;
-    private HashSet<int> knownOrderIds = [];
-
-    public Dictionary<string, GameInstallInfo> InstallData { get => installData; set => SetValue(ref installData, value); }
-
-    public bool UseCoverImages { get => useCoverImages; set => SetValue(ref useCoverImages, value); }
-
-    public int MinimumWebRequestDelay { get => minimumDelay; set => SetValue(ref minimumDelay, value); }
-    public int MaximumWebRequestDelay { get => maximumDelay; set => SetValue(ref maximumDelay, value); }
-    public OnImportAction ImportAction { get => importAction; set => SetValue(ref importAction, value); }
-
-    public HashSet<int> KnownOrderIds { get => knownOrderIds; set => SetValue(ref knownOrderIds, value); }
-
+    public Dictionary<string, GameInstallInfo> InstallData{ get; set => SetValue(ref field, value); } = [];
+    public bool UseCoverImages{ get; set => SetValue(ref field, value); } = true;
+    public int MinimumWebRequestDelay{ get; set => SetValue(ref field, value); } = 2000;
+    public int MaximumWebRequestDelay{ get; set => SetValue(ref field, value); } = 4000;
+    public OnImportAction ImportAction{ get; set => SetValue(ref field, value); } = OnImportAction.ImportOffscreen;
+    public HashSet<int> KnownOrderIds{ get; set => SetValue(ref field, value); } = [];
     public int Version { get; set; } = 1;
 
     public void ClearKnownOrderIds()

@@ -32,25 +32,24 @@ public class GiantBombApiClient : IGiantBombApiClient, IDisposable
     }
 
     private const string BaseUrl = "https://www.giantbomb.com/api/";
-    private string apiKey;
     private RestClient restClient;
     private readonly ILogger logger = LogManager.GetLogger();
     private bool disposed = false;
 
     public string ApiKey
     {
-        get => apiKey;
+        get;
         set
         {
-            if (apiKey != value && !string.IsNullOrEmpty(value))
+            if (field != value && !string.IsNullOrEmpty(value))
             {
                 restClient?.Dispose();
                 restClient = new RestClient(BaseUrl)
-                    .AddDefaultQueryParameter("api_key", value)
-                    .AddDefaultQueryParameter("format", "json");
+                             .AddDefaultQueryParameter("api_key", value)
+                             .AddDefaultQueryParameter("format", "json");
             }
 
-            apiKey = value;
+            field = value;
         }
     }
 

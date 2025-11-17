@@ -7,7 +7,6 @@ namespace ViveportLibrary;
 public class ViveportLibraryClient : LibraryClient
 {
     bool uninstallEntryFetched = false;
-    private UninstallProgram viveportUninstallEntry;
 
     public override bool IsInstalled => ViveportUninstallEntry != null;
     public override string Icon => ViveportLibrary.IconPath;
@@ -17,18 +16,16 @@ public class ViveportLibraryClient : LibraryClient
         get
         {
             if (uninstallEntryFetched) //don't keep trying if it's not installed
-                return viveportUninstallEntry;
+                return field;
 
-            if (viveportUninstallEntry == null)
+            if (field == null)
             {
-                viveportUninstallEntry = Programs.GetUninstallProgram("VIVEPORT");
+                field = Programs.GetUninstallProgram("VIVEPORT");
                 uninstallEntryFetched = true;
             }
 
-            return viveportUninstallEntry;
+            return field;
         }
-
-        set => viveportUninstallEntry = value;
     }
 
     public override void Open()

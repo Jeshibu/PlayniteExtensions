@@ -11,11 +11,10 @@ public class PlatformUtility : IPlatformUtility
 {
     private readonly IPlayniteAPI api;
     private Dictionary<string, string[]> platformSpecNameByNormalName;
-    private HashSet<string> platformSpecNames;
 
     private Dictionary<string, string[]> PlatformSpecNameByNormalName => platformSpecNameByNormalName ??= GetPlatformSpecsByNormalName(api);
 
-    private HashSet<string> PlatformSpecNames => platformSpecNames ??= api?.Database?.Platforms?.Select(p => p.SpecificationId).Where(x => x != null).ToHashSet() ?? [];
+    private HashSet<string> PlatformSpecNames => field ??= api?.Database?.Platforms?.Select(p => p.SpecificationId).Where(x => x != null).ToHashSet() ?? [];
 
     public PlatformUtility()
     {

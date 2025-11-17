@@ -9,8 +9,7 @@ namespace PlayniteExtensions.Tests.Common;
 
 public class FakeWebViewFactory(Dictionary<string, string> sourceFilesByUrl) : IWebViewFactory
 {
-    private FakeWebView _webView;
-    private FakeWebView WebView => _webView ??= new(sourceFilesByUrl);
+    private FakeWebView WebView => field ??= new(sourceFilesByUrl);
 
     public IWebView CreateOffscreenView() => WebView;
 
