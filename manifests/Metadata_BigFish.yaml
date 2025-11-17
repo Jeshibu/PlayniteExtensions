@@ -1,20 +1,27 @@
 AddonId: BigFishMetadata
 Packages:
-  - Version: 0.2
+  - Version: '0.2'
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-04-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-04-08/BigFishMetadata_0_2.pext
     Changelog:
       - Initial release, keeping version number with the library plugin
-  - Version: 0.4
+  - Version: '0.4'
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-08-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/BigFishMetadata_0_4.pext
     Changelog:
       - Improvement in connection handling; less likely to run out of connections
-  - Version: 0.4.1
+  - Version: '0.4.1'
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-08-20
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/BigFishMetadata_0_4_1.pext
     Changelog:
       - "Fixed platform matching failing to match some platforms if they'd been renamed"
+  - Version: '0.5'
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/BigFishMetadata_0_5.pext
+    Changelog:
+      - "Fixed metadata collection"
+      - "Added developers and release date to metadata collection"

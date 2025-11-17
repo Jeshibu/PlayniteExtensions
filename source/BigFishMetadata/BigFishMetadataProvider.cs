@@ -5,7 +5,8 @@ using System.Collections.Generic;
 
 namespace BigFishMetadata;
 
-public class BigFishMetadataProvider(IGameSearchProvider<BigFishSearchResultGame> searchProvider, MetadataRequestOptions options, BigFishMetadata plugin, IPlatformUtility platformUtility) : GenericMetadataProvider<BigFishSearchResultGame>(searchProvider, options, plugin.PlayniteApi, platformUtility)
+public class BigFishMetadataProvider(IGameSearchProvider<BigFishSearchResultGame> searchProvider, MetadataRequestOptions options, BigFishMetadata plugin, IPlatformUtility platformUtility)
+    : GenericMetadataProvider<BigFishSearchResultGame>(searchProvider, options, plugin.PlayniteApi, platformUtility)
 {
     public override List<MetadataField> AvailableFields => plugin.SupportedFields;
 

@@ -7,6 +7,7 @@
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="Barnite.Tests/Barnite.Tests.csproj" />
+    <Project Path="BigFishMetadata.Tests/BigFishMetadata.Tests.csproj" />
     <Project Path="EaLibrary.Tests/EaLibrary.Tests.csproj" />
     <Project Path="GamersGateLibrary.Tests/GamersGateLibrary.Tests.csproj" />
     <Project Path="GamesSizeCalculator.Tests/GamesSizeCalculator.Tests.csproj" />

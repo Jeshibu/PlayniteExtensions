@@ -7,9 +7,9 @@ using System.Windows.Controls;
 
 namespace BigFishMetadata;
 
+// ReSharper disable ClassNeverInstantiated.Global
 public class BigFishMetadata : MetadataPlugin
 {
-    private static readonly ILogger logger = LogManager.GetLogger();
     private readonly IWebDownloader downloader = new WebDownloader();
     private readonly IPlatformUtility platformUtility;
 
@@ -22,6 +22,8 @@ public class BigFishMetadata : MetadataPlugin
         MetadataField.Name,
         MetadataField.Description,
         MetadataField.Genres,
+        MetadataField.Developers,
+        MetadataField.ReleaseDate,
         MetadataField.InstallSize,
         MetadataField.CoverImage,
         MetadataField.BackgroundImage,
@@ -34,10 +36,7 @@ public class BigFishMetadata : MetadataPlugin
     public BigFishMetadata(IPlayniteAPI api) : base(api)
     {
         settings = new BigFishMetadataSettingsViewModel(this, api);
-        Properties = new MetadataPluginProperties
-        {
-            HasSettings = true
-        };
+        Properties = new MetadataPluginProperties { HasSettings = true };
         platformUtility = new PlatformUtility(api);
     }
 

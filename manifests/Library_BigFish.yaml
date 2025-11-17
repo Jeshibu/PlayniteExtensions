@@ -1,25 +1,25 @@
 AddonId: BigFishLibrary
 Packages:
-  - Version: 0.1
+  - Version: '0.1'
     RequiredApiVersion: 6.10
     ReleaseDate: 2023-12-03
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-12-03/BigFishLibrary_0_1.pext
     Changelog:
       - Initial release
-  - Version: 0.1.1
+  - Version: '0.1.1'
     RequiredApiVersion: 6.10
     ReleaseDate: 2023-12-03
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-12-03/BigFishLibrary_0_1_1.pext
     Changelog:
       - Added missing Source field value for newly imported games
-  - Version: 0.2
+  - Version: '0.2'
     RequiredApiVersion: 6.10
     ReleaseDate: 2024-04-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-04-08/BigFishLibrary_0_2.pext
     Changelog:
       - Added importing from Big Fish Games online account
       - Added metadata provider
-  - Version: 0.3
+  - Version: '0.3'
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-05-20
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-05-20/BigFishLibrary_0_3.pext
@@ -27,40 +27,47 @@ Packages:
       - Fixed uninstalled/online game import
       - Added clickable notification that leads to settings when importing without being authenticated
       - Added store page link via metadata provider
-  - Version: 0.3.1
+  - Version: '0.3.1'
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-06-22
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-06-22/BigFishLibrary_0_3_1.pext
     Changelog:
       - Fixed exception when no games are installed
-  - Version: 0.4
+  - Version: '0.4'
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-08-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/BigFishLibrary_0_4.pext
     Changelog:
       - Fetching uninstalled games now uses the legacy API too, for older purchases
       - Improvement in connection handling; less likely to run out of connections
-  - Version: 0.4.1
+  - Version: '0.4.1'
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2024-11-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/BigFishLibrary_0_4_1.pext
     Changelog:
       - Fixed online library fetching
-  - Version: 0.4.2
+  - Version: '0.4.2'
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-03-09
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-01-18/BigFishLibrary_0_4_2.pext
     Changelog:
       - Fixed online library fetching
-  - Version: 0.4.3
+  - Version: '0.4.3'
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-08-20
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/BigFishLibrary_0_4_3.pext
     Changelog:
       - "Fixed platform matching failing to match some platforms if they'd been renamed"
-  - Version: 0.4.4
+  - Version: '0.4.4'
     RequiredApiVersion: 6.11.0
     ReleaseDate: 2025-10-04
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-10-04/BigFishLibrary_0_4_4.pext
     Changelog:
       - "Fixed online game import failing since Playnite 10.37"
+  - Version: '0.5'
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/BigFishLibrary_0_5.pext
+    Changelog:
+      - "Fixed metadata collection"
+      - "Added developers and release date to metadata collection"

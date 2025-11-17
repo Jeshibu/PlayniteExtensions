@@ -1,5 +1,7 @@
-﻿using AngleSharp.Dom.Html;
+﻿using AngleSharp.Dom;
+using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
+using BigFishMetadata.Models;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -29,15 +31,47 @@ public class BigFishSearchProvider(IWebDownloader downloader, BigFishMetadataSet
         if (response.StatusCode != System.Net.HttpStatusCode.OK)
             return null;
 
-        var output = new GameDetails() { Url = searchResult.Url, Links = [new Link { Name = "Big Fish Games", Url = searchResult.Url }] };
+        var output = new GameDetails { Url = searchResult.Url, Links = [new Link { Name = "Big Fish Games", Url = searchResult.Url }] };
 
         var doc = new HtmlParser().Parse(response.ResponseContent);
         var reviewFetchTask = GetCommunityScore(GetReviewsUrl(doc));
 
         output.Names.Add(doc.QuerySelector(".productFullDetail__productName")?.TextContent.Trim());
         output.Description = doc.QuerySelector(".productFullDetail__description")?.InnerHtml.Trim();
-        output.InstallSize = doc.QuerySelector(".productFullDetail__requirementsGame")?.Children.Last().TextContent.ParseInstallSize();
-        output.Genres = doc.QuerySelectorAll(".productFullDetail__genreLink").Select(g => g.TextContent.Trim()).ToList();
+
+        var additionalInfoElements = doc.QuerySelectorAll(".productFullDetail__additionalInfoDetails");
+        foreach (var element in additionalInfoElements)
+        {
+            var header = element.QuerySelector("strong")?.TextContent.Trim().ToLowerInvariant();
+            var lastParagraph = element.QuerySelector("p:last-child");
+            if (header == null || lastParagraph == null)
+                continue;
+
+            static List<string> GetGenres(IElement htmlElement) => htmlElement.QuerySelectorAll(".productFullDetail__genreLink").Select(x => x.TextContent.Trim()).ToList();
+
+            switch (header)
+            {
+                case "genres":
+                    output.Genres = GetGenres(lastParagraph);
+                    break;
+                case "developer":
+                    output.Developers = GetGenres(lastParagraph);
+                    break;
+                case "release date":
+                    if (DateTime.TryParse(lastParagraph.TextContent.Trim(), out var releaseDate))
+                        output.ReleaseDate = new(releaseDate);
+                    break;
+                case "game system requirements":
+                    output.InstallSize = lastParagraph.TextContent.ParseInstallSize();
+                    break;
+                case "big fish games app system requirements":
+                    break;
+                default:
+                    logger.Info($"Unknown header: {header}");
+                    break;
+            }
+        }
+
         var coverUrl = doc.QuerySelector(".productFullDetail__art > img")?.GetAttribute("src");
         if (!string.IsNullOrWhiteSpace(coverUrl))
             output.CoverOptions.Add(new BasicImage(coverUrl));
@@ -52,10 +86,12 @@ public class BigFishSearchProvider(IWebDownloader downloader, BigFishMetadataSet
 
     private static string GetReviewsUrl(IHtmlDocument doc)
     {
-        var translationId = doc.QuerySelector(".productFullDetail__root").GetAttribute("data-game-translation-id");
-        var bvapiUrl = doc.QuerySelector(".productFullDetail__reviews > script").GetAttribute("src");
-        return bvapiUrl.Replace("/static", "").TrimEnd("/bvapi.js") + $"/{translationId}/reviews.djs?format=embeddedhtml&suppressScroll=false";
+        var gameId = doc.QuerySelector(".productFullDetail__root").GetAttribute("data-id");
+        return GetReviewsUrl(gameId);
     }
+
+    public static string GetReviewsUrl(string gameId) =>
+        $"https://shop.bigfishgames.com/graphql?query=query+getReviews%28%24productId%3AInt%21%24page%3AInt%21%24amreviewDir%3AString%24amreviewSort%3AString%24stars%3AInt%24withImages%3ABoolean%24verifiedBuyer%3ABoolean%24isRecommended%3ABoolean%29%7Badvreview%28productId%3A%24productId+page%3A%24page+amreviewDir%3A%24amreviewDir+amreviewSort%3A%24amreviewSort+stars%3A%24stars+withImages%3A%24withImages+verifiedBuyer%3A%24verifiedBuyer+isRecommended%3A%24isRecommended%29%7BtotalRecords+ratingSummary+ratingSummaryValue+recomendedPercent+totalRecordsFiltered+detailedSummary%7Bone+two+three+four+five+__typename%7Ditems%7Breview_id+created_at+answer+verified_buyer+is_recommended+detail_id+title+detail+nickname+like_about+not_like_about+guest_email+plus_review+minus_review+rating_votes%7Bvote_id+option_id+rating_id+review_id+percent+value+rating_code+__typename%7Dimages%7Bfull_path+resized_path+__typename%7Dcomments%7Bid+review_id+status+message+nickname+email+created_at+updated_at+__typename%7D__typename%7D__typename%7D%7D&operationName=getReviews&variables=%7B%22page%22%3A1%2C%22productId%22%3A{gameId}%7D";
 
     private async Task<int?> GetCommunityScore(string url)
     {
@@ -64,44 +100,17 @@ public class BigFishSearchProvider(IWebDownloader downloader, BigFishMetadataSet
         if (response.StatusCode != System.Net.HttpStatusCode.OK)
             return null;
 
-        var reviewJsonString = response.ResponseContent
-            ?.Split('\n')
-            .FirstOrDefault(x => x.StartsWith("webAnalyticsConfig:"))
-            ?.TrimStart("webAnalyticsConfig:")
-            .TrimEnd('\r', ',');
+        var reviewData = JsonConvert.DeserializeObject<ReviewJsonRoot>(response.ResponseContent)?.data?.advreview;
 
-        if (string.IsNullOrWhiteSpace(reviewJsonString))
-            return null;
-
-        var attributes = JsonConvert.DeserializeObject<ReviewJsonRoot>(reviewJsonString)?.JsonData?.Attributes;
-
-        if (attributes == null)
+        if (reviewData == null)
             return null;
 
         return settings.CommunityScoreType switch
         {
-            CommunityScoreType.StarRating => (int)Math.Round(attributes.AvgRating * 20),
-            CommunityScoreType.PercentageRecommended => attributes.PercentRecommend,
+            CommunityScoreType.StarRating => (int)Math.Round(reviewData.ratingSummaryValue * 20),
+            CommunityScoreType.PercentageRecommended => reviewData.recomendedPercent,
             _ => null,
         };
-    }
-
-    private class ReviewJsonRoot
-    {
-        public ReviewJsonData JsonData { get; set; }
-    }
-
-    private class ReviewJsonData
-    {
-        public ReviewJsonAttributes Attributes { get; set; }
-    }
-
-    private class ReviewJsonAttributes
-    {
-        public int NumReviews { get; set; }
-        public double AvgRating { get; set; }
-        public int NumRatingsOnlyReviews { get; set; }
-        public int PercentRecommend { get; set; }
     }
 
     public IEnumerable<BigFishSearchResultGame> Search(string query, CancellationToken cancellationToken = default)
@@ -156,9 +165,9 @@ public class BigFishSearchResultGame : IGameSearchResult
 
     string IGameSearchResult.Title => Name;
 
-    IEnumerable<string> IGameSearchResult.AlternateNames => Enumerable.Empty<string>();
+    IEnumerable<string> IGameSearchResult.AlternateNames => [];
 
-    IEnumerable<string> IGameSearchResult.Platforms => string.IsNullOrWhiteSpace(Platform) ? Enumerable.Empty<string>() : [Platform];
+    IEnumerable<string> IGameSearchResult.Platforms => string.IsNullOrWhiteSpace(Platform) ? [] : [Platform];
 
     ReleaseDate? IGameSearchResult.ReleaseDate => null;
 }

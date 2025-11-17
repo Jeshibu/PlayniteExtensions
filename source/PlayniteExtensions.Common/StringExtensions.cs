@@ -61,6 +61,7 @@ public static class StringExtensions
             if (r != null && s.StartsWith(r, stringComparison))
                 s = s.Substring(r.Length);
         }
+
         return s;
     }
 
@@ -79,6 +80,7 @@ public static class StringExtensions
             if (s.EndsWith(r, stringComparison))
                 s = s.Remove(s.Length - r.Length);
         }
+
         return s;
     }
 
@@ -154,12 +156,14 @@ public static class StringExtensions
                 return null;
         }
     }
+
     public static bool Contains(this string str, string value, StringComparison comparisonType)
     {
         return str?.IndexOf(value, 0, comparisonType) != -1;
     }
 
-    private static readonly Regex installSizeRegex = new(@"\b(?<number>[0-9.]+)\s+(?<scale>[KMGT]B)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    private static readonly Regex installSizeRegex = new(@"\b(?<number>[0-9.]+)\s+(?<scale>[KMGT]i?B)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
     public static ulong? ParseInstallSize(this string str, CultureInfo culture = null)
     {
         var match = installSizeRegex.Match(str);
@@ -173,28 +177,18 @@ public static class StringExtensions
         if (!double.TryParse(number, NumberStyles.Number | NumberStyles.AllowDecimalPoint, culture, out double n))
             return null;
 
-        int power;
-
-        switch (scale)
+        int? power = scale switch
         {
-            case "KB":
-                power = 1;
-                break;
-            case "MB":
-                power = 2;
-                break;
-            case "GB":
-                power = 3;
-                break;
-            case "TB":
-                power = 4;
-                break;
-            default:
-                return null;
-        }
+            "KB" or "KiB" => 1,
+            "MB" or "MiB" => 2,
+            "GB" or "GiB" => 3,
+            "TB" or "TiB" => 4,
+            _ => null
+        };
+        if (power == null)
+            return null;
 
-        var output = Convert.ToUInt64(n * Math.Pow(1024, power));
+        var output = Convert.ToUInt64(n * Math.Pow(1024, power.Value));
         return output;
     }
-
 }

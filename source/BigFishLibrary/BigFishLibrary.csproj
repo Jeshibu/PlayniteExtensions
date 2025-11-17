@@ -20,6 +20,7 @@
   <ItemGroup>
     <Compile Include="..\BigFishMetadata\BigFishMetadataSettings.cs" Link="Common\BigFishMetadata\BigFishMetadataSettings.cs" />
     <Compile Include="..\BigFishMetadata\BigFishSearchProvider.cs" Link="Common\BigFishMetadata\BigFishSearchProvider.cs" />
+    <Compile Include="..\BigFishMetadata\Models\ReviewModels.cs" Link="Common\BigFishMetadata\Models\ReviewModels.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Common\IEnumerableExtensions.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Common\IPlatformUtility.cs" />
     <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="Common\LibraryIdUtility.cs" />

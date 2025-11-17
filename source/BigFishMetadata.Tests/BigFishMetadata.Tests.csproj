@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TestProjectType>UnitTest</TestProjectType>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BigFishMetadata\BigFishMetadata.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NSubstitute" Version="5.3.0" />
+    <PackageReference Include="xunit" Version="2.8.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="files\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <Import Project="..\PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems" Label="Shared" />
+</Project>
