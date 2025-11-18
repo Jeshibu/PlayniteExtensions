@@ -1,4 +1,6 @@
-﻿using GamesSizeCalculator.Models;
+﻿using GamesSizeCalculator.Common.Extensions;
+using GamesSizeCalculator.Models;
+using GamesSizeCalculator.Steam.Services;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using SteamKit2;
@@ -8,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GamesSizeCalculator.SteamSizeCalculation;
+namespace GamesSizeCalculator.Steam;
 
 public class SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtility steamAppIdUtility, GamesSizeCalculatorSettings settings) : ISizeCalculator
 {
@@ -20,7 +22,7 @@ public class SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtil
 
     public async Task<ulong?> GetInstallSizeAsync(Game game)
     {
-        if (!SteamCommon.Steam.IsGameSteamGame(game) && !Settings.GetSizeFromSteamNonSteamGames)
+        if (!Common.Steam.Steam.IsGameSteamGame(game) && !Settings.GetSizeFromSteamNonSteamGames)
         {
             return null;
         }
@@ -268,6 +270,6 @@ public class SteamSizeCalculator(ISteamApiClient steamApiClient, ISteamAppIdUtil
 
     public bool IsPreferredInstallSizeCalculator(Game game)
     {
-        return SteamCommon.Steam.IsGameSteamGame(game);
+        return Common.Steam.Steam.IsGameSteamGame(game);
     }
 }

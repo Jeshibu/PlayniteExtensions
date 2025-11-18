@@ -2,7 +2,7 @@
 using Playnite.SDK.Models;
 using System;
 
-namespace SteamCommon;
+namespace GamesSizeCalculator.Common.Steam;
 
 public static class Steam
 {

@@ -1,12 +1,7 @@
-﻿using GamesSizeCalculator.Models;
-using GamesSizeCalculator.SteamSizeCalculation;
-using Playnite.SDK;
-using Playnite.SDK.Data;
+﻿using GamesSizeCalculator.Common.Steam;
 using Playnite.SDK.Models;
-using SteamCommon;
-using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
+using PlayniteExtensions.Common;
+using System.Linq;
 
 namespace GamesSizeCalculator.Steam;
 

@@ -1,10 +1,11 @@
-﻿using Playnite.SDK;
+﻿using GamesSizeCalculator.Common.Extensions;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace PluginsCommon.Commands;
+namespace GamesSizeCalculator.Common;
 
 public static class GlobalCommands
 {

@@ -1,6 +1,6 @@
 ﻿using Playnite.SDK.Models;
 
-namespace GamesSizeCalculator.SteamSizeCalculation;
+namespace GamesSizeCalculator.Steam;
 
 public interface ISteamAppIdUtility
 {

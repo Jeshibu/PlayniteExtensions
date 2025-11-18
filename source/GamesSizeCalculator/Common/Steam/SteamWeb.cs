@@ -1,14 +1,13 @@
 ﻿using AngleSharp.Parser.Html;
+using GamesSizeCalculator.Common.Extensions;
+using GamesSizeCalculator.Common.SteamModels;
 using Playnite.SDK;
 using Playnite.SDK.Data;
-using PluginsCommon.Web;
-using SteamCommon.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SteamCommon;
+namespace GamesSizeCalculator.Common.Steam;
 
 class SteamWeb
 {
@@ -44,8 +43,7 @@ class SteamWeb
         var searchPageSrc = HttpDownloader.DownloadStringAsync(GetStoreSearchUrl(searchTerm, steamApiCountry)).GetAwaiter().GetResult();
         if (!string.IsNullOrEmpty(searchPageSrc))
         {
-            var parser = new HtmlParser();
-            var searchPage = parser.Parse(searchPageSrc);
+            var searchPage = new HtmlParser().Parse(searchPageSrc);
             foreach (var gameElem in searchPage.QuerySelectorAll(".search_result_row"))
             {
                 if (gameElem.HasAttribute("data-ds-packageid"))

@@ -1,9 +1,10 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace System;
+namespace GamesSizeCalculator.Common.Extensions;
 
 public static class StringExtensions
 {

@@ -1,4 +1,4 @@
-﻿using GamesSizeCalculator.SteamSizeCalculation;
+﻿using GamesSizeCalculator.Steam;
 using Playnite.SDK.Models;
 
 namespace GamesSizeCalculator.Tests.Steam;

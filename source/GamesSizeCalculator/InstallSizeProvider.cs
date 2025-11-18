@@ -1,7 +1,7 @@
-﻿using Playnite.SDK;
+﻿using GamesSizeCalculator.Common;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
-using PlayniteUtilitiesCommon;
 using System;
 using System.Collections.Generic;
 

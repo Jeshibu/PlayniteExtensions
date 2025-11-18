@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace PluginsCommon.Native;
+namespace GamesSizeCalculator.Common.Native;
 
 // Based on https://github.com/JosefNemec/Playnite
 [Flags]

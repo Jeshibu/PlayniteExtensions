@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PluginsCommon;
+namespace GamesSizeCalculator.Common;
 
 // Based on https://github.com/JosefNemec/Playnite
 public enum FileSystemItem

@@ -1,6 +1,6 @@
 ﻿using GamesSizeCalculator.PS3;
 using GamesSizeCalculator.Steam;
-using GamesSizeCalculator.SteamSizeCalculation;
+using GamesSizeCalculator.Steam.Services;
 using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using System;
@@ -101,8 +101,8 @@ public class GamesSizeCalculator : MetadataPlugin
 
     private void FixPs3RomInstallSize(GameMenuItemActionArgs args)
     {
-        using (PlayniteApi.Database.BufferedUpdate())
-        PlayniteApi.Dialogs.ActivateGlobalProgress((GlobalProgressActionArgs a) =>
+        using var bufferedUpdate = PlayniteApi.Database.BufferedUpdate();
+        PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
         {
             a.ProgressMaxValue = args.Games.Count;
 

@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace PluginsCommon.Native;
+namespace GamesSizeCalculator.Common.Native;
 
 // Based on https://github.com/JosefNemec/Playnite
 public class Kernel32

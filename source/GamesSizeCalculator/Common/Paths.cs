@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace PluginsCommon;
+namespace GamesSizeCalculator.Common;
 
 // Based on https://github.com/JosefNemec/Playnite
 public static class Paths

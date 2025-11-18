@@ -3,7 +3,7 @@ using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 
-namespace SteamCommon.Models;
+namespace GamesSizeCalculator.Common.SteamModels;
 
 public class StoreSearchResult : GenericItemOption
 {

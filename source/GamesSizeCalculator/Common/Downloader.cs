@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace PluginsCommon.Web;
+namespace GamesSizeCalculator.Common;
 
 // Based on https://github.com/JosefNemec/Playnite
 public interface IDownloader

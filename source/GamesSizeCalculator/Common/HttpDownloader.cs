@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Playnite.SDK;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Net.Http;
-using Playnite.SDK;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
-namespace PluginsCommon.Web;
+namespace GamesSizeCalculator.Common;
 
 // Based on https://github.com/JosefNemec/Playnite
 public class HttpDownloader

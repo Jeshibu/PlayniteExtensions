@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Playnite.SDK;
+using PlayniteExtensions.Common.Tests;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -1,12 +1,12 @@
-﻿using Playnite.SDK;
-using PluginsCommon.Native;
+﻿using GamesSizeCalculator.Common.Native;
+using Playnite.SDK;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace PluginsCommon;
+namespace GamesSizeCalculator.Common;
 
 // Based on https://github.com/JosefNemec/Playnite
 public static class CmdLineTools
