@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Build/">
     <File Path="../.github/workflows/release.yml" />
+    <File Path="../build-pack-all.ps1" />
     <File Path="../publish/Get-ReleaseData.ps1" />
     <File Path=".editorconfig" />
     <File Path="Directory.Build.Props" />

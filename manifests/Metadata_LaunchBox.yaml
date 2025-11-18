@@ -159,7 +159,7 @@ Packages:
     Changelog:
       - "Fixed metadata collection erroring out in Playnite 10.38"
   - Version: "0.9.3"
-    RequiredApiVersion: 6.8.0
+    RequiredApiVersion: 6.13.0
     ReleaseDate: 2025-11-18
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-11-18/LaunchBoxMetadata_0_9_3.pext
     Changelog:

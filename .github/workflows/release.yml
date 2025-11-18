@@ -65,8 +65,7 @@ jobs:
             Remove-Item "$pluginBuildOutputDir\*" -Include $playniteDlls
           
             & "$Env:GITHUB_WORKSPACE\Playnite\Toolbox.exe" pack $pluginBuildOutputDir "$Env:GITHUB_WORKSPACE\PackingOutput"
-            Get-ChildItem "$Env:GITHUB_WORKSPACE\PackingOutput" -Filter *.pext | Rename-Item -NewName "$($p.Name)_${ver}.pext"
-            Move-Item -Path "$Env:GITHUB_WORKSPACE\PackingOutput\*.pext" -Destination $Env:GITHUB_WORKSPACE
+            Move-Item -Path "$Env:GITHUB_WORKSPACE\PackingOutput\*.pext" -Destination "$Env:GITHUB_WORKSPACE\$($p.Name)_${ver}.pext"
           }
 
       - name: New release

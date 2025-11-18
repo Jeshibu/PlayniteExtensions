@@ -61,6 +61,7 @@ function Get-ReleaseData {
     )
     foreach ($o in $output) {
         Write-Host $o
+        Write-Output $o
         Write-Output $o >> $env:GITHUB_OUTPUT
     }
 }
