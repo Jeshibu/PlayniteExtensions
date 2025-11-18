@@ -5,22 +5,22 @@ using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Controls;
 
 namespace GamesSizeCalculator;
 
 public class GamesSizeCalculator : MetadataPlugin
 {
-    private static readonly ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
+    private List<ISizeCalculator> sizeCalculators { get; } = [];
+    private SteamApiClient steamApiClient;
     private GamesSizeCalculatorSettingsViewModel settings { get; set; }
 
     public override Guid Id { get; } = Guid.Parse("97cc59db-3f80-4852-8bfc-a80304f9efe9");
 
-    public override string Name { get; } = "Games Size Calculator";
+    public override string Name => "Games Size Calculator";
 
     public override List<MetadataField> SupportedFields { get; } = [MetadataField.InstallSize];
 
@@ -46,16 +46,8 @@ public class GamesSizeCalculator : MetadataPlugin
 
     private ISteamAppIdUtility GetDefaultSteamAppUtility()
     {
-        var appListCache = new CachedFileDownloader("https://api.steampowered.com/ISteamApps/GetAppList/v2/",
-                Path.Combine(GetPluginUserDataPath(), "SteamAppList.json"),
-                TimeSpan.FromHours(18),
-                Encoding.UTF8);
-
-        return new SteamAppIdUtility(appListCache);
+        return new SteamAppIdUtility();
     }
-
-    private List<ISizeCalculator> sizeCalculators { get; } = [];
-    private SteamApiClient steamApiClient;
 
     private SteamApiClient SteamApiClient
     {

@@ -26,6 +26,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs">
+      <Link>Common\LibraryIdUtility.cs</Link>
+    </Compile>
     <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs" Link="Common\PluginSettingsViewModel.cs" />
     <Compile Update="GamesSizeCalculatorSettingsView.xaml.cs">
       <DependentUpon>GamesSizeCalculatorSettingsView.xaml</DependentUpon>
