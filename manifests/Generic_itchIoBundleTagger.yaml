@@ -123,7 +123,7 @@ Packages:
       - "Fixed plugin failing to load (and taking Ludusavi with it)"
   - Version: '0.14.3'
     RequiredApiVersion: 6.2.2
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATA}/itchIoBundleTagger_0_14_3.pext
+    ReleaseDate: 2025-11-18
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-11-18/itchIoBundleTagger_0_14_3.pext
     Changelog:
       - "Fixed plugin settings failing to load"

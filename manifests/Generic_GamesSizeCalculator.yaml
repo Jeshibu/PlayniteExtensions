@@ -246,7 +246,7 @@ Packages:
       - Fixed errors during long running Playnite sessions
   - Version: '1.32'
     RequiredApiVersion: 6.4.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/GamesSizeCalculator_1_31_1.pext
+    ReleaseDate: 2025-11-18
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-11-18/GamesSizeCalculator_1_32.pext
     Changelog:
       - 'Fixed failure to download Steam app list'

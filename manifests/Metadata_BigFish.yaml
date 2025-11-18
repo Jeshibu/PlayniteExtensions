@@ -20,8 +20,8 @@ Packages:
       - "Fixed platform matching failing to match some platforms if they'd been renamed"
   - Version: '0.5'
     RequiredApiVersion: 6.11.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/BigFishMetadata_0_5.pext
+    ReleaseDate: 2025-11-18
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-11-18/BigFishMetadata_0_5.pext
     Changelog:
       - "Fixed metadata collection"
       - "Added developers and release date to metadata collection"

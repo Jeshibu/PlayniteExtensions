@@ -59,8 +59,8 @@ Packages:
       - "Updated shadPS4 profile to use the default emulator instance (contributed by Aladore)"
   - Version: '1.8'
     RequiredApiVersion: 6.2.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/ExtraEmulatorProfiles_1_8.pext
+    ReleaseDate: 2025-11-18
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-11-18/ExtraEmulatorProfiles_1_8.pext
     Changelog:
       - "Fixed FinalBurn Neo profile for RetroArch"
       - "Updated Azahar profile to accept .zcci ROMs (contributed by ppriest)"

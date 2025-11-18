@@ -163,7 +163,7 @@ Packages:
       - "Fixed platform matching failing to match some platforms if they'd been renamed"
   - Version: '4.3'
     RequiredApiVersion: 6.11.0
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/SteamTagsImporter_4_3.pext
+    ReleaseDate: 2025-11-18
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-11-18/SteamTagsImporter_4_3.pext
     Changelog:
       - 'Fixed failure to download Steam app list'
