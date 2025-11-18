@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using GamesSizeCalculator.Steam.Services;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace GamesSizeCalculator.Tests.Steam;
