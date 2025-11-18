@@ -1,16 +1,8 @@
-﻿using Playnite.SDK;
-using Playnite.SDK.Data;
+﻿using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 
 namespace GamesSizeCalculator.Common.SteamModels;
-
-public class StoreSearchResult : GenericItemOption
-{
-    public string GameId { get; set; }
-    public string StoreUrl { get; set; }
-    public string BannerImageUrl { get; set; }
-}
 
 public partial class SteamAppDetails
 {

@@ -21,6 +21,33 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GamesSizeCalculator\Common\Downloader.cs">
+      <Link>Common\Steam\Downloader.cs</Link>
+    </Compile>
+    <Compile Include="..\GamesSizeCalculator\Common\Extensions\StringExtensions.cs">
+      <Link>Common\Steam\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\GamesSizeCalculator\Common\FileSystem.cs">
+      <Link>Common\Steam\FileSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\GamesSizeCalculator\Common\HttpDownloader.cs">
+      <Link>Common\Steam\HttpDownloader.cs</Link>
+    </Compile>
+    <Compile Include="..\GamesSizeCalculator\Common\Paths.cs">
+      <Link>Common\Steam\Paths.cs</Link>
+    </Compile>
+    <Compile Include="..\GamesSizeCalculator\Common\SteamModels\SteamAppDetailsResponse.cs">
+      <Link>Common\Steam\Models\SteamAppDetailsResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\GamesSizeCalculator\Common\SteamModels\StoreSearchResult.cs">
+      <Link>Common\Steam\Models\StoreSearchResult.cs</Link>
+    </Compile>
+    <Compile Include="..\GamesSizeCalculator\Common\Steam\Common.cs">
+      <Link>Common\Steam\Common.cs</Link>
+    </Compile>
+    <Compile Include="..\GamesSizeCalculator\Common\Steam\SteamWeb.cs">
+      <Link>Common\Steam\SteamWeb.cs</Link>
+    </Compile>
     <Compile Include="..\PlayniteExtensions.Common\CachedFileDownloader.cs" Link="Common\CachedFileDownloader.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Common\IEnumerableExtensions.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs" Link="Common\IntegerFormatConverter.cs" />

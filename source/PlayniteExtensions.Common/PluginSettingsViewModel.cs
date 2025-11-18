@@ -1,5 +1,4 @@
-﻿using Playnite.SDK;
-using Playnite.SDK.Data;
+﻿using Playnite.SDK.Data;
 using Playnite.SDK.Plugins;
 using System.Collections.Generic;
 

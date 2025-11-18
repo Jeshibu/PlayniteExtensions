@@ -86,10 +86,9 @@ class SteamWeb
         return searchUrl;
     }
 
-    private const string steamAppDetailsMask = @"https://store.steampowered.com/api/appdetails?appids={0}";
     public static SteamAppDetails GetSteamAppDetails(string steamId)
     {
-        var url = string.Format(steamAppDetailsMask, steamId);
+        var url = $"https://store.steampowered.com/api/appdetails?appids={steamId}";
         var downloadedString = HttpDownloader.DownloadStringAsync(url).GetAwaiter().GetResult();
         if (!string.IsNullOrEmpty(downloadedString))
         {

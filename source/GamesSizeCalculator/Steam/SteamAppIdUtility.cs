@@ -7,11 +7,11 @@ namespace GamesSizeCalculator.Steam;
 
 public class SteamAppIdUtility : ISteamAppIdUtility
 {
-    private static SteamIdUtility steamIdUtility = new SteamIdUtility();
+    private static readonly SteamIdUtility SteamIdUtility = new();
 
     public string GetSteamGameId(Game game)
     {
-        return steamIdUtility.GetIdsFromGame(game).FirstOrDefault().Id
+        return SteamIdUtility.GetIdsFromGame(game).FirstOrDefault().Id
                ?? SteamWeb.GetSteamIdFromSearch(game.Name);
     }
 }

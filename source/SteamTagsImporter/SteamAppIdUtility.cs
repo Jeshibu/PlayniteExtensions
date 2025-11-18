@@ -1,11 +1,7 @@
-﻿using Playnite.SDK.Models;
+﻿using GamesSizeCalculator.Common.Steam;
+using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace SteamTagsImporter;
@@ -15,8 +11,6 @@ public class SteamAppIdUtility(ICachedFile steamAppList) : ISteamAppIdUtility
     private readonly SteamIdUtility steamIdUtility = new();
 
     private static readonly Regex NonLetterOrDigitCharacterRegex = new(@"[^\p{L}\p{Nd}]", RegexOptions.Compiled);
-
-    private Dictionary<string, int> SteamIdsByTitle => field ??= GetSteamIdsByTitle();
 
     public ICachedFile SteamAppList { get; } = steamAppList;
 
@@ -31,52 +25,6 @@ public class SteamAppIdUtility(ICachedFile steamAppList) : ISteamAppIdUtility
         if (ids.Any())
             return ids[0].Id;
 
-        if (SteamIdsByTitle.TryGetValue(NormalizeTitle(game.Name), out int appId))
-            return appId.ToString();
-
-        return null;
-    }
-
-    private Dictionary<string, int> GetSteamIdsByTitle()
-    {
-        string tempPath = Path.Combine(Path.GetTempPath(), "SteamAppList.json");
-        var file = new FileInfo(tempPath);
-        if (!file.Exists || file.LastWriteTime < DateTime.Now.AddHours(-18))
-        {
-            using (var client = new WebClient())
-            {
-                client.DownloadFile("https://api.steampowered.com/ISteamApps/GetAppList/v2/", tempPath);
-            }
-        }
-        var jsonStr = File.ReadAllText(tempPath, Encoding.UTF8);
-        var jsonContent = Newtonsoft.Json.JsonConvert.DeserializeObject<AppListRoot>(jsonStr);
-
-        Dictionary<string, int> output = new(StringComparer.InvariantCultureIgnoreCase);
-        foreach (var app in jsonContent.Applist.Apps)
-        {
-            var normalizedTitle = NormalizeTitle(app.Name);
-
-            if (output.ContainsKey(normalizedTitle))
-                continue;
-
-            output.Add(normalizedTitle, app.Appid);
-        }
-        return output;
-    }
-
-    private class AppListRoot
-    {
-        public AppList Applist { get; set; }
-    }
-
-    private class AppList
-    {
-        public List<SteamApp> Apps { get; set; } = [];
-    }
-
-    private class SteamApp
-    {
-        public int Appid { get; set; }
-        public string Name { get; set; }
+        return SteamWeb.GetSteamIdFromSearch(game.Name);
     }
 }
