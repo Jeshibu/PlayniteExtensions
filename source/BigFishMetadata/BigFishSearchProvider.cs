@@ -10,6 +10,7 @@ using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -18,15 +19,16 @@ namespace BigFishMetadata;
 
 public class BigFishSearchProvider(IWebDownloader downloader, BigFishMetadataSettings settings) : IGameSearchProvider<BigFishSearchResultGame>
 {
-    private readonly ILogger logger = LogManager.GetLogger();
-    private readonly Guid BigFishLibraryId = Guid.Parse("37995df7-2ce2-4f7c-83a3-618138ae745d");
+    private readonly ILogger _logger = LogManager.GetLogger();
+    private readonly Guid _bigFishLibraryId = Guid.Parse("37995df7-2ce2-4f7c-83a3-618138ae745d");
+    private readonly BigFishGraphQLService _service = new(downloader);
 
     public GameDetails GetDetails(BigFishSearchResultGame searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
         if (searchResult == null) return null;
 
         var response = downloader.DownloadString(searchResult.Url);
-        logger.Info($"Response {response.StatusCode} from {searchResult.Url}");
+        _logger.Info($"Response {response.StatusCode} from {searchResult.Url}");
 
         if (response.StatusCode != System.Net.HttpStatusCode.OK)
             return null;
@@ -36,47 +38,55 @@ public class BigFishSearchProvider(IWebDownloader downloader, BigFishMetadataSet
         var doc = new HtmlParser().Parse(response.ResponseContent);
         var reviewFetchTask = GetCommunityScore(GetReviewsUrl(doc));
 
-        output.Names.Add(doc.QuerySelector(".productFullDetail__productName")?.TextContent.Trim());
-        output.Description = doc.QuerySelector(".productFullDetail__description")?.InnerHtml.Trim();
+        output.Names.Add(doc.QuerySelector("[data-testid=ProductFullDetail-productName]")?.TextContent.HtmlDecode());
+        output.Description = doc.QuerySelector(".override-productFullDetail-description-Q3J")?.InnerHtml.Trim();
 
-        var additionalInfoElements = doc.QuerySelectorAll(".productFullDetail__additionalInfoDetails");
-        foreach (var element in additionalInfoElements)
+        var additionalInfoHeaders = doc.QuerySelectorAll(".override-productFullDetail-details-Jgl > h3");
+        foreach (var header in additionalInfoHeaders)
         {
-            var header = element.QuerySelector("strong")?.TextContent.Trim().ToLowerInvariant();
-            var lastParagraph = element.QuerySelector("p:last-child");
-            if (header == null || lastParagraph == null)
+            var headerText = header?.TextContent.HtmlDecode().ToLowerInvariant();
+            var content = header?.NextElementSibling;
+            if (header == null || content == null)
                 continue;
 
-            static List<string> GetGenres(IElement htmlElement) => htmlElement.QuerySelectorAll(".productFullDetail__genreLink").Select(x => x.TextContent.Trim()).ToList();
+            static List<string> GetLinkTexts(IElement htmlElement) => htmlElement.QuerySelectorAll("a").Select(x => x.TextContent.HtmlDecode()).ToList();
 
-            switch (header)
+            switch (headerText)
             {
                 case "genres":
-                    output.Genres = GetGenres(lastParagraph);
+                    output.Genres = GetLinkTexts(content);
+                    foreach (var a in content.QuerySelectorAll("a[href]"))
+                    {
+                        var genreName = a.TextContent.HtmlDecode();
+                        if(a.GetAttribute("href").Contains("/game-series/"))
+                            output.Series.Add(genreName);
+                        else
+                            output.Genres.Add(genreName);
+                    }
                     break;
                 case "developer":
-                    output.Developers = GetGenres(lastParagraph);
+                    output.Developers = content.QuerySelectorAll("a").Select(x => x.TextContent.HtmlDecode()).ToList();
                     break;
                 case "release date":
-                    if (DateTime.TryParse(lastParagraph.TextContent.Trim(), out var releaseDate))
+                    if (DateTime.TryParse(content.TextContent.Trim(), out var releaseDate))
                         output.ReleaseDate = new(releaseDate);
                     break;
-                case "game system requirements":
-                    output.InstallSize = lastParagraph.TextContent.ParseInstallSize();
-                    break;
-                case "big fish games app system requirements":
+                case "system requirements":
+                    var match = Regex.Match("Hard Drive: (?<installsize>[0-9]+)", content.TextContent.HtmlDecode());
+                    if (match.Success && ulong.TryParse(match.Groups["installsize"].Value, out ulong megaBytes))
+                        output.InstallSize = megaBytes * 1024 * 1024;
                     break;
                 default:
-                    logger.Info($"Unknown header: {header}");
+                    _logger.Info($"Unknown header: {header}");
                     break;
             }
         }
 
-        var coverUrl = doc.QuerySelector(".productFullDetail__art > img")?.GetAttribute("src");
+        var coverUrl = doc.QuerySelector("img.override-productFullDetail-featureImage-O2t")?.GetAttribute("src");
         if (!string.IsNullOrWhiteSpace(coverUrl))
             output.CoverOptions.Add(new BasicImage(coverUrl));
 
-        output.BackgroundOptions = doc.QuerySelectorAll(".productFullDetail__screenshotNavItem > img").Select(x => new BasicImage(x.GetAttribute("src"))).ToList<IImageData>();
+        output.BackgroundOptions = doc.QuerySelectorAll("img.productMedia-imageThumbnail-pPR").Select(x => new BasicImage(x.GetAttribute("src"))).ToList<IImageData>();
 
         reviewFetchTask.Wait();
         output.CommunityScore = reviewFetchTask.Result;
@@ -96,11 +106,11 @@ public class BigFishSearchProvider(IWebDownloader downloader, BigFishMetadataSet
     private async Task<int?> GetCommunityScore(string url)
     {
         var response = await downloader.DownloadStringAsync(url);
-        logger.Info($"Response {response.StatusCode} from {url}");
+        _logger.Info($"Response {response.StatusCode} from {url}");
         if (response.StatusCode != System.Net.HttpStatusCode.OK)
             return null;
 
-        var reviewData = JsonConvert.DeserializeObject<ReviewJsonRoot>(response.ResponseContent)?.data?.advreview;
+        var reviewData = JsonConvert.DeserializeObject<ResponseRoot<ReviewJsonData>>(response.ResponseContent)?.data?.advreview;
 
         if (reviewData == null)
             return null;
@@ -115,24 +125,26 @@ public class BigFishSearchProvider(IWebDownloader downloader, BigFishMetadataSet
 
     public IEnumerable<BigFishSearchResultGame> Search(string query, CancellationToken cancellationToken = default)
     {
-        var searchUrl = $"https://www.bigfishgames.com/us/en/games/search.html?language={(int)settings.SelectedLanguage}&search_query={HttpUtility.UrlEncode(query)}";
+        var searchUrl = $"https://www.bigfishgames.com/search.html?query={HttpUtility.UrlEncode(query)}&page=1&platform[filter]=Windows,150&language[filter]={settings.SelectedLanguage},{(int)settings.SelectedLanguage}";
         var response = downloader.DownloadString(searchUrl);
-        logger.Info($"Response {response.StatusCode} from {searchUrl}");
+        _logger.Info($"Response {response.StatusCode} from {searchUrl}");
 
         if (response.StatusCode != System.Net.HttpStatusCode.OK)
             yield break;
 
         var doc = new HtmlParser().Parse(response.ResponseContent);
-        foreach (var gameElement in doc.GetElementsByClassName("productcollection__item"))
+        foreach (var gameElement in doc.QuerySelectorAll("[data-cy=GalleryItem-root]"))
         {
             var item = new BigFishSearchResultGame();
-            var titleElement = gameElement.QuerySelector(".productcollection__item-title > a");
-            item.Name = titleElement.TextContent.Trim();
-            item.Url = titleElement.GetAttribute("href");
-            item.CoverUrl = gameElement.QuerySelector(".productcollection__item-images img")?.GetAttribute("src");
+            var titleElement = gameElement.QuerySelector("a[data-cy=GalleryItem-name]");
+            item.Name = titleElement.TextContent.HtmlDecode();
+            item.Url = titleElement.GetAttribute("href").GetAbsoluteUrl(searchUrl);
+            item.CoverUrl = gameElement.QuerySelector("a[aria-label] img[loading=lazy]")?.GetAttribute("src");
 
-            var attributes = gameElement.QuerySelector(".productcollection__item-attributes").TextContent.Trim();
-            item.Platform = attributes.Split([" | "], StringSplitOptions.None).Select(a => a.Trim()).First();
+            var attributes = gameElement.QuerySelectorAll("div.product-attributes").Select(e => e.TextContent.HtmlDecode()).ToList();
+            item.Platform = attributes.LastOrDefault()?.Split([" | "], StringSplitOptions.None).Select(a => a.Trim()).First();
+            if (DateTime.TryParse(attributes.FirstOrDefault(), out var releaseDate))
+                item.ReleaseDate = new(releaseDate);
             yield return item;
         }
     }
@@ -143,12 +155,6 @@ public class BigFishSearchProvider(IWebDownloader downloader, BigFishMetadataSet
     public bool TryGetDetails(Game game, out GameDetails gameDetails, CancellationToken cancellationToken)
     {
         gameDetails = null;
-        if (game.PluginId == BigFishLibraryId)
-        {
-            var searchResult = Search(game.GameId).SingleOrDefault();
-            gameDetails = GetDetails(searchResult);
-            return gameDetails != null;
-        }
         return false;
     }
 }
@@ -163,11 +169,11 @@ public class BigFishSearchResultGame : IGameSearchResult
 
     public string Url { get; set; }
 
+    public ReleaseDate? ReleaseDate { get; set; }
+
     string IGameSearchResult.Title => Name;
 
     IEnumerable<string> IGameSearchResult.AlternateNames => [];
 
     IEnumerable<string> IGameSearchResult.Platforms => string.IsNullOrWhiteSpace(Platform) ? [] : [Platform];
-
-    ReleaseDate? IGameSearchResult.ReleaseDate => null;
 }

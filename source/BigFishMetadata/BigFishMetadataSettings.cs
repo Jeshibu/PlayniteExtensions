@@ -26,6 +26,7 @@ public class BigFishMetadataSettings : ObservableObject
 
 public enum BigFishLanguage
 {
+    Chinese = 132,
     Danish = 141,
     Dutch = 135,
     English = 114,
@@ -34,6 +35,7 @@ public enum BigFishLanguage
     Italian = 126,
     Japanese = 129,
     Portuguese = 144,
+    Russian = 147,
     Spanish = 120,
     Swedish = 138,
 }
