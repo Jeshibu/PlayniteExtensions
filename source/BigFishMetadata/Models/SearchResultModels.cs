@@ -28,7 +28,7 @@ public class SearchResultItem
     public int language { get; set; }
     public string product_delist_date { get; set; }
     public string stock_status { get; set; }
-    public int rating_summary { get; set; }
+    public int? rating_summary { get; set; }
     public string __typename { get; set; }
     public string url_key { get; set; }
 }

@@ -2,10 +2,10 @@ namespace BigFishMetadata.Models;
 
 public class ReviewJsonData
 {
-    public Advreview advreview { get; set; }
+    public AdvReview advreview { get; set; }
 }
 
-public class Advreview
+public class AdvReview
 {
     public int totalRecords { get; set; }
     public int ratingSummary { get; set; }

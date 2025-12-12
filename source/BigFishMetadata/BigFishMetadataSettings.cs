@@ -40,6 +40,14 @@ public enum BigFishLanguage
     Swedish = 138,
 }
 
+public enum BigFishPlatform
+{
+    Mac = 153,
+    iPad = 162,
+    Windows = 150,
+    iOS = 156,
+}
+
 public enum CommunityScoreType
 {
     StarRating,

@@ -94,7 +94,7 @@ public class BigFishMetadataProvider(BigFishRegistryReader registryReader, IGame
         catch (Exception ex)
         {
             logger.Error(ex, "Error getting games");
-            return Enumerable.Empty<GameMetadata>();
+            return [];
         }
     }
 
@@ -129,7 +129,7 @@ public class BigFishMetadataProvider(BigFishRegistryReader registryReader, IGame
     public IEnumerable<GameMetadata> GetOnlineGames()
     {
         if (!settings.ImportFromOnline)
-            return Enumerable.Empty<GameMetadata>();
+            return [];
 
         return scraper.GetGames();
     }

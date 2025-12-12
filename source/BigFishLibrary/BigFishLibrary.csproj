@@ -3,7 +3,6 @@
     <Version>0.4.4</Version>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="0.9.9" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="PlayniteSDK" Version="6.11.0" />
   </ItemGroup>
@@ -18,9 +17,21 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\BigFishMetadata\BigFishGraphQLService.cs">
+      <Link>Common\BigFishMetadata\BigFishGraphQLService.cs</Link>
+    </Compile>
     <Compile Include="..\BigFishMetadata\BigFishMetadataSettings.cs" Link="Common\BigFishMetadata\BigFishMetadataSettings.cs" />
     <Compile Include="..\BigFishMetadata\BigFishSearchProvider.cs" Link="Common\BigFishMetadata\BigFishSearchProvider.cs" />
+    <Compile Include="..\BigFishMetadata\Models\ProductDetailModels.cs">
+      <Link>Common\BigFishMetadata\Models\ProductDetailModels.cs</Link>
+    </Compile>
+    <Compile Include="..\BigFishMetadata\Models\ResponseRoot.cs">
+      <Link>Common\BigFishMetadata\Models\ResponseRoot.cs</Link>
+    </Compile>
     <Compile Include="..\BigFishMetadata\Models\ReviewModels.cs" Link="Common\BigFishMetadata\Models\ReviewModels.cs" />
+    <Compile Include="..\BigFishMetadata\Models\SearchResultModels.cs">
+      <Link>Common\BigFishMetadata\Models\SearchResultModels.cs</Link>
+    </Compile>
     <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Common\IEnumerableExtensions.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Common\IPlatformUtility.cs" />
     <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="Common\LibraryIdUtility.cs" />

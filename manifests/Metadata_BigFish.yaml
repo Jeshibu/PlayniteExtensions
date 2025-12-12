@@ -25,3 +25,10 @@ Packages:
     Changelog:
       - "Fixed metadata collection"
       - "Added developers and release date to metadata collection"
+  - Version: '0.5.1'
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/BigFishMetadata_0_5_1.pext
+    Changelog:
+      - "Fixed game import"
+      - "Fixed metadata collection"

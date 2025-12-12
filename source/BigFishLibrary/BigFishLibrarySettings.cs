@@ -1,5 +1,6 @@
 ﻿using BigFishMetadata;
 using Playnite.SDK;
+using Playnite.SDK.Events;
 using System;
 using System.Windows.Media;
 
@@ -7,7 +8,11 @@ namespace BigFishLibrary;
 
 public class BigFishLibrarySettings : BigFishMetadataSettings
 {
-    public bool ImportFromOnline{ get; set => SetValue(ref field, value); } = false;
+    public bool ImportFromOnline
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = false;
 }
 
 public enum AuthStatus
@@ -54,23 +59,17 @@ public class BigFishLibrarySettingsViewModel : PluginSettingsViewModel<BigFishLi
 
     private void Login()
     {
+        var view = PlayniteApi.WebViews.CreateView(675, 540, Colors.Black);
+        view.LoadingChanged += CloseWhenLoggedIn;
         try
         {
-            PlayniteApi.Dialogs.ShowMessage(
-                "Close the login browser window once you're logged in. Due to website changes and limitations this plugin cannot automatically close the window once you're logged in anymore.",
-                "Close the next window yourself!",
-                System.Windows.MessageBoxButton.OK);
+            view.DeleteDomainCookies(".bigfishgames.com");
+            view.DeleteDomainCookies("bigfishgames.com");
+            view.DeleteDomainCookies(".www.bigfishgames.com");
+            view.DeleteDomainCookies("www.bigfishgames.com");
+            view.Navigate(BigFishOnlineLibraryScraper.OrderHistoryUrl);
 
-            using (var view = PlayniteApi.WebViews.CreateView(675, 540, Colors.Black))
-            {
-                view.DeleteDomainCookies(".bigfishgames.com");
-                view.DeleteDomainCookies("bigfishgames.com");
-                view.DeleteDomainCookies(".www.bigfishgames.com");
-                view.DeleteDomainCookies("www.bigfishgames.com");
-                view.Navigate(BigFishOnlineLibraryScraper.OrderHistoryUrl);
-
-                view.OpenDialog();
-            }
+            view.OpenDialog();
 
             OnPropertyChanged(nameof(AuthStatus));
         }
@@ -79,5 +78,17 @@ public class BigFishLibrarySettingsViewModel : PluginSettingsViewModel<BigFishLi
             PlayniteApi.Dialogs.ShowErrorMessage("Error logging in to Big Fish Games", "");
             Logger.Error(e, "Failed to authenticate user.");
         }
+        finally
+        {
+            view.LoadingChanged -= CloseWhenLoggedIn;
+            view.Dispose();
+        }
+    }
+
+    private static void CloseWhenLoggedIn(object sender, WebViewLoadingChangedEventArgs e)
+    {
+        var view = (IWebView)sender;
+        if (!e.IsLoading && view.GetCurrentAddress() == BigFishOnlineLibraryScraper.OrderHistoryUrl)
+            view.Close();
     }
 }
