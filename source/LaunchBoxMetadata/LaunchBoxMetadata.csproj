@@ -5,7 +5,7 @@
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.9.9" />
     <PackageReference Include="gong-wpf-dragdrop" Version="2.4.1" />
-    <PackageReference Include="Magick.NET-Q8-x86" Version="14.9.1" />
+    <PackageReference Include="Magick.NET-Q8-x86" Version="14.10.0" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="PlayniteSDK" Version="6.13.0" />
     <PackageReference Include="SqlNado" Version="2.0.4" />
