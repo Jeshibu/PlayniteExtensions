@@ -27,8 +27,6 @@ foreach ($p in $projects) {
     Remove-Item "$pluginBuildOutputDir\*" -Include $playniteDlls
 
     & "$PlaynitePath\Toolbox.exe" pack $pluginBuildOutputDir ".\PackingOutput"
-    #Get-ChildItem ".\PackingOutput" -Filter *.pext | Rename-Item -NewName "$($p.Name)_${ver}.pext"
-    #Move-Item -Path ".\PackingOutput\*.pext" -Destination ".\Release-$tag\"
     Move-Item -Path ".\PackingOutput\*.pext" -Destination ".\Release-$tag\$($p.Name)_${ver}.pext"
 }
 
