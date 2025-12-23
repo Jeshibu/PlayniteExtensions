@@ -1,7 +1,7 @@
 ﻿Id: GOGMetadata
 Name: GOG Metadata
 Author: Jeshibu
-Version: 0.2.2
+Version: '0.2.2'
 Module: GOGMetadata.dll
 Type: MetadataProvider
 Icon: icon.png

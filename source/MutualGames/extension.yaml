@@ -1,7 +1,7 @@
 ﻿Id: MutualGames
 Name: Mutual Games
 Author: Jeshibu
-Version: 0.4.1
+Version: '0.4.1'
 Module: MutualGames.dll
 Type: GenericPlugin
 Icon: icon.png

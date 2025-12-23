@@ -1,14 +1,14 @@
 AddonId: OriginLibrary_Builtin
 Packages:
   - Version: '3.0'
-    RequiredApiVersion: 6.13.0
+    RequiredApiVersion: '6.13.0'
     ReleaseDate: 2025-10-12
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ea3.0/EaLibrary_3_0.pext
     Changelog:
       - "Converted from Origin API to EA's new backend - huge thanks to rast1234 for pointing out the APIs necessary"
       - "Due to technical restrictions, it is no longer possible to import EA games without signing in"
   - Version: '3.0.1'
-    RequiredApiVersion: 6.13.0
+    RequiredApiVersion: '6.13.0'
     ReleaseDate: 2025-10-13
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ea3.0.1/EaLibrary_3_0_1.pext
     Changelog:
@@ -16,7 +16,7 @@ Packages:
       - "Fixed missing icon"
       - "Improved game startup handling"
   - Version: '3.1'
-    RequiredApiVersion: 6.13.0
+    RequiredApiVersion: '6.13.0'
     ReleaseDate: 2025-10-14
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ea3.1/EaLibrary_3_1.pext
     Changelog:
@@ -25,7 +25,7 @@ Packages:
       - "Installing a game now prompts to install the game in the EA app instead of opening the EA app library view"
       - "Login prompt window background color now matches login page background"
   - Version: '3.1.1'
-    RequiredApiVersion: 6.13.0
+    RequiredApiVersion: '6.13.0'
     ReleaseDate: 2025-10-15
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ea3.1/EaLibrary_3_1_1.pext
     Changelog:
@@ -33,13 +33,13 @@ Packages:
       - "Fixed error when reading trialDurationHours null values"
       - "Added debug game import button to the settings"
   - Version: '3.1.2'
-    RequiredApiVersion: 6.13.0
+    RequiredApiVersion: '6.13.0'
     ReleaseDate: 2025-10-15
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ea3.1/EaLibrary_3_1_2.pext
     Changelog:
       - "Fixed settings not displaying"
   - Version: '3.2'
-    RequiredApiVersion: 6.13.0
+    RequiredApiVersion: '6.13.0'
     ReleaseDate: 2025-11-01
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-11-01/EaLibrary_3_2.pext
     Changelog:

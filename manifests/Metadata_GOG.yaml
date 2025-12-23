@@ -1,26 +1,26 @@
 AddonId: GOGMetadata
 Packages:
-  - Version: 0.1.1
-    RequiredApiVersion: 6.9.0
+  - Version: '0.1.1'
+    RequiredApiVersion: '6.9.0'
     ReleaseDate: 2023-09-22
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2023-09-22/GOGMetadata_0_1_1.pext
     Changelog:
       - Added metadata language default from Playnite language
-  - Version: 0.2
-    RequiredApiVersion: 6.9.0
+  - Version: '0.2'
+    RequiredApiVersion: '6.9.0'
     ReleaseDate: 2024-01-10
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-01-10/GOGMetadata_0_2.pext
     Changelog:
       - Added packages to search results, for example Fallout 1
-  - Version: 0.2.1
-    RequiredApiVersion: 6.9.0
+  - Version: '0.2.1'
+    RequiredApiVersion: '6.9.0'
     ReleaseDate: 2024-08-08
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2024-08-08/GOGMetadata_0_2_1.pext
     Changelog:
       - Split companies when multiple are entered in a single entry
       - Improvement in connection handling; less likely to run out of connections
-  - Version: 0.2.2
-    RequiredApiVersion: 6.9.0
+  - Version: '0.2.2'
+    RequiredApiVersion: '6.9.0'
     ReleaseDate: 2025-08-20
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/GOGMetadata_0_2_2.pext
     Changelog:
