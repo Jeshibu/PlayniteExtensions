@@ -17,9 +17,9 @@ public class GogClient(IWebViewWrapper webView) : IFriendsGamesClient
     private readonly ILogger logger = LogManager.GetLogger();
     private AccountInfo accountInfo = null;
 
-    public string Name { get; } = "GOG";
+    public string Name => "GOG";
 
-    public FriendSource Source { get; } = FriendSource.GOG;
+    public FriendSource Source => FriendSource.GOG;
 
     public Guid PluginId { get; } = Guid.Parse("AEBE8B7C-6DC3-4A66-AF31-E7375C6B5E9E");
 

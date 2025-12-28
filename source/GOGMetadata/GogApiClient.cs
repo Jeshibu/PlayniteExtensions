@@ -73,7 +73,7 @@ public class GogApiClient(IWebDownloader downloader, GOGMetadataSettings setting
     {
         try
         {
-            var response = downloader.DownloadString($@"https://api.gog.com/products/{id}?expand=description&locale={settings.Locale}");
+            var response = downloader.DownloadString($"https://api.gog.com/products/{id}?expand=description&locale={settings.Locale}");
             return Serialization.FromJson<ProductApiDetail>(response.ResponseContent);
         }
         catch (WebException exc)

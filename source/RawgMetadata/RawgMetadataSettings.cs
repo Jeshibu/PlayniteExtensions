@@ -20,7 +20,7 @@ public class RawgMetadataSettingsViewModel : PluginSettingsViewModel<RawgMetadat
     {
         get => new((a) =>
         {
-            Process.Start(@"https://rawg.io/login?forward=developer");
+            Process.Start("https://rawg.io/login?forward=developer");
         });
     }
 
@@ -28,7 +28,7 @@ public class RawgMetadataSettingsViewModel : PluginSettingsViewModel<RawgMetadat
     {
         get => new((a) =>
         {
-            Process.Start(@"https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes");
+            Process.Start("https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes");
         });
     }
 }

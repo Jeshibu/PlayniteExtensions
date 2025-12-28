@@ -129,7 +129,7 @@ public class MetadataZipFileHandler(IPlayniteAPI playniteAPI, LaunchBoxMetadataS
 
     private static void PurgeControlCharacterEntities(string inputFilePath, string outputFilePath)
     {
-        var hexEntityRegex = new Regex(@"&#x[0-9A-F]{1,2};", RegexOptions.Compiled);
+        var hexEntityRegex = new Regex("&#x[0-9A-F]{1,2};", RegexOptions.Compiled);
 
         using var writer = new StreamWriter(outputFilePath);
         foreach (var line in File.ReadLines(inputFilePath))

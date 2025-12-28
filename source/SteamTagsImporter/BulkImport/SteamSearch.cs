@@ -127,5 +127,5 @@ public class SteamSearch(IWebDownloader downloader, SteamTagsImporterSettings se
         return null;
     }
 
-    private static readonly Regex QuarterReleaseDate = new(@"^(Q(?<quarter>[1-4]) )?(?<year>[0-9]{4})$", RegexOptions.Compiled);
+    private static readonly Regex QuarterReleaseDate = new("^(Q(?<quarter>[1-4]) )?(?<year>[0-9]{4})$", RegexOptions.Compiled);
 }

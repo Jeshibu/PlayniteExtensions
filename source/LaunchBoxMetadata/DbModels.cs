@@ -25,7 +25,7 @@ public class LaunchBoxGame : IDatabaseObject
     public string Genres { get; set; }
     public string Developer { get; set; }
     public string Publisher { get; set; }
-    
+
     /// <summary>
     /// Computed after XML parsing, not part of the original XML spec
     /// </summary>
@@ -57,7 +57,7 @@ public class LaunchBoxGameImage : IDatabaseObject
 
 public class ItemCount: IHasName
 {
-    
+
     [SQLiteColumn(IsPrimaryKey = true, AutoIncrements = true)]
     public long Id { get; set; }
     public string Name { get; set; }
@@ -85,7 +85,7 @@ public interface IDatabaseObject: IHasName
     long DatabaseID { get; }
 }
 
-public class LaunchboxGameSearchResult : LaunchBoxGame
+public class LaunchBoxGameSearchResult : LaunchBoxGame
 {
     public string MatchedName { get; set; }
 }

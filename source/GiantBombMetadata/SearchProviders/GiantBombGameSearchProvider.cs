@@ -43,7 +43,7 @@ public class GiantBombGameSearchProvider(IGiantBombApiClient apiClient, GiantBom
         if (string.IsNullOrWhiteSpace(query))
             return searchOutput;
 
-        if (Regex.IsMatch(query, @"^3030-[0-9]+$"))
+        if (Regex.IsMatch(query, "^3030-[0-9]+$"))
         {
             try
             {

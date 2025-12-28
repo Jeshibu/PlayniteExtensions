@@ -60,10 +60,13 @@ public class OffScreenWebViewWrapper : IWebViewWrapper
 
             view.NavigateAndWait(url);
 
-            var output = new WebViewResponse { Url = view.GetCurrentAddress() };
-            output.Content = getContentMethod(view);
+            var output = new WebViewResponse
+            {
+                Url = view.GetCurrentAddress(),
+                Content = getContentMethod(view)
+            };
 
-            logger.Debug($@"Result for getting {url}: {JsonConvert.SerializeObject(output)}");
+            logger.Debug($"Result for getting {url}: {JsonConvert.SerializeObject(output)}");
 
             return output;
         }

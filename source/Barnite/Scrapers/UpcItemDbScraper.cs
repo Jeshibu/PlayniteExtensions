@@ -11,8 +11,8 @@ namespace Barnite.Scrapers;
 
 public class UpcItemDbScraper : MetadataScraper
 {
-    public override string Name { get; } = "UPCitemdb";
-    public override string WebsiteUrl { get; } = "https://www.upcitemdb.com";
+    public override string Name => "UPCitemdb";
+    public override string WebsiteUrl => "https://www.upcitemdb.com";
 
     protected override string GetSearchUrlFromBarcode(string barcode)
     {

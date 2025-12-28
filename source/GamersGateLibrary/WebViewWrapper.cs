@@ -67,7 +67,7 @@ public class WebViewWrapper : IWebViewWrapper
 
     public static bool IsAuthenticated(string pageSource)
     {
-        bool authenticated = pageSource.Contains(@"navigation-link--icon-user");
+        bool authenticated = pageSource.Contains("navigation-link--icon-user");
         return authenticated;
     }
 

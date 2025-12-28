@@ -92,7 +92,7 @@ public class CheckboxFilter
     public CheckboxFilter(string text, GamePropertyImportViewModel viewModel, Func<GameCheckboxViewModel, bool> filterFunc) : this()
     {
         Text = text;
-        this.ViewModel = viewModel;
+        ViewModel = viewModel;
         FilterFunc = filterFunc;
     }
 

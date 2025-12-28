@@ -88,9 +88,9 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
 
     private class LaunchBoxGameItemOption : GenericItemOption
     {
-        public LaunchboxGameSearchResult Game { get; set; }
+        public LaunchBoxGameSearchResult Game { get; set; }
 
-        public static LaunchBoxGameItemOption FromLaunchBoxGame(LaunchboxGameSearchResult g)
+        public static LaunchBoxGameItemOption FromLaunchBoxGame(LaunchBoxGameSearchResult g)
         {
             var name = g.Name;
             if (g.MatchedName != g.Name)

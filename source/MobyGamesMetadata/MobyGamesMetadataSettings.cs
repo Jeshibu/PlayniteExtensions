@@ -113,7 +113,7 @@ public class MobyGamesMetadataSettingsViewModel : PluginSettingsViewModel<MobyGa
         InitializeGenres();
     }
 
-    public RelayCommand<object> GetApiKeyCommand => new(_ => { Process.Start(@"https://www.mobygames.com/info/api/"); });
+    public RelayCommand<object> GetApiKeyCommand => new(_ => { Process.Start("https://www.mobygames.com/info/api/"); });
 
     public PropertyImportTarget[] ImportTargets { get; } =
     [

@@ -103,7 +103,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
         if (importSetting == null)
         {
             logger.Error($"Could not find import settings for game property <{selectedItem.Name}>");
-            playniteApi.Notifications.Add(this.GetType().Name, "Could not find import settings for property", NotificationType.Error);
+            playniteApi.Notifications.Add(GetType().Name, "Could not find import settings for property", NotificationType.Error);
             return null;
         }
 

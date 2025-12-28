@@ -45,10 +45,10 @@ public class LaunchBoxDatabase
 
         var data = xmlSource.GetData();
         AdvanceProgress();
-        
+
         AddAliasesToGames(data.Games, data.GameAlternateNames);
         AdvanceProgress();
-        
+
         using var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_CREATE | SQLiteOpenOptions.SQLITE_OPEN_READWRITE);
         db.BeginTransaction();
         db.Save(data.Games);
@@ -69,7 +69,7 @@ public class LaunchBoxDatabase
 
         db.Save(data.GameImages.GroupBy(gi => gi.Region).Select(x => new ImageRegion { Name = x.Key, Count = x.Count() }));
         AdvanceProgress();
-        
+
         var genres = db.LoadAll<LaunchBoxGame>()
             .SelectMany(g => g.Genres.SplitLaunchBox())
             .GroupBy(g => g)
@@ -112,7 +112,7 @@ public class LaunchBoxDatabase
         }
     }
 
-    public IEnumerable<LaunchboxGameSearchResult> SearchGames(string search, int limit = 1000)
+    public IEnumerable<LaunchBoxGameSearchResult> SearchGames(string search, int limit = 1000)
     {
         if (string.IsNullOrWhiteSpace(search))
             return [];
@@ -120,7 +120,7 @@ public class LaunchBoxDatabase
         var matchStr = GetMatchStringFromSearchString(search);
 
         using var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY);
-        return db.Load<LaunchboxGameSearchResult>("""
+        return db.Load<LaunchBoxGameSearchResult>("""
                                                    select gn.Name MatchedName, g.*
                                                    from GameNames gn
                                                    join Games g on gn.DatabaseID=g.DatabaseID

@@ -245,22 +245,22 @@ internal class DangerouslySimpleCookieContainer : DelegatingHandler
 {
     internal DangerouslySimpleCookieContainer(CookieContainer cookieContainer = null)
     {
-        this.Container = cookieContainer ?? new CookieContainer();
+        Container = cookieContainer ?? new CookieContainer();
     }
 
     internal DangerouslySimpleCookieContainer(HttpMessageHandler innerHandler, CookieContainer cookieContainer = null)
         : base(innerHandler)
     {
-        this.Container = cookieContainer ?? new CookieContainer();
+        Container = cookieContainer ?? new CookieContainer();
     }
 
     public CookieContainer Container { get; set; }
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-        this.Container.ApplyCookies(request);
+        Container.ApplyCookies(request);
         var response = await base.SendAsync(request, cancellationToken);
-        this.Container.SetCookies(response);
+        Container.SetCookies(response);
         return response;
     }
 }

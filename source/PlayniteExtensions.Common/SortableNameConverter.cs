@@ -55,8 +55,8 @@ public class SortableNameConverter
     {
         articles ??= ["the", "a", "an"];
 
-        this.removeFromStart = articles.Select(a => a + " ").ToArray();
-        this.removeFromEnd = articles.Select(a => ", " + a).ToArray();
+        removeFromStart = articles.Select(a => a + " ").ToArray();
+        removeFromEnd = articles.Select(a => ", " + a).ToArray();
         this.numberLength = numberLength;
         this.removeEditions = removeEditions;
     }

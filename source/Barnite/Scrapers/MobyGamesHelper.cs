@@ -33,7 +33,7 @@ public class MobyGamesHelper(IPlatformUtility platformUtility) : MobyGamesIdUtil
     {
         var page = new HtmlDocument();
         page.LoadHtml(html);
-        var title = page.DocumentNode.SelectSingleNode(@"//h1")?.InnerText.HtmlDecode();
+        var title = page.DocumentNode.SelectSingleNode("//h1")?.InnerText.HtmlDecode();
         if (title == null) return null;
 
         var platforms = page.DocumentNode.SelectNodes("//ul[@id='platformLinks']/li//a[starts-with(@href, '/platform/')]")?.SelectMany(a => PlatformUtility.GetPlatforms(a.InnerText.HtmlDecode())).ToHashSet();
@@ -177,7 +177,7 @@ public class MobyGamesHelper(IPlatformUtility platformUtility) : MobyGamesIdUtil
     {
         if (releaseDateString == null) return null;
 
-        releaseDateString = Regex.Replace(releaseDateString, @"(?<=[0-9])(st|nd|rd|th)", "");
+        releaseDateString = Regex.Replace(releaseDateString, "(?<=[0-9])(st|nd|rd|th)", "");
         if (DateTime.TryParseExact(releaseDateString, "MMMM dd, yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var releaseDate))
             return new ReleaseDate(releaseDate);
         if (DateTime.TryParseExact(releaseDateString, "MMMM yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out releaseDate))

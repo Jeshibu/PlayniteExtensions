@@ -181,7 +181,7 @@ public class XboxMetadataProvider(MetadataRequestOptions options, XboxMetadataSe
 
         if (selected == null)
             return null;
-        
+
         var selectedImage = ((XboxImageFileOption)selected).ImageData;
         return new MetadataFile(selectedImage.Url);
     }

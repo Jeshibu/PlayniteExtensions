@@ -1,5 +1,5 @@
 param (
-    [Parameter()][string]$tag,
+    [Parameter(Mandatory=$true)][string]$tag,
     [Parameter()][string]$PlaynitePath = "C:\Playnite",
     [Parameter()][string]$MSBuildPath = "C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe"
 )
