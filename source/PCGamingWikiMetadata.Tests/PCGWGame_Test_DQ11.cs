@@ -8,16 +8,15 @@ namespace PCGamingWikiMetadata.Tests;
 
 public class PCGWGame_Test_DQ11 : IDisposable
 {
-    private readonly PCGWGame testGame;
+    private readonly PcgwGame testGame;
     private readonly LocalPCGWClient client;
     private readonly TestMetadataRequestOptions options;
 
     public PCGWGame_Test_DQ11()
     {
-        this.options = new TestMetadataRequestOptions();
-        this.options.SetGameSourceXbox();
+        this.options = TestMetadataRequestOptions.Xbox();
         this.client = new LocalPCGWClient(this.options);
-        this.testGame = new PCGWGame(this.client.GetSettings(), "Dragon Quest XI S - Definitive Edition", -1);
+        this.testGame = new PcgwGame(this.client.GetSettings(), "Dragon Quest XI S - Definitive Edition", -1);
 
         this.client.GetSettings().ImportTagEngine = false;
         this.client.GetSettings().ImportTagArtStyle = false;

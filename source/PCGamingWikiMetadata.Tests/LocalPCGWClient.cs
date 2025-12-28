@@ -4,7 +4,7 @@ public class LocalPCGWClient : PCGWClient
 {
     public LocalPCGWClient() : base(null, null)
     {
-        this.options = new TestMetadataRequestOptions();
+        this.options = TestMetadataRequestOptions.Steam();
         PCGamingWikiMetadataSettings settings = new();
         this.gameController = new PCGWGameController(settings);
     }
@@ -21,7 +21,7 @@ public class LocalPCGWClient : PCGWClient
         return this.gameController.Settings;
     }
 
-    public override void FetchGamePageContent(PCGWGame game)
+    public override void FetchGamePageContent(PcgwGame game)
     {
         this.gameController.Game = game;
         base.FetchGamePageContent(game);

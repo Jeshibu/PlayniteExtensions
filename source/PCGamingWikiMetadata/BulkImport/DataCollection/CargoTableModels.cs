@@ -7,15 +7,15 @@ public abstract class CargoFieldBase
 {
     public string Table { get; set; }
     public string Field { get; set; }
+    public string TableDisplayName => ToDisplayName(Table);
     public string FieldDisplayName
     {
         get
         {
             var fieldDisplayName = ToDisplayName(Field);
-            if (Table == CargoTables.GameInfoBoxTableName)
-                return fieldDisplayName;
-
-            return $"{ToDisplayName(Table)}: {fieldDisplayName}";
+            return Table == CargoTables.Names.GameInfoBox
+                ? fieldDisplayName
+                : $"{ToDisplayName(Table)}: {fieldDisplayName}";
         }
     }
 

@@ -72,7 +72,7 @@ internal class CargoQuery : ICargoQuery
 
     private static RestRequest GetBaseGameRequest(string table, string field)
     {
-        var baseTable = CargoTables.GameInfoBoxTableName;
+        const string baseTable = CargoTables.Names.GameInfoBox;
 
         var request = new RestRequest()
                 .AddQueryParameter("fields", $"{baseTable}._pageName=Name,{baseTable}.Released,{baseTable}.Available_on=OS,{baseTable}.Steam_AppID=SteamID,{baseTable}.GOGcom_ID=GOGID,{table}.{field}=Value");

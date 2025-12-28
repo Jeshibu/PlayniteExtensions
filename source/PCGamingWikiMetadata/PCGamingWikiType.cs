@@ -43,6 +43,7 @@ public class Taxonomy
     public const string Engines = "Engines";
     public const string Series = "Series";
     public const string ArtStyles = "Art styles";
+    public const string Middleware = "Middleware";
 }
 public class TaxonomyValue
 {

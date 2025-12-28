@@ -8,16 +8,15 @@ namespace PCGamingWikiMetadata.Tests;
 
 public class PCGWGame_Test_YAKUZA4 : IDisposable
 {
-    private readonly PCGWGame testGame;
+    private readonly PcgwGame testGame;
     private readonly LocalPCGWClient client;
     private readonly TestMetadataRequestOptions options;
 
     public PCGWGame_Test_YAKUZA4()
     {
-        this.options = new TestMetadataRequestOptions();
-        this.options.SetGameSourceXbox();
+        this.options = TestMetadataRequestOptions.Xbox();
         this.client = new LocalPCGWClient(this.options);
-        this.testGame = new PCGWGame(this.client.GetSettings(), "Yakuza 4 Remastered", -1);
+        this.testGame = new PcgwGame(this.client.GetSettings(), "Yakuza 4 Remastered", -1);
 
         this.client.GetSettings().AddTagPrefix = false;
         this.client.GetSettings().ImportXboxPlayAnywhere = true;

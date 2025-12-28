@@ -15,6 +15,7 @@ public class PCGamingWikiMetadataSettings: BulkImportPluginSettings
     public bool ImportTagVehicles { get; set => SetValue(ref field, value); } = true;
     public bool ImportTagThemes { get; set => SetValue(ref field, value); } = true;
     public bool ImportTagArtStyle { get; set => SetValue(ref field, value); } = true;
+    public bool ImportTagMiddleware { get; set => SetValue(ref field, value); } = false;
     public bool ImportTagNoCloudSaves { get; set => SetValue(ref field, value); } = true;
     public bool ImportXboxPlayAnywhere { get; set => SetValue(ref field, value); } = true;
     public bool ImportMultiplayerTypes { get; set => SetValue(ref field, value); } = false;
@@ -43,6 +44,7 @@ public class PCGamingWikiMetadataSettings: BulkImportPluginSettings
     public string TagPrefixThemes { get; set => SetValue(ref field, value); } = $"[{ResourceProvider.GetString("LOCPCGWSettingsTagPrefixThemes")}]";
     public string TagPrefixEngines { get; set => SetValue(ref field, value); } = $"[{ResourceProvider.GetString("LOCPCGWSettingsTagPrefixEngines")}]";
     public string TagPrefixArtStyles { get; set => SetValue(ref field, value); } = $"[{ResourceProvider.GetString("LOCPCGWSettingsTagPrefixArtStyles")}]";
+    public string TagPrefixMiddleware { get; set => SetValue(ref field, value); } = $"[{ResourceProvider.GetString("LOCPCGWSettingsTagPrefixMiddleware")}]";
     public bool ImportLinkOfficialSite { get; set => SetValue(ref field, value); } = true;
     public bool ImportLinkHowLongToBeat { get; set => SetValue(ref field, value); } = true;
     public bool ImportLinkIGDB { get; set => SetValue(ref field, value); } = true;

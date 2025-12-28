@@ -14,6 +14,7 @@
     <sys:String x:Key="LOCPCGWSettingsImportTagVehicles">Vehicles</sys:String>
     <sys:String x:Key="LOCPCGWSettingsImportTagThemes">Themes</sys:String>
     <sys:String x:Key="LOCPCGWSettingsImportTagArtStyle">Art Style</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsImportTagMiddleware">Middleware</sys:String>
     <sys:String x:Key="LOCPCGWSettingsImportTagNoCloudSaves">Add tag for games that don't support cloud saves</sys:String>
     <sys:String x:Key="LOCPCGWSettingsAddTagsPrefix">Add type prefix for enabled tags</sys:String>
     <sys:String x:Key="LOCPCGWSettingsTaxonomyTags">Taxonomy Tags</sys:String>
@@ -52,5 +53,6 @@
     <sys:String x:Key="LOCPCGWSettingsTagPrefixThemes">Themes</sys:String>
     <sys:String x:Key="LOCPCGWSettingsTagPrefixEngines">Game Engine</sys:String>
     <sys:String x:Key="LOCPCGWSettingsTagPrefixArtStyles">Art Style</sys:String>
+    <sys:String x:Key="LOCPCGWSettingsTagPrefixMiddleware">Middleware</sys:String>
 
 </ResourceDictionary>

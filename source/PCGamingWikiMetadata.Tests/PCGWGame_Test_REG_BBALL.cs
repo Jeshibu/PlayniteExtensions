@@ -8,17 +8,16 @@ namespace PCGamingWikiMetadata.Tests;
 
 public class PCGWGame_Test_REG_BBALL : IDisposable
 {
-    private readonly PCGWGame testGame;
+    private readonly PcgwGame testGame;
     private readonly LocalPCGWClient client;
     private readonly TestMetadataRequestOptions options;
 
 
     public PCGWGame_Test_REG_BBALL()
     {
-        this.options = new TestMetadataRequestOptions();
-        this.options.SetGameSourceEpic();
+        this.options = TestMetadataRequestOptions.Epic();
         this.client = new LocalPCGWClient(this.options);
-        this.testGame = new PCGWGame(this.client.GetSettings(), "Regular Human Basketball", -1);
+        this.testGame = new PcgwGame(this.client.GetSettings(), "Regular Human Basketball", -1);
         this.client.GetSettings().ImportMultiplayerTypes = true;
         this.client.GetSettings().ImportFeatureFramerate60 = true;
         this.client.GetSettings().ImportFeatureFramerate120 = true;

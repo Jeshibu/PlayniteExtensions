@@ -29,6 +29,7 @@ public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameC
             var e = new Exception(message, response.ErrorException);
             throw e;
         }
+
         var content = response.Content;
 
         return JObject.Parse(content);
@@ -58,7 +59,7 @@ public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameC
 
             if (searchResults.TryGetValue("error", out JToken error))
             {
-                logger.Error($"Encountered API error: {error.ToString()}");
+                logger.Error($"Encountered API error: {error}");
                 return gameResults;
             }
 
@@ -66,7 +67,7 @@ public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameC
 
             foreach (dynamic game in searchResults["query"]["search"])
             {
-                PCGWGame g = new(gameController.Settings, (string)game.title, (int)game.pageid);
+                PcgwGame g = new(gameController.Settings, (string)game.title, (int)game.pageid);
                 gameResults.Add(g);
             }
         }
@@ -78,13 +79,13 @@ public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameC
         return gameResults.OrderBy(game => NameStringCompare(searchName, game.Name)).ToList();
     }
 
-    public virtual void FetchGamePageContent(PCGWGame game)
+    public virtual void FetchGamePageContent(PcgwGame game)
     {
         var request = new RestRequest()
-            .AddQueryParameter("action", "parse")
-            .AddQueryParameter("page", game.Name.TitleToSlug(urlEncode: false));
+                      .AddQueryParameter("action", "parse")
+                      .AddQueryParameter("page", game.Name.TitleToSlug(urlEncode: false));
 
-        game.LibraryGame = this.options.GameData;
+        game.LibraryGame = options.GameData;
 
         try
         {
@@ -92,11 +93,11 @@ public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameC
 
             if (content.TryGetValue("error", out JToken error))
             {
-                logger.Error($"Encountered API error: {error.ToString()}");
+                logger.Error($"Encountered API error: {error}");
             }
 
-            PCGamingWikiJSONParser jsonParser = new(content, this.gameController);
-            PCGamingWikiHTMLParser parser = new(jsonParser.PageHTMLText(), this.gameController);
+            PCGamingWikiJSONParser jsonParser = new(content, gameController);
+            PcGamingWikiHtmlParser parser = new(jsonParser.PageHTMLText(), gameController);
 
 
             if (parser.CheckPageRedirect(out string redirectPage))
@@ -120,29 +121,10 @@ public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameC
     // https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#C.23
     private static int NameStringCompare(string a, string b)
     {
-        if (string.IsNullOrEmpty(a))
-        {
-            if (!string.IsNullOrEmpty(b))
-            {
-                return b.Length;
-            }
-            return 0;
-        }
+        if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
+            return Math.Max(a?.Length ?? 0, b?.Length ?? 0);
 
-        if (string.IsNullOrEmpty(b))
-        {
-            if (!string.IsNullOrEmpty(a))
-            {
-                return a.Length;
-            }
-            return 0;
-        }
-
-        int cost;
-        int[,] d = new int[a.Length + 1, b.Length + 1];
-        int min1;
-        int min2;
-        int min3;
+        var d = new int[a.Length + 1, b.Length + 1];
 
         for (int i = 0; i <= d.GetUpperBound(0); i += 1)
         {
@@ -158,11 +140,11 @@ public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameC
         {
             for (int j = 1; j <= d.GetUpperBound(1); j += 1)
             {
-                cost = (a[i - 1] != b[j - 1]) ? 1 : 0;
+                var cost = (a[i - 1] != b[j - 1]) ? 1 : 0;
 
-                min1 = d[i - 1, j] + 1;
-                min2 = d[i, j - 1] + 1;
-                min3 = d[i - 1, j - 1] + cost;
+                var min1 = d[i - 1, j] + 1;
+                var min2 = d[i, j - 1] + 1;
+                var min3 = d[i - 1, j - 1] + cost;
                 d[i, j] = Math.Min(Math.Min(min1, min2), min3);
             }
         }

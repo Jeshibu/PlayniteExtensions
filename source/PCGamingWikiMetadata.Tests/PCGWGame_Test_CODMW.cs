@@ -8,16 +8,15 @@ namespace PCGamingWikiMetadata.Tests;
 
 public class PCGWGame_Test_CODMW : IDisposable
 {
-    private readonly PCGWGame testGame;
+    private readonly PcgwGame testGame;
     private readonly LocalPCGWClient client;
     private readonly TestMetadataRequestOptions options;
 
     public PCGWGame_Test_CODMW()
     {
-        this.options = new TestMetadataRequestOptions();
-        this.options.SetGameSourceBattleNet();
+        this.options = TestMetadataRequestOptions.BattleNet();
         this.client = new LocalPCGWClient(this.options);
-        this.testGame = new PCGWGame(this.client.GetSettings(), "Call of Duty: Modern Warfare", -1);
+        this.testGame = new PcgwGame(this.client.GetSettings(), "Call of Duty: Modern Warfare", -1);
         this.client.GetSettings().ImportMultiplayerTypes = true;
         this.client.GetSettings().ImportFeatureVR = true;
         this.client.GetSettings().ImportFeatureHDR = true;

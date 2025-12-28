@@ -8,13 +8,13 @@ namespace PCGamingWikiMetadata.Tests;
 
 public class PCGWGame_Test_SOH : IDisposable
 {
-    private readonly PCGWGame testGame;
+    private readonly PcgwGame testGame;
     private readonly LocalPCGWClient client;
 
     public PCGWGame_Test_SOH()
     {
         this.client = new LocalPCGWClient();
-        this.testGame = new PCGWGame(this.client.GetSettings(), "Song of Horror", -1);
+        this.testGame = new PcgwGame(this.client.GetSettings(), "Song of Horror", -1);
         this.client.FetchGamePageContent(this.testGame);
     }
 

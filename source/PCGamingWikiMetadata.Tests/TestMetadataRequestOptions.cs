@@ -1,4 +1,3 @@
-using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using Playnite.SDK;
 
@@ -6,34 +5,17 @@ namespace PCGamingWikiMetadata.Tests;
 
 public class TestMetadataRequestOptions : MetadataRequestOptions
 {
-    public TestMetadataRequestOptions() : base(null, false)
+    public TestMetadataRequestOptions(BuiltinExtension library) : base(null, false)
     {
-        this.GameData = new Game();
-        SetGameSourceSteam();
+        this.GameData = new()
+        {
+            PluginId = BuiltinExtensions.GetIdFromExtension(library)
+        };
     }
 
-    public void SetGameSourceSteam()
-    {
-        this.GameData.PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.SteamLibrary);
-    }
-
-    public void SetGameSourceEpic()
-    {
-        this.GameData.PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.EpicLibrary);
-    }
-
-    public void SetGameSourceXbox()
-    {
-        this.GameData.PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.XboxLibrary);
-    }
-
-    public void SetGameSourceBattleNet()
-    {
-        this.GameData.PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.BattleNetLibrary);
-    }
-
-    public void SetGameSourceOrigin()
-    {
-        this.GameData.PluginId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.OriginLibrary);
-    }
+    public static TestMetadataRequestOptions Steam() => new(BuiltinExtension.SteamLibrary);
+    public static TestMetadataRequestOptions Origin() => new(BuiltinExtension.OriginLibrary);
+    public static TestMetadataRequestOptions Xbox() => new(BuiltinExtension.XboxLibrary);
+    public static TestMetadataRequestOptions Epic() => new(BuiltinExtension.EpicLibrary);
+    public static TestMetadataRequestOptions BattleNet() => new(BuiltinExtension.BattleNetLibrary);
 }

@@ -8,16 +8,15 @@ namespace PCGamingWikiMetadata.Tests;
 
 public class PCGWGame_Test_CITIES : IDisposable
 {
-    private readonly PCGWGame testGame;
+    private readonly PcgwGame testGame;
     private readonly LocalPCGWClient client;
     private readonly TestMetadataRequestOptions options;
 
     public PCGWGame_Test_CITIES()
     {
-        this.options = new TestMetadataRequestOptions();
-        this.options.SetGameSourceSteam();
+        this.options = TestMetadataRequestOptions.Steam();
         this.client = new LocalPCGWClient(this.options);
-        this.testGame = new PCGWGame(this.client.GetSettings(), "Cities: Skylines", -1);
+        this.testGame = new PcgwGame(this.client.GetSettings(), "Cities: Skylines", -1);
         this.client.GetSettings().ImportLinkOfficialSite = false;
         this.client.FetchGamePageContent(this.testGame);
     }

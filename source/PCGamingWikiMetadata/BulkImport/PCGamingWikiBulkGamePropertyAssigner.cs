@@ -22,7 +22,7 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
         : base(playniteApi, dataSource, platformUtility, databaseIdUtility, ExternalDatabase.PCGamingWiki, maxDegreeOfParallelism)
     {
         this.settings = settings;
-        this.pcgwDataSource = dataSource;
+        pcgwDataSource = dataSource;
         AllowEmptySearchQuery = true;
     }
 
@@ -152,21 +152,27 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
 
     private string GetPrefix(CargoFieldInfo fieldInfo)
     {
-        if (fieldInfo.Table != CargoTables.GameInfoBoxTableName)
-            return null;
-
-        return fieldInfo.Field switch
+        return fieldInfo.Table switch
         {
-            "Monetization" => settings.TagPrefixMonetization,
-            "Microtransactions" => settings.TagPrefixMicrotransactions,
-            "Pacing" => settings.TagPrefixPacing,
-            "Perspectives" => settings.TagPrefixPerspectives,
-            "Controls" => settings.TagPrefixControls,
-            "Vehicles" => settings.TagPrefixVehicles,
-            "Themes" => settings.TagPrefixThemes,
-            "Engines" => settings.TagPrefixEngines,
-            "Art_styles" => settings.TagPrefixArtStyles,
-            _ => null,
+            CargoTables.Names.GameInfoBox => fieldInfo.Field switch
+            {
+                "Monetization" => settings.TagPrefixMonetization,
+                "Microtransactions" => settings.TagPrefixMicrotransactions,
+                "Pacing" => settings.TagPrefixPacing,
+                "Perspectives" => settings.TagPrefixPerspectives,
+                "Controls" => settings.TagPrefixControls,
+                "Vehicles" => settings.TagPrefixVehicles,
+                "Themes" => settings.TagPrefixThemes,
+                "Engines" => settings.TagPrefixEngines,
+                "Art_styles" => settings.TagPrefixArtStyles,
+                _ => null,
+            },
+            _ => fieldInfo.FieldType switch
+            {
+                CargoFieldType.ListOfString => $"{fieldInfo.FieldDisplayName}:",
+                CargoFieldType.String => $"{fieldInfo.TableDisplayName}:",
+                _ => null,
+            }
         };
     }
 }

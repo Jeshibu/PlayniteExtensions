@@ -8,10 +8,10 @@ using PCGamingWikiBulkImport;
 
 namespace PCGamingWikiMetadata;
 
-public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
+public class PcgwGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
 {
-    private readonly ILogger logger = LogManager.GetLogger();
-    public int PageID { get; set; }
+    private readonly ILogger _logger = LogManager.GetLogger();
+    public int PageId { get; set; }
 
     public List<MetadataProperty> Genres { get; } = [];
     public List<MetadataProperty> Developers { get; } = [];
@@ -22,26 +22,26 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
     public List<Link> Links { get; } = [];
     public List<MetadataProperty> Tags { get; } = [];
 
-    private readonly IDictionary<string, int?> reception = new Dictionary<string, int?>();
-    private readonly IDictionary<string, ReleaseDate?> ReleaseDates = new Dictionary<string, ReleaseDate?>();
+    private readonly IDictionary<string, int?> _reception = new Dictionary<string, int?>();
+    private readonly IDictionary<string, ReleaseDate?> _releaseDates = new Dictionary<string, ReleaseDate?>();
 
     public Game LibraryGame;
 
-    public PCGWGame(PCGamingWikiMetadataSettings settings, string name, int pageid) : this(settings)
+    public PcgwGame(PCGamingWikiMetadataSettings settings, string name, int pageid) : this(settings)
     {
-        this.Name = name;
-        this.PageID = pageid;
+        Name = name;
+        PageId = pageid;
     }
 
-    public Link PCGamingWikiLink()
+    public Link PcGamingWikiLink()
     {
-        string url = this.Name.TitleToSlug().SlugToUrl();
+        string url = Name.TitleToSlug().SlugToUrl();
         return new Link("PCGamingWiki", url);
     }
 
     public void AddReception(string aggregator, int score)
     {
-        this.reception[aggregator] = score;
+        _reception[aggregator] = score;
     }
 
     public bool GetOpenCriticReception(out int? score)
@@ -49,7 +49,7 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
         return GetReception("OpenCritic", out score);
     }
 
-    public bool GetIGDBReception(out int? score)
+    public bool GetIgdbReception(out int? score)
     {
         return GetReception("IGDB", out score);
     }
@@ -60,14 +60,14 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
 
     protected bool GetReception(string aggregator, out int? score)
     {
-        return this.reception.TryGetValue(aggregator, out score);
+        return _reception.TryGetValue(aggregator, out score);
     }
 
     public void AddFullControllerSupport(string description)
     {
         if (description == PCGamingWikiType.Rating.NativeSupport)
         {
-            this.AddFeature("Full Controller Support");
+            AddFeature("Full Controller Support");
         }
     }
 
@@ -80,7 +80,7 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
 
         if (description == PCGamingWikiType.Rating.NativeSupport)
         {
-            this.AddFeature("PlayStation Controller");
+            AddFeature("PlayStation Controller");
         }
     }
 
@@ -93,7 +93,7 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
 
         if (description == PCGamingWikiType.Rating.NativeSupport)
         {
-            this.AddFeature("PlayStation Button Prompts");
+            AddFeature("PlayStation Button Prompts");
         }
     }
 
@@ -106,7 +106,7 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
 
         if (description == PCGamingWikiType.Rating.NativeSupport)
         {
-            this.AddFeature("Light Bar Support");
+            AddFeature("Light Bar Support");
         }
     }
 
@@ -119,7 +119,7 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
 
         if (description == PCGamingWikiType.Rating.NativeSupport)
         {
-            this.AddFeature("Adaptive Trigger Support");
+            AddFeature("Adaptive Trigger Support");
         }
     }
 
@@ -132,7 +132,7 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
 
         if (description == PCGamingWikiType.Rating.NativeSupport)
         {
-            this.AddFeature("Haptic Feedback Support");
+            AddFeature("Haptic Feedback Support");
         }
     }
 
@@ -140,7 +140,7 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
     {
         if (description == PCGamingWikiType.Rating.NativeSupport)
         {
-            this.AddFeature("Touchscreen optimised");
+            AddFeature("Touchscreen optimised");
         }
     }
 
@@ -148,7 +148,7 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
     {
         if (description == PCGamingWikiType.Rating.NativeSupport)
         {
-            this.AddFeature("Controller Support");
+            AddFeature("Controller Support");
         }
     }
 
@@ -171,30 +171,30 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
 
         foreach (string type in types)
         {
-            this.AddFeature($"{featureBaseName}: {type}");
+            AddFeature($"{featureBaseName}: {type}");
         }
 
-        if (playerCount == PCGamingWikiHTMLParser.UndefinedPlayerCount)
+        if (playerCount == PcGamingWikiHtmlParser.UndefinedPlayerCount)
         {
-            this.AddFeature(featureBaseName);
+            AddFeature(featureBaseName);
             return;
         }
 
         if (playerCount == 2)
         {
-            this.AddFeature($"{featureBaseName}: 2");
+            AddFeature($"{featureBaseName}: 2");
         }
         else if (playerCount > 2 && playerCount <= 4)
         {
-            this.AddFeature($"{featureBaseName}: 2-4");
+            AddFeature($"{featureBaseName}: 2-4");
         }
         else if (playerCount > 4 && playerCount <= 8)
         {
-            this.AddFeature($"{featureBaseName}: 4-8");
+            AddFeature($"{featureBaseName}: 4-8");
         }
         else if (playerCount > 8)
         {
-            this.AddFeature($"{featureBaseName}: 8+");
+            AddFeature($"{featureBaseName}: 8+");
         }
     }
 
@@ -203,7 +203,7 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
         AddMultiplayerFeatures(rating, "Local Multiplayer", playerCount, types);
     }
 
-    public void AddMultiplayerLAN(string rating, short playerCount, IList<string> types)
+    public void AddMultiplayerLan(string rating, short playerCount, IList<string> types)
     {
         AddMultiplayerFeatures(rating, "LAN Multiplayer", playerCount, types);
     }
@@ -220,22 +220,22 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
 
     public void AddTag(string t)
     {
-        this.Tags.Add(new MetadataNameProperty(t));
+        Tags.Add(new MetadataNameProperty(t));
     }
 
     public void AddFeature(string t)
     {
-        this.Features.AddMissing(new MetadataNameProperty(t));
+        Features.AddMissing(new MetadataNameProperty(t));
     }
 
     public void AddSeries(string t)
     {
-        this.Series.Add(new MetadataNameProperty(t));
+        Series.Add(new MetadataNameProperty(t));
     }
 
-    public void AddCSVSeries(string csv)
+    public void AddCsvSeries(string csv)
     {
-        string[] tags = SplitCSVString(csv);
+        string[] tags = SplitCsvString(csv);
 
         foreach (string tag in tags)
         {
@@ -243,9 +243,9 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
         }
     }
 
-    public void AddCSVFeatures(string csv)
+    public void AddCsvFeatures(string csv)
     {
-        string[] tags = SplitCSVString(csv);
+        string[] tags = SplitCsvString(csv);
 
         foreach (string tag in tags)
         {
@@ -253,21 +253,20 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
         }
     }
 
-    public void AddCSVTags(string csv, string prefix)
+    public void AddCsvTags(string csv, string prefix)
     {
-        char[] trimChars = [' '];
-        string[] tags = SplitCSVString(csv);
+        string[] tags = SplitCsvString(csv);
 
         foreach (string tag in tags)
         {
             string tagString = $"{prefix} {tag}";
-            AddTag(tagString.Trim(trimChars));
+            AddTag(tagString.Trim());
         }
     }
 
-    public void AddCSVTags(string csv)
+    public void AddCsvTags(string csv)
     {
-        string[] tags = SplitCSVString(csv);
+        string[] tags = SplitCsvString(csv);
 
         foreach (string tag in tags)
         {
@@ -278,7 +277,7 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
     public ReleaseDate? WindowsReleaseDate()
     {
 
-        if (this.ReleaseDates.TryGetValue("Windows", out ReleaseDate? date))
+        if (_releaseDates.TryGetValue("Windows", out ReleaseDate? date))
         {
             return date;
         }
@@ -288,12 +287,12 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
         }
     }
 
-    public void AddReleaseDate(string platform, DateTime? date)
+    public void AddReleaseDate(string platform, DateTime date)
     {
-        this.ReleaseDates[platform] = new ReleaseDate((DateTime)date);
+        _releaseDates[platform] = new ReleaseDate(date);
     }
 
-    public string[] SplitCSVString(string csv)
+    public string[] SplitCsvString(string csv)
     {
         TextFieldParser parser = new(new StringReader(csv));
         parser.SetDelimiters(",");
@@ -302,24 +301,30 @@ public class PCGWGame(PCGamingWikiMetadataSettings settings) : GenericItemOption
 
     public void AddGenres(string genreCsv)
     {
-        string[] genres = SplitCSVString(genreCsv);
+        string[] genres = SplitCsvString(genreCsv);
 
         foreach (string genre in genres)
         {
-            this.Genres.Add(new MetadataNameProperty(genre));
+            Genres.Add(new MetadataNameProperty(genre));
         }
     }
 
     public void SetXboxPlayAnywhere()
     {
-        if (BuiltinExtensions.GetExtensionFromId(this.LibraryGame.PluginId) == BuiltinExtension.XboxLibrary)
+        if (BuiltinExtensions.GetExtensionFromId(LibraryGame.PluginId) == BuiltinExtension.XboxLibrary)
         {
-            this.AddFeature("Xbox Play Anywhere");
+            AddFeature("Xbox Play Anywhere");
         }
     }
 
-    public void AddVRFeature()
+    public void AddVrFeature() => AddFeature("VR");
+
+    public void AddMiddleware(string type, string name)
     {
-        this.AddFeature("VR");
+        if (!settings.ImportTagMiddleware)
+            return;
+
+        var prefix = $"{settings.TagPrefixMiddleware} {type}:".Trim();
+        AddCsvTags(name, prefix);
     }
 }

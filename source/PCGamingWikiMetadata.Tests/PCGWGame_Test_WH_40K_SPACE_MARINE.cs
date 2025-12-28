@@ -7,16 +7,15 @@ namespace PCGamingWikiMetadata.Tests;
 
 public class PCGWGame_Test_WH_40K_SPACE_MARINE : IDisposable
 {
-    private readonly PCGWGame testGame;
+    private readonly PcgwGame testGame;
     private readonly LocalPCGWClient client;
     private readonly TestMetadataRequestOptions options;
 
     public PCGWGame_Test_WH_40K_SPACE_MARINE()
     {
-        this.options = new TestMetadataRequestOptions();
-        this.options.SetGameSourceBattleNet();
+        this.options = TestMetadataRequestOptions.BattleNet();
         this.client = new LocalPCGWClient(this.options);
-        this.testGame = new PCGWGame(this.client.GetSettings(), "Warhammer 40,000: Space Marine", -1);
+        this.testGame = new PcgwGame(this.client.GetSettings(), "Warhammer 40,000: Space Marine", -1);
         this.client.FetchGamePageContent(this.testGame);
     }
 

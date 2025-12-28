@@ -1,27 +1,23 @@
+using AngleSharp.Dom;
+using AngleSharp.Dom.Html;
+using AngleSharp.Parser.Html;
+using PCGamingWikiType;
+using Playnite.SDK;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
-using HtmlAgilityPack;
-using System.Text.RegularExpressions;
-using Playnite.SDK;
 using System.Globalization;
-using PlayniteExtensions.Common;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace PCGamingWikiMetadata;
 
-public class PCGamingWikiHTMLParser
+public class PcGamingWikiHtmlParser(string html, PCGWGameController gameController)
 {
-    private readonly ILogger logger = LogManager.GetLogger();
-    private readonly HtmlDocument doc;
-    private readonly PCGWGameController gameController;
+    private readonly ILogger _logger = LogManager.GetLogger();
+    private readonly IHtmlDocument _doc = new HtmlParser().Parse(html);
 
     public const short UndefinedPlayerCount = -1;
-
-    public PCGamingWikiHTMLParser(string html, PCGWGameController gameController)
-    {
-        this.doc = new HtmlDocument();
-        this.doc.LoadHtml(html);
-        this.gameController = gameController;
-    }
 
     public void ApplyGameMetadata()
     {
@@ -30,50 +26,55 @@ public class PCGamingWikiHTMLParser
         ParseCloudSync();
         ParseMultiplayer();
         ParseVideo();
-        ParseVR();
+        ParseVr();
+        ParseMiddleware();
     }
 
-    private void RemoveChildElementTypes(HtmlNode node, string type)
+    private void RemoveChildElementTypes(IElement node, string type)
     {
-        var removeChildren = node.SelectNodes(type);
+        var removeChildren = node.QuerySelectorAll(type);
+        removeChildren.ForEach(a => a.Remove());
 
-        if (removeChildren?.Count > 0)
+        if (removeChildren?.Any() != true)
+            return;
+
+        foreach (var child in removeChildren)
         {
-            node.RemoveChildren(removeChildren);
+            child.Remove();
         }
     }
 
-    private void RemoveCitationsFromHTMLNode(HtmlNode node)
-    {
-        try
-        {
-            RemoveChildElementTypes(node, ".//sup");
-        }
-        catch (Exception e)
-        {
-            logger.Error($"Error removing sup elements: {e.ToString()}");
-        }
-    }
-
-    private void RemoveSpanFromHTMLNode(HtmlNode node)
+    private void RemoveCitationsFromHtmlNode(IElement node)
     {
         try
         {
-            RemoveChildElementTypes(node, ".//span");
+            RemoveChildElementTypes(node, "sup");
         }
         catch (Exception e)
         {
-            logger.Error($"Error removing span elements: {e.ToString()}");
+            _logger.Error($"Error removing sup elements: {e}");
         }
     }
 
-    private IList<HtmlNode> SelectTableRowsByClass(string tableId, string rowClass)
+    private void RemoveSpanFromHtmlNode(IElement node)
     {
-        var table = this.doc.DocumentNode.SelectSingleNode($"//table[@id='{tableId}']");
+        try
+        {
+            RemoveChildElementTypes(node, "span");
+        }
+        catch (Exception e)
+        {
+            _logger.Error($"Error removing span elements: {e}");
+        }
+    }
+
+    private IList<IElement> SelectTableRowsByClass(string tableId, string rowClass)
+    {
+        var table = _doc.QuerySelector($"table#{tableId}");
 
         if (table != null)
         {
-            return table.SelectNodes($"//tr[@class='{rowClass}']");
+            return table.QuerySelectorAll($"tr.{rowClass}").ToList();
         }
 
         return [];
@@ -81,99 +82,97 @@ public class PCGamingWikiHTMLParser
 
     public bool CheckPageRedirect(out string redirectPage)
     {
-        HtmlNode node = this.doc.DocumentNode.SelectSingleNode($"//ul[@class='redirectText']");
+        var node = _doc.QuerySelector("ul.redirectText");
         redirectPage = null;
 
         if (node != null)
         {
-            redirectPage = node.InnerText.HtmlDecode();
+            redirectPage = node.InnerHtml.HtmlDecode();
             return true;
         }
 
         return false;
     }
 
-    private void ParseVR()
+    private void ParseVr()
     {
-        var rows = SelectTableRowsByClass("table-settings-vr-headsets", "template-infotable-body table-settings-vr-body-row");
-        string headset = "";
-        string rating = "";
+        var rows = SelectTableRowsByClass("table-settings-vr-headsets", "table-settings-vr-body-row");
 
-        foreach (HtmlNode row in rows)
+        foreach (IElement row in rows)
         {
-            foreach (HtmlNode child in row.SelectNodes(".//th|td"))
+            string headset = "";
+            string rating = "";
+
+            foreach (IElement child in row.QuerySelectorAll("th, td"))
             {
-                switch (child.Attributes["class"].Value)
+                switch (child.ClassName)
                 {
                     case "table-settings-vr-body-parameter":
-                        headset = child.FirstChild.InnerText.HtmlDecode();
+                        headset = child.TextContent.HtmlDecode();
                         break;
                     case "table-settings-vr-body-rating":
-                        rating = child.FirstChild.Attributes["title"].Value;
+                        rating = child.FirstElementChild.Attributes["title"].Value;
                         break;
                     case "table-settings-vr-body-notes":
                         break;
                 }
             }
 
-            this.gameController.AddVRFeature(headset, rating);
-            headset = "";
-            rating = "";
+            gameController.AddVRFeature(headset, rating);
         }
     }
 
     private void ParseVideo()
     {
-        var rows = SelectTableRowsByClass("table-settings-video", "template-infotable-body table-settings-video-body-row");
-        string feature = "";
-        string rating = "";
+        var rows = SelectTableRowsByClass("table-settings-video", "table-settings-video-body-row");
 
-        foreach (HtmlNode row in rows)
+        foreach (IElement row in rows)
         {
-            foreach (HtmlNode child in row.SelectNodes(".//th|td"))
+            string feature = "";
+            string rating = "";
+
+            foreach (IElement child in row.QuerySelectorAll("th, td"))
             {
                 switch (child.Attributes["class"].Value)
                 {
                     case "table-settings-video-body-parameter":
-                        feature = child.FirstChild.InnerText.HtmlDecode();
+                        feature = child.TextContent.HtmlDecode();
                         break;
                     case "table-settings-video-body-rating":
-                        rating = child.FirstChild.Attributes["title"].Value;
+                        rating = child.FirstElementChild.Attributes["title"].Value;
                         break;
                 }
             }
 
-            this.gameController.AddVideoFeature(feature, rating);
-            feature = "";
-            rating = "";
+            gameController.AddVideoFeature(feature, rating);
         }
     }
 
     private void ParseMultiplayer()
     {
-        var rows = SelectTableRowsByClass("table-network-multiplayer", "template-infotable-body table-network-multiplayer-body-row");
+        var rows = SelectTableRowsByClass("table-network-multiplayer", "table-network-multiplayer-body-row");
         string networkType = "";
         string rating = "";
         short playerCount = UndefinedPlayerCount;
 
-        foreach (HtmlNode row in rows)
+        foreach (IElement row in rows)
         {
-            foreach (HtmlNode child in row.SelectNodes(".//th|td"))
+            foreach (IElement child in row.QuerySelectorAll("th, td"))
             {
                 switch (child.Attributes["class"].Value)
                 {
                     case "table-network-multiplayer-body-parameter":
-                        networkType = child.FirstChild.InnerText.HtmlDecode();
+                        networkType = child.TextContent.HtmlDecode();
                         break;
                     case "table-network-multiplayer-body-rating":
-                        rating = child.FirstChild.Attributes["title"].Value;
+                        rating = child.FirstElementChild.Attributes["title"].Value;
                         break;
                     case "table-network-multiplayer-body-players":
-                        short.TryParse(child.FirstChild.InnerText.HtmlDecode(), out playerCount);
+                        short.TryParse(child.TextContent.HtmlDecode(), out playerCount);
                         break;
                     case "table-network-multiplayer-body-notes":
                         IList<string> notes = ParseMultiplayerNotes(child);
-                        this.gameController.AddMultiplayer(networkType, rating, playerCount, notes);
+                        gameController.AddMultiplayer(networkType, rating, playerCount, notes);
                         rating = "";
                         networkType = "";
                         playerCount = UndefinedPlayerCount;
@@ -183,11 +182,11 @@ public class PCGamingWikiHTMLParser
         }
     }
 
-    private IList<string> ParseMultiplayerNotes(HtmlNode notes)
+    private IList<string> ParseMultiplayerNotes(IElement notes)
     {
         List<string> multiplayerTypes = [];
 
-        Regex pattern = new(@"class=""table-network-multiplayer-body-notes"">(?<mode1>(Co-op|Versus))?(,)?(&#32;)?(?<mode2>(Co-op|Versus))?<br>");
+        Regex pattern = new("""class="table-network-multiplayer-body-notes">(?<mode1>(Co-op|Versus))?(,)?(&#32;)?(?<mode2>(Co-op|Versus))?<br>""");
         Match match = pattern.Match(notes.OuterHtml);
 
         if (match.Groups["mode1"].Success)
@@ -205,49 +204,39 @@ public class PCGamingWikiHTMLParser
 
     private void ParseInput()
     {
-        var rows = SelectTableRowsByClass("table-settings-input", "template-infotable-body table-settings-input-body-row");
+        var rows = SelectTableRowsByClass("table-settings-input", "table-settings-input-body-row");
+
         string param = "";
 
-        foreach (HtmlNode row in rows)
+        foreach (IElement row in rows)
         {
-            foreach (HtmlNode child in row.SelectNodes(".//th|td"))
+            foreach (IElement child in row.QuerySelectorAll("th, td"))
             {
-                switch (child.Attributes["class"].Value)
+                switch (child.ClassName)
                 {
                     case "table-settings-input-body-parameter":
-                        param = child.FirstChild.InnerText.HtmlDecode();
+                        param = child.TextContent.HtmlDecode();
                         break;
                     case "table-settings-input-body-rating":
-                        switch (param)
+                        Action<string> addAction = param switch
                         {
-                            case "Full controller support":
-                                this.gameController.Game.AddFullControllerSupport(child.FirstChild.Attributes["title"].Value);
-                                break;
-                            case "Controller support":
-                                this.gameController.Game.AddControllerSupport(child.FirstChild.Attributes["title"].Value);
-                                break;
-                            case "Touchscreen optimised":
-                                this.gameController.Game.AddTouchscreenSupport(child.FirstChild.Attributes["title"].Value);
-                                break;
-                            case "PlayStation controllers":
-                                this.gameController.Game.AddPlayStationControllerSupport(child.FirstChild.Attributes["title"].Value);
-                                break;
-                            case "PlayStation button prompts":
-                                this.gameController.Game.AddPlayStationButtonPrompts(child.FirstChild.Attributes["title"].Value);
-                                break;
-                            case "Light bar support":
-                                this.gameController.Game.AddLightBarSupport(child.FirstChild.Attributes["title"].Value);
-                                break;
-                            case "Adaptive trigger support":
-                                this.gameController.Game.AddAdaptiveTriggerSupport(child.FirstChild.Attributes["title"].Value);
-                                break;
-                            case "DualSense haptic feedback support":
-                                this.gameController.Game.AddHapticFeedbackSupport(child.FirstChild.Attributes["title"].Value);
-                                break;
-                            default:
-                                break;
+                            "Full controller support" => gameController.Game.AddFullControllerSupport,
+                            "Controller support" => gameController.Game.AddControllerSupport,
+                            "Touchscreen optimised" => gameController.Game.AddTouchscreenSupport,
+                            "PlayStation controllers" => gameController.Game.AddPlayStationControllerSupport,
+                            "PlayStation button prompts" => gameController.Game.AddPlayStationButtonPrompts,
+                            "Light bar support" => gameController.Game.AddLightBarSupport,
+                            "Adaptive trigger support" => gameController.Game.AddAdaptiveTriggerSupport,
+                            "DualSense haptic feedback support" => gameController.Game.AddHapticFeedbackSupport,
+                            _ => null,
+                        };
 
+                        if (addAction != null)
+                        {
+                            var title = child.FirstElementChild.GetAttribute("title");
+                            addAction(title);
                         }
+
                         param = "";
                         break;
                 }
@@ -257,20 +246,20 @@ public class PCGamingWikiHTMLParser
 
     private void ParseCloudSync()
     {
-        var rows = SelectTableRowsByClass("table-cloudsync", "template-infotable-body table-cloudsync-body-row");
+        var rows = SelectTableRowsByClass("table-cloudsync", "table-cloudsync-body-row");
         string launcher = "";
 
-        foreach (HtmlNode row in rows)
+        foreach (IElement row in rows)
         {
-            foreach (HtmlNode child in row.SelectNodes(".//th|td"))
+            foreach (IElement child in row.QuerySelectorAll("th, td"))
             {
                 switch (child.Attributes["class"].Value)
                 {
                     case "table-cloudsync-body-system":
-                        launcher = child.FirstChild.InnerText.HtmlDecode();
+                        launcher = child.TextContent.HtmlDecode();
                         break;
                     case "table-cloudsync-body-rating":
-                        this.gameController.AddCloudSaves(launcher, child.FirstChild.Attributes["title"].Value);
+                        gameController.AddCloudSaves(launcher, child.FirstElementChild.Attributes["title"].Value);
                         launcher = "";
                         break;
                 }
@@ -278,42 +267,57 @@ public class PCGamingWikiHTMLParser
         }
     }
 
+    private void ParseMiddleware()
+    {
+        var rows = SelectTableRowsByClass("table-middleware", "table-middleware-body-row");
+        foreach (var row in rows)
+        {
+            var type = row.QuerySelector("th")?.TextContent.HtmlDecode();
+            var middleware = row.QuerySelector("td")?.TextContent.HtmlDecode();
+
+            if (string.IsNullOrWhiteSpace(middleware) || string.IsNullOrWhiteSpace(type))
+                continue;
+
+            gameController.AddMiddleware(type, middleware);
+        }
+    }
+
     private void ParseInfobox()
     {
-        HtmlNode table = this.doc.DocumentNode.SelectSingleNode("//table[@id='infobox-game']");
+        var table = _doc.QuerySelector("table#infobox-game");
 
         if (table == null)
         {
-            logger.Error($"Unable to fetch infobox-game table for {this.gameController.Game.Name}");
+            _logger.Error($"Unable to fetch infobox-game table for {gameController.Game.Name}");
             return;
         }
 
         string currentHeader = "";
 
-        foreach (HtmlNode row in table.SelectNodes(".//tr"))
+        foreach (IElement row in table.QuerySelectorAll("tr"))
         {
             string key = "";
 
-            foreach (HtmlNode child in row.SelectNodes(".//th|td"))
+            foreach (IElement child in row.QuerySelectorAll("th, td"))
             {
-                RemoveSpanFromHTMLNode(child);
-                RemoveCitationsFromHTMLNode(child);
+                RemoveSpanFromHtmlNode(child);
+                RemoveCitationsFromHtmlNode(child);
 
-                string text = HtmlEntity.DeEntitize(child.InnerText.HtmlDecode());
+                string text = child.TextContent.HtmlDecode();
 
-                switch (child.Name)
+                switch (child.TagName)
                 {
-                    case "th":
+                    case "TH":
                         currentHeader = text;
                         break;
 
-                    case "td":
-                        switch (child.Attributes["class"].Value)
+                    case "TD":
+                        switch (child.ClassName)
                         {
                             case "template-infobox-type":
-                                if (text == "")
-                                    break;
-                                key = text;
+                                if (!string.IsNullOrEmpty(text))
+                                    key = text;
+
                                 break;
                             case "template-infobox-icons":
                                 AddLinks(child);
@@ -324,11 +328,12 @@ public class PCGamingWikiHTMLParser
                                 switch (currentHeader)
                                 {
                                     case "Taxonomy":
-                                        foreach (HtmlNode data in child.SelectNodes(".//a"))
+                                        foreach (IElement data in child.QuerySelectorAll("a"))
                                         {
-                                            text = HtmlEntity.DeEntitize(data.InnerText.HtmlDecode());
-                                            this.gameController.AddTaxonomy(key, text);
+                                            text = data.TextContent.HtmlDecode();
+                                            gameController.AddTaxonomy(key, text);
                                         }
+
                                         break;
                                     case "Reception":
                                         AddReception(key, child);
@@ -336,37 +341,38 @@ public class PCGamingWikiHTMLParser
                                     case "Release dates":
                                         ApplyReleaseDate(key, text);
                                         break;
-                                    case PCGamingWikiType.Taxonomy.Engines:
-                                        this.gameController.AddTaxonomy(PCGamingWikiType.Taxonomy.Engines, text);
+                                    case Taxonomy.Engines:
+                                        gameController.AddTaxonomy(Taxonomy.Engines, text);
                                         break;
                                     case "Developers":
-                                        this.gameController.AddDeveloper(text);
+                                        gameController.AddDeveloper(text);
                                         break;
                                     case "Publishers":
-                                        this.gameController.AddPublisher(text);
+                                        gameController.AddPublisher(text);
                                         break;
                                     default:
-                                        logger.Debug($"ApplyGameMetadata unknown header {currentHeader}");
+                                        _logger.Debug($"ApplyGameMetadata unknown header {currentHeader}");
                                         break;
                                 }
+
                                 break;
                         }
+
                         break;
                 }
             }
         }
     }
 
-    private void AddReception(string aggregator, HtmlNode node)
+    private void AddReception(string aggregator, IElement node)
     {
-
-        if (int.TryParse(node.SelectNodes(".//a")[0].InnerText.HtmlDecode(), out int score))
+        if (int.TryParse(node.QuerySelector("a").TextContent.HtmlDecode(), out int score))
         {
-            this.gameController.Game.AddReception(aggregator, score);
+            gameController.Game.AddReception(aggregator, score);
         }
         else
         {
-            logger.Error($"Unable to add reception {aggregator} {score}");
+            _logger.Error($"Unable to add reception {aggregator} {score}");
         }
     }
 
@@ -377,40 +383,39 @@ public class PCGamingWikiHTMLParser
         if (date == null)
             return;
 
-        this.gameController.Game.AddReleaseDate(platform, date);
+        gameController.Game.AddReleaseDate(platform, date.Value);
     }
 
     private DateTime? ParseWikiDate(string dateString)
     {
         if (DateTime.TryParse(dateString, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime date))
-        {
             return date;
-        }
-        else
-        {
-            logger.Error($"Unable to parse date for {this.gameController.Game.Name}: {dateString}");
-            return null;
-        }
+
+        _logger.Error($"Unable to parse date for {gameController.Game.Name}: {dateString}");
+        return null;
     }
 
-    private void AddLinks(HtmlNode icons)
+    private void AddLinks(IElement icons)
     {
-        string url;
-        foreach (var c in icons.ChildNodes)
+        foreach (var c in icons.Children)
         {
-            url = c.ChildNodes[0].Attributes["href"].Value;
-            switch (c.Attributes["Title"].Value)
+            var title = c.GetAttribute("title");
+            var url = c.QuerySelector("a[href]")?.GetAttribute("href");
+            if (url == null)
+                continue;
+
+            switch (title)
             {
-                case var title when new Regex(@"^Official site$").IsMatch(title):
-                    this.gameController.AddLink(new Playnite.SDK.Models.Link("Official site", url));
+                case "Official site":
+                    gameController.AddLink(new("Official site", url));
                     break;
-                case var title when new Regex(@"GOG Database$").IsMatch(title):
-                    this.gameController.AddLink(new Playnite.SDK.Models.Link("GOG Database", url));
+                case var _ when title.EndsWith("GOG Database"):
+                    gameController.AddLink(new("GOG Database", url));
                     break;
                 default:
-                    string[] linkTitle = c.Attributes["Title"].Value.Split(' ');
+                    string[] linkTitle = c.Attributes["title"].Value.Split(' ');
                     string titleComp = linkTitle[linkTitle.Length - 1];
-                    this.gameController.AddLink(new Playnite.SDK.Models.Link(titleComp, url));
+                    gameController.AddLink(new(titleComp, url));
                     break;
             }
         }

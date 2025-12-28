@@ -7,17 +7,16 @@ namespace PCGamingWikiMetadata.Tests;
 
 public class PCGWGame_Test_CATLADY : IDisposable
 {
-    private readonly PCGWGame testGame;
+    private readonly PcgwGame testGame;
     private readonly LocalPCGWClient client;
     private readonly TestMetadataRequestOptions options;
 
 
     public PCGWGame_Test_CATLADY()
     {
-        this.options = new TestMetadataRequestOptions();
-        this.options.SetGameSourceSteam();
+        this.options = TestMetadataRequestOptions.Steam();
         this.client = new LocalPCGWClient(this.options);
-        this.testGame = new PCGWGame(this.client.GetSettings(), "Cat Lady - The Card Game", -1);
+        this.testGame = new PcgwGame(this.client.GetSettings(), "Cat Lady - The Card Game", -1);
         // this.client.GetSettings().ImportTagNoCloudSaves = false;
         // this.client.GetSettings().ImportFeatureFramerate60 = true;
         // this.client.GetSettings().ImportFeatureFramerate120 = true;

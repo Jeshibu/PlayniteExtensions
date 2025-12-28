@@ -8,16 +8,15 @@ namespace PCGamingWikiMetadata.Tests;
 
 public class PCGWGame_Test_OVERCOOKED : IDisposable
 {
-    private readonly PCGWGame testGame;
+    private readonly PcgwGame testGame;
     private readonly LocalPCGWClient client;
     private readonly TestMetadataRequestOptions options;
 
     public PCGWGame_Test_OVERCOOKED()
     {
-        this.options = new TestMetadataRequestOptions();
-        this.options.SetGameSourceOrigin();
+        this.options = TestMetadataRequestOptions.Origin();
         this.client = new LocalPCGWClient(this.options);
-        this.testGame = new PCGWGame(this.client.GetSettings(), "Overcooked!", -1);
+        this.testGame = new PcgwGame(this.client.GetSettings(), "Overcooked!", -1);
         this.client.GetSettings().ImportFeatureVR = true;
         this.client.GetSettings().ImportMultiplayerTypes = true;
         this.client.FetchGamePageContent(this.testGame);

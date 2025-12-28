@@ -8,17 +8,16 @@ namespace PCGamingWikiMetadata.Tests;
 
 public class PCGWGame_Test_Lego_HP : IDisposable
 {
-    private readonly PCGWGame testGame;
+    private readonly PcgwGame testGame;
     private readonly LocalPCGWClient client;
     private readonly TestMetadataRequestOptions options;
 
 
     public PCGWGame_Test_Lego_HP()
     {
-        this.options = new TestMetadataRequestOptions();
-        this.options.SetGameSourceSteam();
+        this.options = TestMetadataRequestOptions.Steam();
         this.client = new LocalPCGWClient(this.options);
-        this.testGame = new PCGWGame(this.client.GetSettings(), "Lego Harry Potter: Years 1-4", -1);
+        this.testGame = new PcgwGame(this.client.GetSettings(), "Lego Harry Potter: Years 1-4", -1);
         this.client.GetSettings().ImportTagNoCloudSaves = true;
         this.client.GetSettings().ImportFeatureVR = true;
         this.client.GetSettings().ImportFeatureFramerate60 = true;
