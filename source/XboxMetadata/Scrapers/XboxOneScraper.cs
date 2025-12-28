@@ -208,8 +208,6 @@ public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platform
             Platforms = summary.AvailableOn?.SelectMany(p => platformUtility.GetPlatforms(p)).ToList(),
             Developers = GetCompanies(summary.DeveloperName).ToList(),
             Publishers = GetCompanies(summary.PublisherName).ToList(),
-            CommunityScore = (int)(summary.AverageRating * 20),
-            InstallSize = summary.MaxInstallSize,
             Genres = summary.Categories?.ToList(),
             Features = features,
             ReleaseDate = summary.ReleaseDate,
@@ -219,6 +217,12 @@ public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platform
             Backgrounds = GetImages(summary, settings.Background),
             Url = response.ResponseUrl,
         };
+
+        if (summary.AverageRating > 0)
+            output.CommunityScore = (int)(summary.AverageRating * 20);
+
+        if (summary.MaxInstallSize > 0)
+            output.InstallSize = summary.MaxInstallSize;
 
         return output;
     }
