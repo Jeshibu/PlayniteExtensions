@@ -15,8 +15,8 @@ namespace XboxMetadata.Scrapers;
 
 public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platformUtility) : BaseXboxScraper(downloader, platformUtility)
 {
-    public override string Key { get; } = "XboxOne";
-    public override int ExecutionOrder { get; } = 1;
+    public override string Key => "XboxOne";
+    public override int ExecutionOrder => 1;
     private readonly ILogger logger = LogManager.GetLogger();
 
     public override async Task<XboxGameDetails> GetDetailsAsync(XboxMetadataSettings settings, string id, string url)
@@ -42,17 +42,20 @@ public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platform
         var parser = new HtmlParser();
         var doc = await parser.ParseAsync(response.ResponseContent);
 
-        var output = new XboxGameDetails() { Url = response.ResponseUrl };
-
-        output.Title = SelectSingleNodeContent(doc, "#DynamicHeading_productTitle");
-        output.Platforms = SelectNodesTextContent(doc, "div#module-available-on > div > a.c-tag").SelectMany(platformUtility.GetPlatforms).ToList();
-        output.Features = SelectNodesTextContent(doc, "div#module-capabilities > div > a.c-tag");
-        output.Description = SelectSingleNodeContent(doc, "p#product-description");
         var screenshotsJson = doc.QuerySelector("div.cli_gallery_json[data-slides-json]")?.GetAttribute("data-slides-json");
-        output.Backgrounds = GetScreenshots(screenshotsJson).ToList();
-        //output.Developers = SelectNodesTextContent(doc, "div#Detail-57779-toggle-target > span");
-        //output.Publishers = SelectNodesTextContent(doc, "div#Detail-47474-toggle-target > span > span");
-        output.Genres = SelectNodesTextContent(doc, "div#category-toggle-target a");
+        var output = new XboxGameDetails
+        {
+            Url = response.ResponseUrl,
+            Title = SelectSingleNodeContent(doc, "#DynamicHeading_productTitle"),
+            Platforms = SelectNodesTextContent(doc, "div#module-available-on > div > a.c-tag").SelectMany(platformUtility.GetPlatforms).ToList(),
+            Features = SelectNodesTextContent(doc, "div#module-capabilities > div > a.c-tag"),
+            Description = SelectSingleNodeContent(doc, "p#product-description"),
+            Backgrounds = GetScreenshots(screenshotsJson).ToList(),
+            //output.Developers = SelectNodesTextContent(doc, "div#Detail-57779-toggle-target > span");
+            //output.Publishers = SelectNodesTextContent(doc, "div#Detail-47474-toggle-target > span > span");
+            Genres = SelectNodesTextContent(doc, "div#category-toggle-target a")
+        };
+
         var coverUrl = doc.QuerySelector("div.pi-product-image img")?.GetAttribute("src");
         if (!string.IsNullOrWhiteSpace(coverUrl) && settings.Cover.Fields.Any(f => f.Checked && f.Field == ImageSourceField.AppStoreProductImage))
             output.Covers.Add(UrlToImageData(coverUrl));
@@ -111,6 +114,7 @@ public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platform
             output.Width = width;
             output.Height = height;
         }
+
         return output;
     }
 
@@ -119,7 +123,7 @@ public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platform
         bool success = false;
         width = 0;
         height = 0;
-        var matches = Regex.Matches(imageUrl, @"[&?]([a-z])=([0-9]+)");
+        var matches = Regex.Matches(imageUrl, "[&?]([a-z])=([0-9]+)");
         foreach (Match match in matches)
         {
             var queryStringParameter = match.Groups[1].Value;
@@ -136,6 +140,7 @@ public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platform
                     break;
             }
         }
+
         return success;
     }
 
@@ -179,10 +184,18 @@ public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platform
 
         if (settings.ImportAccessibilityFeatures && summary.AccessibilityCapabilities != null)
         {
-            features.AddRange(summary.AccessibilityCapabilities?.Audio.Select(c => "Accessibility: Audio: " + c));
-            features.AddRange(summary.AccessibilityCapabilities?.Gameplay.Select(c => "Accessibility: Gameplay: " + c));
-            features.AddRange(summary.AccessibilityCapabilities?.Input.Select(c => "Accessibility: Input: " + c));
-            features.AddRange(summary.AccessibilityCapabilities?.Visual.Select(c => "Accessibility: Visual: " + c));
+            void AddFeatures(string[] featureNames, string prefix)
+            {
+                if (featureNames == null)
+                    return;
+
+                features.AddRange(featureNames.Select(c => $"Accessibility: {prefix}: {c}"));
+            }
+
+            AddFeatures(summary.AccessibilityCapabilities?.Audio, "Audio");
+            AddFeatures(summary.AccessibilityCapabilities?.Gameplay, "Gameplay");
+            AddFeatures(summary.AccessibilityCapabilities?.Input, "Input");
+            AddFeatures(summary.AccessibilityCapabilities?.Visual, "Visual");
         }
 
         Regex multiSpace = new(@"\s{2,}");
@@ -193,7 +206,7 @@ public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platform
         features.Sort();
         var links = new List<Link> { new("Xbox Store", response.ResponseUrl) };
         if (settings.ImportAccessibilityFeatures && summary.AccessibilityCapabilities?.PublisherInformationUri != null)
-            links.Add(new Link("Accessibility information", summary.AccessibilityCapabilities.PublisherInformationUri));
+            links.Add(new("Accessibility information", summary.AccessibilityCapabilities.PublisherInformationUri));
 
         string ageRating = null;
         if (summary.ContentRating != null)
@@ -239,11 +252,11 @@ public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platform
         var url = GetSearchUrl(settings.Market, query);
         var response = await downloader.DownloadStringAsync(url, throwExceptionOnErrorResponse: true);
         var parsed = JsonConvert.DeserializeObject<XboxSearchResultsRoot>(response.ResponseContent);
-        var searchResults = parsed.ResultSets.Where(rs => rs.Type == "product")
-            ?.SelectMany(rs => rs.Suggests)
-            .Where(sug => sug.Source == "Game")
-            .Select(SearchResultFromSuggest)
-            .ToDictionarySafe(sr => sr.Id).Values; //deduplicate by ID - DCatAll-Products and xSearch-Products can overlap
+        var searchResults = parsed?.ResultSets?.Where(rs => rs.Type == "product")
+                                  .SelectMany(rs => rs.Suggests)
+                                  .Where(sug => sug.Source == "Game")
+                                  .Select(SearchResultFromSuggest)
+                                  .ToDictionarySafe(sr => sr.Id).Values; //deduplicate by ID - DCatAll-Products and xSearch-Products can overlap
         var output = new List<XboxGameSearchResultItem>();
         if (searchResults == null)
             return output;
@@ -260,12 +273,13 @@ public class XboxOneScraper(IWebDownloader downloader, IPlatformUtility platform
                 Platforms = platforms.ToList()
             });
         }
+
         return output;
     }
 
     private static XboxSearchResultGame SearchResultFromSuggest(XboxSearchSuggest suggest)
     {
-        var imgUrl = new Uri(new Uri("https://www.xbox.com/"), suggest.ImageUrl).AbsoluteUri;
+        var imgUrl = new Uri(new("https://www.xbox.com/"), suggest.ImageUrl).AbsoluteUri;
 
         var id = suggest.Metas.FirstOrDefault(m => m.Key == "BigCatalogId")?.Value;
         var productType = suggest.Metas.FirstOrDefault(m => m.Key == "ProductType")?.Value;
