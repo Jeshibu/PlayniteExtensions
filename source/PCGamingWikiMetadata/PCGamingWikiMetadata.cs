@@ -33,6 +33,7 @@ public class PCGamingWikiMetadata : MetadataPlugin
         MetadataField.CriticScore,
         MetadataField.Tags,
     ];
+
     public override string Name => "PCGamingWiki";
 
     public PCGamingWikiMetadata(IPlayniteAPI api) : base(api)
@@ -73,13 +74,10 @@ public class PCGamingWikiMetadata : MetadataPlugin
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
-        yield return new()
-        {
-            MenuSection = "@PCGamingWiki",
-            Description = "Import PCGamingWiki property",
-            Action = _ => ImportGameProperty(),
-        };
+        if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            yield return new() { MenuSection = "@PCGamingWiki", Description = "Import PCGamingWiki property", Action = _ => ImportGameProperty(), };
     }
+
     private void ImportGameProperty()
     {
         var platformUtility = new PlatformUtility(PlayniteApi);

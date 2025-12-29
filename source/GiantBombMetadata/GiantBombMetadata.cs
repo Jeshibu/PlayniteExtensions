@@ -78,7 +78,8 @@ public class GiantBombMetadata : MetadataPlugin
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
-        yield return new MainMenuItem { Description = "Import Giant Bomb game property", MenuSection = "@Giant Bomb", Action = _ => ImportGameProperty() };
+        if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            yield return new MainMenuItem { Description = "Import Giant Bomb game property", MenuSection = "@Giant Bomb", Action = _ => ImportGameProperty() };
     }
 
     public override IEnumerable<TopPanelItem> GetTopPanelItems()
@@ -107,7 +108,7 @@ public class GiantBombMetadata : MetadataPlugin
         var cancelOption = new MessageBoxOption("Cancel", isCancel: true);
 
         var chosenOption = PlayniteApi.Dialogs.ShowMessage("Assign one of the following to all your matching games:", "Bulk property import",
-                    System.Windows.MessageBoxImage.Question, [genreOption, otherOption, cancelOption]);
+                                                           System.Windows.MessageBoxImage.Question, [genreOption, otherOption, cancelOption]);
 
         if (chosenOption == null || chosenOption == cancelOption) return;
 
@@ -131,13 +132,12 @@ public class GiantBombMetadata : MetadataPlugin
 
     private bool BlockMissingApiKey()
     {
-        if (string.IsNullOrWhiteSpace(Settings.Settings.ApiKey))
-        {
-            var notification = new NotificationMessage("giantbomb-missing-api-key", "Missing Giant Bomb API key. Click here to add it.",
-                                                       NotificationType.Error, () => OpenSettingsView());
-            PlayniteApi.Notifications.Add(notification);
-            return true;
-        }
-        return false;
+        if (!string.IsNullOrWhiteSpace(Settings.Settings.ApiKey))
+            return false;
+
+        var notification = new NotificationMessage("giantbomb-missing-api-key", "Missing Giant Bomb API key. Click here to add it.",
+                                                   NotificationType.Error, () => OpenSettingsView());
+        PlayniteApi.Notifications.Add(notification);
+        return true;
     }
 }

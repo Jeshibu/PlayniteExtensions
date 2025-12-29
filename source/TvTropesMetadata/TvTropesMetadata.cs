@@ -49,7 +49,8 @@ public class TvTropesMetadata : MetadataPlugin
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
-        yield return new() { Description = "Import Trope", MenuSection = "@TV Tropes", Action = _ => ImportGameProperty() };
+        if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            yield return new() { Description = "Import Trope", MenuSection = "@TV Tropes", Action = _ => ImportGameProperty() };
     }
 
     public override IEnumerable<TopPanelItem> GetTopPanelItems()

@@ -94,6 +94,9 @@ public class MobyGamesMetadata : MetadataPlugin
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
+        if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+            yield break;
+
         if (settings.Settings.DataSource.HasFlag(DataSource.Api) || settings.Settings.DataSource.HasFlag(DataSource.Scraping))
             yield return new() { Description = "Import MobyGames genre/group", MenuSection = "@MobyGames", Action = _ => ImportGameProperty() };
     }
@@ -153,7 +156,7 @@ public class MobyGamesMetadata : MetadataPlugin
     {
         if (!settings.Settings.DataSource.HasFlag(DataSource.Api) || !string.IsNullOrWhiteSpace(settings.Settings.ApiKey))
             return false;
-        
+
         PlayniteApi.Notifications.Add(new("mobygames-missing-api-key", "Missing MobyGames API key. Click here to add it.",
                                           NotificationType.Error, () => OpenSettingsView()));
         return true;

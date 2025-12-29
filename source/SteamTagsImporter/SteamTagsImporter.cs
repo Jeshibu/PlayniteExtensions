@@ -198,7 +198,8 @@ public class SteamTagsImporter : MetadataPlugin
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
-        yield return new MainMenuItem { Description = "Import Steam game property", MenuSection = "@Steam Tags Importer", Action = a => ImportGameProperty() };
+        if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            yield return new MainMenuItem { Description = "Import Steam game property", MenuSection = "@Steam Tags Importer", Action = a => ImportGameProperty() };
     }
 
     public override IEnumerable<TopPanelItem> GetTopPanelItems()

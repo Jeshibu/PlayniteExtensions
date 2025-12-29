@@ -75,7 +75,8 @@ public class LaunchBoxMetadata : MetadataPlugin
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
-        yield return new() { Description = "Import LaunchBox genre", MenuSection = "@LaunchBox", Action = _ => ImportGameProperty() };
+        if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            yield return new() { Description = "Import LaunchBox genre", MenuSection = "@LaunchBox", Action = _ => ImportGameProperty() };
     }
 
     public override IEnumerable<TopPanelItem> GetTopPanelItems()
