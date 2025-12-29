@@ -23,11 +23,11 @@ public class SortableNameConverter
     private static readonly Dictionary<char, int> romanNumeralValues = new()
     {
         { 'I', 1 }, { 'V', 5 }, { 'X', 10 }, { 'L', 50 }, { 'C', 100 }, { 'D', 500 }, { 'M', 1000 },
-        //unicode uppercase
+        //Unicode uppercase
         {'Ⅰ', 1}, {'Ⅱ', 2}, {'Ⅲ', 3}, {'Ⅳ', 4}, {'Ⅴ', 5}, {'Ⅵ', 6}, {'Ⅶ', 7}, {'Ⅷ', 8}, {'Ⅸ', 9}, {'Ⅹ', 10}, {'Ⅺ', 11}, {'Ⅻ', 12}, {'Ⅼ', 50}, {'Ⅽ', 100}, {'Ⅾ', 500}, {'Ⅿ', 1000},
-        //unicode lowercase
+        //Unicode lowercase
         {'ⅰ', 1}, {'ⅱ', 2}, {'ⅲ', 3}, {'ⅳ', 4}, {'ⅴ', 5}, {'ⅵ', 6}, {'ⅶ', 7}, {'ⅷ', 8}, {'ⅸ', 9}, {'ⅹ', 10}, {'ⅺ', 11}, {'ⅻ', 12}, {'ⅼ', 50}, {'ⅽ', 100}, {'ⅾ', 500}, {'ⅿ', 1000},
-        //unicode big/exotic numbers
+        //Unicode big/exotic numbers
         {'ↀ', 1000}, {'ↁ', 5000}, {'ↂ', 10000}, {'Ↄ', 100}, {'ↄ', 100}, {'ↅ', 6}, {'ↆ', 50}, {'ↇ', 50000}, {'ↈ', 100000}
     };
 
@@ -46,12 +46,12 @@ public class SortableNameConverter
     private static readonly Regex ignoredEndWordsRegex = new(@"(\s*[-:\u2010-\u2014\uFE58\uFE63\uFF0D])?(\s+(?<a>\()*(?<b>\[)*((the\s+)?\S+\s+(edition|cut)|deluxe|hd|collection|remaster(ed)?|remake|ultimate|anthology|game of the( year)?|goty|enhanced|ce))+(?<-b>\])*(?<-a>\))*(?(a)(?!))(?(b)(?!))$", RegexOptions.ExplicitCapture | RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="articles">Words to remove from the start of the title. Default: "The", "A", "An".</param>
     /// <param name="numberLength">The minimum string length of numbers. If 4, XXIII or 23 will turn into 0023, but 1999 will stay the same.</param>
     /// <param name="removeEditions">If true, remove editions from the end of titles</param>
-    public SortableNameConverter(IEnumerable<string> articles = null, int numberLength = 2, bool removeEditions = false)
+    public SortableNameConverter(string[] articles = null, int numberLength = 2, bool removeEditions = false)
     {
         articles ??= ["the", "a", "an"];
 
@@ -98,7 +98,7 @@ public class SortableNameConverter
 
             if (match.Groups["numberword"].Success && MatchComesAfterChapterOrEpisodeOrAtEndOfString(input, match))
                 return numberWordValues[match.Value].ToString(new string('0', numberLength));
-            
+
             return match.Value;
         });
 

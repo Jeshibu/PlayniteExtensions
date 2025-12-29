@@ -25,3 +25,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/MutualGames_0_4_1.pext
     Changelog:
       - "Fixed platform matching failing to match some platforms if they'd been renamed"
+  - Version: '0.5'
+    RequiredApiVersion: '6.11.0'
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/MutualGames_0_5.pext
+    Changelog:
+      - "Reworked Steam authentication and friend-game-fetching"

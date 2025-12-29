@@ -1,6 +1,7 @@
 ﻿using AngleSharp.Parser.Html;
 using MutualGames.Models.Export;
 using MutualGames.Models.Settings;
+using MutualGames.Services.Gog.Models;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using PlayniteExtensions.Common;
@@ -15,7 +16,7 @@ public class GogClient(IWebViewWrapper webView) : IFriendsGamesClient
 {
     private readonly HtmlParser htmlParser = new();
     private readonly ILogger logger = LogManager.GetLogger();
-    private AccountInfo accountInfo = null;
+    private GogAccountInfo accountInfo = null;
 
     public string Name => "GOG";
 
@@ -50,11 +51,11 @@ public class GogClient(IWebViewWrapper webView) : IFriendsGamesClient
         } while (page < totalPages);
     }
 
-    private GetFriendGamesResponse GetFriendGames(AccountInfo account, FriendAccountInfo friend, int page)
+    private GogGetFriendGamesResponse GetFriendGames(GogAccountInfo account, FriendAccountInfo friend, int page)
     {
         var url = $"https://www.gog.com/u/{friend.Name}/games/stats/{account.Username}?sort=recent_playtime&order=desc&page={page}&sort_user={account.UserId}";
         var response = webView.DownloadPageTextAsync(url).Result;
-        return JsonConvert.DeserializeObject<GetFriendGamesResponse>(response.Content);
+        return JsonConvert.DeserializeObject<GogGetFriendGamesResponse>(response.Content);
     }
 
     public IEnumerable<FriendAccountInfo> GetFriends(CancellationToken cancellationToken)
@@ -92,7 +93,7 @@ public class GogClient(IWebViewWrapper webView) : IFriendsGamesClient
         throw new NotAuthenticatedException();
     }
 
-    private async Task<AccountInfo> GetLoggedInUserAsync()
+    private async Task<GogAccountInfo> GetLoggedInUserAsync()
     {
         if (accountInfo != null)
             return accountInfo;
@@ -101,7 +102,7 @@ public class GogClient(IWebViewWrapper webView) : IFriendsGamesClient
         if (string.IsNullOrWhiteSpace(response.Content))
             throw new NotAuthenticatedException();
 
-        accountInfo = JsonConvert.DeserializeObject<AccountInfo>(response.Content);
+        accountInfo = JsonConvert.DeserializeObject<GogAccountInfo>(response.Content);
         if (!accountInfo.IsLoggedIn)
         {
             accountInfo = null;
@@ -126,54 +127,4 @@ public class GogClient(IWebViewWrapper webView) : IFriendsGamesClient
     }
 
     public Task<bool> IsLoginSuccessAsync(IWebView loginWebView) => IsAuthenticatedAsync();
-
-    #region models
-    private class GetFriendGamesResponse
-    {
-        public int Page { get; set; }
-        public int Limit { get; set; }
-        public int Pages { get; set; }
-        public int Total { get; set; }
-
-        [JsonProperty("_embedded")]
-        public EmbeddedGames Embedded { get; set; }
-    }
-
-    private class EmbeddedGames
-    {
-        public List<GameAndStats> Items { get; set; } = [];
-    }
-
-    private class GameAndStats
-    {
-        public GogGame Game { get; set; }
-    }
-
-    private class GogGame
-    {
-        public string Id { get; set; }
-        public string Title { get; set; }
-        public string Url { get; set; }
-        public bool AchievementSupport { get; set; }
-        public string Image { get; set; }
-    }
-
-    private class GogFriendContainer
-    {
-        public GogFriend User { get; set; }
-    }
-
-    private class GogFriend
-    {
-        public string Id { get; set; }
-        public string Username { get; set; }
-    }
-
-    private class AccountInfo
-    {
-        public string UserId { get; set; }
-        public string Username { get; set; }
-        public bool IsLoggedIn { get; set; }
-    }
-    #endregion models
 }

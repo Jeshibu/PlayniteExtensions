@@ -64,6 +64,6 @@ public class MutualGames : GenericPlugin
     {
         var webView = new OffScreenWebViewWrapper(PlayniteApi);
         yield return new GogClient(webView);
-        yield return new SteamClient(webView);
+        yield return new SteamClient(PlayniteApi);
     }
 }
