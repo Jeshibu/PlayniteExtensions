@@ -30,7 +30,7 @@
                         </Expander.Header>
 
                         <Expander.Content>
-                            <Border Padding="30 0 0 0">
+                            <Border Padding="50 0 0 0">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto" />
@@ -109,7 +109,7 @@
                         </Expander.Header>
 
                         <Expander.Content>
-                            <Border Padding="30 0 0 0">
+                            <Border Padding="50 0 0 0">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto" />

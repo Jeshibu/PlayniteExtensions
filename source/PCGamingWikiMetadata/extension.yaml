@@ -5,3 +5,10 @@ Version: '1.6'
 Module: PCGamingWikiMetadata.dll
 Type: MetadataProvider
 Icon: icon.png
+Links:
+  - Name: PCGamingWiki
+    Url: https://www.pcgamingwiki.com/
+  - Name: GitHub repository
+    Url: https://github.com/Jeshibu/PlayniteExtensions
+  - Name: Donate via Ko-fi
+    Url: https://ko-fi.com/Jeshibu
