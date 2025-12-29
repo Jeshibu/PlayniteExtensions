@@ -239,8 +239,8 @@ Packages:
       - "Fixed platform matching failing to match some platforms if they'd been renamed"
   - Version: '1.6'
     RequiredApiVersion: '6.11.0'
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/PCGamingWikiMetadata_1_6.pext
+    ReleaseDate: 2025-12-29
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-12-29/PCGamingWikiMetadata_1_6.pext
     Changelog:
       - "Added to metadata collection: Middleware"
       - "Added to bulk import: Middleware, XDG, and GOG.com enhancement project"
