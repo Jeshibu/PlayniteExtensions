@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>0.9.2</Version>
+    <Version>0.9.5</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.9.9" />
     <PackageReference Include="gong-wpf-dragdrop" Version="2.4.1" />
-    <PackageReference Include="Magick.NET-Q8-x86" Version="14.10.0" />
+    <PackageReference Include="Magick.NET-Q8-x86" Version="14.8.2" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="PlayniteSDK" Version="6.13.0" />
     <PackageReference Include="SqlNado" Version="2.0.4" />

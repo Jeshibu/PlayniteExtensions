@@ -171,3 +171,9 @@ Packages:
     Changelog:
       - "Fixed: genre bulk import menu option appeared in fullscreen mode, where it was not usable"
       - "Updated Magick.NET dependency"
+  - Version: "0.9.5"
+    RequiredApiVersion: '6.13.0'
+    ReleaseDate: 2025-12-30
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-12-29/LaunchBoxMetadata_0_9_5.pext
+    Changelog:
+      - "Fixed broken dependency"
