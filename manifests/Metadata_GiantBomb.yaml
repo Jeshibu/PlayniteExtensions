@@ -140,3 +140,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-09-09/GiantBombMetadata_0_10.pext
     Changelog:
       - "New: import a theme or genre to all your games"
+  - Version: "0.11"
+    RequiredApiVersion: '6.8.0'
+    ReleaseDate: 2025-12-30
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-12-29/GiantBombMetadata_0_11.pext
+    Changelog:
+      - "This update completely disables all Giant Bomb metadata functionality. Giant Bomb's website has completely changed, and their game wiki, which is the source for this plugin, is in a very basic work in progress state."
+      - "Keeping this plugin installed is optional but will allow you to eventually update to the next release, sometime after Giant Bomb's wiki is functional enough."

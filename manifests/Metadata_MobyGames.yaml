@@ -129,3 +129,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/MobyGamesMetadata_0_7_3.pext
     Changelog:
       - "Fixed platform matching failing to match some platforms if they'd been renamed"
+  - Version: '0.7.4'
+    RequiredApiVersion: '6.9.0'
+    ReleaseDate: 2025-12-30
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-12-29/MobyGamesMetadata_0_7_4.pext
+    Changelog:
+      - "Fixed: genre/group bulk import menu option appeared in fullscreen mode, where it was not usable"

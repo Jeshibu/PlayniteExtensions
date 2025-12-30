@@ -42,7 +42,7 @@ public class GiantBombMetadata : MetadataPlugin
         MetadataField.BackgroundImage,
     ];
 
-    public override List<MetadataField> SupportedFields => Fields;
+    public override List<MetadataField> SupportedFields => [];
 
     public override string Name { get; } = "Giant Bomb";
 
@@ -78,6 +78,8 @@ public class GiantBombMetadata : MetadataPlugin
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
+        yield break;
+
         if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             yield return new MainMenuItem { Description = "Import Giant Bomb game property", MenuSection = "@Giant Bomb", Action = _ => ImportGameProperty() };
     }

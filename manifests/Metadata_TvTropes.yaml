@@ -50,3 +50,9 @@ Packages:
     PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-09-09/TvTropesMetadata_0_4_9.pext'
     Changelog:
       - "Really actually fixed search returning nothing this time"
+  - Version: '0.4.10'
+    RequiredApiVersion: '6.11.0'
+    ReleaseDate: 2025-12-30
+    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-12-29/TvTropesMetadata_0_4_10.pext'
+    Changelog:
+      - "Fixed: tag/feature bulk import menu option appeared in fullscreen mode, where it was not usable"

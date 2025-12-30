@@ -9,7 +9,7 @@ namespace GiantBombMetadata;
 
 public class GiantBombMetadataProvider(IGameSearchProvider<GiantBombSearchResultItem> dataSource, MetadataRequestOptions options, IPlayniteAPI playniteApi, IPlatformUtility platformUtility) : GenericMetadataProvider<GiantBombSearchResultItem>(dataSource, options, playniteApi, platformUtility)
 {
-    public override List<MetadataField> AvailableFields => GiantBombMetadata.Fields;
+    public override List<MetadataField> AvailableFields => [];
 
-    protected override string ProviderName { get; } = "Giant Bomb";
+    protected override string ProviderName => "Giant Bomb";
 }

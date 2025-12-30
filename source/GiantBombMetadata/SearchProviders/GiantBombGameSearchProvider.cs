@@ -26,6 +26,8 @@ public class GiantBombGameSearchProvider(IGiantBombApiClient apiClient, GiantBom
     public bool TryGetDetails(Game game, out GameDetails gameDetails, CancellationToken cancellationToken)
     {
         gameDetails = null;
+        return false;
+
         string guid = game.GetGiantBombGuidFromGameLinks();
         if (guid == null)
             return false;
@@ -38,6 +40,8 @@ public class GiantBombGameSearchProvider(IGiantBombApiClient apiClient, GiantBom
 
     public IEnumerable<GiantBombSearchResultItem> Search(string query, CancellationToken cancellationToken = default)
     {
+        return [];
+
         var searchOutput = new List<GiantBombSearchResultItem>();
 
         if (string.IsNullOrWhiteSpace(query))

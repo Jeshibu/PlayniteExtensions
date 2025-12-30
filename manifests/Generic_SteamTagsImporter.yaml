@@ -167,3 +167,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-11-18/SteamTagsImporter_4_3.pext
     Changelog:
       - 'Fixed failure to download Steam app list'
+  - Version: '4.3.1'
+    RequiredApiVersion: '6.11.0'
+    ReleaseDate: 2025-12-30
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-12-29/SteamTagsImporter_4_3_1.pext
+    Changelog:
+      - "Fixed: tag/feature bulk import menu option appeared in fullscreen mode, where it was not usable"

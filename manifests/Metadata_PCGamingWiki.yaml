@@ -244,3 +244,9 @@ Packages:
     Changelog:
       - "Added to metadata collection: Middleware"
       - "Added to bulk import: Middleware, XDG, and GOG.com enhancement project"
+  - Version: '1.6.1'
+    RequiredApiVersion: '6.11.0'
+    ReleaseDate: 2025-12-30
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-12-29/PCGamingWikiMetadata_1_6_1.pext
+    Changelog:
+      - "Fixed: property bulk import menu option appeared in fullscreen mode, where it was not usable"
