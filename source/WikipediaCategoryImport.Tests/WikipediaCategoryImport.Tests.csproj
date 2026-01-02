@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Version>10.47</Version>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWpf>true</UseWpf>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="xunit" Version="2.8.1"/>
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.1"/>
+    <ProjectReference Include="../WikipediaCategoryImport/WikipediaCategoryImport.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <Import Project="..\PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems" Label="Shared" />
+  
+</Project>

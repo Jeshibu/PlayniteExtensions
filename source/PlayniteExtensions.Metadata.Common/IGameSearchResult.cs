@@ -11,7 +11,7 @@ public interface IGameSearchResult
     string Name { get; }
 
     /// <summary>
-    /// Actual name/title
+    /// Actual name/title to use for game matching
     /// </summary>
     string Title { get; }
 

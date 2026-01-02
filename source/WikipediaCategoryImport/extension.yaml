@@ -1,0 +1,14 @@
+﻿Id: WikipediaCategoryImport
+Name: Wikipedia Category Import metadata provider
+Author: Jeshibu
+Version: '0.1'
+Module: WikipediaCategoryImport.dll
+Type: MetadataProvider
+Icon: icon.png
+Links:
+  - Name: Wikipedia
+    Url: https://www.wikipedia.org/
+  - Name: GitHub repository
+    Url: https://github.com/Jeshibu/PlayniteExtensions
+  - Name: Donate via Ko-fi
+    Url: https://ko-fi.com/Jeshibu

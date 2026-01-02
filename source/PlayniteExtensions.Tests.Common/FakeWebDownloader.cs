@@ -22,6 +22,7 @@ public class FakeWebDownloader : IWebDownloader
     public List<string> CalledUrls { get; } = [];
 
     public CookieContainer Cookies { get; } = new();
+    public string UserAgent { get; set; }
 
     public FakeWebDownloader() { }
 
@@ -61,13 +62,13 @@ public class FakeWebDownloader : IWebDownloader
 
         throw new($"Url not accounted for: {url}");
     }
-    
+
     public Task<DownloadStringResponse> PostAsync(string url, string body, Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, CancellationToken cancellationToken = default, bool getContent = true)
     {
         CalledUrls.Add(url);
         if (FilesByUrl.TryGetValue(url, out string filePath))
             return Task.FromResult(new DownloadStringResponse(url, File.ReadAllText(filePath), HttpStatusCode.OK));
-        
+
         throw new($"Url not accounted for: {url}");
     }
 }

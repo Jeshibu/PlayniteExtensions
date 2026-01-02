@@ -20,6 +20,7 @@ public interface IWebDownloader
     /// The total collection of cookies used both as input for requests and output for responses
     /// </summary>
     CookieContainer Cookies { get; }
+    string UserAgent { get; set; }
 
     DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null,
         string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken cancellationToken = default, bool getContent = true);
@@ -40,19 +41,19 @@ public class DownloadStringResponse(string responseUrl, string responseContent, 
 
 public class WebDownloader : IWebDownloader
 {
-    private readonly DangerouslySimpleCookieContainer cookieContainer;
-    private readonly HttpClient httpClient;
-    private readonly ILogger logger = LogManager.GetLogger();
-    public static HttpStatusCode[] HttpRedirectStatusCodes = [HttpStatusCode.Redirect, HttpStatusCode.Moved, HttpStatusCode.TemporaryRedirect, (HttpStatusCode)308];
+    private readonly DangerouslySimpleCookieContainer _cookieContainer;
+    private readonly HttpClient _httpClient;
+    private readonly ILogger _logger = LogManager.GetLogger();
+    private static readonly HttpStatusCode[] HttpRedirectStatusCodes = [HttpStatusCode.Redirect, HttpStatusCode.Moved, HttpStatusCode.TemporaryRedirect, (HttpStatusCode)308];
 
-    public CookieContainer Cookies => cookieContainer.Container;
+    public CookieContainer Cookies => _cookieContainer.Container;
     public string Accept { get; set; } = "text/html,application/json,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
     public string UserAgent { get; set; } = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0";
 
     public WebDownloader()
     {
-        cookieContainer = new DangerouslySimpleCookieContainer(new HttpClientHandler());
-        httpClient = new HttpClient(cookieContainer, false);
+        _cookieContainer = new DangerouslySimpleCookieContainer(new HttpClientHandler());
+        _httpClient = new HttpClient(_cookieContainer, false);
     }
 
     public DownloadStringResponse DownloadString(string url, Func<string, string, string> redirectUrlGetFunc = null, Func<string, CookieCollection> jsCookieGetFunc = null, string referer = null, Action<HttpRequestHeaders> headerSetter = null,
@@ -61,7 +62,7 @@ public class WebDownloader : IWebDownloader
         var sw = System.Diagnostics.Stopwatch.StartNew();
         var output = DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType, throwExceptionOnErrorResponse, maxRedirectDepth, 0, cancellationToken, getContent).Result;
         sw.Stop();
-        logger.Info($"Call to {url} completed in {sw.Elapsed}, status: {output?.StatusCode}");
+        _logger.Info($"Call to {url} completed in {sw.Elapsed}, status: {output?.StatusCode}");
         return output;
     }
 
@@ -71,7 +72,7 @@ public class WebDownloader : IWebDownloader
         var sw = System.Diagnostics.Stopwatch.StartNew();
         var output = await DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType, throwExceptionOnErrorResponse, maxRedirectDepth, 0, cancellationToken, getContent);
         sw.Stop();
-        logger.Info($"Call to {url} completed in {sw.Elapsed}, status: {output?.StatusCode}");
+        _logger.Info($"Call to {url} completed in {sw.Elapsed}, status: {output?.StatusCode}");
         return output;
     }
 
@@ -98,11 +99,11 @@ public class WebDownloader : IWebDownloader
         HttpResponseMessage response;
         try
         {
-            response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken);
+            response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken);
         }
         catch (HttpRequestException webex)
         {
-            logger.Info(webex, "Error getting response from " + url);
+            _logger.Info(webex, "Error getting response from " + url);
 
             if (throwExceptionOnErrorResponse)
                 throw;
@@ -153,11 +154,11 @@ public class WebDownloader : IWebDownloader
         HttpResponseMessage response;
         try
         {
-            response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken);
+            response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken);
         }
         catch (HttpRequestException webex)
         {
-            logger.Info(webex, "Error getting response from " + url);
+            _logger.Info(webex, "Error getting response from " + url);
 
             if (throwExceptionOnErrorResponse)
                 throw;
@@ -207,7 +208,7 @@ public class WebDownloader : IWebDownloader
 
     private void Combine(CookieContainer a, CookieCollection b)
     {
-        lock (cookieLock)
+        lock (_cookieLock)
         {
             if (a == null || a.Count == 0) return;
             if (b == null || b.Count == 0) return;
@@ -216,7 +217,7 @@ public class WebDownloader : IWebDownloader
         }
     }
 
-    private readonly object cookieLock = new();
+    private readonly object _cookieLock = new();
 }
 
 public static class HttpRequestHeaderExtensionMethods
