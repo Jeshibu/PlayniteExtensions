@@ -34,9 +34,4 @@ public class GiantBombBulkPropertyAssigner(IPlayniteAPI playniteAPI, GiantBombMe
 
         return output;
     }
-
-    protected override string GetGameIdFromUrl(string url)
-    {
-        return GiantBombHelper.GetGiantBombGuidFromUrl(url);
-    }
 }

@@ -10,18 +10,9 @@ public class BulkTropeAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWi
 {
     public override string MetadataProviderName => "TV Tropes";
 
-    protected override string GetGameIdFromUrl(string url)
-    {
-        var dbId = DatabaseIdUtility.GetIdFromUrl(url);
-        if (dbId.Database == ExternalDatabase.TvTropes)
-            return dbId.Id;
-
-        return null;
-    }
-
     protected override PropertyImportSetting GetPropertyImportSetting(TvTropesSearchResult searchItem, out string name)
     {
         name = searchItem.Title;
-        return new PropertyImportSetting { ImportTarget = PropertyImportTarget.Tags, Prefix = settings.TropePrefix };
+        return new() { ImportTarget = PropertyImportTarget.Tags, Prefix = settings.TropePrefix };
     }
 }

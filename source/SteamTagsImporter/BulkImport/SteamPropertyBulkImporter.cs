@@ -10,25 +10,16 @@ namespace SteamTagsImporter.BulkImport;
 
 public class SteamPropertyBulkImporter : BulkGamePropertyAssigner<SteamProperty, GamePropertyImportViewModel>
 {
-    public override string MetadataProviderName { get; } = "Steam";
+    public override string MetadataProviderName => "Steam";
     private readonly SteamTagsImporterSettings settings;
     private readonly SteamIdUtility steamIdUtility;
 
-    public SteamPropertyBulkImporter(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<SteamProperty, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, SteamTagsImporterSettings settings)
-        : base(playniteAPI, dataSource, platformUtility, new SteamIdUtility(), ExternalDatabase.Steam, settings.MaxDegreeOfParallelism)
+    public SteamPropertyBulkImporter(IPlayniteAPI playniteApi, ISearchableDataSourceWithDetails<SteamProperty, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, SteamTagsImporterSettings settings)
+        : base(playniteApi, dataSource, platformUtility, new SteamIdUtility(), ExternalDatabase.Steam, settings.MaxDegreeOfParallelism)
     {
         AllowEmptySearchQuery = true;
         this.settings = settings;
         this.steamIdUtility = (SteamIdUtility)DatabaseIdUtility;
-    }
-
-    protected override string GetGameIdFromUrl(string url)
-    {
-        var dbId = DatabaseIdUtility.GetIdFromUrl(url);
-        if (dbId.Database == ExternalDatabase.Steam)
-            return dbId.Id;
-
-        return null;
     }
 
     protected override PropertyImportSetting GetPropertyImportSetting(SteamProperty searchItem, out string name)

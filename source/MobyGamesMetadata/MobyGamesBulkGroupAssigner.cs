@@ -14,15 +14,6 @@ public class MobyGamesBulkGroupAssigner(IPlayniteAPI playniteApi, ISearchableDat
 {
     public override string MetadataProviderName => "MobyGames";
 
-    protected override string GetGameIdFromUrl(string url)
-    {
-        var dbId = DatabaseIdUtility.GetIdFromUrl(url);
-        if (dbId.Database == ExternalDatabase.MobyGames)
-            return dbId.Id;
-
-        return null;
-    }
-
     protected override PropertyImportSetting GetPropertyImportSetting(SearchResult searchItem, out string propName)
     {
         return new() { ImportTarget = MobyGamesHelper.GetGroupImportTarget(searchItem.Name, out propName) };
@@ -33,7 +24,7 @@ public class MobyGamesBulkGroupAssigner(IPlayniteAPI playniteApi, ISearchableDat
     private bool IsAlreadyLinked(IEnumerable<Link> links, string url)
     {
         var dbId = DatabaseIdUtility.GetIdFromUrl(url);
-        
+
         return links?.Any(l => DatabaseIdUtility.GetIdFromUrl(l.Url) == dbId) ?? false;
     }
 }

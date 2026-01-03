@@ -34,6 +34,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
     protected readonly IPlayniteAPI playniteApi = playniteApi;
     public abstract string MetadataProviderName { get; }
     public bool AllowEmptySearchQuery { get; set; } = false;
+    public string DefaultSearch { get; set; } = null;
     public IExternalDatabaseIdUtility DatabaseIdUtility { get; } = databaseIdUtility;
     public ExternalDatabase DatabaseType { get; } = databaseType;
     public int MaxDegreeOfParallelism { get; } = maxDegreeOfParallelism;
@@ -69,7 +70,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
 
     protected virtual TSearchItem SelectGameProperty()
     {
-        var selectedItem = playniteApi.Dialogs.ChooseItemWithSearch(null, (a) =>
+        var selectedItem = playniteApi.Dialogs.ChooseItemWithSearch(null, a =>
         {
             var output = new List<GenericItemOption>();
 
@@ -88,14 +89,22 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
             }
 
             return output;
-        }, string.Empty, "Search for a property to assign to all your matching games") as GenericItemOption<TSearchItem>;
+        }, DefaultSearch, "Search for a property to assign to all your matching games") as GenericItemOption<TSearchItem>;
 
         return selectedItem == null ? default : selectedItem.Item;
     }
 
     protected abstract PropertyImportSetting GetPropertyImportSetting(TSearchItem searchItem, out string name);
 
-    protected abstract string GetGameIdFromUrl(string url);
+    protected virtual string GetGameIdFromUrl(string url)
+    {
+        var dbId = DatabaseIdUtility.GetIdFromUrl(url);
+
+        if (dbId.Database == DatabaseType)
+            return dbId.Id;
+
+        return null;
+    }
 
     private GamePropertyImportViewModel PromptGamePropertyImportUserApproval(TSearchItem selectedItem, List<GameDetails> gamesToMatch)
     {

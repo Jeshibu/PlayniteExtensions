@@ -13,13 +13,7 @@ public class MobyGamesBulkGenreAssigner : BulkGamePropertyAssigner<MobyGamesGenr
         AllowEmptySearchQuery = true;
     }
 
-    public override string MetadataProviderName { get; } = "MobyGames";
-
-    protected override string GetGameIdFromUrl(string url)
-    {
-        var dbId = DatabaseIdUtility.GetIdFromUrl(url);
-        return dbId.Database == ExternalDatabase.MobyGames ? dbId.Id : null;
-    }
+    public override string MetadataProviderName => "MobyGames";
 
     protected override PropertyImportSetting GetPropertyImportSetting(MobyGamesGenreSetting searchItem, out string name)
     {
