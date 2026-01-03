@@ -30,12 +30,30 @@ public class ApiTests
     }
 
     [Fact]
-    public void GetCategories()
+    public void GetGameCategories()
     {
         var title = "Assassin's Creed II";
         _downloader.FilesByUrl.Add(_api.GetArticleUrl(title), "Resources/details-game-asscreed2.json");
-        var categories = _api.GetCategories(title);
-        Assert.NotEmpty(categories);
-        Assert.All(categories, c => Assert.DoesNotContain("Category:", c));
+        var article = _api.GetArticleCategories(title);
+        Assert.NotEmpty(article.Categories);
+        Assert.All(article.Categories, c => Assert.DoesNotContain("Category:", c));
+    }
+
+    [Fact]
+    public void SearchCategories()
+    {
+        var query = "Video Games";
+        _downloader.FilesByUrl.Add(_api.GetSearchUrl(query, WikipediaNamespace.Category), "Resources/search-categories.json");
+        var searchResults = _api.Search(query, WikipediaNamespace.Category).ToList();
+        Assert.NotEmpty(searchResults);
+    }
+
+    [Fact]
+    public void GetCategoryMembers()
+    {
+        var pageName = "Category:Video_games_set_in_the_11th_century";
+        _downloader.FilesByUrl.Add(_api.GetCategoryMembersUrl(pageName), "Resources/details-category-11th-century.json");
+        var categoryMembers = _api.GetCategoryMembers(pageName);
+        Assert.NotEmpty(categoryMembers);
     }
 }

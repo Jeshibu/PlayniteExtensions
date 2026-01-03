@@ -5,6 +5,8 @@ namespace PlayniteExtensions.Metadata.Common;
 
 public class BulkImportPluginSettings : ObservableObject
 {
+    public bool ShowTopPanelButton { get; set; } = true;
+
     public int MaxDegreeOfParallelism { get; set; } = GetDefaultMaxDegreeOfParallelism();
 
     public int Version { get; set; } = 0;

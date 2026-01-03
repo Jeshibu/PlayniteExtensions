@@ -45,7 +45,6 @@ public class LaunchBoxMetadataSettings : BulkImportPluginSettings
 
     public ObservableCollection<RegionSetting> Regions { get; set; } = [];
     public bool PreferGameRegion { get; set; } = true;
-    public bool ShowTopPanelButton { get; set; } = true;
 
     public int AdviseDatabaseUpdateAfterDays { get; set; } = 30;
 

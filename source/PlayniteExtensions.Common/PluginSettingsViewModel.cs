@@ -15,25 +15,13 @@ public abstract class PluginSettingsViewModel<TSettings, TPlugin>(TPlugin plugin
     protected TSettings EditingClone { get; set; }
     public TSettings Settings { get; protected set => SetValue(ref field, value); }
 
-    public virtual void BeginEdit()
-    {
-        EditingClone = Serialization.GetClone(Settings);
-    }
+    public virtual void BeginEdit() => EditingClone = Serialization.GetClone(Settings);
 
-    public void CancelEdit()
-    {
-        Settings = EditingClone;
-    }
+    public void CancelEdit() => Settings = EditingClone;
 
-    public virtual void EndEdit()
-    {
-        Plugin.SavePluginSettings(Settings);
-    }
+    public virtual void EndEdit() => Plugin.SavePluginSettings(Settings);
 
-    protected TSettings LoadSavedSettings()
-    {
-        return Plugin.LoadPluginSettings<TSettings>();
-    }
+    protected TSettings LoadSavedSettings() => Plugin.LoadPluginSettings<TSettings>();
 
     public virtual bool VerifySettings(out List<string> errors)
     {

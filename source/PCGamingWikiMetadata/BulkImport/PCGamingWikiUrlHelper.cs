@@ -5,21 +5,24 @@ namespace PCGamingWikiBulkImport;
 
 public static class PCGamingWikiUrlHelper
 {
-    public static string TitleToSlug(this string title, bool urlEncode = true)
+    extension(string title)
     {
-        if (string.IsNullOrWhiteSpace(title))
-            return title;
+        public string TitleToSlug(bool urlEncode = true)
+        {
+            if (string.IsNullOrWhiteSpace(title))
+                return title;
 
-        var sb = new StringBuilder();
-        foreach (char c in title)
-            sb.Append(EscapeSlugCharacter(c, urlEncode));
+            var sb = new StringBuilder();
+            foreach (char c in title)
+                sb.Append(EscapeSlugCharacter(c, urlEncode));
 
-        return sb.ToString();
-    }
+            return sb.ToString();
+        }
 
-    public static string SlugToUrl(this string slug)
-    {
-        return $"https://www.pcgamingwiki.com/wiki/{slug}";
+        public string SlugToUrl()
+        {
+            return $"https://www.pcgamingwiki.com/wiki/{title}";
+        }
     }
 
     private static string EscapeSlugCharacter(char c, bool urlEncode)

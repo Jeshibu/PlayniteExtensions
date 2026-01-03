@@ -17,7 +17,6 @@ public class GiantBombMetadataSettings : BulkImportPluginSettings
     public PropertyImportSetting Franchises { get; set; } = new() { Prefix = "", ImportTarget = PropertyImportTarget.Series };
     public PropertyImportSetting Genres { get; set; } = new() { Prefix = "", ImportTarget = PropertyImportTarget.Genres };
     public MultiValuedPropertySelectionMode FranchiseSelectionMode { get; set; } = MultiValuedPropertySelectionMode.All;
-    public bool ShowTopPanelButton { get; set; } = true;
 }
 
 public enum MultiValuedPropertySelectionMode

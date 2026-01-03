@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using WikipediaCategoryImport.Models;
+using WikipediaCategoryImport.Models.API;
 
 namespace WikipediaCategoryImport;
 
@@ -15,11 +17,13 @@ public class WikipediaApi
 {
     private readonly string _baseUrl;
     private readonly IWebDownloader _downloader;
+    private readonly string _wikipediaLocale;
     private readonly ILogger _logger = LogManager.GetLogger();
 
     public WikipediaApi(IWebDownloader downloader, Version playniteVersion, string wikipediaLocale = "en")
     {
         _downloader = downloader;
+        _wikipediaLocale = wikipediaLocale;
         _baseUrl = $"https://{wikipediaLocale}.wikipedia.org/w/api.php?format=json";
 
         var pluginVersion = GetType().Assembly!.GetName().Version;
@@ -44,9 +48,22 @@ public class WikipediaApi
         {
             { "action", "query" },
             { "titles", pageName },
-            { "prop", "categories" },
+            { "prop", "categories|redirects" },
             { "cllimit", "max" },
+            { "rdlimit", "max" },
             { "redirects", null },
+        }, continueParams);
+    }
+
+    public string GetCategoryMembersUrl(string pageName, Dictionary<string, string> continueParams = null)
+    {
+        return GetUrl(new()
+        {
+            { "action", "query" },
+            { "list", "categorymembers" },
+            { "cmtitle", pageName },
+            { "cmlimit", "max" },
+            { "cmprop", "title|type" },
         }, continueParams);
     }
 
@@ -74,34 +91,66 @@ public class WikipediaApi
         }
     }
 
-    public ICollection<string> GetCategories(string pageName, CancellationToken cancellationToken = default)
+    public ArticleDetails GetArticleCategories(string pageName, CancellationToken cancellationToken = default)
     {
-        var output = new List<string>();
-        Dictionary<string, string> @continue = null;
+        var output = new ArticleDetails();
+        Dictionary<string, string> continueParams = null;
         while (true)
         {
-            var article = GetCategories(pageName, @continue, cancellationToken);
-            foreach (var category in article.query.pages.First().Value.categories)
-            {
-                var trimmed = category.title.Split([':'], 2).Last();
-                output.Add(trimmed);
-            }
-
-            if (article.@continue == null)
+            if (cancellationToken.IsCancellationRequested)
                 break;
 
-            @continue = article.@continue;
+            var article = GetArticleCategories(pageName, continueParams, cancellationToken);
+            var page = article.query.pages.First().Value;
+            output.Title ??= page.title;
+            output.Url ??= WikipediaIdUtility.ToWikipediaUrl(_wikipediaLocale, page.title);
+            output.Categories.AddRange(page.categories.Select(c => c.title));
+
+            continueParams = article.@continue;
+
+            if (continueParams == null)
+                break;
         }
 
         return output;
     }
 
-    private WikipediaArticleResponse GetCategories(string pageName, Dictionary<string, string> continueParams = null, CancellationToken cancellationToken = default)
+    public ICollection<CategoryMember> GetCategoryMembers(string pageName, CancellationToken cancellationToken = default)
+    {
+        var output = new List<CategoryMember>();
+        Dictionary<string, string> continueParams = null;
+        while (true)
+        {
+            if (cancellationToken.IsCancellationRequested)
+                break;
+
+            var response = GetCategoryMembers(pageName, continueParams, cancellationToken);
+            output.AddRange(response.query.categorymembers);
+
+            continueParams = response.@continue;
+
+            if (continueParams == null)
+                break;
+        }
+
+        return output;
+    }
+
+    private WikipediaQueryResponse<PageQuery> GetArticleCategories(string pageName, Dictionary<string, string> continueParams, CancellationToken cancellationToken)
     {
         var url = GetArticleUrl(pageName, continueParams);
 
         var response = _downloader.DownloadString(url, cancellationToken: cancellationToken);
-        var responseObj = JsonConvert.DeserializeObject<WikipediaArticleResponse>(response.ResponseContent);
+        var responseObj = JsonConvert.DeserializeObject<WikipediaQueryResponse<PageQuery>>(response.ResponseContent);
+        return responseObj;
+    }
+
+    private WikipediaQueryResponse<CategoryMemberQueryResult> GetCategoryMembers(string pageName, Dictionary<string, string> continueParams, CancellationToken cancellationToken)
+    {
+        var url = GetCategoryMembersUrl(pageName, continueParams);
+
+        var response = _downloader.DownloadString(url, cancellationToken: cancellationToken);
+        var responseObj = JsonConvert.DeserializeObject<WikipediaQueryResponse<CategoryMemberQueryResult>>(response.ResponseContent);
         return responseObj;
     }
 

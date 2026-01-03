@@ -5,7 +5,6 @@ namespace TvTropesMetadata;
 
 public class TvTropesMetadataSettings : BulkImportPluginSettings
 {
-    public bool ShowTopPanelButton { get; set; }
     public string TropePrefix { get; set; }
     public bool OnlyFirstGamePerTropeListItem { get; set; }
 }

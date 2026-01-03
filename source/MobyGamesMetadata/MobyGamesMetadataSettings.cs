@@ -14,7 +14,6 @@ public class MobyGamesMetadataSettings : BulkImportPluginSettings
 {
     public DataSource DataSource { get; set; } = DataSource.Api;
     public string ApiKey { get; set => SetValue(ref field, value?.Trim()); }
-    public bool ShowTopPanelButton { get; set; } = true;
     public ObservableCollection<MobyGamesGenreSetting> Genres { get; set; } = [];
 
     public MobyGamesImageSourceSettings Cover { get; set; } = new()

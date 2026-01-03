@@ -11,7 +11,7 @@ public interface ISearchableDataSource<TSearchResult>
     GenericItemOption<TSearchResult> ToGenericItemOption(TSearchResult item);
 }
 
-public interface ISearchableDataSourceWithDetails<TSearchResult, TDetails> : ISearchableDataSource<TSearchResult>
+public interface ISearchableDataSourceWithDetails<TSearchResult, out TDetails> : ISearchableDataSource<TSearchResult>
 {
     TDetails GetDetails(TSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null);
 }

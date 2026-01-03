@@ -23,7 +23,6 @@ public class SteamTagsImporterSettings : BulkImportPluginSettings
     public ObservableCollection<string> OkayTags { get; set; } = [];
     public ObservableCollection<string> BlacklistedTags { get; set; } = [];
     public bool OnlyImportGamesWithThisLanguageSupport { get; set; } = false;
-    public bool ShowTopPanelButton { get; set; } = true;
 }
 
 public class SteamTagsImporterSettingsViewModel : PluginSettingsViewModel<SteamTagsImporterSettings, SteamTagsImporter>

@@ -58,7 +58,6 @@ public class PCGamingWikiMetadataSettings: BulkImportPluginSettings
     public bool ImportLinkWSGF { get; set => SetValue(ref field, value); } = true;
     public bool ImportLinkWineHQ { get; set => SetValue(ref field, value); } = false;
     public bool ImportLinkGOGDatabase { get; set => SetValue(ref field, value); } = true;
-    public bool ShowTopPanelButton { get; set; } = true;
 }
 
 public class PCGamingWikiMetadataSettingsViewModel : PluginSettingsViewModel<PCGamingWikiMetadataSettings, PCGamingWikiMetadata>

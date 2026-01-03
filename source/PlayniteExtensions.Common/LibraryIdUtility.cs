@@ -157,22 +157,42 @@ public class MobyGamesIdUtility : SingleExternalDatabaseIdUtility
 public class WikipediaIdUtility : SingleExternalDatabaseIdUtility
 {
     private readonly Regex idRegex = new(@"https?://(?<lang>[a-z]+)\.wikipedia\.org/wiki/(?<article>[^?]+)", RegexOptions.Compiled);
-    
+
     public override ExternalDatabase Database => ExternalDatabase.Wikipedia;
     public override IEnumerable<Guid> LibraryIds => [];
     public override DbId GetIdFromUrl(string url)
     {
         if(string.IsNullOrWhiteSpace(url))
             return default;
-        
-        var match =  idRegex.Match(url);
+
+        var match = idRegex.Match(url);
         if(!match.Success)
-            return default;
-        
-        var idString = WebUtility.UrlDecode(match.Groups["id"].Value);
+            return new(ExternalDatabase.None, null);
+
+        var idString = WebUtility.UrlDecode(match.Groups["article"].Value);
         var lang = match.Groups["lang"].Value;
         return DbId.Wikipedia($"{lang}/{idString}");
     }
+
+    public static Tuple<string, string> GetLanguageAndIdFromDbId(DbId dbId)
+    {
+        if (dbId.Database != ExternalDatabase.Wikipedia)
+            return null;
+
+        var split = dbId.Id.Split(['/'], 2);
+        return new(split[0], split[1]);
+    }
+
+    public static string ToWikipediaUrl(DbId dbId)
+    {
+        var langAndId = GetLanguageAndIdFromDbId(dbId);
+        if (langAndId == null)
+            return null;
+
+        return ToWikipediaUrl(langAndId.Item1, langAndId.Item2);
+    }
+
+    public static string ToWikipediaUrl(string lang, string name) => $"https://{lang}.wikipedia.org/wiki/{name?.Replace(' ', '_')}";
 }
 
 public class AggregateExternalDatabaseUtility : IExternalDatabaseIdUtility
