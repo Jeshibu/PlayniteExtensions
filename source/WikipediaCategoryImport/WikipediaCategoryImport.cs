@@ -18,7 +18,7 @@ public class WikipediaCategoryImport : MetadataPlugin
 
     public WikipediaCategoryImport(IPlayniteAPI playniteApi) : base(playniteApi)
     {
-        Properties = new(){ HasSettings =  true };
+        Properties = new() { HasSettings = false };
         _settings = new(this, playniteApi);
     }
 
@@ -58,7 +58,7 @@ public class WikipediaCategoryImport : MetadataPlugin
     {
         var api = new WikipediaApi(new WebDownloader(), PlayniteApi.ApplicationInfo.ApplicationVersion);
         var searchProvider = new WikipediaCategorySearchProvider(api);
-        var bulk = new WikipediaCategoryBulkImport(PlayniteApi, searchProvider, new PlatformUtility(), new WikipediaIdUtility(), ExternalDatabase.Wikipedia, _settings.Settings.MaxDegreeOfParallelism);
+        var bulk = new WikipediaCategoryBulkImport(PlayniteApi, searchProvider, new PlatformUtility(), _settings.Settings.MaxDegreeOfParallelism);
         bulk.ImportGameProperty();
     }
 }

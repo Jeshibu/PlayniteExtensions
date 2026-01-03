@@ -27,7 +27,7 @@ public class WikipediaApi
         _baseUrl = $"https://{wikipediaLocale}.wikipedia.org/w/api.php?format=json";
 
         var pluginVersion = GetType().Assembly!.GetName().Version;
-        _downloader.UserAgent = $"Wikipedia Category Importer {pluginVersion} (Playnite {playniteVersion})";
+        _downloader.UserAgent = $"Wikipedia Category Importer {pluginVersion} (Playnite {playniteVersion}, https://github.com/Jeshibu/PlayniteExtensions)";
     }
 
     public string GetSearchUrl(string query, WikipediaNamespace ns)
@@ -37,7 +37,7 @@ public class WikipediaApi
             { "action", "opensearch" },
             { "search", query },
             { "limit", "50" },
-            { "namespace", ns.ToString() },
+            { "namespace", ((int)ns).ToString() },
             //{ "redirects", "resolve" },
         });
     }
