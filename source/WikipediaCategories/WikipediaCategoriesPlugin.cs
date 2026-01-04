@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
@@ -11,7 +10,7 @@ using WikipediaCategories.Settings;
 
 namespace WikipediaCategories;
 
-[UsedImplicitly]
+// ReSharper disable once ClassNeverInstantiated.Global
 public class WikipediaCategoriesPlugin : MetadataPlugin
 {
     private readonly WikipediaSettingsViewmodel _settings;
