@@ -3,7 +3,7 @@ using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System.Linq;
 
-namespace WikipediaCategoryImport.BulkImport;
+namespace WikipediaCategories.BulkImport;
 
 public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSearchResult,GamePropertyImportViewModel>
 {

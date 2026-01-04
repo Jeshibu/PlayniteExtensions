@@ -6,17 +6,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using WikipediaCategoryImport.BulkImport;
-using WikipediaCategoryImport.Settings;
+using WikipediaCategories.BulkImport;
+using WikipediaCategories.Settings;
 
-namespace WikipediaCategoryImport;
+namespace WikipediaCategories;
 
 [UsedImplicitly]
-public class WikipediaCategoryImport : MetadataPlugin
+public class WikipediaCategoriesPlugin : MetadataPlugin
 {
     private readonly WikipediaSettingsViewmodel _settings;
 
-    public WikipediaCategoryImport(IPlayniteAPI playniteApi) : base(playniteApi)
+    public WikipediaCategoriesPlugin(IPlayniteAPI playniteApi) : base(playniteApi)
     {
         Properties = new() { HasSettings = false };
         _settings = new(this, playniteApi);

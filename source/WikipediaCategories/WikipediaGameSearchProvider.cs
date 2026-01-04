@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-namespace WikipediaCategoryImport;
+namespace WikipediaCategories;
 
 public class WikipediaGameSearchProvider(WikipediaApi api) : IGameSearchProvider<WikipediaGameSearchResult>
 {

@@ -1,6 +1,6 @@
 using PlayniteExtensions.Common;
 
-namespace WikipediaCategoryImport.Tests;
+namespace WikipediaCategories.Tests;
 
 public class IdUtilityTests
 {

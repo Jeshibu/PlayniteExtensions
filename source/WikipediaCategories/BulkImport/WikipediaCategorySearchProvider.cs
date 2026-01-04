@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace WikipediaCategoryImport.BulkImport;
+namespace WikipediaCategories.BulkImport;
 
 public class WikipediaCategorySearchProvider(WikipediaApi api)
     : ISearchableDataSourceWithDetails<WikipediaSearchResult, IEnumerable<GameDetails>>

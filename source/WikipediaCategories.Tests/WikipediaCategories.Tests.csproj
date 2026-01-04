@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="xunit" Version="2.8.1"/>
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.1"/>
-    <ProjectReference Include="../WikipediaCategoryImport/WikipediaCategoryImport.csproj" />
+    <ProjectReference Include="..\WikipediaCategories\WikipediaCategories.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,9 +19,6 @@
 
   <ItemGroup>
     <None Update="Resources\*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\details-category-11th-century-subcat.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

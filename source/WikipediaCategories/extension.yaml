@@ -1,8 +1,8 @@
-﻿Id: WikipediaCategoryImport
-Name: Wikipedia Category Import metadata provider
+﻿Id: WikipediaCategories
+Name: Wikipedia Categories metadata provider
 Author: Jeshibu
 Version: '0.1'
-Module: WikipediaCategoryImport.dll
+Module: WikipediaCategories.dll
 Type: MetadataProvider
 Icon: icon.png
 Links:

@@ -23,7 +23,7 @@
     <Project Path="SteamTagsImporter.Tests/SteamTagsImporter.Tests.csproj" />
     <Project Path="TvTropesMetadata.Tests/TvTropesMetadata.Tests.csproj" />
     <Project Path="ViveportLibrary.Tests/ViveportLibrary.Tests.csproj" />
-    <Project Path="WikipediaCategoryImport.Tests/WikipediaCategoryImport.Tests.csproj" />
+    <Project Path="WikipediaCategories.Tests/WikipediaCategories.Tests.csproj" />
     <Project Path="XboxMetadata.Tests/XboxMetadata.Tests.csproj" />
   </Folder>
   <Project Path="Barnite/Barnite.csproj" />
@@ -53,6 +53,6 @@
   <Project Path="SteamTagsImporter/SteamTagsImporter.csproj" />
   <Project Path="TvTropesMetadata/TvTropesMetadata.csproj" />
   <Project Path="ViveportLibrary/ViveportLibrary.csproj" />
-  <Project Path="WikipediaCategoryImport/WikipediaCategoryImport.csproj" />
+  <Project Path="WikipediaCategories/WikipediaCategories.csproj" />
   <Project Path="XboxMetadata/XboxMetadata.csproj" />
 </Solution>

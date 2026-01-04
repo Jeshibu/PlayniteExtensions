@@ -1,7 +1,7 @@
 using PlayniteExtensions.Tests.Common;
-using WikipediaCategoryImport.BulkImport;
+using WikipediaCategories.BulkImport;
 
-namespace WikipediaCategoryImport.Tests;
+namespace WikipediaCategories.Tests;
 
 public class CategorySearchProviderTests
 {

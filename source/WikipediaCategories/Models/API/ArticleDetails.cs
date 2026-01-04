@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace WikipediaCategoryImport.Models.API;
+namespace WikipediaCategories.Models.API;
 
 public class PageQuery
 {

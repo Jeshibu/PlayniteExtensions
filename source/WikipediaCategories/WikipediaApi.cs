@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Playnite.SDK;
@@ -8,10 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using WikipediaCategoryImport.Models;
-using WikipediaCategoryImport.Models.API;
+using WikipediaCategories.Models;
+using WikipediaCategories.Models.API;
 
-namespace WikipediaCategoryImport;
+namespace WikipediaCategories;
 
 public class WikipediaApi
 {

@@ -4,7 +4,7 @@ using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System.Collections.Generic;
 
-namespace WikipediaCategoryImport;
+namespace WikipediaCategories;
 
 public class WikipediaCategoryMetadataProvider(IGameSearchProvider<WikipediaGameSearchResult> dataSource, MetadataRequestOptions options, IPlayniteAPI playniteApi, IPlatformUtility platformUtility)
     : GenericMetadataProvider<WikipediaGameSearchResult>(dataSource, options, playniteApi, platformUtility)
