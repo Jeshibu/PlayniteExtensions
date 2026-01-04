@@ -1,4 +1,3 @@
-using MutualGames.Services.Steam.Models;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;

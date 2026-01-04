@@ -1,4 +1,3 @@
-using EaLibrary.Models;
 using Playnite.Common;
 using Playnite.SDK;
 using Playnite.SDK.Models;

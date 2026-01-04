@@ -1,7 +1,6 @@
 ﻿using MobyGamesMetadata.Api;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Tests.Common;
-using System.IO;
 using System.Linq;
 using Xunit;
 

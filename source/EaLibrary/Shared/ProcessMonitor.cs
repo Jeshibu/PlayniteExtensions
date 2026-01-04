@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.IO;
 using Playnite.SDK;
-using System.Text.RegularExpressions;
 
 namespace Playnite.Common;
 
