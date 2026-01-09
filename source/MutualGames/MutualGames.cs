@@ -52,7 +52,7 @@ public class MutualGames : GenericPlugin
 
     private void ExportFile(MainMenuItemActionArgs args)
     {
-        var exporter = new MutualGamesFileExporter(PlayniteApi, Settings.Settings);
+        var exporter = new MutualGamesFileExporter(PlayniteApi);
         exporter.Export();
     }
 

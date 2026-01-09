@@ -9,6 +9,8 @@
     <Import_RootNamespace>PlayniteExtensions.Tests.Common</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)FakeItemCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FakePlayniteDatabase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FakeWebDownloader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FakeWebView.cs" />
   </ItemGroup>

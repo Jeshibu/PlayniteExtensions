@@ -9,13 +9,9 @@
     <PackageReference Include="SteamKit2" Version="1.8.3" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System.Xaml" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="WindowsBase" />
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
@@ -26,36 +22,18 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs">
-      <Link>Common\LibraryIdUtility.cs</Link>
-    </Compile>
+    <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="Common\LibraryIdUtility.cs" />
     <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs" Link="Common\PluginSettingsViewModel.cs" />
-    <Compile Update="GamesSizeCalculatorSettingsView.xaml.cs">
-      <DependentUpon>GamesSizeCalculatorSettingsView.xaml</DependentUpon>
-    </Compile>
+    <Compile Update="GamesSizeCalculatorSettingsView.xaml.cs" Link="GamesSizeCalculatorSettingsView.xaml" />
+    <None Include="extension.yaml" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="extension.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="app.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="GamesSizeCalculatorSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Localization\en_US.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="icon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="icon.png" CopyToOutputDirectory="Always" />
   </ItemGroup>
 </Project>

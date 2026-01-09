@@ -1,12 +1,12 @@
 ﻿using Playnite.SDK;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
-using System.Collections.Generic;
 using TvTropesMetadata.Scraping;
 
 namespace TvTropesMetadata;
 
-public class BulkTropeAssigner(IPlayniteAPI playniteAPI, ISearchableDataSourceWithDetails<TvTropesSearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, TvTropesMetadataSettings settings) : BulkGamePropertyAssigner<TvTropesSearchResult, GamePropertyImportViewModel>(playniteAPI, dataSource, platformUtility, new TvTropesIdUtility(), ExternalDatabase.TvTropes, settings.MaxDegreeOfParallelism)
+public class BulkTropeAssigner(IPlayniteAPI playniteApi, IBulkPropertyImportDataSource<TvTropesSearchResult> dataSource, IPlatformUtility platformUtility, TvTropesMetadataSettings settings)
+    : BulkGamePropertyAssigner<TvTropesSearchResult, GamePropertyImportViewModel>(playniteApi.Database, new(playniteApi), dataSource, platformUtility, new TvTropesIdUtility(), ExternalDatabase.TvTropes, settings.MaxDegreeOfParallelism)
 {
     public override string MetadataProviderName => "TV Tropes";
 

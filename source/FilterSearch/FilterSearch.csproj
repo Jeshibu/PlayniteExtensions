@@ -6,33 +6,15 @@
     <PackageReference Include="PlayniteSDK" Version="6.12.0" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="extension.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="icon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\PlayniteExtensions.Common\IgnoreScrollBehavior.cs">
-      <Link>Common\IgnoreScrollBehavior.cs</Link>
-    </Compile>
-    <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs">
-      <Link>Common\PluginSettingsViewModel.cs</Link>
-    </Compile>
+    <None Include="extension.yaml" CopyToOutputDirectory="Always" />
+    <None Include="icon.png" CopyToOutputDirectory="Always" />
+    <Compile Include="..\PlayniteExtensions.Common\IgnoreScrollBehavior.cs" Link="Common\IgnoreScrollBehavior.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs" Link="Common\PluginSettingsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Settings\FilterSearchSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
 </Project>

@@ -34,9 +34,6 @@
     <Compile Include="..\PlayniteExtensions.Metadata.Common\GameDetails.cs" Link="Common\Metadata\GameDetails.cs" />
     <Compile Include="..\PlayniteExtensions.Metadata.Common\GameMatchingHelper.cs" Link="Common\Metadata\GameMatchingHelper.cs" />
     <Compile Include="..\PlayniteExtensions.Metadata.Common\IImageData.cs" Link="Common\Metadata\IImageData.cs" />
-    <Compile Update="Models\Export\Enums.cs">
-      <Generator>MSBuild:Compile</Generator>
-    </Compile>
     <Compile Update="Views\Settings\MutualGamesSettingsView.xaml.cs">
       <DependentUpon>MutualGamesSettingsView.xaml</DependentUpon>
     </Compile>
@@ -48,25 +45,6 @@
     <None Include="extension.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Localization\*.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <Page Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Settings\MutualGamesSettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Export\ExportFilePromptView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="icon.png">

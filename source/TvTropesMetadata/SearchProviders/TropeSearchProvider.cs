@@ -9,10 +9,10 @@ using TvTropesMetadata.Scraping;
 
 namespace TvTropesMetadata.SearchProviders;
 
-public class TropeSearchProvider(TropeScraper scraper, TvTropesMetadataSettings settings) : ISearchableDataSourceWithDetails<TvTropesSearchResult, IEnumerable<GameDetails>>
+public class TropeSearchProvider(TropeScraper scraper, TvTropesMetadataSettings settings) : IBulkPropertyImportDataSource<TvTropesSearchResult>
 {
     public IEnumerable<GameDetails> GetDetails(TvTropesSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null) => GetDetails(searchResult.Url);
-    
+
     public IEnumerable<GameDetails> GetDetails(string searchResultUrl)
     {
         var page = scraper.GetGamesForTrope(searchResultUrl);

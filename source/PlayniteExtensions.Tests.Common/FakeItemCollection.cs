@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace XboxMetadata.Tests;
+namespace PlayniteExtensions.Tests.Common;
 
 class FakeItemCollection<T> : IItemCollection<T> where T : DatabaseObject
 {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using MutualGames.Models.Export;
-using MutualGames.Models.Settings;
 using MutualGames.Views.Export;
 using Newtonsoft.Json;
 using Playnite.SDK;
@@ -14,7 +13,7 @@ using System.Windows;
 
 namespace MutualGames;
 
-public sealed class MutualGamesFileExporter(IPlayniteAPI playniteAPI, MutualGamesSettings settings)
+public sealed class MutualGamesFileExporter(IPlayniteAPI playniteApi)
 {
     public void Export()
     {
@@ -22,12 +21,12 @@ public sealed class MutualGamesFileExporter(IPlayniteAPI playniteAPI, MutualGame
         if (promptResult == null)
             return;
 
-        if (!TryGetExportFilePath(out var filePath))
+        if (!TryGetExportFilePath(out string filePath))
             return;
 
         var games = GetGames(promptResult.Mode).Select(ExternalGameData.FromGame);
-        var plugins = playniteAPI.Addons.Plugins.OfType<LibraryPlugin>().Select(PluginData.FromPlugin);
-        var platforms = playniteAPI.Database.Platforms.Select(PlatformData.FromPlatform);
+        var plugins = playniteApi.Addons.Plugins.OfType<LibraryPlugin>().Select(PluginData.FromPlugin);
+        var platforms = playniteApi.Database.Platforms.Select(PlatformData.FromPlatform);
 
         var root = new ExportRoot();
         root.Games.AddRange(games);
@@ -35,30 +34,30 @@ public sealed class MutualGamesFileExporter(IPlayniteAPI playniteAPI, MutualGame
         root.Platforms.AddRange(platforms);
 
         File.WriteAllText(filePath, JsonConvert.SerializeObject(root, Formatting.None));
-        playniteAPI.Dialogs.ShowMessage($"Exported {root.Games.Count} games! Send the file to friends to let them mark your mutual games.");
+        playniteApi.Dialogs.ShowMessage($"Exported {root.Games.Count} games! Send the file to friends to let them mark your mutual games.");
     }
 
     private ExportFilePromptViewModel Prompt()
     {
-        var window = playniteAPI.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMinimizeButton = false, ShowMaximizeButton = false });
+        var window = playniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMinimizeButton = false, ShowMaximizeButton = false });
         var promptViewModel = new ExportFilePromptViewModel();
         var view = new ExportFilePromptView(window) { DataContext = promptViewModel };
         window.Content = view;
         window.SizeToContent = SizeToContent.WidthAndHeight;
-        window.Owner = playniteAPI.Dialogs.GetCurrentAppWindow();
+        window.Owner = playniteApi.Dialogs.GetCurrentAppWindow();
         window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
         window.Title = "Export games for Mutual Games";
-        var result = window.ShowDialog();
+        bool? result = window.ShowDialog();
         if (result == false)
             return null;
 
         return promptViewModel;
     }
 
-    private bool TryGetExportFilePath(out string filePath)
+    private static bool TryGetExportFilePath(out string filePath)
     {
-        var myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        var fileName = Environment.UserName + ".mutualgames";
+        string myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        string fileName = Environment.UserName + ".mutualgames";
 
         SaveFileDialog saveFileDialog1 = new()
         {
@@ -67,20 +66,17 @@ public sealed class MutualGamesFileExporter(IPlayniteAPI playniteAPI, MutualGame
             InitialDirectory = myDocuments,
             FileName = fileName,
         };
-        var result = saveFileDialog1.ShowDialog();
+        bool? result = saveFileDialog1.ShowDialog();
 
         filePath = saveFileDialog1.FileName;
         return (result ?? false) && !string.IsNullOrWhiteSpace(filePath);
     }
 
-    private IEnumerable<Game> GetGames(ExportGamesMode mode)
+    private IEnumerable<Game> GetGames(ExportGamesMode mode) => mode switch
     {
-        return mode switch
-        {
-            ExportGamesMode.AllIncludeHidden => playniteAPI.Database.Games,
-            ExportGamesMode.AllExcludeHidden => playniteAPI.Database.Games.Where(g => !g.Hidden),
-            ExportGamesMode.Filtered => playniteAPI.MainView.FilteredGames,
-            _ => throw new ArgumentException(nameof(mode)),
-        };
-    }
+        ExportGamesMode.AllIncludeHidden => playniteApi.Database.Games,
+        ExportGamesMode.AllExcludeHidden => playniteApi.Database.Games.Where(g => !g.Hidden),
+        ExportGamesMode.Filtered => playniteApi.MainView.FilteredGames,
+        _ => throw new ArgumentException(nameof(mode)),
+    };
 }

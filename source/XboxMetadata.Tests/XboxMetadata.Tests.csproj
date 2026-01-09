@@ -24,10 +24,7 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\PlayniteExtensions.Tests.Common\FakeWebDownloader.cs" Link="Common.Tests\FakeWebDownloader.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="xbone sniper elite 5 search.json">
+    <None Include="*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="*.html">
@@ -37,4 +34,5 @@
   <ItemGroup>
     <ProjectReference Include="..\XboxMetadata\XboxMetadata.csproj" />
   </ItemGroup>
+  <Import Project="..\PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems" Label="Shared" />
 </Project>

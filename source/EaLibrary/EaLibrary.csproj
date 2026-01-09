@@ -14,15 +14,12 @@
         <PackageReference Include="SHA3" Version="1.0.0"/>
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="PresentationCore"/>
-        <Reference Include="PresentationFramework"/>
         <Reference Include="System.Management"/>
         <Reference Include="System.Web"/>
         <Reference Include="System.Xaml"/>
         <Reference Include="System.Data.DataSetExtensions"/>
         <Reference Include="Microsoft.CSharp"/>
         <Reference Include="System.Net.Http"/>
-        <Reference Include="WindowsBase"/>
     </ItemGroup>
     <ItemGroup>
         <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Common\IPlatformUtility.cs"/>
@@ -34,26 +31,8 @@
         <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs" Link="Common\WebDownloader.cs"/>
     </ItemGroup>
     <ItemGroup>
-        <None Include="extension.yaml">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="Localization\*.xaml">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-        <Page Include="App.xaml">
-            <Generator>MSBuild:Compile</Generator>
-            <SubType>Designer</SubType>
-        </Page>
-        <Page Include="Settings\EaLibrarySettingsView.xaml">
-            <SubType>Designer</SubType>
-            <Generator>MSBuild:Compile</Generator>
-        </Page>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="Resources\ea_icon.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
+        <None Include="extension.yaml" CopyToOutputDirectory="Always" />
+        <None Include="Localization\*.xaml" CopyToOutputDirectory="Always" />
+        <None Include="Resources\ea_icon.png" CopyToOutputDirectory="Always" />
     </ItemGroup>
 </Project>

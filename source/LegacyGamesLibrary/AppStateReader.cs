@@ -19,44 +19,6 @@ public class AppStateReader(string appStatePath = null) : IAppStateReader
 
     public string AppStatePath { get; } = appStatePath ?? DefaultAppStatePath;
 
-    private class AppStateRoot
-    {
-        public AppStateSiteData SiteData;
-        public AppStateUser User;
-    }
-
-    private class AppStateSiteData
-    {
-        public List<AppStateBundle> Catalog;
-        public List<AppStateBundle> GiveawayCatalog;
-    }
-
-    private class AppStateBundle
-    {
-        public int Id;
-        public string Name;
-        public string Permalink;
-        public string Description;
-        public List<AppStateGame> Games;
-    }
-
-    private class AppStateUser
-    {
-        public List<AppStateUserDownloadLicense> GiveawayDownloads;
-        public AppStateUserProfile Profile;
-    }
-
-    private class AppStateUserProfile
-    {
-        public List<AppStateUserDownloadLicense> Downloads;
-    }
-
-    private class AppStateUserDownloadLicense
-    {
-        [JsonProperty("product_id")]
-        public int ProductId;
-    }
-
     public IEnumerable<AppStateGame> GetUserOwnedGames()
     {
         if (!File.Exists(AppStatePath))
@@ -126,18 +88,4 @@ public class AppStateReader(string appStatePath = null) : IAppStateReader
         }
         return gamesByInstallerId.Values;
     }
-}
-
-public class AppStateGame
-{
-    [JsonProperty("game_name")]
-    public string GameName;
-    [JsonProperty("game_description")]
-    public string GameDescription;
-    [JsonProperty("game_coverart")]
-    public string GameCoverArt;
-    [JsonProperty("game_installed_size")]
-    public string GameInstalledSize;
-    [JsonProperty("installer_uuid")]
-    public string InstallerUUID;
 }
