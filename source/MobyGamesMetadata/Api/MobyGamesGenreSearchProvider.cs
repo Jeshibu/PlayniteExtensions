@@ -10,7 +10,8 @@ using System.Threading;
 
 namespace MobyGamesMetadata.Api;
 
-public class MobyGamesGenreSearchProvider(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility) : BaseAggregateMobyGamesDataCollector(apiClient, scraper, settings, platformUtility), ISearchableDataSourceWithDetails<MobyGamesGenreSetting, IEnumerable<GameDetails>>
+public class MobyGamesGenreSearchProvider(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility)
+    : BaseAggregateMobyGamesDataCollector(apiClient, scraper, settings, platformUtility), IBulkPropertyImportDataSource<MobyGamesGenreSetting>
 {
     public IEnumerable<GameDetails> GetDetails(MobyGamesGenreSetting searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {

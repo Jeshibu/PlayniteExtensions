@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace GiantBombMetadata.SearchProviders;
 
-public class GiantBombGameThemeOrGenreSearchProvider(IGiantBombApiClient apiClient, GiantBombScraper scraper) : ISearchableDataSourceWithDetails<GiantBombSearchResultItem, IEnumerable<GameDetails>>
+public class GiantBombGameThemeOrGenreSearchProvider(IGiantBombApiClient apiClient, GiantBombScraper scraper) : IBulkPropertyImportDataSource<GiantBombSearchResultItem>
 {
     private readonly ILogger logger = LogManager.GetLogger();
 

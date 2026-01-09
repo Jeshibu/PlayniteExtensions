@@ -115,19 +115,19 @@ public class GiantBombMetadata : MetadataPlugin
         if (chosenOption == null || chosenOption == cancelOption) return;
 
         var scraper = new GiantBombScraper(downloader, PlatformUtility);
-        ISearchableDataSourceWithDetails<GiantBombSearchResultItem, IEnumerable<GameDetails>> searchProvider;
+        IBulkPropertyImportDataSource<GiantBombSearchResultItem> searchProvider;
 
         if (chosenOption == otherOption)
-            searchProvider = new GiantBombGamePropertySearchProvider(ApiClient, new GiantBombScraper(downloader, PlatformUtility));
+            searchProvider = new GiantBombGamePropertySearchProvider(ApiClient, scraper);
         else if (chosenOption == genreOption)
-            searchProvider = new GiantBombGameThemeOrGenreSearchProvider(ApiClient, new GiantBombScraper(downloader, PlatformUtility));
+            searchProvider = new GiantBombGameThemeOrGenreSearchProvider(ApiClient, scraper);
         else
             return;
 
         var extra = new GiantBombBulkPropertyAssigner(PlayniteApi, Settings.Settings, searchProvider, new PlatformUtility(PlayniteApi), Settings.Settings.MaxDegreeOfParallelism);
 
-        if (chosenOption == genreOption)
-            extra.AllowEmptySearchQuery = true;
+        // if (chosenOption == genreOption)
+        //     extra.AllowEmptySearchQuery = true;
 
         extra.ImportGameProperty();
     }

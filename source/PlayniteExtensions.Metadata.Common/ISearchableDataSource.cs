@@ -26,3 +26,5 @@ public interface IGameSearchProvider<TSearchResult> : ISearchableDataSourceWithD
     /// <returns></returns>
     bool TryGetDetails(Game game, out GameDetails gameDetails, CancellationToken cancellationToken);
 }
+
+public interface IBulkPropertyImportDataSource<TSearchResult> : ISearchableDataSourceWithDetails<TSearchResult, IEnumerable<GameDetails>>;

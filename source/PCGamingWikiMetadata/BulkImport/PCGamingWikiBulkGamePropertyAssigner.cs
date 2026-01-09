@@ -1,7 +1,5 @@
-﻿using PCGamingWikiBulkImport.DataCollection;
-using PCGamingWikiBulkImport.Models;
-using PCGamingWikiBulkImport.Views;
-using PCGamingWikiMetadata;
+﻿using PCGamingWikiBulkImport;
+using PCGamingWikiBulkImport.DataCollection;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
@@ -9,21 +7,21 @@ using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 
-namespace PCGamingWikiBulkImport;
+namespace PCGamingWikiMetadata.BulkImport;
 
 internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<PCGamingWikiSelectedValues, GamePropertyImportViewModel>
 {
     private readonly PCGamingWikiMetadataSettings settings;
     private readonly PCGamingWikiPropertySearchProvider pcgwDataSource;
+    private readonly PCGamingWikiBulkImportUserInterface _ui;
 
     public PCGamingWikiBulkGamePropertyAssigner(IPlayniteAPI playniteApi, PCGamingWikiMetadataSettings settings, IExternalDatabaseIdUtility databaseIdUtility, PCGamingWikiPropertySearchProvider dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
-        : base(playniteApi, dataSource, platformUtility, databaseIdUtility, ExternalDatabase.PCGamingWiki, maxDegreeOfParallelism)
+        : base(playniteApi.Database, new(playniteApi){AllowEmptySearchQuery = true}, dataSource, platformUtility, databaseIdUtility, ExternalDatabase.PCGamingWiki, maxDegreeOfParallelism)
     {
         this.settings = settings;
         pcgwDataSource = dataSource;
-        AllowEmptySearchQuery = true;
+        _ui = new(playniteApi);
     }
 
     public override string MetadataProviderName => "PCGamingWiki";
@@ -39,7 +37,7 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
 
     private static string IdToString(ExternalDatabase db, string id) => $"{db}:{id}";
 
-    protected override PCGamingWikiSelectedValues SelectGameProperty()
+    public override PCGamingWikiSelectedValues SelectGameProperty()
     {
         var selectedProperty = base.SelectGameProperty();
         if (selectedProperty == null)
@@ -55,16 +53,16 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
 
     private PCGamingWikiSelectedValues SelectStringListProperty(PCGamingWikiSelectedValues selectedPropertyCategory)
     {
-        var selectedValue = (GenericItemOption<ItemCount>)playniteApi.Dialogs.ChooseItemWithSearch(null, query =>
+        var selectedItem = _ui.ChooseItemWithSearch<ItemCount>(null, query =>
         {
             var counts = pcgwDataSource.GetCounts(selectedPropertyCategory.FieldInfo, query);
             var options = counts.Select(c => new GenericItemOption<ItemCount>(c) { Name = GetItemDisplayName(selectedPropertyCategory.FieldInfo, c) }).ToList<GenericItemOption>();
             return options;
         });
-        if (selectedValue == null)
+        if (selectedItem == null)
             return null;
 
-        selectedPropertyCategory.SelectedValues.Add(selectedValue.Item.Value);
+        selectedPropertyCategory.SelectedValues.Add(selectedItem.Value);
         return selectedPropertyCategory;
     }
 
@@ -86,15 +84,8 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
             });
             var vm = new SelectStringsViewModel(selectedPropertyCategory.Name, items);
 
-            var window = playniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
-            var view = new SelectStringsView(window) { DataContext = vm };
-            window.Content = view;
-            window.SizeToContent = SizeToContent.WidthAndHeight;
-            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            window.Title = "Select games";
-            window.SizeChanged += Window_SizeChanged;
-            var dialogResult = window.ShowDialog();
-            if (dialogResult != true)
+            vm = _ui.SelectString(vm);
+            if (vm == null)
                 return null;
 
             selectedPropertyCategory.SelectedValues = vm.Items.Where(i => i.IsSelected).Select(i => i.Value).ToList();

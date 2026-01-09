@@ -1,4 +1,5 @@
 ﻿using PCGamingWikiBulkImport.DataCollection;
+using PCGamingWikiMetadata.BulkImport;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
@@ -11,9 +12,9 @@ using System.Threading;
 
 namespace PCGamingWikiBulkImport;
 
-public class PCGamingWikiPropertySearchProvider(ICargoQuery cargoQuery, IPlatformUtility platformUtility) : ISearchableDataSourceWithDetails<PCGamingWikiSelectedValues, IEnumerable<GameDetails>>
+public class PCGamingWikiPropertySearchProvider(ICargoQuery cargoQuery, IPlatformUtility platformUtility) : IBulkPropertyImportDataSource<PCGamingWikiSelectedValues>
 {
-    private readonly CargoTables Tables = new();
+    private readonly CargoTables _tables = new();
 
     private ILogger Logger { get; }
 
@@ -64,9 +65,9 @@ public class PCGamingWikiPropertySearchProvider(ICargoQuery cargoQuery, IPlatfor
     public IEnumerable<PCGamingWikiSelectedValues> Search(string query, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrWhiteSpace(query))
-            return ToSelectedValues(Tables.Fields);
+            return ToSelectedValues(_tables.Fields);
 
-        var matching = Tables.Fields.Where(f => f.FieldDisplayName.Contains(query, StringComparison.InvariantCultureIgnoreCase));
+        var matching = _tables.Fields.Where(f => f.FieldDisplayName.Contains(query, StringComparison.InvariantCultureIgnoreCase));
         return ToSelectedValues(matching);
     }
 

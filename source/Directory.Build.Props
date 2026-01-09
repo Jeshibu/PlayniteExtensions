@@ -1,10 +1,12 @@
 <Project>
     <PropertyGroup>
         <TargetFramework>net462</TargetFramework>
-        <Copyright>Copyright © 2025</Copyright>
+        <Copyright>Copyright © 2026</Copyright>
         <OutputPath>bin\$(Configuration)\</OutputPath>
         <LangVersion>14</LangVersion>
         <Authors>Jeshibu</Authors>
+        <UseWpf>true</UseWpf>
+        <UseWindowsForms>true</UseWindowsForms>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <DebugType>full</DebugType>

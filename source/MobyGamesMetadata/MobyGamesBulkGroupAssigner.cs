@@ -9,8 +9,8 @@ using System.Linq;
 
 namespace MobyGamesMetadata;
 
-public class MobyGamesBulkGroupAssigner(IPlayniteAPI playniteApi, ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
-    : BulkGamePropertyAssigner<SearchResult, GamePropertyImportViewModel>(playniteApi, dataSource, platformUtility, new MobyGamesIdUtility(), ExternalDatabase.MobyGames, maxDegreeOfParallelism)
+public class MobyGamesBulkGroupAssigner(IPlayniteAPI playniteApi, IBulkPropertyImportDataSource<SearchResult> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
+    : BulkGamePropertyAssigner<SearchResult, GamePropertyImportViewModel>(playniteApi.Database, new(playniteApi), dataSource, platformUtility, new MobyGamesIdUtility(), ExternalDatabase.MobyGames, maxDegreeOfParallelism)
 {
     public override string MetadataProviderName => "MobyGames";
 

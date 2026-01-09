@@ -9,8 +9,7 @@ using PlayniteExtensions.Metadata.Common;
 
 namespace LaunchBoxMetadata.GenreImport;
 
-public class GenreSearchProvider(LaunchBoxDatabase database, IPlatformUtility platformUtility)
-    : ISearchableDataSourceWithDetails<Genre, IEnumerable<GameDetails>>
+public class GenreSearchProvider(LaunchBoxDatabase database, IPlatformUtility platformUtility) : IBulkPropertyImportDataSource<Genre>
 {
     private List<Genre> genres = database.GetGenres().ToList();
 
@@ -37,16 +36,16 @@ public class GenreSearchProvider(LaunchBoxDatabase database, IPlatformUtility pl
             Platforms = game.Platform.Split([';'], StringSplitOptions.RemoveEmptyEntries).SelectMany(platformUtility.GetPlatforms).ToList(),
             Names = [game.Name, ..game.Aliases.SplitAliases()],
         };
-        
+
         if (game.ReleaseDate.HasValue)
             output.ReleaseDate = new(game.ReleaseDate.Value);
-        
+
         if (!string.IsNullOrWhiteSpace(game.WikipediaURL))
             output.Links.Add(new("Wikipedia", game.WikipediaURL));
-        
+
         if (!string.IsNullOrWhiteSpace(game.VideoURL))
             output.Links.Add(new("Video", game.VideoURL));
-        
+
         return output;
     }
 }

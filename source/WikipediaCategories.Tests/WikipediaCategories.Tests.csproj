@@ -2,9 +2,6 @@
 
   <PropertyGroup>
     <Version>10.47</Version>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <UseWpf>true</UseWpf>
-    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,5 +21,5 @@
   </ItemGroup>
 
   <Import Project="..\PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems" Label="Shared" />
-  
+
 </Project>

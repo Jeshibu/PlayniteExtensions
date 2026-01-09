@@ -7,8 +7,8 @@ using System.Collections.Generic;
 namespace GiantBombMetadata;
 
 
-public class GiantBombBulkPropertyAssigner(IPlayniteAPI playniteAPI, GiantBombMetadataSettings settings, ISearchableDataSourceWithDetails<GiantBombSearchResultItem, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
-    : BulkGamePropertyAssigner<GiantBombSearchResultItem, GamePropertyImportViewModel>(playniteAPI, dataSource, platformUtility, new GiantBombIdUtility(), ExternalDatabase.GiantBomb, maxDegreeOfParallelism)
+public class GiantBombBulkPropertyAssigner(IPlayniteAPI playniteApi, GiantBombMetadataSettings settings, IBulkPropertyImportDataSource<GiantBombSearchResultItem> dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism)
+    : BulkGamePropertyAssigner<GiantBombSearchResultItem, GamePropertyImportViewModel>(playniteApi.Database, new(playniteApi), dataSource, platformUtility, new GiantBombIdUtility(), ExternalDatabase.GiantBomb, maxDegreeOfParallelism)
 {
     public GiantBombMetadataSettings Settings { get; } = settings;
 

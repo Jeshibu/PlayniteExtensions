@@ -14,10 +14,9 @@ public class SteamPropertyBulkImporter : BulkGamePropertyAssigner<SteamProperty,
     private readonly SteamTagsImporterSettings settings;
     private readonly SteamIdUtility steamIdUtility;
 
-    public SteamPropertyBulkImporter(IPlayniteAPI playniteApi, ISearchableDataSourceWithDetails<SteamProperty, IEnumerable<GameDetails>> dataSource, IPlatformUtility platformUtility, SteamTagsImporterSettings settings)
-        : base(playniteApi, dataSource, platformUtility, new SteamIdUtility(), ExternalDatabase.Steam, settings.MaxDegreeOfParallelism)
+    public SteamPropertyBulkImporter(IPlayniteAPI playniteApi, IBulkPropertyImportDataSource<SteamProperty> dataSource, IPlatformUtility platformUtility, SteamTagsImporterSettings settings)
+        : base(playniteApi.Database, new(playniteApi){AllowEmptySearchQuery = true}, dataSource, platformUtility, new SteamIdUtility(), ExternalDatabase.Steam, settings.MaxDegreeOfParallelism)
     {
-        AllowEmptySearchQuery = true;
         this.settings = settings;
         this.steamIdUtility = (SteamIdUtility)DatabaseIdUtility;
     }

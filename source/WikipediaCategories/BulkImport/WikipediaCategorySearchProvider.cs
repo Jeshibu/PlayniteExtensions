@@ -2,14 +2,20 @@ using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
+using WikipediaCategories.Models;
 
 namespace WikipediaCategories.BulkImport;
 
-public class WikipediaCategorySearchProvider(WikipediaApi api)
-    : ISearchableDataSourceWithDetails<WikipediaSearchResult, IEnumerable<GameDetails>>
+public interface IWikipediaCategorySearchProvider : IBulkPropertyImportDataSource<WikipediaSearchResult>
+{
+
+}
+
+public class WikipediaCategorySearchProvider(WikipediaApi api) : IWikipediaCategorySearchProvider
 {
     public IEnumerable<WikipediaSearchResult> Search(string query, CancellationToken cancellationToken = default)
     {
@@ -18,9 +24,9 @@ public class WikipediaCategorySearchProvider(WikipediaApi api)
 
     public GenericItemOption<WikipediaSearchResult> ToGenericItemOption(WikipediaSearchResult item) => new(item) { Name = item.Name };
 
-    public IEnumerable<GameDetails> GetDetails(WikipediaSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
+    IEnumerable<GameDetails> ISearchableDataSourceWithDetails<WikipediaSearchResult, IEnumerable<GameDetails>>.GetDetails(WikipediaSearchResult searchResult, GlobalProgressActionArgs progressArgs, Game searchGame)
     {
-        return GetDetailsRecursive(searchResult.Name, 0, progressArgs?.CancelToken ?? CancellationToken.None);
+        throw new NotImplementedException();
     }
 
     private IEnumerable<GameDetails> GetDetailsRecursive(string rootCategoryName, int depth, CancellationToken cancellationToken)
@@ -66,9 +72,32 @@ public class WikipediaCategorySearchProvider(WikipediaApi api)
             output.Add(new()
             {
                 Names = [displayTitle],
-                Url = WikipediaIdUtility.ToWikipediaUrl("en", pageName),
+                Url = WikipediaIdUtility.ToWikipediaUrl(api.WikipediaLocale, pageName),
             });
         }
+    }
+
+    public CategoryContents GetCategoryContents(string categoryName, CancellationToken cancellationToken)
+    {
+        var output = new CategoryContents();
+
+        var categoryMembers = api.GetCategoryMembers(categoryName, cancellationToken);
+        foreach (var categoryMember in categoryMembers)
+        {
+            if (cancellationToken.IsCancellationRequested)
+                break;
+
+            switch ((WikipediaNamespace)categoryMember.ns)
+            {
+                case WikipediaNamespace.Article:
+                    output.Articles.Add(categoryMember.title);
+                    break;
+                case WikipediaNamespace.Category:
+                    output.Subcategories.Add(categoryMember.title);
+                    break;
+            }
+        }
+        return output;
     }
 
     private static readonly Regex TitleParenthesesRegex = new(@"(?<title>.+) \((?<parenContents>.+)\)", RegexOptions.Compiled);

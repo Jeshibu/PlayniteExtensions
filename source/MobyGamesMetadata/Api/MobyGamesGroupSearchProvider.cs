@@ -10,8 +10,7 @@ using System.Threading;
 namespace MobyGamesMetadata.Api;
 
 public class MobyGamesGroupSearchProvider(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility)
-    : BaseAggregateMobyGamesDataCollector(apiClient, scraper, settings, platformUtility)
-        , ISearchableDataSourceWithDetails<SearchResult, IEnumerable<GameDetails>>
+    : BaseAggregateMobyGamesDataCollector(apiClient, scraper, settings, platformUtility), IBulkPropertyImportDataSource<SearchResult>
 {
     public IEnumerable<GameDetails> GetDetails(SearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
@@ -20,10 +19,10 @@ public class MobyGamesGroupSearchProvider(MobyGamesApiClient apiClient, MobyGame
             var result = apiClient.GetAllGamesForGroup(searchResult.Id, progressArgs);
             return result.Select(g => ToGameDetails(g, searchGame));
         }
-        
+
         if (settings.DataSource.HasFlag(DataSource.Scraping))
             return scraper.GetGamesFromGroup(searchResult.Url, progressArgs);
-        
+
         return [];
     }
 

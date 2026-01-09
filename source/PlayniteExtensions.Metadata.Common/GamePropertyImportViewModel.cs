@@ -8,8 +8,6 @@ namespace PlayniteExtensions.Metadata.Common;
 
 public class GamePropertyImportViewModel
 {
-    public IPlayniteAPI PlayniteAPI { get; set; }
-
     public GamePropertyImportTargetField[] TargetFieldOptions { get; set; } =
     [
         GamePropertyImportTargetField.Category,
@@ -50,8 +48,8 @@ public class GameCheckboxViewModel : ObservableObject
         {
             if (Game.ReleaseDate == null)
                 return Game.Name;
-            else
-                return $"{Game.Name} ({Game.ReleaseDate?.Year})";
+
+            return $"{Game.Name} ({Game.ReleaseDate?.Year})";
         }
     }
 }

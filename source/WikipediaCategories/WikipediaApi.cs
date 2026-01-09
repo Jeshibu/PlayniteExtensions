@@ -16,13 +16,13 @@ public class WikipediaApi
 {
     private readonly string _baseUrl;
     private readonly IWebDownloader _downloader;
-    private readonly string _wikipediaLocale;
     private readonly ILogger _logger = LogManager.GetLogger();
+    public string WikipediaLocale { get; }
 
     public WikipediaApi(IWebDownloader downloader, Version playniteVersion, string wikipediaLocale = "en")
     {
         _downloader = downloader;
-        _wikipediaLocale = wikipediaLocale;
+        WikipediaLocale = wikipediaLocale;
         _baseUrl = $"https://{wikipediaLocale}.wikipedia.org/w/api.php?format=json";
 
         var pluginVersion = GetType().Assembly!.GetName().Version;
@@ -102,7 +102,7 @@ public class WikipediaApi
             var article = GetArticleCategories(pageName, continueParams, cancellationToken);
             var page = article.query.pages.First().Value;
             output.Title ??= page.title;
-            output.Url ??= WikipediaIdUtility.ToWikipediaUrl(_wikipediaLocale, page.title);
+            output.Url ??= WikipediaIdUtility.ToWikipediaUrl(WikipediaLocale, page.title);
             output.Categories.AddRange(page.categories.Select(c => c.title));
 
             continueParams = article.@continue;
@@ -157,6 +157,11 @@ public class WikipediaApi
     {
         StringBuilder sb = new(_baseUrl);
 
+        AddParameters(parameters);
+        AddParameters(continueParams);
+
+        return sb.ToString();
+
         void AddParameters(Dictionary<string, string> localParameters)
         {
             if (localParameters == null)
@@ -170,10 +175,5 @@ public class WikipediaApi
                     sb.Append('=').Append(Uri.EscapeDataString(parameter.Value));
             }
         }
-
-        AddParameters(parameters);
-        AddParameters(continueParams);
-
-        return sb.ToString();
     }
 }

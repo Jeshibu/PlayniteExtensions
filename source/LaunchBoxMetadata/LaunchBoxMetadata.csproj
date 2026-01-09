@@ -25,45 +25,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\PlayniteExtensions.Common\GlobalCommands.cs" Link="Common\GlobalCommands.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Common\IEnumerableExtensions.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IgnoreScrollBehavior.cs" Link="Common\IgnoreScrollBehavior.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs" Link="Common\IntegerFormatConverter.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Common\IPlatformUtility.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="Common\LibraryIdUtility.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs" Link="Common\PlatformUtility.cs" />
     <Compile Include="..\PlayniteExtensions.Common\PlayniteConvert.cs" Link="Common\PlayniteConvert.cs" />
     <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs" Link="Common\PluginSettingsViewModel.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\SortableNameConverter.cs" Link="Common\SortableNameConverter.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs" Link="Common\StringExtensions.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\TitleComparer.cs" Link="Common\TitleComparer.cs" />
     <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs" Link="Common\WebDownloader.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkGamePropertyAssigner.cs" Link="Common\Metadata\BulkGamePropertyAssigner.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\BulkImportPluginSettings.cs" Link="Common\Metadata\BulkImportPluginSettings.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GameDetails.cs" Link="Common\Metadata\GameDetails.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GameMatchingHelper.cs" Link="Common\Metadata\GameMatchingHelper.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GamePropertyImportViewModel.cs" Link="Common\Metadata\GamePropertyImportViewModel.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericItemOption.cs" Link="Common\Metadata\GenericItemOption.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\GenericMetadataProvider.cs" Link="Common\Metadata\GenericMetadataProvider.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\IGameSearchResult.cs" Link="Common\Metadata\IGameSearchResult.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\IImageData.cs" Link="Common\Metadata\IImageData.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\ISearchableDataSource.cs" Link="Common\Metadata\ISearchableDataSource.cs" />
-    <Compile Include="..\PlayniteExtensions.Metadata.Common\Settings.cs" Link="Common\Metadata\Settings.cs" />
-    <Compile Update="Common\Metadata\GamePropertyImportView.xaml.cs">
-      <DependentUpon>GamePropertyImportView.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="LaunchBoxMetadataSettingsView.xaml.cs">
-      <DependentUpon>LaunchBoxMetadataSettingsView.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="extension.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="icon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="extension.yaml" CopyToOutputDirectory="Always" />
+    <None Include="icon.png" CopyToOutputDirectory="Always" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Localization\*.xaml">
@@ -71,20 +41,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Page Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="LaunchBoxMetadataSettingsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Common\Metadata\GamePropertyImportView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="xcopy &quot;$(SolutionDir)PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*&quot; &quot;$(ProjectDir)Common\Metadata&quot; /Y /I" />
-  </Target>
+  <Import Project="..\BulkImport.props"/>
 </Project>

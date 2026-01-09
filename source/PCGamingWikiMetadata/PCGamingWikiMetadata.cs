@@ -1,5 +1,6 @@
 ﻿using PCGamingWikiBulkImport.DataCollection;
 using PCGamingWikiBulkImport;
+using PCGamingWikiMetadata.BulkImport;
 using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using System;

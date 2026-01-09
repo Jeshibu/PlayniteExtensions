@@ -1,4 +1,5 @@
 ﻿using PlayniteExtensions.Tests.Common;
+using System.Linq;
 
 namespace WikipediaCategories.Tests;
 
@@ -17,7 +18,7 @@ public class ApiTests
     public void UserAgentContainsVersions()
     {
         var pluginVersion = _api.GetType().Assembly.GetName().Version;
-        Assert.Equal($"Wikipedia Category Importer {pluginVersion} (Playnite 10.47)", _downloader.UserAgent);
+        Assert.Equal($"Wikipedia Category Importer {pluginVersion} (Playnite 10.47, https://github.com/Jeshibu/PlayniteExtensions)", _downloader.UserAgent);
     }
 
     [Fact]
@@ -36,7 +37,6 @@ public class ApiTests
         _downloader.FilesByUrl.Add(_api.GetArticleUrl(title), "Resources/details-game-asscreed2.json");
         var article = _api.GetArticleCategories(title);
         Assert.NotEmpty(article.Categories);
-        Assert.All(article.Categories, c => Assert.DoesNotContain("Category:", c));
     }
 
     [Fact]

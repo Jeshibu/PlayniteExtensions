@@ -1,8 +1,8 @@
-﻿using Playnite.SDK.Plugins;
-using Playnite.SDK;
+﻿using Playnite.SDK;
 using Playnite.SDK.Models;
-using System.Collections.Generic;
+using Playnite.SDK.Plugins;
 using System;
+using System.Collections.Generic;
 
 namespace PCGamingWikiMetadata;
 
@@ -55,10 +55,7 @@ public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
         if (!options.IsBackgroundDownload)
         {
             logger.Debug("not background");
-            var item = playniteApi.Dialogs.ChooseItemWithSearch(null, (a) =>
-            {
-                return client.SearchGames(a);
-            }, options.GameData.Name);
+            var item = playniteApi.Dialogs.ChooseItemWithSearch(null, a => client.SearchGames(a), options.GameData.Name);
 
             if (item != null)
             {
@@ -69,7 +66,7 @@ public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
             else
             {
                 gameController.Game = new PcgwGame(settings);
-                logger.Warn($"Cancelled search");
+                logger.Warn("Cancelled search");
             }
         }
         else

@@ -14,7 +14,7 @@ xcopy "$PlaynitePath\Emulation\Emulators" ".\source\ExtraEmulatorProfiles\Emulat
 
 $bulkImportProjects = @('GiantBombMetadata', 'LaunchBoxMetadata', 'MobyGamesMetadata', 'PCGamingWikiMetadata', 'SteamTagsImporter', 'TvTropesMetadata', 'WikipediaCategoryImport')
 foreach ($proj in $bulkImportProjects){
-    xcopy ".\source\PlayniteExtensions.Metadata.Common\GamePropertyImportView.xaml*" ".\source\$proj\Common\Metadata" /Y /I
+    xcopy ".\source\PlayniteExtensions.Metadata.Common\Views" ".\source\$proj\Common\Metadata\Views" /Y /I
 }
 
 & "$MSBuildPath" ".\source\PlayniteExtensions.slnx" -p:Configuration=Release -restore -clp:ErrorsOnly

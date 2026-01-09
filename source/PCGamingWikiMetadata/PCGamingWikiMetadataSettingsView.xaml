@@ -196,7 +196,7 @@
             <ScrollViewer HorizontalScrollBarVisibility="Auto">
                 <StackPanel>
                     <StackPanel.Resources>
-                        <Style TargetType="TextBox">
+                        <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
                             <Setter Property="Margin" Value="0,2,0,0" />
                         </Style>
                         <Style TargetType="StackPanel">

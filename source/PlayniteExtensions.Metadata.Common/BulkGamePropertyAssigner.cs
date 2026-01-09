@@ -1,16 +1,17 @@
-﻿using Playnite.SDK.Models;
-using Playnite.SDK;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Linq;
-using System.Reflection;
-using System.Windows;
+﻿using Playnite.SDK;
+using Playnite.SDK.Models;
 using PlayniteExtensions.Common;
-using System.Windows.Controls;
-using System.Threading.Tasks;
-using System.Windows.Media;
+using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Forms;
+using System.Windows.Media;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace PlayniteExtensions.Metadata.Common;
 
@@ -20,8 +21,9 @@ public interface IHasName
 }
 
 public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewModel>(
-    IPlayniteAPI playniteApi,
-    ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource,
+    IGameDatabaseAPI playniteDatabase,
+    BulkPropertyUserInterface ui,
+    IBulkPropertyImportDataSource<TSearchItem> dataSource,
     IPlatformUtility platformUtility,
     IExternalDatabaseIdUtility databaseIdUtility,
     ExternalDatabase databaseType,
@@ -30,11 +32,10 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
     where TApprovalPromptViewModel : GamePropertyImportViewModel, new()
 {
     protected readonly ILogger logger = LogManager.GetLogger();
-    protected readonly ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource = dataSource;
-    protected readonly IPlayniteAPI playniteApi = playniteApi;
+    protected IBulkPropertyImportDataSource<TSearchItem> DataSource { get; } = dataSource;
+    protected IGameDatabaseAPI Database { get; } = playniteDatabase;
+    protected BulkPropertyUserInterface Ui { get; } = ui;
     public abstract string MetadataProviderName { get; }
-    public bool AllowEmptySearchQuery { get; set; } = false;
-    public string DefaultSearch { get; set; } = null;
     public IExternalDatabaseIdUtility DatabaseIdUtility { get; } = databaseIdUtility;
     public ExternalDatabase DatabaseType { get; } = databaseType;
     public int MaxDegreeOfParallelism { get; } = maxDegreeOfParallelism;
@@ -52,10 +53,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
             return;
 
         List<GameDetails> associatedGames = null;
-        playniteApi.Dialogs.ActivateGlobalProgress(a =>
-        {
-            associatedGames = dataSource.GetDetails(selectedItem, a)?.ToList();
-        }, GetGameDownloadProgressOptions(selectedItem));
+        Ui.ShowProgress(a => { associatedGames = DataSource.GetDetails(selectedItem, a)?.ToList(); }, GetGameDownloadProgressOptions(selectedItem));
 
         if (associatedGames == null)
             return;
@@ -68,31 +66,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
         UpdateGames(viewModel);
     }
 
-    protected virtual TSearchItem SelectGameProperty()
-    {
-        var selectedItem = playniteApi.Dialogs.ChooseItemWithSearch(null, a =>
-        {
-            var output = new List<GenericItemOption>();
-
-            if (!AllowEmptySearchQuery && string.IsNullOrWhiteSpace(a))
-                return output;
-
-            try
-            {
-                var searchResult = dataSource.Search(a);
-                output.AddRange(searchResult.Select(dataSource.ToGenericItemOption));
-            }
-            catch (Exception e)
-            {
-                logger.Error(e, $"Failed to get search data for <{a}>");
-                return [];
-            }
-
-            return output;
-        }, DefaultSearch, "Search for a property to assign to all your matching games") as GenericItemOption<TSearchItem>;
-
-        return selectedItem == null ? default : selectedItem.Item;
-    }
+    public virtual TSearchItem SelectGameProperty() => Ui.SelectGameProperty(DataSource);
 
     protected abstract PropertyImportSetting GetPropertyImportSetting(TSearchItem searchItem, out string name);
 
@@ -112,7 +86,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
         if (importSetting == null)
         {
             logger.Error($"Could not find import settings for game property <{selectedItem.Name}>");
-            playniteApi.Notifications.Add(GetType().Name, "Could not find import settings for property", NotificationType.Error);
+            Ui.AddNotification(GetType().Name, "Could not find import settings for property", NotificationType.Error);
             return null;
         }
 
@@ -120,11 +94,11 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
 
         if (proposedMatches.Count == 0)
         {
-            playniteApi.Dialogs.ShowMessage("No matching games found in your library.", $"{MetadataProviderName} game property assigner", MessageBoxButton.OK, MessageBoxImage.Information);
+            Ui.ShowDialog("No matching games found in your library.", $"{MetadataProviderName} game property assigner", MessageBoxButton.OK, MessageBoxImage.Information);
             return null;
         }
 
-        var viewModel = new TApprovalPromptViewModel { Name = $"{importSetting.Prefix}{propName}", Games = proposedMatches, PlayniteAPI = playniteApi };
+        var viewModel = new TApprovalPromptViewModel { Name = $"{importSetting.Prefix}{propName}", Games = proposedMatches };
         viewModel.Links.AddRange(GetPotentialLinks(selectedItem));
         viewModel.Filters.AddRange(GetCheckboxFilters(viewModel));
         viewModel.TargetField = importSetting.ImportTarget switch
@@ -136,19 +110,9 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
             PropertyImportTarget.Publishers => GamePropertyImportTargetField.Publishers,
             _ => GamePropertyImportTargetField.Tag,
         };
-        var window = playniteApi.Dialogs.CreateWindow(new WindowCreationOptions { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
-        var view = GetBulkPropertyImportView(window, viewModel);
-        window.Content = view;
-        window.SizeToContent = SizeToContent.WidthAndHeight;
-        window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-        window.Title = "Select games";
-        window.SizeChanged += Window_SizeChanged;
-        var dialogResult = window.ShowDialog();
-        if (dialogResult == true)
-            return viewModel;
-        else
-            return null;
+        return Ui.SelectGames(viewModel);
     }
+
 
     protected virtual IList<DbId> GetIds(GameDetails gameDetails)
     {
@@ -164,12 +128,12 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
     {
         var proposedMatches = new ConcurrentDictionary<Guid, GameCheckboxViewModel>();
         bool loopCompleted = false;
-        var progressResult = playniteApi.Dialogs.ActivateGlobalProgress(a =>
+        Ui.ShowProgress(a =>
         {
             a.ProgressMaxValue = gamesToMatch.Count + 10;
 
             var matchHelper = new GameMatchingHelper(DatabaseIdUtility, MaxDegreeOfParallelism);
-            matchHelper.Prepare(playniteApi.Database.Games, a.CancelToken);
+            matchHelper.Prepare(Database.Games, a.CancelToken);
             a.CurrentProgressValue += 10;
 
             ParallelOptions parallelOptions = new() { CancellationToken = a.CancelToken, MaxDegreeOfParallelism = MaxDegreeOfParallelism };
@@ -179,28 +143,24 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
                 {
                     void AddMatchedGame(Game game)
                     {
-                        proposedMatches.AddOrUpdate(game.Id, new GameCheckboxViewModel(game, externalGameInfo), (id, existingCheckboxVM) =>
+                        proposedMatches.AddOrUpdate(game.Id, new GameCheckboxViewModel(game, externalGameInfo), (_, existingCheckboxVm) =>
                         {
-                            existingCheckboxVM.GameDetails.Add(externalGameInfo);
+                            existingCheckboxVm.GameDetails.Add(externalGameInfo);
 
-                            return existingCheckboxVM;
+                            return existingCheckboxVm;
                         });
                     }
 
                     foreach (var dbId in GetIds(externalGameInfo))
-                    {
                         if (matchHelper.TryGetGamesById(dbId, out var gamesWithThisId))
                             foreach (var g in gamesWithThisId)
                                 AddMatchedGame(g);
-                    }
 
                     foreach (var name in externalGameInfo.Names)
-                    {
                         if (matchHelper.TryGetGamesByName(name, out var gamesWithThisName))
                             foreach (var g in gamesWithThisName)
                                 if (platformUtility.PlatformsOverlap(g.Platforms, externalGameInfo.Platforms))
                                     AddMatchedGame(g);
-                    }
                 }
                 catch (Exception ex)
                 {
@@ -219,88 +179,58 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
         return matchingGames;
     }
 
-    private bool windowSizedDown = false;
-
-    protected void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        if (windowSizedDown) return;
-
-        if (sender is not Window window) return;
-
-        var screen = System.Windows.Forms.Screen.AllScreens.OrderBy(s => s.WorkingArea.Height).First();
-        var dpi = VisualTreeHelper.GetDpi(window);
-
-        if (window.ActualHeight * dpi.DpiScaleY > screen.WorkingArea.Height)
-        {
-            windowSizedDown = true;
-            window.SizeToContent = SizeToContent.Width;
-            window.Height = 0.96D * screen.WorkingArea.Height / dpi.DpiScaleY;
-        }
-    }
-
-    protected virtual UserControl GetBulkPropertyImportView(Window window, TApprovalPromptViewModel viewModel)
-    {
-        return new GamePropertyImportView(window) { DataContext = viewModel };
-    }
-
     private void UpdateGames(GamePropertyImportViewModel viewModel)
     {
-        using (playniteApi.Database.BufferedUpdate())
-        {
-            var dbItem = GetDatabaseObject(viewModel);
+        using var bufferedUpdate = Database.BufferedUpdate();
+        var dbItem = GetDatabaseObject(viewModel);
 
-            foreach (var g in viewModel.Games)
+        foreach (var g in viewModel.Games)
+        {
+            if (!g.IsChecked)
+                continue;
+
+            foreach (var gd in g.GameDetails)
+                gd.Id ??= GetGameIdFromUrl(gd.Url);
+
+            bool update = AddItem(g.Game, viewModel.TargetField, dbItem.Id);
+
+            foreach (var potentialLink in viewModel.Links)
             {
-                if (!g.IsChecked)
+                if (!potentialLink.Checked)
                     continue;
 
+                g.Game.Links ??= [];
+
                 foreach (var gd in g.GameDetails)
-                    gd.Id ??= GetGameIdFromUrl(gd.Url);
-
-                bool update = AddItem(g.Game, viewModel.TargetField, dbItem.Id);
-
-                foreach (var potentialLink in viewModel.Links)
                 {
-                    if (!potentialLink.Checked)
+                    var url = potentialLink.GetUrl(gd);
+
+                    if (string.IsNullOrWhiteSpace(url) || potentialLink.IsAlreadyLinked(g.Game.Links, url))
                         continue;
 
-                    g.Game.Links ??= [];
-
-                    foreach (var gd in g.GameDetails)
-                    {
-                        var url = potentialLink.GetUrl(gd);
-
-                        if (string.IsNullOrWhiteSpace(url) || potentialLink.IsAlreadyLinked(g.Game.Links, url))
-                            continue;
-
-                        g.Game.Links.Add(new(potentialLink.Name, url));
-                        update = true;
-                    }
+                    g.Game.Links.Add(new(potentialLink.Name, url));
+                    update = true;
                 }
+            }
 
-                if (update)
-                {
-                    g.Game.Modified = DateTime.Now;
-                    playniteApi.Database.Games.Update(g.Game);
-                }
+            if (update)
+            {
+                g.Game.Modified = DateTime.Now;
+                Database.Games.Update(g.Game);
             }
         }
     }
 
-    private static DatabaseObject GetDatabaseObject(GamePropertyImportViewModel viewModel)
+    private DatabaseObject GetDatabaseObject(GamePropertyImportViewModel viewModel) => viewModel.TargetField switch
     {
-        var db = viewModel.PlayniteAPI.Database;
-        return viewModel.TargetField switch
-        {
-            GamePropertyImportTargetField.Category => GetDatabaseObjectByName(db.Categories, viewModel.Name),
-            GamePropertyImportTargetField.Genre => GetDatabaseObjectByName(db.Genres, viewModel.Name),
-            GamePropertyImportTargetField.Tag => GetDatabaseObjectByName(db.Tags, viewModel.Name),
-            GamePropertyImportTargetField.Feature => GetDatabaseObjectByName(db.Features, viewModel.Name),
-            GamePropertyImportTargetField.Series => GetDatabaseObjectByName(db.Series, viewModel.Name),
-            GamePropertyImportTargetField.Developers or GamePropertyImportTargetField.Publishers => GetDatabaseObjectByName(db.Companies, viewModel.Name),
-            _ => throw new ArgumentException(),
-        };
-    }
+        GamePropertyImportTargetField.Category => GetDatabaseObjectByName(Database.Categories, viewModel.Name),
+        GamePropertyImportTargetField.Genre => GetDatabaseObjectByName(Database.Genres, viewModel.Name),
+        GamePropertyImportTargetField.Tag => GetDatabaseObjectByName(Database.Tags, viewModel.Name),
+        GamePropertyImportTargetField.Feature => GetDatabaseObjectByName(Database.Features, viewModel.Name),
+        GamePropertyImportTargetField.Series => GetDatabaseObjectByName(Database.Series, viewModel.Name),
+        GamePropertyImportTargetField.Developers or GamePropertyImportTargetField.Publishers => GetDatabaseObjectByName(Database.Companies, viewModel.Name),
+        _ => throw new ArgumentException(),
+    };
 
     private static DatabaseObject GetDatabaseObjectByName<T>(IItemCollection<T> collection, string name) where T : DatabaseObject
     {
@@ -313,13 +243,13 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
         yield return new(MetadataProviderName, game => game.Url);
     }
 
-    protected virtual IEnumerable<CheckboxFilter> GetCheckboxFilters(GamePropertyImportViewModel viewModel)
-    {
-        yield return new("Check all", viewModel, x => true);
-        yield return new("Uncheck all", viewModel, x => false);
-        yield return new("Only filtered games", viewModel, x => playniteApi.MainView.FilteredGames.Contains(x.Game));
-        yield return new("Only matching platforms", viewModel, PlatformsOverlap);
-    }
+    protected virtual IEnumerable<CheckboxFilter> GetCheckboxFilters(GamePropertyImportViewModel viewModel) =>
+    [
+        new("Check all", viewModel, _ => true),
+        new("Uncheck all", viewModel, _ => false),
+        new("Only filtered games", viewModel, x => Ui.GameIsInCurrentFilter(x.Game)),
+        new("Only matching platforms", viewModel, PlatformsOverlap)
+    ];
 
     private bool PlatformsOverlap(GameCheckboxViewModel checkbox)
     {
@@ -365,4 +295,80 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
     }
 
     private static bool AddItem(Game g, GamePropertyImportTargetField targetField, Guid idToAdd) => AddItem(g, GetCollectionSelector(targetField), idToAdd);
+}
+
+public class BulkPropertyUserInterface(IPlayniteAPI playniteApi)
+{
+    protected readonly ILogger logger = LogManager.GetLogger();
+    protected bool windowSizedDown;
+    public bool AllowEmptySearchQuery { get; set; } = false;
+    public string DefaultSearch { get; set; } = null;
+
+    protected void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (windowSizedDown) return;
+
+        if (sender is not Window window) return;
+
+        var screen = Screen.AllScreens.OrderBy(s => s.WorkingArea.Height).First();
+        var dpi = VisualTreeHelper.GetDpi(window);
+
+        if (window.ActualHeight * dpi.DpiScaleY > screen.WorkingArea.Height)
+        {
+            windowSizedDown = true;
+            window.SizeToContent = SizeToContent.Width;
+            window.Height = 0.96D * screen.WorkingArea.Height / dpi.DpiScaleY;
+        }
+    }
+
+    public virtual TSearchItem SelectGameProperty<TSearchItem>(ISearchableDataSourceWithDetails<TSearchItem, IEnumerable<GameDetails>> dataSource)
+    {
+        var selectedItem = playniteApi.Dialogs.ChooseItemWithSearch(null, a =>
+        {
+            var output = new List<GenericItemOption>();
+
+            if (!AllowEmptySearchQuery && string.IsNullOrWhiteSpace(a))
+                return output;
+
+            try
+            {
+                var searchResult = dataSource.Search(a);
+                output.AddRange(searchResult.Select(dataSource.ToGenericItemOption));
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, $"Failed to get search data for <{a}>");
+                return [];
+            }
+
+            return output;
+        }, DefaultSearch, "Search for a property to assign to all your matching games") as GenericItemOption<TSearchItem>;
+
+        return selectedItem == null ? default : selectedItem.Item;
+    }
+
+    public virtual GamePropertyImportViewModel SelectGames<TApprovalPromptViewModel>(TApprovalPromptViewModel viewModel) where TApprovalPromptViewModel : GamePropertyImportViewModel, new()
+    {
+        var window = playniteApi.Dialogs.CreateWindow(new() { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
+        var control = GetBulkPropertyImportView(window, viewModel);
+        window.Content = control;
+        window.SizeToContent = SizeToContent.WidthAndHeight;
+        window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+        window.Title = "Select games";
+        windowSizedDown = false;
+        window.SizeChanged += Window_SizeChanged;
+        bool? dialogResult = window.ShowDialog();
+        return dialogResult == true ? viewModel : null;
+    }
+
+    protected virtual UserControl GetBulkPropertyImportView<TApprovalPromptViewModel>(Window window, TApprovalPromptViewModel viewModel) where TApprovalPromptViewModel : GamePropertyImportViewModel, new()
+    {
+        throw new NotImplementedException();
+        //return new GamePropertyImportView(window) { DataContext = viewModel };
+    }
+
+    public virtual void ShowProgress(Action<GlobalProgressActionArgs> action, GlobalProgressOptions progressOptions) => playniteApi.Dialogs.ActivateGlobalProgress(action, progressOptions);
+    public virtual void AddNotification(string id, string text, NotificationType type) => playniteApi.Notifications.Add(id, text, type);
+    public virtual void ShowDialog(string bodyText, string caption, MessageBoxButton button, MessageBoxImage icon) => playniteApi.Dialogs.ShowMessage(bodyText, caption, button, icon);
+    public bool GameIsInCurrentFilter(Game game) => playniteApi.MainView.FilteredGames.Contains(game);
 }

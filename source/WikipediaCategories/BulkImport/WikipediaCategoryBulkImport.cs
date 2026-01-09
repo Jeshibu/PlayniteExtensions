@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace WikipediaCategories.BulkImport;
 
-public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSearchResult,GamePropertyImportViewModel>
+public class WikipediaCategoryBulkImport : BulkGamePropertyAssigner<WikipediaSearchResult, GamePropertyImportViewModel>
 {
-    public WikipediaCategoryBulkImport(IPlayniteAPI playniteApi, WikipediaCategorySearchProvider dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
-        : base(playniteApi, dataSource, platformUtility, new WikipediaIdUtility(), ExternalDatabase.Wikipedia, maxDegreeOfParallelism)
+    public WikipediaCategoryBulkImport(IGameDatabaseAPI db, BulkPropertyUserInterface ui, WikipediaCategorySearchProvider dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
+        : base(db, ui, dataSource, platformUtility, new WikipediaIdUtility(), ExternalDatabase.Wikipedia, maxDegreeOfParallelism)
     {
-        AllowEmptySearchQuery = false;
-        DefaultSearch = "Video games set in ";
+        Ui.AllowEmptySearchQuery = false;
+        Ui.DefaultSearch = "Video games set in";
     }
 
     public override string MetadataProviderName => "Wikipedia";

@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace SteamTagsImporter.BulkImport;
 
-public class SteamPropertySearchProvider(SteamSearch steamSearch) : ISearchableDataSourceWithDetails<SteamProperty, IEnumerable<GameDetails>>
+public class SteamPropertySearchProvider(SteamSearch steamSearch) : IBulkPropertyImportDataSource<SteamProperty>
 {
     private readonly ILogger logger = LogManager.GetLogger();
     private SteamProperty[] SteamProperties => field ??= steamSearch.GetProperties().ToArray();

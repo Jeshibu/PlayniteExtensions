@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace PCGamingWikiBulkImport.Models;
+namespace PlayniteExtensions.Metadata.Common;
 
 public class SelectStringsViewModel(string propertyName, IEnumerable<SelectableStringViewModel> items)
 {
