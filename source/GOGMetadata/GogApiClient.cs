@@ -56,9 +56,7 @@ public class GogApiClient(IWebDownloader downloader, GOGMetadataSettings setting
             }
 
             if (dataStarted)
-            {
                 stringData += trimmed;
-            }
         }
 
         logger.Warn("Failed to get store data from page, no data found. " + url);
@@ -100,18 +98,14 @@ public class GogApiClient(IWebDownloader downloader, GOGMetadataSettings setting
             Tags = AsList(searchResult.tags),
             ReleaseDate = searchResult.ReleaseDate,
             CoverOptions = [new BasicImage(settings.UseVerticalCovers ? searchResult.coverVertical : searchResult.coverHorizontal)],
-            BackgroundOptions = searchResult.screenshots?.Select(ScreenshotUrlToImageData).ToList() ?? [],
             Platforms = searchResult.operatingSystems?.SelectMany(platformUtility.GetPlatforms).ToList() ?? [],
             CommunityScore = searchResult.reviewsRating * 2,
-            Links = [new Link("GOG Store Page", $"https://www.gog.com/{settings.Locale}/game/{searchResult.slug}")],
+            Links = [new("GOG Store Page", $"https://www.gog.com/{settings.Locale}/game/{searchResult.slug}")],
         };
 
         if (gogDetails != null)
         {
             output.Description = RemoveDescriptionPromos(gogDetails.description?.full)?.Trim();
-
-            if (gogDetails.images?.background != null)
-                output.BackgroundOptions.Add(new BasicImage("http:" + gogDetails.images.background));
 
             if (!string.IsNullOrEmpty(gogDetails.links.forum))
                 output.Links.Add(new Link("GOG Forum", gogDetails.links.forum));
@@ -126,10 +120,19 @@ public class GogApiClient(IWebDownloader downloader, GOGMetadataSettings setting
 
             if (output.ReleaseDate == null && storeGame.globalReleaseDate != null)
                 output.ReleaseDate = new ReleaseDate(storeGame.globalReleaseDate.Value);
+        }
 
-            var bgUrl = storeGame.galaxyBackgroundImage ?? storeGame.backgroundImage;
-            if (!string.IsNullOrEmpty(bgUrl))
-                output.BackgroundOptions.Add(new BasicImage(bgUrl.Replace(".jpg", "_bg_crop_1920x655.jpg")) { Width = 1920, Height = 655 });
+        var storeBackground = storeGame?.galaxyBackgroundImage ?? storeGame?.backgroundImage;
+        foreach (var backgroundSource in settings.BackgroundTypePriority)
+        {
+            var addOptions = backgroundSource switch
+            {
+                BackgroundType.Screenshot => searchResult.screenshots?.Select(ScreenshotUrlToImageData).ToList() ?? [],
+                BackgroundType.Background when gogDetails?.images?.background != null => [new BasicImage("http:" + gogDetails.images.background) { Description = "Background" }],
+                BackgroundType.StoreBackground when storeBackground != null => [new BasicImage(storeBackground.Replace(".jpg", "_bg_crop_1920x655.jpg")) { Description = "Store background" }],
+                _ => [],
+            };
+            output.BackgroundOptions.AddRange(addOptions);
         }
 
         return output;
@@ -155,6 +158,7 @@ public class GogApiClient(IWebDownloader downloader, GOGMetadataSettings setting
     {
         return new BasicImage(url.Replace("_{formatter}", ""))
         {
+            Description = "Screenshot",
             ThumbnailUrl = url.Replace("{formatter}", "product_card_v2_thumbnail_271")
         };
     }

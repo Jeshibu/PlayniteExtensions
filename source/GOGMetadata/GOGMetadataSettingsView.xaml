@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:gog="clr-namespace:GOGMetadata"
+             xmlns:dd="urn:gong-wpf-dragdrop"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=gog:GOGMetadataSettingsViewModel}"
              d:DesignHeight="400" d:DesignWidth="600">
@@ -11,9 +12,18 @@
         <CheckBox IsChecked="{Binding Settings.UseVerticalCovers}" Content="Use vertical covers"/>
         <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
             <TextBlock VerticalAlignment="Center" Text="Language" Margin="0,0,10,0"/>
-            <ComboBox x:Name="LanguageSelection" DisplayMemberPath="Value" SelectedValuePath="Key"
-                                  SelectedValue="{Binding Settings.Locale}" ItemsSource="{Binding Path=Languages}"
-                                  IsEditable="false" MinWidth="150"/>
+            <ComboBox DisplayMemberPath="Value" SelectedValuePath="Key" IsEditable="false" MinWidth="150"
+                      SelectedValue="{Binding Settings.Locale}" ItemsSource="{Binding Path=Languages}" />
         </StackPanel>
+        <TextBlock TextWrapping="Wrap" Margin="0 10 0 0">Background image type priority:</TextBlock>
+        <ListBox Margin="0 5" Width="210" Height="80" ItemsSource="{Binding Settings.BackgroundTypePriority}" HorizontalAlignment="Left"
+                 dd:DragDrop.DragDropContext="Background" dd:DragDrop.IsDragSource="True" dd:DragDrop.IsDropTarget="True" SelectionMode="Single">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" Width="Auto" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBlock>Drag and drop to reorder. First in the list gets priority.</TextBlock>
     </StackPanel>
 </UserControl>

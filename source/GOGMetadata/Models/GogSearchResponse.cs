@@ -25,13 +25,13 @@ public class GogSearchResponse
         public List<SluggedName> tags;
         public int reviewsRating;
 
-        public string Name => title;
+        string IGameSearchResult.Name => title;
 
-        public string Title => title;
+        string IGameSearchResult.Title => title;
 
-        public IEnumerable<string> AlternateNames => [];
+        IEnumerable<string> IGameSearchResult.AlternateNames => [];
 
-        public IEnumerable<string> Platforms => operatingSystems;
+        IEnumerable<string> IGameSearchResult.Platforms => operatingSystems;
 
         public ReleaseDate? ReleaseDate
         {
@@ -40,7 +40,7 @@ public class GogSearchResponse
                 if (!DateTime.TryParseExact(releaseDate, "yyyy.MM.dd", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out var date))
                     return null;
 
-                if (date.Month == 1 && date.Day == 1)
+                if (date is { Month: 1, Day: 1 })
                     return new ReleaseDate(date.Year);
 
                 return new ReleaseDate(date);

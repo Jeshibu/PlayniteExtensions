@@ -45,6 +45,8 @@ public class GOGMetadata : MetadataPlugin
 
     public override UserControl GetSettingsView(bool firstRunSettings)
     {
+        //So for anyone using GongSolutions.Wpf.DragDrop - be aware you have to instantiate something from it before referencing the package in your XAML
+        GongSolutions.Wpf.DragDrop.DefaultDragHandler _ = new();
         return new GOGMetadataSettingsView();
     }
 }
