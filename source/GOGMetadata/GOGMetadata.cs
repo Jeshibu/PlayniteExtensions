@@ -24,7 +24,7 @@ public class GOGMetadata : MetadataPlugin
 
     public GOGMetadata(IPlayniteAPI api) : base(api)
     {
-        settings = new GOGMetadataSettingsViewModel(this, this.PlayniteApi);
+        settings = new GOGMetadataSettingsViewModel(this, this.PlayniteApi, new GogApi(downloader));
         Properties = new MetadataPluginProperties
         {
             HasSettings = true
@@ -33,13 +33,15 @@ public class GOGMetadata : MetadataPlugin
 
     public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
     {
+        var gogApi = new GogApi(downloader);
         var platformUtility = new PlatformUtility(PlayniteApi);
-        var searchProvider = new GogApiClient(downloader, settings.Settings, platformUtility);
+        var searchProvider = new GameSearchProvider(gogApi, settings.Settings, platformUtility);
         return new GOGMetadataProvider(searchProvider, options, PlayniteApi, platformUtility);
     }
 
     public override ISettings GetSettings(bool firstRunSettings)
     {
+        //settings.InitializeCatalogData();
         return settings;
     }
 
