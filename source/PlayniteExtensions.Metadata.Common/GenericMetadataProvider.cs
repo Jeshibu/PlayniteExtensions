@@ -11,47 +11,47 @@ namespace PlayniteExtensions.Metadata.Common;
 
 public abstract class GenericMetadataProvider<TSearchResult>(IGameSearchProvider<TSearchResult> dataSource, MetadataRequestOptions options, IPlayniteAPI playniteApi, IPlatformUtility platformUtility) : OnDemandMetadataProvider where TSearchResult : IGameSearchResult
 {
-    protected readonly IGameSearchProvider<TSearchResult> dataSource = dataSource;
-    protected readonly MetadataRequestOptions options = options;
-    protected readonly List<Platform> requestPlatforms = options.GameData.Platforms;
-    protected readonly IPlayniteAPI playniteApi = playniteApi;
-    protected readonly IPlatformUtility platformUtility = platformUtility;
-    protected ILogger logger = LogManager.GetLogger();
-    protected GameDetails foundGame = null;
+    protected readonly IGameSearchProvider<TSearchResult> DataSource = dataSource;
+    protected readonly MetadataRequestOptions Options = options;
+    protected readonly List<Platform> RequestPlatforms = options.GameData.Platforms;
+    protected readonly IPlayniteAPI PlayniteApi = playniteApi;
+    protected readonly IPlatformUtility PlatformUtility = platformUtility;
+    protected readonly ILogger Logger = LogManager.GetLogger();
+    protected GameDetails FoundGame = null;
     protected abstract string ProviderName { get; }
 
-    protected virtual GameDetails GetGameDetails(GetMetadataFieldArgs args)
+    protected GameDetails GetGameDetails(GetMetadataFieldArgs args)
     {
-        if (foundGame != null)
-            return foundGame;
+        if (FoundGame != null)
+            return FoundGame;
 
-        if (options.IsBackgroundDownload && dataSource.TryGetDetails(options.GameData, out var details, args.CancelToken))
-            return foundGame = details;
+        if (Options.IsBackgroundDownload && DataSource.TryGetDetails(Options.GameData, out var details, args.CancelToken))
+            return FoundGame = details;
 
         var searchResult = GetSearchResultGame(args);
         if (searchResult != null)
-            return foundGame = dataSource.GetDetails(searchResult, searchGame: options.GameData);
+            return FoundGame = DataSource.GetDetails(searchResult, searchGame: Options.GameData);
 
-        return foundGame = new GameDetails();
+        return FoundGame = new GameDetails();
     }
 
-    protected virtual TSearchResult GetSearchResultGame(GetMetadataFieldArgs args)
+    public TSearchResult GetSearchResultGame(GetMetadataFieldArgs args)
     {
-        if (options.IsBackgroundDownload)
+        if (Options.IsBackgroundDownload)
         {
-            if (string.IsNullOrWhiteSpace(options.GameData.Name))
+            if (string.IsNullOrWhiteSpace(Options.GameData.Name))
                 return default;
 
-            var searchResult = dataSource.Search(options.GameData.Name, args.CancelToken);
+            var searchResult = DataSource.Search(Options.GameData.Name, args.CancelToken);
 
             if (searchResult == null)
                 return default;
 
             var snc = new SortableNameConverter([], numberLength: 1);
 
-            var nameToMatch = snc.Convert(options.GameData.Name, removeEditions: true).Deflate();
+            var nameToMatch = snc.Convert(Options.GameData.Name, removeEditions: true).Deflate();
 
-            var matchedGames = searchResult.Where(g => HasMatchingName(g, nameToMatch, snc) && platformUtility.PlatformsOverlap(requestPlatforms, g.Platforms)).ToList();
+            var matchedGames = searchResult.Where(g => HasMatchingName(g, nameToMatch, snc) && PlatformUtility.PlatformsOverlap(RequestPlatforms, g.Platforms)).ToList();
 
             switch (matchedGames.Count)
             {
@@ -60,14 +60,14 @@ public abstract class GenericMetadataProvider<TSearchResult>(IGameSearchProvider
                 case 1:
                     return matchedGames.First();
                 default:
-                    var searchReleaseDate = options.GameData.ReleaseDate;
+                    var searchReleaseDate = Options.GameData.ReleaseDate;
                     var sortedByReleaseDateProximity = matchedGames.OrderBy(g => GetDaysApart(searchReleaseDate, g.ReleaseDate)).ToList();
                     return sortedByReleaseDateProximity.First();
             }
         }
         else
         {
-            var selectedGame = playniteApi.Dialogs.ChooseItemWithSearch(null, (a) =>
+            var selectedGame = PlayniteApi.Dialogs.ChooseItemWithSearch(null, (a) =>
             {
                 var searchOutput = new List<GenericItemOption>();
 
@@ -76,17 +76,17 @@ public abstract class GenericMetadataProvider<TSearchResult>(IGameSearchProvider
 
                 try
                 {
-                    var searchResult = dataSource.Search(a, CancellationToken.None);
+                    var searchResult = DataSource.Search(a, CancellationToken.None);
                     if (searchResult != null)
-                        searchOutput.AddRange(searchResult.Select(dataSource.ToGenericItemOption));
+                        searchOutput.AddRange(searchResult.Select(DataSource.ToGenericItemOption));
                 }
                 catch (Exception e)
                 {
-                    logger.Error(e, $"Failed to get {ProviderName} search data for <{a}>");
+                    Logger.Error(e, $"Failed to get {ProviderName} search data for <{a}>");
                 }
 
                 return searchOutput;
-            }, options.GameData.Name, string.Empty);
+            }, Options.GameData.Name, string.Empty);
 
             var selectedGameReal = (GenericItemOption<TSearchResult>)selectedGame;
             return selectedGameReal == null ? default : selectedGameReal.Item;
@@ -236,11 +236,11 @@ public abstract class GenericMetadataProvider<TSearchResult>(IGameSearchProvider
         if (images == null || images.Count == 0)
             return null;
 
-        if (options.IsBackgroundDownload || images.Count == 1)
+        if (Options.IsBackgroundDownload || images.Count == 1)
             return new(images.First().Url);
 
         var imageOptions = images.Select(i => new ImgOption(i)).ToList<ImageFileOption>();
-        var selected = playniteApi.Dialogs.ChooseImageFile(imageOptions, caption);
+        var selected = PlayniteApi.Dialogs.ChooseImageFile(imageOptions, caption);
         var fullSizeUrl = (selected as ImgOption)?.Image.Url;
 
         if (fullSizeUrl == null)

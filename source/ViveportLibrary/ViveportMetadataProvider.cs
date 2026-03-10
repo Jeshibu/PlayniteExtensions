@@ -43,18 +43,18 @@ public class ViveportMetadataProvider(IViveportApiClient viveportApiClient, Vive
             AgeRatings = GetCustomAttributeMetadataProperties([appDetails.ContentRating.ToString()], customAttributes, "content_rating", opt => opt.AdminLabel),
             ReleaseDate = new ReleaseDate(GetDateFromMilliseconds(appDetails.ReleaseTimeMilliseconds)),
             Version = appDetails.VersionName,
-            Links = [new Link("Viveport Store Page", $"https://www.viveport.com/apps/{game.GameId}")],
+            Links = [new("Viveport Store Page", $"https://www.viveport.com/apps/{game.GameId}")],
         };
 
-        var coverUrl = GetCoverUrl(appDetails);
+        string coverUrl = GetCoverUrl(appDetails);
         if (coverUrl != null)
-            metadata.CoverImage = new MetadataFile(coverUrl);
+            metadata.CoverImage = new(coverUrl);
 
-        var developer = appDetails.DeveloperDisplayName?.TrimCompanyForms();
+        string developer = appDetails.DeveloperDisplayName?.TrimCompanyForms();
         if (!string.IsNullOrWhiteSpace(developer))
             metadata.Developers = [new MetadataNameProperty(developer.TrimCompanyForms())];
 
-        var publisher = appDetails.Publisher?.TrimCompanyForms();
+        string publisher = appDetails.Publisher?.TrimCompanyForms();
         if (!string.IsNullOrWhiteSpace(publisher))
             metadata.Publishers = [new MetadataNameProperty(publisher.TrimCompanyForms())];
 
@@ -67,7 +67,7 @@ public class ViveportMetadataProvider(IViveportApiClient viveportApiClient, Vive
 
         if (appDetails.SystemRequirements?.OS != null)
         {
-            foreach (var os in appDetails.SystemRequirements.OS)
+            foreach (string os in appDetails.SystemRequirements.OS)
             {
                 if (os.StartsWith("win", StringComparison.InvariantCultureIgnoreCase))
                     metadata.Platforms.Add(new MetadataSpecProperty("pc_windows"));
@@ -84,7 +84,7 @@ public class ViveportMetadataProvider(IViveportApiClient viveportApiClient, Vive
                                      .FirstOrDefault();
         metadata.BackgroundImage = new MetadataFile(biggestImage?.Url);
 
-        List<string> features = GetCustomAttributeLabels(appDetails.PlayerNum, customAttributes, "player_num", opt => opt.AdminLabel).Select(s => s.Replace("Singleplayer", "Single-player")).ToList();
+        var features = GetCustomAttributeLabels(appDetails.PlayerNum, customAttributes, "player_num", opt => opt.AdminLabel).Select(s => s.Replace("Singleplayer", "Single-player")).ToList();
         if (settings.ImportInputMethodsAsFeatures)
             features.AddRange(GetCustomAttributeLabels(appDetails.InputMethods, customAttributes, "input_methods", opt => opt.AdminLabel));
         features.AddRange(GetCustomAttributeLabels(appDetails.PlayArea, customAttributes, "play_area", opt => opt.AdminLabel).Select(s => $"VR {s}"));
@@ -137,32 +137,29 @@ public class ViveportMetadataProvider(IViveportApiClient viveportApiClient, Vive
         return GetCustomAttributeLabels(values, items, attributeCodeName, matchSelector).Select(s => new MetadataNameProperty(s)).ToList().NullIfEmpty()?.ToHashSet<MetadataProperty>();
     }
 
-    private ulong GetInstallSize(ViveportApp appDetails)
+    private static ulong GetInstallSize(ViveportApp appDetails)
     {
         var otherRequirements = appDetails?.SystemRequirements?.Others;
         if (otherRequirements == null)
             return 0;
 
-        if (!ulong.TryParse(otherRequirements.DiskSpace, out var diskspace))
+        if (!ulong.TryParse(otherRequirements.DiskSpace, out ulong diskspace))
             return 0;
 
-        var power = GetPowerOf1024FromUnit(otherRequirements.DiskSpaceUnit);
+        int power = GetPowerOf1024FromUnit(otherRequirements.DiskSpaceUnit);
 
         return diskspace * (ulong)Math.Pow(1024, power);
     }
 
-    private int GetPowerOf1024FromUnit(string unit)
+    private static int GetPowerOf1024FromUnit(string unit) => unit switch
     {
-        return unit switch
-        {
-            "B" => 0,
-            "KB" => 1,
-            "MB" => 2,
-            "GB" => 3,
-            "TB" => 4,
-            _ => 0,
-        };
-    }
+        "B" => 0,
+        "KB" => 1,
+        "MB" => 2,
+        "GB" => 3,
+        "TB" => 4,
+        _ => 0,
+    };
 
     private static DateTime GetDateFromMilliseconds(long milliseconds) => new DateTime(1970, 1, 1).AddMilliseconds(milliseconds);
 }
