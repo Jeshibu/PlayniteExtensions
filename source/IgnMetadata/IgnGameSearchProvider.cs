@@ -25,8 +25,11 @@ public class IgnGameSearchProvider(IgnApiClient client, IPlatformUtility platfor
         if (ignDetails == null)
             return null;
 
+        var url = $"https://www.ign.com/games/{slug}";
+
         var gameDetails = new GameDetails
         {
+            Url = url,
             Names = ignDetails.Names,
             Developers = ignDetails.Producers?.Select(x => x.Name.TrimCompanyForms()).ToList(),
             Publishers = ignDetails.Publishers?.Select(x => x.Name.TrimCompanyForms()).ToList(),
@@ -38,8 +41,8 @@ public class IgnGameSearchProvider(IgnApiClient client, IPlatformUtility platfor
             Platforms = ignDetails.Platforms.SelectMany(platformUtility.GetPlatforms).ToList(),
             ReleaseDate = ignDetails.ReleaseDate,
             CriticScore = Get100Score(ignDetails.PrimaryReview?.Score),
+            Links = [new("IGN", url)]
         };
-        gameDetails.Links.Add(new Link("IGN", $"https://www.ign.com/games/{slug}"));
 
         if (ignDetails.PrimaryImage?.Url != null)
             gameDetails.CoverOptions.Add(new BasicImage(ignDetails.PrimaryImage.Url));

@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using IgnMetadata.Api;
+using IgnMetadata.HowLongToBeat;
 using Playnite.SDK;
+using Playnite.SDK.Events;
+using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
+using System.Linq;
 
 namespace IgnMetadata;
 
@@ -12,13 +16,14 @@ public class IgnMetadata : MetadataPlugin
     private static readonly ILogger logger = LogManager.GetLogger();
 
     private readonly IPlatformUtility platformUtility;
-    private readonly IgnApiClient client;
+    private IWebDownloader Downloader => field ??= new WebDownloader { Accept = "*/*" };
+    private bool HowLongToBeatIsInstalled { get; set; }
 
     public override Guid Id { get; } = Guid.Parse("6024e3a9-de7e-4848-9101-7a2f818e7e47");
 
     public override List<MetadataField> SupportedFields => Fields;
 
-    internal static List<MetadataField> Fields =
+    internal static readonly List<MetadataField> Fields =
     [
         MetadataField.CoverImage,
         MetadataField.Name,
@@ -44,12 +49,34 @@ public class IgnMetadata : MetadataPlugin
             HasSettings = false
         };
         platformUtility = new PlatformUtility(PlayniteApi);
-        client = new IgnApiClient(new WebDownloader() { Accept = "*/*" });
     }
 
     public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
     {
-        var searchProvider = new IgnGameSearchProvider(client, platformUtility);
-        return new IgnMetadataProvider(searchProvider, options, this.PlayniteApi, platformUtility);
+        var searchProvider = new IgnGameSearchProvider(new IgnApiClient(Downloader), platformUtility);
+        return new IgnMetadataProvider(searchProvider, options, PlayniteApi, platformUtility);
+    }
+
+    public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+    {
+        HowLongToBeatIsInstalled = PlayniteApi.Addons.Addons.Contains("playnite-howlongtobeat-plugin");
+    }
+
+    public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
+    {
+        if (!HowLongToBeatIsInstalled)
+            yield break;
+
+        var writer = new HltbDataWriter(PlayniteApi.Paths.ExtensionsDataPath);
+        if (!args.Games.Any(writer.HasNoHltbData))
+            yield break;
+
+        yield return new() { MenuSection = "HowLongToBeat", Description = "Set data from IGN", Action = x => ImportHowLongToBeatData(x.Games, showResultDialog: true) };
+    }
+
+    private void ImportHowLongToBeatData(List<Game> games, bool showResultDialog)
+    {
+        var setter = new MassHltbDataSetter(PlayniteApi, Downloader, showResultDialog);
+        setter.SetHltbData(games);
     }
 }

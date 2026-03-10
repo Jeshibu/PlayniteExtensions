@@ -18,6 +18,8 @@ public enum ExternalDatabase
     TvTropes,
     RAWG,
     Wikipedia,
+    IGN,
+    HowLongToBeat,
     // if you add a 16 value here, update the bit shift in DbId.GetHashCode() to 5 instead of 4
 }
 
