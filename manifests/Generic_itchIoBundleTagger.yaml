@@ -127,3 +127,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-11-18/itchIoBundleTagger_0_14_3.pext
     Changelog:
       - "Fixed plugin settings failing to load"
+  - Version: '0.15'
+    RequiredApiVersion: '6.2.2'
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/itchIoBundleTagger_0_15.pext
+    Changelog:
+      - "Added support for new bundle - No ICE in Minnesota"

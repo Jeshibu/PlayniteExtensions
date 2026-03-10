@@ -20,6 +20,7 @@ tag-bundle-cfr2025 = California Fire Relief Bundle
 tag-bundle-valencia = Amor per Valencia / Love for Valencia
 tag-bundle-ttrpgfohio = TTRPGs for Trans Rights - Ohio
 tag-bundle-crips = Crips for eSims for Gaza Bundle
+tag-bundle-noiceminnesota = No ICE in Minnesota
 
 setting-tag-prefix = Prefix tag names with: 
 setting-add-free-tag = Add "{ tag-free }" tag if applicable
