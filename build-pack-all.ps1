@@ -1,7 +1,6 @@
 param (
     [Parameter(Mandatory=$true)][string]$tag,
-    [Parameter()][string]$PlaynitePath = "C:\Playnite",
-    [Parameter()][string]$MSBuildPath = "C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe"
+    [Parameter()][string]$PlaynitePath = "C:\Playnite"
 )
 
 $ToolboxPath = "$PlaynitePath\Toolbox.exe"
@@ -17,7 +16,7 @@ foreach ($proj in $bulkImportProjects){
     xcopy ".\source\PlayniteExtensions.Metadata.Common\Views" ".\source\$proj\Common\Metadata\Views" /Y /I
 }
 
-& "$MSBuildPath" ".\source\PlayniteExtensions.slnx" -p:Configuration=Release -restore -clp:ErrorsOnly
+dotnet build ".\source\PlayniteExtensions.slnx" -p:Configuration=Release -restore -clp:ErrorsOnly
 
 mkdir "PackingOutput" -Force
 mkdir "Release-$tag" -Force

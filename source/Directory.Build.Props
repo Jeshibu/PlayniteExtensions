@@ -17,4 +17,7 @@
         <DefineConstants>TRACE</DefineConstants>
         <Optimize>true</Optimize>
     </PropertyGroup>
+    <PropertyGroup>
+        <SolutionDir Condition="'$(SolutionDir)'==''">$(MSBuildThisFileDirectory)</SolutionDir>
+    </PropertyGroup>
 </Project>

@@ -28,7 +28,7 @@ jobs:
 
       - name: Setup Playnite
         run: |
-          Invoke-WebRequest -Uri "https://github.com/JosefNemec/Playnite/releases/download/10.50/10.50.7z" -OutFile "$Env:GITHUB_WORKSPACE\Playnite.7z"
+          Invoke-WebRequest -Uri "https://github.com/JosefNemec/Playnite/releases/download/10.51/10.51.7z" -OutFile "$Env:GITHUB_WORKSPACE\Playnite.7z"
           & "$env:ProgramFiles\7-Zip\7z.exe" x "$env:GITHUB_WORKSPACE\Playnite.7z" "-o$env:GITHUB_WORKSPACE\Playnite"
 
       - name: Copy Playnite Emulation directory to ExtraEmulatorProfiles
@@ -36,18 +36,24 @@ jobs:
           xcopy "$Env:GITHUB_WORKSPACE\Playnite\Emulation\*.yaml" "$Env:GITHUB_WORKSPACE\source\ExtraEmulatorProfiles\EmulationFiles\Original" /Y /I
           xcopy "$Env:GITHUB_WORKSPACE\Playnite\Emulation\Emulators" "$Env:GITHUB_WORKSPACE\source\ExtraEmulatorProfiles\EmulationFiles\Original\Emulators" /Y /I /E
 
-      - name: Build entire solution
+      - name: Build projects
         run: |
-          cd "C:\Program Files\Microsoft Visual Studio\18\Enterprise\MSBuild\Current\Bin\"
-          .\MSBuild.exe "$Env:GITHUB_WORKSPACE\source\PlayniteExtensions.slnx" -p:Configuration=Release -restore -clp:ErrorsOnly
+          Write-Host '${{ steps.projectselection.outputs.projects }}' -f Orange
+          
+          $projects = ConvertFrom-Json '${{ steps.projectselection.outputs.projects }}'
+          
+          foreach ($p in $projects) {
+            $projectName = $p.Name
+            Write-Host "Building $projectName" -f Green
+            dotnet build "$Env:GITHUB_WORKSPACE\source\$projectName\$projectName.csproj" -p:Configuration=Release -restore
+          }
 
       - name: Run unit tests
         run: |
-          $testprojects = ConvertFrom-Json '${{ steps.projectselection.outputs.testprojects }}'
-          $runnerpath = "$env:USERPROFILE\.nuget\packages\xunit.runner.console\2.8.1\tools\net462\xunit.console.x86.exe"
-          foreach ($tp in $testprojects){
-            "Executing tests in project: $tp"
-            & $runnerpath "$Env:GITHUB_WORKSPACE\source\$tp\bin\Release\net462\$tp.dll"
+          $testProjects = ConvertFrom-Json '${{ steps.projectselection.outputs.testprojects }}'
+          foreach ($tp in $testProjects){
+            "Executing tests in project: $tp" -f Blue
+            dotnet test "$Env:GITHUB_WORKSPACE\source\$tp\$tp.csproj"
           }
 
       - name: Pack with Playnite
