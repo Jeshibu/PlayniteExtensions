@@ -1,19 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TestProjectType>UnitTest</TestProjectType>
-  </PropertyGroup>
+  <Import Project="..\Tests.props" />
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="PlayniteSDK" Version="6.8.0" />
     <PackageReference Include="RestSharp" Version="108.0.2" />
-    <PackageReference Include="xunit" Version="2.8.1" />
-    <PackageReference Include="xunit.runner.console" Version="2.8.1">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Configuration" />

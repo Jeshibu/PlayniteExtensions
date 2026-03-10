@@ -1,18 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TestProjectType>UnitTest</TestProjectType>
-  </PropertyGroup>
+  <Import Project="..\Tests.props" />
   <Import Project="..\PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems" Label="Shared" />
-  <ItemGroup>
-    <PackageReference Include="xunit" Version="2.8.1" />
-    <PackageReference Include="xunit.runner.console" Version="2.8.1">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -26,10 +14,7 @@
     <ProjectReference Include="..\LaunchBoxMetadata\LaunchBoxMetadata.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Metadata.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="*.html">
+    <None Update="*.html;*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -1,7 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TestProjectType>UnitTest</TestProjectType>
-  </PropertyGroup>
+  <Import Project="..\Tests.props" />
   <Import Project="..\PlayniteExtensions.Common\PlayniteExtensions.Common.projitems" Label="Shared" />
   <Import Project="..\PlayniteExtensions.Metadata.Common\PlayniteExtensions.Metadata.Common.projitems" Label="Shared" />
   <Import Project="..\PlayniteExtensions.Tests.Common\PlayniteExtensions.Tests.Common.projitems" Label="Shared" />
@@ -10,14 +8,6 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="PlayniteSDK" Version="6.9.0" />
-    <PackageReference Include="xunit" Version="2.8.1" />
-    <PackageReference Include="xunit.runner.console" Version="2.8.1">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Configuration" />
