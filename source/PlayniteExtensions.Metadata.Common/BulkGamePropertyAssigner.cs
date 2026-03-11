@@ -147,12 +147,11 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
             {
                 try
                 {
-                    void AddMatchedGame(Game game)
+                    void AddMatchedGame(Game game, ExternalDatabase matchSource)
                     {
-                        proposedMatches.AddOrUpdate(game.Id, new GameCheckboxViewModel(game, externalGameInfo), (_, existingCheckboxVm) =>
+                        proposedMatches.AddOrUpdate(game.Id, new GameCheckboxViewModel(game, externalGameInfo, matchSource), (_, existingCheckboxVm) =>
                         {
-                            existingCheckboxVm.GameDetails.Add(externalGameInfo);
-
+                            existingCheckboxVm.AddMatchedGame(externalGameInfo, matchSource);
                             return existingCheckboxVm;
                         });
                     }
@@ -160,13 +159,13 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
                     foreach (var dbId in GetIds(externalGameInfo))
                         if (matchHelper.TryGetGamesById(dbId, out var gamesWithThisId))
                             foreach (var g in gamesWithThisId)
-                                AddMatchedGame(g);
+                                AddMatchedGame(g, dbId.Database);
 
                     foreach (var name in externalGameInfo.Names)
                         if (matchHelper.TryGetGamesByName(name, out var gamesWithThisName))
                             foreach (var g in gamesWithThisName)
                                 if (platformUtility.PlatformsOverlap(g.Platforms, externalGameInfo.Platforms))
-                                    AddMatchedGame(g);
+                                    AddMatchedGame(g, ExternalDatabase.None);
                 }
                 catch (Exception ex)
                 {
@@ -195,8 +194,8 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
             if (!g.IsChecked)
                 continue;
 
-            foreach (var gd in g.GameDetails)
-                gd.Id ??= GetGameIdFromUrl(gd.Url);
+            foreach (var mg in g.MatchedGames)
+                mg.Details.Id ??= GetGameIdFromUrl(mg.Details.Url);
 
             bool update = AddItem(g.Game, viewModel.TargetField, dbItem.Id);
 
@@ -207,9 +206,9 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
 
                 g.Game.Links ??= [];
 
-                foreach (var gd in g.GameDetails)
+                foreach (var mg in g.MatchedGames)
                 {
-                    var url = potentialLink.GetUrl(gd);
+                    var url = potentialLink.GetUrl(mg.Details);
 
                     if (string.IsNullOrWhiteSpace(url) || potentialLink.IsAlreadyLinked(g.Game.Links, url))
                         continue;
@@ -260,9 +259,9 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
     private bool PlatformsOverlap(GameCheckboxViewModel checkbox)
     {
         var gdPlatforms = new List<MetadataProperty>();
-        foreach (var gd in checkbox.GameDetails)
-            if (gd.Platforms != null)
-                gdPlatforms.AddRange(gd.Platforms);
+        foreach (var mg in checkbox.MatchedGames)
+            if (mg.Details.Platforms != null)
+                gdPlatforms.AddRange(mg.Details.Platforms);
 
         return platformUtility.PlatformsOverlap(checkbox.Game.Platforms, gdPlatforms);
     }

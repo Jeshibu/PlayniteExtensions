@@ -1,8 +1,10 @@
 ﻿using Playnite.SDK.Models;
 using Playnite.SDK;
+using PlayniteExtensions.Common;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Text;
 
 namespace PlayniteExtensions.Metadata.Common;
 
@@ -30,18 +32,80 @@ public class GamePropertyImportViewModel
     public ICollection<GameCheckboxViewModel> Games { get; set; }
 }
 
+public class MatchedGame
+{
+    public GameDetails Details { get; set; }
+    public Dictionary<ExternalDatabase, int> MatchSourceCounts { get; } = [];
+
+    public MatchedGame(GameDetails details, ExternalDatabase source)
+    {
+        Details = details;
+        AddMatch(source);
+    }
+
+    public void AddMatch(ExternalDatabase source)
+    {
+        if (MatchSourceCounts.ContainsKey(source))
+            MatchSourceCounts[source]++;
+        else
+            MatchSourceCounts.Add(source, 1);
+    }
+
+    public string DisplayText
+    {
+        get
+        {
+            var sb = new StringBuilder();
+            sb.Append(string.Join(" / ", Details.Names));
+            sb.Append(" (");
+            if (Details.ReleaseDate.HasValue)
+                sb.Append(Details.ReleaseDate?.Year).Append(", ");
+
+            sb.Append("matched via: ");
+            sb.Append(GetMatchSourceDisplayString());
+            sb.Append(')');
+            return sb.ToString();
+        }
+    }
+
+    private string GetMatchSourceDisplayString()
+    {
+        var sb = new StringBuilder();
+        foreach (var kvp in MatchSourceCounts.Where(kvp => kvp.Value > 0))
+        {
+            if (sb.Length > 0)
+                sb.Append(", ");
+
+            if (kvp.Key == ExternalDatabase.None)
+                sb.Append("name");
+            else
+                sb.Append(kvp.Key);
+
+            if (kvp.Value > 1)
+                sb.Append(" x").Append(kvp.Value);
+        }
+
+        return sb.ToString();
+    }
+}
+
 public class GameCheckboxViewModel : ObservableObject
 {
-    public GameCheckboxViewModel(Game game, GameDetails gameDetails, bool isChecked = true)
+    public GameCheckboxViewModel(Game game, GameDetails gameDetails, ExternalDatabase source)
     {
         Game = game;
-        GameDetails.Add(gameDetails);
-        IsChecked = isChecked;
+        MatchedGames.Add(new(gameDetails, source));
     }
 
     public Game Game { get; set; }
-    public List<GameDetails> GameDetails { get; } = [];
-    public bool IsChecked { get; set => SetValue(ref field, value); }
+    public List<MatchedGame> MatchedGames { get; } = [];
+
+    public bool IsChecked
+    {
+        get;
+        set => SetValue(ref field, value);
+    } = true;
+
     public string DisplayName
     {
         get
@@ -52,6 +116,20 @@ public class GameCheckboxViewModel : ObservableObject
             return $"{Game.Name} ({Game.ReleaseDate?.Year})";
         }
     }
+
+    public void AddMatchedGame(GameDetails game, ExternalDatabase source)
+    {
+        var existingMatchedGame = MatchedGames.FirstOrDefault(mg => mg.Details == game);
+        if (existingMatchedGame != null)
+        {
+            existingMatchedGame.AddMatch(source);
+            return;
+        }
+
+        MatchedGames.Add(new(game, source));
+    }
+
+    public List<string> MatchedGameDisplayNames => MatchedGames.Select(g => g.DisplayText).ToList();
 }
 
 public class PotentialLink(string name, Func<GameDetails, string> getUrlMethod, Func<IEnumerable<Link>, string, bool> isAlreadyLinkedMethod = null)
@@ -60,16 +138,14 @@ public class PotentialLink(string name, Func<GameDetails, string> getUrlMethod, 
     public bool Checked { get; set; } = true;
     public string GetUrl(GameDetails game) => getUrlMethod(game);
 
-    public virtual bool IsAlreadyLinked(IEnumerable<Link> links, string url)
+    public bool IsAlreadyLinked(IEnumerable<Link> links, string url)
     {
         if (links == null) return false;
 
         if (isAlreadyLinkedMethod != null)
             return isAlreadyLinkedMethod(links, url);
 
-        if (string.IsNullOrWhiteSpace(url)) return true;
-
-        return links.Any(l => url.Equals(l.Url, StringComparison.InvariantCultureIgnoreCase));
+        return string.IsNullOrWhiteSpace(url) || links.Any(l => url.Equals(l.Url, StringComparison.InvariantCultureIgnoreCase));
     }
 }
 
