@@ -10,10 +10,10 @@ namespace TvTropesMetadata.Scraping;
 
 public class WorkScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewFactory)
 {
-    private readonly List<string> VideogameBreadCrumbs = ["Video Games", "Video Game", "VideoGame", "Visual Novel", "Franchise"];
+    private readonly List<string> _videogameBreadCrumbs = ["Video Games", "Video Game", "VideoGame", "Visual Novel", "Franchise"];
 
-    private bool MatchesBreadCrumbs(TvTropesSearchResult sr) => sr.Breadcrumbs.Count == 1 && VideogameBreadCrumbs.Contains(sr.Breadcrumbs[0]);
-    private bool MatchesUrlCategory(TvTropesSearchResult sr) => CategoryWhitelist.Any(cat => sr.Url.StartsWith(articleBaseUrl + cat));
+    private bool MatchesBreadCrumbs(TvTropesSearchResult sr) => sr.Breadcrumbs.Count == 1 && _videogameBreadCrumbs.Contains(sr.Breadcrumbs[0]);
+    private bool MatchesUrlCategory(TvTropesSearchResult sr) => CategoryWhitelist.Any(cat => sr.Url.StartsWith(ArticleBaseUrl + cat));
 
     public override IEnumerable<TvTropesSearchResult> Search(string query)
     {

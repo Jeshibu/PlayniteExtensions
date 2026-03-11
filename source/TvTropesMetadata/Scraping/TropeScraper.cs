@@ -13,9 +13,9 @@ namespace TvTropesMetadata.Scraping;
 
 public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewFactory)
 {
-    private List<string> VideogameCategoryUrlRoots = ["VideoGame", "VisualNovel"];
+    private readonly List<string> _videogameCategoryUrlRoots = ["VideoGame", "VisualNovel"];
 
-    private List<string> FolderLabelWhitelist =
+    private readonly List<string> _folderLabelWhitelist =
     [
         "Game",
         "Visual Novel",
@@ -50,10 +50,7 @@ public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewF
         return results;
     }
 
-    public ParsedTropePage GetGamesForTrope(string url)
-    {
-        return GetGamesForTrope(url, pageIsSubsection: false);
-    }
+    public ParsedTropePage GetGamesForTrope(string url) => GetGamesForTrope(url, pageIsSubsection: false);
 
     private ParsedTropePage GetGamesForTrope(string url, bool pageIsSubsection)
     {
@@ -87,12 +84,12 @@ public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewF
         return output;
     }
 
-    private bool IsVideogameFolderName(string folderName) => FolderLabelWhitelist.Any(l => folderName.Contains(l, StringComparison.InvariantCultureIgnoreCase));
+    private bool IsVideogameFolderName(string folderName) => _folderLabelWhitelist.Any(l => folderName.Contains(l, StringComparison.InvariantCultureIgnoreCase));
 
     private bool IsVideogameUrl(string url)
     {
         var linkSegments = GetWikiPathSegments(url);
-        return linkSegments.Length == 2 && VideogameCategoryUrlRoots.Contains(linkSegments[0]);
+        return linkSegments.Length == 2 && _videogameCategoryUrlRoots.Contains(linkSegments[0]);
     }
 
     private IEnumerable<string> GetSubcategoryUrls(IHtmlDocument doc, string pageUrl)
@@ -128,7 +125,7 @@ public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewF
         var output = new List<IElement>();
 
         void AddListElementsFromSourceString(string source) => output.AddRange(htmlParser.Parse(source).QuerySelectorAll("ul > li:has(> em, > a.twikilink)"));
-        bool IsNonVideoGamesHeader(string header) => NonLettersAndNumbers.Replace(header, "").Contains("nonvideogame", StringComparison.InvariantCultureIgnoreCase);
+        bool IsNonVideoGamesHeader(string header) => _nonLettersAndNumbers.Replace(header, "").Contains("nonvideogame", StringComparison.InvariantCultureIgnoreCase);
 
         if (!getAllUnfiltered)
         {
@@ -183,7 +180,7 @@ public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewF
 
         void AddWork(TvTropesWork work)
         {
-            var deflatedName = NonLettersAndNumbers.Replace(work.Title, string.Empty);
+            var deflatedName = _nonLettersAndNumbers.Replace(work.Title, string.Empty);
             if (workNamesDeflated.Add(deflatedName))
                 output.Works.Add(work);
         }
@@ -208,14 +205,14 @@ public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewF
         return output;
     }
 
-    private readonly Regex NonLettersAndNumbers = new(@"[^\p{L}0-9]", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+    private readonly Regex _nonLettersAndNumbers = new(@"[^\p{L}0-9]", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
     private bool IsVideoGameLink(IElement element)
     {
         return element.TagName == "A" && UrlBelongsToWhitelistedWorkCategory(element.GetAttribute("href"));
     }
 
-    private string ReverseEngineerGameNameFromUrlSegment(string urlSegment)
+    private static string ReverseEngineerGameNameFromUrlSegment(string urlSegment)
     {
         var str = urlSegment.ToList();
         for (int i = 0; (i + 1) < str.Count; i++)

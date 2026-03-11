@@ -14,7 +14,7 @@ public class GameMatchingHelper(IExternalDatabaseIdUtility externalDatabaseIdUti
 {
     private ConcurrentDictionary<DbId, IList<Game>> GamesById { get; } = new();
 
-    public ConcurrentDictionary<string, string> DeflatedNames { get; } = new();
+    private ConcurrentDictionary<string, string> DeflatedNames { get; } = new();
     public IExternalDatabaseIdUtility ExternalDatabaseIdUtility { get; } = externalDatabaseIdUtility;
     public int MaxDegreeOfParallelism { get; } = maxDegreeOfParallelism;
 
@@ -25,10 +25,7 @@ public class GameMatchingHelper(IExternalDatabaseIdUtility externalDatabaseIdUti
         return new(names.Select(GetDeflatedName), StringComparer.InvariantCultureIgnoreCase);
     }
 
-    public string GetDeflatedName(string name)
-    {
-        return DeflatedNames.GetOrAdd(name, GenerateDeflatedName);
-    }
+    public string GetDeflatedName(string name) => DeflatedNames.GetOrAdd(name, GenerateDeflatedName);
 
     private string GenerateDeflatedName(string name)
     {

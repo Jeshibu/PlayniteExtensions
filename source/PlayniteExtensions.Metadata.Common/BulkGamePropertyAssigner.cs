@@ -27,8 +27,8 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
     IPlatformUtility platformUtility,
     IExternalDatabaseIdUtility databaseIdUtility,
     ExternalDatabase databaseType,
-    int maxDegreeOfParallelism = 8)
-    where TSearchItem : IHasName
+    int maxDegreeOfParallelism = 8
+) where TSearchItem : IHasName
     where TApprovalPromptViewModel : GamePropertyImportViewModel, new()
 {
     protected readonly ILogger logger = LogManager.GetLogger();
@@ -72,7 +72,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
         return associatedGames;
     }
 
-    public virtual TSearchItem SelectGameProperty() => Ui.SelectGameProperty(DataSource);
+    protected virtual TSearchItem SelectGameProperty() => Ui.SelectGameProperty(DataSource);
 
     protected abstract PropertyImportSetting GetPropertyImportSetting(TSearchItem searchItem, out string name);
 

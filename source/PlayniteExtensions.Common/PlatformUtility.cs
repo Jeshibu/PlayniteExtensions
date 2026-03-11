@@ -9,12 +9,12 @@ namespace PlayniteExtensions.Common;
 
 public class PlatformUtility : IPlatformUtility
 {
-    private readonly IPlayniteAPI api;
-    private Dictionary<string, string[]> platformSpecNameByNormalName;
+    private readonly IPlayniteAPI _api;
+    private Dictionary<string, string[]> _platformSpecNameByNormalName;
 
-    private Dictionary<string, string[]> PlatformSpecNameByNormalName => platformSpecNameByNormalName ??= GetPlatformSpecsByNormalName(api);
+    private Dictionary<string, string[]> PlatformSpecNameByNormalName => _platformSpecNameByNormalName ??= GetPlatformSpecsByNormalName(_api);
 
-    private HashSet<string> PlatformSpecNames => field ??= api?.Database?.Platforms?.Select(p => p.SpecificationId).Where(x => x != null).ToHashSet() ?? [];
+    private HashSet<string> PlatformSpecNames => field ??= _api?.Database?.Platforms?.Select(p => p.SpecificationId).Where(x => x != null).ToHashSet() ?? [];
 
     public PlatformUtility()
     {
@@ -22,7 +22,7 @@ public class PlatformUtility : IPlatformUtility
 
     public PlatformUtility(IPlayniteAPI api)
     {
-        this.api = api;
+        _api = api;
     }
 
     /// <summary>
@@ -31,19 +31,19 @@ public class PlatformUtility : IPlatformUtility
     /// <param name="overrideValues"></param>
     public PlatformUtility(Dictionary<string, string[]> overrideValues)
     {
-        platformSpecNameByNormalName = overrideValues;
+        _platformSpecNameByNormalName = overrideValues;
     }
 
     /// <summary>
     /// For unit testing purposes only
     /// </summary>
     /// <param name="platformName"></param>
-    /// <param name="specId"></param>
+    /// <param name="specIds"></param>
     public PlatformUtility(string platformName, params string[] specIds)
     {
-        platformSpecNameByNormalName = GetPlatformSpecsByNormalName(null);
+        _platformSpecNameByNormalName = GetPlatformSpecsByNormalName(null);
         if (!string.IsNullOrWhiteSpace(platformName) && specIds != null && specIds.Any())
-            TryAddPlatformByName(platformSpecNameByNormalName, platformName, specIds);
+            TryAddPlatformByName(_platformSpecNameByNormalName, platformName, specIds);
     }
 
     private static readonly Regex TrimCompanyName = new(@"^(atari|bandai|coleco|commodore|mattel|nec|nintendo|sega|sinclair|snk|sony|microsoft)?\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant | RegexOptions.Compiled);
@@ -204,7 +204,7 @@ public class PlatformUtility : IPlatformUtility
         return output;
     }
 
-    private static readonly Dictionary<string, string> nameAbbreviations = new(StringComparer.InvariantCulture)
+    private static readonly Dictionary<string, string> NameAbbreviations = new(StringComparer.InvariantCulture)
     {
         { "NGE", "Nokia N-Gage" },
         { "A2GS", "Apple IIgs" },
@@ -368,7 +368,7 @@ public class PlatformUtility : IPlatformUtility
         if (PlatformSpecNameByNormalName.TryGetValue(sanitizedPlatformName, out string[] specIds))
             return specIds.Select(s => new MetadataSpecProperty(s)).ToList<MetadataProperty>();
 
-        if (nameAbbreviations.TryGetValue(sanitizedPlatformName, out string foundPlatformName))
+        if (NameAbbreviations.TryGetValue(sanitizedPlatformName, out string foundPlatformName))
             return [new MetadataNameProperty(foundPlatformName)];
 
         if (PlatformSpecNames.Contains(platformName))

@@ -18,11 +18,11 @@ namespace TvTropesMetadata.Scraping;
 public abstract class BaseScraper(IWebViewFactory webViewFactory)
 {
     protected IWebView WebView => field ??= webViewFactory.CreateOffscreenView();
-    protected readonly ILogger logger = LogManager.GetLogger();
-    protected List<string> CategoryWhitelist = ["VideoGame", "VisualNovel"];
-    protected const string articleBaseUrl = "https://tvtropes.org/pmwiki/pmwiki.php/";
+    protected readonly ILogger Logger = LogManager.GetLogger();
+    protected readonly List<string> CategoryWhitelist = ["VideoGame", "VisualNovel"];
+    protected const string ArticleBaseUrl = "https://tvtropes.org/pmwiki/pmwiki.php/";
 
-    protected List<string> BlacklistedWords =
+    protected readonly List<string> BlacklistedWords =
     [
         "deconstructed", "averted", "inverted", "subverted",
         "deconstructs", "averts", "inverts", "subverts"
@@ -88,7 +88,7 @@ public abstract class BaseScraper(IWebViewFactory webViewFactory)
 
     protected TvTropesSearchResult GetBasicPageInfo(string url)
     {
-        if (url == null || !url.StartsWith(articleBaseUrl))
+        if (url == null || !url.StartsWith(ArticleBaseUrl))
             return null;
 
         try
@@ -105,7 +105,7 @@ public abstract class BaseScraper(IWebViewFactory webViewFactory)
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Error getting basic page info");
+            Logger.Error(ex, "Error getting basic page info");
             return null;
         }
     }

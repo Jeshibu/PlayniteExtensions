@@ -10,34 +10,40 @@ using System.Linq;
 
 namespace PCGamingWikiMetadata.BulkImport;
 
-internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<PCGamingWikiSelectedValues, GamePropertyImportViewModel>
+internal class PCGamingWikiBulkGamePropertyAssigner(
+    IPlayniteAPI playniteApi,
+    PCGamingWikiMetadataSettings settings,
+    IExternalDatabaseIdUtility databaseIdUtility,
+    PCGamingWikiPropertySearchProvider dataSource,
+    IPlatformUtility platformUtility,
+    int maxDegreeOfParallelism = 8
+) : BulkGamePropertyAssigner<PCGamingWikiSelectedValues, GamePropertyImportViewModel>(
+    playniteApi.Database,
+    new PCGamingWikiBulkImportUserInterface(playniteApi),
+    dataSource,
+    platformUtility,
+    databaseIdUtility,
+    ExternalDatabase.PCGamingWiki,
+    maxDegreeOfParallelism
+)
 {
-    private readonly PCGamingWikiMetadataSettings _settings;
-    private readonly PCGamingWikiPropertySearchProvider _pcgwDataSource;
-    private readonly PCGamingWikiBulkImportUserInterface _ui;
-
-    public PCGamingWikiBulkGamePropertyAssigner(IPlayniteAPI playniteApi, PCGamingWikiMetadataSettings settings, IExternalDatabaseIdUtility databaseIdUtility, PCGamingWikiPropertySearchProvider dataSource, IPlatformUtility platformUtility, int maxDegreeOfParallelism = 8)
-        : base(playniteApi.Database, new(playniteApi) { AllowEmptySearchQuery = true }, dataSource, platformUtility, databaseIdUtility, ExternalDatabase.PCGamingWiki, maxDegreeOfParallelism)
-    {
-        _settings = settings;
-        _pcgwDataSource = dataSource;
-        _ui = new(playniteApi);
-    }
+    private PCGamingWikiBulkImportUserInterface PcgwUi => (PCGamingWikiBulkImportUserInterface)Ui;
 
     public override string MetadataProviderName => "PCGamingWiki";
 
     protected override string GetGameIdFromUrl(string url)
     {
         var idMatch = DatabaseIdUtility.GetIdFromUrl(url);
-        if (idMatch.Database != ExternalDatabase.None)
-            return IdToString(idMatch.Database, idMatch.Id);
-
-        return null;
+        return idMatch.Database switch
+        {
+            ExternalDatabase.None => null,
+            _ => IdToString(idMatch.Database, idMatch.Id)
+        };
     }
 
     private static string IdToString(ExternalDatabase db, string id) => $"{db}:{id}";
 
-    public override PCGamingWikiSelectedValues SelectGameProperty()
+    protected override PCGamingWikiSelectedValues SelectGameProperty()
     {
         var selectedProperty = base.SelectGameProperty();
         if (selectedProperty == null)
@@ -53,9 +59,9 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
 
     private PCGamingWikiSelectedValues SelectStringListProperty(PCGamingWikiSelectedValues selectedPropertyCategory)
     {
-        var selectedItem = _ui.ChooseItemWithSearch<ItemCount>(null, query =>
+        var selectedItem = Ui.ChooseItemWithSearch<ItemCount>(null, query =>
         {
-            var counts = _pcgwDataSource.GetCounts(selectedPropertyCategory.FieldInfo, query);
+            var counts = dataSource.GetCounts(selectedPropertyCategory.FieldInfo, query);
             var options = counts.Select(c => new GenericItemOption<ItemCount>(c) { Name = GetItemDisplayName(selectedPropertyCategory.FieldInfo, c) }).ToList<GenericItemOption>();
             return options;
         });
@@ -66,16 +72,13 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
         return selectedPropertyCategory;
     }
 
-    private static string GetItemDisplayName(CargoFieldInfo field, ItemCount itemCount)
-    {
-        return $"{itemCount.Value.TrimStart(field.PageNamePrefix)} ({itemCount.Count})";
-    }
+    private static string GetItemDisplayName(CargoFieldInfo field, ItemCount itemCount) => $"{itemCount.Value.TrimStart(field.PageNamePrefix)} ({itemCount.Count})";
 
     private PCGamingWikiSelectedValues SelectStringProperty(PCGamingWikiSelectedValues selectedPropertyCategory)
     {
         try
         {
-            var counts = _pcgwDataSource.GetCounts(selectedPropertyCategory.FieldInfo, null).ToList();
+            var counts = dataSource.GetCounts(selectedPropertyCategory.FieldInfo, null).ToList();
             var items = counts.Select(c => new SelectableStringViewModel
             {
                 Value = c.Value,
@@ -84,7 +87,7 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
             });
             var vm = new SelectStringsViewModel(selectedPropertyCategory.Name, items);
 
-            vm = _ui.SelectString(vm);
+            vm = PcgwUi.SelectString(vm);
             if (vm == null)
                 return null;
 
@@ -123,50 +126,47 @@ internal class PCGamingWikiBulkGamePropertyAssigner : BulkGamePropertyAssigner<P
         return false;
     }
 
-    private readonly string[] falseValues = ["false", "unknown", "n/a", "hackable"];
+    private readonly string[] _falseValues = ["false", "unknown", "n/a", "hackable"];
 
-    private bool GetDefaultSelectionStatus(string value) => !falseValues.Contains(value, StringComparer.InvariantCultureIgnoreCase);
+    private bool GetDefaultSelectionStatus(string value) => !_falseValues.Contains(value, StringComparer.InvariantCultureIgnoreCase);
 
     protected override PropertyImportSetting GetPropertyImportSetting(PCGamingWikiSelectedValues searchItem, out string name)
     {
-        var p = _settings.AddTagPrefix ? GetPrefix(searchItem.FieldInfo) : null;
+        var p = settings.AddTagPrefix ? GetPrefix(searchItem.FieldInfo) : null;
         var n = GetTagName(searchItem);
         name = $"{p} {n}".Trim();
         return new() { ImportTarget = searchItem.FieldInfo.PreferredField };
     }
 
-    private string GetTagName(PCGamingWikiSelectedValues searchItem)
+    private static string GetTagName(PCGamingWikiSelectedValues searchItem)
     {
         return searchItem.FieldInfo.FieldType == CargoFieldType.String
             ? searchItem.FieldInfo.FieldDisplayName
             : searchItem.SelectedValues.FirstOrDefault().TrimStart(searchItem.FieldInfo.PageNamePrefix);
     }
 
-    private string GetPrefix(CargoFieldInfo fieldInfo)
+    private string GetPrefix(CargoFieldInfo fieldInfo) => fieldInfo.Table switch
     {
-        return fieldInfo.Table switch
+        CargoTables.Names.GameInfoBox => fieldInfo.Field switch
         {
-            CargoTables.Names.GameInfoBox => fieldInfo.Field switch
-            {
-                "Monetization" => _settings.TagPrefixMonetization,
-                "Microtransactions" => _settings.TagPrefixMicrotransactions,
-                "Pacing" => _settings.TagPrefixPacing,
-                "Perspectives" => _settings.TagPrefixPerspectives,
-                "Controls" => _settings.TagPrefixControls,
-                "Vehicles" => _settings.TagPrefixVehicles,
-                "Themes" => _settings.TagPrefixThemes,
-                "Engines" => _settings.TagPrefixEngines,
-                "Art_styles" => _settings.TagPrefixArtStyles,
-                _ => null,
-            },
-            _ => fieldInfo.FieldType switch
-            {
-                CargoFieldType.ListOfString => $"{fieldInfo.FieldDisplayName}:",
-                CargoFieldType.String => $"{fieldInfo.TableDisplayName}:",
-                _ => null,
-            }
-        };
-    }
+            "Monetization" => settings.TagPrefixMonetization,
+            "Microtransactions" => settings.TagPrefixMicrotransactions,
+            "Pacing" => settings.TagPrefixPacing,
+            "Perspectives" => settings.TagPrefixPerspectives,
+            "Controls" => settings.TagPrefixControls,
+            "Vehicles" => settings.TagPrefixVehicles,
+            "Themes" => settings.TagPrefixThemes,
+            "Engines" => settings.TagPrefixEngines,
+            "Art_styles" => settings.TagPrefixArtStyles,
+            _ => null,
+        },
+        _ => fieldInfo.FieldType switch
+        {
+            CargoFieldType.ListOfString => $"{fieldInfo.FieldDisplayName}:",
+            CargoFieldType.String => $"{fieldInfo.TableDisplayName}:",
+            _ => null,
+        }
+    };
 }
 
 public class PCGamingWikiSelectedValues : IHasName

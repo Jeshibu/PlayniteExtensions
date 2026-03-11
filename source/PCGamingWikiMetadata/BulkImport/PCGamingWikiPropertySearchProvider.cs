@@ -114,7 +114,7 @@ public class PCGamingWikiPropertySearchProvider(ICargoQuery cargoQuery, IPlatfor
         return game;
     }
 
-    private ReleaseDate? GetReleaseDate(string releaseDateString)
+    private static ReleaseDate? GetReleaseDate(string releaseDateString)
     {
         var releaseDateStrings = releaseDateString?.Split([';'], StringSplitOptions.RemoveEmptyEntries);
         if (releaseDateStrings == null || releaseDateStrings.Length == 0)
