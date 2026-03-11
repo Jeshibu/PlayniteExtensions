@@ -6,16 +6,17 @@ using PlayniteExtensions.Metadata.Common;
 
 namespace LaunchBoxMetadata.GenreImport;
 
-public class GenreBulkImport : BulkGamePropertyAssigner<Genre, GamePropertyImportViewModel>
+public class GenreBulkImport(IPlayniteAPI playniteApi, GenreSearchProvider dataSource, IPlatformUtility platformUtility, LaunchBoxMetadataSettings settings)
+: BulkGamePropertyAssigner<Genre, GamePropertyImportViewModel>(
+    playniteApi.Database,
+    new(playniteApi) { AllowEmptySearchQuery = true },
+    dataSource,
+    platformUtility,
+    new WikipediaIdUtility(),
+    ExternalDatabase.Wikipedia,
+    settings.MaxDegreeOfParallelism
+)
 {
-    private readonly LaunchBoxMetadataSettings settings;
-
-    public GenreBulkImport(IPlayniteAPI playniteApi, GenreSearchProvider dataSource, IPlatformUtility platformUtility, LaunchBoxMetadataSettings settings)
-        : base(playniteApi.Database, new(playniteApi) { AllowEmptySearchQuery = true }, dataSource, platformUtility, new WikipediaIdUtility(), ExternalDatabase.Wikipedia, settings.MaxDegreeOfParallelism)
-    {
-        this.settings = settings;
-    }
-
     public override string MetadataProviderName => "LaunchBox";
 
     protected override PropertyImportSetting GetPropertyImportSetting(Genre searchItem, out string name)

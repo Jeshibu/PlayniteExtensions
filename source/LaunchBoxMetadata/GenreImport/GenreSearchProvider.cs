@@ -11,11 +11,14 @@ namespace LaunchBoxMetadata.GenreImport;
 
 public class GenreSearchProvider(LaunchBoxDatabase database, IPlatformUtility platformUtility) : IBulkPropertyImportDataSource<Genre>
 {
-    private List<Genre> genres = database.GetGenres().ToList();
+    private List<Genre> Genres => database.GetGenres().ToList();
 
     public IEnumerable<Genre> Search(string query, CancellationToken cancellationToken = default)
     {
-        return genres.Where(g => g.Name.Contains(query, StringComparison.InvariantCultureIgnoreCase));
+        if (string.IsNullOrEmpty(query))
+            return Genres.OrderBy(g => g.Name);
+
+        return Genres.Where(g => g.Name.Contains(query, StringComparison.InvariantCultureIgnoreCase));
     }
 
     public GenericItemOption<Genre> ToGenericItemOption(Genre item)
