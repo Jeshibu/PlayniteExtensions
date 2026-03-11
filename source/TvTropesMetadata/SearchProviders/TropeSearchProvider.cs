@@ -20,7 +20,7 @@ public class TropeSearchProvider(TropeScraper scraper, TvTropesMetadataSettings 
         foreach (var item in page.Items)
         {
             var works = settings.OnlyFirstGamePerTropeListItem ? item.Works.Take(1) : item.Works;
-            foreach (var work in item.Works)
+            foreach (var work in works)
             {
                 if (!worksByName.TryGetValue(work.Title, out HashSet<string> urls))
                 {
