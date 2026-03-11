@@ -215,6 +215,46 @@
                 </StackPanel>
             </ScrollViewer>
         </TabItem>
+        <TabItem Header="Screenshot Utilities">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" Margin="20">
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap" Margin="0,0,0,10" FontWeight="Bold" Visibility="{Binding VisibilityScreenshotUtilitiesNotice}">You need to install Screenshot Utilities from the Playnite Addon database for the following settings to take effect.</TextBlock>
+                    <TextBlock TextWrapping="Wrap">Images smaller than either of the minimum dimensions will be ignored.</TextBlock>
+                    <Grid Width="Auto" Margin="0,0,0,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0">Minimum dimensions:</TextBlock>
+                        <WrapPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox Width="70" Text="{Binding Settings.ScreenshotUtilities.MinWidth, Converter={StaticResource intConverter}}" />
+                            <TextBlock Margin="0,0,5,0">w x</TextBlock>
+                            <TextBox Width="70" Text="{Binding Settings.ScreenshotUtilities.MinHeight, Converter={StaticResource intConverter}}" />
+                            <TextBlock>h</TextBlock>
+                        </WrapPanel>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" TextWrapping="Wrap">Orientation:</TextBlock>
+                        <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" ItemsSource="{Binding AspectRatios}" SelectedValue="{Binding Settings.ScreenshotUtilities.AspectRatio}" SelectedValuePath="Key" DisplayMemberPath="Value" />
+                    </Grid>
+                    <TextBlock TextWrapping="Wrap">Use the following image types to display in the screenshot utilities viewer, in the specified order (drag and drop to reorder):</TextBlock>
+                    <ListBox Name="ScreenshotUtilitiesImageTypes" ItemsSource="{Binding Settings.ScreenshotUtilities.ImageTypes}" pec:IgnoreScrollBehaviour.IgnoreScroll="True" d:ItemsSource="{d:SampleData ItemCount=25}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel ToolTip="Drag me!" Orientation="Horizontal">
+                                    <TextBlock Text="░" Padding="10,0" />
+                                    <CheckBox IsChecked="{Binding Checked}" Content="{Binding Name}" Width="Auto" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </ScrollViewer>
+        </TabItem>
         <TabItem Header="Regions">
             <Grid Margin="20">
                 <Grid.RowDefinitions>

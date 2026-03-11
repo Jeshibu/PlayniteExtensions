@@ -61,8 +61,9 @@ public class WebDownloader : IWebDownloader
         string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken cancellationToken = default, bool getContent = true)
     {
         var sw = System.Diagnostics.Stopwatch.StartNew();
-        var output = Task.Run(async () => await DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType, throwExceptionOnErrorResponse, maxRedirectDepth, 0, cancellationToken, getContent))
-                         .GetAwaiter().GetResult();
+
+        var output = AsyncHelper.RunSync(() => DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType, throwExceptionOnErrorResponse, maxRedirectDepth, 0, cancellationToken, getContent));
+
         sw.Stop();
         _logger.Info($"Call to {url} completed in {sw.Elapsed}, status: {output?.StatusCode}");
         return output;
@@ -329,5 +330,31 @@ public static class CookieContainerExtensions
             output.Expires = cookie.Expires.Value;
 
         return output;
+    }
+}
+
+public static class AsyncHelper
+{
+    private static readonly TaskFactory MyTaskFactory = new(CancellationToken.None,
+            TaskCreationOptions.None,
+            TaskContinuationOptions.None,
+            TaskScheduler.Default);
+    
+    public static TResult RunSync<TResult>(Func<Task<TResult>> func)
+    {
+        return MyTaskFactory
+            .StartNew(async () => await func())
+            .Unwrap()
+            .GetAwaiter()
+            .GetResult();
+    }
+
+    public static void RunSync(Func<Task> func)
+    {
+        MyTaskFactory
+            .StartNew(async () => await func())
+            .Unwrap()
+            .GetAwaiter()
+            .GetResult();
     }
 }

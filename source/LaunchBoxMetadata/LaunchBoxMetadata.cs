@@ -1,25 +1,33 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper.ScreenshotsCommon;
+using LaunchBoxMetadata.GenreImport;
+using LaunchBoxMetadata.ScreenshotUtilitiesIntegration;
+using Playnite.SDK;
 using Playnite.SDK.Events;
+using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Controls;
-using LaunchBoxMetadata.GenreImport;
 
 namespace LaunchBoxMetadata;
 
-public class LaunchBoxMetadata : MetadataPlugin
+public class LaunchBoxMetadata : MetadataPlugin, IScreenshotProviderPlugin
 {
+    private const string MetadataSourceName = "LaunchBox";
+
     //So for anyone using GongSolutions.Wpf.DragDrop - be aware you have to instantiate something from it before referencing the package in your XAML
     private readonly GongSolutions.Wpf.DragDrop.DefaultDragHandler dropInfo = new();
+
     private readonly ILogger logger = LogManager.GetLogger();
     private readonly IPlatformUtility platformUtility;
 
     private LaunchBoxMetadataSettingsViewModel Settings { get; set; }
     private LaunchBoxWebScraper WebScraper { get; set; }
+    private ScreenshotUtilitiesIntegrator ScreenshotUtilitiesIntegrator => new(this, Settings.Settings, WebScraper, platformUtility);
 
     public override Guid Id { get; } = Guid.Parse("3b1908f2-de02-48c9-9633-10d978903652");
 
@@ -40,7 +48,10 @@ public class LaunchBoxMetadata : MetadataPlugin
         MetadataField.Links,
     ];
 
-    public override string Name => "LaunchBox";
+    public override string Name => MetadataSourceName;
+    public string ProviderName { get; set; } = MetadataSourceName;
+    public bool SupportsAutomaticScreenshots { get; set; } = true;
+    public bool SupportsScreenshotSearch { get; set; } = true;
 
     public LaunchBoxMetadata(IPlayniteAPI api) : base(api)
     {
@@ -128,4 +139,12 @@ public class LaunchBoxMetadata : MetadataPlugin
 
         return true;
     }
+
+    public async Task<bool> CleanUpAsync(Game game) => await ScreenshotHelper.DeleteOrphanedJsonFiles(game.Id, Id);
+
+    public async Task<bool> GetScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate) => await ScreenshotUtilitiesIntegrator.FetchScreenshotsAsync(game, daysSinceLastUpdate, forceUpdate);
+
+    public string GetScreenshotSearchResult(Game game, string searchTerm) => ScreenshotUtilitiesIntegrator.GetScreenshotSearchResult(game, searchTerm);
+
+    public async Task<bool> GetScreenshotsManualAsync(Game game, string gameIdentifier) => await ScreenshotUtilitiesIntegrator.FetchScreenshotsAsync(game, 0, true, gameIdentifier);
 }

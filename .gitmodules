@@ -1,0 +1,3 @@
+[submodule "source/Playnite-KNARZhelper"]
+	path = source/Playnite-KNARZhelper
+	url = https://github.com/HerrKnarz/Playnite-KNARZhelper.git

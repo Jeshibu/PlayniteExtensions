@@ -24,6 +24,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Playnite-KNARZhelper\KNARZhelper\FilesCommon\FileHelper.cs" Link="ScreenshotUtilitiesIntegration\Shared\FilesCommon\FileHelper.cs" />
+    <Compile Include="..\Playnite-KNARZhelper\KNARZhelper\Log.cs" Link="ScreenshotUtilitiesIntegration\Shared\Log.cs" />
+    <Compile Include="..\Playnite-KNARZhelper\KNARZhelper\MetadataCommon\MetadataHelper.cs" Link="ScreenshotUtilitiesIntegration\Shared\MetadataCommon\MetadataHelper.cs" />
+    <Compile Include="..\Playnite-KNARZhelper\KNARZhelper\MiscHelper.cs" Link="ScreenshotUtilitiesIntegration\Shared\MiscHelper.cs" />
+    <Compile Include="..\Playnite-KNARZhelper\KNARZhelper\ScreenshotsCommon\IScreenshotProviderPlugin.cs" Link="ScreenshotUtilitiesIntegration\Shared\ScreenshotsCommon\IScreenshotProviderPlugin.cs" />
+    <Compile Include="..\Playnite-KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\Screenshot.cs" Link="ScreenshotUtilitiesIntegration\Shared\ScreenshotsCommon\Models\Screenshot.cs" />
+    <Compile Include="..\Playnite-KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\ScreenshotGroup.cs" Link="ScreenshotUtilitiesIntegration\Shared\ScreenshotsCommon\Models\ScreenshotGroup.cs" />
+    <Compile Include="..\Playnite-KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\ScreenshotGroups.cs" Link="ScreenshotUtilitiesIntegration\Shared\ScreenshotsCommon\Models\ScreenshotGroups.cs" />
+    <Compile Include="..\Playnite-KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\ScreenshotProvider.cs" Link="ScreenshotUtilitiesIntegration\Shared\ScreenshotsCommon\Models\ScreenshotProvider.cs" />
+    <Compile Include="..\Playnite-KNARZhelper\KNARZhelper\ScreenshotsCommon\Models\ScreenshotSearchResult.cs" Link="ScreenshotUtilitiesIntegration\Shared\ScreenshotsCommon\Models\ScreenshotSearchResult.cs" />
+    <Compile Include="..\Playnite-KNARZhelper\KNARZhelper\ScreenshotsCommon\ScreenshotHelper.cs" Link="ScreenshotUtilitiesIntegration\Shared\ScreenshotsCommon\ScreenshotHelper.cs" />
+    <Compile Include="..\Playnite-KNARZhelper\KNARZhelper\StringHelper.cs" Link="ScreenshotUtilitiesIntegration\Shared\StringHelper.cs" />
     <Compile Include="..\PlayniteExtensions.Common\GlobalCommands.cs" Link="Common\GlobalCommands.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IgnoreScrollBehavior.cs" Link="Common\IgnoreScrollBehavior.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs" Link="Common\IntegerFormatConverter.cs" />
@@ -42,5 +54,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <Import Project="..\BulkImport.props"/>
+  <ItemGroup>
+    <Folder Include="ScreenshotUtilitiesIntegration\Shared\FilesCommon\" />
+    <Folder Include="ScreenshotUtilitiesIntegration\Shared\MetadataCommon\" />
+    <Folder Include="ScreenshotUtilitiesIntegration\Shared\ScreenshotsCommon\Models\" />
+    <Folder Include="ScreenshotUtilitiesIntegration\Shared\ScreenshotsCommon\" />
+  </ItemGroup>
+  <Import Project="..\BulkImport.props" />
 </Project>

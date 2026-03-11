@@ -24,37 +24,9 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
 
     private LaunchBoxGame FindGame()
     {
-        if (foundGame != null)
-            return foundGame;
-
-        if (options.IsBackgroundDownload)
-        {
-            var results = database.SearchGames(options.GameData.Name, 100);
-            var deflatedSearchGameName = options.GameData.Name.Deflate();
-            foreach (var game in results)
-            {
-                var deflatedMatchedGameName = game.MatchedName.Deflate();
-                if (!deflatedSearchGameName.Equals(deflatedMatchedGameName, StringComparison.InvariantCultureIgnoreCase))
-                    continue;
-
-                if (platformUtility.PlatformsOverlap(options.GameData?.Platforms, game.Platform?.SplitLaunchBox()))
-                    return foundGame = game;
-            }
-
-            return foundGame = new LaunchBoxGame();
-        }
-        else
-        {
-            var chosen = plugin.PlayniteApi.Dialogs.ChooseItemWithSearch(null, s =>
-            {
-                var results = database.SearchGames(s).Select(LaunchBoxGameItemOption.FromLaunchBoxGame).ToList<GenericItemOption>();
-                return results;
-            }, options.GameData.Name, "LaunchBox: select game");
-            if (chosen == null)
-                return foundGame = new LaunchBoxGame();
-            else
-                return foundGame = ((LaunchBoxGameItemOption)chosen).Game;
-        }
+        return foundGame ??= (options.IsBackgroundDownload
+            ? LaunchBoxHelper.FindGameInBackground(database, options.GameData, platformUtility)
+            : LaunchBoxHelper.FindGameViaSearch(database, options.GameData));
     }
 
     private string GetLaunchBoxGamesDatabaseUrl(LaunchBoxGame game)
@@ -78,41 +50,8 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
             return foundImages = [];
 
         var detailsUrl = GetLaunchBoxGamesDatabaseUrl(game);
-        if (string.IsNullOrWhiteSpace(detailsUrl))
-        {
-            logger.Error($"Could not retrieve website ID for database ID {id}");
-            return foundImages = [];
-        }
 
-        return foundImages = scraper.GetGameImageDetails(detailsUrl).ToList();
-    }
-
-    private class LaunchBoxGameItemOption : GenericItemOption
-    {
-        public LaunchBoxGameSearchResult Game { get; set; }
-
-        public static LaunchBoxGameItemOption FromLaunchBoxGame(LaunchBoxGameSearchResult g)
-        {
-            var name = g.Name;
-            if (g.MatchedName != g.Name)
-                name += $" ({g.MatchedName})";
-
-            var descriptionItems = new List<string>();
-            if (g.ReleaseDate.HasValue)
-                descriptionItems.Add(g.ReleaseDate.Value.ToString("yyyy-MM-dd"));
-            if (g.ReleaseYear != 0)
-                descriptionItems.Add(g.ReleaseYear.ToString());
-            descriptionItems.Add(g.Platform);
-
-            string description = string.Join(" | ", descriptionItems);
-
-            return new LaunchBoxGameItemOption
-            {
-                Game = g,
-                Name = name,
-                Description = description,
-            };
-        }
+        return foundImages = LaunchBoxHelper.GetImageDetails(scraper, detailsUrl, id).ToList();
     }
 
     private IEnumerable<MetadataProperty> Split(string str)
@@ -210,26 +149,6 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
         return SplitCompanies(FindGame().Publisher);
     }
 
-    private bool FilterImage(LaunchBoxImageDetails imgDetails, ICollection<string> whitelistedTypes, ICollection<string> whitelistedRegions, LaunchBoxImageSourceSettings imgSetting)
-    {
-        if (!whitelistedTypes.Contains(imgDetails.Type))
-            return false;
-
-        if (!whitelistedRegions.Contains(imgDetails.Region))
-            return false;
-
-        if (imgDetails.Width < imgSetting.MinWidth || imgDetails.Height < imgSetting.MinHeight)
-            return false;
-
-        return imgSetting.AspectRatio switch
-        {
-            AspectRatio.Vertical => imgDetails.Width < imgDetails.Height,
-            AspectRatio.Horizontal => imgDetails.Width > imgDetails.Height,
-            AspectRatio.Square => imgDetails.Width == imgDetails.Height,
-            _ => true,
-        };
-    }
-
     private MetadataFile PickImage(string caption, LaunchBoxImageSourceSettings imgSettings)
     {
         var images = GetImageOptions(imgSettings);
@@ -253,43 +172,15 @@ public class LaunchBoxMetadataProvider(MetadataRequestOptions options, LaunchBox
     private List<ImageFileOption> GetImageOptions(LaunchBoxImageSourceSettings imgSettings)
     {
         var whitelistedImgTypes = imgSettings.ImageTypes.Where(t => t.Checked).Select(t => t.Name).ToList();
-        var whitelistedRegions = GetWhitelistedRegions();
+        var whitelistedRegions = LaunchBoxHelper.GetWhitelistedRegions(options.GameData?.Regions, settings);
 
-        var images = GetImageDetails().Where(i => FilterImage(i, whitelistedImgTypes, whitelistedRegions, imgSettings)).ToList();
+        var images = GetImageDetails().Where(i => LaunchBoxHelper.FilterImage(i, whitelistedImgTypes, whitelistedRegions, imgSettings)).ToList();
 
         return images.OrderBy(i => whitelistedImgTypes.IndexOf(i.Type))
                      .ThenBy(i => whitelistedRegions.IndexOf(i.Region))
                      .ThenByDescending(i => i.Width * i.Height)
                      .Select(LaunchBoxImageFileOption.FromImageDetails)
                      .ToList<ImageFileOption>();
-    }
-
-    private List<string> GetWhitelistedRegions()
-    {
-        var comparer = StringComparer.InvariantCultureIgnoreCase;
-        var gameRegions = options.GameData?.Regions?.Select(r => r.Name).ToList();
-        if (settings.PreferGameRegion && gameRegions != null && gameRegions.Any())
-        {
-            var output = new List<string>();
-            foreach (var regionSetting in settings.Regions)
-            {
-                var aliases = regionSetting.Aliases?.Split([','], StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
-                if (gameRegions.Any(gr => comparer.Equals(gr, regionSetting.Name) || (aliases != null && aliases.ContainsString(gr))))
-                    output.Add(regionSetting.Name); //put any matched region at the top
-            }
-
-            foreach (var regionSetting in settings.Regions)
-            {
-                if (regionSetting.Checked && !output.Contains(regionSetting.Name))
-                    output.Add(regionSetting.Name); //add the rest of the enabled regions
-            }
-
-            return output;
-        }
-        else
-        {
-            return settings.Regions.Where(r => r.Checked).Select(r => r.Name).ToList();
-        }
     }
 
     private async Task<MetadataFile> ScaleImageAsync(LaunchBoxImageDetails imgDetails, LaunchBoxImageSourceSettings imgSettings)

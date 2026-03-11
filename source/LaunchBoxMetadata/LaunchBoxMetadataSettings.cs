@@ -1,11 +1,13 @@
-﻿using Playnite.SDK;
+﻿using KNARZhelper.ScreenshotsCommon;
+using Playnite.SDK;
+using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
-using PlayniteExtensions.Metadata.Common;
 
 namespace LaunchBoxMetadata;
 
@@ -39,6 +41,15 @@ public class LaunchBoxMetadataSettings : BulkImportPluginSettings
         AspectRatio = AspectRatio.Horizontal,
         MaxHeight = 1440,
         MaxWidth = 2560,
+        MinHeight = 500,
+        MinWidth = 1000,
+    };
+
+    public LaunchBoxImageSourceSettings ScreenshotUtilities { get; set; } = new()
+    {
+        AspectRatio = AspectRatio.Any,
+        MaxHeight = 0,
+        MaxWidth = 0,
         MinHeight = 500,
         MinWidth = 1000,
     };
@@ -130,6 +141,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
             InitializeImageTypeList(types, Settings.Icon, "Icon", "Clear Logo");
             InitializeImageTypeList(types, Settings.Cover, "Box - Front", "Box - Front - Reconstructed", "Fanart - Box - Front");
             InitializeImageTypeList(types, Settings.Background, "Fanart - Background", "Screenshot - Gameplay", "Screenshot - Game Title", "Banner");
+            InitializeImageTypeList(types, Settings.ScreenshotUtilities, "Fanart - Background", "Screenshot - Gameplay", "Screenshot - Game Title", "Banner");
         }
         catch (Exception ex)
         {
@@ -293,4 +305,8 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
         { AspectRatio.Square, "Square" },
         { AspectRatio.AnyExtendToSquare, "Any (extend to square)" },
     };
+
+    public Visibility VisibilityScreenshotUtilitiesNotice => ScreenshotHelper.IsScreenshotUtilitiesInstalled
+            ? Visibility.Collapsed
+            : Visibility.Visible;
 }
