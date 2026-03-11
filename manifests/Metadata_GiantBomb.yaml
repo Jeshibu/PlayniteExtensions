@@ -150,7 +150,7 @@ Packages:
   - Version: "0.11.1"
     RequiredApiVersion: '6.8.0'
     ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-12-29/GiantBombMetadata_0_11_1.pext
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/GiantBombMetadata_0_11_1.pext
     Changelog:
       - "Fixed: property import top panel button still showed up despite it not functioning"
       - "This update, like the last one, completely disables all Giant Bomb metadata functionality. Giant Bomb's website has completely changed, and their game wiki, which is the source for this plugin, is in a very basic work in progress state."
