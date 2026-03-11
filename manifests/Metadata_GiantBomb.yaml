@@ -147,3 +147,11 @@ Packages:
     Changelog:
       - "This update completely disables all Giant Bomb metadata functionality. Giant Bomb's website has completely changed, and their game wiki, which is the source for this plugin, is in a very basic work in progress state."
       - "Keeping this plugin installed is optional but will allow you to eventually update to the next release, sometime after Giant Bomb's wiki is functional enough."
+  - Version: "0.11.1"
+    RequiredApiVersion: '6.8.0'
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-12-29/GiantBombMetadata_0_11_1.pext
+    Changelog:
+      - "Fixed: property import top panel button still showed up despite it not functioning"
+      - "This update, like the last one, completely disables all Giant Bomb metadata functionality. Giant Bomb's website has completely changed, and their game wiki, which is the source for this plugin, is in a very basic work in progress state."
+      - "Keeping this plugin installed is optional but will allow you to eventually be notified of an update, sometime after Giant Bomb's wiki is functional enough."

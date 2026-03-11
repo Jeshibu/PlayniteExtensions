@@ -86,6 +86,8 @@ public class GiantBombMetadata : MetadataPlugin
 
     public override IEnumerable<TopPanelItem> GetTopPanelItems()
     {
+        yield break;
+
         if (!Settings.Settings.ShowTopPanelButton)
             yield break;
 
