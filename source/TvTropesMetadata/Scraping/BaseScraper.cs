@@ -15,9 +15,10 @@ using System.Web;
 
 namespace TvTropesMetadata.Scraping;
 
-public abstract class BaseScraper(IWebViewFactory webViewFactory)
+public abstract class BaseScraper(IWebViewFactory webViewFactory): IDisposable
 {
-    protected IWebView WebView => field ??= webViewFactory.CreateOffscreenView();
+    private IWebView _webView;
+    protected IWebView WebView => _webView ??= webViewFactory.CreateOffscreenView();
     protected readonly ILogger Logger = LogManager.GetLogger();
     protected readonly List<string> CategoryWhitelist = ["VideoGame", "VisualNovel"];
     protected const string ArticleBaseUrl = "https://tvtropes.org/pmwiki/pmwiki.php/";
@@ -61,7 +62,7 @@ public abstract class BaseScraper(IWebViewFactory webViewFactory)
                 continue;
 
             var name = h3.TextContent.HtmlDecode().TrimEnd([" (trope)", " (Video Game)"]);
-            
+
             output.Add(new()
             {
                 Name = name,
@@ -78,7 +79,7 @@ public abstract class BaseScraper(IWebViewFactory webViewFactory)
     {
         if (breadCrumbs == null)
             return [];
-        
+
         // › pmwiki › pmwiki.php › Main › E...
         return breadCrumbs.Split('›').Select(x => x.Trim())
                           .Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
@@ -149,12 +150,12 @@ public abstract class BaseScraper(IWebViewFactory webViewFactory)
 
     protected string[] GetWikiPathSegments(string url)
     {
-        var match = PathSplitter.Match(url);
+        var match = _pathSplitter.Match(url);
         var segments = match.Groups["segment"].Captures.Cast<Capture>().Select(x => x.Value).ToArray();
         return segments;
     }
 
-    private readonly Regex PathSplitter = new(@"pmwiki\.php(/(?<segment>\w+))+", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+    private readonly Regex _pathSplitter = new(@"pmwiki\.php(/(?<segment>\w+))+", RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
     protected IHtmlDocument GetDocument(string url, int delay = 0)
     {
@@ -184,6 +185,11 @@ public abstract class BaseScraper(IWebViewFactory webViewFactory)
     protected bool UrlBelongsToWhitelistedWorkCategory(string url) => CategoryWhitelist.Any(c => url.Contains(c, StringComparison.InvariantCultureIgnoreCase));
 
     protected static string GetAbsoluteUrl(string url) => url.GetAbsoluteUrl("https://tvtropes.org/");
+
+    public void Dispose()
+    {
+        _webView?.Dispose();
+    }
 }
 
 public class TvTropesSearchResult : IHasName, IGameSearchResult

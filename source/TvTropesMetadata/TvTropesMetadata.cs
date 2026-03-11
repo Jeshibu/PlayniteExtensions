@@ -33,7 +33,8 @@ public class TvTropesMetadata : MetadataPlugin
 
     public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
     {
-        var searchProvider = new WorkSearchProvider(new Scraping.WorkScraper(PlayniteApi.WebViews), settings.Settings);
+        using var workScraper = new Scraping.WorkScraper(PlayniteApi.WebViews);
+        var searchProvider = new WorkSearchProvider(workScraper, settings.Settings);
         return new TvTropesMetadataProvider(searchProvider, options, PlayniteApi, new PlatformUtility(PlayniteApi));
     }
 
@@ -71,7 +72,8 @@ public class TvTropesMetadata : MetadataPlugin
 
     private void ImportGameProperty()
     {
-        var searchProvider = new TropeSearchProvider(new Scraping.TropeScraper(PlayniteApi.WebViews), settings.Settings);
+        using var tropeScraper = new Scraping.TropeScraper(PlayniteApi.WebViews);
+        var searchProvider = new TropeSearchProvider(tropeScraper, settings.Settings);
         var extra = new BulkTropeAssigner(PlayniteApi, searchProvider, new PlatformUtility(PlayniteApi), settings.Settings);
         extra.ImportGameProperty();
     }
