@@ -8,9 +8,6 @@
     <File Path="Directory.Build.Props" />
     <File Path="Tests.props" />
   </Folder>
-  <Folder Name="/Submodules/">
-    <Project Path="Playnite-KNARZhelper/KNARZhelper/KNARZhelper.csproj" Id="e3e24870-27f7-400e-b411-47acd9c8b562" />
-  </Folder>
   <Folder Name="/Tests/">
     <Project Path="Barnite.Tests/Barnite.Tests.csproj" />
     <Project Path="BigFishMetadata.Tests/BigFishMetadata.Tests.csproj" />

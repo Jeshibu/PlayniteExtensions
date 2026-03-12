@@ -11,16 +11,15 @@ namespace SteamTagsImporter.BulkImport;
 
 public class SteamPropertySearchProvider(SteamSearch steamSearch) : IBulkPropertyImportDataSource<SteamProperty>
 {
-    private readonly ILogger logger = LogManager.GetLogger();
+    private readonly ILogger _logger = LogManager.GetLogger();
     private SteamProperty[] SteamProperties => field ??= steamSearch.GetProperties().ToArray();
 
     public IEnumerable<GameDetails> GetDetails(SteamProperty prop, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
-        logger.Info($"Getting list of games for {prop}");
-        int start = 0, total = 0;
+        _logger.Info($"Getting list of games for {prop}");
+        int start = 0, total;
         var games = new List<GameDetails>();
-        if (progressArgs != null)
-            progressArgs.IsIndeterminate = false;
+        progressArgs?.IsIndeterminate = false;
 
         do
         {
@@ -37,8 +36,8 @@ public class SteamPropertySearchProvider(SteamSearch steamSearch) : IBulkPropert
                 progressArgs.ProgressMaxValue = searchResult.TotalCount;
                 progressArgs.CurrentProgressValue = games.Count;
                 progressArgs.Text = progressText;
-                logger.Info(progressText);
-                logger.Info($"Actual downloaded game count: {games.Count}");
+                _logger.Info(progressText);
+                _logger.Info($"Actual downloaded game count: {games.Count}");
             }
         } while (start < total && progressArgs?.CancelToken.IsCancellationRequested != true);
 
@@ -48,7 +47,7 @@ public class SteamPropertySearchProvider(SteamSearch steamSearch) : IBulkPropert
         {
             var gamesInGroup = gr.ToList();
             if (gamesInGroup.Count > 1)
-                logger.Info($"Found {gamesInGroup.Count} games for {gamesInGroup[0]} - {gr.Key}");
+                _logger.Info($"Found {gamesInGroup.Count} games for {gamesInGroup[0]} - {gr.Key}");
 
             yield return gamesInGroup[0];
         }

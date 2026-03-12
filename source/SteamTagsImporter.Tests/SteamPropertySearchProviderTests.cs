@@ -48,7 +48,7 @@ public class SteamPropertySearchProviderTests
         var footballSearchResults = searchProvider.GetDetails(props[0]).ToList();
         Assert.Equal(116, footballSearchResults.Count);
 
-        var names = footballSearchResults.Select(x => x.Names.Single());
+        var names = footballSearchResults.Select(x => x.Names.Single()).ToList();
         Assert.Contains("Madden NFL 24", names);
         Assert.Contains("Greats of the Gridiron", names);
     }

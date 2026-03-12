@@ -15,17 +15,17 @@ namespace LaunchBoxMetadata.ScreenshotUtilitiesIntegration;
 
 public class ScreenshotUtilitiesIntegrator(LaunchBoxMetadata plugin, LaunchBoxMetadataSettings settings, LaunchBoxWebScraper scraper, IPlatformUtility platformUtility)
 {
-    private string GetDatabaseUrl(Game game, ScreenshotGroup screenshotGroup, string databaseId = default)
+    private string GetDatabaseUrl(Game game, ScreenshotGroup screenshotGroup, string databaseId = null)
     {
-        string searchUrl = default;
+        string searchUrl = null;
 
-        if (databaseId != default && long.TryParse(databaseId, out var dbIdLong))
+        if (databaseId != null && long.TryParse(databaseId, out var dbIdLong))
             searchUrl = scraper.GetLaunchBoxGamesDatabaseUrl(dbIdLong);
 
-        if (searchUrl == default)
+        if (searchUrl == null)
             searchUrl = screenshotGroup.GameIdentifier;
 
-        if (searchUrl == default)
+        if (searchUrl == null)
         {
             var link = MetadataHelper.GetLink(game, new System.Text.RegularExpressions.Regex(@"gamesdb\.launchbox-app\.com\/games\/details\/"));
 
@@ -33,11 +33,11 @@ public class ScreenshotUtilitiesIntegrator(LaunchBoxMetadata plugin, LaunchBoxMe
                 searchUrl = link.Url;
         }
 
-        if (searchUrl == default)
+        if (searchUrl == null)
         {
             var foundGame = LaunchBoxHelper.FindGameInBackground(new LaunchBoxDatabase(plugin.GetPluginUserDataPath()), game, platformUtility);
 
-            if (foundGame.DatabaseID != default)
+            if (foundGame.DatabaseID != 0)
             {
                 searchUrl = scraper.GetLaunchBoxGamesDatabaseUrl(foundGame.DatabaseID);
             }
@@ -109,7 +109,7 @@ public class ScreenshotUtilitiesIntegrator(LaunchBoxMetadata plugin, LaunchBoxMe
         return updated;
     }
 
-    public async Task<bool> FetchScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate, string databaseId = default)
+    public async Task<bool> FetchScreenshotsAsync(Game game, int daysSinceLastUpdate, bool forceUpdate, string databaseId = null)
     {
         try
         {
@@ -131,12 +131,12 @@ public class ScreenshotUtilitiesIntegrator(LaunchBoxMetadata plugin, LaunchBoxMe
                 return false;
 
             // Return if a game was searched and it's the one we already have.
-            if (searchUrl != default && searchUrl.Equals(screenshotGroup.GameIdentifier))
+            if (searchUrl != null && searchUrl.Equals(screenshotGroup.GameIdentifier))
                 return false;
 
             // We need to reset the file if we got a new id from the method call and it's not the
             // same we already got.
-            if (!fileExists || (databaseId != default && !searchUrl.Equals(screenshotGroup.GameIdentifier)))
+            if (!fileExists || (databaseId != null && !searchUrl.Equals(screenshotGroup.GameIdentifier)))
             {
                 screenshotGroup.GameIdentifier = searchUrl;
 
@@ -162,7 +162,7 @@ public class ScreenshotUtilitiesIntegrator(LaunchBoxMetadata plugin, LaunchBoxMe
         {
             var results = new LaunchBoxDatabase(plugin.GetPluginUserDataPath()).SearchGames(searchTerm).Select(LaunchBoxGameItemOption.FromLaunchBoxGame).ToList();
 
-            if (!results?.Any() ?? true)
+            if (!results.Any())
                 return null;
 
             var result = new List<ScreenshotSearchResult>(results.Select(item => new ScreenshotSearchResult
