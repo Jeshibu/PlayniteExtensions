@@ -57,18 +57,18 @@ public class SteamSearch(IWebDownloader downloader, SteamTagsImporterSettings se
         }
     }
 
-    public string GetSearchRequestUrl(string param, string value, int start)
+    public string GetSearchRequestUrl(string param, string value, int start, int count = 100)
     {
-        var url = $"https://store.steampowered.com/search/results/?query=&start={start}&count=50&dynamic_data=&force_infinite=1&category1=998,994,992,997&{param}={value}&ndl=1&snr=1_7_7_230_7&infinite=1";
+        var url = $"https://store.steampowered.com/search/results/?query=&start={start}&count={count}&dynamic_data=&force_infinite=1&category1=998,994,992,997&{param}={value}&ndl=1&snr=1_7_7_230_7&infinite=1";
         if (settings.OnlyImportGamesWithThisLanguageSupport)
             url += $"&language={settings.LanguageKey}";
 
         return url;
     }
 
-    public SteamSearchResponse SearchGames(string param, string value, int start)
+    public SteamSearchResponse SearchGames(string param, string value, int start, int count)
     {
-        var url = GetSearchRequestUrl(param, value, start);
+        var url = GetSearchRequestUrl(param, value, start, count);
         var response = downloader.DownloadString(url);
         return JsonConvert.DeserializeObject<SteamSearchResponse>(response.ResponseContent);
     }

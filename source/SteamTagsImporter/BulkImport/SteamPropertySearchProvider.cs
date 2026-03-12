@@ -1,11 +1,14 @@
-﻿using Playnite.SDK;
+﻿using ComposableAsync;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Metadata.Common;
 using PlayniteExtensions.Common;
+using RateLimiter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace SteamTagsImporter.BulkImport;
 
@@ -21,18 +24,30 @@ public class SteamPropertySearchProvider(SteamSearch steamSearch) : IBulkPropert
         var games = new List<GameDetails>();
         progressArgs?.IsIndeterminate = false;
 
+        const int pageSize = 100, maxRequestsPerMinute = 29, maxGamesPerMinute = pageSize * maxRequestsPerMinute;
+
+        var timeConstraint = TimeLimiter.GetFromMaxCountByInterval(maxRequestsPerMinute, TimeSpan.FromMinutes(1));
+
         do
         {
-            var searchResult = steamSearch.SearchGames(prop.Param, prop.Value, start);
+            Task.Run(async () => await timeConstraint, progressArgs?.CancelToken ?? CancellationToken.None).GetAwaiter().GetResult();
+
+            var searchResult = steamSearch.SearchGames(prop.Param, prop.Value, start, pageSize);
             total = searchResult.TotalCount;
 
             games.AddRange(steamSearch.ParseSearchResultHtml(searchResult.ResultsHtml));
 
-            start += 50;
+            start += pageSize;
 
             if (progressArgs != null)
             {
                 var progressText = $"Downloading {prop.Name}… {games.Count}/{total}";
+                if (total > maxGamesPerMinute)
+                    progressText += $"""
+
+                                     Download will pause every {maxGamesPerMinute} per minute, to wait out rate limiting.
+                                     """;
+
                 progressArgs.ProgressMaxValue = searchResult.TotalCount;
                 progressArgs.CurrentProgressValue = games.Count;
                 progressArgs.Text = progressText;

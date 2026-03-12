@@ -15,9 +15,9 @@ public class SteamPropertySearchProviderTests
     public SteamPropertySearchProviderTests()
     {
         steamSearch = new SteamSearch(downloader, settings);
-        downloader.FilesByUrl.Add(steamSearch.GetSearchRequestUrl("tags", "1254552", 000), "football000.json");
-        downloader.FilesByUrl.Add(steamSearch.GetSearchRequestUrl("tags", "1254552", 050), "football050.json");
-        downloader.FilesByUrl.Add(steamSearch.GetSearchRequestUrl("tags", "1254552", 100), "football100.json");
+        downloader.FilesByUrl.Add(steamSearch.GetSearchRequestUrl("tags", "1254552", 000, 50), "football000.json");
+        downloader.FilesByUrl.Add(steamSearch.GetSearchRequestUrl("tags", "1254552", 050, 50), "football050.json");
+        downloader.FilesByUrl.Add(steamSearch.GetSearchRequestUrl("tags", "1254552", 100, 50), "football100.json");
         searchProvider = new SteamPropertySearchProvider(steamSearch);
     }
 

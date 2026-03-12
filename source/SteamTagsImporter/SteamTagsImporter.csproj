@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>4.2.7</Version>
+    <Version>4.4</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.9.9" />
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.4.0" />
     <PackageReference Include="PlayniteSDK" Version="6.11.0" />
+    <PackageReference Include="RateLimiter" Version="2.2.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />

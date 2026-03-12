@@ -173,3 +173,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-12-29/SteamTagsImporter_4_3_1.pext
     Changelog:
       - "Fixed: tag/feature bulk import menu option appeared in fullscreen mode, where it was not usable"
+  - Version: '4.4'
+    RequiredApiVersion: '6.11.0'
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/SteamTagsImporter_4_4.pext
+    Changelog:
+      - "Added: tag/feature bulk import column to show what games matched your games, and how"
+      - "Fixed: tag/feature bulk import would error out due to rate limiting after 1450 games downloaded. You will be waiting for 1 minute after every 2900 games downloaded now, though."
