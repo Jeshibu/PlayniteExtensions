@@ -183,3 +183,11 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-02-16/LaunchBoxMetadata_0_10.pext
     Changelog:
       - "Added image size to image selection dialogs"
+  - Version: "0.11"
+    RequiredApiVersion: '6.14.0'
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/LaunchBoxMetadata_0_11.pext
+    Changelog:
+      - "Added support for the Screenshot Utilities extension. It can now pull screenshots from the LaunchBox Games Database."
+      - "Added bulk genre import column to show what games matched your games, and how."
+      - "Fixed bulk genre import search dialog not showing genres without searching."
