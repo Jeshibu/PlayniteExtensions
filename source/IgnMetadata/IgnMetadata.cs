@@ -38,6 +38,8 @@ public class IgnMetadata : MetadataPlugin
         MetadataField.Platform,
         MetadataField.Links,
         MetadataField.BackgroundImage,
+        MetadataField.CommunityScore,
+        MetadataField.CriticScore,
     ];
 
     public override string Name => "IGN";

@@ -82,3 +82,12 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-10-04/IgnMetadata_0_5_1.pext
     Changelog:
       - "Fixed no results being found since Playnite 10.37"
+  - Version: "0.6"
+    RequiredApiVersion: '6.4.0'
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/IgnMetadata_0_6.pext
+    Changelog:
+      - "Added community rating"
+      - "Added critic rating (only from IGN reviews)"
+      - "Fixed no backgrounds being found"
+      - "Added the option to add HowLongToBeat data to games from IGN. This is rounded up to whole hours, and should only be considered a fallback for when the HowLongToBeat plugin breaks for a while."
