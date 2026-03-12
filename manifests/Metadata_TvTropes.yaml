@@ -56,3 +56,11 @@ Packages:
     PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-12-29/TvTropesMetadata_0_4_10.pext'
     Changelog:
       - "Fixed: tag/feature bulk import menu option appeared in fullscreen mode, where it was not usable"
+  - Version: '0.5'
+    RequiredApiVersion: '6.11.0'
+    ReleaseDate: {NEWDATE}
+    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/TvTropesMetadata_0_5.pext'
+    Changelog:
+      - 'Added bulk trope import column to show what games matched your games, and how.'
+      - 'Fixed background browser processes not being disposed'
+      - 'Fixed bulk trope import not honoring the "Only import first game per trope list item" setting'

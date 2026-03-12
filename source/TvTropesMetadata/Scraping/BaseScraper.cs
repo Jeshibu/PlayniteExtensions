@@ -134,7 +134,7 @@ public abstract class BaseScraper(IWebViewFactory webViewFactory): IDisposable
             : descriptionDoc.Body.InnerHtml;
     }
 
-    protected IEnumerable<Tuple<string, string>> GetHeaderSegments(string content)
+    protected static IEnumerable<Tuple<string, string>> GetHeaderSegments(string content)
     {
         var headerSegments = content.Trim().Split(["<h2>"], StringSplitOptions.RemoveEmptyEntries);
         foreach (var segment in headerSegments)
