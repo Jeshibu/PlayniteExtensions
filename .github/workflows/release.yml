@@ -38,13 +38,13 @@ jobs:
 
       - name: Build projects
         run: |
-          Write-Host '${{ steps.projectselection.outputs.projects }}' -f Orange
+          Write-Host '${{ steps.projectselection.outputs.projects }}' -f Cyan
           
           $projects = ConvertFrom-Json '${{ steps.projectselection.outputs.projects }}'
           
           foreach ($p in $projects) {
             $projectName = $p.Name
-            Write-Host "Building $projectName" -f Green
+            Write-Host "Building $projectName" -f Cyan
             dotnet build "$Env:GITHUB_WORKSPACE\source\$projectName\$projectName.csproj" -p:Configuration=Release -restore
           }
 
@@ -52,7 +52,7 @@ jobs:
         run: |
           $testProjects = ConvertFrom-Json '${{ steps.projectselection.outputs.testprojects }}'
           foreach ($tp in $testProjects){
-            "Executing tests in project: $tp" -f Blue
+            Write-Host "Executing tests in project: $tp" -f Cyan
             dotnet test "$Env:GITHUB_WORKSPACE\source\$tp\$tp.csproj"
           }
 

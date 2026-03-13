@@ -3,8 +3,6 @@ param (
     [Parameter()][string]$PlaynitePath = "C:\Playnite"
 )
 
-$ToolboxPath = "$PlaynitePath\Toolbox.exe"
-
 $releaseData = (./publish/Get-ReleaseData.ps1 $tag) -split '`n'
 $projects = ConvertFrom-Json ($releaseData[3] -split '=',2)[1]
 
