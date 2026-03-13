@@ -18,6 +18,7 @@ public class LaunchBoxMetadataSettings : BulkImportPluginSettings
     public bool UseVideoLink { get; set; } = true;
     public string MetadataZipEtag { get; set; }
     public DateTimeOffset? MetadataZipLastModified { get; set; }
+
     public LaunchBoxImageSourceSettings Icon { get; set; } = new()
     {
         AspectRatio = AspectRatio.AnyExtendToSquare,
@@ -108,24 +109,9 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
         InitializeDatabaseLists();
     }
 
-    private RelayCommand initializeDatabaseCommand;
-    private RelayCommand downloadMetadataCommand;
+    public ICommand InitializeDatabaseCommand => field ??= new RelayCommand(InitializeDatabase);
 
-    public ICommand InitializeDatabaseCommand
-    {
-        get
-        {
-            return initializeDatabaseCommand ??= new RelayCommand(InitializeDatabase);
-        }
-    }
-
-    public ICommand DownloadMetadataCommand
-    {
-        get
-        {
-            return downloadMetadataCommand ??= new RelayCommand(DownloadMetadata);
-        }
-    }
+    public ICommand DownloadMetadataCommand => field ??= new RelayCommand(DownloadMetadata);
 
     private LaunchBoxDatabase GetDatabase()
     {
@@ -152,7 +138,6 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
         {
             var database = GetDatabase();
             InitializeRegionList(database.GetRegions().ToList());
-
         }
         catch (Exception ex)
         {
@@ -161,44 +146,37 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
         }
     }
 
-    private void InitializeImageTypeList(List<string> types, LaunchBoxImageSourceSettings imgSettings, params string[] defaultChecked)
+    private static void InitializeImageTypeList(List<string> types, LaunchBoxImageSourceSettings imgSettings, params string[] defaultChecked)
     {
         if (imgSettings.ImageTypes.Count == 0) //put default selected items at the top
         {
-            foreach (var def in defaultChecked)
-            {
+            foreach (string def in defaultChecked)
                 imgSettings.ImageTypes.Add(new CheckboxSetting { Name = def, Checked = true });
             }
-        }
 
-        foreach (var t in types)
+        foreach (string t in types)
         {
-            if (!imgSettings.ImageTypes.Any(x => x.Name == t))
+            if (imgSettings.ImageTypes.All(x => x.Name != t))
                 imgSettings.ImageTypes.Add(new CheckboxSetting { Name = t, Checked = defaultChecked.Contains(t) });
         }
     }
 
     private void InitializeRegionList(List<string> regions)
     {
-        foreach (var regionName in regions)
-        {
-            if (!Settings.Regions.Any(r => r.Name == regionName))
+        foreach (string regionName in regions)
             {
+            if (Settings.Regions.All(r => r.Name != regionName))
                 Settings.Regions.Add(new RegionSetting { Checked = true, Name = regionName, Aliases = GetDefaultRegionAliases(regionName) });
             }
         }
-    }
 
-    private string GetDefaultRegionAliases(string region)
-    {
-        return region switch
+    private static string GetDefaultRegionAliases(string region) => region switch
         {
             "United States" => "US, USA",
             "United Kingdom" => "UK, GB, Great Britain",
             "Japan" => "JP, JA",
             _ => null,
         };
-    }
 
     private void DownloadMetadata()
     {
@@ -266,10 +244,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
 
             var xmlParser = new LaunchBoxXmlParser(xmlPath);
             var database = new LaunchBoxDatabase(Plugin.GetPluginUserDataPath());
-            PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
-            {
-                database.CreateDatabase(xmlParser, a);
-            }, new GlobalProgressOptions("Initializing database...", false));
+            PlayniteApi.Dialogs.ActivateGlobalProgress(a => { database.CreateDatabase(xmlParser, a); }, new GlobalProgressOptions("Initializing database...", false));
 
             PlayniteApi.Dialogs.ShowMessage("LaunchBox metadata database successfully initialized!", "LaunchBox database", System.Windows.MessageBoxButton.OK);
 

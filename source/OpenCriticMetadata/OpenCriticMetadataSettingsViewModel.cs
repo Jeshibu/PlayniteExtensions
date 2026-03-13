@@ -19,14 +19,14 @@ public class OpenCriticMetadataSettingsViewModel : PluginSettingsViewModel<OpenC
     {
         var remove = new List<CheckboxSetting>();
         foreach (var existing in list)
-            if (!items.Any(i => i.Name == existing.Name))
+            if (items.All(i => i.Name != existing.Name))
                 remove.Add(existing);
 
         foreach (var r in remove)
             list.Remove(r);
 
         foreach (var item in items)
-            if (!list.Any(i => i.Name == item.Name))
+            if (list.All(i => i.Name != item.Name))
                 list.Add(item);
     }
 

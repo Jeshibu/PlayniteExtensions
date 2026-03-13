@@ -33,7 +33,7 @@ public class CheckboxSetting
 
     public override string ToString()
     {
-        var symbol = Checked ? '✅' : '❌';
+        char symbol = Checked ? '✅' : '❌';
         return $"{symbol} {Name}";
     }
 }

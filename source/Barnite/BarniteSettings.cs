@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -51,7 +52,10 @@ public class BarniteSettingsViewModel : PluginSettingsViewModel<BarniteSettings,
                 {
                     System.Diagnostics.Process.Start(ss.WebsiteUrl);
                 }
-                catch { }
+                catch(Exception ex)
+                {
+                    Logger.Error(ex, $"Failed to open Url {ss?.WebsiteUrl}");
+                }
             });
         }
     }
