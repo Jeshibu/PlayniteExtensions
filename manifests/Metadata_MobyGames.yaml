@@ -135,3 +135,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-12-29/MobyGamesMetadata_0_7_4.pext
     Changelog:
       - "Fixed: genre/group bulk import menu option appeared in fullscreen mode, where it was not usable"
+  - Version: '0.8'
+    RequiredApiVersion: '6.9.0'
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/MobyGamesMetadata_0_8.pext
+    Changelog:
+      - "Added bulk genre/group import column to show what games matched your games, and how."

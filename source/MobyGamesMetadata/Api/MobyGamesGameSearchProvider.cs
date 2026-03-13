@@ -11,9 +11,10 @@ using System.Threading;
 
 namespace MobyGamesMetadata.Api;
 
-public class MobyGamesGameSearchProvider(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility) : BaseAggregateMobyGamesDataCollector(apiClient, scraper, settings, platformUtility), IGameSearchProvider<GameSearchResult>, IDisposable
+public class MobyGamesGameSearchProvider(MobyGamesApiClient apiClient, MobyGamesScraper scraper, MobyGamesMetadataSettings settings, IPlatformUtility platformUtility)
+    : BaseAggregateMobyGamesDataCollector(apiClient, scraper, settings, platformUtility), IGameSearchProvider<GameSearchResult>, IDisposable
 {
-    private readonly MobyGamesHelper helper = new(platformUtility);
+    private readonly MobyGamesHelper _helper = new(platformUtility);
 
     public GameDetails GetDetails(GameSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
@@ -22,24 +23,24 @@ public class MobyGamesGameSearchProvider(MobyGamesApiClient apiClient, MobyGames
 
     public GameDetails GetDetails(int id, Game searchGame = null, MobyGame searchResultGame = null)
     {
-        if (settings.DataSource == DataSource.ApiAndScraping)
+        if (Settings.DataSource == DataSource.ApiAndScraping)
         {
-            var scraperDetails = scraper.GetGameDetails(id);
-            var apiDetails = searchResultGame ?? apiClient.GetMobyGame(id);
+            var scraperDetails = Scraper.GetGameDetails(id);
+            var apiDetails = searchResultGame ?? ApiClient.GetMobyGame(id);
             var output = Merge(scraperDetails, ToGameDetails(apiDetails, searchGame));
             return output;
         }
 
-        if (settings.DataSource.HasFlag(DataSource.Scraping))
+        if (Settings.DataSource.HasFlag(DataSource.Scraping))
         {
-            var gameDetails = scraper.GetGameDetails(id);
+            var gameDetails = Scraper.GetGameDetails(id);
             gameDetails.Description = gameDetails.Description.MakeHtmlUrlsAbsolute(gameDetails.Url);
             return gameDetails;
         }
 
-        if (settings.DataSource.HasFlag(DataSource.Api))
+        if (Settings.DataSource.HasFlag(DataSource.Api))
         {
-            var apiDetails = searchResultGame ?? apiClient.GetMobyGame(id);
+            var apiDetails = searchResultGame ?? ApiClient.GetMobyGame(id);
             var output = ToGameDetails(apiDetails, searchGame);
             return output;
         }
@@ -49,13 +50,13 @@ public class MobyGamesGameSearchProvider(MobyGamesApiClient apiClient, MobyGames
 
     public IEnumerable<GameSearchResult> Search(string query, CancellationToken cancellationToken = default)
     {
-        if (settings.DataSource.HasFlag(DataSource.Scraping))
-            return scraper.GetGameSearchResults(query);
+        if (Settings.DataSource.HasFlag(DataSource.Scraping))
+            return Scraper.GetGameSearchResults(query);
 
-        if (settings.DataSource.HasFlag(DataSource.Api))
-            return apiClient.SearchGames(query, cancellationToken).Select(ToSearchResult);
+        if (Settings.DataSource.HasFlag(DataSource.Api))
+            return ApiClient.SearchGames(query, cancellationToken).Select(ToSearchResult);
 
-        return new List<GameSearchResult>();
+        return [];
     }
 
     public bool TryGetDetails(Game game, out GameDetails gameDetails, CancellationToken cancellationToken)
@@ -66,7 +67,7 @@ public class MobyGamesGameSearchProvider(MobyGamesApiClient apiClient, MobyGames
 
         foreach (var link in game.Links)
         {
-            var id = helper.GetMobyGameIdFromUrl(link.Url);
+            var id = _helper.GetMobyGameIdFromUrl(link.Url);
             if (id == null)
                 continue;
 
@@ -74,21 +75,14 @@ public class MobyGamesGameSearchProvider(MobyGamesApiClient apiClient, MobyGames
 
             return gameDetails != null;
         }
+
         return false;
     }
 
-    public GenericItemOption<GameSearchResult> ToGenericItemOption(GameSearchResult item)
-    {
-        var output = new GenericItemOption<GameSearchResult>(item)
-        {
-            Name = item.Name,
-            Description = item.Description,
-        };
-        return output;
-    }
+    public GenericItemOption<GameSearchResult> ToGenericItemOption(GameSearchResult item) => new(item) { Name = item.Name, Description = item.Description };
 
     public void Dispose()
     {
-        scraper.Dispose();
+        Scraper.Dispose();
     }
 }

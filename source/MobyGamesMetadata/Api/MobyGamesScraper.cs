@@ -26,10 +26,7 @@ public class MobyGamesScraper(IPlatformUtility platformUtility, IWebViewFactory 
         return $"https://www.mobygames.com/search/?q={query}&type={objectType}&adult=true";
     }
 
-    private static string GetGameDetailsUrl(int id)
-    {
-        return $"https://www.mobygames.com/game/{id}";
-    }
+    private static string GetGameDetailsUrl(int id) => $"https://www.mobygames.com/game/{id}";
 
     public IEnumerable<GameSearchResult> GetGameSearchResults(string query)
     {
@@ -105,7 +102,7 @@ public class MobyGamesScraper(IPlatformUtility platformUtility, IWebViewFactory 
                     gameDetails.Names = [gameDetails.Url.Split(['/'], StringSplitOptions.RemoveEmptyEntries).Last()];
 
                 var releaseYearString = cells[1].TextContent;
-                if (int.TryParse(releaseYearString, out var releaseYear))
+                if (int.TryParse(releaseYearString, out int releaseYear))
                     gameDetails.ReleaseDate = new(releaseYear);
 
                 var platformLinks = cells[2].QuerySelectorAll("a[href]");
@@ -134,7 +131,7 @@ public class MobyGamesScraper(IPlatformUtility platformUtility, IWebViewFactory 
         return WebView.GetPageSource();
     }
 
-    private IEnumerable<GameSearchResult> ParseGameSearchResultHtml(string html)
+    private static IEnumerable<GameSearchResult> ParseGameSearchResultHtml(string html)
     {
         var doc = new HtmlParser().Parse(html);
 
@@ -204,10 +201,7 @@ public class MobyGamesScraper(IPlatformUtility platformUtility, IWebViewFactory 
 
     public void Dispose()
     {
-        if (_webView == null)
-            return;
-
-        _webView.Dispose();
+        _webView?.Dispose();
         _webView = null;
     }
 

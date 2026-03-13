@@ -14,32 +14,25 @@ public class MobyGamesGroupSearchProvider(MobyGamesApiClient apiClient, MobyGame
 {
     public IEnumerable<GameDetails> GetDetails(SearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
-        if (settings.DataSource.HasFlag(DataSource.Api))
+        if (Settings.DataSource.HasFlag(DataSource.Api))
         {
-            var result = apiClient.GetAllGamesForGroup(searchResult.Id, progressArgs);
+            var result = ApiClient.GetAllGamesForGroup(searchResult.Id, progressArgs);
             return result.Select(g => ToGameDetails(g, searchGame));
         }
 
-        if (settings.DataSource.HasFlag(DataSource.Scraping))
-            return scraper.GetGamesFromGroup(searchResult.Url, progressArgs);
+        if (Settings.DataSource.HasFlag(DataSource.Scraping))
+            return Scraper.GetGamesFromGroup(searchResult.Url, progressArgs);
 
         return [];
     }
 
     IEnumerable<SearchResult> ISearchableDataSource<SearchResult>.Search(string query, CancellationToken cancellationToken)
     {
-        if (settings.DataSource.HasFlag(DataSource.Scraping))
-            return scraper.GetGroupSearchResults(query);
+        if (Settings.DataSource.HasFlag(DataSource.Scraping))
+            return Scraper.GetGroupSearchResults(query);
 
         return [];
     }
 
-    public GenericItemOption<SearchResult> ToGenericItemOption(SearchResult item)
-    {
-        return new(item)
-        {
-            Name = item.Name,
-            Description = item.Description,
-        };
-    }
+    public GenericItemOption<SearchResult> ToGenericItemOption(SearchResult item) => new(item) { Name = item.Name, Description = item.Description };
 }

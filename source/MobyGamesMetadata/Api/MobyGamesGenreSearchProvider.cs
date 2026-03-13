@@ -15,20 +15,14 @@ public class MobyGamesGenreSearchProvider(MobyGamesApiClient apiClient, MobyGame
 {
     public IEnumerable<GameDetails> GetDetails(MobyGamesGenreSetting searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
-        var result = apiClient.GetAllGamesForGenre(searchResult.Id, progressArgs);
+        var result = ApiClient.GetAllGamesForGenre(searchResult.Id, progressArgs);
         return result.Select(g => ToGameDetails(g, searchGame));
     }
 
     public IEnumerable<MobyGamesGenreSetting> Search(string query, CancellationToken cancellationToken = default)
     {
-        return settings.Genres.Where(g => $"{g.Category} {g.Name}".Contains(query, StringComparison.InvariantCultureIgnoreCase));
+        return Settings.Genres.Where(g => $"{g.Category} {g.Name}".Contains(query, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    public GenericItemOption<MobyGamesGenreSetting> ToGenericItemOption(MobyGamesGenreSetting item)
-    {
-        var output = new GenericItemOption<MobyGamesGenreSetting>(item);
-        output.Name = item.Name;
-        output.Description = item.Category;
-        return output;
-    }
+    public GenericItemOption<MobyGamesGenreSetting> ToGenericItemOption(MobyGamesGenreSetting item) => new(item) { Name = item.Name, Description = item.Category };
 }

@@ -81,10 +81,7 @@ public class MobyGamesMetadata : MetadataPlugin
         return new MobyGamesMetadataProvider(options, this, aggr, platformUtility, settings.Settings);
     }
 
-    public override ISettings GetSettings(bool firstRunSettings)
-    {
-        return settings;
-    }
+    public override ISettings GetSettings(bool firstRunSettings) => settings;
 
     public override UserControl GetSettingsView(bool firstRunSettings)
     {
