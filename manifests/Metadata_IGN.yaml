@@ -84,8 +84,8 @@ Packages:
       - "Fixed no results being found since Playnite 10.37"
   - Version: "0.6"
     RequiredApiVersion: '6.4.0'
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/IgnMetadata_0_6.pext
+    ReleaseDate: 2026-03-13
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-03-13/IgnMetadata_0_6.pext
     Changelog:
       - "Added community rating"
       - "Added critic rating (only from IGN reviews)"

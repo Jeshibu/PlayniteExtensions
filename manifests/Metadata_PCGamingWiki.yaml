@@ -258,7 +258,7 @@ Packages:
       - "Fixed: article redirects were not parsing correctly"
   - Version: '1.7'
     RequiredApiVersion: '6.11.0'
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/PCGamingWikiMetadata_1_7.pext
+    ReleaseDate: 2026-03-13
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-03-13/PCGamingWikiMetadata_1_7.pext
     Changelog:
       - "Added bulk property import column to show what games matched your games, and how"
