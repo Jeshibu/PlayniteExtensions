@@ -20,6 +20,8 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.Resources>
                     <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
@@ -36,13 +38,20 @@
                     <pec:IntegerFormatConverter x:Key="IntConverter"/>
                 </Grid.Resources>
 
-                <TextBlock>Critic score average:</TextBlock>
-                <ComboBox Grid.Row="0" Grid.Column="1" IsReadOnly="True" IsEditable="False" SelectedValuePath="Key" DisplayMemberPath="Value" Width="auto"
+                <TextBlock Grid.Row="0" Grid.Column="1" Margin="5 0">
+                    <Hyperlink Command="{Binding OpenUrl}" CommandParameter="https://rapidapi.com/opencritic-opencritic-default/api/opencritic-api">
+                        <TextBlock>Get your API key here</TextBlock>
+                    </Hyperlink>
+                </TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="0">API key:</TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Settings.ApiKey}" Width="200" />
+                <TextBlock Grid.Row="2" Grid.Column="0">Critic score average:</TextBlock>
+                <ComboBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" IsEditable="False" SelectedValuePath="Key" DisplayMemberPath="Value" Width="auto"
                           ItemsSource="{Binding CriticSources}" SelectedValue="{Binding Settings.CriticScoreSource}"/>
-                <TextBlock Grid.Row="1" Grid.Column="0">Minimum critic review count:</TextBlock>
-                <TextBox Width="70" Text="{Binding Settings.MinimumCriticReviewCount, Converter={StaticResource IntConverter}}" Grid.Row="1" Grid.Column="1"/>
-                <TextBlock Grid.Row="2" Grid.Column="0">Minimum user review count:</TextBlock>
-                <TextBox Width="70" Text="{Binding Settings.MinimumCommunityReviewCount, Converter={StaticResource IntConverter}}" Grid.Row="2" Grid.Column="1"/>
+                <TextBlock Grid.Row="3" Grid.Column="0">Minimum critic review count:</TextBlock>
+                <TextBox  Grid.Row="3" Grid.Column="1" Width="70" Text="{Binding Settings.MinimumCriticReviewCount, Converter={StaticResource IntConverter}}" />
+                <TextBlock Grid.Row="4" Grid.Column="0">Minimum user review count:</TextBlock>
+                <TextBox Grid.Row="4" Grid.Column="1" Width="70" Text="{Binding Settings.MinimumCommunityReviewCount, Converter={StaticResource IntConverter}}" />
             </Grid>
 
             <TextBlock TextWrapping="Wrap">Use the following image types, in the specified order (drag and drop to reorder):</TextBlock>

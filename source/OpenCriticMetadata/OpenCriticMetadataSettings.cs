@@ -5,6 +5,7 @@ namespace OpenCriticMetadata;
 
 public class OpenCriticMetadataSettings : ObservableObject
 {
+    public string ApiKey { get; set => field = value?.Trim(); }
     public OpenCriticSource CriticScoreSource { get; set; } = OpenCriticSource.TopCritics;
     public int MinimumCriticReviewCount { get; set; } = 1;
     public int MinimumCommunityReviewCount { get; set; } = 20;

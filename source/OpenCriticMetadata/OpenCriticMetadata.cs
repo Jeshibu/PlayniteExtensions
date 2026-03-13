@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK;
+using Playnite.SDK.Events;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using System;
@@ -11,10 +12,9 @@ public class OpenCriticMetadata : MetadataPlugin
 {
     //So for anyone using GongSolutions.Wpf.DragDrop - be aware you have to instantiate something from it before referencing the package in your XAML
     private readonly GongSolutions.Wpf.DragDrop.DefaultDragHandler dropInfo = new();
-    private static readonly ILogger logger = LogManager.GetLogger();
 
-    private OpenCriticMetadataSettingsViewModel settings { get; set; }
-    private readonly IPlatformUtility platformUtility;
+    private OpenCriticMetadataSettingsViewModel Settings { get; set; }
+    private readonly IPlatformUtility _platformUtility;
 
     public override Guid Id { get; } = Guid.Parse("f6da90b0-3042-4fe4-8d1e-7cdcf44389f7");
 
@@ -37,26 +37,34 @@ public class OpenCriticMetadata : MetadataPlugin
 
     public OpenCriticMetadata(IPlayniteAPI api) : base(api)
     {
-        settings = new OpenCriticMetadataSettingsViewModel(this);
+        Settings = new OpenCriticMetadataSettingsViewModel(this);
         Properties = new MetadataPluginProperties
         {
             HasSettings = false
         };
-        platformUtility = new PlatformUtility(api);
+        _platformUtility = new PlatformUtility(api);
     }
+
+    public override void OnApplicationStarted(OnApplicationStartedEventArgs args) => BlockMissingApiKey();
 
     public override OnDemandMetadataProvider GetMetadataProvider(MetadataRequestOptions options)
     {
-        return new OpenCriticMetadataProvider(options, this, new OpenCriticSearchProvider(platformUtility, settings.Settings), platformUtility);
+        if (BlockMissingApiKey())
+            return null;
+
+        return new OpenCriticMetadataProvider(options, this, new OpenCriticSearchProvider(_platformUtility, Settings.Settings), _platformUtility);
     }
 
-    public override ISettings GetSettings(bool firstRunSettings)
-    {
-        return settings;
-    }
+    public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
-    public override UserControl GetSettingsView(bool firstRunSettings)
+    public override UserControl GetSettingsView(bool firstRunSettings) => new OpenCriticMetadataSettingsView();
+
+    private bool BlockMissingApiKey()
     {
-        return new OpenCriticMetadataSettingsView();
+        if (!string.IsNullOrWhiteSpace(Settings.Settings.ApiKey))
+            return false;
+
+        PlayniteApi.Notifications.Add(new("OpenCritic-missing-api-key", "OpenCritic requires an API key. Click here to obtain and enter it.", NotificationType.Error, () => OpenSettingsView()));
+        return true;
     }
 }

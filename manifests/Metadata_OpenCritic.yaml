@@ -39,3 +39,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-09-09/OpenCriticMetadata_0_2_3.pext
     Changelog:
       - "Fixed being able to drag and drop across controls in the settings"
+  - Version: '0.3'
+    RequiredApiVersion: '6.2.0'
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/OpenCriticMetadata_0_3.pext
+    Changelog:
+      - "Fixed searches never showing any results"
+      - "Implemented API key system. Free tier is limited to 25 searches a day, and the next tier up is $19 a month. Not ideal, but c'est la vie."

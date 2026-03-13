@@ -23,9 +23,12 @@ public class OpenCriticMetadataProvider(MetadataRequestOptions options, OpenCrit
 
 public class OpenCriticSearchProvider(IPlatformUtility platformUtility, OpenCriticMetadataSettings settings) : IGameSearchProvider<OpenCriticSearchResultItem>
 {
-    private readonly ILogger logger = LogManager.GetLogger();
-    private readonly RestClient restClient = new RestClient("https://api.opencritic.com/api/")
-        .AddDefaultHeader("Referer", "https://opencritic.com/");
+    private readonly ILogger _logger = LogManager.GetLogger();
+
+    private readonly RestClient _restClient = new RestClient("https://opencritic-api.p.rapidapi.com/")
+                                              .AddDefaultHeader("Content-Type", "application/json")
+                                              .AddDefaultHeader("x-rapidapi-host", "opencritic-api.p.rapidapi.com")
+                                              .AddDefaultHeader("x-rapidapi-key", settings.ApiKey);
 
     public GameDetails GetDetails(OpenCriticSearchResultItem searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null) => GetDetails(searchResult.Id);
 
@@ -145,17 +148,17 @@ public class OpenCriticSearchProvider(IPlatformUtility platformUtility, OpenCrit
     {
         try
         {
-            var response = restClient.Execute(request);
+            var response = _restClient.Execute(request);
             if (!string.IsNullOrEmpty(response.ErrorMessage))
             {
-                logger.Error(response.ErrorMessage);
+                _logger.Error(response.ErrorMessage);
             }
             var data = JsonConvert.DeserializeObject<T>(response.Content);
             return data;
         }
         catch (Exception ex)
         {
-            logger.Error(ex, $"Error getting {request.Resource}");
+            _logger.Error(ex, $"Error getting {request.Resource}");
             return null;
         }
     }

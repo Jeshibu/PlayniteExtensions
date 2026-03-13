@@ -1,6 +1,8 @@
 ﻿using Playnite.SDK;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using static OpenCriticMetadata.ImageTypeNames;
 
@@ -35,4 +37,16 @@ public class OpenCriticMetadataSettingsViewModel : PluginSettingsViewModel<OpenC
         { OpenCriticSource.TopCritics, "Top critics only" },
         { OpenCriticSource.Median, "All critics" },
     };
+
+    public RelayCommand<string> OpenUrl => new(url =>
+    {
+        try
+        {
+            Process.Start(url);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, $"Unable to open url {url}");
+        }
+    });
 }
