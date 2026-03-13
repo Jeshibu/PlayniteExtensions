@@ -105,7 +105,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
 {
     public LaunchBoxMetadataSettingsViewModel(LaunchBoxMetadata plugin) : base(plugin, plugin.PlayniteApi)
     {
-        Settings = LoadSavedSettings() ?? new LaunchBoxMetadataSettings() {  DatabaseVersion = LaunchBoxMetadataSettings.CurrentDatabaseVersion };
+        Settings = LoadSavedSettings() ?? new LaunchBoxMetadataSettings() { DatabaseVersion = LaunchBoxMetadataSettings.CurrentDatabaseVersion };
         InitializeDatabaseLists();
     }
 
@@ -127,7 +127,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
             InitializeImageTypeList(types, Settings.Icon, "Icon", "Clear Logo");
             InitializeImageTypeList(types, Settings.Cover, "Box - Front", "Box - Front - Reconstructed", "Fanart - Box - Front");
             InitializeImageTypeList(types, Settings.Background, "Fanart - Background", "Screenshot - Gameplay", "Screenshot - Game Title", "Banner");
-            InitializeImageTypeList(types, Settings.ScreenshotUtilities, "Fanart - Background", "Screenshot - Gameplay", "Screenshot - Game Title", "Banner");
+            InitializeImageTypeList(types, Settings.ScreenshotUtilities, "Screenshot - Gameplay", "Screenshot - Game Title");
         }
         catch (Exception ex)
         {
@@ -152,7 +152,7 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
         {
             foreach (string def in defaultChecked)
                 imgSettings.ImageTypes.Add(new CheckboxSetting { Name = def, Checked = true });
-            }
+        }
 
         foreach (string t in types)
         {
@@ -164,19 +164,19 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
     private void InitializeRegionList(List<string> regions)
     {
         foreach (string regionName in regions)
-            {
+        {
             if (Settings.Regions.All(r => r.Name != regionName))
                 Settings.Regions.Add(new RegionSetting { Checked = true, Name = regionName, Aliases = GetDefaultRegionAliases(regionName) });
-            }
         }
+    }
 
     private static string GetDefaultRegionAliases(string region) => region switch
-        {
-            "United States" => "US, USA",
-            "United Kingdom" => "UK, GB, Great Britain",
-            "Japan" => "JP, JA",
-            _ => null,
-        };
+    {
+        "United States" => "US, USA",
+        "United Kingdom" => "UK, GB, Great Britain",
+        "Japan" => "JP, JA",
+        _ => null,
+    };
 
     private void DownloadMetadata()
     {
@@ -282,6 +282,6 @@ public class LaunchBoxMetadataSettingsViewModel : PluginSettingsViewModel<Launch
     };
 
     public Visibility VisibilityScreenshotUtilitiesNotice => ScreenshotHelper.IsScreenshotUtilitiesInstalled
-            ? Visibility.Collapsed
-            : Visibility.Visible;
+        ? Visibility.Collapsed
+        : Visibility.Visible;
 }
