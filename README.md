@@ -12,6 +12,7 @@ After installing, you will be prompted to restart. Click yes. Then, have a look 
 
 # Contributing
 Pull requests are appreciated, but unless they're small fixes, it's best to discuss the changes first (for example in an issue). Nobody wants to have a significant amount of work rejected.
+Only code written 100% by humans is accepted.
 
 # Donating
 If you like these extensions, you can donate via [my Ko-fi](https://ko-fi.com/Jeshibu)
