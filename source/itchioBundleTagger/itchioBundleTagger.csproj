@@ -5,7 +5,7 @@
   <ItemGroup>
     <PackageReference Include="IndexRange" Version="1.0.2" />
     <PackageReference Include="Linguini.Bundle" Version="0.3.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" NoWarn="NU1903" />
     <PackageReference Include="PlayniteSDK" Version="6.2.2" />
   </ItemGroup>
   <ItemGroup>

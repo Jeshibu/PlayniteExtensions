@@ -7,7 +7,7 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
     <PackageReference Include="PlayniteSDK" Version="6.9.0" />
     <PackageReference Include="RateLimiter" Version="2.2.0" />
-    <PackageReference Include="RestSharp" Version="108.0.2" />
+    <PackageReference Include="RestSharp" Version="108.0.2" NoWarn="NU1902" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />

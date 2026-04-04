@@ -3,7 +3,7 @@
     <Version>0.6.3</Version>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" NoWarn="NU1903" />
     <PackageReference Include="PlayniteSDK" Version="6.4.0" />
   </ItemGroup>
   <ItemGroup>

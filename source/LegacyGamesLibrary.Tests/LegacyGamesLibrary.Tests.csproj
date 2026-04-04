@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\Tests.props" />
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" NoWarn="NU1903" />
     <PackageReference Include="PlayniteSDK" Version="6.4.0" />
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: windows-2025-vs2026
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - run: Install-Module powershell-yaml -force
 

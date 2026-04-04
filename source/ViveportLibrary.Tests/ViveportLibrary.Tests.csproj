@@ -3,7 +3,6 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="PlayniteSDK" Version="6.8.0" />
-    <PackageReference Include="RestSharp" Version="108.0.2" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Configuration" />
