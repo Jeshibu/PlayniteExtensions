@@ -10,6 +10,8 @@ jobs:
     runs-on: windows-2025-vs2026
     steps:
       - uses: actions/checkout@v6
+        with:
+          submodules: true
 
       - run: Install-Module powershell-yaml -force
 
