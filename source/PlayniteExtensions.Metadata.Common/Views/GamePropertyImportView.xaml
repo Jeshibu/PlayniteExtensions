@@ -45,7 +45,7 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <ListView ItemsSource="{Binding Games}" Grid.Row="4" Margin="20,0" VirtualizingStackPanel.IsVirtualizing="False" d:ItemsSource="{d:SampleData ItemCount=50}">
+        <ListView ItemsSource="{Binding Games}" Grid.Row="4" Margin="20,0" d:ItemsSource="{d:SampleData ItemCount=50}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Playnite game" Width="auto">
@@ -58,10 +58,23 @@
                     <GridViewColumn Header="Matched games" Width="auto">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ItemsControl ItemsSource="{Binding MatchedGameDisplayNames}" d:ItemsSource="{d:SampleData ItemCount=2}">
+                                <ItemsControl ItemsSource="{Binding MatchedGames}" d:ItemsSource="{d:SampleData ItemCount=2}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding}"/>
+                                            <TextBlock Text="{Binding DisplayName}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Matching method(s)" Width="auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ItemsControl ItemsSource="{Binding MatchedGames}" d:ItemsSource="{d:SampleData ItemCount=2}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding MatchSourceDisplayString}"/>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>

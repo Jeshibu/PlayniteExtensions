@@ -51,42 +51,45 @@ public class MatchedGame
             MatchSourceCounts.Add(source, 1);
     }
 
-    public string DisplayText
+    public string DisplayName
     {
         get
         {
             var sb = new StringBuilder();
             sb.Append(string.Join(" / ", Details.Names));
-            sb.Append(" (");
             if (Details.ReleaseDate.HasValue)
-                sb.Append(Details.ReleaseDate?.Year).Append(", ");
+                sb.Append(" (").Append(Details.ReleaseDate?.Year).Append(")");
 
-            sb.Append("matched via: ");
-            sb.Append(GetMatchSourceDisplayString());
-            sb.Append(')');
             return sb.ToString();
         }
     }
 
-    private string GetMatchSourceDisplayString()
+    public string MatchSourceDisplayString
     {
-        var sb = new StringBuilder();
-        foreach (var kvp in MatchSourceCounts.Where(kvp => kvp.Value > 0))
+        get
         {
-            if (sb.Length > 0)
-                sb.Append(", ");
+            var sb = new StringBuilder();
+            foreach (var kvp in MatchSourceCounts.Where(kvp => kvp.Value > 0))
+            {
+                if (sb.Length > 0)
+                    sb.Append(", ");
 
-            if (kvp.Key == ExternalDatabase.None)
-                sb.Append("name");
-            else
-                sb.Append(kvp.Key);
+                sb.Append(GetMatchSourceDisplayName(kvp.Key));
 
-            if (kvp.Value > 1)
-                sb.Append(" x").Append(kvp.Value);
+                if (kvp.Value > 1)
+                    sb.Append(" x").Append(kvp.Value);
+            }
+
+            return sb.ToString();
         }
-
-        return sb.ToString();
     }
+
+    private static string GetMatchSourceDisplayName(ExternalDatabase source) => source switch
+    {
+        ExternalDatabase.None => "name",
+        ExternalDatabase.Steam or ExternalDatabase.GOG => $"{source} ID/URL",
+        _ => $"{source} URL"
+    };
 }
 
 public class GameCheckboxViewModel : ObservableObject
@@ -128,8 +131,6 @@ public class GameCheckboxViewModel : ObservableObject
 
         MatchedGames.Add(new(game, source));
     }
-
-    public List<string> MatchedGameDisplayNames => MatchedGames.Select(g => g.DisplayText).ToList();
 }
 
 public class PotentialLink(string name, Func<GameDetails, string> getUrlMethod, Func<IEnumerable<Link>, string, bool> isAlreadyLinkedMethod = null)

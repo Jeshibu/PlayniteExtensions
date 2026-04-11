@@ -1,7 +1,7 @@
 ﻿Id: LaunchBoxMetadata
 Name: LaunchBox Metadata Provider
 Author: Jeshibu
-Version: '0.11'
+Version: '0.12'
 Module: LaunchBoxMetadata.dll
 Type: MetadataProvider
 Icon: icon.png
