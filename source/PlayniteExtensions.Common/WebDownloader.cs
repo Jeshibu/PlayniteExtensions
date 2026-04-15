@@ -49,7 +49,7 @@ public class WebDownloader : IWebDownloader
 
     public CookieContainer Cookies => _cookieContainer.Container;
     public string Accept { get; set; } = "text/html,application/json,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9";
-    public string UserAgent { get; set; } = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:139.0) Gecko/20100101 Firefox/139.0";
+    public string UserAgent { get; set; } = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0";
 
     public WebDownloader(HttpMessageHandler messageHandler = null)
     {
@@ -93,7 +93,7 @@ public class WebDownloader : IWebDownloader
         headerSetter?.Invoke(request.Headers);
 
         if (contentType != null)
-            request.Headers.AddInvalid("Content-Type", contentType);
+            request.Content.Headers.ContentType = new(contentType);
 
         HttpStatusCode statusCode;
         string responseUrl;
@@ -147,7 +147,7 @@ public class WebDownloader : IWebDownloader
         headerSetter?.Invoke(request.Headers);
 
         if (contentType != null)
-            request.Headers.AddInvalid("Content-Type", contentType);
+            request.Content.Headers.ContentType = new(contentType);
 
         HttpStatusCode statusCode;
         string responseUrl;

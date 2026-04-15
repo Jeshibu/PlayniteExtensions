@@ -1,6 +1,7 @@
 using EaLibrary.Models;
 using Newtonsoft.Json;
 using Playnite.SDK;
+using Playnite.SDK.Events;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
@@ -48,10 +49,9 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
         webView.DeleteDomainCookiesRegex(@".*\.ea\.com");
         webView.Navigate(LoginUrl);
 
-        webView.LoadingChanged += (_, args) =>
+        void OnLoadingChanged(object _, WebViewLoadingChangedEventArgs args)
         {
-            if (args.IsLoading)
-                return;
+            if (args.IsLoading) return;
 
             var url = webView.GetCurrentAddress();
             if (url == HomeUrl)
@@ -59,9 +59,11 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
                 success = true;
                 webView.Close();
             }
-        };
+        }
 
+        webView.LoadingChanged += OnLoadingChanged;
         webView.OpenDialog(); //blocks until the dialog closes
+        webView.LoadingChanged -= OnLoadingChanged;
         return success;
     }
 
