@@ -41,6 +41,7 @@
   <Project Path="itchioBundleTagger/itchioBundleTagger.csproj" />
   <Project Path="LaunchBoxMetadata/LaunchBoxMetadata.csproj" />
   <Project Path="LegacyGamesLibrary/LegacyGamesLibrary.csproj" />
+  <Project Path="LoadingBayLibrary/LoadingBayLibrary.csproj" />
   <Project Path="MobyGamesMetadata/MobyGamesMetadata.csproj" />
   <Project Path="MutualGames/MutualGames.csproj" />
   <Project Path="OpenCriticMetadata/OpenCriticMetadata.csproj" />

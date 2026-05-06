@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>0.1</Version>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="PlayniteSDK" Version="6.2.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" NoWarn="NU1903" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Common\IEnumerableExtensions.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs" Link="Common\PluginSettingsViewModel.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\RegistryValueProvider.cs" Link="Common\RegistryValueProvider.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs" Link="Common\StringExtensions.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\TitleComparer.cs" Link="Common\TitleComparer.cs" />
+    <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs" Link="Common\WebDownloader.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="extension.yaml" CopyToOutputDirectory="Always" />
+    <None Include="icon.png" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+</Project>

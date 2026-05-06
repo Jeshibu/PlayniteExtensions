@@ -1,0 +1,14 @@
+﻿Id: LoadingBayLibrary
+Name: Loading Bay library
+Author: Jeshibu
+Version: '0.1'
+Module: LoadingBayLibrary.dll
+Type: GameLibrary
+Icon: icon.png
+Links:
+  - Name: LoadingBay
+    Url: https://store.loadingbay.com/
+  - Name: GitHub repository
+    Url: https://github.com/Jeshibu/PlayniteExtensions
+  - Name: Donate via Ko-fi
+    Url: https://ko-fi.com/Jeshibu
