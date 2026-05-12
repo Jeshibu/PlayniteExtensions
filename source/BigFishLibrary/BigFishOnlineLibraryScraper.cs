@@ -1,61 +1,145 @@
 ﻿using Newtonsoft.Json;
 using Playnite.SDK;
+using Playnite.SDK.Events;
 using Playnite.SDK.Models;
+using Playnite.SDK.WebViewModels;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Net.Http.Headers;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace BigFishLibrary;
 
-public class BigFishOnlineLibraryScraper(IPlayniteAPI playniteApi, IWebDownloader downloader)
+public class BigFishOnlineLibraryScraper(IPlayniteAPI playniteApi)
 {
     private readonly ILogger logger = LogManager.GetLogger();
-    public const string OrderHistoryUrl = "https://www.bigfishgames.com/order-history.html";
+    private const string OrderHistoryUrl = "https://www.bigfishgames.com/order-history.html";
 
     public IEnumerable<GameMetadata> GetGames()
     {
-        string token;
-        try
-        {
-            token = GetTokens();
-            logger.Info($"Got token with length {token?.Length}");
-        }
-        catch (Exception ex)
-        {
-            logger.Warn(ex, "Error while getting token");
-            return [];
-        }
+        var graphQlGames = GetGamesIntercept(CancellationToken.None);
+        var orders = graphQlGames?.Data?.Customer?.Orders.Items;
+        if (orders is null)
+            throw new NotAuthenticatedException();
 
-        var graphQlGames = GetGamesGraphQL(token);
-        var games = graphQlGames.Select(ToGameDetails).ToDictionarySafe(g => g.GameId);
+        var games = orders
+                    .SelectMany(i => i.Items)
+                    .Select(ToGameDetails)
+                    .ToDictionarySafe(g => g.GameId);
+
         return games.Values;
     }
 
-    private IEnumerable<Product> GetGamesGraphQL(string token)
+    private LibraryRoot GetGamesIntercept(CancellationToken cancellationToken)
     {
-        if (token == null)
-            throw new NotAuthenticatedException();
+        var orderHistoryResponse = new TaskCompletionSource<string>();
+        using var webView = playniteApi.WebViews.CreateOffscreenView(new()
+        {
+            JavaScriptEnabled = true, PassResourceContentStreamToCallback = true,
+            ShouldPassResourceContentFunc = IsOrderHistoryCall,
+            ResourceLoadedCallback = GetResourceCallback(orderHistoryResponse),
+        });
 
-        const string url =
-            "https://www.bigfishgames.com/graphql?query=query+GetCustomerOrders%28%24filter%3ACustomerOrdersFilterInput%24pageSize%3AInt%21%29%7Bcustomer%7Borders%28filter%3A%24filter+pageSize%3A%24pageSize+scope%3AWEBSITE%29%7B...CustomerOrdersFragment+__typename%7D__typename%7D%7Dfragment+CustomerOrdersFragment+on+CustomerOrders%7Bitems%7Bbilling_address%7Bcity+country_code+firstname+lastname+postcode+region+street+telephone+__typename%7Did+invoices%7Bid+__typename%7Ditems%7Bid+product_name+product_sale_price%7Bcurrency+value+__typename%7Dproduct_sku+product_url_key+selected_options%7Blabel+value+__typename%7Dquantity_ordered+__typename%7Dnumber+order_date+payment_methods%7Bname+type+additional_data%7Bname+value+__typename%7D__typename%7Dshipments%7Bid+tracking%7Bnumber+__typename%7D__typename%7Dshipping_address%7Bcity+country_code+firstname+lastname+postcode+region+street+telephone+__typename%7Dshipping_method+status+state+total%7Bdiscounts%7Bamount%7Bcurrency+value+__typename%7D__typename%7Dgrand_total%7Bcurrency+value+__typename%7Dsubtotal%7Bcurrency+value+__typename%7Dtotal_shipping%7Bcurrency+value+__typename%7Dtotal_tax%7Bcurrency+value+__typename%7D__typename%7D__typename%7Dpage_info%7Bcurrent_page+total_pages+__typename%7Dtotal_count+__typename%7D&operationName=GetCustomerOrders&variables=%7B%22filter%22%3A%7B%7D%2C%22pageSize%22%3A10000%7D";
+        webView.Navigate(OrderHistoryUrl);
+        var completedTask = Task.WhenAny(orderHistoryResponse.Task, Task.Delay(TimeSpan.FromSeconds(5), cancellationToken)).GetAwaiter().GetResult();
 
-        var response = downloader.DownloadString(url, headerSetter: GetHeaderSetAction(token), contentType: "application/json", referer: "https://www.bigfishgames.com/");
-        logger.Info($"Response ({response.StatusCode}): {response.ResponseContent}");
-        var data = JsonConvert.DeserializeObject<LibraryRoot>(response.ResponseContent);
-        if (data?.Data?.Customer?.Orders?.Items == null)
-            throw new NotAuthenticatedException();
+        if (completedTask != orderHistoryResponse.Task)
+            return null;
 
-        foreach (var order in data.Data.Customer.Orders.Items)
-        foreach (var product in order.Items)
-            yield return product;
+        return JsonConvert.DeserializeObject<LibraryRoot>(orderHistoryResponse.Task.Result);
     }
 
-    private static Action<HttpRequestHeaders> GetHeaderSetAction(string token)
+    public bool IsAuthenticated(CancellationToken cancellationToken = default) => GetGamesIntercept(cancellationToken) != null;
+
+    public bool Authenticate()
     {
-        return headers => { headers.Authorization = new("Bearer", token); };
+        var orderHistoryResponse = new TaskCompletionSource<string>();
+        using var view = playniteApi.WebViews.CreateView(new()
+        {
+            JavaScriptEnabled = true, PassResourceContentStreamToCallback = true,
+            ShouldPassResourceContentFunc = IsOrderHistoryCall,
+            ResourceLoadedCallback = GetResourceCallback(orderHistoryResponse),
+            WindowWidth = 675,
+            WindowHeight = 675,
+            WindowBackground = Colors.White,
+        });
+
+        view.LoadingChanged += CloseWhenLoggedIn;
+        try
+        {
+            view.DeleteDomainCookies(".bigfishgames.com");
+            view.DeleteDomainCookies("bigfishgames.com");
+            view.DeleteDomainCookies(".www.bigfishgames.com");
+            view.DeleteDomainCookies("www.bigfishgames.com");
+            view.Navigate(OrderHistoryUrl);
+
+            view.OpenDialog();
+
+            return orderHistoryResponse.Task.IsCompleted
+                   && orderHistoryResponse.Task.Result != null;
+        }
+        catch (Exception e)
+        {
+            playniteApi.Dialogs.ShowErrorMessage("Error logging in to Big Fish Games", "");
+            logger.Error(e, "Failed to authenticate user.");
+            return false;
+        }
+        finally
+        {
+            view.LoadingChanged -= CloseWhenLoggedIn;
+        }
+
+        void CloseWhenLoggedIn(object sender, WebViewLoadingChangedEventArgs e)
+        {
+            var webView = (IWebView)sender;
+            if (orderHistoryResponse.Task.IsCompleted)
+                webView.Close();
+        }
+    }
+
+    private static bool IsOrderHistoryCall(ShouldPassResourceContentFuncArgs a) => IsOrderHistoryCall(a.Request, a.Response);
+    private static bool IsOrderHistoryCall(WebViewResourceLoadedCallback a) => IsOrderHistoryCall(a.Request, a.Response);
+
+    private static bool IsOrderHistoryCall(Request request, Response response) => response.StatusCode == 200
+                                                                                  && request.Url.StartsWith("https://www.bigfishgames.com/graphql?query=query+GetCustomerOrders");
+
+    private Action<WebViewResourceLoadedCallback> GetResourceCallback(TaskCompletionSource<string> orderHistoryResponse)
+    {
+        return ResourceCallback;
+
+        void ResourceCallback(WebViewResourceLoadedCallback call)
+        {
+            try
+            {
+                if (call.Request.Url.Contains("sign-in"))
+                    return;
+
+                if (!IsOrderHistoryCall(call))
+                    return;
+
+                if (call.ResponseContent is not { CanSeek: true, CanRead: true })
+                {
+                    logger.Error($"Can't read/seek response content for {call.Request.Url}");
+                    orderHistoryResponse.SetResult(null);
+                    return;
+                }
+
+                call.ResponseContent.Seek(0, SeekOrigin.Begin);
+                using var streamReader = new StreamReader(call.ResponseContent, Encoding.UTF8);
+                string responseContent = streamReader.ReadToEnd();
+
+                orderHistoryResponse.SetResult(responseContent);
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, "Error getting order history");
+            }
+        }
     }
 
     private GameMetadata ToGameDetails(Product product)
@@ -67,58 +151,6 @@ public class BigFishOnlineLibraryScraper(IPlayniteAPI playniteApi, IWebDownloade
             Name = product.Name,
             Source = new MetadataNameProperty(BigFishLibrary.PluginName),
         };
-    }
-
-    private string GetTokens()
-    {
-        using var webView = playniteApi.WebViews.CreateOffscreenView();
-        return GetToken(webView);
-    }
-
-    private static string GetToken(IWebView webView)
-    {
-        const string script = "window.localStorage['M2_VENIA_BROWSER_PERSISTENCE__signin_token']";
-        var scriptResult = Task.Run(async () => await ExecuteJavaScriptOnPage(webView, OrderHistoryUrl, script, maxAttempts: 2, millisecondsExtraDelay: 3500)).GetAwaiter().GetResult();
-        if (scriptResult == null)
-            return null;
-
-        var resultDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(scriptResult.ToString());
-        if (resultDict.TryGetValue("value", out var value))
-            return value.ToString().Trim('"');
-
-        return null;
-    }
-
-    public static bool IsLoggedIn(IWebView webView)
-    {
-        var token = GetToken(webView);
-        return !string.IsNullOrWhiteSpace(token);
-    }
-
-    private static async Task<object> ExecuteJavaScriptOnPage(IWebView webView, string url, string script, int maxAttempts = 1, int millisecondsExtraDelay = 0)
-    {
-        for (int attempt = 0; attempt < maxAttempts; attempt++)
-        {
-            webView.Navigate(url);
-            int waitStep = 333, maxWait = 9990;
-            for (int elapsed = 0; elapsed < maxWait; elapsed += waitStep)
-                if (webView.CanExecuteJavascriptInMainFrame)
-                    break;
-                else
-                    await Task.Delay(waitStep);
-
-            if (!webView.CanExecuteJavascriptInMainFrame)
-                continue;
-
-            if (millisecondsExtraDelay > 0)
-                await Task.Delay(millisecondsExtraDelay);
-
-            var scriptResult = await webView.EvaluateScriptAsync(script);
-            if (scriptResult.Success && scriptResult.Result != null)
-                return scriptResult.Result;
-        }
-
-        return null;
     }
 
     #region json models
@@ -195,4 +227,4 @@ public class BigFishOnlineLibraryScraper(IPlayniteAPI playniteApi, IWebDownloade
     #endregion json models
 }
 
-internal class NotAuthenticatedException : Exception { }
+internal class NotAuthenticatedException : Exception;

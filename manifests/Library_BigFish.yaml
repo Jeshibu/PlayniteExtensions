@@ -78,3 +78,9 @@ Packages:
     Changelog:
       - "Fixed game search"
       - "Fixed metadata collection"
+  - Version: '0.5.2'
+    RequiredApiVersion: '6.16.0'
+    ReleaseDate: 2026-05-12
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/bigfishlibrary0.5.2/BigFishLibrary_0_5_2.pext
+    Changelog:
+      - 'Fixed authentication window closing instantly when opening it'

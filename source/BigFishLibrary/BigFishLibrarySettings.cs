@@ -1,8 +1,6 @@
 ﻿using BigFishMetadata;
 using Playnite.SDK;
-using Playnite.SDK.Events;
 using System;
-using System.Windows.Media;
 
 namespace BigFishLibrary;
 
@@ -34,10 +32,10 @@ public class BigFishLibrarySettingsViewModel : PluginSettingsViewModel<BigFishLi
     {
         get
         {
-            var view = PlayniteApi.WebViews.CreateOffscreenView();
+            var scraper = new BigFishOnlineLibraryScraper(Plugin.PlayniteApi);
             try
             {
-                if (BigFishOnlineLibraryScraper.IsLoggedIn(view))
+                if (scraper.IsAuthenticated())
                     return AuthStatus.Ok;
                 else
                     return AuthStatus.AuthRequired;
@@ -47,11 +45,6 @@ public class BigFishLibrarySettingsViewModel : PluginSettingsViewModel<BigFishLi
                 Logger.Error(e, "Failed to check Big Fish Games auth status.");
                 return AuthStatus.Failed;
             }
-            finally
-            {
-                view.Close();
-                view.Dispose();
-            }
         }
     }
 
@@ -59,36 +52,7 @@ public class BigFishLibrarySettingsViewModel : PluginSettingsViewModel<BigFishLi
 
     private void Login()
     {
-        var view = PlayniteApi.WebViews.CreateView(675, 540, Colors.Black);
-        view.LoadingChanged += CloseWhenLoggedIn;
-        try
-        {
-            view.DeleteDomainCookies(".bigfishgames.com");
-            view.DeleteDomainCookies("bigfishgames.com");
-            view.DeleteDomainCookies(".www.bigfishgames.com");
-            view.DeleteDomainCookies("www.bigfishgames.com");
-            view.Navigate(BigFishOnlineLibraryScraper.OrderHistoryUrl);
-
-            view.OpenDialog();
-
-            OnPropertyChanged(nameof(AuthStatus));
-        }
-        catch (Exception e)
-        {
-            PlayniteApi.Dialogs.ShowErrorMessage("Error logging in to Big Fish Games", "");
-            Logger.Error(e, "Failed to authenticate user.");
-        }
-        finally
-        {
-            view.LoadingChanged -= CloseWhenLoggedIn;
-            view.Dispose();
-        }
-    }
-
-    private static void CloseWhenLoggedIn(object sender, WebViewLoadingChangedEventArgs e)
-    {
-        var view = (IWebView)sender;
-        if (!e.IsLoading && view.GetCurrentAddress() == BigFishOnlineLibraryScraper.OrderHistoryUrl)
-            view.Close();
+        bool success = new BigFishOnlineLibraryScraper(Plugin.PlayniteApi).Authenticate();
+        OnPropertyChanged(nameof(AuthStatus));
     }
 }

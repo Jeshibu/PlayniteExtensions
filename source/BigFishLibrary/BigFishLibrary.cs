@@ -40,7 +40,7 @@ public class BigFishLibrary : LibraryPlugin
         get
         {
             var searchProvider = new BigFishSearchProvider(Downloader, settings.Settings);
-            var scraper = new BigFishOnlineLibraryScraper(PlayniteApi, Downloader);
+            var scraper = new BigFishOnlineLibraryScraper(PlayniteApi);
             return new BigFishMetadataProvider(RegistryReader, searchProvider, settings.Settings, scraper);
         }
     }
@@ -65,10 +65,10 @@ public class BigFishLibrary : LibraryPlugin
             var metadataProvider = MetadataProvider;
             var onlineGames = metadataProvider.GetOnlineGames().ToDictionary(g => g.GameId);
             logger.Info($"Found {onlineGames.Count} online games");
-            
+
             var offlineGames = metadataProvider.GetOfflineGames().ToList();
             logger.Info($"Found {offlineGames.Count} offline games");
-            
+
             foreach (var offlineGame in offlineGames)
             {
                 if (onlineGames.TryGetValue(offlineGame.GameId, out var onlineGame))
