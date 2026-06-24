@@ -164,7 +164,7 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
             },
             platforms = new[] { "PC" }
         };
-        return GetPersistedQueryUrl("getPreloadedOwnedGames", variables, "5de4178ee7e1f084ce9deca856c74a9e03547a67dfafc0cb844d532fb54ae73d");
+        return GetPersistedQueryUrl("getPreloadedOwnedGames", variables, "779f1cd1355699752e20c0b3877847f4e3010ef5de131c248e98f8eff84f0718");
     }
 
     public static string GetPlayTimesUrl(IEnumerable<string> gameSlugs) => GetPersistedQueryUrl("GetGamePlayTimes", new { gameSlugs }, "3f09b35e06b75c74d8ec3e520a598ebb5e2992b1e1268b6dd3b8ed99b9fafb29");
