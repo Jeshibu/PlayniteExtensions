@@ -37,14 +37,17 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
     private const string LoginUrl = "https://www.ea.com/login";
     private const string DealsUrl = "https://www.ea.com/sales/deals";
     private const string GraphQlBaseUrl = "https://service-aggregation-layer.juno.ea.com/graphql";
+    private const string NucleusAuthUrl = "https://accounts.ea.com/connect/auth?client_id=ORIGIN_JS_SDK&redirect_uri=nucleus:rest&response_type=token&locale=en_US";
     private readonly ILogger _logger = LogManager.GetLogger();
     private readonly string _version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+    private string _cachedToken;
     public bool DebugRequests { get; set; }
     public List<string> DebugFilePaths { get; } = [];
 
     public bool Login()
     {
         var success = false;
+        _cachedToken = null;
         using var webView = webViewFactory.CreateView(500, 700, Color.FromRgb(29, 32, 51));
         webView.DeleteDomainCookiesRegex(@".*\.ea\.com");
         webView.Navigate(LoginUrl);
@@ -54,7 +57,7 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
             if (args.IsLoading) return;
 
             var url = webView.GetCurrentAddress();
-            if (url == HomeUrl)
+            if (url == HomeUrl || (url != null && url.StartsWith(HomeUrl) && !url.Contains("login")))
             {
                 success = true;
                 webView.Close();
@@ -62,8 +65,12 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
         }
 
         webView.LoadingChanged += OnLoadingChanged;
-        webView.OpenDialog(); //blocks until the dialog closes
+        webView.OpenDialog();
         webView.LoadingChanged -= OnLoadingChanged;
+
+        if (success)
+            _cachedToken = FetchTokenViaCookies();
+
         return success;
     }
 
@@ -71,41 +78,87 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
 
     public string GetAuthToken()
     {
-        var cancellationTokenSource = new CancellationTokenSource();
-        string auth = null;
-        var webviewSettings = new WebViewSettings
-        {
-            JavaScriptEnabled = true,
-            PassResourceContentStreamToCallback = false,
-            ResourceLoadedCallback = resource =>
-            {
-                if (cancellationTokenSource.IsCancellationRequested || !resource.Request.Url.StartsWith(GraphQlBaseUrl))
-                    return;
+        if (!string.IsNullOrEmpty(_cachedToken))
+            return _cachedToken;
 
-                if (resource.Request.Headers.TryGetValue("authorization", out string authHeader))
-                {
-                    _logger.Info($"Auth header nabbed from {resource.Request.Url}");
-                    auth = authHeader.TrimStart("Bearer ");
-                    cancellationTokenSource.Cancel();
-                }
-                else
-                {
-                    _logger.Info($"No auth header found for {resource.Request.Url}, other headers: {string.Join(", ", resource.Request.Headers.Keys)}");
-                }
-            }
-        };
+        // Try fetching a fresh token using persisted session cookies
+        _cachedToken = FetchTokenViaCookies();
+        return _cachedToken;
+    }
 
-        using var webView = webViewFactory.CreateOffscreenView(webviewSettings);
-        webView.Navigate(DealsUrl);
+    /// <summary>
+    /// Fetches an access token from EA using the sid/remid cookies in the shared CEF cookie store.
+    /// Uses the ORIGIN_JS_SDK client with nucleus:rest redirect which returns the token as JSON.
+    /// </summary>
+    private string FetchTokenViaCookies()
+    {
         try
         {
-            Task.Delay(5000, cancellationTokenSource.Token).Wait();
+            var webviewSettings = new WebViewSettings { JavaScriptEnabled = false };
+            using var webView = webViewFactory.CreateOffscreenView(webviewSettings);
+            webView.Navigate(HomeUrl);
+            Task.Delay(2000).Wait();
+
+            var cookies = webView.GetCookies();
+            if (cookies == null)
+                return null;
+
+            var sidCookie = cookies.FirstOrDefault(c => c.Name == "sid" && c.Domain != null && c.Domain.Contains("ea.com"));
+            var remidCookie = cookies.FirstOrDefault(c => c.Name == "remid" && c.Domain != null && c.Domain.Contains("ea.com"));
+
+            if (sidCookie == null)
+            {
+                _logger.Info("No EA session cookie found - login required");
+                return null;
+            }
+
+            var cookieHeader = $"sid={sidCookie.Value}";
+            if (remidCookie != null)
+                cookieHeader += $"; remid={remidCookie.Value}";
+
+            return RequestTokenFromEa(cookieHeader);
         }
-        catch when (cancellationTokenSource.IsCancellationRequested)
+        catch (Exception ex)
         {
+            _logger.Error(ex, "Error fetching token via cookies");
+            return null;
+        }
+    }
+
+    private string RequestTokenFromEa(string cookieHeader)
+    {
+        try
+        {
+            var request = WebRequest.CreateHttp(NucleusAuthUrl);
+            request.Method = "GET";
+            request.AllowAutoRedirect = false;
+            request.Headers.Add("Cookie", cookieHeader);
+            request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
+
+            using var response = (HttpWebResponse)request.GetResponse();
+            using var reader = new StreamReader(response.GetResponseStream());
+            var body = reader.ReadToEnd();
+
+            var tokenObj = JsonConvert.DeserializeObject<Dictionary<string, object>>(body);
+            if (tokenObj != null && tokenObj.ContainsKey("access_token"))
+            {
+                _logger.Info("Successfully obtained EA access token via nucleus:rest flow");
+                return tokenObj["access_token"].ToString();
+            }
+
+            _logger.Warn($"Unexpected token response: {body}");
+        }
+        catch (WebException wex) when (wex.Response is HttpWebResponse errResp)
+        {
+            using var reader = new StreamReader(errResp.GetResponseStream());
+            _logger.Error($"EA token request failed ({(int)errResp.StatusCode}): {reader.ReadToEnd()}");
+        }
+        catch (Exception ex)
+        {
+            _logger.Error(ex, "Error requesting EA token");
         }
 
-        return auth;
+        return null;
     }
 
     public List<OwnedGameProduct> GetOwnedGames(string auth)
