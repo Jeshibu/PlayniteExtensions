@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+	<html>
+		<head lang="en">
+                        <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=newest_pages" />
+            <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=most_popular" />
+            <link rel="alternate" type="application/rss+xml" href="https://tvtropes.org/pmwiki/rss-feed.php?filter=updated_content" />
+
+                        <link rel="preload" href="/images/loading-graphic.png" as="image">
+
+            <!-- Google tag (gtag.js) -->
+            <script>window.gtl = null;</script>
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-XPPLXMRF6Z" onload="window.gtl = true;" onerror="window.gtl = false;"></script>
+            <script>
+                var pbjs = pbjs || {};
+
+                // Used for Video players on Tropes
+                var tropes_videos_commands = tropes_videos_commands || [];
+
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-XPPLXMRF6Z');
+
+                window.googletag = window.googletag || {cmd: []};
+            </script>
+
+                        <script>
+                function object(objectId) {
+                    if (document.getElementById && document.getElementById(objectId)) {
+                        return document.getElementById(objectId);
+                    } else if (document.all && document.all(objectId)) {
+                        return document.all(objectId);
+                    } else if (document.layers && document.layers[objectId]) {
+                        return document.layers[objectId];
+                    } else {
+                        return false;
+                    }
+                }
+
+                // JAVASCRIPT COOKIES CODE: for getting and setting user viewing preferences
+                var cookies = {
+                    create: function (name, value, days2expire, path) {
+                        var date = new Date();
+                        date.setTime(date.getTime() + (days2expire * 24 * 60 * 60 * 1000));
+                        var expires = date.toUTCString();
+                        document.cookie = name + '=' + value + ';' + 'expires=' + expires + ';domain=.tvtropes.org;' + 'path=' + path + ';';
+                    },
+										createWithExpire: function(name, value, expires, path) {
+												document.cookie = name + '=' + value + ';' + 'expires=' + expires + ';domain=.tvtropes.org;' + 'path=' + path + ';';
+										},
+                    read: function (name) {
+                        var cookie_value = "",
+                            current_cookie = "",
+                            name_expr = name + "=",
+                            all_cookies = document.cookie.split(';'),
+                            n = all_cookies.length;
+
+                        for (var i = 0; i < n; i++) {
+                            current_cookie = all_cookies[i].trim();
+                            if (current_cookie.indexOf(name_expr) === 0) {
+                                cookie_value = current_cookie.substring(name_expr.length, current_cookie.length);
+                                break;
+                            }
+                        }
+                        return cookie_value;
+                    },
+                    update: function (name, val) {
+                        this.create(name, val, 300, "/");
+                    },
+                    remove: function (name) {
+                        //delete cookie with and without domain setting
+                        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.tvtropes.org; path=/;";
+                        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
+                    }
+                };
+
+                // show app promo banner
+                function show_promo(){
+                    var logged_in = false;
+
+                    // Check for the different possible cookies set by closeBanner()
+                    var banner_cookie_logged_in = cookies.read('app-announcement-banner-logged-in');
+                    var banner_cookie_guest = cookies.read('app-announcement-banner-guest');
+
+                    if(logged_in){
+                        document.body.classList.remove('app-promo');
+                        if(banner_cookie_logged_in){
+                            document.body.classList.add('footer-app-promo');
+                        }else{
+                            document.body.classList.remove('footer-app-promo');
+                        }
+                    }else{
+                        document.body.classList.remove('footer-app-promo');
+                        if(banner_cookie_guest){
+                            document.body.classList.remove('app-promo');
+                        }else{
+                            document.body.classList.add('app-promo');
+                        }
+                    }
+                }
+
+                function updateUserPrefs() {
+                    //GENERAL: detect and set browser, if not cookied (will be treated like a user-preference and added to the #user-pref element)
+                    if( !cookies.read('user-browser') ){
+                        var broswer = '';
+
+                        if(navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) ){
+                            browser = 'iOS';
+                        } else if (/Opera[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+                            browser = 'opera';
+                        } else if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
+                            browser = 'MSIE';
+                        } else if (/Navigator[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+                            browser = 'netscape';
+                        } else if (/Chrome[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+                            browser = 'chrome';
+                        } else if (/Safari[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+                            browser = 'safari';
+                            /Version[\/\s](\d+\.\d+)/.test(navigator.userAgent);
+                            browserVersion = new Number(RegExp.$1);
+                        } else if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+                            browser = 'firefox';
+                        } else {
+                            browser = 'internet_explorer';
+                        }
+                        cookies.create('user-browser',browser,1,'/');
+                        document.getElementById('user-prefs').classList.add('browser-' + browser);
+                    } else {
+                        document.getElementById('user-prefs').classList.add('browser-' + cookies.read('user-browser'));
+                    }
+
+                    //update user preference settings based on their database settings
+                    var logged_in = false;
+                    
+                    if(logged_in == false) {
+                        if(cookies.read('wide-load') !== '') document.getElementById('user-prefs').classList.add('wide-load');
+                        if(cookies.read('night-vision') !== '') document.getElementById('user-prefs').classList.add('night-vision');
+                        if(cookies.read('sticky-header') !== '') document.getElementById('user-prefs').classList.add('sticky-header');
+                        if(cookies.read('show-spoilers') !== '') document.getElementById('user-prefs').classList.add('show-spoilers');
+                        if(cookies.read('highlight-links') !== '') document.getElementById('user-prefs').classList.add('highlight-links');
+                    } else {
+                        if (false) document.getElementById('user-prefs').classList.add('wide-load');
+                        if (false) document.getElementById('user-prefs').classList.add('mono-font');
+                        if (false) document.getElementById('user-prefs').classList.add('night-vision');
+                        if (false) document.getElementById('user-prefs').classList.add('sticky-header');
+                        if (false) document.getElementById('user-prefs').classList.add('show-spoilers');
+                        if (false) document.getElementById('user-prefs').classList.add('tvtropes-editor-on');
+                        if (false) document.getElementById('user-prefs').classList.add('folders-open');
+                        if (false) document.getElementById('user-prefs').classList.add('lefthand-sidebar');
+                        if (false) document.getElementById('user-prefs').classList.add('highlight-links');
+                        if (false) document.getElementById('user-prefs').classList.add('forum-gingerbread');
+                        if (false) document.getElementById('user-prefs').classList.add('hide-likes-articles');
+                        if (false) document.getElementById('user-prefs').classList.add('hide-likes-posts');
+                        if (false) document.getElementById('user-prefs').classList.add('shared-avatars');
+                        if (false) document.getElementById('user-prefs').classList.add('stop-auto-play-video');
+                        if (false) document.getElementById('user-prefs').classList.add('hide-laconic-hover');
+                        if (false) document.getElementById('user-prefs').classList.add('show-namespaces');
+                    }
+                        
+                    //desktop view on mobile
+                    if (cookies.read('desktop-on-mobile') !== ''){
+                        document.getElementById('user-prefs').classList.add('desktop-on-mobile');
+
+                        var viewport = document.querySelector("meta[name=viewport]");
+                        viewport.setAttribute('content', 'width=1000');
+                    }
+
+                    if (logged_in) {
+                        if (1) cookies.remove('stop-auto-play-video');
+                        else if (0) cookies.create('stop-auto-play-video','true',300,'/');
+                    }
+
+                    //updates element
+                    if(cookies.read('stop-auto-play-video') !== '') document.getElementById('user-prefs').classList.add('stop-auto-play-video');
+                }
+
+                function updateDesktopPrefs() {
+                    var logged_in = false;
+
+                    if(logged_in == false) {
+                        if(cookies.read('wide-load') !== '') document.getElementById('sidebar-toggle-wideload').classList.add('active');
+                        if(cookies.read('night-vision') !== '') document.getElementById('sidebar-toggle-nightvision').classList.add('active');
+                        if(cookies.read('sticky-header') !== '') document.getElementById('sidebar-toggle-stickyheader').classList.add('active');
+                        if(cookies.read('show-spoilers') !== '') document.getElementById('sidebar-toggle-showspoilers').classList.add('active');
+                    } else {
+                        if (false) document.getElementById('sidebar-toggle-wideload').classList.add('active');
+                        if (false) document.getElementById('sidebar-toggle-nightvision').classList.add('active');
+                        if (false) document.getElementById('sidebar-toggle-stickyheader').classList.add('active');
+                        if (false) document.getElementById('sidebar-toggle-showspoilers').classList.add('active');
+                    }
+                }
+
+                function updateMobilePrefs() {
+                    var logged_in = false;
+
+                    if(logged_in == false) {
+                        if(cookies.read('highlight-links') !== '') document.getElementById('mobile-toggle-highlightlinks').classList.add('active');
+                        if(cookies.read('night-vision') !== '') document.getElementById('mobile-toggle-nightvision').classList.add('active');
+                        if(cookies.read('sticky-header') !== '') document.getElementById('mobile-toggle-stickyheader').classList.add('active');
+                        if(cookies.read('show-spoilers') !== '') document.getElementById('mobile-toggle-showspoilers').classList.add('active'); 
+                    } else {
+                        if (false) document.getElementById('mobile-toggle-showspoilers').classList.add('active');
+                        if (false) document.getElementById('mobile-toggle-nightvision').classList.add('active');
+                        if (false) document.getElementById('mobile-toggle-stickyheader').classList.add('active');
+                        if (false) document.getElementById('mobile-toggle-highlightlinks').classList.add('active');
+                    }
+                }
+
+                function is_mobile() {
+	                if(document.body.clientWidth && document.body.clientWidth<=768) return true;
+	                else return false;
+                }
+
+                function sendToSiteSearch(obj, q) {
+
+                    window.location.href = "/pmwiki/search_result.php#gsc.tab=0&gsc.q="+q+"&gsc.sort=";
+                    return false;
+                }
+
+            </script>
+			
+						<script type="text/javascript">
+                var country_code_list = ['AT','BE','BG','CH','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GF','GP','GR','HR','HU','IC','IE','IS','IT','LI','LT','LU','LV','MF','MQ','MT','NL','NO','PL','PT','RE','RO','SE','SI','SK','SX','YT'];
+                var ad_block_detected = cookies.read('ad_block_detected') ? true : false;
+
+                var site_htl_settings = {
+                    "adx"              : "yes", // yes/no if we should include adx on page
+                    "groupname"        : "Main", // track groupname in htl/gam
+                    "has_folders"      : "yes", // track folder pages in htl/gam
+                    "user_type"        : "guest", // track member/guest in htl/gam
+                    "is_testing"       : "no", // yes/no if in testing mode
+                    "split_testing"    : "1", // 0/1, 0=control, 1=test, for a/b testing
+                    "send_reports"     : "1", // true/false if reports should be sent for logging in DataBricks
+                    "report_url"       : "https://analytics.tvtropes.org/analytics-data/tvtropes/", // Endpoint for logging (data stream)
+                    "logging_turned_on": "1", // true/false if console logging should be turned on
+                    "site_name"        : "tvtropes", // Site name for display in logging
+                    "sticky_slot_names": ["tvtropes_dt_sticky", "tvtropes_m_sticky"], // Possible slot names for the sticky slot
+                    "ad_block_detected" : ad_block_detected, // if cookie of ad_block_detected is set, set to true, otherwise false
+                }
+
+                if(ad_block_detected) gtag('event', 'adblock', {'event_label': 'whitelist'});
+			</script>
+
+            
+                        <script>
+                // Create the ad project
+var ads_project = (function(sent_in_settings){
+    //default settings
+    var setting_defaults = {
+        "adx"              : "yes",
+        "groupname"        : "",
+        "has_folders"      : "unknown",
+        "user_type"        : "guest",
+        "is_testing"       : "no",
+        "split_testing"    : "0",
+        "send_reports"     : "0",
+        "logging_turned_on": "false",
+        "site_name"        : "site_name",
+        "report_url"       : "",
+        "page_template"    : "",
+        "sticky_slot_names": [],
+        "ad_block_detected" : false
+    }
+
+    // Combine defaults with sent in parameters
+    var project_settings = {...setting_defaults, ...sent_in_settings};
+
+    /***************************************
+    --------------- AD CODE ---------------
+    ***************************************/
+    window.BCLighthouseTag = window.BCLighthouseTag || {};
+    window.BCLighthouseTag.cmd = window.BCLighthouseTag.cmd || [];
+
+    BCLighthouseTag.cmd.push(function() {
+        // Only set these if given in settings
+        if(project_settings.groupname != "") BCLighthouseTag.setTargeting("groupname", project_settings.groupname);
+        if(project_settings.page_template != "") BCLighthouseTag.setTargeting("page_template", project_settings.page_template);
+
+        BCLighthouseTag.setTargeting("adx", project_settings.adx);
+        BCLighthouseTag.setTargeting('website', project_settings.site_name);
+        BCLighthouseTag.setTargeting('user_type', project_settings.user_type);
+        BCLighthouseTag.setTargeting('has_folders', project_settings.has_folders);
+        BCLighthouseTag.setTargeting('ad_block_detected', project_settings.ad_block_detected);
+    });
+    
+    // Logging
+    function output_logging(content){
+        if(project_settings.logging_turned_on){
+            if(typeof content == "string") console.log(project_settings.site_name + " Ads: " + content);
+            else console.log(content);
+        }
+    }
+})(site_htl_settings);            </script>
+
+                        <script type="text/javascript">
+                var tvtropes_config = {
+                    asteri_stream_enabled : "1",
+                    is_logged_in         : "",
+                    live_server          : "1",
+                    bigcrunch_live       : "1",
+                    bigcrunch_revnum     : "11",
+                    handle               : "",
+                    email_popup          : "0",
+                    troper_email         : "",
+                    get_asteri_stream     : "",
+                    revnum               : "9022b5f62cf20c0fa658f8bd90d771277e81771c",
+                    img_domain           : "https://static.tvtropes.org",
+                    adblock              : "1",
+                    adblock_url          : "propermessage.io",
+                    universal_page_type  : "Article",
+                    pause_editing        : "0",
+                    pause_editing_msg    : "",
+                    pause_site_changes   : "0",
+                    assets_domain        : "https://assets.tvtropes.org",
+                    ranking              : 0,
+                };
+
+                // This will track the total number of ads inserted over time
+                var globalAdInsertionCount = 0;
+
+                // Check to see if this page is isolated, if so, run BCLighthouseTag.disableGoogleAdManager();
+                if(window.site_htl_settings.adx == "no"){
+                    console.log("disabling google");
+                    
+                    BCLighthouseTag.cmd.push(() => {
+                        BCLighthouseTag.disableGoogleAdManager();
+                    });
+                }
+            </script>
+
+                        <script>
+                // Add second script to the head
+                var htl_script = document.createElement('script');
+                htl_script.async = "async";
+
+                // Add the fundingchoices script to the head
+                window.fundingchoices_loaded = null;
+                var script = document.createElement('script');
+                    script.src = "https://fundingchoicesmessages.google.com/i/pub-6608306193529351?ers=1";
+                    script.async = true;
+                    script.nonce = "rczD8qB5ececf2fL1Vj9XQ";
+                    script.onload = function() { window.fundingchoices_loaded = true; };
+                    script.onerror = function() { window.fundingchoices_loaded = false; };
+                
+                // Add second script to the head
+                var script2 = document.createElement('script');
+                    script2.nonce = "rczD8qB5ececf2fL1Vj9XQ";
+                    script2.innerHTML = "(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();";
+                
+                // Add both scripts to head
+                document.head.appendChild(script);
+                document.head.appendChild(script2);
+
+                window.bcl = null;
+                var bigcrunch_url = window.tvtropes_config.bigcrunch_live == 1 ? "https://lh.bigcrunch.com/main.js?v=" + window.tvtropes_config.bigcrunch_revnum : "https://dev-lh.bigcrunch.com/main.js?v=" + window.tvtropes_config.bigcrunch_revnum;
+
+                htl_script.src = bigcrunch_url;
+                htl_script.crossOrigin = "anonymous";
+                htl_script.id = "bigcrunchtag";
+                htl_script.setAttribute('data-property-id', '34a5ddec-697b-424e-81d2-e6bb46a1b83e');
+                htl_script.onload = function() { window.bcl = true; };
+                htl_script.onerror = function() { window.bcl = false; };
+                                    
+                // Add both scripts to head
+                document.head.appendChild(htl_script);
+            </script>
+
+                        <script>
+                // Add HTL script to head
+                document.head.appendChild(htl_script);
+            </script>
+			
+			
+											<script>(function(){/*
+							 Copyright The Closure Library Authors.
+							 SPDX-License-Identifier: Apache-2.0
+							*/
+							'use strict';var aa=function(a){var b=0;return function(){return b<a.length?{done:!1,value:a[b++]}:{done:!0}}},ba="function"==typeof Object.create?Object.create:function(a){var b=function(){};b.prototype=a;return new b},k;if("function"==typeof Object.setPrototypeOf)k=Object.setPrototypeOf;else{var m;a:{var ca={a:!0},n={};try{n.__proto__=ca;m=n.a;break a}catch(a){}m=!1}k=m?function(a,b){a.__proto__=b;if(a.__proto__!==b)throw new TypeError(a+" is not extensible");return a}:null}
+							var p=k,q=function(a,b){a.prototype=ba(b.prototype);a.prototype.constructor=a;if(p)p(a,b);else for(var c in b)if("prototype"!=c)if(Object.defineProperties){var d=Object.getOwnPropertyDescriptor(b,c);d&&Object.defineProperty(a,c,d)}else a[c]=b[c];a.v=b.prototype},r=this||self,da=function(){},t=function(a){return a};var u;var w=function(a,b){this.g=b===v?a:""};w.prototype.toString=function(){return this.g+""};var v={},x=function(a){if(void 0===u){var b=null;var c=r.trustedTypes;if(c&&c.createPolicy){try{b=c.createPolicy("goog#html",{createHTML:t,createScript:t,createScriptURL:t})}catch(d){r.console&&r.console.error(d.message)}u=b}else u=b}a=(b=u)?b.createScriptURL(a):a;return new w(a,v)};var A=function(){return Math.floor(2147483648*Math.random()).toString(36)+Math.abs(Math.floor(2147483648*Math.random())^Date.now()).toString(36)};var B={},C=null;var D="function"===typeof Uint8Array;function E(a,b,c){return"object"===typeof a?D&&!Array.isArray(a)&&a instanceof Uint8Array?c(a):F(a,b,c):b(a)}function F(a,b,c){if(Array.isArray(a)){for(var d=Array(a.length),e=0;e<a.length;e++){var f=a[e];null!=f&&(d[e]=E(f,b,c))}Array.isArray(a)&&a.s&&G(d);return d}d={};for(e in a)Object.prototype.hasOwnProperty.call(a,e)&&(f=a[e],null!=f&&(d[e]=E(f,b,c)));return d}
+							function ea(a){return F(a,function(b){return"number"===typeof b?isFinite(b)?b:String(b):b},function(b){var c;void 0===c&&(c=0);if(!C){C={};for(var d="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split(""),e=["+/=","+/","-_=","-_.","-_"],f=0;5>f;f++){var h=d.concat(e[f].split(""));B[f]=h;for(var g=0;g<h.length;g++){var l=h[g];void 0===C[l]&&(C[l]=g)}}}c=B[c];d=Array(Math.floor(b.length/3));e=c[64]||"";for(f=h=0;h<b.length-2;h+=3){var y=b[h],z=b[h+1];l=b[h+2];g=c[y>>2];y=c[(y&3)<<
+							4|z>>4];z=c[(z&15)<<2|l>>6];l=c[l&63];d[f++]=""+g+y+z+l}g=0;l=e;switch(b.length-h){case 2:g=b[h+1],l=c[(g&15)<<2]||e;case 1:b=b[h],d[f]=""+c[b>>2]+c[(b&3)<<4|g>>4]+l+e}return d.join("")})}var fa={s:{value:!0,configurable:!0}},G=function(a){Array.isArray(a)&&!Object.isFrozen(a)&&Object.defineProperties(a,fa);return a};var H;var J=function(a,b,c){var d=H;H=null;a||(a=d);d=this.constructor.u;a||(a=d?[d]:[]);this.j=d?0:-1;this.h=null;this.g=a;a:{d=this.g.length;a=d-1;if(d&&(d=this.g[a],!(null===d||"object"!=typeof d||Array.isArray(d)||D&&d instanceof Uint8Array))){this.l=a-this.j;this.i=d;break a}void 0!==b&&-1<b?(this.l=Math.max(b,a+1-this.j),this.i=null):this.l=Number.MAX_VALUE}if(c)for(b=0;b<c.length;b++)a=c[b],a<this.l?(a+=this.j,(d=this.g[a])?G(d):this.g[a]=I):(d=this.l+this.j,this.g[d]||(this.i=this.g[d]={}),(d=this.i[a])?
+							G(d):this.i[a]=I)},I=Object.freeze(G([])),K=function(a,b){if(-1===b)return null;if(b<a.l){b+=a.j;var c=a.g[b];return c!==I?c:a.g[b]=G([])}if(a.i)return c=a.i[b],c!==I?c:a.i[b]=G([])},M=function(a,b){var c=L;if(-1===b)return null;a.h||(a.h={});if(!a.h[b]){var d=K(a,b);d&&(a.h[b]=new c(d))}return a.h[b]};J.prototype.toJSON=function(){var a=N(this,!1);return ea(a)};
+							var N=function(a,b){if(a.h)for(var c in a.h)if(Object.prototype.hasOwnProperty.call(a.h,c)){var d=a.h[c];if(Array.isArray(d))for(var e=0;e<d.length;e++)d[e]&&N(d[e],b);else d&&N(d,b)}return a.g},O=function(a,b){H=b=b?JSON.parse(b):null;a=new a(b);H=null;return a};J.prototype.toString=function(){return N(this,!1).toString()};var P=function(a){J.call(this,a)};q(P,J);function ha(a){var b,c=(a.ownerDocument&&a.ownerDocument.defaultView||window).document,d=null===(b=c.querySelector)||void 0===b?void 0:b.call(c,"script[nonce]");(b=d?d.nonce||d.getAttribute("nonce")||"":"")&&a.setAttribute("nonce",b)};var Q=function(a,b){b=String(b);"application/xhtml+xml"===a.contentType&&(b=b.toLowerCase());return a.createElement(b)},R=function(a){this.g=a||r.document||document};R.prototype.appendChild=function(a,b){a.appendChild(b)};var S=function(a,b,c,d,e,f){try{var h=a.g,g=Q(a.g,"SCRIPT");g.async=!0;g.src=b instanceof w&&b.constructor===w?b.g:"type_error:TrustedResourceUrl";ha(g);h.head.appendChild(g);g.addEventListener("load",function(){e();d&&h.head.removeChild(g)});g.addEventListener("error",function(){0<c?S(a,b,c-1,d,e,f):(d&&h.head.removeChild(g),f())})}catch(l){f()}};var ia=r.atob("aHR0cHM6Ly93d3cuZ3N0YXRpYy5jb20vaW1hZ2VzL2ljb25zL21hdGVyaWFsL3N5c3RlbS8xeC93YXJuaW5nX2FtYmVyXzI0ZHAucG5n"),ja=r.atob("WW91IGFyZSBzZWVpbmcgdGhpcyBtZXNzYWdlIGJlY2F1c2UgYWQgb3Igc2NyaXB0IGJsb2NraW5nIHNvZnR3YXJlIGlzIGludGVyZmVyaW5nIHdpdGggdGhpcyBwYWdlLg=="),ka=r.atob("RGlzYWJsZSBhbnkgYWQgb3Igc2NyaXB0IGJsb2NraW5nIHNvZnR3YXJlLCB0aGVuIHJlbG9hZCB0aGlzIHBhZ2Uu"),la=function(a,b,c){this.h=a;this.j=new R(this.h);this.g=null;this.i=[];this.l=!1;this.o=b;this.m=c},V=function(a){if(a.h.body&&!a.l){var b=
+							function(){T(a);r.setTimeout(function(){return U(a,3)},50)};S(a.j,a.o,2,!0,function(){r[a.m]||b()},b);a.l=!0}},T=function(a){for(var b=W(1,5),c=0;c<b;c++){var d=X(a);a.h.body.appendChild(d);a.i.push(d)}b=X(a);b.style.bottom="0";b.style.left="0";b.style.position="fixed";b.style.width=W(100,110).toString()+"%";b.style.zIndex=W(2147483544,2147483644).toString();b.style["background-color"]=ma(249,259,242,252,219,229);b.style["box-shadow"]="0 0 12px #888";b.style.color=ma(0,10,0,10,0,10);b.style.display=
+							"flex";b.style["justify-content"]="center";b.style["font-family"]="Roboto, Arial";c=X(a);c.style.width=W(80,85).toString()+"%";c.style.maxWidth=W(750,775).toString()+"px";c.style.margin="24px";c.style.display="flex";c.style["align-items"]="flex-start";c.style["justify-content"]="center";d=Q(a.j.g,"IMG");d.className=A();d.src=ia;d.style.height="24px";d.style.width="24px";d.style["padding-right"]="16px";var e=X(a),f=X(a);f.style["font-weight"]="bold";f.textContent=ja;var h=X(a);h.textContent=ka;Y(a,
+							e,f);Y(a,e,h);Y(a,c,d);Y(a,c,e);Y(a,b,c);a.g=b;a.h.body.appendChild(a.g);b=W(1,5);for(c=0;c<b;c++)d=X(a),a.h.body.appendChild(d),a.i.push(d)},Y=function(a,b,c){for(var d=W(1,5),e=0;e<d;e++){var f=X(a);b.appendChild(f)}b.appendChild(c);c=W(1,5);for(d=0;d<c;d++)e=X(a),b.appendChild(e)},W=function(a,b){return Math.floor(a+Math.random()*(b-a))},ma=function(a,b,c,d,e,f){return"rgb("+W(Math.max(a,0),Math.min(b,255)).toString()+","+W(Math.max(c,0),Math.min(d,255)).toString()+","+W(Math.max(e,0),Math.min(f,
+							255)).toString()+")"},X=function(a){a=Q(a.j.g,"DIV");a.className=A();return a},U=function(a,b){0>=b||null!=a.g&&0!=a.g.offsetHeight&&0!=a.g.offsetWidth||(na(a),T(a),r.setTimeout(function(){return U(a,b-1)},50))},na=function(a){var b=a.i;var c="undefined"!=typeof Symbol&&Symbol.iterator&&b[Symbol.iterator];b=c?c.call(b):{next:aa(b)};for(c=b.next();!c.done;c=b.next())(c=c.value)&&c.parentNode&&c.parentNode.removeChild(c);a.i=[];(b=a.g)&&b.parentNode&&b.parentNode.removeChild(b);a.g=null};var pa=function(a,b,c,d,e){var f=oa(c),h=function(l){l.appendChild(f);r.setTimeout(function(){f?(0!==f.offsetHeight&&0!==f.offsetWidth?b():a(),f.parentNode&&f.parentNode.removeChild(f)):a()},d)},g=function(l){document.body?h(document.body):0<l?r.setTimeout(function(){g(l-1)},e):b()};g(3)},oa=function(a){var b=document.createElement("div");b.className=a;b.style.width="1px";b.style.height="1px";b.style.position="absolute";b.style.left="-10000px";b.style.top="-10000px";b.style.zIndex="-10000";return b};var L=function(a){J.call(this,a)};q(L,J);var qa=function(a){J.call(this,a)};q(qa,J);var ra=function(a,b){this.l=a;this.m=new R(a.document);this.g=b;this.i=K(this.g,1);b=M(this.g,2);this.o=x(K(b,4)||"");this.h=!1;b=M(this.g,13);b=x(K(b,4)||"");this.j=new la(a.document,b,K(this.g,12))};ra.prototype.start=function(){sa(this)};
+							var sa=function(a){ta(a);S(a.m,a.o,3,!1,function(){a:{var b=a.i;var c=r.btoa(b);if(c=r[c]){try{var d=O(P,r.atob(c))}catch(e){b=!1;break a}b=b===K(d,1)}else b=!1}b?Z(a,K(a.g,14)):(Z(a,K(a.g,8)),V(a.j))},function(){pa(function(){Z(a,K(a.g,7));V(a.j)},function(){return Z(a,K(a.g,6))},K(a.g,9),K(a.g,10),K(a.g,11))})},Z=function(a,b){a.h||(a.h=!0,a=new a.l.XMLHttpRequest,a.open("GET",b,!0),a.send())},ta=function(a){var b=r.btoa(a.i);a.l[b]&&Z(a,K(a.g,5))};(function(a,b){r[a]=function(c){for(var d=[],e=0;e<arguments.length;++e)d[e-0]=arguments[e];r[a]=da;b.apply(null,d)}})("__h82AlnkH6D91__",function(a){"function"===typeof window.atob&&(new ra(window,O(qa,window.atob(a)))).start()});}).call(this);
+
+							window.__h82AlnkH6D91__("WyJwdWItMjU3NTc4ODY5MDc5ODI4MiIsW251bGwsbnVsbCxudWxsLCJodHRwczovL2Z1bmRpbmdjaG9pY2VzbWVzc2FnZXMuZ29vZ2xlLmNvbS9iL3B1Yi0yNTc1Nzg4NjkwNzk4MjgyIl0sbnVsbCxudWxsLCJodHRwczovL2Z1bmRpbmdjaG9pY2VzbWVzc2FnZXMuZ29vZ2xlLmNvbS9lbC9BR1NLV3hWV0tMOXhFeS1ZVk1sOTdzcC10MW5mbkxvWmZweWVjaGRJdUxJU244LXpjbUwxM1R5Mlhhb2RoQTJFU3VNS3ljQm1kVHgxSUNlMVBrX2hIeUxHa1ZZNHJ3XHUwMDNkXHUwMDNkP3RlXHUwMDNkVE9LRU5fRVhQT1NFRCIsImh0dHBzOi8vZnVuZGluZ2Nob2ljZXNtZXNzYWdlcy5nb29nbGUuY29tL2VsL0FHU0tXeFZCeVhDdDlWajY1eXNrMWFHVW9LUUpLdktrTlh4WVdlRDBhYnhmS3RVUi00eDZfRTNWOXpqSm5vYkFfVzIxeGNDb3F3M1RmN1dYRmxXZFZaazVMMFlQQ2dcdTAwM2RcdTAwM2Q/YWJcdTAwM2QxXHUwMDI2c2JmXHUwMDNkMSIsImh0dHBzOi8vZnVuZGluZ2Nob2ljZXNtZXNzYWdlcy5nb29nbGUuY29tL2VsL0FHU0tXeFV4bEsxQ0dxcEpGY3lvcXZXZ0ZnWWRBRjhMMzBOU0Y1ci1paGZSd1VRNzV4YmF6NGxydWVfRUhoWmU1ai00UUhRYXc4MUVZREFkQ2pBN21Tb1BxUUsxaFFcdTAwM2RcdTAwM2Q/YWJcdTAwM2QyXHUwMDI2c2JmXHUwMDNkMSIsImh0dHBzOi8vZnVuZGluZ2Nob2ljZXNtZXNzYWdlcy5nb29nbGUuY29tL2VsL0FHU0tXeFZJUWxpOV9jN0NuWWlHWkU3S2xIV2JWVi10NlpYQ2hQTnlHVTRobGhmSjdLQnJnNjllSFhHYm9aSXRqRm42MDViNWpuaG5KYkxCcU1ySURyY2lLVEk0VmdcdTAwM2RcdTAwM2Q/c2JmXHUwMDNkMiIsImRpdi1ncHQtYWQiLDIwLDEwMCwiY0hWaUxUSTFOelUzT0RnMk9UQTNPVGd5T0RJXHUwMDNkIixbbnVsbCxudWxsLG51bGwsImh0dHBzOi8vd3d3LmdzdGF0aWMuY29tLzBlbW4vZi9wL3B1Yi0yNTc1Nzg4NjkwNzk4MjgyLmpzP3VzcXBcdTAwM2RDQkEiXSwiaHR0cHM6Ly9mdW5kaW5nY2hvaWNlc21lc3NhZ2VzLmdvb2dsZS5jb20vZWwvQUdTS1d4V1hNUEJXZjVaNURyT1VGdDZwVVR5eGh1YzBFNlVGQnJJZUhuUUNCMVlUOWVtYlJTbGxYQ3F6NDV5ODdqT3RVWC1SX3JkcmdudFdjejdtazA2WkZYWDQyd1x1MDAzZFx1MDAzZCJd");
+					</script>
+						<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+			<title>Anti-Hoarding - TV Tropes</title>
+            <meta name="description" content="The Anti-Hoarding trope as used in popular culture. Games often involve resource management of some kind, and resources are meant to be used. However, some &hellip;" />
+                        <link rel="canonical" href="https://tvtropes.org/pmwiki/pmwiki.php/Main/AntiHoarding" />
+            
+
+                        <link rel="shortcut icon" href="https://assets.tvtropes.org/img/icons/favicon.ico" type="image/x-icon" />
+
+                        <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:site" content="@tvtropes" />
+            <meta name="twitter:owner" content="@tvtropes" />
+            <meta name="twitter:title" content="Anti-Hoarding - TV Tropes" />
+            <meta name="twitter:description" content="The Anti-Hoarding trope as used in popular culture. Games often involve resource management of some kind, and resources are meant to be used. However, some &hellip;" />
+			            	<meta name="twitter:image:src" content="https://static.tvtropes.org/pmwiki/pub/images/encumbrance__by_travisjhanson.png" />
+	        
+                        <meta property="og:site_name" content="TV Tropes" />
+            <meta property="og:locale" content="en_US" />
+            <meta property="article:publisher" content="https://www.facebook.com/tvtropes" />
+			<meta property="og:title" content="Anti-Hoarding - TV Tropes" />
+			<meta property="og:type" content="website" />
+							<meta property="og:url" content="https://tvtropes.org/pmwiki/pmwiki.php/Main/AntiHoarding" />
+			
+			<meta property="og:image" content="https://static.tvtropes.org/pmwiki/pub/images/encumbrance__by_travisjhanson.png" />
+			<meta property="og:description" content="Games often involve resource management of some kind, and resources are meant to be used. However, some of them may be considered Too Awesome to Use, or the player's strategy may involve saving up for a particularly expensive upgrade or starving &hellip;" />
+
+                        <meta name="robots" content="max-image-preview:large">
+
+						
+
+			            <link rel="apple-touch-icon" sizes="57x57" href="https://assets.tvtropes.org/img/icons/apple-icon-57x57.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="60x60" href="https://assets.tvtropes.org/img/icons/apple-icon-60x60.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="72x72" href="https://assets.tvtropes.org/img/icons/apple-icon-72x72.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="76x76" href="https://assets.tvtropes.org/img/icons/apple-icon-76x76.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="114x114" href="https://assets.tvtropes.org/img/icons/apple-icon-114x114.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="120x120" href="https://assets.tvtropes.org/img/icons/apple-icon-120x120.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="144x144" href="https://assets.tvtropes.org/img/icons/apple-icon-144x144.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="152x152" href="https://assets.tvtropes.org/img/icons/apple-icon-152x152.png" type="image/png">
+            <link rel="apple-touch-icon" sizes="180x180" href="https://assets.tvtropes.org/img/icons/apple-icon-180x180.png" type="image/png">
+            <link rel="icon" sizes="16x16" href="https://assets.tvtropes.org/img/icons/favicon-16x16.png" type="image/png">
+            <link rel="icon" sizes="32x32" href="https://assets.tvtropes.org/img/icons/favicon-32x32.png" type="image/png">
+            <link rel="icon" sizes="96x96" href="https://assets.tvtropes.org/img/icons/favicon-96x96.png" type="image/png">
+            <link rel="icon" sizes="192x192" href="https://assets.tvtropes.org/img/icons/favicon-192x192.png" type="image/png">
+
+                        
+                        
+						<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+                        <link rel="stylesheet" href="https://assets.tvtropes.org/design/assets/bundle.css?rev=9022b5f62cf20c0fa658f8bd90d771277e81771c" />
+
+            <!-- Smart App Banner for iOS -->
+            <meta name="apple-itunes-app" content="app-id=6738365737, app-argument=tvtropes://pmwiki/pmwiki.php/Main/AntiHoarding">
+
+                                                
+                        
+                        
+                        						
+                        						
+												<script type="text/javascript">
+						  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+						  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+						  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+						  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+						  ga('create', 'UA-3821842-1', 'auto');
+						  ga('send', 'pageview');
+						</script>
+
+
+
+
+
+						        </head>
+ <body class="">
+
+        <i id="user-prefs"></i>
+    <script>updateUserPrefs(); 
+    show_promo();
+    const af = 0;
+    </script>
+
+    <div id="fb-root"></div>
+
+    <div id="modal-box">
+        <div class="modal-loading-graphic"></div>
+    </div>
+    <style>
+        @keyframes rotate-forever {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #modal-box > .modal-loading-graphic {
+            display: none; /* Hidden by default */
+
+            background: no-repeat center url('/images/loading-graphic.png');
+            background-size: 80px 80px;
+
+            width: 80px;
+            height: 80px;
+
+            border-radius: 50%;
+
+            position: absolute;
+            top: calc(30% - 40px);
+            left: calc(50% - 40px);
+            z-index: 2;
+
+            animation: rotate-forever 0.34s linear infinite;
+
+        }
+        #modal-box.active > .modal-loading-graphic {
+            display: block; /* Show only when modal is active */
+        }
+    </style>
+
+    <!-- if user is logged in, show header banner otherwise show footer banner -->
+    
+<div class="outer-promo-banner" id="outer-promo-banner">
+    <div class="promo-banner">
+        <img src="/images/tvtropes_logo_180x180.png" alt="TVTropes Logo" class="promo-logo">
+        <div class="promo-text-container">
+            <span class="promo-text-top">TVTropes</span>
+            <span class="promo-text">Now available in the app store!</span>
+        </div>
+        <a href="#" class="promo-button" id="promo-app-link">Open</a>
+
+        <a href="#" id="promo-close-button"><i class="fa fa-close"></i></a>
+    </div>
+</div>
+
+<script>
+    // Detect if browser is Safari
+    function is_ios_safari(){
+        var ua = navigator.userAgent;
+        return /iP(hone|ad|od)/.test(ua) && /Safari/.test(ua) && !/CriOS|FxiOS|OPiOS|EdgiOS/.test(ua);
+    }
+
+    // Detect OS only
+    function get_mobile_type(){
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        if(/iPhone|iPad|iPod/i.test(userAgent)){
+            return "iOS";
+        } else if(/Android/i.test(userAgent)){
+            return "Android";
+        } else {
+            return "Other";
+        }
+    }
+
+    // Get current page path for deep linking (use tvtropes:// custom scheme)
+    var deepLink = "tvtropes://" + window.location.pathname.replace(/^\//, '');
+
+    // App store URLs
+    var appStoreUrls = {
+        iOS: "https://apps.apple.com/app/6738365737",
+        Android: "https://play.google.com/store/apps/details?id=org.tvtropes.app"
+    };
+
+    var promo_link = document.getElementById("promo-app-link");
+    var os = get_mobile_type();
+
+    if(os === "iOS" && is_ios_safari()){
+        // Safari iOS — rely on native Smart App Banner, hide custom one
+        document.body.classList.remove("app-promo");
+    }
+    else{
+        // Handle click with smart fallback for all other browsers
+        promo_link.addEventListener("click", function(e){
+            e.preventDefault();
+
+            var fallbackUrl = appStoreUrls[os] || appStoreUrls.iOS;
+            var appOpened = false;
+
+            // Set up fallback to app store
+            var fallbackTimeout = setTimeout(function(){
+                // If we're still here after 1.5s, app probably isn't installed
+                if(!appOpened && document.visibilityState !== "hidden"){
+                    window.location.href = fallbackUrl;
+                }
+            }, 1500);
+
+            // Listen for page visibility change (app opened successfully)
+            var handleVisibilityChange = function(){
+                if(document.visibilityState === "hidden"){
+                    appOpened = true;
+                    clearTimeout(fallbackTimeout);
+                }
+            };
+            document.addEventListener("visibilitychange", handleVisibilityChange);
+
+            // Clean up listener after attempt
+            setTimeout(function(){
+                document.removeEventListener("visibilitychange", handleVisibilityChange);
+            }, 2000);
+
+            // Attempt to open the app
+            window.location.href = deepLink;
+        });
+    }
+</script>
+
+    <header id="main-header-bar" class="headroom-element ">
+        <div id="main-header-bar-inner">
+
+            <span id="header-spacer-left" class="header-spacer"></span>
+
+            <a href="#mobile-menu" id="main-mobile-toggle" class="mobile-menu-toggle-button tablet-on"><span></span><span></span><span></span></a>
+
+            <a href="/" id="main-header-logoButton" class="no-dev"></a>
+
+            <span id="header-spacer-right" class="header-spacer"></span>
+
+            <nav id="main-header-nav" class="tablet-off">
+                <a href="/pmwiki/pmwiki.php/Main/Tropes">Tropes</a>
+                <a href="/pmwiki/pmwiki.php/Main/Media">Media</a>
+                <a href="/pmwiki/review_activity.php" class="nav-browse">Reviews</a>
+                <a href="/pmwiki/popular-pages.php">Popular</a>
+                <a href="/pmwiki/topics.php">Forums</a>
+                <a href="/pmwiki/recent_videos.php" >Videos</a>
+            </nav>
+
+            <div id="main-header-bar-right">
+                                <div id="signup-login-box" class="font-xs mobile-off">
+                    <a href="#" class="hover-underline bold" data-modal-target="signup">Join</a>
+                    <a href="#" class="hover-underline bold" data-modal-target="login">Login</a>
+                </div>
+                
+                                <div id="signup-login-mobileToggle" class="mobile-on inline">
+                    <a href="#" data-modal-target="login"><i class="fa fa-user"></i></a>
+                </div>
+                
+                <div id="search-box">
+                    <form class="search" action="/pmwiki/search_result.php" onSubmit="return sendToSiteSearch(this, this.q.value);">
+                        <input type="text" name="q" class="search-box" placeholder="Search" value="" required>
+                        <input id="main_search_submit"type="submit" class="submit-button" value="&#xf002;" />
+                                                <input type="hidden" name="search_type" value="article">
+                        <input type="hidden" name="page_type" value="all">
+                                                <input type="hidden" name="cx" value="partner-pub-6610802604051523:amzitfn8e7v">
+                        <input type="hidden" name="cof" value="FORID:10">
+                        <input type="hidden" name="ie" value="ISO-8859-1">
+                        <input name="siteurl" type="hidden" value="">
+                        <input name="ref" type="hidden" value="">
+                        <input name="ss" type="hidden" value="">
+                    </form>
+                    <a href="#close-search" class="mobile-on mobile-search-toggle close-x"><i class="fa fa-close"></i></a>
+                </div>
+
+                <div id="random-box">
+                    <a href="/pmwiki/pmwiki.php/Main/IronicJuxtaposition" class="button-random-trope" rel="nofollow" onclick="gtag('event', 'trope_random_button_click', {'is_user': 0});"></a>
+                    <a href="/pmwiki/pmwiki.php/Anime/SelectionProject" class="button-random-media" rel="nofollow" onclick="gtag('event', 'media_random_button_click', {'is_user': 0});"></a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="mobile-menu" class="tablet-on"><div class="mobile-menu-options">
+
+    <div class="nav-wrapper">
+        <a href="/pmwiki/pmwiki.php/Main/Tropes" class="xl">Tropes</a>
+        <a href="/pmwiki/pmwiki.php/Main/Media" class="xl">Media</a>
+        <a href="/pmwiki/review_activity.php" class="xl">Reviews</a>
+        <a href="/pmwiki/popular-pages.php" class="xl">Popular</a>
+        <a href="/pmwiki/index_report.php" class="xl">Indexes</a>
+        <a href="/pmwiki/topics.php" class="xl">Forums</a>
+        <a href="/pmwiki/recent_videos.php" class="xl">Videos</a>
+
+        <a href="/pmwiki/query.php?type=att">Ask The Tropers</a>
+        <a href="/pmwiki/query.php?type=tf">Trope Finder</a>
+        <a href="/pmwiki/query.php?type=ykts">Media Finder</a>
+        <a href="/pmwiki/tlp_activity.php">Trope Launch Pad</a>
+        <a href="/pmwiki/query.php?type=wl">Tech Wishlist</a>
+        <a href="/pmwiki/browse.php">Browse</a> 
+        
+                <a href="#tools" data-click-toggle="active">Tools <i class="fa fa-chevron-down"></i></a>
+        <div class="tools-dropdown mobile-dropdown-linkList">
+            <a href="/pmwiki/cutlist.php" data-modal-target="login" rel="nofollow">Cut List</a>
+            <a href="/pmwiki/image-fixer.php" data-modal-target="login" rel="nofollow">Image Fixer</a>
+            <a href="/pmwiki/changes.php">New Edits</a>
+            <a href="/pmwiki/articles_new.php">New Articles</a>
+            <a href="/pmwiki/recent_edit_reasons.php">Edit Reasons</a>
+            <a href="/pmwiki/launches.php" data-modal-target="login" rel="nofollow">Launches</a>
+            <a href="/pmwiki/img_list.php" data-modal-target="login" rel="nofollow">Images List</a>
+            <a href="/pmwiki/crown_activity.php">Crowner Activity</a>
+            <a href="/pmwiki/no_types.php">Un-typed Pages</a>
+            <a href="/pmwiki/page_type_audit.php">Recent Page Type Changes</a>
+            <a href="/pmwiki/changelog.php">Changelog</a>
+        </div>
+
+        <a href="#tips" data-click-toggle="active">Tips <i class="fa fa-chevron-down"></i></a>
+        <div class="tips-dropdown mobile-dropdown-linkList">
+                <a href="/pmwiki/pmwiki.php/Administrivia/CreatingNewRedirects">Creating New Redirects</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/Crosswicking">Cross Wicking</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/TipsForEditing">Tips for Editing</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/TextFormattingRules">Text Formatting Rules</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/TVTropesGlossary?from=Main.TVTropesGlossary">Glossary</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/EditReasonsAndWhyYouShouldUseThem">Edit Reasons</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/HandlingSpoilers">Handling Spoilers</a>
+                <a href="/pmwiki/pmwiki.php/Administrivia/WordCruft">Word Cruft</a>
+                <a href="/pmwiki/pmwiki.php/Main/Administrivia">Administrivia</a>
+                <a href="/pmwiki/pmwiki.php/Main/FAQ">FAQ</a>
+        </div>
+        
+        <a href="#hq" data-click-toggle="active">Tropes HQ <i class="fa fa-chevron-down"></i></a>
+
+        <div class="tools-dropdown mobile-dropdown-linkList">
+            <a href="/pmwiki/about.php">About Us</a>
+            <a href="/pmwiki/contact.php">Contact Us</a>
+            <a href="/pmwiki/dmca.php">DMCA Notice</a>
+            <a href="/pmwiki/privacypolicy.php">Privacy Policy</a>
+            <a href="/pmwiki/query.php?type=bug">Report Bug</a>
+            <a href="/pmwiki/termsofservice.php">Terms Of Service</a>
+        </div>
+
+        <a href="/pmwiki/ad-free-subscribe.php">Go Ad-Free</a>
+        <a href="/pmwiki/changelog.php">Changelog</a></li>
+
+        <div class="toggle-switches">
+            <ul class="mobile-menu display-toggles">
+                <li>Show Spoilers <div id="mobile-toggle-showspoilers" class="display-toggle show-spoilers"></div></li>
+                <li>Night Vision <div id="mobile-toggle-nightvision" class="display-toggle night-vision"></div></li>
+                <li>Sticky Header <div id="mobile-toggle-stickyheader" class="display-toggle sticky-header"></div></li>
+                <li>Highlight Links <div id="mobile-toggle-highlightlinks" class="display-toggle highlight-links"></div></li>
+            </ul>
+            <script>updateMobilePrefs();</script>
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+    </header>
+
+    <div id="homepage-introBox-mobile" class="mobile-on">
+                  <a href="/"><img src="/images/logo-white-big.png" class="logo-small" /></a>
+        
+        <form class="search" action="/pmwiki/search_result.php" style="margin:10px -5px -6px -5px;" onSubmit="return sendToSiteSearch(this, this.q.value);">
+            <input type="text" name="q" class="search-box" placeholder="Search" value="" required>
+            <input type="submit" class="submit-button" value="&#xf002;" />
+                        <input type="hidden" name="search_type" value="article">
+            <input type="hidden" name="page_type" value="all">
+                        <input type="hidden" name="cx" value="partner-pub-6610802604051523:amzitfn8e7v">
+            <input type="hidden" name="cof" value="FORID:10">
+            <input type="hidden" name="ie" value="ISO-8859-1">
+            <input name="siteurl" type="hidden" value="">
+            <input name="ref" type="hidden" value="">
+            <input name="ss" type="hidden" value="">
+        </form>
+
+            </div>
+        
+        <script type="text/javascript" name="tvtropes-js">(()=>{let mh82n7=false;function ig0hys(){let jzoa6p=false;setTimeout(()=>{const w=document.body?.clientWidth||0;if(w>=981){const el=document.getElementById("stick-cont");if(el&&el.offsetHeight===0)jzoa6p=true;}else if(w<=768){const el=document.querySelector(".tvtropes-ad-unit.mobile-fad");if(el&&el.offsetHeight===0)jzoa6p=true;}if(jzoa6p){mh82n7=true;kpy18rr();eaq34w2y();}},100);}function s0d8r(){if(mh82n7)return;var byelxgs=['https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js','https://securepubads.g.doubleclick.net/tag/js/gpt.js','https://www.googletagservices.com/dcm/dcmads.js'];var kbab3=['https://ship.bigcrunch.com/ads.js?asdf=xxx',];var ked0h=0;var dmrxg0c=false;var a4yhjlbe=false;var mk0pgh=false;function v74z2pd7(){var ddl9eetv=arguments[0]||0;var j67z3a5k=window[s1v78zyx.gtm];var tkjjc1unhj=window[s1v78zyx.bc];if(!mk0pgh){mk0pgh=true;byelxgs.forEach(function(url){var script=document.createElement('script');script.src=url;script.onload=function(){};script.onerror=function(){ked0h++;};document.head.appendChild(script);});kbab3.forEach(function(url){var script=document.createElement('script');script.src=url;script.onload=function(){setTimeout(function(){if(typeof window.pbjs==='undefined'||!window.pbjs.installedModules||!Array.isArray(window.pbjs.installedModules)||window.pbjs.installedModules.length===0||!window.pbjs.libLoaded||typeof window.pbjs.version==='undefined'){dmrxg0c=true;}},100);};script.onerror=function(error_event){dmrxg0c=true;};document.head.appendChild(script);});}setTimeout(function(){var e0bs1x=ked0h;if(j67z3a5k===false)e0bs1x++;if(tkjjc1unhj===false)a4yhjlbe=true;if(dmrxg0c==true||a4yhjlbe==true){e0bs1x++;}if(j67z3a5k!==false&&(typeof window.dataLayer==='undefined'||!Array.isArray(window.dataLayer)||typeof window.dataLayer.push!=='function')){e0bs1x++;}if(e0bs1x>=2&&(dmrxg0c==true||a4yhjlbe==true||j67z3a5k===false)){mh82n7=true;kpy18rr();eaq34w2y();}else if((tkjjc1unhj===undefined||j67z3a5k===undefined)&&!mh82n7&&ddl9eetv<40){setTimeout(function(){v74z2pd7(ddl9eetv+1);},200);}},ddl9eetv===0?100:300);}v74z2pd7();};const invqz={djefbk(n){return document.cookie.split(/;\s*/).map(s=>s.split("=")).reduce((a,[k,...v])=>{a[decodeURIComponent(k)]=decodeURIComponent(v.join("=")||"");return a;},{})[n];},cl9abtv807(n,v,days,path="/"){const d=new Date(Date.now()+days*864e5).toUTCString();document.cookie=`${encodeURIComponent(n)}=${encodeURIComponent(v)}; Expires=${d}; Path=${path}; SameSite=Lax`;}};function kpy18rr(){const main_container=document.getElementById("main-content");const main_entry=document.getElementById("main-entry");if(main_entry?.parentNode)main_entry.parentNode.removeChild(main_entry);const new_main=document.createElement("article");new_main.id="main-entry";new_main.className="with-sidebar";const notice=i9f4z();if(notice)new_main.appendChild(notice);if(main_container)main_container.appendChild(new_main);const btn=document.getElementById("btn_6wir2q");if(btn)btn.addEventListener("click",lhbjbic5);const refresh=document.querySelector(".refresh_btn");if(refresh)refresh.addEventListener("click",()=>location.reload());}function eaq34w2y(){invqz.cl9abtv807("ad_block_detected","true",365,"/");let user_id=invqz.djefbk("user_id");if(!user_id){user_id=p25u7s();invqz.cl9abtv807("user_id",user_id,365,"/");}const post=new URLSearchParams();post.append("device_type",do99jf);post.append("user_id",user_id);post.append("user_agent",navigator.userAgent);post.append("page_path",location.pathname+location.search+location.hash);fetch("/ajax/a_b_d.php",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:post}).catch(()=>{});}const s1v78zyx=(()=>{const gtm_original='gtl';const bc_original='bcl';const gtm_new='gtm_'+Math.random().toString(36).substr(2,9);const bc_new='bc_'+Math.random().toString(36).substr(2,9);Object.defineProperty(window,gtm_original,{get:function(){return window[gtm_new];},set:function(val){window[gtm_new]=val;},configurable:true});Object.defineProperty(window,bc_original,{get:function(){return window[bc_new];},set:function(val){window[bc_new]=val;},configurable:true});return{gtm:gtm_new,bc:bc_new,};})();function lhbjbic5(){const panel=document.getElementById("instr_6wir2q");if(!panel)return;if(panel.classList.contains("open")){panel.classList.remove("open");return;}panel.classList.add("open");r0sce9o9();eldfpp("adblock");}function r0sce9o9(){const tabs=document.querySelectorAll(".extension_tab");tabs.forEach(tab=>{tab.addEventListener("click",()=>{tabs.forEach(t=>t.classList.remove("active"));tab.classList.add("active");eldfpp(tab.getAttribute("data-extension"));});});};function eldfpp(extension){const content=document.getElementById("instruction_content");if(!content)return;const instructions={adblock:['click the adblock icon <span class="extension_icon adblock_icon" style="display:inline-flex;width:16px;height:16px;align-items:center;justify-content:center;border-radius:50%;">🛑</span> in your browser toolbar.',"choose <strong>don't run on pages on this site</strong> (or <strong>pause on this site</strong>).","confirm and refresh the page."],adblockplus:["click the adblock plus icon in your browser toolbar.","toggle the power button to disable on this site.","click refresh."],ublockorigin:['click the ublock origin icon <span class="extension_icon ublockorigin_icon" style="display:inline-flex;width:16px;height:16px;align-items:center;justify-content:center;border-radius:50%;">uo</span> in your browser toolbar.',"click the power button to disable for this site (it turns gray).","click the reload icon or refresh the page."],other:["open your ad blocker extension menu.","look for a “pause on this site” or “allowlist site” option.","confirm and refresh the page."]};const list=instructions[extension]||instructions.other;content.innerHTML=list.map((step,i)=>`<li class="instruction_item"><div class="instruction_number">${i+1}</div><div class="instruction_text">${step}</div></li>`).join("");}function cayyy3(){if(window.matchMedia("(max-width: 768px)").matches)return"mobile";if(window.matchMedia("(max-width: 980px)").matches)return"tablet";return"desktop";}const do99jf=cayyy3();function i9f4z(){const nid="abn_6wir2q";if(document.getElementById(nid))return;const wrap=document.createElement("div");wrap.id=nid;wrap.className="adblock_notice";wrap.innerHTML=`<div class="adblock_card" role="region" aria-labelledby="adblock_title" aria-describedby="adblock_desc"><img class="adblock_logo" src="https://static.tvtropes.org/pmwiki/pub/images/logo_light.png" alt="tvtropes"><h2 id="adblock_title" class="adblock_title">Please allow ads on our site or subscribe</h2><p id="adblock_desc" class="adblock_text"> Looks like you're using an ad blocker. We rely on advertising to help fund our site. Please turn off your ad blocker and refresh the page. </p><div class="adblock_actions"><button id="btn_6wir2q" class="adblock_btn" type="button">Allow Ads</button><a id="btn_subscribe" class="adblock_btn" href="/pmwiki/ad-free-subscribe.php">Subscribe</a></div><a class="adblock_login_link" href="/pmwiki/login_prompt.php">Login</a><div id="instr_6wir2q" class="instructions_panel" aria-live="polite"><div class="instructions_header_inline"><h3 class="instructions_title_inline">which ad blocker do you have?</h3><div class="extension_tabs"><div class="extension_tab active" data-extension="adblock"><div class="extension_icon adblock_icon">🛑</div>adblock</div><div class="extension_tab" data-extension="adblockplus"><div class="extension_icon adblockplus_icon">abp</div>adblock plus</div><div class="extension_tab" data-extension="ublockorigin"><div class="extension_icon ublockorigin_icon">uo</div>ublock origin</div><div class="extension_tab" data-extension="other"><div class="extension_icon other_icon">...</div>other</div></div></div><ol class="instruction_list" id="instruction_content"></ol><button class="refresh_btn" type="button">refresh page</button></div></div>`;return wrap;};function p25u7s(){let d=Date.now();if(performance?.now)d+=performance.now();return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,c=>{const r=(d+Math.random()*16)%16|0;d=Math.floor(d/16);return(c==="x"?r:(r&0x3|0x8)).toString(16);});};window.addEventListener("DOMContentLoaded",()=>{ig0hys();setTimeout(()=>{s0d8r();},100);});})();function get_device_type(){var ua=navigator.userAgent.toLowerCase();var device_type="";if(/(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(ua)){device_type="mobile";}else if(/(mobi|ipod|phone|blackberry|opera mini|fennec|minimo|symbian|psp|nintendo ds|archos|skyfire|puffin|blazer|bolt|gobrowser|iris|maemo|semc|teashark|uzard)/.test(ua)){device_type="mobile";}else{device_type="desktop";}return device_type;}var device_type=get_device_type();var show_modal_loaded=false;function show_modal(type,message,confirmation_url,call_back,oauth_finalize,groupname,title,video_id,author,time,replytext){console.log("showing modal "+type);const modalBox=document.getElementById('modal-box');const childDivs=modalBox.querySelectorAll(':scope > div');if(childDivs.length>1){kill_modal();}modalBox.classList.add('active');let alert='';if(typeof message==='object'&&message!==null){Object.keys(message).forEach(function(key){alert+='&'+key+'='+encodeURIComponent(message[key]);});}else{alert='&message='+encodeURIComponent(message);}const url='/design/parts/component-modalBox.php?window='+type+alert+(confirmation_url?'&curl='+encodeURIComponent(confirmation_url):"")+(oauth_finalize?'&oauth_finalize='+encodeURIComponent(oauth_finalize):"")+(groupname?'&groupname='+groupname:"")+(video_id?'&video_id='+encodeURIComponent(video_id):"")+(author?'&author='+encodeURIComponent(author):"")+(time?'&time='+encodeURIComponent(time):"");const body_data=new URLSearchParams();if(replytext)body_data.append('replytext',replytext);fetch(url,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body_data.toString()}).then(response=>response.text()).then(html=>{modalBox.innerHTML=html;const scripts=modalBox.querySelectorAll('script');scripts.forEach(script=>{const newScript=document.createElement('script');newScript.type='text/javascript';if(script.src){newScript.src=script.src;if(newScript.src.includes('/design/js/dropzone.js')){newScript.onload=function(){const img_uploader_script=document.createElement('script');img_uploader_script.type='text/javascript';img_uploader_script.src="/design/js/imguploader.js";img_uploader_script.onload=function(){myAwesomeDropzone=new Dropzone("#myAwesomeDropzone",{url:"/ajax/uploadImg.php"});};document.body.appendChild(img_uploader_script);}}}else{newScript.textContent=script.textContent;}script.parentNode.removeChild(script);modalBox.appendChild(newScript);});if(call_back){call_back();}});if(show_modal_loaded==false){modalBox.addEventListener('click',function(e){if(e.target===e.currentTarget){kill_modal();}});}show_modal_loaded=true;}function kill_modal(){console.log("killing modal");const modalBox=document.getElementById('modal-box');modalBox.classList.remove('active');modalBox.innerHTML='<div class="modal-loading-graphic"></div>';}function pause_modal(){var modal=document.querySelector('#modal-box > div.modal');if(!modal)modal=document.querySelector('#modal-box');modal.classList.add('hidden');const modalBox=document.getElementById('modal-box');modalBox.classList.add('paused');const loadingGraphic=document.createElement('div');loadingGraphic.className='modal-loading-graphic';modalBox.appendChild(loadingGraphic);}function unpause_modal(){const modalBox=document.getElementById('modal-box');modalBox.classList.remove('paused');var modal=document.querySelector('#modal-box > div.modal');if(!modal)modal=document.querySelector('#modal-box');modal.classList.remove('hidden');const loadingGraphic=document.querySelector('#modal-box > div.modal-loading-graphic');if(loadingGraphic){modalBox.removeChild(loadingGraphic);}}function show_loader(){console.log("Displaying loading graphic");kill_modal();const modalBox=document.getElementById('modal-box');modalBox.classList.add('active');const loadingGraphic=document.createElement('div');loadingGraphic.className='modal-loading-graphic';modalBox.appendChild(loadingGraphic);}function togglenote(id){var ele=object(id);var state=ele.style.display;if(state=='none')ele.style.display='inline';if(state=='inline')ele.style.display='none';}function toggle_more_menu(position){var more_menu=document.getElementById(position+"_more_list");more_menu.classList.toggle("hidden_more_list");more_menu.classList.toggle("display");var menu_button=document.getElementById(position+"_more_button");menu_button.classList.toggle("is-open");}function scroll_to_top(duration){var start=window.pageYOffset;var start_time=performance.now();if('requestAnimationFrame'in window===false){window.scrollTo(0,0);return;}function scroll(){var current_time=performance.now();var elapsed_time=current_time-start_time;var progress=elapsed_time/duration;var ease_in_out_quad=progress<0.5?2*progress*progress:-1+(4-2*progress)*progress;window.scrollTo(0,start*(1-ease_in_out_quad));if(elapsed_time<duration){requestAnimationFrame(scroll);}else{window.scrollTo(0,0);}}scroll();}function toggleAllFolders(){}function togglefolder(id){}const mobile_menu_button=document.querySelector('.mobile-menu-toggle-button');if(mobile_menu_button){mobile_menu_button.addEventListener('click',function(e){e.preventDefault();const header=document.querySelector('header#main-header-bar');if(header.classList.contains('mobile-menu-active')){header.classList.remove('mobile-menu-active');}else{header.classList.add('mobile-menu-active');}});}var global_pHeight=0;var search_form=document.querySelector("form.search");var search_button=document.querySelector("#main_search_submit");var hardcoded_loaded=true;if(search_form&&search_button){search_button.addEventListener("click",function(e){var query=search_form.q.value.trim();var search_url="/pmwiki/search_result.php#gsc.tab=0&gsc.q="+encodeURIComponent(query)+"&gsc.sort=";if(e.metaKey||e.ctrlKey||e.shiftKey){e.preventDefault();e.stopImmediatePropagation();window.open(search_url,'_blank');return false;}if(query.trim()===""){return false;}e.preventDefault();window.location.href=search_url;});}var floodParam=new URLSearchParams(window.location.search).get('flood');if(floodParam){var floodMsg=floodParam==='spam'?'Too many posts in a row, please wait for someone else to post first. You can also edit your comment to add more details you forgot.':'Too many posts in a short period of time. Please try again later.';show_modal('alert',floodMsg);var params=new URLSearchParams(window.location.search);params.delete('flood');history.replaceState(null,'',window.location.pathname+(params.toString()?'?'+params.toString():''));}var suspendedParam=new URLSearchParams(window.location.search).get('suspended');if(suspendedParam){show_modal('alert',"Your permissions for this area have been suspended. Please visit <a href='/pmwiki/pmwiki.php/Administrivia/WhatToDoIfYouAreSuspended'>this page</a> for more details.");var params=new URLSearchParams(window.location.search);params.delete('suspended');history.replaceState(null,'',window.location.pathname+(params.toString()?'?'+params.toString():''));}document.addEventListener('DOMContentLoaded',function(){if(device_type=='mobile')return;var user_prefs=document.getElementById('user-prefs');var hide_laconic_hover=user_prefs.classList.contains('hide-laconic-hover');var currentUrl=window.location.pathname;var urlMatch=currentUrl.match(/\/pmwiki\.php\/([^\/]+)\/([^\/?#]+)/);var currentGroupname=urlMatch?urlMatch[1]:'';var currentTitle=urlMatch?urlMatch[2]:'';var test_pages=['TechnologyMarchesOn','EnhanceButton','RetroUpgrade','TechnologyPorn','PowerFloats','EquipmentUpgrade'];var sub_test_page=currentGroupname==='Main'&&test_pages.includes(currentTitle);if((af==0&&!sub_test_page)||hide_laconic_hover)return;var popup=document.createElement('div');popup.id='hover_popup';popup.style.position='absolute';popup.style.background='#636f7e';popup.style.color='#fff';popup.style.border='1px solid #515151';popup.style.padding='10px';popup.style.maxWidth='300px';popup.style.zIndex='9999999';popup.style.display='none';popup.style.borderRadius='5px';popup.style.boxShadow='#2525259e 2px 2px 6px';popup.style.lineHeight='1.2';popup.classList.add('laconic-hover-popup');document.body.appendChild(popup);var hover_timer=null;var laconic_cache={};document.body.addEventListener('mouseover',function(e){var target=e.target;if(target.tagName==='A'&&target.href.includes('tvtropes.org')&&target.href.includes('pmwiki.php')){if(target.hasAttribute('title')){target.setAttribute('data-original-title',target.getAttribute('title'));target.removeAttribute('title');}var parent=target.parentElement;while(parent&&parent!==document.body){if(parent.hasAttribute('title')){parent.setAttribute('data-laconic-suppressed-title',parent.getAttribute('title'));parent.removeAttribute('title');}parent=parent.parentElement;}hover_timer=setTimeout(function(){if(laconic_cache[target.href]){popup.innerHTML=laconic_cache[target.href];popup.style.top=(e.pageY+10)+'px';popup.style.left=(e.pageX+10)+'px';popup.style.display='block';}else{var post_data=new URLSearchParams();post_data.append('url',target.href);post_data.append('sub_test_page',sub_test_page);fetch('/ajax/laconic_hover.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:post_data}).then(response=>response.json()).then(data=>{if(data.success){popup.innerHTML='';var laconicLabel=document.createElement('span');laconicLabel.className='laconic-label';if(data.has_laconic){laconicLabel.textContent=data.title;}else{laconicLabel.textContent=data.groupname+' / '+data.title;}popup.appendChild(laconicLabel);var laconicText=document.createElement('div');laconicText.className='laconic-text';laconicText.innerHTML=data.preview_html;popup.appendChild(laconicText);if(live_ads==1){var subscriberMessage=document.createElement('div');subscriberMessage.className='subscriber-only-message';subscriberMessage.style.marginTop='8px';subscriberMessage.style.fontSize='13px';subscriberMessage.style.fontStyle='italic';subscriberMessage.style.opacity='0.8';subscriberMessage.style.color='#ffffff';subscriberMessage.style.textAlign='center';subscriberMessage.textContent='*** subscriber-only feature ***';popup.appendChild(subscriberMessage);}laconic_cache[target.href]=popup.innerHTML;popup.style.top=(e.pageY+10)+'px';popup.style.left=(e.pageX+10)+'px';popup.style.display='block';}});}},500);function moveHandler(ev){popup.style.top=(ev.pageY+10)+'px';popup.style.left=(ev.pageX+10)+'px';}target.addEventListener('mousemove',moveHandler);function outHandler(){clearTimeout(hover_timer);popup.style.display='none';if(target.hasAttribute('data-original-title')){target.setAttribute('title',target.getAttribute('data-original-title'));target.removeAttribute('data-original-title');}var parent=target.parentElement;while(parent&&parent!==document.body){if(parent.hasAttribute('data-laconic-suppressed-title')){parent.setAttribute('title',parent.getAttribute('data-laconic-suppressed-title'));parent.removeAttribute('data-laconic-suppressed-title');}parent=parent.parentElement;}target.removeEventListener('mousemove',moveHandler);target.removeEventListener('mouseout',outHandler);}target.addEventListener('mouseout',outHandler);}});});document.body.addEventListener('click',function(e){const target=e.target.closest('.watch-button');const loggedInElement=document.getElementById('logged_in');const loggedIn=loggedInElement?loggedInElement.value:null;const checkbox=e.target.closest('.toggle_hide_likes_checkbox');if(checkbox){e.preventDefault();const groupname=checkbox.dataset.groupname;const title=checkbox.dataset.title;fetch('/ajax/hide_likes.php?groupname='+encodeURIComponent(groupname)+'&title='+encodeURIComponent(title)).then(function(response){if(!response.ok)throw new Error('Network response was not ok');return response.json();}).then(function(data){if(data.success){checkbox.checked=data.likes_hidden==1;const thumbVoteArea=document.querySelector('.thumb-vote-area');if(thumbVoteArea&&data.likes_hidden==1){thumbVoteArea.style.display='none';}else if(thumbVoteArea){thumbVoteArea.style.display='';}}}).catch(function(error){console.error('Fetch error:',error);});}if(e.target.closest('#desktop-on-mobile-toggle > a')){e.preventDefault();var body_class="desktop-on-mobile";var userPrefs=document.getElementById('user-prefs');if(userPrefs.classList.contains(body_class)){cookies.remove(body_class);}else{cookies.create(body_class,'true',300,'/');}location.reload();}if(e.target.closest('.display-toggles > li')){e.preventDefault();var li=e.target.closest('.display-toggles > li');var toggle=li.querySelector('.display-toggle');var setting_map={'profile-toggle-show-namespaces':'show-namespaces','profile-toggle-nightvision':'night-vision','profile-toggle-stickyheader':'sticky-header','profile-toggle-wideload':'wide-load','profile-toggle-showspoilers':'show-spoilers','sidebar-toggle-nightvision':'night-vision','sidebar-toggle-stickyheader':'sticky-header','sidebar-toggle-wideload':'wide-load','sidebar-toggle-showspoilers':'show-spoilers','mobile-toggle-nightvision':'night-vision','mobile-toggle-stickyheader':'sticky-header','mobile-toggle-highlightlinks':'highlight-links','mobile-toggle-showspoilers':'show-spoilers','profile-toggle-wysiwyg-toggle':'wysiwyg-toggle','profile-toggle-monofont':'mono-font','editor-toggle-monofont':'mono-font','profile-toggle-foldersopen':'folders-open','profile-toggle-lefthandsidebar':'lefthand-sidebar','profile-toggle-highlightlinks':'highlight-links','profile-toggle-forumgingerbread':'forum-gingerbread','profile-toggle-acceptshare':'accept-share','profile-toggle-stopautoplayvideo':'stop-auto-play-video','video-toggle-stopautoplayvideo':'stop-auto-play-video','profile-toggle-hide-likes-posts':'hide-likes-posts','profile-toggle-hide-likes-articles':'hide-likes-articles','profile-toggle-hide-laconic-hover':'hide-laconic-hover','profile-toggle-hide-justwatch-widget':'hide-justwatch-widget'};if(toggle.id==='toggle_notification_query'||toggle.id==='toggle_notification_pm'||toggle.id==='toggle_notification_video'){fetch('/ajax/toggle_user_prefs.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded',},body:'pref='+encodeURIComponent(toggle.id)}).then(response=>response.json()).then(json=>{if(json.success){toggle.classList.toggle('active');}else{toggle.classList.toggle('active');}}).catch(error=>{console.error('Error:',error);});}var setting=setting_map[toggle.id];if(setting&&(loggedIn=='true'||tvtropes_config.is_logged_in==1)){toggle.classList.toggle('active');var user_prefs=document.querySelector('#user-prefs');if(user_prefs){user_prefs.classList.toggle(setting);}if(setting==="show-spoilers"){document.querySelectorAll('.spoiler').forEach(spoiler=>{spoiler.classList.remove('off');});}var form_data=new FormData();form_data.append('setting',setting);fetch('/ajax/update_profile_settings.php',{method:'POST',body:form_data}).then(response=>response.json()).then(data=>{if(!data.success){toggle.classList.toggle('active');var user_prefs_check=document.querySelector('#user-prefs');if(user_prefs_check&&user_prefs_check.classList.contains(setting)){user_prefs_check.classList.toggle(setting);}}}).catch(error=>{toggle.classList.toggle('active');var user_prefs_check=document.querySelector('#user-prefs');if(user_prefs_check&&user_prefs_check.classList.contains(setting)){user_prefs_check.classList.toggle(setting);}});}else if(tvtropes_config.is_logged_in!=1){var userPrefs=document.getElementById('user-prefs');userPrefs.classList.toggle(setting);if(userPrefs.classList.contains(setting)){cookies.create(setting,'true',300,'/');toggle.classList.toggle('active');}else{cookies.remove(setting);toggle.classList.toggle('active');if(setting==="show-spoilers"){document.querySelectorAll('.spoiler').forEach(spoiler=>{spoiler.classList.remove('off');});}}}}if(target&&loggedIn!==null){e.preventDefault();if(loggedIn==='true'){target.classList.add('processing');}if(target.getAttribute('data-watch-info')){var data=target.dataset.watchInfo.split(',');if(!data.length)return;var addOrDrop=target.classList.contains('watching')||target.parentElement.classList.contains('watching')?'drop':'add';handleWatchItem(addOrDrop,data[0],data[1],target);}else if(target.getAttribute('data-watch-discussion-info')){var data=target.dataset.watchDiscussionInfo.split(',');if(!data.length)return;var addOrDrop=target.classList.contains('watching')||target.parentElement.classList.contains('watching')?'drop':'add';var pageType='Discussion';handleWatchItem(addOrDrop,data[0],data[1],target,pageType);}else if(target.getAttribute('data-watch-thread-id')){var threadId=target.getAttribute('data-watch-thread-id');var url=target.classList.contains('watching')||target.parentElement.classList.contains('watching')?'/pmwiki/thread_watch_drop.php?thread=':'/pmwiki/setthreadwatch.php?d_id=';url+=threadId;handleWatchThread(url,target);}}if(e.target.classList.contains('kill-modal-button')){e.preventDefault();kill_modal();}const targetWithoutToggleTarget=e.target.closest('*[data-click-toggle]:not([data-click-toggle-target])');if(targetWithoutToggleTarget){e.preventDefault();const toggleClass=targetWithoutToggleTarget.getAttribute('data-click-toggle');targetWithoutToggleTarget.classList.toggle(toggleClass);}const targetWithToggleTarget=e.target.closest('*[data-click-toggle][data-click-toggle-target]:not(#signup-form-toggles a)');if(targetWithToggleTarget){e.preventDefault();const hasFetchArticles=targetWithToggleTarget.getAttribute('onclick')&&targetWithToggleTarget.getAttribute('onclick').includes('fetch_articles');if(!hasFetchArticles){e.stopPropagation();}const toggleTargetId=targetWithToggleTarget.getAttribute('data-click-toggle-target');const toggleClass=targetWithToggleTarget.getAttribute('data-click-toggle');const isExclusive=targetWithToggleTarget.getAttribute('data-click-toggle-exclusive')==='true';if(isExclusive){const toggleTarget=document.getElementById(toggleTargetId);if(toggleTarget){const siblings=Array.from(toggleTarget.parentNode.children);for(let sibling of siblings){if(sibling!==toggleTarget){sibling.classList.remove(toggleClass);}}toggleTarget.classList.add(toggleClass);}}else{if(toggleTargetId.indexOf(',')>-1){const targets=toggleTargetId.split(",");targets.forEach(t=>{document.querySelectorAll('#'+t).forEach(el=>{el.classList.toggle(toggleClass);});});}else{document.querySelectorAll('#'+toggleTargetId).forEach(el=>{el.classList.toggle(toggleClass);});}}}const modalTarget=e.target.closest('*[data-modal-target]');if(modalTarget){if(!modalTarget){return;}let modal=modalTarget.getAttribute('data-modal-target');let msg=modalTarget.getAttribute('data-modal-vars')?modalTarget.getAttribute('data-modal-vars'):modalTarget.getAttribute('data-modal-confirmation-message');let url=modalTarget.getAttribute('data-modal-confirmation-url');try{var obj=JSON.parse(msg);if(obj&&typeof obj==="object"){msg=obj;}}catch(e){}if(modal==="allow")return;e.preventDefault();if(modal.substring(0,6)==="alert-"){const msgArr={"alert-banned":"Your permissions for this area have been suspended. Please visit <a href='/pmwiki/pmwiki.php/Administrivia/WhatToDoIfYouAreSuspended'>this page</a> for more details.","alert-bounced":"This account has committed severe or repeated violations of our rules and is permanently denied access to many of the account features of the site. If you feel that this may be an error, please <a href=\"/pmwiki/contact.php\">contact the mods</a>.","alert-denied":"Your account was denied by a moderator. If you believe this was done in error please <a href=\"/pmwiki/contact.php\">contact the mods</a>.","alert-verify":"You must verify your email address before doing this. Check your email for a link.","alert-approval":"Your account must be approved by a moderator before you can do this. If you still have this problem in a couple hours try <a href=\"/pmwiki/contact.php\">contacting the mods</a>.","alert-age":"Your account is not old enough. Give it a little more time.","alert-mod":"This page is only for moderators. Try something else.","alert-db":"We are currently updating our servers. Please check back later."};if(modal in msgArr){msg=msgArr[modal];}else{msg="Unknown error. Please <a href=\"/pmwiki/contact.php\">Contact us</a> if the problem persists.";}modal="alert";}show_modal(modal,msg,url);}const spoilers=e.target.closest('.spoiler');if(spoilers){spoilers.classList.toggle('off');}const folders=e.target.closest('.folderlabel');if(folders&&e.target.getAttribute('onclick')!=="toggleAllFolders();"){e.preventDefault();folders.classList.toggle('is-open');let folder=folders.nextElementSibling;if(folders.classList.contains('is-open')){gtag('event','folder_click',{'device_type':device_type});}if(folder&&folders.classList.contains('is-open')&&live_ads==1&&(document.body.clientWidth&&document.body.clientWidth<=768)&&tvtropes_config.universal_page_type=='Article'){if(folder.querySelectorAll('.tvtropes-ad-unit').length===0){global_pHeight=insert_ads_in_content(folder,globalAdInsertionCount,global_pHeight);}}}const allFolders=e.target.closest('div[onclick*="toggleAllFolders()"]');if(allFolders){let parentElement=allFolders.parentNode;if(parentElement.tagName==='H2')parentElement=parentElement.parentNode;let isCurrentlyOpen=e.target.classList.contains('is-open');let foldersAndButtons=parentElement.querySelectorAll('.folderlabel, .toggle-all-folders-button');foldersAndButtons.forEach(function(element){if(isCurrentlyOpen){element.classList.remove('is-open');}else{element.classList.add('is-open');}});if(!isCurrentlyOpen){gtag('event','all_folders_click',{'device_type':device_type});parentElement.querySelectorAll('.folder').forEach(function(folder){if(!folder.querySelector('.tvtropes-ad-unit')&&live_ads==1&&(document.body.clientWidth&&document.body.clientWidth<=768)&&tvtropes_config.universal_page_type=='Article'){global_pHeight=insert_ads_in_content(folder,globalAdInsertionCount,global_pHeight);}});}}},true);var handleWatchItem=function(addOrDrop,groupname,title,obj,pageType=''){fetch("/ajax/watchlist.php",{method:"POST",headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'},body:`groupname=${encodeURIComponent(groupname)}&title=${encodeURIComponent(title)}&type=${encodeURIComponent(addOrDrop)}&json=1&pageType=${encodeURIComponent(pageType)}`}).then(response=>response.json()).then(data=>{obj.classList.remove('processing');if(obj.classList.contains('tile-watch-button')){obj.parentNode.classList.toggle('watching');}else{obj.classList.toggle('watching');}}).catch(error=>{obj.classList.remove('processing');show_modal('alert-red','Whoops, something went wrong. Please try adding again.');});};var handleWatchThread=function(url,obj){fetch(url).then(response=>response.text()).then(data=>{obj.classList.remove('processing');if(obj.classList.contains('tile-watch-button')){obj.parentNode.classList.toggle('watching');}else{obj.classList.toggle('watching');}}).catch(error=>{obj.classList.remove('processing');show_modal('alert-red','Whoops, something went wrong. Please try adding again.');});};function copyVideoLinkToClipboard(video_id,element){var playerElement=document.getElementById('tvtropes_overlay_player');if(playerElement&&element.closest('._pmvv-vidbox-desc')){var currentVideoId=playerElement.getAttribute('data-video-id');if(currentVideoId){video_id=currentVideoId;}}if(!video_id){alert('Unable to get video information');return;}if(video_id.startsWith('tvtropes-videos-')){video_id=video_id.replace('tvtropes-videos-','');}var url='https://tvtropes.org/pmwiki/video_example.php?video_id='+video_id;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){showCopyFeedback(element);}).catch(function(err){console.error('Failed to copy link: ',err);});}else{console.error('Clipboard API not supported');}}function showCopyFeedback(element){var feedback=element.parentElement.querySelector('.copy-feedback');if(feedback){feedback.style.display='inline';setTimeout(function(){feedback.style.display='none';},1500);}}</script>
+    
+                    <script>
+                if(is_mobile()) {
+                    document.write("<div class=\"htlad-tvtropes_m_sticky\"></div>");
+                }
+                else {
+                    document.write("<div class=\"htlad-tvtropes_dt_sticky\"></div>");
+                }
+            </script>
+
+                <div id="tvtropes_oop_ad_slot" style="display: none;"></div>
+    
+    <script>
+        if (typeof hardcoded_loaded === 'undefined') {
+            document.addEventListener('DOMContentLoaded', function() {
+                var mainEntry = document.querySelector('#main-content > #main-entry');
+                if (mainEntry) {
+                    mainEntry.innerHTML = '<div class="error-code" style="background: red; color: white; padding: 10px; margin-bottom: 10px;">ERROR_CODE: 1001</div>' +
+                                         '<div class="error-message" style="background: red; color: white; padding: 10px; margin-bottom: 10px;">folder functions error, disabling extensions in your browser should fix this</div>' +
+                                         mainEntry.innerHTML;
+                }
+            });
+        }
+    </script><div id="top_container_spacing"></div>
+
+<div id="main-container">
+
+    
+        <div id="action-bar-top" class="action-bar mobile-off">
+
+        <div class="action-bar-right">
+            <p>Follow TV Tropes</p>
+            <a href="https://www.facebook.com/TVTropes" class="button-fb">
+                <i class="fa fa-facebook"></i></a>
+            <a href="https://www.twitter.com/TVTropes" class="button-tw">
+                <i class="fa fa-twitter"></i></a>
+        </div>
+
+                <nav class="actions-wrapper" itemscope itemtype="http://schema.org/SiteNavigationElement">
+            <ul id="top_main_list" class="page-actions">
+            <li class="link-edit">
+                    <a rel = "nofollow" class = "article-edit-button"data-modal-target= "login"href = "/pmwiki/pmwiki.php/Main/AntiHoarding?action=edit">
+                         <i class="fa fa-pencil"></i> Edit Page</a></li><li class="link-related"><a href="/pmwiki/relatedsearch.php?term=Main/AntiHoarding">
+                <i class="fa fa-share-alt"></i> Related</a></li><li class="link-history"><a href="/pmwiki/article_history.php?article=Main.AntiHoarding" data-modal-target="login" rel="nofollow">
+                <i class="fa fa-history"></i> History</a></li><li class="link-discussion"><a href="/pmwiki/remarks.php?trope=Main.AntiHoarding" data-modal-target="login" rel="nofollow">
+                                        <i class="fa fa-comment"></i> Discussion</a></li><li class="link-todo tuck-always"><a href="#todo" data-modal-target="login" rel="nofollow"><i class="fa fa-check-circle"></i> To Do</a></li>                </ul>
+                                    <button id="top_more_button" onclick="toggle_more_menu('top');" type="button" class="nav__dropdown-toggle">More</button>
+                            <ul id="top_more_list" class="more_menu hidden_more_list">
+                <li class="link-pageSource tuck-always more_list_item"><a href="/pmwiki/pmwiki.php/Main/AntiHoarding?action=source" target="_blank" rel="nofollow"data-modal-target= "login"><i class="fa fa-code"></i> Page Source</a></li>            </ul>
+        </nav> 
+
+        <div class="WikiWordModalStub"></div>
+        <div class="ImgUploadModalStub" data-page-type="Article"></div>
+
+        <div class="login-alert" style="display: none;">
+            You need to <a href="/pmwiki/login.php" style="color:#21A0E8">login</a> to do this. <a href="/pmwiki/login.php?tab=register_account" style="color:#21A0E8">Get Known</a> if you don't have an account
+        </div>
+
+    </div>
+    
+    <div id="main-content" class="page-Article ">
+
+        
+                <article id="main-entry" class="with-sidebar">
+        
+        
+<!-- HIDDEN INPUTS FOR JS -->
+<input type="hidden" id="groupname-hidden" value="Main"/>
+<input type="hidden" id="title-hidden" value="AntiHoarding"/>
+<input type="hidden" id="article_id" value="553224" />
+<input type="hidden" id="logged_in" value="false" />
+<p id="current_url" class="hidden">http://tvtropes.org/pmwiki/pmwiki.php/Main/AntiHoarding</p>
+
+    <meta itemprop="datePublished" content=""/>
+    <meta itemprop="articleSection" content="" />
+    <meta itemprop="image" content="">
+
+
+
+
+
+
+
+
+
+<style>
+.ad-caption-subscribe-wrapper {
+    text-align: center;
+    padding: 8px 0;
+            margin-top: -40px;
+        display: none;
+}
+
+@media (max-width: 768px) {
+    .ad-caption-subscribe-wrapper {
+        display: block;
+    }
+}
+
+.ad-caption-subscribe:hover {
+    text-decoration: underline;
+}
+
+.thumb-button.up.heart-only .fa-heart-o {
+    color: black;
+    transition: color 0.2s ease;
+}
+
+.thumb-button.up.heart-only .fa-heart-o.selected {
+    color: #008fec;
+}
+
+</style>
+
+
+
+        
+
+    
+
+             
+
+                                        <h1 itemprop="headline" class="entry-title" style=""> 
+                    <span class="wrapped_title">
+                        Anti-Hoarding 
+                         
+                    </span>
+                    <div class="watch_rank_wrap">
+                    <span 
+            class="thumb-vote-area"
+            data-seq-num="AntiHoarding"
+            data-discussion-id="AntiHoarding"
+            data-subject-trope="Main.AntiHoarding"
+            data-page-type="article"
+        >
+            <a 
+                href="javascript:void(0);" 
+                class="thumb-button up heart-only"
+                data-modal-target="login"            >
+                <span class="thumb-count up-count" style="margin-top: 2px;margin-right: 1px;">4</span>
+                <i class="fa fa-heart-o"></i>
+            </a>
+        </span>
+        <a href="#watch" class="watch-button " data-modal-target="login" >Follow<span>ing</span></a>
+</div>
+                   
+                                    </h1>
+
+                        
+
+
+    
+
+
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "name": "TV Tropes",
+                "item": "https://tvtropes.org/"
+            },{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Tropes",
+                "item": "https://tvtropes.org/pmwiki/pmwiki.php/Main/Tropes"
+            },{
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Anti-Hoarding",
+                "item": "https://tvtropes.org/pmwiki/pmwiki.php/Main/AntiHoarding"
+            }]
+
+        }
+    </script>
+        <script type="application/ld+json">
+                {
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "name": "Anti-Hoarding",
+          "headline": "Anti-Hoarding",
+          "url": "https://tvtropes.org/pmwiki/pmwiki.php/Main/AntiHoarding",
+          "image": "https://static.tvtropes.org/pmwiki/pub/images/encumbrance__by_travisjhanson.png",
+          "author": {
+            "@type": "Organization",
+            "name": "Contributors to TV Tropes (aka Tropers)"
+          },
+          "datePublished": "2016-05-17T00:00:00-07:00",
+          "dateModified": "2026-03-31T22:09:02-07:00"
+        }
+    </script>
+
+
+<a href="#mobile-actions-toggle" id="mobile-actionbar-toggle" class="mobile-actionbar-toggle mobile-on" data-click-toggle="active" >
+<p class="tiny-off">Go To</p><span></span><span></span><span></span><i class="fa fa-pencil"></i></a>
+<nav id="mobile-actions-bar" class="mobile-actions-wrapper mobile-on"></nav>
+<script>
+    //duplicate action bar to the mobile-action-bar holder
+    if (document.getElementById("mobile-actions-bar")) {
+        // Clone the main list
+        var top_main_list = document.getElementById('top_main_list');
+        var top_main_list_cln = top_main_list.cloneNode(true);
+        // Clone the more list
+        var top_more_list = document.getElementById('top_more_list');
+        var top_more_list_cln = top_more_list.cloneNode(true);
+
+        top_more_list_cln.querySelectorAll("li").forEach(function(child){
+            top_main_list_cln.appendChild(child);
+        });
+
+        document.getElementById("mobile-actions-bar").appendChild(top_main_list_cln);
+    }
+</script>
+
+
+<nav class="body-options" itemscope itemtype="http://schema.org/SiteNavigationElement">
+
+    <ul class="subpage-links">
+
+                            <li>
+                <a href="/pmwiki/pmwiki.php/Main/AntiHoarding"
+                class="subpage-link curr-subpage"
+                title="The Main page">
+                    <span class="wrapper">
+                        <span class="spi main-page"></span>                        Main                    </span>
+                </a>
+            </li>
+        
+        
+                
+                                 
+                                <li>
+                    <a href="/pmwiki/pmwiki.php/Laconic/AntiHoarding" class="subpage-link " title="The Laconic page">
+                    <span class="wrapper"><span class="spi laconic-icon"></span>Laconic</span></a>
+                </li>
+                            
+                                 
+                                <li>
+                    <a href="/pmwiki/pmwiki.php/PlayingWith/AntiHoarding" class="subpage-link " title="The PlayingWith page">
+                    <span class="wrapper">PlayingWith</span></a>
+                </li>
+                            
+                
+
+                            <li class="create-subpage dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    <span class="wrapper">Create Subpage <i class="fa fa-plus-circle"></i></span>
+                    </a>
+
+
+                    <select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
+                        <option value="">- Create New -</option>
+
+                                                <option value="/pmwiki/pmwiki.php/Analysis/AntiHoarding?action=edit">Analysis</option>
+                                                <option value="/pmwiki/pmwiki.php/Archive/AntiHoarding?action=edit">Archive</option>
+                                                <option value="/pmwiki/pmwiki.php/Awesome/AntiHoarding?action=edit">Awesome</option>
+                                                <option value="/pmwiki/pmwiki.php/Characters/AntiHoarding?action=edit">Characters</option>
+                                                <option value="/pmwiki/pmwiki.php/DerivativeWorks/AntiHoarding?action=edit">DerivativeWork&#8230;</option>
+                                                <option value="/pmwiki/pmwiki.php/FanficRecs/AntiHoarding?action=edit">FanficRecs</option>
+                                                <option value="/pmwiki/pmwiki.php/FanWorks/AntiHoarding?action=edit">FanWorks</option>
+                                                <option value="/pmwiki/pmwiki.php/Fridge/AntiHoarding?action=edit">Fridge</option>
+                                                <option value="/pmwiki/pmwiki.php/Funny/AntiHoarding?action=edit">Funny</option>
+                                                <option value="/pmwiki/pmwiki.php/Haiku/AntiHoarding?action=edit">Haiku</option>
+                                                <option value="/pmwiki/pmwiki.php/Headscratchers/AntiHoarding?action=edit">Headscratchers</option>
+                                                <option value="/pmwiki/pmwiki.php/Heartwarming/AntiHoarding?action=edit">Heartwarming</option>
+                                                <option value="/pmwiki/pmwiki.php/ImageLinks/AntiHoarding?action=edit">ImageLinks</option>
+                                                <option value="/pmwiki/pmwiki.php/ImageSource/AntiHoarding?action=edit">ImageSource</option>
+                                                <option value="/pmwiki/pmwiki.php/MediaNotes/AntiHoarding?action=edit">MediaNotes</option>
+                                                <option value="/pmwiki/pmwiki.php/Newsletter/AntiHoarding?action=edit">Newsletter</option>
+                                                <option value="/pmwiki/pmwiki.php/NightmareFuel/AntiHoarding?action=edit">NightmareFuel</option>
+                                                <option value="/pmwiki/pmwiki.php/Quotes/AntiHoarding?action=edit">Quotes</option>
+                                                <option value="/pmwiki/pmwiki.php/QuoteSource/AntiHoarding?action=edit">QuoteSource</option>
+                                                <option value="/pmwiki/pmwiki.php/Recap/AntiHoarding?action=edit">Recap</option>
+                                                <option value="/pmwiki/pmwiki.php/ReferencedBy/AntiHoarding?action=edit">ReferencedBy</option>
+                                                <option value="/pmwiki/pmwiki.php/Shocking/AntiHoarding?action=edit">Shocking</option>
+                                                <option value="/pmwiki/pmwiki.php/TearJerker/AntiHoarding?action=edit">TearJerker</option>
+                                                <option value="/pmwiki/pmwiki.php/Timeline/AntiHoarding?action=edit">Timeline</option>
+                                                <option value="/pmwiki/pmwiki.php/Trivia/AntiHoarding?action=edit">Trivia</option>
+                                                <option value="/pmwiki/pmwiki.php/WMG/AntiHoarding?action=edit">WMG</option>
+                                                <option value="/pmwiki/pmwiki.php/YMMV/AntiHoarding?action=edit">YMMV</option>
+                        
+                    </select>
+
+                    
+                            </li>
+        
+            </ul>
+
+
+</nav>
+
+
+
+<div id="main-article" class="article-content retro-folders">
+
+
+
+        
+            <p><!--&#010;-->
+<!-- Image selected via crowner in the Image Suggestion thread: https://tvtropes.org/pmwiki/crowner.php?crowner_id=2pk5dxfg-->
+<!-- https://tvtropes.org/pmwiki/posts.php?discussion=1452266899092104700-->
+<!-- Please don't change or remove without starting a new thread.-->
+<!--&#010;-->
+<div class="quoteright" style="width:350px;" ><div class="lazy_load_img_box" style="padding-top:72.59%"><img src='https://static.tvtropes.org/pmwiki/pub/images/encumbrance__by_travisjhanson.png' class='embeddedimage' border='0' alt='Anti-Hoarding (trope)'  width=321 height=233></div></div>
+<div class="acaptionright" style="width:350px;" ><a class='urllink' href='https://www.deviantart.com/travisjhanson/art/Encumbrance-828496948'>Encumbrance<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> by Travis Hanson - <a class='urllink' href='https://www.facebook.com/profile.php?id=100039596477496'>Facebook Fanpage<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a>, <a class='urllink' href='https://www.beanleafpress.com/'>Homepage<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a> <br data-format="\\" /><span class="font-s">Used with permission.</span></div>
+<!--&#010;-->
+Games often involve resource management of some kind, and resources are meant to be used. However, some of them may be considered <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TooAwesomeToUse' title='/pmwiki/pmwiki.php/Main/TooAwesomeToUse' data-format='VG9vQXdlc29tZVRvVXNl'>Too Awesome to Use</a>, or the player's strategy may involve saving up for a particularly expensive upgrade or starving out the others of a specific resource &#8212; either way, they begin hoarding said resource, denying it its original purpose. The anti-hoarding mechanics are there to nip that in the bud.
+</p><p>The simplest anti-hoarding mechanic is a hard <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Cap' title='/pmwiki/pmwiki.php/Main/Cap' data-format='e3tDYXB9fQ=='>Cap</a> or a gentler <a class='twikilink' href='/pmwiki/pmwiki.php/Main/CriticalEncumbranceFailure' title='/pmwiki/pmwiki.php/Main/CriticalEncumbranceFailure' data-format='Q3JpdGljYWxFbmN1bWJyYW5jZUZhaWx1cmU='>Critical Encumbrance Failure</a> on how many of each resource a player can hold. More advanced (and more fun) mechanics may involve <a class='twikilink' href='/pmwiki/pmwiki.php/Main/InventoryManagementPuzzle' title='/pmwiki/pmwiki.php/Main/InventoryManagementPuzzle' data-format='W1tJbnZlbnRvcnlNYW5hZ2VtZW50UHV6emxlIHJlcXVpcmluZyB0aGUgcGxheWVycyB0byBhcnJhbmdlIHRoZWlyIGludmVudG9yeSBpdGVtcyB3aXRoaW4gYSBsaW1pdGVkIHNwYWNlXV0='>requiring the players to arrange their inventory items within a limited space</a>, or even allow the players to hold as many resources as they want, but take away a chunk of them if a certain, often randomized, event occurs in-game. Another option is to make items disappear over a period of time to incentivize players to use them before they are gone.
+</p><p>Compare <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AntiGrinding' title='/pmwiki/pmwiki.php/Main/AntiGrinding' data-format='QW50aUdyaW5kaW5n'>Anti-Grinding</a>, measures similarly designed to prevent <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LevelGrinding' title='/pmwiki/pmwiki.php/Main/LevelGrinding' data-format='TGV2ZWxHcmluZGluZw=='>Level Grinding</a> in a game, and <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AggressivePlayIncentive' title='/pmwiki/pmwiki.php/Main/AggressivePlayIncentive' data-format='QWdncmVzc2l2ZVBsYXlJbmNlbnRpdmU='>Aggressive Play Incentive</a>, intended to counteract defensive tactics. Might be justified by a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PickupHierarchy' title='/pmwiki/pmwiki.php/Main/PickupHierarchy' data-format='UGlja3VwSGllcmFyY2h5'>Pick-up Hierarchy</a> in which some collectibles are more important than others.
+<hr data-format='&#8212;&#8212;' />
+<h2>Examples:</h2>
+</p><p><div class="folderlabel" onclick="toggleAllFolders();">&nbsp;&nbsp;&nbsp;&nbsp;open/close all folders&nbsp; </div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder0');">&nbsp;&nbsp;&nbsp;&nbsp;Board Games&nbsp;</div><div id="folder0" class="folder" isfolder="true" style="display:block;">
+<ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/ArcadiaQuest' title='/pmwiki/pmwiki.php/TabletopGame/ArcadiaQuest' data-format='VGFibGV0b3BHYW1lL0FyY2FkaWFRdWVzdA=='>Arcadia Quest</a></em> you can spend a lot of time killing enemies to build up your money. This can help you buy a lot of great items during the purchase phase, however once the purchase phase ends, you discard all money but 1 coin. As such, spending your time ignoring the missions in an effort to build of a reservoir of money early that can help you later is entirely pointless.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Catan' title='/pmwiki/pmwiki.php/TabletopGame/Catan' data-format='VGFibGV0b3BHYW1lL3t7Q2F0YW59fQ=='>Catan</a></em>, you can hold as many resource cards as you want in your hand, but if anyone at the table rolls a 7 (which is the single most likely roll on a 2d6) when you have more than 7 cards (8 or more cards), you have to discard a full <em>half</em> of them(rounded down). This encourages the players to spend their resources on buildings quickly, or to trade them for others they need. The <em>Cities &amp; Knights</em> expansion allows building ramparts around up to three cities, each adding 2 cards to the maximum. Given the greater number of different resources in this game, building at least one is indispensable.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Everdell' title='/pmwiki/pmwiki.php/TabletopGame/Everdell' data-format='VGFibGV0b3BHYW1lL3t7RXZlcmRlbGx9fQ=='>Everdell</a></em>:
+<ul ><li> The game has a hand limit of 8 cards (though certain player powers increase it) to keep you from hoarding them. Particularly relevant because some effects let you discard cards for a bonus.
+</li><li> The Innkeeper and Crane can be discarded to play respectively a Critter or Construction at a discount. These cards are subject to a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/UniquenessRule' title='/pmwiki/pmwiki.php/Main/UniquenessRule' data-format='VW5pcXVlbmVzc1J1bGU='>Uniqueness Rule</a> to discourage you from playing one and sitting on it for too long &#8212; that means you won't be able to snag a second copy if one shows up in the Meadow. Another option is keeping the card in your hand, but then it'll count against your hand limit.
+</li></ul></li><li> <em><a class='createlink' rel='nofollow' href='/pmwiki/pmwiki.php/TabletopGame/Feudalia' title='/pmwiki/pmwiki.php/TabletopGame/Feudalia' data-format='VGFibGV0b3BHYW1lL3t7RmV1ZGFsaWF9fQ=='>Feudalia</a></em>: A tax collector gets added to the deck on the player's first reshuffle, and will take half of the player's resources whenever it's drawn. This requires players to spend their resources rather than just holding onto them.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/MiceAndMystics' title='/pmwiki/pmwiki.php/TabletopGame/MiceAndMystics' data-format='VGFibGV0b3BHYW1lL01pY2VBbmRNeXN0aWNz'>Mice and Mystics</a></em>:
+<ul ><li> Each character can carry at most three items at a time, plus the items equipped in their inventory slots.
+</li><li> Each character can only take their starting equipment plus one item into the next chapter of the game. Extra items, cheese tokens, and the party inventory are lost.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Pandemic' title='/pmwiki/pmwiki.php/TabletopGame/Pandemic' data-format='VGFibGV0b3BHYW1lL3t7UGFuZGVtaWN9fQ=='>Pandemic</a></em> limits the number of city cards a player can hold in their hand to seven, forcing you to discard excess cards unless expended or given to another player before the end of your turn. This puts the players into a crisis mindset that the game is predicated upon.
+<ul ><li> This is common in many cooperative games; having players utilize their resources together and reduce wasted actions is an effective way of forcing players to work together.
+</li></ul></li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/SalvageHiddenTreasures' title='/pmwiki/pmwiki.php/TabletopGame/SalvageHiddenTreasures' data-format='VGFibGV0b3BHYW1lL1NhbHZhZ2VIaWRkZW5UcmVhc3VyZXM='>Salvage Hidden Treasures</a></em>, one cannot just win by just hoarding all the treasure they can find; their boat have a capacity of 10 weight units, and since the treasures usually weigh at least 3 units, the ship's hold will end up full rather quickly. The players can, however, buy more boats to increase their hold capacity, for a maximum of 30 units.
+</li><li> The <em>Tiny Epic</em> series of games tend to involve resource tracks around player cards, with different tokens representing different resources. These tracks are all finite, usually in the range of 9 to 13 maximum, encouraging players to spend often, and to prevent them from putting all their stock into a single resource.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder1');">&nbsp;&nbsp;&nbsp;&nbsp;Collectable Card Games&nbsp;</div><div id="folder1" class="folder" isfolder="true" style="display:block;">
+<ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/IlluminatiNewWorldOrder' title='/pmwiki/pmwiki.php/TabletopGame/IlluminatiNewWorldOrder' data-format='VGFibGV0b3BHYW1lL0lsbHVtaW5hdGlOZXdXb3JsZE9yZGVy'>Illuminati: New World Order</a></em>, while you can have as many Plot cards as you wish in your hand during your turn, at the end of your turn you have to reduce your hand down to five. There's precious few ways to expand this (one Illuminati, the Gnomes of Zurich, expand this to six, and one group, the Conspiracy Theorists, expand it by one extra) and even fewer ways to "stash" a card (Texas, Fidel Castro). Thankfully, unlike most games, you don't have to discard the excess; you can return them to your deck, and can even choose *where* in the deck you put it.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder2');">&nbsp;&nbsp;&nbsp;&nbsp;Tabletop RPG&nbsp;</div><div id="folder2" class="folder" isfolder="true" style="display:block;">
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Century' title='/pmwiki/pmwiki.php/TabletopGame/Century' data-format='VGFibGV0b3BHYW1lL3t7Q2VudHVyeX19'>Century</a></em>: Each player can have a maximum of 10 resources in their hold, with <em>Eastern Wonders</em> and <em>Eastern Mountains</em> also providing a bonus tile to hold a few more resources. If this limit wasn't present, it could be possible to obtain an extreme count of resources through resource conversion cards.
+</li><li> <a class='twikilink' href='/pmwiki/pmwiki.php/MediaNotes/CypherSystem' title='/pmwiki/pmwiki.php/MediaNotes/CypherSystem' data-format='TWVkaWFOb3Rlcy9DeXBoZXJTeXN0ZW0='>Cypher System</a> games (ex. <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Numenera' title='/pmwiki/pmwiki.php/TabletopGame/Numenera' data-format='VGFibGV0b3BHYW1lL3t7TnVtZW5lcmF9fQ=='>Numenera</a></em>): There is a soft cap on how many <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LimitedUseMagicalDevice' title='/pmwiki/pmwiki.php/Main/LimitedUseMagicalDevice' data-format='W1tMaW1pdGVkVXNlTWFnaWNhbERldmljZSBjeXBoZXJzXV0='>cyphers</a> a character can carry at once, with consequences if anyone goes above the cap varying from one of the cyphers randomly deactivating to <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RocksFallEveryoneDies' title='/pmwiki/pmwiki.php/Main/RocksFallEveryoneDies' data-format='W1tSb2Nrc0ZhbGxFdmVyeW9uZURpZXMgYSBob2xlIGdldHRpbmcgcmlwcGVkIGluIHJlYWxpdHkgYW5kIHN3YWxsb3dpbmcgdGhlIGhvYXJkZXIgdXBdXQ=='>a hole getting ripped in reality and swallowing the hoarder up</a>. Combined with the explicit instructions for the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/GameMaster' title='/pmwiki/pmwiki.php/Main/GameMaster' data-format='R2FtZU1hc3Rlcg=='>Game Master</a> to be <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MontyHaul' title='/pmwiki/pmwiki.php/Main/MontyHaul' data-format='W1tNb250eUhhdWwgZ2VuZXJvdXMgYWJvdXQgY3lwaGVycyBzcGVjaWZpY2FsbHldXQ=='>generous about cyphers specifically</a>, this is designed to try to counter the RPG player's default urge to hoard every resource they obtain indefinitely.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/DungeonsAndDragons' title='/pmwiki/pmwiki.php/TabletopGame/DungeonsAndDragons' data-format='VGFibGV0b3BHYW1lL0R1bmdlb25zQW5kRHJhZ29ucw=='>Dungeons & Dragons</a></em> has encumbrance determined by a character's strength score. Obviously, the higher said strength score, the more they can carry. Certain factors such as size and form altered this number. Then, when the character exceeded this encumbrance, they start suffering penalties the more they carried over the limit. Eventually, if the total weight they're carrying got too high, they wouldn't even be able to lift it. Then again, <em>D&amp;D</em> basically invented the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BagOfHolding' title='/pmwiki/pmwiki.php/Main/BagOfHolding' data-format='QmFnT2ZIb2xkaW5n'>Bag of Holding</a> trope. Similarly, the spell slot system has a maximum number of spells you can cast (sans cantrips) per long rest, so you can't "hoard" spells by putting off casting them. They're use-it-or-lose it, with no compensation for unused slots. Attunement in 5th Edition was introduced in an attempt to limit hoarding of magic items, since characters can only attune to three items at a time.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/Heroine' title='/pmwiki/pmwiki.php/TabletopGame/Heroine' data-format='VGFibGV0b3BHYW1lL3t7SGVyb2luZX19'>Heroine</a></em>: There are only fourteen Drama Points in the entire game. If there are no more "in the bank" and a player does something that should give them one, they instead take a Drama Point from the player who has the most of them at the table. Also, the player with the <em>least</em> Drama Points after the final scene gets to narrate the epilogue.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/TheOneRing' title='/pmwiki/pmwiki.php/TabletopGame/TheOneRing' data-format='VGFibGV0b3BHYW1lL1RoZU9uZVJpbmc='>The One Ring</a></em>: Encumbrance is a major factor in how far the players can travel without giving in to fatigue, and treasure is <em>heavy</em> and difficult to transport long distances.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/SwashbucklersOfTheSevenSkies' title='/pmwiki/pmwiki.php/TabletopGame/SwashbucklersOfTheSevenSkies' data-format='VGFibGV0b3BHYW1lL1N3YXNoYnVja2xlcnNPZlRoZVNldmVuU2tpZXM='>Swashbucklers of the 7 Skies</a></em> has two different forms of this trope for limited-use bonuses (Style Dice) or treasures:
+<ul ><li> Players can spend Style Dice for bonuses on their rolls or as an extra cost to do unusual things with their Fortes. Each player starts with a couple and the GM has a pool to hand out for impressive deeds. Spent ones go back to the GM's pool. Players are encouraged to spend them, since they go away at the end of a game session (and get reset at the default amount next time, so leftovers are just wasted), and are really easy to get back — just add some extra detail to your next action and try to impress or amuse the other players.
+</li><li> Treasures like money or special items are granted as Temporary Fortes — temporary skills. Unless the player spends <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ExperiencePoints' title='/pmwiki/pmwiki.php/Main/ExperiencePoints' data-format='W1tFeHBlcmllbmNlUG9pbnRzIFRyYWluaW5nIFBvaW50c11d'>Training Points</a> to make them regular Fortes, they <em>will</em> go away soon. It's up to the player to find some way to spend them usefully, or at least in an entertaining manner — at the least, you can explain how you blew your share of the treasure on getting half the town rip-roaring drunk, in exchange for an extra Style Die or two next time you play.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/TabletopGame/TheWitcherRolePlayingGame' title='/pmwiki/pmwiki.php/TabletopGame/TheWitcherRolePlayingGame' data-format='VGFibGV0b3BHYW1lL1RoZVdpdGNoZXJSb2xlUGxheWluZ0dhbWU='>The Witcher Role Playing Game</a></em>: All items have a weight. If you're carrying more inventory than your encumberance can handle, you'll be slowed to the point of uselessness. Getting a horse with saddlebags or a wagon can help lighten the load, but even then there's a limit, and you can't take those everywhere.
+</li></ul></div>
+</p><p><div class="folderlabel" onclick="togglefolder('folder3');">&nbsp;&nbsp;&nbsp;&nbsp;Video Games&nbsp;</div><div id="folder3" class="folder" isfolder="true" style="display:block;">
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/AntiIdleTheGame' title='/pmwiki/pmwiki.php/VideoGame/AntiIdleTheGame' data-format='VmlkZW9HYW1lL0FudGlJZGxlVGhlR2FtZQ=='>Anti-Idle: The Game</a></em>:
+<ul ><li> In <em>Battle Arena</em>, each tab of your inventory has 30 slots. Once you fill up a tab, excess items spill into a "Recently Deleted" tab, and while you can retrieve items from there, it costs Pixels to do so. You can store items you don't need at the moment in the Item Storage menu, but going to that menu will terminate your hit combo and cancel any raids in progress.
+</li><li> In <em><span class='esc-seq' title='non-wikiword'>TukkunFCG</span></em>, you can only have up to 6 cards in your hand at any one time, and you draw one card per turn. If you are already at 6 cards when a new turn begins, you will take damage.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/BloodstainedRitualOfTheNight' title='/pmwiki/pmwiki.php/VideoGame/BloodstainedRitualOfTheNight' data-format='VmlkZW9HYW1lL0Jsb29kc3RhaW5lZFJpdHVhbE9mVGhlTmlnaHQ='>Bloodstained: Ritual of the Night</a></em> puts a hard limit on how many healing potions Miriam can carry, making it impossible to outlast bosses by simply healing again and again (there is no such limit on health-restoring crafted food, however, so there is a loophole). Also, while your <a class='twikilink' href='/pmwiki/pmwiki.php/Main/PowersAsPrograms' title='/pmwiki/pmwiki.php/Main/PowersAsPrograms' data-format='W1tQb3dlcnNBc1Byb2dyYW1zIHNoYXJkc11d'>shards</a> gain extra power when you carry multiple copies of the same one, you cannot have more than nine copies at once: this encourages you to sell extra copies to Dominique for cash.
+</li><li> With exception to the first, the <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Boktai' title='/pmwiki/pmwiki.php/VideoGame/Boktai' data-format='VmlkZW9HYW1lL3t7Qm9rdGFpfX0='>Boktai</a></em> series allows you to only carry a limited number of items in your inventory. In addition, these items can spoil, which causes them to restore only a smidgeon of health on top of <a class='twikilink' href='/pmwiki/pmwiki.php/Main/InterfaceScrew' title='/pmwiki/pmwiki.php/Main/InterfaceScrew' data-format='W1tJbnRlcmZhY2VTY3JldyBwb2lzb25pbmddXQ=='>poisoning</a> the user. Lita, the shopkeeper, encourages Django to use items rather than hoard them, though she also has an ulterior motive of getting him to return to her shop more frequently. Of course, based on certain conditions, causing an item to spoil can actually be beneficial; for example, chocolate can melt onto the item beneath it, coating it in chocolate to preserve it, or it can melt onto another piece of chocolate to make a better item.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Bonfire' title='/pmwiki/pmwiki.php/VideoGame/Bonfire' data-format='VmlkZW9HYW1lL3t7Qm9uZmlyZX19'>Bonfire</a></em>, used items will grant you a bonus of 10 gold and 10 XP to the journey's end reward, encouraging you to use as many as possible. There is even an early-game quest cheekily called "Hoarder's Nightmare" that forces you to use several items to complete.
+</li><li> <em><a class='createlink' rel='nofollow' href='/pmwiki/pmwiki.php/VideoGame/CardSurvivalTropicalIsland' title='/pmwiki/pmwiki.php/VideoGame/CardSurvivalTropicalIsland' data-format='W1tWaWRlb0dhbWUvQ2FyZFN1cnZpdmFsVHJvcGljYWxJc2xhbmQgQ2FyZCBTdXJ2aXZhbDogVHJvcGljYWwgSXNsYW5kXV0='>Card Survival: Tropical Island</a></em>:
+<ul ><li> Many raw foods have a time limit to be consumed before they rot. You can build primitive preservation containers to store these foods and freeze their timers.
+</li><li> Storms occasionally ravage the island and destroy anything not stored inside your hut, even items kept in baskets or chests and unfinished crafting projects. Unfortunately, you cannot predict when the next storm will come, so expect a major loss in your inventory if you're not prepared.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Chippy' title='/pmwiki/pmwiki.php/VideoGame/Chippy' data-format='VmlkZW9HYW1lL3t7Q2hpcHB5fX0='>Chippy</a></em>:
+<ul ><li> Most single-use attack and defense powerups are <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Cap' title='/pmwiki/pmwiki.php/Main/Cap' data-format='e3tjYXB9fXBlZA=='>capped</a> at 3 or 9, to prevent you from saving them all for blasting the last boss form's core, or spamming a forcefield around yourself.
+</li><li> Shield <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BossArenaRecovery' title='/pmwiki/pmwiki.php/Main/BossArenaRecovery' data-format='W1tCb3NzQXJlbmFSZWNvdmVyeSBjb250YWluZXJzXV0='>containers</a> spawn less frequently if you have more <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SingleUseShield' title='/pmwiki/pmwiki.php/Main/SingleUseShield' data-format='e3tTfGluZ2xlVXNlU2hpZWxkfX1oaWVsZHM='>Shields</a> on you, making it inefficient to shy away from the boss to farm them.
+</li></ul></li><li> In the expansions to <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/CivilizationVI' title='/pmwiki/pmwiki.php/VideoGame/CivilizationVI' data-format='VmlkZW9HYW1lL3t7Q2l2aWxpemF0aW9uIFZJfX0='>Civilization VI</a></em>, strategic resources accumulate, but have a hard storage cap. This means you are throttled when building any units that require said resource&#8212;Swordsmen, for example, require 20 Iron, and the default cap on a standard game is 50, so you can only build two Swordsmen until you accumulate enough Iron to build another. Additionally, each of those Swordsmen will drain 1 Iron from your storage, reducing or stalling the rate of replenishment. You can raise the cap by building the Encampment District (and subsequent buildings) and some Civs have special abilities that expand this further. Even if you find/conquer a ton of sources of a resource, the hard cap still forces you to wait.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/CrusaderKings' title='/pmwiki/pmwiki.php/VideoGame/CrusaderKings' data-format='W1tWaWRlb0dhbWUvQ3J1c2FkZXJLaW5ncyBDcnVzYWRlciBLaW5ncyAyXV0='>Crusader Kings 2</a></em> and <a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/CrusaderKingsIII' title='/pmwiki/pmwiki.php/VideoGame/CrusaderKingsIII' data-format='W1tWaWRlb0dhbWUvQ3J1c2FkZXJLaW5nc0lJSSBpdHMgc2VxdWVsXV0='>its sequel</a> have a soft limit on the number of holdings the player can have. Exceeding this limit places harsh penalties on tax income and makes the player's feudal subjects dislike them more. Some players would circumvent this by holding every single title in their realm (AKA "North Korea mode") until Paradox <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ObviousRulePatch' title='/pmwiki/pmwiki.php/Main/ObviousRulePatch' data-format='W1tPYnZpb3VzUnVsZVBhdGNoIGltcGxlbWVudGVkIGhhcnNoZXIgdGF4IGFuZCBsZXZ5IHBlbmFsdGllc11d'>implemented harsher tax and levy penalties</a> on rulers who did so.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/CthulhuSavesTheWorld' title='/pmwiki/pmwiki.php/VideoGame/CthulhuSavesTheWorld' data-format='VmlkZW9HYW1lL0N0aHVsaHVTYXZlc1RoZVdvcmxk'>Cthulhu Saves the World</a></em> features <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RareCandy' title='/pmwiki/pmwiki.php/Main/RareCandy' data-format='W1tSYXJlQ2FuZHkgc3RhdC1yYWlzaW5nIGl0ZW1zXV0='>stat-raising items</a> that are applied immediately upon picking them up. The developer commentary specifically mentions they implemented them this way so players wouldn't hold onto them forever (and to avoid making a more complex inventory system).
+</li><li> <em><a class='createlink' rel='nofollow' href='/pmwiki/pmwiki.php/VideoGame/Daioh' title='/pmwiki/pmwiki.php/VideoGame/Daioh' data-format='VmlkZW9HYW1lL3t7RGFpb2h9fQ=='>Daioh</a></em> punishes <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SmartBomb' title='/pmwiki/pmwiki.php/Main/SmartBomb' data-format='W1tTbWFydEJvbWIgYm9tYl1d'>bomb</a>-hoarding by making the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/DynamicDifficulty' title='/pmwiki/pmwiki.php/Main/DynamicDifficulty' data-format='W1tEeW5hbWljRGlmZmljdWx0eSByYW5rXV0='>rank</a> spike if the player goes too long without firing bombs, with the time until the next rank spike being shorter the more bombs the player has in stock. Conversely, firing bombs will reduce the rank. A detailed explanation of the relationship between bombs and rank (as well as other factors about rank) can be read <a class='urllink' href='https://shmups.wiki/library/Daioh#Rank'>here<img src="https://static.tvtropes.org/pmwiki/pub/external_link.gif" height="12" width="12" style="border:none;" /></a>.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/DarkestDungeon' title='/pmwiki/pmwiki.php/VideoGame/DarkestDungeon' data-format='VmlkZW9HYW1lL0Rhcmtlc3REdW5nZW9u'>Darkest Dungeon</a></em>: Each expedition is limited to sixteen inventory slots. Some similar items can be "stacked" but even these have a hard limit. There's no way to expand these slots, although there's limited ways to increase the stacking (some Hamlet upgrades or the Antiquarian). The sequel, <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/DarkestDungeon2' title='/pmwiki/pmwiki.php/VideoGame/DarkestDungeon2' data-format='e3tWaWRlb0dhbWUvRGFya2VzdCBEdW5nZW9uIDJ9fQ=='>Darkest Dungeon 2</a></em>, continues this, although it's much more forgiving as the stagecoach has a pretty large capacity, and you can expand it with upgrades.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/DevilMayCry5' title='/pmwiki/pmwiki.php/VideoGame/DevilMayCry5' data-format='VmlkZW9HYW1lL0RldmlsTWF5Q3J5NQ=='>Devil May Cry 5</a></em>: Nero can hold a maximum of eight <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ArtificialLimbs' title='/pmwiki/pmwiki.php/Main/ArtificialLimbs' data-format='W1tBcnRpZmljaWFsTGltYnMgRGV2aWwgQnJlYWtlcnNdXQ=='>Devil Breakers</a>, and they are cheap and easily found as pickups. Switching Breakers requires Nero to destroy his current one (either by using <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ChargedAttack' title='/pmwiki/pmwiki.php/Main/ChargedAttack' data-format='W1tDaGFyZ2VkQXR0YWNrIEJyZWFrIEFnZV1d'>Break Age</a>/Break Away, or by getting hit whilst using them), however.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/EtrianOdyssey' title='/pmwiki/pmwiki.php/VideoGame/EtrianOdyssey' data-format='VmlkZW9HYW1lL0V0cmlhbk9keXNzZXk='>Etrian Odyssey</a></em>, you have a cap of 60 items. Note that if you have multiple instances of one item, each of them will count toward that limit (for example, if you have five Medicas, they will take up 5/60 slots, not be one slot with five Medicas). This inventory is also where the drops from monsters and gathering spots go, so it's best to use your items so that you can free up room for more of those valuable drops that can sell for a pretty penny and make new items.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/TheElderScrolls' title='/pmwiki/pmwiki.php/Franchise/TheElderScrolls' data-format='RnJhbmNoaXNlL1RoZUVsZGVyU2Nyb2xscw=='>The Elder Scrolls</a></em>:
+<ul ><li> Throughout the series, there is a limit on how much you can carry at one time based on item weight called "Encumbrance". If you pick up every single item you possibly can, you'll reach this limit very quickly, preventing you from moving (or causing you to move very slowly depending on the game) so the game encourages only taking items with the best value/weight ratio. You can get around this by putting items down, but risk them being de-spawned if the cell resets (which, in most games, will happen after 72 in-game hours). You can put them into a container, but these also sometimes reset and, if the container is tagged with a different "owner", may mark your legitimately acquired items as "stolen". <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AHomeOwnerIsYou' title='/pmwiki/pmwiki.php/Main/AHomeOwnerIsYou' data-format='W1tBSG9tZU93bmVySXNZb3UgUGxheWVyIG93bmVkIGhvdXNlc11d'>Player owned houses</a>, generally only available late in games at high cost, allow for much greater storage but by that point, you'll be much more selective about the items you choose to hoard anyway.
+</li><li> After an early mission of the main quest in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TheElderScrollsVSkyrim' title='/pmwiki/pmwiki.php/VideoGame/TheElderScrollsVSkyrim' data-format='W1tWaWRlb0dhbWUvVGhlRWxkZXJTY3JvbGxzVlNreXJpbSBTa3lyaW1dXQ=='>Skyrim</a></em>, Dragons will start randomly spawning all over Skyrim. They scale to your level and, though certainly threatening foes, follow an abusable battle pattern, meaning you'll be able to defeat scores of them with relative ease. They drop both bones and scales, which can be used to craft some of the best armor in the game...but not until you get your Smithing skill to 100 and take the associated perk. Until then, they are nothing more than valuable <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ShopFodder' title='/pmwiki/pmwiki.php/Main/ShopFodder' data-format='U2hvcEZvZGRlcg=='>Shop Fodder</a>...and also very heavy, discouraging you from hoarding them until you have a home to store them.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Elsword' title='/pmwiki/pmwiki.php/VideoGame/Elsword' data-format='e3tWaWRlb0dhbWUvRWxzd29yZH19'>Elsword</a></em>: many items have different caps in your item storage. Like how you can only hold 100 <a class='twikilink' href='/pmwiki/pmwiki.php/Main/EmergencyEnergyTank' title='/pmwiki/pmwiki.php/Main/EmergencyEnergyTank' data-format='e3tFbWVyZ2VuY3kgRW5lcmd5IFRhbmt9fXM='>Emergency Energy Tanks</a> in one slot or 300 of a certain crafting item in a slot. If you don't expand your item slots, managing your items will be harder. There are also the "temporary" items (most notably the promotional costumes) that you can only hold for a certain amount of time, ranging from a day to a month.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Heretic' title='/pmwiki/pmwiki.php/VideoGame/Heretic' data-format='VmlkZW9HYW1lL3t7SGVyZXRpY319'>Heretic</a></em>, each time you complete a level, you can only carry one of each inventory item you've collected into the next level (except the Wings of Wrath, which cannot be transferred at all), encouraging you to use as many items as you can before the end of the level.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/FellSealArbitersMark' title='/pmwiki/pmwiki.php/VideoGame/FellSealArbitersMark' data-format='VmlkZW9HYW1lL0ZlbGxTZWFsQXJiaXRlcnNNYXJr'>Fell Seal: Arbiter's Mark</a></em>: The game disincentivizes item hoarding by making items such as healing potions be available in limited amounts during battles and automatically restocks them in between. <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ItemCrafting' title='/pmwiki/pmwiki.php/Main/ItemCrafting' data-format='SXRlbUNyYWZ0aW5n'>Item Crafting</a> allows the player to unlock new items and increase the number of uses for said items.
+</li><li> Equipment in <em>Grow Castle</em> is generated with random stats and abilities, meaning that it's very easy for a piece of equipment to fall into the category of, "Well, I don't want to equip this right now, but I can see how I'd want it in X situation, so I don't want to just throw it away." This is balanced out by basing the crafting system on stones obtained by recycling equipment, so you <em>need</em> to ruthlessly and regularly cull surplus gear in order to craft higher-tier pieces.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/HeartsOfIron' title='/pmwiki/pmwiki.php/VideoGame/HeartsOfIron' data-format='W1tWaWRlb0dhbWUvSGVhcnRzT2ZJcm9uIEhlYXJ0cyBvZiBJcm9uIElJSV1d'>Hearts of Iron III</a></em> had the problem of experienced players stockpiling huge amounts of important resources such as fuel before the outbreak of hostilities, making resource management during the actual war trivial. Its sequel, <em>Hearts of Iron IV</em>, took steps to avert this by not allowing stockpiling of raw materials at all, instead only using them directly in production of weapons and other equipment which could be stockpiled instead. This made pre-war buildup less flexible as you'd have to commit to certain types of equipment and couldn't just hoard raw materials to build whatever you happened to need down the line. The game also initially didn't have fuel as a resource at all, instead opting to use oil as a raw material in the production of vehicles and ships. It was eventually reintroduced to the franchise along with the release of the DLC <em>Man the Guns</em>, but the ability to stockpile it was made much more limited.
+</li><li> Any recovery items you have in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Illbleed' title='/pmwiki/pmwiki.php/VideoGame/Illbleed' data-format='VmlkZW9HYW1lL3t7SWxsYmxlZWR9fQ=='>Illbleed</a></em> will disappear from your inventory on completing a stage, making it pointless to buy far more than you think you'll need, and encouraging you to go ahead and use up any you find in a given level.
+</li><li> Unlike most <span class='esc-seq' title='non-wikiword'>JRPGs</span> which give 99 cap of any type of item, <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TheLegendOfDragoon' title='/pmwiki/pmwiki.php/VideoGame/TheLegendOfDragoon' data-format='VmlkZW9HYW1lL1RoZUxlZ2VuZE9mRHJhZ29vbg=='>The Legend of Dragoon</a></em> only allows you to carry a maximum of 32 items total. Many monsters drop things such as healing potions upon defeat, so it encourages actually using them rather than hoarding.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/TheLegendOfZelda' title='/pmwiki/pmwiki.php/Franchise/TheLegendOfZelda' data-format='RnJhbmNoaXNlL1RoZUxlZ2VuZE9mWmVsZGE='>The Legend of Zelda</a></em>:
+<ul ><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TheLegendOfZeldaBreathOfTheWild' title='/pmwiki/pmwiki.php/VideoGame/TheLegendOfZeldaBreathOfTheWild' data-format='W1tWaWRlb0dhbWUvVGhlTGVnZW5kT2ZaZWxkYUJyZWF0aE9mVGhlV2lsZCBCcmVhdGggb2YgdGhlIFdpbGRdXQ=='>Breath of the Wild</a></em>, all melee weapons, bows, and shields have a durability rating; after a certain number of uses, they will break. Even the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/InfinityMinusOneSword' title='/pmwiki/pmwiki.php/Main/InfinityMinusOneSword' data-format='W1tJbmZpbml0eU1pbnVzT25lU3dvcmQgTWFzdGVyIFN3b3JkXV0='>Master Sword</a> will "run out of energy" and require time to regenerate after enough hits. There is also a limited number of slots for carrying this equipment and expanding your "stash" <a class='twikilink' href='/pmwiki/pmwiki.php/Main/CollectionSidequest' title='/pmwiki/pmwiki.php/Main/CollectionSidequest' data-format='W1tDb2xsZWN0aW9uU2lkZXF1ZXN0IHRha2VzIHNpZ25pZmljYW50IHRpbWUgYW5kIGVmZm9ydF1d'>takes significant time and effort</a>. This forces the player to continuously replace their weapons, but also encourages them to try out different weapons on different enemies, throw them at opponents when appropriate, and seek out new and interesting equipment.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TheLegendOfZeldaTearsOfTheKingdom' title='/pmwiki/pmwiki.php/VideoGame/TheLegendOfZeldaTearsOfTheKingdom' data-format='W1tWaWRlb0dhbWUvVGhlTGVnZW5kT2ZaZWxkYVRlYXJzT2ZUaGVLaW5nZG9tIFRlYXJzIG9mIHRoZSBLaW5nZG9tXV0='>Tears of the Kingdom</a></em> takes this to another level with the Fuse system, which allows you combine random objects with your weapons, shields, and arrows and see what happens, further encouraging experimentation and burning through your inventory.
+</li></ul></li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/LetItDie' title='/pmwiki/pmwiki.php/VideoGame/LetItDie' data-format='VmlkZW9HYW1lL0xldEl0RGll'>Let It Die</a></em>, there are three currencies: Killcoins, <span class='esc-seq' title='non-wikiword'>SPLithium</span>, and Death Metal. While Death Metals can't be stolen, the banks for Killcoins and <span class='esc-seq' title='non-wikiword'>SPLithium</span> can be broken into when other players invade your Waiting room. While both banks can be upgraded to hold more of each, the more you have in your banks, the more an invader receives, causing most players to hold parcels of them in their reward box, which can only hold 50 before preventing more rewards from being received. Combined with a small storage box and inventory space, players are forced to decide what's worth keeping and trying to keep their currency banks low unless they're willing to risk losing it to invaders.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/LookOutside' title='/pmwiki/pmwiki.php/VideoGame/LookOutside' data-format='VmlkZW9HYW1lL0xvb2tPdXRzaWRl'>Look Outside</a></em>: The gameplay mechanics work in such a way that it's functionally impossible to hoard items while also progressing. <a class='twikilink' href='/pmwiki/pmwiki.php/Main/BreakableWeapons' title='/pmwiki/pmwiki.php/Main/BreakableWeapons' data-format='W1tCcmVha2FibGVXZWFwb25zIEFsbCB3ZWFwb25zIGNhbiBicmVhayB3aXRoIHRvbyBtdWNoIHVzZV1d'>All weapons can break with too much use</a>, many weapons require fuel or ammunition that must be regularly purchased, many enemies hit so fast and hard that gobbling up tons of healing items is basically mandatory, enemies will get so tough that defeating them without using Special skills, which require stamina to use, is extremely tough, and you'll frequently need to sell stuff in order to afford more useful items from merchants.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MassEffect1' title='/pmwiki/pmwiki.php/VideoGame/MassEffect1' data-format='VmlkZW9HYW1lL01hc3NFZmZlY3Qx'>Mass Effect 1</a></em> has a maximum number of weapons, armours and mods you can hold in your inventory, exceeding which will force you to turn any new loot into omni-gel until the total number drops to the limit. Thus you are encouraged to regularly sell or recycle weaker, outdated equipment.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MegaMan5' title='/pmwiki/pmwiki.php/VideoGame/MegaMan5' data-format='VmlkZW9HYW1lL01lZ2FNYW41'>Mega Man 5</a></em>: This is the game that introduces the M-Tank, an item that not only refills Mega Man’s health but all of his sub-weapon’s energy as well, making it very valuable. While it can be found in several stages, the game only lets you hold one at a time, so if the player has one in their inventory it won’t even appear.
+</li><li> An NPC in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MOTHER3' title='/pmwiki/pmwiki.php/VideoGame/MOTHER3' data-format='VmlkZW9HYW1lL01PVEhFUjM='>Mother 3</a></em> encourages you to use your items as needed and to not hoard everything. The game has a pretty small inventory limit per character in order to make you use common items more frequently.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MountAndBlade' title='/pmwiki/pmwiki.php/VideoGame/MountAndBlade' data-format='VmlkZW9HYW1lL01vdW50QW5kQmxhZGU='>Mount & Blade</a></em> keeps you from hoarding too many soldiers by means of a party cap (based on your influence, charisma, and wealth, mirroring the social, personal, and financial requirements to field a medieval army) and keeps you from having too many companions via an <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ArbitraryHeadcountLimit' title='/pmwiki/pmwiki.php/Main/ArbitraryHeadcountLimit' data-format='QXJiaXRyYXJ5SGVhZGNvdW50TGltaXQ='>Arbitrary Headcount Limit</a> (with the justification that you can't give <em>everyone</em> the attention they deserve, leading to jealousy in the ranks). It also discourages hoarding too many horses by imposing a 'herding' penalty to world map movement speed if you have more horses than soldiers, and also slows you down if you go over the weight limit for equipment as well. Playing the game is equal parts field combat and logistics exercise.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/MULE' title='/pmwiki/pmwiki.php/VideoGame/MULE' data-format='VmlkZW9HYW1lL3t7TVVMRX19'>M.U.L.E.</a></em>, Food and Energy (after usage) spoils at a rate of 50% and 25% per month rounded down, respectively, preventing players from hoarding them effectively. Smithore and Crystite have soft caps of 50 — anything left over post-auction will be lost, so it is best to sell any past that mark if you get the chance.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/NewHorizons' title='/pmwiki/pmwiki.php/VideoGame/NewHorizons' data-format='VmlkZW9HYW1lL05ld0hvcml6b25z'>New Horizons</a></em>, once the captain gets one million gold on the ship, crew gets envious and demands to sign articles. The crew's morale will plummet as long as the amount isn't reduced, either by going to a loanshark or spending it. The biggest the amount is, the worse it gets. Extra pays and double rum rations only help temporarily.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/PanzerPaladin' title='/pmwiki/pmwiki.php/VideoGame/PanzerPaladin' data-format='VmlkZW9HYW1lL1BhbnplclBhbGFkaW4='>Panzer Paladin</a></em> requires you to slot in a weapon to activate checkpoints. Each weapon you have in your inventory increases Spirit Burden, and too much of it and it will increase the number of enemies and the chance <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RecurringBoss' title='/pmwiki/pmwiki.php/Main/RecurringBoss' data-format='W1tSZWN1cnJpbmdCb3NzIHRoZSBIb3JzZW1hbl1d'>the Horseman</a> appears to impede your progress.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Pikmin' title='/pmwiki/pmwiki.php/VideoGame/Pikmin' data-format='VmlkZW9HYW1lL3t7UGlrbWlufX0='>Pikmin</a></em> series:
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Pikmin2' title='/pmwiki/pmwiki.php/VideoGame/Pikmin2' data-format='VmlkZW9HYW1lL1Bpa21pbjI='>Pikmin 2</a></em>: Purple and White Pikmin can only be obtained from their respective Candypop Buds in this game. Buds respawn when the cave they are in is revisited, but Buds in earlier caves will not appear if the player has over a certain amount of Pikmin of that type, to prevent easily gathering large numbers of them at the beginning.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Pikmin4' title='/pmwiki/pmwiki.php/VideoGame/Pikmin4' data-format='VmlkZW9HYW1lL1Bpa21pbjQ='>Pikmin 4</a></em>: Failing a Dandori Challenge will normally give 10 raw material, the main currency, for at least trying. Attempting to abuse this mechanic will have the challenges start giving 1 raw material instead.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/RiseOfTheTombRaider' title='/pmwiki/pmwiki.php/VideoGame/RiseOfTheTombRaider' data-format='VmlkZW9HYW1lL1Jpc2VPZlRoZVRvbWJSYWlkZXI='>Rise of the Tomb Raider</a></em> has a (increasable to a point) limit to how much salvage you can carry, which means that if you don't start using that stuff after a while, everything salvaged from kills and boxes will be wasted, as finding salvage when inventory is full causes the stuff to disappear.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/RogueLegacy' title='/pmwiki/pmwiki.php/VideoGame/RogueLegacy' data-format='VmlkZW9HYW1lL1JvZ3VlTGVnYWN5'>Rogue Legacy</a></em>, entering the castle requires giving <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TheGrimReaper' title='/pmwiki/pmwiki.php/Main/TheGrimReaper' data-format='VGhlR3JpbVJlYXBlcg=='>The Grim Reaper</a> all the money you have on hand, forcing you to spend as much of your player character's inherited loot as possible on upgrading their estate and buying new equipment. One of the available estate upgrades allows haggling with the Reaper to only demand a percentage of money.
+</li><li> The <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Retraux' title='/pmwiki/pmwiki.php/Main/Retraux' data-format='e3tSZXRyYXV4fX0='>Retraux</a> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/JapaneseRPG' title='/pmwiki/pmwiki.php/Main/JapaneseRPG' data-format='SmFwYW5lc2VSUEc='>Japanese RPG</a> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SeaOfStars' title='/pmwiki/pmwiki.php/VideoGame/SeaOfStars' data-format='VmlkZW9HYW1lL1NlYU9mU3RhcnM='>Sea of Stars</a></em> employs this trope this by replacing all items with <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MedicinalCuisine' title='/pmwiki/pmwiki.php/Main/MedicinalCuisine' data-format='TWVkaWNpbmFsQ3Vpc2luZQ=='>Medicinal Cuisine</a> and having your first <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SupportPartyMember' title='/pmwiki/pmwiki.php/Main/SupportPartyMember' data-format='U3VwcG9ydFBhcnR5TWVtYmVy'>Support Party Member</a>, Garl the Warrior Cook, a cook, sitting down at save points to transform ingredients collected in the wild into home-cooked meals. While you can find dishes hanging out in <a class='twikilink' href='/pmwiki/pmwiki.php/Main/InexplicableTreasureChests' title='/pmwiki/pmwiki.php/Main/InexplicableTreasureChests' data-format='SW5leHBsaWNhYmxlVHJlYXN1cmVDaGVzdHM='>Inexplicable Treasure Chests</a> that are <em>currently</em> <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TooAwesomeToUse' title='/pmwiki/pmwiki.php/Main/TooAwesomeToUse' data-format='VG9vQXdlc29tZVRvVXNl'>Too Awesome to Use</a>, they won't stay that way, as learning new recipes is one of the game's <a class='twikilink' href='/pmwiki/pmwiki.php/Main/CollectionSidequest' title='/pmwiki/pmwiki.php/Main/CollectionSidequest' data-format='e3tDb2xsZWN0aW9uIFNpZGVxdWVzdH19cw=='>Collection Sidequests</a>. Additionally, there's a hard <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Cap' title='/pmwiki/pmwiki.php/Main/Cap' data-format='e3tjYXB9fQ=='>cap</a> of 10 cooked dishes in the party's inventory, encouraging everyone to eat their fill.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/SecretOfMana' title='/pmwiki/pmwiki.php/VideoGame/SecretOfMana' data-format='VmlkZW9HYW1lL1NlY3JldE9mTWFuYQ=='>Secret of Mana</a></em> is ludicrously strict about it, capping your consumable supplies at a mere <em>4</em> of each item at a time. It becomes less of a headache as your magic gets stronger, but it sure would be nice to have a few extra recovery items on hand during <a class='twikilink' href='/pmwiki/pmwiki.php/Main/MarathonLevel' title='/pmwiki/pmwiki.php/Main/MarathonLevel' data-format='e3tNYXJhdGhvbiBMZXZlbH19cw=='>Marathon Levels</a> that force you to burn through most of your MP fighting enemies.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ShinMegamiTenseiIV' title='/pmwiki/pmwiki.php/VideoGame/ShinMegamiTenseiIV' data-format='VmlkZW9HYW1lL1NoaW5NZWdhbWlUZW5zZWlJVg=='>Shin Megami Tensei IV</a></em>, each item has its own inventory <a class='twikilink' href='/pmwiki/pmwiki.php/Main/Cap' title='/pmwiki/pmwiki.php/Main/Cap' data-format='e3tjYXB9fQ=='>cap</a>, and the better items tend to have lower caps to encourage you to actually use them. The lowly Life Stone (small HP restore) has a cap of 50, while the amazing Summon Stone (revive with full HP <em>and</em> summon into battle with one action) has a cap of 5. The only exception to that pattern is the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/RareCandy' title='/pmwiki/pmwiki.php/Main/RareCandy' data-format='UmFyZUNhbmR5'>Rare Candy</a> items, which invariably have a cap of 99. The same behavior is displayed in the 3DS remake of <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ShinMegamiTenseiStrangeJourney' title='/pmwiki/pmwiki.php/VideoGame/ShinMegamiTenseiStrangeJourney' data-format='VmlkZW9HYW1lL1NoaW5NZWdhbWlUZW5zZWlTdHJhbmdlSm91cm5leQ=='>Shin Megami Tensei: Strange Journey</a></em> to downplay the <a class='twikilink' href='/pmwiki/pmwiki.php/Main/ItemCaddy' title='/pmwiki/pmwiki.php/Main/ItemCaddy' data-format='SXRlbUNhZGR5'>Item Caddy</a> role of the protagonist.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Stacklands' title='/pmwiki/pmwiki.php/VideoGame/Stacklands' data-format='VmlkZW9HYW1lL3t7U3RhY2tsYW5kc319'>Stacklands</a></em>, food gathered on the Island will spoil and turn into goop if left out in the sun for too long.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/STALKER' title='/pmwiki/pmwiki.php/VideoGame/STALKER' data-format='VmlkZW9HYW1lL3t7U1RBTEtFUn19'>S.T.A.L.K.E.R.</a></em>: You have a <a class='twikilink' href='/pmwiki/pmwiki.php/Main/LimitedLoadout' title='/pmwiki/pmwiki.php/Main/LimitedLoadout' data-format='W1tMaW1pdGVkTG9hZG91dCB3ZWlnaHQgbGltaXQgdGhhdCYjMDM5O3Mgbm90IHBhcnRpY3VsYXJseSBnZW5lcm91c11d'>weight limit that's not particularly generous</a>, and everything you can carry has an assigned weight, even ammunition. Going one gram over the limit makes your <a class='twikilink' href='/pmwiki/pmwiki.php/Main/SprintMeter' title='/pmwiki/pmwiki.php/Main/SprintMeter' data-format='U3ByaW50TWV0ZXI='>Sprint Meter</a> deplete incredibly fast.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/StoryOfSeasonsGrandBazaar' title='/pmwiki/pmwiki.php/VideoGame/StoryOfSeasonsGrandBazaar' data-format='VmlkZW9HYW1lL1N0b3J5T2ZTZWFzb25zR3JhbmRCYXphYXI='>Story of Seasons: Grand Bazaar</a></em>: Crops and produce have a Freshness rating that slowly ticks down. The less fresh an item, the less it'll sell for — and once it's gone bad it can't be sold, gifted, or eaten at all, only good for turning into fertilizer. The freshness clock will reset if an item is used in processing or cooking (e.g. processing milk on the edge of spoiling into butter makes perfectly fresh butter) and there's no freshness rating on certain items like bugs, trees, honey, and seeds.
+</li><li> In <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Suzerain' title='/pmwiki/pmwiki.php/VideoGame/Suzerain' data-format='VmlkZW9HYW1lL3t7U3V6ZXJhaW59fQ=='>Suzerain</a></em>, managing your national budget is a key part of your decision making, and going deep into debt is an easy way to induce an economic crash. But if you decide to go in the other direction and end up being too frugal, then you will trigger the 'Black Tuesday' event, as your government's lack of infrastructure investments results in a stock market crash and also leads into an economic depression.
+</li><li> The <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/TalesSeries' title='/pmwiki/pmwiki.php/VideoGame/TalesSeries' data-format='VmlkZW9HYW1lL1RhbGVzU2VyaWVz'>Tales Series</a></em> games put the item cap at about 20 units instead of the usual 99 for <span class='esc-seq' title='non-wikiword'>JRPGs</span>, encouraging players to use consumables so that any new ones they get don't go to waste.
+</li><li> All equipment in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ThiefTheDarkProject' title='/pmwiki/pmwiki.php/VideoGame/ThiefTheDarkProject' data-format='VmlkZW9HYW1lL1RoaWVmVGhlRGFya1Byb2plY3Q='>Thief: The Dark Project</a></em> and <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/ThiefIITheMetalAge' title='/pmwiki/pmwiki.php/VideoGame/ThiefIITheMetalAge' data-format='VmlkZW9HYW1lL1RoaWVmSUlUaGVNZXRhbEFnZQ=='>Thief II: The Metal Age</a></em> (aside from your sword, blackjack and bow) disappears at the end of a mission, and all money disappears when you exit the shop screen at the start of a mission (though if a mission forgoes the shop screen and dumps you right into the action, any money you collected from the last mission carries over). This was done to prevent players from hoarding either and make good use of all their equipment and cash at the earliest opportunity.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Tunic' title='/pmwiki/pmwiki.php/VideoGame/Tunic' data-format='VmlkZW9HYW1lL3t7VHVuaWN9fQ=='>Tunic</a></em> gives you free bombs if you throw a lot of them, to encourage their use. This contrasts non-bomb consumables, which are both <a class='twikilink' href='/pmwiki/pmwiki.php/Main/TooAwesomeToUse' title='/pmwiki/pmwiki.php/Main/TooAwesomeToUse' data-format='VG9vQXdlc29tZVRvVXNl'>Too Awesome to Use</a> and made <a class='twikilink' href='/pmwiki/pmwiki.php/Main/AwesomeButImpractical' title='/pmwiki/pmwiki.php/Main/AwesomeButImpractical' data-format='QXdlc29tZUJ1dEltcHJhY3RpY2Fs'>Awesome, but Impractical</a> by the item menu not pausing the game.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/VictoriaAnEmpireUnderTheSun' title='/pmwiki/pmwiki.php/VideoGame/VictoriaAnEmpireUnderTheSun' data-format='VmlkZW9HYW1lL1ZpY3RvcmlhQW5FbXBpcmVVbmRlclRoZVN1bg=='>Victoria: An Empire Under The Sun</a></em>:
+<ul ><li> The original <em>Victoria</em> game has the hard cap on the size of your stockpile, but supplemented this with fairly common random events that destroy a large proportion of your stockpile of a particular good.
+</li><li> <em>Victoria 2</em> puts a hard cap on the amount of a given good you can stockpile at a time, to stop a top producer or #1 great power from hoarding most of the world's supply of important goods to themselves and starve the rest of the world, something which would otherwise be far too easy to do as for instance the United Kingdom.
+</li></ul></li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/Franchise/Warcraft' title='/pmwiki/pmwiki.php/Franchise/Warcraft' data-format='RnJhbmNoaXNlL3t7V2FyY3JhZnR9fQ=='>Warcraft</a></em>:
+<ul ><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/WarcraftIII' title='/pmwiki/pmwiki.php/VideoGame/WarcraftIII' data-format='VmlkZW9HYW1lL1dhcmNyYWZ0SUlJ'>Warcraft III</a></em>: Heroes have an inventory capacity for six items, and at most three heroes per game. The expansion's orc campaign gives you a persistent six-item stash. The game also discourages the hoarding of your ARMIES through its upkeep mechanic. Having too large an army imposed a percentage-based penalty, up to 60%, to your gold income. Competitive play resolves around keeping an army just under the first threshold until you are ready to rocket to maximum army size for a full assault.
+</li><li> <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/WorldOfWarcraft' title='/pmwiki/pmwiki.php/VideoGame/WorldOfWarcraft' data-format='VmlkZW9HYW1lL1dvcmxkT2ZXYXJjcmFmdA=='>World of Warcraft</a></em> is constantly moving forward with successive expansions and patches. It is very common for a patch to introduce a currency that will only be useful in the current patch or possibly for the rest of the expansion, with no benefit to hoarding them for later. In some cases, a currency type will be re-used, but before the new planned period, all previous currency of that type will be converted to the more common copper/silver/gold currency at a very low rate.
+</li></ul></li><li> The argon crystals in <em><a class='twikilink' href='/pmwiki/pmwiki.php/VideoGame/Warframe' title='/pmwiki/pmwiki.php/VideoGame/Warframe' data-format='VmlkZW9HYW1lL3t7V2FyZnJhbWV9fQ=='>Warframe</a></em> are a resource found almost exclusively in the Void that on top of being rare are also transient; every 24 hours, each newly collected batch of crystals starts decaying at a half-life of 24 hours, so it's recommended not to search for them until you have a blueprint that requires them.
+</li><li> <em><a class='createlink' rel='nofollow' href='/pmwiki/pmwiki.php/VideoGame/WidgetSatchel' title='/pmwiki/pmwiki.php/VideoGame/WidgetSatchel' data-format='VmlkZW9HYW1lL1dpZGdldFNhdGNoZWw='>Widget Satchel</a></em> reduces jump height and movement speed up to 50 carried widgets, requiring them to be spent in order to get movement back to full. Note that the Sproket needs 596 widgets for the best end-game construction.
+</li></ul></div>
+<hr data-format='&#8212;&#8212;' />
+</p></div>
+
+
+
+        
+
+
+        <div class="section-links" itemscope itemtype="http://schema.org/SiteNavigationElement">
+
+    
+    <div class="titles">
+        <div><h3 class="text-center text-uppercase">Previous</h3></div>
+        <div><h3 class="text-center text-uppercase">Index</h3></div>
+        <div><h3 class="text-center text-uppercase">Next</h3></div>
+    </div>
+
+
+    <div class="links">
+                    
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AdventureFriendlyWorld">Adventure-Friendly World</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/TabletopGameTropes">Tabletop Game Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/ArtisticLicenseChess">Artistic License – Chess</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/AffectionateGestureToTheNose">Affectionate Gesture to the Nose</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/ImageSource/DeviantArt">ImageSource/DeviantArt</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/SugarWiki/AndTheFandomRejoiced">And the Fandom Rejoiced</a> 
+                                            </li>
+                </ul>
+
+            
+                <ul>
+                    <li>
+                                                    <a href="/pmwiki/pmwiki.php/Main/Antepiece">Antepiece</a>
+                                            </li>
+                    <li>
+                        <a href="/pmwiki/pmwiki.php/Main/VideoGameTropes">Video Game Tropes</a>
+                    </li>
+                    <li>
+                         
+                            <a href="/pmwiki/pmwiki.php/Main/ArbitraryMissionRestriction">Arbitrary Mission Restriction</a> 
+                                            </li>
+                </ul>
+
+                    
+        
+            </div>
+</div>
+
+
+    <div id="proper_player_insert_div" class="outer_ads_by_salon_wrapper">
+    </div>
+
+
+<script>
+    if( document.getElementById('user-prefs').classList.contains('folders-open') ){
+        console.log('open all folders');
+        var elements = document.querySelectorAll('.folderlabel, .toggle-all-folders-button');
+        elements.forEach((element) => {
+          element.classList.add('is-open');
+        });
+    }
+</script>
+
+
+<script>
+// correct incorrect URL capitalization on article pages
+if(tvtropes_config.universal_page_type == 'Article'){
+    // Extract the groupname and title from the URL
+    var url = window.location.href;
+    var url_parts = url.split('/');
+    var title = url_parts[url_parts.length - 1];
+    var groupname = url_parts[url_parts.length - 2];
+
+    // Correct groupname and title from PHP (also works on new/non-existing pages)
+    var correct_groupname = 'Main';
+    var correct_title = 'AntiHoarding';
+
+    // Check if they are different (case-sensitive comparison)
+    if (groupname !== correct_groupname || title !== correct_title) {
+        // Construct the corrected URL
+        var correctedUrl = url_parts.slice(0, -2).join('/') + '/' + correct_groupname + '/' + correct_title;
+
+        // Update the browser URL without reloading the page
+        window.history.replaceState(null, '', correctedUrl);
+    }
+}
+
+function insert_ad(adCount, paragraph, adName, folder = 0, logged_in){
+
+        var ad_count = adCount < 10 ? "0"+adCount : adCount;
+        var inside_folder = folder ? "1" : "0";
+
+        // Create element for ad unit
+        var adUnit = document.createElement('div');
+        adUnit.setAttribute("class", `htlad-${adName}`);
+        adUnit.setAttribute("id", `${adName}_${adCount}`);
+        adUnit.setAttribute("data-targeting", `{"slot_number": "${ad_count}", "in_folder": "${inside_folder}"}`);
+
+        // create element for subscribe link
+        var subscribeWrapper = document.createElement('div');
+        subscribeWrapper.setAttribute("class", "ad-caption-subscribe-wrapper");
+        var subscribeLink = document.createElement('a');
+        subscribeLink.setAttribute("href", "/pmwiki/ad-free-subscribe.php");
+        subscribeLink.setAttribute("class", "ad-caption-subscribe");
+
+        // only include this for non-users
+        if(logged_in == false) {
+            subscribeLink.innerHTML = `<span class="ad-caption-text">Tired of seeing ads? </span><span class="ad-caption-link">Subscribe!</span>`;
+        }
+
+        // Add Advertisement label
+        var adLabel = document.createElement("span");
+        adLabel.innerHTML = "Advertisement:"
+        adLabel.setAttribute("class","ad-caption");
+
+        var adWrapper = document.createElement("div");
+        adWrapper.setAttribute("class","tvtropes-ad-unit mobile-fad square_fad mobile_unit_scroll");
+        adWrapper.setAttribute("id","mobile_"+adCount);
+
+        // Merge all pieces
+        adWrapper.appendChild(adLabel);
+        adWrapper.appendChild(adUnit);
+        adWrapper.appendChild(subscribeWrapper);
+        subscribeWrapper.appendChild(subscribeLink);
+
+        // Insert adWrapper right after the paragraph
+        paragraph.parentNode.insertBefore(adWrapper, paragraph.nextSibling);
+
+        // Insert subscribeWrapper right after adWrapper (as its sibling)
+        paragraph.parentNode.insertBefore(subscribeWrapper, adWrapper.nextSibling);
+
+        // for getting correct ad count even when ones are deleted
+        globalAdInsertionCount++;
+}
+
+function insert_ads_in_content(folder = 0, totalAdsCount = 0, pHeight = 0) {
+
+    if(folder) var node = folder.firstElementChild; // Get the first traversable element of the folder
+    else var node = document.getElementById("main-article").firstElementChild;
+
+    var pCount = 0;
+    var adCount = totalAdsCount + 1;
+    var nodeCount = 0;
+    var nodeLevel = 0;
+    var x = 0;
+
+    //loop through elements of content
+    while(x<300) {
+        x++; nodeCount++;
+
+        //traverse to the next element (if exists)
+        if(nodeCount>1) {
+            if(!node.nextElementSibling) {
+                console.log('adparser: no next element');
+
+                if(nodeLevel>0) {
+                    nodeLevel--;
+                    node = node.parentElement;
+                    console.log('adparser: we were down a level, go back up ('+nodeLevel+')');
+                    continue;
+                }
+                else {
+                    break; 
+                }
+            }
+
+            node = node.nextElementSibling;
+        }
+
+
+        //skip inserted ads or empty nodes
+        if(!node || node==="null" || typeof node !== "object") continue;
+        if(!node.offsetHeight || node.offsetHeight==0) continue;
+        if(node.className && node.className.includes('tvtropes-ad-unit')) continue;
+
+        //skip if image block that has a caption after it (NEW: ALWAYS SKIP THE IMAGE BLOCK)
+        if(node.className && node.className.includes('quoteright')) {
+            // if(node.nextElementSibling && node.nextElementSibling.className && node.nextElementSibling.className.includes('acaptionright')) {
+                pHeight += node.offsetHeight;
+                continue;
+            // }
+        } 
+
+        //if very large element, loop through elements inside
+        if(node.offsetHeight>700 && node.firstElementChild) {
+            nodeLevel++;
+            console.log('adparser: traverse through large element='+node.nodeName+', height='+node.offsetHeight+' level='+nodeLevel);
+            node = node.firstElementChild;
+            nodeCount = 0;
+            continue;
+        }
+
+        // Skip if after a folder label or if the current node is a folder label itself
+        if ((node.previousElementSibling && node.previousElementSibling.className && node.previousElementSibling.className.includes("folderlabel")) || (node.className && node.className.includes("folderlabel"))) {
+            console.log('adparser: skipping ad insertion related to folder label');
+            if (!node.className || !node.className.includes("folderlabel")) { // If it's not the folder label itself, skip the insertion
+                continue;
+            } else {
+                pHeight += node.offsetHeight; // If it is the folder label, just add its height to pHeight and continue
+                continue;
+            }
+        }
+
+        //paragraph counter
+        if(node.nodeName=="P") pCount++;
+
+        //add height of node to counter
+        pHeight += node.offsetHeight;
+
+        //add margin of node to counter if available
+        try {
+            var nodeStyle = getComputedStyle(node);
+            if(nodeStyle.marginTop && parseInt(nodeStyle.marginTop)>0) pHeight+=parseInt(nodeStyle.marginTop);
+            if(nodeStyle.marginBottom && parseInt(nodeStyle.marginBottom)>0) pHeight+=parseInt(nodeStyle.marginBottom);
+            //console.log(nodeStyle.marginTop+','+nodeStyle.marginBottom);
+        } catch(e) { }
+
+        //debug logging
+        console.log('adparser: name='+node.nodeName+', height='+node.offsetHeight+' =>'+pHeight);
+        //console.log(node.className);
+
+        // check if user is logged in
+        var logged_in = 0;
+
+        // Calculate the required height based on the user's logged-in status or ad count
+        var requiredHeight           = globalAdInsertionCount > 15 ? 1500 : 1100;
+        if(logged_in) requiredHeight = 2250;
+
+        // only inserts an ad if the total height and paragraph count conditions are met
+        if ((adCount === 1 && pCount >= 1 && pHeight >= 400) || pHeight >= requiredHeight) {
+            // Check existing ad positions and compare with the item about to be inserted after
+            var ads = document.querySelectorAll('.tvtropes-ad-unit');
+            var nodeBottomPosition = node.getBoundingClientRect().bottom + window.scrollY; // Get bottom position of current node
+            var canInsertAd = true; // Flag to track if we can insert an ad
+
+            ads.forEach(function (ad) {
+                var adTop = ad.getBoundingClientRect().top + window.scrollY;
+                var adBottom = ad.getBoundingClientRect().bottom + window.scrollY;
+
+                // Ensure the new ad is at least requiredHeight away from any existing ads
+                if (Math.abs(nodeBottomPosition - adTop) < requiredHeight || Math.abs(nodeBottomPosition - adBottom) < requiredHeight) {
+                    canInsertAd = false;
+                    console.log('adparser: cannot insert ad, not enough space between ads.');
+                }
+            });
+            // If we can't insert an ad, skip to the next node
+            if(!canInsertAd) continue;
+
+            // after 50 ads, stop inserting. Or after 20 ads if the user is logged in
+            if ((adCount > 50 || (adCount > 20 && logged_in))) {
+                break;
+            }
+
+            console.log('adparser: insert ad '+adCount);
+            insert_ad(adCount, node, "tvtropes_m_incontent_dynamic", folder, logged_in);
+            adCount++;
+            pHeight = 0;
+            pCount = 0;
+        }
+    }
+
+    //insert one at end if room
+    var maxpHeight = 1100; if(logged_in) maxpHeight=1500;
+    if(pHeight>=maxpHeight && folder==0) {
+        console.log('adparser: insert ad');
+
+        insert_ad(adCount, document.getElementById("main-article").lastElementChild, "tvtropes_m_incontent_dynamic", logged_in);
+    }
+
+    // delete ads after the 8th one to reduce load times
+    BCLighthouseTag.cmd.push(function() {
+        googletag.cmd.push(function() {
+            googletag.pubads().addEventListener('slotRequested', function(event) {
+                const slot = event.slot;
+                const slotName = slot.getAdUnitPath().split('/').pop() || slot.getAdUnitPath();
+
+                if(slotName === 'tvtropes_m_incontent_dynamic') {
+                    const slotNumber = parseInt(slot.getTargeting('slot_number')[0]);
+                    console.log(slotName+' = '+slotNumber);
+
+                    // Determine the ad slot that needs to be deleted.
+                    const adNumberToDelete = slotNumber - 8;
+
+                    if(adNumberToDelete > 0) {
+                        const adToDelete = document.getElementById(`mobile_${adNumberToDelete}`);
+                        if(adToDelete) {
+                            var adHeight = window.pageYOffset + adToDelete.getBoundingClientRect().top;
+                            var windowHeight = window.scrollY;
+
+                            // Check if the ad element exists and is above the current viewport (above the fold).
+                            if (adHeight < windowHeight) {
+                                console.log('ad delete = '+adNumberToDelete);
+                                adToDelete.remove(); 
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    });
+
+    // return pHeight 
+    return pHeight;
+}
+
+if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
+    insert_ads_in_content();
+}
+</script>
+
+
+                
+
+                
+            </article>
+
+                
+                        <div id="main-content-sidebar"><div class="sidebar-item display-options">
+  <ul class="sidebar display-toggles">
+    <li>Show Spoilers <div id="sidebar-toggle-showspoilers" class="display-toggle show-spoilers"></div></li>
+    <li>Night Vision <div id="sidebar-toggle-nightvision" class="display-toggle night-vision"></div></li>
+    <li>Sticky Header <div id="sidebar-toggle-stickyheader" class="display-toggle sticky-header"></div></li>
+    <li>Wide Load <div id="sidebar-toggle-wideload" class="display-toggle wide-load"></div></li>
+  </ul>
+  <script>updateDesktopPrefs();</script>
+</div>
+
+        <div class="sidebar-item quick-links" itemtype="http://schema.org/SiteNavigationElement">
+
+        <p class="sidebar-item-title" data-title="Important Links">Important Links</p>
+
+        <div class="padded">
+            <a href="/pmwiki/query.php?type=att">Ask The Tropers</a>
+            <a href="/pmwiki/query.php?type=tf">Trope Finder</a>
+            <a href="/pmwiki/query.php?type=ykts">Media Finder</a>
+            <a href="/pmwiki/tlp_activity.php">Trope Launch Pad</a>
+            <a href="/pmwiki/query.php?type=wl">Tech Wishlist</a></li>
+            <a href="/pmwiki/browse.php">Browse</a>
+            <a href="/pmwiki/ad-free-subscribe.php">Go Ad Free!</a>
+            <div class="crucial_browsing_dropdown">
+                <a href="javascript:void(0);" onclick="double_dropdown(); return false;" id="crucial_browsing_dropdown"><span class="new_blue">Crucial Browsing</span><i class="fa fa-angle-down"></i></a>
+                <ul id="main_dropdown">
+                    <li class="first_dropdown"><a href="/pmwiki/index_report.php">Indexes</a>
+
+                    <li class="first_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Genre</a>
+                        <ul>
+                            <li><a href='/pmwiki/pmwiki.php/Main/ActionAdventureTropes' title='Main/ActionAdventureTropes'>Action Adventure</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/ComedyTropes' title='Main/ComedyTropes'>Comedy</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/CommercialsTropes' title='Main/CommercialsTropes'>Commercials</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/CrimeAndPunishmentTropes' title='Main/CrimeAndPunishmentTropes'>Crime &amp; Punishment</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/DramaTropes' title='Main/DramaTropes'>Drama</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/HorrorTropes' title='Main/HorrorTropes'>Horror</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/LoveTropes' title='Main/LoveTropes'>Love</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/NewsTropes' title='Main/NewsTropes'>News</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/ProfessionalWrestling' title='Main/ProfessionalWrestling'>Professional Wrestling</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/SpeculativeFictionTropes' title='Main/SpeculativeFictionTropes'>Speculative Fiction</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/SportsStoryTropes' title='Main/SportsStoryTropes'>Sports Story</a></li>
+                            <li><a href='/pmwiki/pmwiki.php/Main/WarTropes' title='Main/WarTropes'>War</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="first_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Media</a>
+                        <ul>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Media" title="Main/Media">All Media</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/AnimationTropes" title="Main/AnimationTropes">Animation (Western)</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Anime" title="Main/Anime">Anime</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/ComicBookTropes" title="Main/ComicBookTropes">Comic Book</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/FanFic" title="FanFic/FanFics">Fan Fics</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Film" title="Main/Film">Film</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/GameTropes" title="Main/GameTropes">Game</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Literature" title="Main/Literature">Literature</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/MusicAndSoundEffects" title="Main/MusicAndSoundEffects">Music And Sound Effects</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/NewMediaTropes" title="Main/NewMediaTropes">New Media</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/PrintMediaTropes" title="Main/PrintMediaTropes">Print Media</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Radio" title="Main/Radio">Radio</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/SequentialArt" title="Main/SequentialArt">Sequential Art</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/TabletopGames" title="Main/TabletopGames">Tabletop Games</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/MediaNotes/Television" title="MediaNotes/Television">Television</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Theater" title="Main/Theater">Theater</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/VideogameTropes" title="Main/VideogameTropes">Videogame</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Webcomics" title="Main/Webcomics">Webcomics</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="first_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Narrative</a>
+                        <ul>
+                            <li><a href="/pmwiki/pmwiki.php/Main/UniversalTropes" title="Main/UniversalTropes">Universal</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/AppliedPhlebotinum" title="Main/AppliedPhlebotinum">Applied Phlebotinum</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/CharacterizationTropes" title="Main/CharacterizationTropes">Characterization</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Characters" title="Main/Characters">Characters</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/CharactersAsDevice" title="Main/CharactersAsDevice">Characters As Device</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Dialogue" title="Main/Dialogue">Dialogue</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Motifs" title="Main/Motifs">Motifs</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/NarrativeDevices" title="Main/NarrativeDevices">Narrative Devices</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Paratext" title="Main/Paratext">Paratext</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Plots" title="Main/Plots">Plots</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Settings" title="Main/Settings">Settings</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Spectacle" title="Main/Spectacle">Spectacle</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="first_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Other Categories</a>
+                        <ul>
+                            <li><a href="/pmwiki/pmwiki.php/Main/BritishTellyTropes" title="Main/BritishTellyTropes">British Telly</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/TheContributors" title="Main/TheContributors">The Contributors</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/CreatorSpeak" title="Main/CreatorSpeak">Creator Speak</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Creators" title="Main/Creators">Creators</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/DerivativeWorks" title="Main/DerivativeWorks">Derivative Works</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/LanguageTropes" title="Main/LanguageTropes">Language</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/LawsAndFormulas" title="Main/LawsAndFormulas">Laws And Formulas</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/ShowBusiness" title="Main/ShowBusiness">Show Business</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/SplitPersonalityTropes" title="Main/SplitPersonalityTropes">Split Personality</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/StockRoom" title="Main/StockRoom">Stock Room</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/TropeTropes" title="Main/TropeTropes">Trope</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Tropes" title="Main/Tropes">Tropes</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/TruthAndLies" title="Main/TruthAndLies">Truth And Lies</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/TruthInTelevision" title="Main/TruthInTelevision">Truth In Television</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="first_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Topical Tropes</a>
+                        <ul>
+                            <li><a href="/pmwiki/pmwiki.php/Main/BetrayalTropes" title="Main/BetrayalTropes">Betrayal</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/CensorshipTropes" title="Main/CensorshipTropes">Censorship</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/CombatTropes" title="Main/CombatTropes">Combat</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/DeathTropes" title="Main/DeathTropes">Death</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/FamilyTropes" title="Main/FamilyTropes">Family</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/FateAndProphecyTropes" title="Main/FateAndProphecyTropes">Fate And Prophecy</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/FoodTropes" title="Main/FoodTropes">Food</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/HolidayTropes" title="Main/HolidayTropes">Holiday</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/MemoryTropes" title="Main/MemoryTropes">Memory</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/MoneyTropes" title="Main/MoneyTropes">Money</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/MoralityTropes" title="Main/MoralityTropes">Morality</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/PoliticsTropes" title="Main/PoliticsTropes">Politics</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/ReligionTropes" title="Main/ReligionTropes">Religion</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/SchoolTropes" title="Main/SchoolTropes">School</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="resources_dropdown">
+                <a href="javascript:void(0);" onclick="second_double_dropdown(); return false;" id="resources_dropdown"><span class="new_blue blue">Resources</span><i class="fa fa-angle-down"></i></a>
+
+                <ul id="second_main_dropdown" class="padded font-s" itemscope itemtype="http://schema.org/SiteNavigationElement">
+                                        <li class="second_dropdown"><a href="#test" data-click-toggle="active">Tools</a>
+                        <ul>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/IttyBittyWikiTools">Wiki Tools</a></li>
+                            <li><a href="/pmwiki/cutlist.php" data-modal-target="login" rel="nofollow">Cut List</a></li>
+                            <li><a href="/pmwiki/image-fixer.php" data-modal-target="login" rel="nofollow">Image Fixer</a></li>
+                            <li><a href="/pmwiki/changes.php">New Edits</a></li>
+                            <li><a href="/pmwiki/articles_new.php">New Articles</a></li>
+                            <li><a href="/pmwiki/recent_edit_reasons.php">Edit Reasons</a></li>
+                            <li><a href="/pmwiki/isolated_pages.php">Isolated Pages</a></li> 
+                            <li><a href="/pmwiki/launches.php" data-modal-target="login" rel="nofollow">Launches</a></li>
+                            <li><a href="/pmwiki/img_list.php" data-modal-target="login" rel="nofollow">Images List</a></li>
+                            <li><a href="/pmwiki/recent_videos.php">Recent Videos</a></li>
+                            <li><a href="/pmwiki/crown_activity.php">Crowner Activity</a></li>
+                            <li><a href="/pmwiki/no_types.php">Un-typed Pages</a></li>
+                            <li><a href="/pmwiki/page_type_audit.php">Recent Page Type Changes</a></li>
+                        </ul>
+                    </li>
+                    <li class="second_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Templates</a>
+                        <ul>
+                            <li><a href="/pmwiki/pmwiki.php/Main/TropeEntryTemplate">Trope Entry</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/ProgramEntryTemplate">Works</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/CharacterSheetTemplate">Character Sheet</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/PlayingWithWikiTemplate">Playing With</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/FanficRecs/TemplatePageForNewFandomRecommendations">Fandom</a></li>
+                        </ul>
+                    </li>
+                    <li class="second_dropdown"><a href="javascript:void(0);" data-click-toggle="active">Tips</a>
+                        <ul>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/CreatingNewRedirects">Creating New Redirects</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/Crosswicking">Cross Wicking</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/TipsForEditing">Tips for Editing</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/TextFormattingRules">Text Formatting Rules</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/TVTropesGlossary">Glossary</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/EditReasonsAndWhyYouShouldUseThem">Edit Reasons</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/HandlingSpoilers">Handling Spoilers</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Administrivia/WordCruft">Word Cruft</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/Administrivia">Administrivia</a></li>
+                            <li><a href="/pmwiki/pmwiki.php/Main/FAQ">FAQ</a></li>
+                        </ul>
+                    </li>
+                    <li class="second_dropdown"><a href="/pmwiki/changelog.php">Changelog</a></li>
+                    <li class="second_dropdown"><a href="/pmwiki/query.php?type=bug">Report Bug</a></li>
+                    <li class="second_dropdown"><a href="/pmwiki/conversations.php?topic=renames">Trope Repair Shop</a></li>
+                    <li class="second_dropdown"><a href="/pmwiki/conversations.php?topic=images">Image Pickin'</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="asteri-sidebar" style="display:none">
+            <p style="margin-top: 20px;" class="sidebar-item-title" data-title="Advertisement">Advertisement:</p>
+            <div id="asteri_cont"></div>
+        </div>
+        <script>
+            //asteri enabled
+            if((tvtropes_config.asteri_stream_enabled || tvtropes_config.get_asteri_stream == 'live')) {
+                //aster stream currently live and not a logged-in troper
+                if(!tvtropes_config.is_logged_in && cookies.read('asteri_event_active') != '') {
+                    document.getElementById('asteri-sidebar').style.display="";
+                }
+            }
+        </script>
+
+    </div>
+
+        
+            
+
+    
+        
+            <script>
+    if(!is_mobile()) {
+
+        //don't insert if content is too small on page
+        var tropes_insert_side_ad=true;
+        if(document.getElementById("main-article") && document.getElementById("main-article").clientHeight) {
+            var sidebar_height=document.getElementById("main-article").clientHeight;
+            if(sidebar_height>0 && sidebar_height<500) {
+                tropes_insert_side_ad=false;
+                console.log('ad parser: content too small for sidebar ad');
+            }
+        }
+
+        if(tropes_insert_side_ad) {
+
+       document.write(`
+        <div id="stick-cont"  class="sidebar-item sb-fad-unit">
+            <p class="sidebar-item-title" data-title="Advertisement">Advertisement:</p>
+            <div id="stick-bar" class="sidebar-section">
+                <div class="square_fad fad-size-300x600 fad-section text-center">
+                    <div class='tvtropes-ad-unit '>
+                      <div id='tvtropes_dt_inview' class='htlad-tvtropes_dt_inview'></div>
+                    </div>
+                </div>
+            </div>
+            <div class="ad-caption-subscribe-sidebar">
+                <a href="/pmwiki/ad-free-subscribe.php" class="ad-caption-subscribe">
+                    <span class="ad-caption-text">Tired of seeing ads? </span><span class="ad-caption-link">Subscribe!</span>
+                </a>
+            </div>
+        </div>
+        `);
+        }
+
+    }
+    </script>
+    
+
+</div>
+        
+    </div>
+
+        <div id="action-bar-bottom" class="action-bar tablet-off">
+        <a href="#top-of-page" class="scroll-to-top dead-button" onclick="scroll_to_top(500);">Top</a>
+    </div>
+    
+</div>    <footer id="main-footer">
+        <div id="main-footer-inner">
+
+
+            <div class="footer-left">
+
+                <a href="/" class="img-link"><img data-src="/img/tvtropes-footer-logo.png" alt="TV Tropes" class="logo_image lazy-image" title="TV Tropes" /></a>
+
+
+                <ul class="social-buttons">
+                   <li><a class="btn fb" target="_blank" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-facebook']);" href="https://www.facebook.com/tvtropes"><i class="fa fa-facebook"></i></a></li>
+                   <li><a class="btn tw" target="_blank" onclick="_gaq.push(['_trackEvent', 'btn-social-icon', 'click', 'btn-twitter']);" href="https://www.twitter.com/tvtropes"><i class="fa fa-twitter"></i></a> </li>
+                                                      </ul>
+
+            </div>
+
+            <hr/>
+
+            <ul class="footer-menu" itemscope itemtype="http://schema.org/SiteNavigationElement">
+                <li><h4 class="footer-menu-header">TVTropes</h4></li>
+                <li><a href="/pmwiki/pmwiki.php/Main/Administrivia">About TVTropes</a></li>
+                <li><a href="/pmwiki/pmwiki.php/Administrivia/TheGoalsOfTVTropes">TVTropes Goals</a></li>
+                <li><a href="/pmwiki/pmwiki.php/Administrivia/TheTropingCode">Troping Code</a></li>
+                <li><a href="/pmwiki/pmwiki.php/Administrivia/TVTropesCustoms">TVTropes Customs</a></li>
+                <li><a href="/pmwiki/pmwiki.php/JustForFun/TropesOfLegend">Tropes of Legend</a></li>
+                <li><a href="/pmwiki/ad-free-subscribe.php">Go Ad-Free</a></li>
+                            </ul>
+
+            <hr/>
+
+            <ul class="footer-menu" itemscope itemtype="http://schema.org/SiteNavigationElement">
+                <li><h4 class="footer-menu-header">Community</h4></li>
+                <li><a href="/pmwiki/query.php?type=att">Ask The Tropers</a></li>
+                <li><a href="/pmwiki/tlp_activity.php">Trope Launch Pad</a></li>
+                <li><a href="/pmwiki/query.php?type=tf">Trope Finder</a></li>
+                <li><a href="/pmwiki/query.php?type=ykts">Media Finder</a></li>
+                <li><a href="/pmwiki/query.php?type=wl">Tech Wishlist</a></li>
+                <li><a href="/pmwiki/review_activity.php">Reviews</a></li>
+                <li><a href="/pmwiki/topics.php">Forum</a></li>
+            </ul>
+
+            <hr/>
+
+            <ul class="footer-menu" itemscope itemtype="http://schema.org/SiteNavigationElement">
+                <li><h4 class="footer-menu-header">Tropes HQ</h4></li>
+                <li><a href="/pmwiki/about.php">About Us</a></li>
+                                <li><a href="/pmwiki/contact.php">Contact Us</a></li>
+                <li><a href="/pmwiki/query.php?type=bug">Report Bug</a></li>
+                <li><a href="/pmwiki/changelog.php">Changelog</a></li>
+                <li><a href="/pmwiki/dmca.php">DMCA Notice</a></li>
+                <li><a href="/pmwiki/privacypolicy.php">Privacy Policy</a></li>
+                <li><a href="/pmwiki/termsofservice.php">Terms Of Service</a></li>
+
+            </ul>
+
+        </div>
+
+        <div id="desktop-on-mobile-toggle" class="text-center gutter-top gutter-bottom tablet-on">
+          <a href="/pmwiki/switchDeviceCss.php?mobileVersion=1" rel="nofollow">Switch to <span class="txt-desktop">Desktop</span><span class="txt-mobile">Mobile</span> Version</a>
+        </div>
+
+        <div class="legal">
+            <p>TVTropes is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. <br>Permissions beyond the scope of this license may be available from <a xmlns:cc="http://creativecommons.org/ns#" href="mailto:thestaff@tvtropes.org" rel="cc:morePermissions"> thestaff@tvtropes.org</a>.</p>
+            <br>
+            <div class="privacy_wrapper">
+            </div>
+        </div>
+    </footer>
+    
+    
+    <style>
+      div.fc-ccpa-root {
+        position: absolute !important;
+        bottom: 93px !important;
+        margin: auto !important;
+        width: 100% !important;
+        z-index: 9999 !important;
+        overflow: hidden !important;
+      }
+      .fc-ccpa-root .fc-dns-dialog .fc-dns-link p{
+        outline: none !important;
+        text-decoration: underline !important;
+        font-size: .7em !important;
+        font-family: sans-serif !important;
+      }
+      .fc-ccpa-root .fc-dns-dialog .fc-dns-link .fc-button-background {
+        background: none !important;
+      }
+    </style>
+
+        <div id="_pm_videoViewer" class="full-screen">
+
+  <a href="#close" class="close" id="_pm_videoViewer-close"></a>
+
+  <div class="_pmvv-body">
+
+    <div class="_pmvv-vidbox">
+
+        
+    </div>
+
+  </div>
+
+  
+</div>
+
+        
+    
+        <script type="text/javascript">
+
+        var cleanCreativeEnabled = "";
+        var donation = "";
+        var live_ads = "1";
+        var img_domain = "https://static.tvtropes.org";
+        var snoozed = cookies.read('snoozedabm');
+        var elem = document.createElement('script');
+        elem.async = true;
+
+
+        // if page type is article or homepage load bundle_nojquery. otherwise load regular bundle.js
+        if(tvtropes_config.universal_page_type == "Article" || tvtropes_config.universal_page_type == "HomePage") {
+            elem.src = 'https://assets.tvtropes.org/design/assets/bundle_nojquery.js?rev=9022b5f62cf20c0fa658f8bd90d771277e81771c';
+        } else {
+            elem.src = 'https://assets.tvtropes.org/design/assets/bundle.js?rev=9022b5f62cf20c0fa658f8bd90d771277e81771c';
+        }
+
+        elem.onload = function() {
+                                 }
+        document.getElementsByTagName('head')[0].appendChild(elem);
+    </script>
+
+
+    
+    
+
+    
+    
+  <script type="text/javascript">
+      function send_analytics_event(user_type, donation){
+          // if(user_type == 'uncached' || user_type == 'cached'){
+          //   ga('send', 'event', 'caching', 'load', user_type, {'nonInteraction': 1});
+          //   return;
+          // }
+          var event_name = user_type;
+
+          if(donation == 'true'){
+              event_name += "_donation"
+          }else if(typeof(valid_user) == 'undefined'){
+              event_name += "_blocked"
+          }else if(valid_user == true){
+              event_name += "_unblocked";
+          }else{
+              event_name = "_unknown"
+          }
+          ga('send', 'event', 'ads', 'load', event_name, {'nonInteraction': 1});
+      }
+
+    
+    send_analytics_event("guest", "false");
+      </script>
+
+
+
+<!-- Quantcast Tag -->
+<script type="text/javascript">
+  window._qevents = window._qevents || [];
+
+  (function() {
+    var elem = document.createElement('script');
+    elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+    elem.async = true;
+    elem.type = "text/javascript";
+    var scpt = document.getElementsByTagName('script')[0];
+    scpt.parentNode.insertBefore(elem, scpt);
+  })();
+
+  window._qevents.push({
+      qacct:"p-mEzuYq24VEJ-3"
+  });
+</script>
+
+<noscript>
+  <div style="display:none;">
+    <img src="//pixel.quantserve.com/pixel/p-mEzuYq24VEJ-3.gif" border="0" height="1" width="1" alt="Quantcast"/>
+  </div>
+</noscript>
+<!-- End Quantcast tag -->
+
+
+<!-- Begin comScore Tag -->
+<script>
+  var _comscore = _comscore || [];
+  _comscore.push({ c1: "2", c2: "38282685" });
+  (function() {
+    var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+    s.src = "https://sb.scorecardresearch.com/cs/38282685/beacon.js";
+    el.parentNode.insertBefore(s, el);
+  })();
+</script>
+<noscript>
+  <img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=38282685&amp;cv=3.6.0&amp;cj=1">
+</noscript>
+<!-- End comScore Tag -->
+</body>
+</html>

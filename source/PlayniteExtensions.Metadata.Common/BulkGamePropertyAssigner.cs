@@ -31,7 +31,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
 ) where TSearchItem : IHasName
     where TApprovalPromptViewModel : GamePropertyImportViewModel, new()
 {
-    protected readonly ILogger logger = LogManager.GetLogger();
+    protected readonly ILogger Logger = LogManager.GetLogger();
     protected IBulkPropertyImportDataSource<TSearchItem> DataSource { get; } = dataSource;
     protected IGameDatabaseAPI Database { get; } = playniteDatabase;
     protected BulkPropertyUserInterface Ui { get; } = ui;
@@ -91,7 +91,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
         var importSetting = GetPropertyImportSetting(selectedItem, out string propName);
         if (importSetting == null)
         {
-            logger.Error($"Could not find import settings for game property <{selectedItem.Name}>");
+            Logger.Error($"Could not find import settings for game property <{selectedItem.Name}>");
             Ui.AddNotification(GetType().Name, "Could not find import settings for property", NotificationType.Error);
             return null;
         }
@@ -169,7 +169,7 @@ public abstract class BulkGamePropertyAssigner<TSearchItem, TApprovalPromptViewM
                 }
                 catch (Exception ex)
                 {
-                    logger.Error(ex, "Error matching games");
+                    Logger.Error(ex, "Error matching games");
                 }
 
                 a.CurrentProgressValue++;

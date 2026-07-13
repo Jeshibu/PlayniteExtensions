@@ -30,7 +30,7 @@ public class GiantBombBulkPropertyAssigner(IPlayniteAPI playniteApi, GiantBombMe
             _ => null,
         };
         if (output == null)
-            logger.Error($"Unknown resource type: {selectedItem.ResourceType}");
+            Logger.Error($"Unknown resource type: {selectedItem.ResourceType}");
 
         return output;
     }

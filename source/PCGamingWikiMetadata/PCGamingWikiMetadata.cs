@@ -1,15 +1,13 @@
-﻿using PCGamingWikiBulkImport.DataCollection;
-using PCGamingWikiBulkImport;
+﻿using PCGamingWikiBulkImport;
 using PCGamingWikiMetadata.BulkImport;
 using Playnite.SDK;
 using Playnite.SDK.Plugins;
+using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Windows.Controls;
-using System.IO;
-using PlayniteExtensions.Common;
-
 
 namespace PCGamingWikiMetadata;
 

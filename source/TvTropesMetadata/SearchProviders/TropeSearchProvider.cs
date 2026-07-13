@@ -1,5 +1,6 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
+using PlayniteExtensions.Common;
 using PlayniteExtensions.Metadata.Common;
 using System;
 using System.Collections.Generic;
@@ -34,8 +35,18 @@ public class TropeSearchProvider(TropeScraper scraper, TvTropesMetadataSettings 
             }
         }
 
+        var titleComparer = new TitleComparer();
+
         foreach (var kvp in worksByName)
-            yield return new GameDetails { Names = [kvp.Key], Url = kvp.Value.FirstOrDefault() };
+        {
+            var gd = new GameDetails { Names = [kvp.Key], Url = kvp.Value.FirstOrDefault() };
+
+            var extraName = scraper.ReverseEngineerGameNameFromUrl(gd.Url);
+            if (!string.IsNullOrWhiteSpace(extraName) && !gd.Names.Contains(extraName, titleComparer))
+                gd.Names.Add(extraName);
+
+            yield return gd;
+        }
     }
 
     public IEnumerable<TvTropesSearchResult> Search(string query, CancellationToken cancellationToken = default)

@@ -9,7 +9,7 @@ namespace PlayniteExtensions.Tests.Common;
 
 public class FakeWebViewFactory(Dictionary<string, string> sourceFilesByUrl) : IWebViewFactory
 {
-    private FakeWebView WebView => field ??= new(sourceFilesByUrl);
+    protected virtual FakeWebView WebView => field ??= new(sourceFilesByUrl);
 
     public IWebView CreateOffscreenView() => WebView;
 
@@ -55,7 +55,7 @@ public class FakeWebView(Dictionary<string, string> sourceFilesByUrl) : IWebView
 
     public string GetCurrentAddress() => Url;
 
-    public string GetPageSource()
+    public virtual string GetPageSource()
     {
         if (!sourceFilesByUrl.TryGetValue(Url, out string filePath))
             throw new KeyNotFoundException($"Couldn't find file path for URL {Url}");

@@ -62,7 +62,7 @@ public class WebDownloader : IWebDownloader
     {
         var sw = System.Diagnostics.Stopwatch.StartNew();
 
-        var output = AsyncHelper.RunSync(() => DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType, throwExceptionOnErrorResponse, maxRedirectDepth, 0, cancellationToken, getContent));
+        var output = AsyncHelper.RunSync(() => DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, throwExceptionOnErrorResponse, maxRedirectDepth, 0, cancellationToken, getContent));
 
         sw.Stop();
         _logger.Info($"Call to {url} completed in {sw.Elapsed}, status: {output?.StatusCode}");
@@ -73,7 +73,7 @@ public class WebDownloader : IWebDownloader
         Action<HttpRequestHeaders> headerSetter = null, string contentType = null, bool throwExceptionOnErrorResponse = true, int maxRedirectDepth = 7, CancellationToken cancellationToken = default, bool getContent = true)
     {
         var sw = System.Diagnostics.Stopwatch.StartNew();
-        var output = await DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, contentType, throwExceptionOnErrorResponse, maxRedirectDepth, 0, cancellationToken, getContent);
+        var output = await DownloadStringAsync(url, redirectUrlGetFunc, jsCookieGetFunc, referer, headerSetter, throwExceptionOnErrorResponse, maxRedirectDepth, 0, cancellationToken, getContent);
         sw.Stop();
         _logger.Info($"Call to {url} completed in {sw.Elapsed}, status: {output?.StatusCode}");
         return output;
@@ -130,8 +130,7 @@ public class WebDownloader : IWebDownloader
         return new DownloadStringResponse(responseUrl, responseContent, statusCode);
     }
 
-    private async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc, Func<string, CookieCollection> jsCookieGetFunc, string referer, Action<HttpRequestHeaders> headerSetter,
-        string contentType, bool throwExceptionOnErrorResponse, int maxRedirectDepth, int depth, CancellationToken cancellationToken, bool getContent)
+    private async Task<DownloadStringResponse> DownloadStringAsync(string url, Func<string, string, string> redirectUrlGetFunc, Func<string, CookieCollection> jsCookieGetFunc, string referer, Action<HttpRequestHeaders> headerSetter, bool throwExceptionOnErrorResponse, int maxRedirectDepth, int depth, CancellationToken cancellationToken, bool getContent)
     {
         var request = new HttpRequestMessage(HttpMethod.Get, url);
 
@@ -145,9 +144,6 @@ public class WebDownloader : IWebDownloader
             request.Headers.Referrer = new Uri(referer);
 
         headerSetter?.Invoke(request.Headers);
-
-        if (contentType != null)
-            request.Content.Headers.ContentType = new(contentType);
 
         HttpStatusCode statusCode;
         string responseUrl;
@@ -200,7 +196,7 @@ public class WebDownloader : IWebDownloader
             if (depth > maxRedirectDepth)
                 return new DownloadStringResponse(redirectUrl, null, statusCode);
 
-            var redirectOutput = await DownloadStringAsync(redirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer: url, headerSetter, contentType: null, throwExceptionOnErrorResponse, maxRedirectDepth, depth + 1, cancellationToken, getContent);
+            var redirectOutput = await DownloadStringAsync(redirectUrl, redirectUrlGetFunc, jsCookieGetFunc, referer: url, headerSetter, throwExceptionOnErrorResponse, maxRedirectDepth, depth + 1, cancellationToken, getContent);
             return redirectOutput;
         }
         else
@@ -336,17 +332,17 @@ public static class CookieContainerExtensions
 public static class AsyncHelper
 {
     private static readonly TaskFactory MyTaskFactory = new(CancellationToken.None,
-            TaskCreationOptions.None,
-            TaskContinuationOptions.None,
-            TaskScheduler.Default);
-    
+                                                            TaskCreationOptions.None,
+                                                            TaskContinuationOptions.None,
+                                                            TaskScheduler.Default);
+
     public static TResult RunSync<TResult>(Func<Task<TResult>> func)
     {
         return MyTaskFactory
-            .StartNew(async () => await func())
-            .Unwrap()
-            .GetAwaiter()
-            .GetResult();
+               .StartNew(async () => await func())
+               .Unwrap()
+               .GetAwaiter()
+               .GetResult();
     }
 
     public static void RunSync(Func<Task> func)

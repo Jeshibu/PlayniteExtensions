@@ -96,7 +96,7 @@ internal class PCGamingWikiBulkGamePropertyAssigner(
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Error selecting values");
+            Logger.Error(ex, "Error selecting values");
             return null;
         }
     }
