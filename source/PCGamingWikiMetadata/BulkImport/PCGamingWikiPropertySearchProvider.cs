@@ -67,7 +67,7 @@ public class PCGamingWikiPropertySearchProvider(ICargoQuery cargoQuery, IPlatfor
         if (string.IsNullOrWhiteSpace(query))
             return ToSelectedValues(_tables.Fields);
 
-        var matching = _tables.Fields.Where(f => f.FieldDisplayName.Contains(query, StringComparison.InvariantCultureIgnoreCase));
+        var matching = _tables.Fields.Where(f => f.TableAndFieldDisplayName.Contains(query, StringComparison.InvariantCultureIgnoreCase));
         return ToSelectedValues(matching);
     }
 
@@ -78,7 +78,7 @@ public class PCGamingWikiPropertySearchProvider(ICargoQuery cargoQuery, IPlatfor
 
     public GenericItemOption<PCGamingWikiSelectedValues> ToGenericItemOption(PCGamingWikiSelectedValues item)
     {
-        return new(item) { Name = item.FieldInfo.FieldDisplayName };
+        return new(item) { Name = item.FieldInfo.TableAndFieldDisplayName };
     }
 
     public IEnumerable<ItemCount> GetCounts(CargoFieldInfo field, string searchString)

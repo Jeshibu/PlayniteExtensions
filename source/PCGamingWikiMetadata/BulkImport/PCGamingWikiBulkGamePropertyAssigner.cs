@@ -171,7 +171,7 @@ internal class PCGamingWikiBulkGamePropertyAssigner(
 
 public class PCGamingWikiSelectedValues : IHasName
 {
-    public string Name => FieldInfo.FieldDisplayName;
+    public string Name => FieldInfo.TableAndFieldDisplayName;
     public CargoFieldInfo FieldInfo { get; set; }
     public List<string> SelectedValues { get; set; } = [];
 }
