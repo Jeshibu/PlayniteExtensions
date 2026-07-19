@@ -3,6 +3,7 @@
     <Version>1.7</Version>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="RateLimiter" Version="2.2.0" />
     <Reference Include="Microsoft.VisualBasic" />
     <PackageReference Include="AngleSharp" Version="0.9.9" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />

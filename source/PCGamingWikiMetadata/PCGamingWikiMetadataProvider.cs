@@ -17,7 +17,6 @@ public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
 
     private readonly PCGWGameController gameController;
     private static readonly ILogger logger = LogManager.GetLogger();
-    private static IWebDownloader Downloader => field ??= new WebDownloader();
 
     public override List<MetadataField> AvailableFields => field ??= GetAvailableFields();
 
@@ -27,7 +26,7 @@ public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
         this.playniteApi = playniteApi;
         this.settings = settings;
         gameController = new PCGWGameController(settings);
-        client = new PCGWClient(this.options, gameController, Downloader);
+        client = new PCGWClient(this.options, gameController, PCGamingWikiMetadata.Downloader);
     }
 
     private List<MetadataField> GetAvailableFields()

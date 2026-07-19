@@ -1,8 +1,10 @@
-﻿using PCGamingWikiBulkImport;
+﻿using ComposableAsync;
+using PCGamingWikiBulkImport;
 using PCGamingWikiMetadata.BulkImport;
 using Playnite.SDK;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
+using RateLimiter;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +16,7 @@ namespace PCGamingWikiMetadata;
 public class PCGamingWikiMetadata : MetadataPlugin
 {
     private static readonly ILogger logger = LogManager.GetLogger();
-    internal static IWebDownloader Downloader => field ??= new WebDownloader();
+    internal static IWebDownloader Downloader => field ??= new WebDownloader(TimeLimiter.GetFromMaxCountByInterval(1, TimeSpan.FromSeconds(2)).AsDelegatingHandler());
 
     private PCGamingWikiMetadataSettingsViewModel settings { get; set; }
 
