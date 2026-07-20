@@ -64,3 +64,9 @@ Packages:
       - 'Added bulk trope import column to show what games matched your games, and how.'
       - 'Fixed background browser processes not being disposed'
       - 'Fixed bulk trope import not honoring the "Only import first game per trope list item" setting'
+  - Version: '0.5.1'
+    RequiredApiVersion: '6.11.0'
+    ReleaseDate: 2026-07-20
+    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-07-20/TvTropesMetadata_0_5_1.pext'
+    Changelog:
+      - 'Bulk property import: fixed double games being found in some cases, and improved subcategory handling'

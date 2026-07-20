@@ -262,3 +262,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-03-13/PCGamingWikiMetadata_1_7.pext
     Changelog:
       - "Added bulk property import column to show what games matched your games, and how"
+  - Version: '1.8'
+    RequiredApiVersion: '6.11.0'
+    ReleaseDate: 2026-07-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-07-20/PCGamingWikiMetadata_1_8.pext
+    Changelog:
+      - "Implemented rate limiting that PCGW now enforces of 1 request per 2 seconds"
+      - "Fixed bulk import sometimes having the category double in the suggested property name"

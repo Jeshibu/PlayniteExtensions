@@ -72,3 +72,11 @@ Packages:
     Changelog:
       - "Added Xenia Edge profile (Xbox 360)"
       - "Added ISO scanning to RPCS3 import script. This looks in the .ISO file to determine the exact name, so isn't dependant on the ISO file name."
+  - Version: '1.10'
+    RequiredApiVersion: '6.2.0'
+    ReleaseDate: 2026-07-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-07-20/ExtraEmulatorProfiles_1_10.pext
+    Changelog:
+      - "Fixed RALibretro executable detection"
+      - "Profiles that are already included in Playnite 10.56, which is everything before this update, are no longer included"
+      - "If you're running Playnite 10.20, you can get Playnite 10.56's emulator profiles by, in the settings, hitting [Reset to original Playnite emulator profiles] followed by [Apply patch]"

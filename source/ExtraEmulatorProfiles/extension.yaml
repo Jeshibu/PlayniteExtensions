@@ -1,7 +1,7 @@
 ﻿Id: ExtraEmulatorProfiles
 Name: Extra Emulator Profiles
 Author: Jeshibu
-Version: '1.9' #When updating this, update the .csproj version too! The emulator profile patching process depends on it
+Version: '1.10' #When updating this, update the .csproj version too! The emulator profile patching process depends on it
 Module: ExtraEmulatorProfiles.dll
 Type: GenericPlugin
 Icon: icon.png

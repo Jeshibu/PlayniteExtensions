@@ -180,3 +180,9 @@ Packages:
     Changelog:
       - "Added: tag/feature bulk import column to show what games matched your games, and how"
       - "Fixed: tag/feature bulk import would error out due to rate limiting after 1450 games downloaded. You will be waiting for 1 minute after every 2900 games downloaded now, though."
+  - Version: '4.4.1'
+    RequiredApiVersion: '6.11.0'
+    ReleaseDate: 2026-07-20
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-07-20/SteamTagsImporter_4_4_1.pext
+    Changelog:
+      - "Fixed: closing Playnite while a game import was running could lead to the settings corrupting and resetting"
