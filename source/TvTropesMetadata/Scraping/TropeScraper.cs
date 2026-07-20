@@ -66,7 +66,8 @@ public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewF
         var doc = GetDocument(url);
         var output = new ParsedTropePage { Title = GetTitle(doc) };
         var articleContent = doc.QuerySelector(".article-content")?.InnerHtml;
-        output.Items.AddRange(GetTropePageListElements(articleContent, getAllUnfiltered: pageIsSubsection).Select(ParseTropePageListItem));
+        var listElements = GetTropePageListElements(articleContent, getAllUnfiltered: pageIsSubsection);
+        output.Items.AddRange(listElements.Select(ParseTropePageListItem));
         if (pageIsSubsection)
         {
             var breadcrumbLinks = doc.QuerySelectorAll(".entry-title .entry-breadcrumb > a[href]");
@@ -80,7 +81,7 @@ public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewF
         }
         else
         {
-            var subcategoryUrls = GetSubcategoryUrls(doc, url);
+            var subcategoryUrls = GetSubcategoryUrls(doc, url).Distinct().ToList();
             foreach (var subcategoryUrl in subcategoryUrls)
             {
                 var subcategoryPage = GetGamesForTrope(subcategoryUrl, pageIsSubsection: true);
@@ -113,24 +114,29 @@ public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewF
         var lastUrlSegment = GetWikiPathSegments(pageUrl).Last();
         var links = doc.QuerySelectorAll(".article-content > ul > li > a.twikilink[href]");
 
-        bool IsSubcategoryUrl(string subcategoryUrl)
+        bool IsSubcategoryLink(IElement a, out string absoluteUrl)
         {
-            var linkSegments = GetWikiPathSegments(subcategoryUrl);
+            var linkUrl = a.GetAttribute("href");
+            absoluteUrl = linkUrl.GetAbsoluteUrl(pageUrl);
+            var linkSegments = GetWikiPathSegments(linkUrl);
             return linkSegments.Length == 2 && linkSegments[0].Equals(lastUrlSegment, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        bool LinkTextIsVideogameFolderName(IElement a)
+        {
+            var linkText = a.TextContent.HtmlDecode();
+            return IsVideogameFolderName(linkText);
         }
 
         foreach (var a in links)
         {
-            var linkUrl = a.GetAttribute("href");
-            var linkText = a.TextContent.HtmlDecode();
-            if (!IsSubcategoryUrl(linkUrl) || !IsVideogameFolderName(linkText))
-                continue;
+            if (LinkTextIsVideogameFolderName(a) && IsSubcategoryLink(a, out string absoluteUrl))
+                yield return absoluteUrl;
 
-            yield return linkUrl.GetAbsoluteUrl(pageUrl);
-
-            var childUrls = a.ParentElement.QuerySelectorAll("ul > li a.twikilink[href]").Select(x => x.GetAttribute("href").GetAbsoluteUrl(pageUrl)).ToArray();
-            foreach (var childUrl in childUrls)
-                yield return childUrl;
+            var childLinks = a.ParentElement.QuerySelectorAll("> ul > li a.twikilink[href]");
+            foreach (var childLink in childLinks)
+                if (childLink != a && IsSubcategoryLink(childLink, out string childLinkUrl))
+                    yield return childLinkUrl;
         }
     }
 
@@ -154,7 +160,7 @@ public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewF
                         AddListElementsFromSourceString(segment.Item2);
         }
 
-        if (!getAllUnfiltered)
+        void AddFiltered()
         {
             bool nonVideoGameSegmentExists = headerSegments.Any(h => IsNonVideoGamesHeader(h.Item1));
             foreach (var segment in headerSegments)
@@ -165,7 +171,10 @@ public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewF
 
                 var segmentContent = segment.Item2;
                 if (IsVideogameFolderName(segmentHeader) || nonVideoGameSegmentExists)
+                {
                     AddListElementsFromSourceString(segmentContent);
+                    continue;
+                }
 
                 var folderLabels = htmlParser.Parse(segmentContent).QuerySelectorAll(".folderlabel[onclick^=\"togglefolder(\"]");
 
@@ -181,6 +190,9 @@ public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewF
                 }
             }
         }
+
+        if (!getAllUnfiltered)
+            AddFiltered();
 
         if (output.Count == 0)
         {

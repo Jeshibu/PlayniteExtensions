@@ -60,6 +60,21 @@ public class TropeScraperTests
     }
 
     [Fact]
+    public void SubcategoryLinksIgnoreUnrelated()
+    {
+        //TODO: use the AfterTheEnd pages to verify that Main/VisualNovels isn't imported
+        var scraper = new TropeScraper(webViewFactory);
+        var sp = new TropeSearchProvider(scraper, new TvTropesMetadataSettings { OnlyFirstGamePerTropeListItem = false });
+        var result = sp.GetDetails("https://tvtropes.org/pmwiki/pmwiki.php/Main/AfterTheEnd").ToList();
+
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/AfterTheEnd/VideoGames", webViewFactory.CalledUrls);
+        Assert.DoesNotContain("https://tvtropes.org/pmwiki/pmwiki.php/Main/VisualNovels", webViewFactory.CalledUrls);
+
+        ContainsGame(result, "Aquanox", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/Aquanox");
+        DoesNotContainGame(result, "Vampire Therapist");
+    }
+
+    [Fact]
     public void MixedSubcategoryAndFolderLinksParse()
     {
         var scraper = new TropeScraper(webViewFactory);
@@ -280,5 +295,11 @@ public class TropeScraperTests
         var game = ContainsGame(games, titles[0], url);
         AssertHelper.CollectionsHaveSameItems(titles, game.Names);
         return game;
+    }
+
+    private static void DoesNotContainGame(IEnumerable<GameDetails> games, string title)
+    {
+        var titleMatches = games.Where(g => g.Names.Contains(title)).ToList();
+        Assert.Empty(titleMatches);
     }
 }
