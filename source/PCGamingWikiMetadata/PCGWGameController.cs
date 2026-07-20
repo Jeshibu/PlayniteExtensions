@@ -9,12 +9,8 @@ public class PCGWGameController
 {
     private readonly ILogger logger = LogManager.GetLogger();
     public PcgwGame Game;
-    private readonly PCGamingWikiMetadataSettings settings;
 
-    public PCGamingWikiMetadataSettings Settings
-    {
-        get { return settings; }
-    }
+    public PCGamingWikiMetadataSettings Settings { get; }
 
     private Dictionary<string, Func<bool>> settingsMap;
     private Dictionary<string, Action<string>> taxonomyFunctions;
@@ -22,69 +18,69 @@ public class PCGWGameController
 
     public PCGWGameController(PCGamingWikiMetadataSettings settings)
     {
-        this.settings = settings;
-        InitalizeSettingsMappings();
+        this.Settings = settings;
+        InitializeSettingsMappings();
     }
 
     public PCGWGameController(PcgwGame game, PCGamingWikiMetadataSettings settings)
     {
         Game = game;
-        this.settings = settings;
-        InitalizeSettingsMappings();
+        this.Settings = settings;
+        InitializeSettingsMappings();
     }
 
-    private void InitalizeSettingsMappings()
+    private void InitializeSettingsMappings()
     {
         settingsMap = new Dictionary<string, Func<bool>>()
         {
-            { PCGamingWikiType.Taxonomy.Engines, () => settings.ImportTagEngine },
-            { PCGamingWikiType.Taxonomy.Monetization, () => settings.ImportTagMonetization },
-            { PCGamingWikiType.Taxonomy.Microtransactions, () => settings.ImportTagMicrotransactions },
-            { PCGamingWikiType.Taxonomy.Pacing, () => settings.ImportTagPacing },
-            { PCGamingWikiType.Taxonomy.Perspectives, () => settings.ImportTagPerspectives },
-            { PCGamingWikiType.Taxonomy.Controls, () => settings.ImportTagControls },
-            { PCGamingWikiType.Taxonomy.Vehicles, () => settings.ImportTagVehicles },
-            { PCGamingWikiType.Taxonomy.Themes, () => settings.ImportTagThemes },
-            { PCGamingWikiType.Taxonomy.ArtStyles, () => settings.ImportTagArtStyle },
-            { PCGamingWikiType.Taxonomy.Middleware, () => settings.ImportTagMiddleware },
-            { PCGamingWikiType.Video.HDR, () => settings.ImportFeatureHDR },
-            { PCGamingWikiType.Video.RayTracing, () => settings.ImportFeatureRayTracing },
-            { PCGamingWikiType.Video.FPS120Plus, () => settings.ImportFeatureFramerate120 },
-            { PCGamingWikiType.Video.FPS60, () => settings.ImportFeatureFramerate60 },
-            { PCGamingWikiType.Video.Ultrawide, () => settings.ImportFeatureUltrawide },
-            { PCGamingWikiType.Video.VR, () => settings.ImportFeatureVR },
-            { PCGamingWikiType.VRHeadsets.HTCVive, () => settings.ImportFeatureVRHTCVive },
-            { PCGamingWikiType.VRHeadsets.OculusRift, () => settings.ImportFeatureVROculusRift },
-            { PCGamingWikiType.VRHeadsets.OSVR, () => settings.ImportFeatureVROSVR },
-            { PCGamingWikiType.VRHeadsets.WindowsMixedReality, () => settings.ImportFeatureVRWMR },
+            { PCGamingWikiType.Taxonomy.Engines, () => Settings.ImportTagEngine },
+            { PCGamingWikiType.Taxonomy.Monetization, () => Settings.ImportTagMonetization },
+            { PCGamingWikiType.Taxonomy.Microtransactions, () => Settings.ImportTagMicrotransactions },
+            { PCGamingWikiType.Taxonomy.Pacing, () => Settings.ImportTagPacing },
+            { PCGamingWikiType.Taxonomy.Perspectives, () => Settings.ImportTagPerspectives },
+            { PCGamingWikiType.Taxonomy.Controls, () => Settings.ImportTagControls },
+            { PCGamingWikiType.Taxonomy.Vehicles, () => Settings.ImportTagVehicles },
+            { PCGamingWikiType.Taxonomy.Themes, () => Settings.ImportTagThemes },
+            { PCGamingWikiType.Taxonomy.ArtStyles, () => Settings.ImportTagArtStyle },
+            { PCGamingWikiType.Taxonomy.Middleware, () => Settings.ImportTagMiddleware },
+            { PCGamingWikiType.Video.HDR, () => Settings.ImportFeatureHDR },
+            { PCGamingWikiType.Video.RayTracing, () => Settings.ImportFeatureRayTracing },
+            { PCGamingWikiType.Video.FPS120Plus, () => Settings.ImportFeatureFramerate120 },
+            { PCGamingWikiType.Video.FPS60, () => Settings.ImportFeatureFramerate60 },
+            { PCGamingWikiType.Video.Ultrawide, () => Settings.ImportFeatureUltrawide },
+            { PCGamingWikiType.Video.VR, () => Settings.ImportFeatureVR },
+            { PCGamingWikiType.VRHeadsets.HTCVive, () => Settings.ImportFeatureVRHTCVive },
+            { PCGamingWikiType.VRHeadsets.OculusRift, () => Settings.ImportFeatureVROculusRift },
+            { PCGamingWikiType.VRHeadsets.OSVR, () => Settings.ImportFeatureVROSVR },
+            { PCGamingWikiType.VRHeadsets.WindowsMixedReality, () => Settings.ImportFeatureVRWMR },
 
-            { PCGamingWikiType.Link.OfficialSite, () => settings.ImportLinkOfficialSite },
-            { PCGamingWikiType.Link.HowLongToBeat, () => settings.ImportLinkHowLongToBeat },
-            { PCGamingWikiType.Link.IGDB, () => settings.ImportLinkIGDB },
-            { PCGamingWikiType.Link.IsThereAnyDeal, () => settings.ImportLinkIsThereAnyDeal },
-            { PCGamingWikiType.Link.ProtonDB, () => settings.ImportLinkProtonDB },
-            { PCGamingWikiType.Link.SteamDB, () => settings.ImportLinkSteamDB },
-            { PCGamingWikiType.Link.StrategyWiki, () => settings.ImportLinkStrategyWiki },
-            { PCGamingWikiType.Link.Wikipedia, () => settings.ImportLinkWikipedia },
-            { PCGamingWikiType.Link.NexusMods, () => settings.ImportLinkNexusMods },
-            { PCGamingWikiType.Link.MobyGames, () => settings.ImportLinkMobyGames },
-            { PCGamingWikiType.Link.WSGF, () => settings.ImportLinkWSGF },
-            { PCGamingWikiType.Link.WineHQ, () => settings.ImportLinkWineHQ },
-            { PCGamingWikiType.Link.GOGDatabase, () => settings.ImportLinkGOGDatabase },
+            { PCGamingWikiType.Link.OfficialSite, () => Settings.ImportLinkOfficialSite },
+            { PCGamingWikiType.Link.HowLongToBeat, () => Settings.ImportLinkHowLongToBeat },
+            { PCGamingWikiType.Link.IGDB, () => Settings.ImportLinkIGDB },
+            { PCGamingWikiType.Link.IsThereAnyDeal, () => Settings.ImportLinkIsThereAnyDeal },
+            { PCGamingWikiType.Link.ProtonDB, () => Settings.ImportLinkProtonDB },
+            { PCGamingWikiType.Link.SteamDB, () => Settings.ImportLinkSteamDB },
+            { PCGamingWikiType.Link.StrategyWiki, () => Settings.ImportLinkStrategyWiki },
+            { PCGamingWikiType.Link.Wikipedia, () => Settings.ImportLinkWikipedia },
+            { PCGamingWikiType.Link.NexusMods, () => Settings.ImportLinkNexusMods },
+            { PCGamingWikiType.Link.MobyGames, () => Settings.ImportLinkMobyGames },
+            { PCGamingWikiType.Link.WSGF, () => Settings.ImportLinkWSGF },
+            { PCGamingWikiType.Link.WineHQ, () => Settings.ImportLinkWineHQ },
+            { PCGamingWikiType.Link.GOGDatabase, () => Settings.ImportLinkGOGDatabase },
         };
 
         taxonomyTagPrefix = new Dictionary<string, Func<string>>()
         {
-            { PCGamingWikiType.Taxonomy.Engines, () => settings.TagPrefixEngines },
-            { PCGamingWikiType.Taxonomy.Themes, () => settings.TagPrefixThemes },
-            { PCGamingWikiType.Taxonomy.ArtStyles, () => settings.TagPrefixArtStyles },
-            { PCGamingWikiType.Taxonomy.Vehicles, () => settings.TagPrefixVehicles },
-            { PCGamingWikiType.Taxonomy.Controls, () => settings.TagPrefixControls },
-            { PCGamingWikiType.Taxonomy.Perspectives, () => settings.TagPrefixPerspectives },
-            { PCGamingWikiType.Taxonomy.Pacing, () => settings.TagPrefixPacing },
-            { PCGamingWikiType.Taxonomy.Monetization, () => settings.TagPrefixMonetization },
-            { PCGamingWikiType.Taxonomy.Microtransactions, () => settings.TagPrefixMicrotransactions },
-            { PCGamingWikiType.Taxonomy.Middleware, () => settings.TagPrefixMiddleware },
+            { PCGamingWikiType.Taxonomy.Engines, () => Settings.TagPrefixEngines },
+            { PCGamingWikiType.Taxonomy.Themes, () => Settings.TagPrefixThemes },
+            { PCGamingWikiType.Taxonomy.ArtStyles, () => Settings.TagPrefixArtStyles },
+            { PCGamingWikiType.Taxonomy.Vehicles, () => Settings.TagPrefixVehicles },
+            { PCGamingWikiType.Taxonomy.Controls, () => Settings.TagPrefixControls },
+            { PCGamingWikiType.Taxonomy.Perspectives, () => Settings.TagPrefixPerspectives },
+            { PCGamingWikiType.Taxonomy.Pacing, () => Settings.TagPrefixPacing },
+            { PCGamingWikiType.Taxonomy.Monetization, () => Settings.TagPrefixMonetization },
+            { PCGamingWikiType.Taxonomy.Microtransactions, () => Settings.TagPrefixMicrotransactions },
+            { PCGamingWikiType.Taxonomy.Middleware, () => Settings.TagPrefixMiddleware },
         };
 
         taxonomyFunctions = new Dictionary<string, Action<string>>()
@@ -106,7 +102,7 @@ public class PCGWGameController
 
     private string TagPrefix(string taxonomyKey)
     {
-        return settings.AddTagPrefix
+        return Settings.AddTagPrefix
             ? taxonomyTagPrefix[taxonomyKey].Invoke()
             : "";
     }
@@ -135,7 +131,7 @@ public class PCGWGameController
             action(text);
     }
 
-    private BuiltinExtension? LauncherNameToPluginId(string launcher) => launcher switch
+    private static BuiltinExtension? LauncherNameToPluginId(string launcher) => launcher switch
     {
         PCGamingWikiType.Cloud.Steam => BuiltinExtension.SteamLibrary,
         PCGamingWikiType.Cloud.Xbox => BuiltinExtension.XboxLibrary,
@@ -150,43 +146,36 @@ public class PCGWGameController
     {
         BuiltinExtension? extension = LauncherNameToPluginId(launcher);
 
-        if (BuiltinExtensions.GetExtensionFromId(Game.LibraryGame.PluginId) == extension)
-        {
-            switch (description)
-            {
-                case PCGamingWikiType.Rating.NativeSupport:
-                    Game.AddFeature("Cloud Saves");
-                    break;
-                case PCGamingWikiType.Rating.NotSupported:
-                    if (settings.ImportTagNoCloudSaves)
-                        Game.AddTag("No Cloud Saves");
+        if (BuiltinExtensions.GetExtensionFromId(Game.LibraryGame.PluginId) != extension)
+            return;
 
-                    break;
-                case PCGamingWikiType.Rating.Unknown:
-                    break;
-            }
+        switch (description)
+        {
+            case PCGamingWikiType.Rating.NativeSupport:
+                Game.AddFeature("Cloud Saves");
+                break;
+            case PCGamingWikiType.Rating.NotSupported:
+                if (Settings.ImportTagNoCloudSaves)
+                    Game.AddTag("No Cloud Saves");
+                break;
+            case PCGamingWikiType.Rating.Unknown:
+                break;
         }
     }
 
     public void AddVRFeature(string headset, string rating)
     {
         if (IsSettingDisabled(PCGamingWikiType.Video.VR))
-        {
             return;
-        }
 
         if (SettingExistsAndEnabled(headset) && NativeOrLimitedSupport(rating))
-        {
             Game.AddVrFeature();
-        }
     }
 
     public void AddVideoFeature(string key, string rating)
     {
         if (IsSettingDisabled(key) || !NativeOrLimitedSupport(rating))
-        {
             return;
-        }
 
         switch (key)
         {
@@ -214,24 +203,16 @@ public class PCGWGameController
 
     public void SetXboxPlayAnywhere()
     {
-        if (settings.ImportXboxPlayAnywhere)
-        {
+        if (Settings.ImportXboxPlayAnywhere)
             Game.SetXboxPlayAnywhere();
-        }
     }
 
-    private bool NativeOrLimitedSupport(string rating)
-    {
-        return rating == PCGamingWikiType.Rating.NativeSupport ||
-               rating == PCGamingWikiType.Rating.Limited;
-    }
+    private static bool NativeOrLimitedSupport(string rating) => rating is PCGamingWikiType.Rating.NativeSupport or PCGamingWikiType.Rating.Limited;
 
     public void AddMultiplayer(string networkType, string rating, short playerCount, IList<string> notes)
     {
-        if (!settings.ImportMultiplayerTypes)
-        {
+        if (!Settings.ImportMultiplayerTypes)
             return;
-        }
 
         switch (networkType)
         {
@@ -263,9 +244,7 @@ public class PCGWGameController
     public void AddLink(Link link)
     {
         if (SettingExistsAndEnabled(link.Name))
-        {
             Game.Links.Add(link);
-        }
     }
 
     public void AddMiddleware(string type, string name)

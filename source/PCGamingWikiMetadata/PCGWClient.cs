@@ -34,10 +34,7 @@ public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameC
 
     public static string GetValueCountsUrl(string table, string field, string filter = null)
     {
-        string having = "Value IS NOT NULL";
-
-        if (!string.IsNullOrWhiteSpace(filter))
-            having = $"Value LIKE '%{EscapeString(filter)}%'";
+        string having = string.IsNullOrWhiteSpace(filter) ? "Value IS NOT NULL" : $"Value LIKE '%{EscapeString(filter)}%'";
 
         return GetUrl(new()
         {
@@ -107,18 +104,14 @@ public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameC
     {
         try
         {
-            _logger.Info(url);
-
             var response = downloader.DownloadString(url);
 
-            return JObject.Parse(response.ResponseContent);
+            return JObject.Parse(response?.ResponseContent);
         }
         catch (Exception ex)
         {
             _logger.Error(ex, "Error performing API request");
-            const string message = "Error retrieving response. Check inner details for more info.";
-            var e = new Exception(message, ex);
-            throw e;
+            throw new("Error retrieving response. Check inner details for more info.", ex);
         }
     }
 
@@ -170,6 +163,7 @@ public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameC
             if (content.TryGetValue("error", out JToken error))
             {
                 _logger.Error($"Encountered API error: {error}");
+                return;
             }
 
             PCGamingWikiJSONParser jsonParser = new(content, gameController);
@@ -264,27 +258,25 @@ public class PCGWClient(MetadataRequestOptions options, PCGWGameController gameC
 
         var d = new int[a.Length + 1, b.Length + 1];
 
-        for (int i = 0; i <= d.GetUpperBound(0); i += 1)
+        for (int i = 0; i <= d.GetUpperBound(0); i++)
         {
             d[i, 0] = i;
         }
 
-        for (int i = 0; i <= d.GetUpperBound(1); i += 1)
+        for (int i = 0; i <= d.GetUpperBound(1); i++)
         {
             d[0, i] = i;
         }
 
-        for (int i = 1; i <= d.GetUpperBound(0); i += 1)
+        for (int i = 1; i <= d.GetUpperBound(0); i++)
+        for (int j = 1; j <= d.GetUpperBound(1); j++)
         {
-            for (int j = 1; j <= d.GetUpperBound(1); j += 1)
-            {
-                var cost = (a[i - 1] != b[j - 1]) ? 1 : 0;
+            var cost = (a[i - 1] != b[j - 1]) ? 1 : 0;
 
-                var min1 = d[i - 1, j] + 1;
-                var min2 = d[i, j - 1] + 1;
-                var min3 = d[i - 1, j - 1] + cost;
-                d[i, j] = Math.Min(Math.Min(min1, min2), min3);
-            }
+            var min1 = d[i - 1, j] + 1;
+            var min2 = d[i, j - 1] + 1;
+            var min3 = d[i - 1, j - 1] + cost;
+            d[i, j] = Math.Min(Math.Min(min1, min2), min3);
         }
 
         return d[d.GetUpperBound(0), d.GetUpperBound(1)];

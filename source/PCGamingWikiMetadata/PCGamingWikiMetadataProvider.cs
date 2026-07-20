@@ -32,12 +32,10 @@ public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
     private List<MetadataField> GetAvailableFields()
     {
         if (gameController.Game == null)
-        {
-            GetPCGWMetadata();
-        }
+            GetPCGWMetadata(); // Side effect: actually fetch the game's data?! Nasty, often useless. TODO: move into property getters
 
-        var fields = new List<MetadataField>
-        {
+        return
+        [
             MetadataField.Name,
             MetadataField.Links,
             MetadataField.ReleaseDate,
@@ -48,9 +46,7 @@ public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
             MetadataField.Publishers,
             MetadataField.CriticScore,
             MetadataField.Tags
-        };
-
-        return fields;
+        ];
     }
 
     private void GetPCGWMetadata()
@@ -67,10 +63,9 @@ public class PCGamingWikiMetadataProvider : OnDemandMetadataProvider
             logger.Debug("not background");
             var item = playniteApi.Dialogs.ChooseItemWithSearch(null, a => client.SearchGames(a), options.GameData.Name);
 
-            if (item != null)
+            if (item is PcgwGame pcgwGame)
             {
-                var searchItem = item as PcgwGame;
-                gameController.Game = (PcgwGame)item;
+                gameController.Game = pcgwGame;
                 client.FetchGamePageContent(gameController.Game);
             }
             else
