@@ -18,7 +18,7 @@ public class SteamTagsImporterSettings : BulkImportPluginSettings
     public string TagPrefix { get; set => SetValue(ref field, value); } = string.Empty;
     public bool TagDelistedGames { get; set => SetValue(ref field, value); } = false;
     public string DelistedTagName { get; set => SetValue(ref field, value); } = "Delisted";
-    public DateTime LastAutomaticTagUpdate { get; set => SetValue(ref field, value); } = default;
+    public DateTime LastAutomaticTagUpdate { get; set => SetValue(ref field, value); } = DateTime.Now;
     public string LanguageKey { get; set => SetValue(ref field, value); } = string.Empty;
     public ObservableCollection<string> OkayTags { get; set; } = [];
     public ObservableCollection<string> BlacklistedTags { get; set; } = [];

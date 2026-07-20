@@ -21,11 +21,7 @@ public class SteamTagsImporter : MetadataPlugin
     private readonly Func<ISteamTagScraper> getTagScraper;
     private readonly IWebDownloader downloader = new WebDownloader();
 
-    public SteamTagsImporterSettingsViewModel Settings
-    {
-        get => field ??= new SteamTagsImporterSettingsViewModel(this);
-        set;
-    }
+    private SteamTagsImporterSettingsViewModel Settings { get => field ??= new(this); set; }
 
     public override Guid Id { get; } = Guid.Parse("01b67948-33a1-42d5-bd39-e4e8a226d215");
 
@@ -56,7 +52,7 @@ public class SteamTagsImporter : MetadataPlugin
         this.Properties = new MetadataPluginProperties { HasSettings = true };
     }
 
-    public override ISettings GetSettings(bool firstRunSettings = false) => Settings;
+    public override ISettings GetSettings(bool firstRunSettings) => Settings;
 
     public override UserControl GetSettingsView(bool firstRunSettings)
     {
@@ -73,13 +69,12 @@ public class SteamTagsImporter : MetadataPlugin
         if (!Settings.Settings.AutomaticallyAddTagsToNewGames)
             return;
 
-        List<Game> games;
-        if (Settings.Settings.LastAutomaticTagUpdate == DateTime.MinValue)
-            games = [];
-        else
-            games = PlayniteApi.Database.Games.Where(g => g.Added > Settings.Settings.LastAutomaticTagUpdate).ToList();
+        var games = PlayniteApi.Database.Games.Where(g => g.Added > Settings.Settings.LastAutomaticTagUpdate).ToList();
 
         logger.Debug($"Library update: {games.Count} games");
+
+        if (games.Count == 0)
+            return;
 
         SetTags(games);
 
