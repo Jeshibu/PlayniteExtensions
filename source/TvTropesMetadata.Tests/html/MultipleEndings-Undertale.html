@@ -996,49 +996,12 @@ The "Genocide" or "No Mercy" route<span class="notelabel" onclick="togglenote('n
 
     
     
-  <script type="text/javascript">
-      function send_analytics_event(user_type, donation){
-          // if(user_type == 'uncached' || user_type == 'cached'){
-          //   ga('send', 'event', 'caching', 'load', user_type, {'nonInteraction': 1});
-          //   return;
-          // }
-          var event_name = user_type;
-
-          if(donation == 'true'){
-              event_name += "_donation"
-          }else if(typeof(valid_user) == 'undefined'){
-              event_name += "_blocked"
-          }else if(valid_user == true){
-              event_name += "_unblocked";
-          }else{
-              event_name = "_unknown"
-          }
-          ga('send', 'event', 'ads', 'load', event_name, {'nonInteraction': 1});
-      }
-
-    
-    send_analytics_event("guest", "false");
-      </script>
+  
 
 
 
 <!-- Quantcast Tag -->
-<script type="text/javascript">
-  window._qevents = window._qevents || [];
 
-  (function() {
-    var elem = document.createElement('script');
-    elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
-    elem.async = true;
-    elem.type = "text/javascript";
-    var scpt = document.getElementsByTagName('script')[0];
-    scpt.parentNode.insertBefore(elem, scpt);
-  })();
-
-  window._qevents.push({
-      qacct:"p-mEzuYq24VEJ-3"
-  });
-</script>
 
 <noscript>
   <div style="display:none;">
@@ -1049,15 +1012,7 @@ The "Genocide" or "No Mercy" route<span class="notelabel" onclick="togglenote('n
 
 
 <!-- Begin comScore Tag -->
-<script>
-  var _comscore = _comscore || [];
-  _comscore.push({ c1: "2", c2: "38282685" });
-  (function() {
-    var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
-    s.src = "https://sb.scorecardresearch.com/cs/38282685/beacon.js";
-    el.parentNode.insertBefore(s, el);
-  })();
-</script>
+
 <noscript>
   <img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=38282685&amp;cv=3.6.0&amp;cj=1">
 </noscript>

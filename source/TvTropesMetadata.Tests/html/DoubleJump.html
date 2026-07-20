@@ -8,387 +8,25 @@
                         <link rel="preload" href="/images/loading-graphic.png" as="image">
 
             <!-- Google tag (gtag.js) -->
-            <script>window.gtl = null;</script>
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-XPPLXMRF6Z" onload="window.gtl = true;" onerror="window.gtl = false;"></script>
-            <script>
-                var pbjs = pbjs || {};
+            
+            
+            
 
-                // Used for Video players on Tropes
-                var tropes_videos_commands = tropes_videos_commands || [];
-
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'G-XPPLXMRF6Z');
-
-                window.googletag = window.googletag || {cmd: []};
-            </script>
-
-                        <script>
-                function object(objectId) {
-                    if (document.getElementById && document.getElementById(objectId)) {
-                        return document.getElementById(objectId);
-                    } else if (document.all && document.all(objectId)) {
-                        return document.all(objectId);
-                    } else if (document.layers && document.layers[objectId]) {
-                        return document.layers[objectId];
-                    } else {
-                        return false;
-                    }
-                }
-
-                // JAVASCRIPT COOKIES CODE: for getting and setting user viewing preferences
-                var cookies = {
-                    create: function (name, value, days2expire, path) {
-                        var date = new Date();
-                        date.setTime(date.getTime() + (days2expire * 24 * 60 * 60 * 1000));
-                        var expires = date.toUTCString();
-                        document.cookie = name + '=' + value + ';' + 'expires=' + expires + ';domain=.tvtropes.org;' + 'path=' + path + ';';
-                    },
-										createWithExpire: function(name, value, expires, path) {
-												document.cookie = name + '=' + value + ';' + 'expires=' + expires + ';domain=.tvtropes.org;' + 'path=' + path + ';';
-										},
-                    read: function (name) {
-                        var cookie_value = "",
-                            current_cookie = "",
-                            name_expr = name + "=",
-                            all_cookies = document.cookie.split(';'),
-                            n = all_cookies.length;
-
-                        for (var i = 0; i < n; i++) {
-                            current_cookie = all_cookies[i].trim();
-                            if (current_cookie.indexOf(name_expr) === 0) {
-                                cookie_value = current_cookie.substring(name_expr.length, current_cookie.length);
-                                break;
-                            }
-                        }
-                        return cookie_value;
-                    },
-                    update: function (name, val) {
-                        this.create(name, val, 300, "/");
-                    },
-                    remove: function (name) {
-                        //delete cookie with and without domain setting
-                        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.tvtropes.org; path=/;";
-                        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
-                    }
-                };
-
-                // show app promo banner
-                function show_promo(){
-                    var logged_in = false;
-
-                    // Check for the different possible cookies set by closeBanner()
-                    var banner_cookie_logged_in = cookies.read('app-announcement-banner-logged-in');
-                    var banner_cookie_guest = cookies.read('app-announcement-banner-guest');
-
-                    if(logged_in){
-                        document.body.classList.remove('app-promo');
-                        if(banner_cookie_logged_in){
-                            document.body.classList.add('footer-app-promo');
-                        }else{
-                            document.body.classList.remove('footer-app-promo');
-                        }
-                    }else{
-                        document.body.classList.remove('footer-app-promo');
-                        if(banner_cookie_guest){
-                            document.body.classList.remove('app-promo');
-                        }else{
-                            document.body.classList.add('app-promo');
-                        }
-                    }
-                }
-
-                function updateUserPrefs() {
-                    //GENERAL: detect and set browser, if not cookied (will be treated like a user-preference and added to the #user-pref element)
-                    if( !cookies.read('user-browser') ){
-                        var broswer = '';
-
-                        if(navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) ){
-                            browser = 'iOS';
-                        } else if (/Opera[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
-                            browser = 'opera';
-                        } else if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
-                            browser = 'MSIE';
-                        } else if (/Navigator[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
-                            browser = 'netscape';
-                        } else if (/Chrome[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
-                            browser = 'chrome';
-                        } else if (/Safari[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
-                            browser = 'safari';
-                            /Version[\/\s](\d+\.\d+)/.test(navigator.userAgent);
-                            browserVersion = new Number(RegExp.$1);
-                        } else if (/Firefox[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
-                            browser = 'firefox';
-                        } else {
-                            browser = 'internet_explorer';
-                        }
-                        cookies.create('user-browser',browser,1,'/');
-                        document.getElementById('user-prefs').classList.add('browser-' + browser);
-                    } else {
-                        document.getElementById('user-prefs').classList.add('browser-' + cookies.read('user-browser'));
-                    }
-
-                    //update user preference settings based on their database settings
-                    var logged_in = false;
-                    
-                    if(logged_in == false) {
-                        if(cookies.read('wide-load') !== '') document.getElementById('user-prefs').classList.add('wide-load');
-                        if(cookies.read('night-vision') !== '') document.getElementById('user-prefs').classList.add('night-vision');
-                        if(cookies.read('sticky-header') !== '') document.getElementById('user-prefs').classList.add('sticky-header');
-                        if(cookies.read('show-spoilers') !== '') document.getElementById('user-prefs').classList.add('show-spoilers');
-                        if(cookies.read('highlight-links') !== '') document.getElementById('user-prefs').classList.add('highlight-links');
-                    } else {
-                        if (false) document.getElementById('user-prefs').classList.add('wide-load');
-                        if (false) document.getElementById('user-prefs').classList.add('mono-font');
-                        if (false) document.getElementById('user-prefs').classList.add('night-vision');
-                        if (false) document.getElementById('user-prefs').classList.add('sticky-header');
-                        if (false) document.getElementById('user-prefs').classList.add('show-spoilers');
-                        if (false) document.getElementById('user-prefs').classList.add('tvtropes-editor-on');
-                        if (false) document.getElementById('user-prefs').classList.add('folders-open');
-                        if (false) document.getElementById('user-prefs').classList.add('lefthand-sidebar');
-                        if (false) document.getElementById('user-prefs').classList.add('highlight-links');
-                        if (false) document.getElementById('user-prefs').classList.add('forum-gingerbread');
-                        if (false) document.getElementById('user-prefs').classList.add('hide-likes-articles');
-                        if (false) document.getElementById('user-prefs').classList.add('hide-likes-posts');
-                        if (false) document.getElementById('user-prefs').classList.add('shared-avatars');
-                        if (false) document.getElementById('user-prefs').classList.add('stop-auto-play-video');
-                        if (false) document.getElementById('user-prefs').classList.add('hide-laconic-hover');
-                        if (false) document.getElementById('user-prefs').classList.add('show-namespaces');
-                    }
                         
-                    //desktop view on mobile
-                    if (cookies.read('desktop-on-mobile') !== ''){
-                        document.getElementById('user-prefs').classList.add('desktop-on-mobile');
-
-                        var viewport = document.querySelector("meta[name=viewport]");
-                        viewport.setAttribute('content', 'width=1000');
-                    }
-
-                    if (logged_in) {
-                        if (1) cookies.remove('stop-auto-play-video');
-                        else if (0) cookies.create('stop-auto-play-video','true',300,'/');
-                    }
-
-                    //updates element
-                    if(cookies.read('stop-auto-play-video') !== '') document.getElementById('user-prefs').classList.add('stop-auto-play-video');
-                }
-
-                function updateDesktopPrefs() {
-                    var logged_in = false;
-
-                    if(logged_in == false) {
-                        if(cookies.read('wide-load') !== '') document.getElementById('sidebar-toggle-wideload').classList.add('active');
-                        if(cookies.read('night-vision') !== '') document.getElementById('sidebar-toggle-nightvision').classList.add('active');
-                        if(cookies.read('sticky-header') !== '') document.getElementById('sidebar-toggle-stickyheader').classList.add('active');
-                        if(cookies.read('show-spoilers') !== '') document.getElementById('sidebar-toggle-showspoilers').classList.add('active');
-                    } else {
-                        if (false) document.getElementById('sidebar-toggle-wideload').classList.add('active');
-                        if (false) document.getElementById('sidebar-toggle-nightvision').classList.add('active');
-                        if (false) document.getElementById('sidebar-toggle-stickyheader').classList.add('active');
-                        if (false) document.getElementById('sidebar-toggle-showspoilers').classList.add('active');
-                    }
-                }
-
-                function updateMobilePrefs() {
-                    var logged_in = false;
-
-                    if(logged_in == false) {
-                        if(cookies.read('highlight-links') !== '') document.getElementById('mobile-toggle-highlightlinks').classList.add('active');
-                        if(cookies.read('night-vision') !== '') document.getElementById('mobile-toggle-nightvision').classList.add('active');
-                        if(cookies.read('sticky-header') !== '') document.getElementById('mobile-toggle-stickyheader').classList.add('active');
-                        if(cookies.read('show-spoilers') !== '') document.getElementById('mobile-toggle-showspoilers').classList.add('active'); 
-                    } else {
-                        if (false) document.getElementById('mobile-toggle-showspoilers').classList.add('active');
-                        if (false) document.getElementById('mobile-toggle-nightvision').classList.add('active');
-                        if (false) document.getElementById('mobile-toggle-stickyheader').classList.add('active');
-                        if (false) document.getElementById('mobile-toggle-highlightlinks').classList.add('active');
-                    }
-                }
-
-                function is_mobile() {
-	                if(document.body.clientWidth && document.body.clientWidth<=768) return true;
-	                else return false;
-                }
-
-                function sendToSiteSearch(obj, q) {
-
-                    window.location.href = "/pmwiki/search_result.php#gsc.tab=0&gsc.q="+q+"&gsc.sort=";
-                    return false;
-                }
-
-            </script>
 			
-						<script type="text/javascript">
-                var country_code_list = ['AT','BE','BG','CH','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GF','GP','GR','HR','HU','IC','IE','IS','IT','LI','LT','LU','LV','MF','MQ','MT','NL','NO','PL','PT','RE','RO','SE','SI','SK','SX','YT'];
-                var ad_block_detected = cookies.read('ad_block_detected') ? true : false;
-
-                var site_htl_settings = {
-                    "adx"              : "yes", // yes/no if we should include adx on page
-                    "groupname"        : "Main", // track groupname in htl/gam
-                    "has_folders"      : "yes", // track folder pages in htl/gam
-                    "user_type"        : "guest", // track member/guest in htl/gam
-                    "is_testing"       : "no", // yes/no if in testing mode
-                    "split_testing"    : "1", // 0/1, 0=control, 1=test, for a/b testing
-                    "send_reports"     : "1", // true/false if reports should be sent for logging in DataBricks
-                    "report_url"       : "https://analytics.tvtropes.org/analytics-data/tvtropes/", // Endpoint for logging (data stream)
-                    "logging_turned_on": "1", // true/false if console logging should be turned on
-                    "site_name"        : "tvtropes", // Site name for display in logging
-                    "sticky_slot_names": ["tvtropes_dt_sticky", "tvtropes_m_sticky"], // Possible slot names for the sticky slot
-                    "ad_block_detected" : ad_block_detected, // if cookie of ad_block_detected is set, set to true, otherwise false
-                }
-
-                if(ad_block_detected) gtag('event', 'adblock', {'event_label': 'whitelist'});
-			</script>
+						
 
             
-                        <script>
-                // Create the ad project
-var ads_project = (function(sent_in_settings){
-    //default settings
-    var setting_defaults = {
-        "adx"              : "yes",
-        "groupname"        : "",
-        "has_folders"      : "unknown",
-        "user_type"        : "guest",
-        "is_testing"       : "no",
-        "split_testing"    : "0",
-        "send_reports"     : "0",
-        "logging_turned_on": "false",
-        "site_name"        : "site_name",
-        "report_url"       : "",
-        "page_template"    : "",
-        "sticky_slot_names": [],
-        "ad_block_detected" : false
-    }
+                        
 
-    // Combine defaults with sent in parameters
-    var project_settings = {...setting_defaults, ...sent_in_settings};
+                        
 
-    /***************************************
-    --------------- AD CODE ---------------
-    ***************************************/
-    window.BCLighthouseTag = window.BCLighthouseTag || {};
-    window.BCLighthouseTag.cmd = window.BCLighthouseTag.cmd || [];
+                        
 
-    BCLighthouseTag.cmd.push(function() {
-        // Only set these if given in settings
-        if(project_settings.groupname != "") BCLighthouseTag.setTargeting("groupname", project_settings.groupname);
-        if(project_settings.page_template != "") BCLighthouseTag.setTargeting("page_template", project_settings.page_template);
-
-        BCLighthouseTag.setTargeting("adx", project_settings.adx);
-        BCLighthouseTag.setTargeting('website', project_settings.site_name);
-        BCLighthouseTag.setTargeting('user_type', project_settings.user_type);
-        BCLighthouseTag.setTargeting('has_folders', project_settings.has_folders);
-        BCLighthouseTag.setTargeting('ad_block_detected', project_settings.ad_block_detected);
-    });
-    
-    // Logging
-    function output_logging(content){
-        if(project_settings.logging_turned_on){
-            if(typeof content == "string") console.log(project_settings.site_name + " Ads: " + content);
-            else console.log(content);
-        }
-    }
-})(site_htl_settings);            </script>
-
-                        <script type="text/javascript">
-                var tvtropes_config = {
-                    asteri_stream_enabled : "1",
-                    is_logged_in         : "",
-                    live_server          : "1",
-                    bigcrunch_live       : "1",
-                    bigcrunch_revnum     : "11",
-                    handle               : "",
-                    email_popup          : "0",
-                    troper_email         : "",
-                    get_asteri_stream     : "",
-                    revnum               : "daf0219bce9c16b7cfe4c5b770942b1fa4be3afe",
-                    img_domain           : "https://static.tvtropes.org",
-                    adblock              : "1",
-                    adblock_url          : "propermessage.io",
-                    universal_page_type  : "Article",
-                    pause_editing        : "0",
-                    pause_editing_msg    : "",
-                    pause_site_changes   : "0",
-                    assets_domain        : "https://assets.tvtropes.org",
-                    ranking              : 0,
-                };
-
-                // This will track the total number of ads inserted over time
-                var globalAdInsertionCount = 0;
-
-                // Check to see if this page is isolated, if so, run BCLighthouseTag.disableGoogleAdManager();
-                if(window.site_htl_settings.adx == "no"){
-                    console.log("disabling google");
-                    
-                    BCLighthouseTag.cmd.push(() => {
-                        BCLighthouseTag.disableGoogleAdManager();
-                    });
-                }
-            </script>
-
-                        <script>
-                // Add second script to the head
-                var htl_script = document.createElement('script');
-                htl_script.async = "async";
-
-                // Add the fundingchoices script to the head
-                window.fundingchoices_loaded = null;
-                var script = document.createElement('script');
-                    script.src = "https://fundingchoicesmessages.google.com/i/pub-6608306193529351?ers=1";
-                    script.async = true;
-                    script.nonce = "rczD8qB5ececf2fL1Vj9XQ";
-                    script.onload = function() { window.fundingchoices_loaded = true; };
-                    script.onerror = function() { window.fundingchoices_loaded = false; };
-                
-                // Add second script to the head
-                var script2 = document.createElement('script');
-                    script2.nonce = "rczD8qB5ececf2fL1Vj9XQ";
-                    script2.innerHTML = "(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();";
-                
-                // Add both scripts to head
-                document.head.appendChild(script);
-                document.head.appendChild(script2);
-
-                window.bcl = null;
-                var bigcrunch_url = window.tvtropes_config.bigcrunch_live == 1 ? "https://lh.bigcrunch.com/main.js?v=" + window.tvtropes_config.bigcrunch_revnum : "https://dev-lh.bigcrunch.com/main.js?v=" + window.tvtropes_config.bigcrunch_revnum;
-
-                htl_script.src = bigcrunch_url;
-                htl_script.crossOrigin = "anonymous";
-                htl_script.id = "bigcrunchtag";
-                htl_script.setAttribute('data-property-id', '34a5ddec-697b-424e-81d2-e6bb46a1b83e');
-                htl_script.onload = function() { window.bcl = true; };
-                htl_script.onerror = function() { window.bcl = false; };
-                                    
-                // Add both scripts to head
-                document.head.appendChild(htl_script);
-            </script>
-
-                        <script>
-                // Add HTL script to head
-                document.head.appendChild(htl_script);
-            </script>
+                        
 			
 			
-											<script>(function(){/*
-							 Copyright The Closure Library Authors.
-							 SPDX-License-Identifier: Apache-2.0
-							*/
-							'use strict';var aa=function(a){var b=0;return function(){return b<a.length?{done:!1,value:a[b++]}:{done:!0}}},ba="function"==typeof Object.create?Object.create:function(a){var b=function(){};b.prototype=a;return new b},k;if("function"==typeof Object.setPrototypeOf)k=Object.setPrototypeOf;else{var m;a:{var ca={a:!0},n={};try{n.__proto__=ca;m=n.a;break a}catch(a){}m=!1}k=m?function(a,b){a.__proto__=b;if(a.__proto__!==b)throw new TypeError(a+" is not extensible");return a}:null}
-							var p=k,q=function(a,b){a.prototype=ba(b.prototype);a.prototype.constructor=a;if(p)p(a,b);else for(var c in b)if("prototype"!=c)if(Object.defineProperties){var d=Object.getOwnPropertyDescriptor(b,c);d&&Object.defineProperty(a,c,d)}else a[c]=b[c];a.v=b.prototype},r=this||self,da=function(){},t=function(a){return a};var u;var w=function(a,b){this.g=b===v?a:""};w.prototype.toString=function(){return this.g+""};var v={},x=function(a){if(void 0===u){var b=null;var c=r.trustedTypes;if(c&&c.createPolicy){try{b=c.createPolicy("goog#html",{createHTML:t,createScript:t,createScriptURL:t})}catch(d){r.console&&r.console.error(d.message)}u=b}else u=b}a=(b=u)?b.createScriptURL(a):a;return new w(a,v)};var A=function(){return Math.floor(2147483648*Math.random()).toString(36)+Math.abs(Math.floor(2147483648*Math.random())^Date.now()).toString(36)};var B={},C=null;var D="function"===typeof Uint8Array;function E(a,b,c){return"object"===typeof a?D&&!Array.isArray(a)&&a instanceof Uint8Array?c(a):F(a,b,c):b(a)}function F(a,b,c){if(Array.isArray(a)){for(var d=Array(a.length),e=0;e<a.length;e++){var f=a[e];null!=f&&(d[e]=E(f,b,c))}Array.isArray(a)&&a.s&&G(d);return d}d={};for(e in a)Object.prototype.hasOwnProperty.call(a,e)&&(f=a[e],null!=f&&(d[e]=E(f,b,c)));return d}
-							function ea(a){return F(a,function(b){return"number"===typeof b?isFinite(b)?b:String(b):b},function(b){var c;void 0===c&&(c=0);if(!C){C={};for(var d="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split(""),e=["+/=","+/","-_=","-_.","-_"],f=0;5>f;f++){var h=d.concat(e[f].split(""));B[f]=h;for(var g=0;g<h.length;g++){var l=h[g];void 0===C[l]&&(C[l]=g)}}}c=B[c];d=Array(Math.floor(b.length/3));e=c[64]||"";for(f=h=0;h<b.length-2;h+=3){var y=b[h],z=b[h+1];l=b[h+2];g=c[y>>2];y=c[(y&3)<<
-							4|z>>4];z=c[(z&15)<<2|l>>6];l=c[l&63];d[f++]=""+g+y+z+l}g=0;l=e;switch(b.length-h){case 2:g=b[h+1],l=c[(g&15)<<2]||e;case 1:b=b[h],d[f]=""+c[b>>2]+c[(b&3)<<4|g>>4]+l+e}return d.join("")})}var fa={s:{value:!0,configurable:!0}},G=function(a){Array.isArray(a)&&!Object.isFrozen(a)&&Object.defineProperties(a,fa);return a};var H;var J=function(a,b,c){var d=H;H=null;a||(a=d);d=this.constructor.u;a||(a=d?[d]:[]);this.j=d?0:-1;this.h=null;this.g=a;a:{d=this.g.length;a=d-1;if(d&&(d=this.g[a],!(null===d||"object"!=typeof d||Array.isArray(d)||D&&d instanceof Uint8Array))){this.l=a-this.j;this.i=d;break a}void 0!==b&&-1<b?(this.l=Math.max(b,a+1-this.j),this.i=null):this.l=Number.MAX_VALUE}if(c)for(b=0;b<c.length;b++)a=c[b],a<this.l?(a+=this.j,(d=this.g[a])?G(d):this.g[a]=I):(d=this.l+this.j,this.g[d]||(this.i=this.g[d]={}),(d=this.i[a])?
-							G(d):this.i[a]=I)},I=Object.freeze(G([])),K=function(a,b){if(-1===b)return null;if(b<a.l){b+=a.j;var c=a.g[b];return c!==I?c:a.g[b]=G([])}if(a.i)return c=a.i[b],c!==I?c:a.i[b]=G([])},M=function(a,b){var c=L;if(-1===b)return null;a.h||(a.h={});if(!a.h[b]){var d=K(a,b);d&&(a.h[b]=new c(d))}return a.h[b]};J.prototype.toJSON=function(){var a=N(this,!1);return ea(a)};
-							var N=function(a,b){if(a.h)for(var c in a.h)if(Object.prototype.hasOwnProperty.call(a.h,c)){var d=a.h[c];if(Array.isArray(d))for(var e=0;e<d.length;e++)d[e]&&N(d[e],b);else d&&N(d,b)}return a.g},O=function(a,b){H=b=b?JSON.parse(b):null;a=new a(b);H=null;return a};J.prototype.toString=function(){return N(this,!1).toString()};var P=function(a){J.call(this,a)};q(P,J);function ha(a){var b,c=(a.ownerDocument&&a.ownerDocument.defaultView||window).document,d=null===(b=c.querySelector)||void 0===b?void 0:b.call(c,"script[nonce]");(b=d?d.nonce||d.getAttribute("nonce")||"":"")&&a.setAttribute("nonce",b)};var Q=function(a,b){b=String(b);"application/xhtml+xml"===a.contentType&&(b=b.toLowerCase());return a.createElement(b)},R=function(a){this.g=a||r.document||document};R.prototype.appendChild=function(a,b){a.appendChild(b)};var S=function(a,b,c,d,e,f){try{var h=a.g,g=Q(a.g,"SCRIPT");g.async=!0;g.src=b instanceof w&&b.constructor===w?b.g:"type_error:TrustedResourceUrl";ha(g);h.head.appendChild(g);g.addEventListener("load",function(){e();d&&h.head.removeChild(g)});g.addEventListener("error",function(){0<c?S(a,b,c-1,d,e,f):(d&&h.head.removeChild(g),f())})}catch(l){f()}};var ia=r.atob("aHR0cHM6Ly93d3cuZ3N0YXRpYy5jb20vaW1hZ2VzL2ljb25zL21hdGVyaWFsL3N5c3RlbS8xeC93YXJuaW5nX2FtYmVyXzI0ZHAucG5n"),ja=r.atob("WW91IGFyZSBzZWVpbmcgdGhpcyBtZXNzYWdlIGJlY2F1c2UgYWQgb3Igc2NyaXB0IGJsb2NraW5nIHNvZnR3YXJlIGlzIGludGVyZmVyaW5nIHdpdGggdGhpcyBwYWdlLg=="),ka=r.atob("RGlzYWJsZSBhbnkgYWQgb3Igc2NyaXB0IGJsb2NraW5nIHNvZnR3YXJlLCB0aGVuIHJlbG9hZCB0aGlzIHBhZ2Uu"),la=function(a,b,c){this.h=a;this.j=new R(this.h);this.g=null;this.i=[];this.l=!1;this.o=b;this.m=c},V=function(a){if(a.h.body&&!a.l){var b=
-							function(){T(a);r.setTimeout(function(){return U(a,3)},50)};S(a.j,a.o,2,!0,function(){r[a.m]||b()},b);a.l=!0}},T=function(a){for(var b=W(1,5),c=0;c<b;c++){var d=X(a);a.h.body.appendChild(d);a.i.push(d)}b=X(a);b.style.bottom="0";b.style.left="0";b.style.position="fixed";b.style.width=W(100,110).toString()+"%";b.style.zIndex=W(2147483544,2147483644).toString();b.style["background-color"]=ma(249,259,242,252,219,229);b.style["box-shadow"]="0 0 12px #888";b.style.color=ma(0,10,0,10,0,10);b.style.display=
-							"flex";b.style["justify-content"]="center";b.style["font-family"]="Roboto, Arial";c=X(a);c.style.width=W(80,85).toString()+"%";c.style.maxWidth=W(750,775).toString()+"px";c.style.margin="24px";c.style.display="flex";c.style["align-items"]="flex-start";c.style["justify-content"]="center";d=Q(a.j.g,"IMG");d.className=A();d.src=ia;d.style.height="24px";d.style.width="24px";d.style["padding-right"]="16px";var e=X(a),f=X(a);f.style["font-weight"]="bold";f.textContent=ja;var h=X(a);h.textContent=ka;Y(a,
-							e,f);Y(a,e,h);Y(a,c,d);Y(a,c,e);Y(a,b,c);a.g=b;a.h.body.appendChild(a.g);b=W(1,5);for(c=0;c<b;c++)d=X(a),a.h.body.appendChild(d),a.i.push(d)},Y=function(a,b,c){for(var d=W(1,5),e=0;e<d;e++){var f=X(a);b.appendChild(f)}b.appendChild(c);c=W(1,5);for(d=0;d<c;d++)e=X(a),b.appendChild(e)},W=function(a,b){return Math.floor(a+Math.random()*(b-a))},ma=function(a,b,c,d,e,f){return"rgb("+W(Math.max(a,0),Math.min(b,255)).toString()+","+W(Math.max(c,0),Math.min(d,255)).toString()+","+W(Math.max(e,0),Math.min(f,
-							255)).toString()+")"},X=function(a){a=Q(a.j.g,"DIV");a.className=A();return a},U=function(a,b){0>=b||null!=a.g&&0!=a.g.offsetHeight&&0!=a.g.offsetWidth||(na(a),T(a),r.setTimeout(function(){return U(a,b-1)},50))},na=function(a){var b=a.i;var c="undefined"!=typeof Symbol&&Symbol.iterator&&b[Symbol.iterator];b=c?c.call(b):{next:aa(b)};for(c=b.next();!c.done;c=b.next())(c=c.value)&&c.parentNode&&c.parentNode.removeChild(c);a.i=[];(b=a.g)&&b.parentNode&&b.parentNode.removeChild(b);a.g=null};var pa=function(a,b,c,d,e){var f=oa(c),h=function(l){l.appendChild(f);r.setTimeout(function(){f?(0!==f.offsetHeight&&0!==f.offsetWidth?b():a(),f.parentNode&&f.parentNode.removeChild(f)):a()},d)},g=function(l){document.body?h(document.body):0<l?r.setTimeout(function(){g(l-1)},e):b()};g(3)},oa=function(a){var b=document.createElement("div");b.className=a;b.style.width="1px";b.style.height="1px";b.style.position="absolute";b.style.left="-10000px";b.style.top="-10000px";b.style.zIndex="-10000";return b};var L=function(a){J.call(this,a)};q(L,J);var qa=function(a){J.call(this,a)};q(qa,J);var ra=function(a,b){this.l=a;this.m=new R(a.document);this.g=b;this.i=K(this.g,1);b=M(this.g,2);this.o=x(K(b,4)||"");this.h=!1;b=M(this.g,13);b=x(K(b,4)||"");this.j=new la(a.document,b,K(this.g,12))};ra.prototype.start=function(){sa(this)};
-							var sa=function(a){ta(a);S(a.m,a.o,3,!1,function(){a:{var b=a.i;var c=r.btoa(b);if(c=r[c]){try{var d=O(P,r.atob(c))}catch(e){b=!1;break a}b=b===K(d,1)}else b=!1}b?Z(a,K(a.g,14)):(Z(a,K(a.g,8)),V(a.j))},function(){pa(function(){Z(a,K(a.g,7));V(a.j)},function(){return Z(a,K(a.g,6))},K(a.g,9),K(a.g,10),K(a.g,11))})},Z=function(a,b){a.h||(a.h=!0,a=new a.l.XMLHttpRequest,a.open("GET",b,!0),a.send())},ta=function(a){var b=r.btoa(a.i);a.l[b]&&Z(a,K(a.g,5))};(function(a,b){r[a]=function(c){for(var d=[],e=0;e<arguments.length;++e)d[e-0]=arguments[e];r[a]=da;b.apply(null,d)}})("__h82AlnkH6D91__",function(a){"function"===typeof window.atob&&(new ra(window,O(qa,window.atob(a)))).start()});}).call(this);
-
-							window.__h82AlnkH6D91__("WyJwdWItMjU3NTc4ODY5MDc5ODI4MiIsW251bGwsbnVsbCxudWxsLCJodHRwczovL2Z1bmRpbmdjaG9pY2VzbWVzc2FnZXMuZ29vZ2xlLmNvbS9iL3B1Yi0yNTc1Nzg4NjkwNzk4MjgyIl0sbnVsbCxudWxsLCJodHRwczovL2Z1bmRpbmdjaG9pY2VzbWVzc2FnZXMuZ29vZ2xlLmNvbS9lbC9BR1NLV3hWV0tMOXhFeS1ZVk1sOTdzcC10MW5mbkxvWmZweWVjaGRJdUxJU244LXpjbUwxM1R5Mlhhb2RoQTJFU3VNS3ljQm1kVHgxSUNlMVBrX2hIeUxHa1ZZNHJ3XHUwMDNkXHUwMDNkP3RlXHUwMDNkVE9LRU5fRVhQT1NFRCIsImh0dHBzOi8vZnVuZGluZ2Nob2ljZXNtZXNzYWdlcy5nb29nbGUuY29tL2VsL0FHU0tXeFZCeVhDdDlWajY1eXNrMWFHVW9LUUpLdktrTlh4WVdlRDBhYnhmS3RVUi00eDZfRTNWOXpqSm5vYkFfVzIxeGNDb3F3M1RmN1dYRmxXZFZaazVMMFlQQ2dcdTAwM2RcdTAwM2Q/YWJcdTAwM2QxXHUwMDI2c2JmXHUwMDNkMSIsImh0dHBzOi8vZnVuZGluZ2Nob2ljZXNtZXNzYWdlcy5nb29nbGUuY29tL2VsL0FHU0tXeFV4bEsxQ0dxcEpGY3lvcXZXZ0ZnWWRBRjhMMzBOU0Y1ci1paGZSd1VRNzV4YmF6NGxydWVfRUhoWmU1ai00UUhRYXc4MUVZREFkQ2pBN21Tb1BxUUsxaFFcdTAwM2RcdTAwM2Q/YWJcdTAwM2QyXHUwMDI2c2JmXHUwMDNkMSIsImh0dHBzOi8vZnVuZGluZ2Nob2ljZXNtZXNzYWdlcy5nb29nbGUuY29tL2VsL0FHU0tXeFZJUWxpOV9jN0NuWWlHWkU3S2xIV2JWVi10NlpYQ2hQTnlHVTRobGhmSjdLQnJnNjllSFhHYm9aSXRqRm42MDViNWpuaG5KYkxCcU1ySURyY2lLVEk0VmdcdTAwM2RcdTAwM2Q/c2JmXHUwMDNkMiIsImRpdi1ncHQtYWQiLDIwLDEwMCwiY0hWaUxUSTFOelUzT0RnMk9UQTNPVGd5T0RJXHUwMDNkIixbbnVsbCxudWxsLG51bGwsImh0dHBzOi8vd3d3LmdzdGF0aWMuY29tLzBlbW4vZi9wL3B1Yi0yNTc1Nzg4NjkwNzk4MjgyLmpzP3VzcXBcdTAwM2RDQkEiXSwiaHR0cHM6Ly9mdW5kaW5nY2hvaWNlc21lc3NhZ2VzLmdvb2dsZS5jb20vZWwvQUdTS1d4V1hNUEJXZjVaNURyT1VGdDZwVVR5eGh1YzBFNlVGQnJJZUhuUUNCMVlUOWVtYlJTbGxYQ3F6NDV5ODdqT3RVWC1SX3JkcmdudFdjejdtazA2WkZYWDQyd1x1MDAzZFx1MDAzZCJd");
-					</script>
+											
 						<meta http-equiv="X-UA-Compatible" content="IE=edge">
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
@@ -447,15 +85,7 @@ var ads_project = (function(sent_in_settings){
                         
                         						
                         						
-												<script type="text/javascript">
-						  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-						  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-						  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-						  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-						  ga('create', 'UA-3821842-1', 'auto');
-						  ga('send', 'pageview');
-						</script>
+												
 
 
 
@@ -465,10 +95,7 @@ var ads_project = (function(sent_in_settings){
  <body class="">
 
         <i id="user-prefs"></i>
-    <script>updateUserPrefs(); 
-    show_promo();
-    const af = 0;
-    </script>
+    
 
     <div id="fb-root"></div>
 
@@ -520,77 +147,7 @@ var ads_project = (function(sent_in_settings){
     </div>
 </div>
 
-<script>
-    // Detect if browser is Safari
-    function is_ios_safari(){
-        var ua = navigator.userAgent;
-        return /iP(hone|ad|od)/.test(ua) && /Safari/.test(ua) && !/CriOS|FxiOS|OPiOS|EdgiOS/.test(ua);
-    }
 
-    // Detect OS only
-    function get_mobile_type(){
-        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-        if(/iPhone|iPad|iPod/i.test(userAgent)){
-            return "iOS";
-        } else if(/Android/i.test(userAgent)){
-            return "Android";
-        } else {
-            return "Other";
-        }
-    }
-
-    // Get current page path for deep linking (use tvtropes:// custom scheme)
-    var deepLink = "tvtropes://" + window.location.pathname.replace(/^\//, '');
-
-    // App store URLs
-    var appStoreUrls = {
-        iOS: "https://apps.apple.com/app/6738365737",
-        Android: "https://play.google.com/store/apps/details?id=org.tvtropes.app"
-    };
-
-    var promo_link = document.getElementById("promo-app-link");
-    var os = get_mobile_type();
-
-    if(os === "iOS" && is_ios_safari()){
-        // Safari iOS — rely on native Smart App Banner, hide custom one
-        document.body.classList.remove("app-promo");
-    }
-    else{
-        // Handle click with smart fallback for all other browsers
-        promo_link.addEventListener("click", function(e){
-            e.preventDefault();
-
-            var fallbackUrl = appStoreUrls[os] || appStoreUrls.iOS;
-            var appOpened = false;
-
-            // Set up fallback to app store
-            var fallbackTimeout = setTimeout(function(){
-                // If we're still here after 1.5s, app probably isn't installed
-                if(!appOpened && document.visibilityState !== "hidden"){
-                    window.location.href = fallbackUrl;
-                }
-            }, 1500);
-
-            // Listen for page visibility change (app opened successfully)
-            var handleVisibilityChange = function(){
-                if(document.visibilityState === "hidden"){
-                    appOpened = true;
-                    clearTimeout(fallbackTimeout);
-                }
-            };
-            document.addEventListener("visibilitychange", handleVisibilityChange);
-
-            // Clean up listener after attempt
-            setTimeout(function(){
-                document.removeEventListener("visibilitychange", handleVisibilityChange);
-            }, 2000);
-
-            // Attempt to open the app
-            window.location.href = deepLink;
-        });
-    }
-</script>
 
     <header id="main-header-bar" class="headroom-element ">
         <div id="main-header-bar-inner">
@@ -715,7 +272,7 @@ var ads_project = (function(sent_in_settings){
                 <li>Sticky Header <div id="mobile-toggle-stickyheader" class="display-toggle sticky-header"></div></li>
                 <li>Highlight Links <div id="mobile-toggle-highlightlinks" class="display-toggle highlight-links"></div></li>
             </ul>
-            <script>updateMobilePrefs();</script>
+            
         </div>
 
     </div>
@@ -743,31 +300,13 @@ var ads_project = (function(sent_in_settings){
 
             </div>
         
-        <script type="text/javascript" name="tvtropes-js">(()=>{function jwbkca(){const panel=document.getElementById("instr_z1gni2oi");if(!panel)return;if(panel.classList.contains("open")){panel.classList.remove("open");return;}panel.classList.add("open");bpvahu0();e7mhr5("adblock");}function bpvahu0(){const tabs=document.querySelectorAll(".extension_tab");tabs.forEach(tab=>{tab.addEventListener("click",()=>{tabs.forEach(t=>t.classList.remove("active"));tab.classList.add("active");e7mhr5(tab.getAttribute("data-extension"));});});};function e7mhr5(extension){const content=document.getElementById("instruction_content");if(!content)return;const instructions={adblock:['click the adblock icon <span class="extension_icon adblock_icon" style="display:inline-flex;width:16px;height:16px;align-items:center;justify-content:center;border-radius:50%;">🛑</span> in your browser toolbar.',"choose <strong>don't run on pages on this site</strong> (or <strong>pause on this site</strong>).","confirm and refresh the page."],adblockplus:["click the adblock plus icon in your browser toolbar.","toggle the power button to disable on this site.","click refresh."],ublockorigin:['click the ublock origin icon <span class="extension_icon ublockorigin_icon" style="display:inline-flex;width:16px;height:16px;align-items:center;justify-content:center;border-radius:50%;">uo</span> in your browser toolbar.',"click the power button to disable for this site (it turns gray).","click the reload icon or refresh the page."],other:["open your ad blocker extension menu.","look for a “pause on this site” or “allowlist site” option.","confirm and refresh the page."]};const list=instructions[extension]||instructions.other;content.innerHTML=list.map((step,i)=>`<li class="instruction_item"><div class="instruction_number">${i+1}</div><div class="instruction_text">${step}</div></li>`).join("");}function xa6d2easdq(){const main_container=document.getElementById("main-content");const main_entry=document.getElementById("main-entry");if(main_entry?.parentNode)main_entry.parentNode.removeChild(main_entry);const new_main=document.createElement("article");new_main.id="main-entry";new_main.className="with-sidebar";const notice=u13v1();if(notice)new_main.appendChild(notice);if(main_container)main_container.appendChild(new_main);const btn=document.getElementById("btn_z1gni2oi");if(btn)btn.addEventListener("click",jwbkca);const refresh=document.querySelector(".refresh_btn");if(refresh)refresh.addEventListener("click",()=>location.reload());}function x7tauv3t(){xy7iabs9.lp7cf9kqgx("ad_block_detected","true",365,"/");let user_id=xy7iabs9.owjorlp("user_id");if(!user_id){user_id=jwjqtf2t();xy7iabs9.lp7cf9kqgx("user_id",user_id,365,"/");}const post=new URLSearchParams();post.append("device_type",jhc1k3);post.append("user_id",user_id);post.append("user_agent",navigator.userAgent);post.append("page_path",location.pathname+location.search+location.hash);fetch("/ajax/a_b_d.php",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:post}).catch(()=>{});}let tc4gmj1xye=false;function op7wk1b780(){let qk9lviozj=false;setTimeout(()=>{const w=document.body?.clientWidth||0;if(w>=981){const el=document.getElementById("stick-cont");if(el&&el.offsetHeight===0)qk9lviozj=true;}else if(w<=768){const el=document.querySelector(".tvtropes-ad-unit.mobile-fad");if(el&&el.offsetHeight===0)qk9lviozj=true;}if(qk9lviozj){tc4gmj1xye=true;xa6d2easdq();x7tauv3t();}},100);}function p1zwr4obm(){if(tc4gmj1xye)return;var tpk8gkz=['https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js','https://securepubads.g.doubleclick.net/tag/js/gpt.js','https://www.googletagservices.com/dcm/dcmads.js'];var gfnlmxa5=['https://ship.bigcrunch.com/ads.js?asdf=xxx',];var eh32p=0;var oslu4=false;var wqtk7=false;var n4eep9iec=false;function tyyaa(){var e4qmiut=arguments[0]||0;var i6q5a0yd=window[l6rhtv1xkx.gtm];var ofn6cfhs=window[l6rhtv1xkx.bc];if(!n4eep9iec){n4eep9iec=true;tpk8gkz.forEach(function(url){var script=document.createElement('script');script.src=url;script.onload=function(){};script.onerror=function(){eh32p++;};document.head.appendChild(script);});gfnlmxa5.forEach(function(url){var script=document.createElement('script');script.src=url;script.onload=function(){setTimeout(function(){if(typeof window.pbjs==='undefined'||!window.pbjs.installedModules||!Array.isArray(window.pbjs.installedModules)||window.pbjs.installedModules.length===0||!window.pbjs.libLoaded||typeof window.pbjs.version==='undefined'){oslu4=true;}},100);};script.onerror=function(error_event){oslu4=true;};document.head.appendChild(script);});}setTimeout(function(){var flvd99p=eh32p;if(i6q5a0yd===false)flvd99p++;if(ofn6cfhs===false)wqtk7=true;if(oslu4==true||wqtk7==true){flvd99p++;}if(i6q5a0yd!==false&&(typeof window.dataLayer==='undefined'||!Array.isArray(window.dataLayer)||typeof window.dataLayer.push!=='function')){flvd99p++;}if(flvd99p>=2&&(oslu4==true||wqtk7==true||i6q5a0yd===false)){tc4gmj1xye=true;xa6d2easdq();x7tauv3t();}else if((ofn6cfhs===undefined||i6q5a0yd===undefined)&&!tc4gmj1xye&&e4qmiut<40){setTimeout(function(){tyyaa(e4qmiut+1);},200);}},e4qmiut===0?100:300);}tyyaa();};const xy7iabs9={owjorlp(n){return document.cookie.split(/;\s*/).map(s=>s.split("=")).reduce((a,[k,...v])=>{a[decodeURIComponent(k)]=decodeURIComponent(v.join("=")||"");return a;},{})[n];},lp7cf9kqgx(n,v,days,path="/"){const d=new Date(Date.now()+days*864e5).toUTCString();document.cookie=`${encodeURIComponent(n)}=${encodeURIComponent(v)}; Expires=${d}; Path=${path}; SameSite=Lax`;}};function jwjqtf2t(){let d=Date.now();if(performance?.now)d+=performance.now();return"xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g,c=>{const r=(d+Math.random()*16)%16|0;d=Math.floor(d/16);return(c==="x"?r:(r&0x3|0x8)).toString(16);});};function ekm35(){if(window.matchMedia("(max-width: 768px)").matches)return"mobile";if(window.matchMedia("(max-width: 980px)").matches)return"tablet";return"desktop";}const jhc1k3=ekm35();function u13v1(){const nid="abn_z1gni2oi";if(document.getElementById(nid))return;const wrap=document.createElement("div");wrap.id=nid;wrap.className="adblock_notice";wrap.innerHTML=`<div class="adblock_card" role="region" aria-labelledby="adblock_title" aria-describedby="adblock_desc"><img class="adblock_logo" src="https://static.tvtropes.org/pmwiki/pub/images/logo_light.png" alt="tvtropes"><h2 id="adblock_title" class="adblock_title">Please allow ads on our site or subscribe</h2><p id="adblock_desc" class="adblock_text"> Looks like you're using an ad blocker. We rely on advertising to help fund our site. Please turn off your ad blocker and refresh the page. </p><div class="adblock_actions"><button id="btn_z1gni2oi" class="adblock_btn" type="button">Allow Ads</button><a id="btn_subscribe" class="adblock_btn" href="/pmwiki/ad-free-subscribe.php">Subscribe</a></div><a class="adblock_login_link" href="/pmwiki/login_prompt.php">Login</a><div id="instr_z1gni2oi" class="instructions_panel" aria-live="polite"><div class="instructions_header_inline"><h3 class="instructions_title_inline">which ad blocker do you have?</h3><div class="extension_tabs"><div class="extension_tab active" data-extension="adblock"><div class="extension_icon adblock_icon">🛑</div>adblock</div><div class="extension_tab" data-extension="adblockplus"><div class="extension_icon adblockplus_icon">abp</div>adblock plus</div><div class="extension_tab" data-extension="ublockorigin"><div class="extension_icon ublockorigin_icon">uo</div>ublock origin</div><div class="extension_tab" data-extension="other"><div class="extension_icon other_icon">...</div>other</div></div></div><ol class="instruction_list" id="instruction_content"></ol><button class="refresh_btn" type="button">refresh page</button></div></div>`;return wrap;};const l6rhtv1xkx=(()=>{const gtm_original='gtl';const bc_original='bcl';const gtm_new='gtm_'+Math.random().toString(36).substr(2,9);const bc_new='bc_'+Math.random().toString(36).substr(2,9);Object.defineProperty(window,gtm_original,{get:function(){return window[gtm_new];},set:function(val){window[gtm_new]=val;},configurable:true});Object.defineProperty(window,bc_original,{get:function(){return window[bc_new];},set:function(val){window[bc_new]=val;},configurable:true});return{gtm:gtm_new,bc:bc_new,};})();window.addEventListener("DOMContentLoaded",()=>{op7wk1b780();setTimeout(()=>{p1zwr4obm();},100);});})();function get_device_type(){var ua=navigator.userAgent.toLowerCase();var device_type="";if(/(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(ua)){device_type="mobile";}else if(/(mobi|ipod|phone|blackberry|opera mini|fennec|minimo|symbian|psp|nintendo ds|archos|skyfire|puffin|blazer|bolt|gobrowser|iris|maemo|semc|teashark|uzard)/.test(ua)){device_type="mobile";}else{device_type="desktop";}return device_type;}var device_type=get_device_type();var show_modal_loaded=false;function show_modal(type,message,confirmation_url,call_back,oauth_finalize,groupname,title,video_id,author,time,replytext){console.log("showing modal "+type);const modalBox=document.getElementById('modal-box');const childDivs=modalBox.querySelectorAll(':scope > div');if(childDivs.length>1){kill_modal();}modalBox.classList.add('active');let alert='';if(typeof message==='object'&&message!==null){Object.keys(message).forEach(function(key){alert+='&'+key+'='+encodeURIComponent(message[key]);});}else{alert='&message='+encodeURIComponent(message);}const url='/design/parts/component-modalBox.php?window='+type+alert+(confirmation_url?'&curl='+encodeURIComponent(confirmation_url):"")+(oauth_finalize?'&oauth_finalize='+encodeURIComponent(oauth_finalize):"")+(groupname?'&groupname='+groupname:"")+(video_id?'&video_id='+encodeURIComponent(video_id):"")+(author?'&author='+encodeURIComponent(author):"")+(time?'&time='+encodeURIComponent(time):"");const body_data=new URLSearchParams();if(replytext)body_data.append('replytext',replytext);fetch(url,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body_data.toString()}).then(response=>response.text()).then(html=>{modalBox.innerHTML=html;const scripts=modalBox.querySelectorAll('script');scripts.forEach(script=>{const newScript=document.createElement('script');newScript.type='text/javascript';if(script.src){newScript.src=script.src;if(newScript.src.includes('/design/js/dropzone.js')){newScript.onload=function(){const img_uploader_script=document.createElement('script');img_uploader_script.type='text/javascript';img_uploader_script.src="/design/js/imguploader.js";img_uploader_script.onload=function(){myAwesomeDropzone=new Dropzone("#myAwesomeDropzone",{url:"/ajax/uploadImg.php"});};document.body.appendChild(img_uploader_script);}}}else{newScript.textContent=script.textContent;}script.parentNode.removeChild(script);modalBox.appendChild(newScript);});if(call_back){call_back();}});if(show_modal_loaded==false){modalBox.addEventListener('click',function(e){if(e.target===e.currentTarget){kill_modal();}});}show_modal_loaded=true;}function kill_modal(){console.log("killing modal");const modalBox=document.getElementById('modal-box');modalBox.classList.remove('active');modalBox.innerHTML='<div class="modal-loading-graphic"></div>';}function pause_modal(){var modal=document.querySelector('#modal-box > div.modal');if(!modal)modal=document.querySelector('#modal-box');modal.classList.add('hidden');const modalBox=document.getElementById('modal-box');modalBox.classList.add('paused');const loadingGraphic=document.createElement('div');loadingGraphic.className='modal-loading-graphic';modalBox.appendChild(loadingGraphic);}function unpause_modal(){const modalBox=document.getElementById('modal-box');modalBox.classList.remove('paused');var modal=document.querySelector('#modal-box > div.modal');if(!modal)modal=document.querySelector('#modal-box');modal.classList.remove('hidden');const loadingGraphic=document.querySelector('#modal-box > div.modal-loading-graphic');if(loadingGraphic){modalBox.removeChild(loadingGraphic);}}function show_loader(){console.log("Displaying loading graphic");kill_modal();const modalBox=document.getElementById('modal-box');modalBox.classList.add('active');const loadingGraphic=document.createElement('div');loadingGraphic.className='modal-loading-graphic';modalBox.appendChild(loadingGraphic);}function togglenote(id){var ele=object(id);var state=ele.style.display;if(state=='none')ele.style.display='inline';if(state=='inline')ele.style.display='none';}function toggle_more_menu(position){var more_menu=document.getElementById(position+"_more_list");more_menu.classList.toggle("hidden_more_list");more_menu.classList.toggle("display");var menu_button=document.getElementById(position+"_more_button");menu_button.classList.toggle("is-open");}function scroll_to_top(duration){var start=window.pageYOffset;var start_time=performance.now();if('requestAnimationFrame'in window===false){window.scrollTo(0,0);return;}function scroll(){var current_time=performance.now();var elapsed_time=current_time-start_time;var progress=elapsed_time/duration;var ease_in_out_quad=progress<0.5?2*progress*progress:-1+(4-2*progress)*progress;window.scrollTo(0,start*(1-ease_in_out_quad));if(elapsed_time<duration){requestAnimationFrame(scroll);}else{window.scrollTo(0,0);}}scroll();}function toggleAllFolders(){}function togglefolder(id){}const mobile_menu_button=document.querySelector('.mobile-menu-toggle-button');if(mobile_menu_button){mobile_menu_button.addEventListener('click',function(e){e.preventDefault();const header=document.querySelector('header#main-header-bar');if(header.classList.contains('mobile-menu-active')){header.classList.remove('mobile-menu-active');}else{header.classList.add('mobile-menu-active');}});}var global_pHeight=0;var search_form=document.querySelector("form.search");var search_button=document.querySelector("#main_search_submit");var hardcoded_loaded=true;if(search_form&&search_button){search_button.addEventListener("click",function(e){var query=search_form.q.value.trim();var search_url="/pmwiki/search_result.php#gsc.tab=0&gsc.q="+encodeURIComponent(query)+"&gsc.sort=";if(e.metaKey||e.ctrlKey||e.shiftKey){e.preventDefault();e.stopImmediatePropagation();window.open(search_url,'_blank');return false;}if(query.trim()===""){return false;}e.preventDefault();window.location.href=search_url;});}var floodParam=new URLSearchParams(window.location.search).get('flood');if(floodParam){var floodMsg=floodParam==='spam'?'Too many posts in a row, please wait for someone else to post first. You can also edit your comment to add more details you forgot.':'Too many posts in a short period of time. Please try again later.';show_modal('alert',floodMsg);var params=new URLSearchParams(window.location.search);params.delete('flood');history.replaceState(null,'',window.location.pathname+(params.toString()?'?'+params.toString():''));}var suspendedParam=new URLSearchParams(window.location.search).get('suspended');if(suspendedParam){show_modal('alert',"Your permissions for this area have been suspended. Please visit <a href='/pmwiki/pmwiki.php/Administrivia/WhatToDoIfYouAreSuspended'>this page</a> for more details.");var params=new URLSearchParams(window.location.search);params.delete('suspended');history.replaceState(null,'',window.location.pathname+(params.toString()?'?'+params.toString():''));}document.addEventListener('DOMContentLoaded',function(){if(device_type=='mobile')return;var user_prefs=document.getElementById('user-prefs');var hide_laconic_hover=user_prefs.classList.contains('hide-laconic-hover');var currentUrl=window.location.pathname;var urlMatch=currentUrl.match(/\/pmwiki\.php\/([^\/]+)\/([^\/?#]+)/);var currentGroupname=urlMatch?urlMatch[1]:'';var currentTitle=urlMatch?urlMatch[2]:'';var test_pages=['TechnologyMarchesOn','EnhanceButton','RetroUpgrade','TechnologyPorn','PowerFloats','EquipmentUpgrade'];var sub_test_page=currentGroupname==='Main'&&test_pages.includes(currentTitle);if((af==0&&!sub_test_page)||hide_laconic_hover)return;var popup=document.createElement('div');popup.id='hover_popup';popup.style.position='absolute';popup.style.background='#636f7e';popup.style.color='#fff';popup.style.border='1px solid #515151';popup.style.padding='10px';popup.style.maxWidth='300px';popup.style.zIndex='9999999';popup.style.display='none';popup.style.borderRadius='5px';popup.style.boxShadow='#2525259e 2px 2px 6px';popup.style.lineHeight='1.2';popup.classList.add('laconic-hover-popup');document.body.appendChild(popup);var hover_timer=null;var laconic_cache={};document.body.addEventListener('mouseover',function(e){var target=e.target;if(target.tagName==='A'&&target.href.includes('tvtropes.org')&&target.href.includes('pmwiki.php')){if(target.hasAttribute('title')){target.setAttribute('data-original-title',target.getAttribute('title'));target.removeAttribute('title');}var parent=target.parentElement;while(parent&&parent!==document.body){if(parent.hasAttribute('title')){parent.setAttribute('data-laconic-suppressed-title',parent.getAttribute('title'));parent.removeAttribute('title');}parent=parent.parentElement;}hover_timer=setTimeout(function(){if(laconic_cache[target.href]){popup.innerHTML=laconic_cache[target.href];popup.style.top=(e.pageY+10)+'px';popup.style.left=(e.pageX+10)+'px';popup.style.display='block';}else{var post_data=new URLSearchParams();post_data.append('url',target.href);post_data.append('sub_test_page',sub_test_page);fetch('/ajax/laconic_hover.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:post_data}).then(response=>response.json()).then(data=>{if(data.success){popup.innerHTML='';var laconicLabel=document.createElement('span');laconicLabel.className='laconic-label';if(data.has_laconic){laconicLabel.textContent=data.title;}else{laconicLabel.textContent=data.groupname+' / '+data.title;}popup.appendChild(laconicLabel);var laconicText=document.createElement('div');laconicText.className='laconic-text';laconicText.innerHTML=data.preview_html;popup.appendChild(laconicText);if(live_ads==1){var subscriberMessage=document.createElement('div');subscriberMessage.className='subscriber-only-message';subscriberMessage.style.marginTop='8px';subscriberMessage.style.fontSize='13px';subscriberMessage.style.fontStyle='italic';subscriberMessage.style.opacity='0.8';subscriberMessage.style.color='#ffffff';subscriberMessage.style.textAlign='center';subscriberMessage.textContent='*** subscriber-only feature ***';popup.appendChild(subscriberMessage);}laconic_cache[target.href]=popup.innerHTML;popup.style.top=(e.pageY+10)+'px';popup.style.left=(e.pageX+10)+'px';popup.style.display='block';}});}},500);function moveHandler(ev){popup.style.top=(ev.pageY+10)+'px';popup.style.left=(ev.pageX+10)+'px';}target.addEventListener('mousemove',moveHandler);function outHandler(){clearTimeout(hover_timer);popup.style.display='none';if(target.hasAttribute('data-original-title')){target.setAttribute('title',target.getAttribute('data-original-title'));target.removeAttribute('data-original-title');}var parent=target.parentElement;while(parent&&parent!==document.body){if(parent.hasAttribute('data-laconic-suppressed-title')){parent.setAttribute('title',parent.getAttribute('data-laconic-suppressed-title'));parent.removeAttribute('data-laconic-suppressed-title');}parent=parent.parentElement;}target.removeEventListener('mousemove',moveHandler);target.removeEventListener('mouseout',outHandler);}target.addEventListener('mouseout',outHandler);}});});document.body.addEventListener('click',function(e){const target=e.target.closest('.watch-button');const loggedInElement=document.getElementById('logged_in');const loggedIn=loggedInElement?loggedInElement.value:null;const checkbox=e.target.closest('.toggle_hide_likes_checkbox');if(checkbox){e.preventDefault();const groupname=checkbox.dataset.groupname;const title=checkbox.dataset.title;fetch('/ajax/hide_likes.php?groupname='+encodeURIComponent(groupname)+'&title='+encodeURIComponent(title)).then(function(response){if(!response.ok)throw new Error('Network response was not ok');return response.json();}).then(function(data){if(data.success){checkbox.checked=data.likes_hidden==1;const thumbVoteArea=document.querySelector('.thumb-vote-area');if(thumbVoteArea&&data.likes_hidden==1){thumbVoteArea.style.display='none';}else if(thumbVoteArea){thumbVoteArea.style.display='';}}}).catch(function(error){console.error('Fetch error:',error);});}if(e.target.closest('#desktop-on-mobile-toggle > a')){e.preventDefault();var body_class="desktop-on-mobile";var userPrefs=document.getElementById('user-prefs');if(userPrefs.classList.contains(body_class)){cookies.remove(body_class);}else{cookies.create(body_class,'true',300,'/');}location.reload();}if(e.target.closest('.display-toggles > li')){e.preventDefault();var li=e.target.closest('.display-toggles > li');var toggle=li.querySelector('.display-toggle');var setting_map={'profile-toggle-show-namespaces':'show-namespaces','profile-toggle-nightvision':'night-vision','profile-toggle-stickyheader':'sticky-header','profile-toggle-wideload':'wide-load','profile-toggle-showspoilers':'show-spoilers','sidebar-toggle-nightvision':'night-vision','sidebar-toggle-stickyheader':'sticky-header','sidebar-toggle-wideload':'wide-load','sidebar-toggle-showspoilers':'show-spoilers','mobile-toggle-nightvision':'night-vision','mobile-toggle-stickyheader':'sticky-header','mobile-toggle-highlightlinks':'highlight-links','mobile-toggle-showspoilers':'show-spoilers','profile-toggle-wysiwyg-toggle':'wysiwyg-toggle','profile-toggle-monofont':'mono-font','editor-toggle-monofont':'mono-font','profile-toggle-foldersopen':'folders-open','profile-toggle-lefthandsidebar':'lefthand-sidebar','profile-toggle-highlightlinks':'highlight-links','profile-toggle-forumgingerbread':'forum-gingerbread','profile-toggle-acceptshare':'accept-share','profile-toggle-stopautoplayvideo':'stop-auto-play-video','video-toggle-stopautoplayvideo':'stop-auto-play-video','profile-toggle-hide-likes-posts':'hide-likes-posts','profile-toggle-hide-likes-articles':'hide-likes-articles','profile-toggle-hide-laconic-hover':'hide-laconic-hover','profile-toggle-hide-justwatch-widget':'hide-justwatch-widget'};if(toggle.id==='toggle_notification_query'||toggle.id==='toggle_notification_pm'||toggle.id==='toggle_notification_video'){fetch('/ajax/toggle_user_prefs.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded',},body:'pref='+encodeURIComponent(toggle.id)}).then(response=>response.json()).then(json=>{if(json.success){toggle.classList.toggle('active');}else{toggle.classList.toggle('active');}}).catch(error=>{console.error('Error:',error);});}var setting=setting_map[toggle.id];if(setting&&(loggedIn=='true'||tvtropes_config.is_logged_in==1)){toggle.classList.toggle('active');var user_prefs=document.querySelector('#user-prefs');if(user_prefs){user_prefs.classList.toggle(setting);}if(setting==="show-spoilers"){document.querySelectorAll('.spoiler').forEach(spoiler=>{spoiler.classList.remove('off');});}var form_data=new FormData();form_data.append('setting',setting);fetch('/ajax/update_profile_settings.php',{method:'POST',body:form_data}).then(response=>response.json()).then(data=>{if(!data.success){toggle.classList.toggle('active');var user_prefs_check=document.querySelector('#user-prefs');if(user_prefs_check&&user_prefs_check.classList.contains(setting)){user_prefs_check.classList.toggle(setting);}}}).catch(error=>{toggle.classList.toggle('active');var user_prefs_check=document.querySelector('#user-prefs');if(user_prefs_check&&user_prefs_check.classList.contains(setting)){user_prefs_check.classList.toggle(setting);}});}else if(tvtropes_config.is_logged_in!=1){var userPrefs=document.getElementById('user-prefs');userPrefs.classList.toggle(setting);if(userPrefs.classList.contains(setting)){cookies.create(setting,'true',300,'/');toggle.classList.toggle('active');}else{cookies.remove(setting);toggle.classList.toggle('active');if(setting==="show-spoilers"){document.querySelectorAll('.spoiler').forEach(spoiler=>{spoiler.classList.remove('off');});}}}}if(target&&loggedIn!==null){e.preventDefault();if(loggedIn==='true'){target.classList.add('processing');}if(target.getAttribute('data-watch-info')){var data=target.dataset.watchInfo.split(',');if(!data.length)return;var addOrDrop=target.classList.contains('watching')||target.parentElement.classList.contains('watching')?'drop':'add';handleWatchItem(addOrDrop,data[0],data[1],target);}else if(target.getAttribute('data-watch-discussion-info')){var data=target.dataset.watchDiscussionInfo.split(',');if(!data.length)return;var addOrDrop=target.classList.contains('watching')||target.parentElement.classList.contains('watching')?'drop':'add';var pageType='Discussion';handleWatchItem(addOrDrop,data[0],data[1],target,pageType);}else if(target.getAttribute('data-watch-thread-id')){var threadId=target.getAttribute('data-watch-thread-id');var url=target.classList.contains('watching')||target.parentElement.classList.contains('watching')?'/pmwiki/thread_watch_drop.php?thread=':'/pmwiki/setthreadwatch.php?d_id=';url+=threadId;handleWatchThread(url,target);}}if(e.target.classList.contains('kill-modal-button')){e.preventDefault();kill_modal();}const targetWithoutToggleTarget=e.target.closest('*[data-click-toggle]:not([data-click-toggle-target])');if(targetWithoutToggleTarget){e.preventDefault();const toggleClass=targetWithoutToggleTarget.getAttribute('data-click-toggle');targetWithoutToggleTarget.classList.toggle(toggleClass);}const targetWithToggleTarget=e.target.closest('*[data-click-toggle][data-click-toggle-target]:not(#signup-form-toggles a)');if(targetWithToggleTarget){e.preventDefault();const hasFetchArticles=targetWithToggleTarget.getAttribute('onclick')&&targetWithToggleTarget.getAttribute('onclick').includes('fetch_articles');if(!hasFetchArticles){e.stopPropagation();}const toggleTargetId=targetWithToggleTarget.getAttribute('data-click-toggle-target');const toggleClass=targetWithToggleTarget.getAttribute('data-click-toggle');const isExclusive=targetWithToggleTarget.getAttribute('data-click-toggle-exclusive')==='true';if(isExclusive){const toggleTarget=document.getElementById(toggleTargetId);if(toggleTarget){const siblings=Array.from(toggleTarget.parentNode.children);for(let sibling of siblings){if(sibling!==toggleTarget){sibling.classList.remove(toggleClass);}}toggleTarget.classList.add(toggleClass);}}else{if(toggleTargetId.indexOf(',')>-1){const targets=toggleTargetId.split(",");targets.forEach(t=>{document.querySelectorAll('#'+t).forEach(el=>{el.classList.toggle(toggleClass);});});}else{document.querySelectorAll('#'+toggleTargetId).forEach(el=>{el.classList.toggle(toggleClass);});}}}const modalTarget=e.target.closest('*[data-modal-target]');if(modalTarget){if(!modalTarget){return;}let modal=modalTarget.getAttribute('data-modal-target');let msg=modalTarget.getAttribute('data-modal-vars')?modalTarget.getAttribute('data-modal-vars'):modalTarget.getAttribute('data-modal-confirmation-message');let url=modalTarget.getAttribute('data-modal-confirmation-url');try{var obj=JSON.parse(msg);if(obj&&typeof obj==="object"){msg=obj;}}catch(e){}if(modal==="allow")return;e.preventDefault();if(modal.substring(0,6)==="alert-"){const msgArr={"alert-banned":"Your permissions for this area have been suspended. Please visit <a href='/pmwiki/pmwiki.php/Administrivia/WhatToDoIfYouAreSuspended'>this page</a> for more details.","alert-bounced":"This account has committed severe or repeated violations of our rules and is permanently denied access to many of the account features of the site. If you feel that this may be an error, please <a href=\"/pmwiki/contact.php\">contact the mods</a>.","alert-denied":"Your account was denied by a moderator. If you believe this was done in error please <a href=\"/pmwiki/contact.php\">contact the mods</a>.","alert-verify":"You must verify your email address before doing this. Check your email for a link.","alert-approval":"Your account must be approved by a moderator before you can do this. If you still have this problem in a couple hours try <a href=\"/pmwiki/contact.php\">contacting the mods</a>.","alert-age":"Your account is not old enough. Give it a little more time.","alert-mod":"This page is only for moderators. Try something else.","alert-db":"We are currently updating our servers. Please check back later."};if(modal in msgArr){msg=msgArr[modal];}else{msg="Unknown error. Please <a href=\"/pmwiki/contact.php\">Contact us</a> if the problem persists.";}modal="alert";}show_modal(modal,msg,url);}const spoilers=e.target.closest('.spoiler');if(spoilers){spoilers.classList.toggle('off');}const folders=e.target.closest('.folderlabel');if(folders&&e.target.getAttribute('onclick')!=="toggleAllFolders();"){e.preventDefault();folders.classList.toggle('is-open');let folder=folders.nextElementSibling;if(folders.classList.contains('is-open')){gtag('event','folder_click',{'device_type':device_type});}if(folder&&folders.classList.contains('is-open')&&live_ads==1&&(document.body.clientWidth&&document.body.clientWidth<=768)&&tvtropes_config.universal_page_type=='Article'){if(folder.querySelectorAll('.tvtropes-ad-unit').length===0){global_pHeight=insert_ads_in_content(folder,globalAdInsertionCount,global_pHeight);}}}const allFolders=e.target.closest('div[onclick*="toggleAllFolders()"]');if(allFolders){let parentElement=allFolders.parentNode;if(parentElement.tagName==='H2')parentElement=parentElement.parentNode;let isCurrentlyOpen=e.target.classList.contains('is-open');let foldersAndButtons=parentElement.querySelectorAll('.folderlabel, .toggle-all-folders-button');foldersAndButtons.forEach(function(element){if(isCurrentlyOpen){element.classList.remove('is-open');}else{element.classList.add('is-open');}});if(!isCurrentlyOpen){gtag('event','all_folders_click',{'device_type':device_type});parentElement.querySelectorAll('.folder').forEach(function(folder){if(!folder.querySelector('.tvtropes-ad-unit')&&live_ads==1&&(document.body.clientWidth&&document.body.clientWidth<=768)&&tvtropes_config.universal_page_type=='Article'){global_pHeight=insert_ads_in_content(folder,globalAdInsertionCount,global_pHeight);}});}}},true);var handleWatchItem=function(addOrDrop,groupname,title,obj,pageType=''){fetch("/ajax/watchlist.php",{method:"POST",headers:{'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'},body:`groupname=${encodeURIComponent(groupname)}&title=${encodeURIComponent(title)}&type=${encodeURIComponent(addOrDrop)}&json=1&pageType=${encodeURIComponent(pageType)}`}).then(response=>response.json()).then(data=>{obj.classList.remove('processing');if(obj.classList.contains('tile-watch-button')){obj.parentNode.classList.toggle('watching');}else{obj.classList.toggle('watching');}}).catch(error=>{obj.classList.remove('processing');show_modal('alert-red','Whoops, something went wrong. Please try adding again.');});};var handleWatchThread=function(url,obj){fetch(url).then(response=>response.text()).then(data=>{obj.classList.remove('processing');if(obj.classList.contains('tile-watch-button')){obj.parentNode.classList.toggle('watching');}else{obj.classList.toggle('watching');}}).catch(error=>{obj.classList.remove('processing');show_modal('alert-red','Whoops, something went wrong. Please try adding again.');});};function copyVideoLinkToClipboard(video_id,element){var playerElement=document.getElementById('tvtropes_overlay_player');if(playerElement&&element.closest('._pmvv-vidbox-desc')){var currentVideoId=playerElement.getAttribute('data-video-id');if(currentVideoId){video_id=currentVideoId;}}if(!video_id){alert('Unable to get video information');return;}if(video_id.startsWith('tvtropes-videos-')){video_id=video_id.replace('tvtropes-videos-','');}var url='https://tvtropes.org/pmwiki/video_example.php?video_id='+video_id;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){showCopyFeedback(element);}).catch(function(err){console.error('Failed to copy link: ',err);});}else{console.error('Clipboard API not supported');}}function showCopyFeedback(element){var feedback=element.parentElement.querySelector('.copy-feedback');if(feedback){feedback.style.display='inline';setTimeout(function(){feedback.style.display='none';},1500);}}</script>
+        
     
-                    <script>
-                if(is_mobile()) {
-                    document.write("<div class=\"htlad-tvtropes_m_sticky\"></div>");
-                }
-                else {
-                    document.write("<div class=\"htlad-tvtropes_dt_sticky\"></div>");
-                }
-            </script>
+                    
 
                 <div id="tvtropes_oop_ad_slot" style="display: none;"></div>
     
-    <script>
-        if (typeof hardcoded_loaded === 'undefined') {
-            document.addEventListener('DOMContentLoaded', function() {
-                var mainEntry = document.querySelector('#main-content > #main-entry');
-                if (mainEntry) {
-                    mainEntry.innerHTML = '<div class="error-code" style="background: red; color: white; padding: 10px; margin-bottom: 10px;">ERROR_CODE: 1001</div>' +
-                                         '<div class="error-message" style="background: red; color: white; padding: 10px; margin-bottom: 10px;">folder functions error, disabling extensions in your browser should fix this</div>' +
-                                         mainEntry.innerHTML;
-                }
-            });
-        }
-    </script><div id="top_container_spacing"></div>
+    <div id="top_container_spacing"></div>
 
 <div id="main-container">
 
@@ -898,67 +437,14 @@ var ads_project = (function(sent_in_settings){
     
 
 
-        <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [{
-                "@type": "ListItem",
-                "position": 1,
-                "name": "TV Tropes",
-                "item": "https://tvtropes.org/"
-            },{
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Tropes",
-                "item": "https://tvtropes.org/pmwiki/pmwiki.php/Main/Tropes"
-            },{
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Double Jump",
-                "item": "https://tvtropes.org/pmwiki/pmwiki.php/Main/DoubleJump"
-            }]
-
-        }
-    </script>
-        <script type="application/ld+json">
-                {
-          "@context": "https://schema.org",
-          "@type": "Article",
-          "name": "Double Jump",
-          "headline": "Double Jump",
-          "url": "https://tvtropes.org/pmwiki/pmwiki.php/Main/DoubleJump",
-          "image": "https://mediaproxy.tvtropes.org/width/1200/https://static.tvtropes.org/pmwiki/pub/images/daisy_5.png",
-          "author": {
-            "@type": "Organization",
-            "name": "Contributors to TV Tropes (aka Tropers)"
-          },
-          "datePublished": "2008-01-13T00:00:00-08:00",
-          "dateModified": "2026-03-25T04:44:53-07:00"
-        }
-    </script>
+        
+        
 
 
 <a href="#mobile-actions-toggle" id="mobile-actionbar-toggle" class="mobile-actionbar-toggle mobile-on" data-click-toggle="active" >
 <p class="tiny-off">Go To</p><span></span><span></span><span></span><i class="fa fa-pencil"></i></a>
 <nav id="mobile-actions-bar" class="mobile-actions-wrapper mobile-on"></nav>
-<script>
-    //duplicate action bar to the mobile-action-bar holder
-    if (document.getElementById("mobile-actions-bar")) {
-        // Clone the main list
-        var top_main_list = document.getElementById('top_main_list');
-        var top_main_list_cln = top_main_list.cloneNode(true);
-        // Clone the more list
-        var top_more_list = document.getElementById('top_more_list');
-        var top_more_list_cln = top_more_list.cloneNode(true);
 
-        top_more_list_cln.querySelectorAll("li").forEach(function(child){
-            top_main_list_cln.appendChild(child);
-        });
-
-        document.getElementById("mobile-actions-bar").appendChild(top_main_list_cln);
-    }
-</script>
 
 
 <nav class="body-options" itemscope itemtype="http://schema.org/SiteNavigationElement">
@@ -1510,9 +996,7 @@ var ads_project = (function(sent_in_settings){
               		data-muted="1"
               		data-video-length="145"
               >
-                  <script>
-                      tropes_videos_commands.push(function(){ new_video_project.load_video("tvtropes_no_volume_player", false); });
-                  </script>
+                  
               </div>
 
           </div>
@@ -1737,262 +1221,10 @@ var ads_project = (function(sent_in_settings){
 
 
 
-<script>
-    if( document.getElementById('user-prefs').classList.contains('folders-open') ){
-        console.log('open all folders');
-        var elements = document.querySelectorAll('.folderlabel, .toggle-all-folders-button');
-        elements.forEach((element) => {
-          element.classList.add('is-open');
-        });
-    }
-</script>
 
 
-<script>
-// correct incorrect URL capitalization on article pages
-if(tvtropes_config.universal_page_type == 'Article'){
-    // Extract the groupname and title from the URL
-    var url = window.location.href;
-    var url_parts = url.split('/');
-    var title = url_parts[url_parts.length - 1];
-    var groupname = url_parts[url_parts.length - 2];
-
-    // Correct groupname and title from PHP (also works on new/non-existing pages)
-    var correct_groupname = 'Main';
-    var correct_title = 'DoubleJump';
-
-    // Check if they are different (case-sensitive comparison)
-    if (groupname !== correct_groupname || title !== correct_title) {
-        // Construct the corrected URL
-        var correctedUrl = url_parts.slice(0, -2).join('/') + '/' + correct_groupname + '/' + correct_title;
-
-        // Update the browser URL without reloading the page
-        window.history.replaceState(null, '', correctedUrl);
-    }
-}
-
-function insert_ad(adCount, paragraph, adName, folder = 0, logged_in){
-
-        var ad_count = adCount < 10 ? "0"+adCount : adCount;
-        var inside_folder = folder ? "1" : "0";
-
-        // Create element for ad unit
-        var adUnit = document.createElement('div');
-        adUnit.setAttribute("class", `htlad-${adName}`);
-        adUnit.setAttribute("id", `${adName}_${adCount}`);
-        adUnit.setAttribute("data-targeting", `{"slot_number": "${ad_count}", "in_folder": "${inside_folder}"}`);
-
-        // create element for subscribe link
-        var subscribeWrapper = document.createElement('div');
-        subscribeWrapper.setAttribute("class", "ad-caption-subscribe-wrapper");
-        var subscribeLink = document.createElement('a');
-        subscribeLink.setAttribute("href", "/pmwiki/ad-free-subscribe.php");
-        subscribeLink.setAttribute("class", "ad-caption-subscribe");
-
-        // only include this for non-users
-        if(logged_in == false) {
-            subscribeLink.innerHTML = `<span class="ad-caption-text">Tired of seeing ads? </span><span class="ad-caption-link">Subscribe!</span>`;
-        }
-
-        // Add Advertisement label
-        var adLabel = document.createElement("span");
-        adLabel.innerHTML = "Advertisement:"
-        adLabel.setAttribute("class","ad-caption");
-
-        var adWrapper = document.createElement("div");
-        adWrapper.setAttribute("class","tvtropes-ad-unit mobile-fad square_fad mobile_unit_scroll");
-        adWrapper.setAttribute("id","mobile_"+adCount);
-
-        // Merge all pieces
-        adWrapper.appendChild(adLabel);
-        adWrapper.appendChild(adUnit);
-        adWrapper.appendChild(subscribeWrapper);
-        subscribeWrapper.appendChild(subscribeLink);
-
-        // Insert adWrapper right after the paragraph
-        paragraph.parentNode.insertBefore(adWrapper, paragraph.nextSibling);
-
-        // Insert subscribeWrapper right after adWrapper (as its sibling)
-        paragraph.parentNode.insertBefore(subscribeWrapper, adWrapper.nextSibling);
-
-        // for getting correct ad count even when ones are deleted
-        globalAdInsertionCount++;
-}
-
-function insert_ads_in_content(folder = 0, totalAdsCount = 0, pHeight = 0) {
-
-    if(folder) var node = folder.firstElementChild; // Get the first traversable element of the folder
-    else var node = document.getElementById("main-article").firstElementChild;
-
-    var pCount = 0;
-    var adCount = totalAdsCount + 1;
-    var nodeCount = 0;
-    var nodeLevel = 0;
-    var x = 0;
-
-    //loop through elements of content
-    while(x<300) {
-        x++; nodeCount++;
-
-        //traverse to the next element (if exists)
-        if(nodeCount>1) {
-            if(!node.nextElementSibling) {
-                console.log('adparser: no next element');
-
-                if(nodeLevel>0) {
-                    nodeLevel--;
-                    node = node.parentElement;
-                    console.log('adparser: we were down a level, go back up ('+nodeLevel+')');
-                    continue;
-                }
-                else {
-                    break; 
-                }
-            }
-
-            node = node.nextElementSibling;
-        }
 
 
-        //skip inserted ads or empty nodes
-        if(!node || node==="null" || typeof node !== "object") continue;
-        if(!node.offsetHeight || node.offsetHeight==0) continue;
-        if(node.className && node.className.includes('tvtropes-ad-unit')) continue;
-
-        //skip if image block that has a caption after it (NEW: ALWAYS SKIP THE IMAGE BLOCK)
-        if(node.className && node.className.includes('quoteright')) {
-            // if(node.nextElementSibling && node.nextElementSibling.className && node.nextElementSibling.className.includes('acaptionright')) {
-                pHeight += node.offsetHeight;
-                continue;
-            // }
-        } 
-
-        //if very large element, loop through elements inside
-        if(node.offsetHeight>700 && node.firstElementChild) {
-            nodeLevel++;
-            console.log('adparser: traverse through large element='+node.nodeName+', height='+node.offsetHeight+' level='+nodeLevel);
-            node = node.firstElementChild;
-            nodeCount = 0;
-            continue;
-        }
-
-        // Skip if after a folder label or if the current node is a folder label itself
-        if ((node.previousElementSibling && node.previousElementSibling.className && node.previousElementSibling.className.includes("folderlabel")) || (node.className && node.className.includes("folderlabel"))) {
-            console.log('adparser: skipping ad insertion related to folder label');
-            if (!node.className || !node.className.includes("folderlabel")) { // If it's not the folder label itself, skip the insertion
-                continue;
-            } else {
-                pHeight += node.offsetHeight; // If it is the folder label, just add its height to pHeight and continue
-                continue;
-            }
-        }
-
-        //paragraph counter
-        if(node.nodeName=="P") pCount++;
-
-        //add height of node to counter
-        pHeight += node.offsetHeight;
-
-        //add margin of node to counter if available
-        try {
-            var nodeStyle = getComputedStyle(node);
-            if(nodeStyle.marginTop && parseInt(nodeStyle.marginTop)>0) pHeight+=parseInt(nodeStyle.marginTop);
-            if(nodeStyle.marginBottom && parseInt(nodeStyle.marginBottom)>0) pHeight+=parseInt(nodeStyle.marginBottom);
-            //console.log(nodeStyle.marginTop+','+nodeStyle.marginBottom);
-        } catch(e) { }
-
-        //debug logging
-        console.log('adparser: name='+node.nodeName+', height='+node.offsetHeight+' =>'+pHeight);
-        //console.log(node.className);
-
-        // check if user is logged in
-        var logged_in = 0;
-
-        // Calculate the required height based on the user's logged-in status or ad count
-        var requiredHeight           = globalAdInsertionCount > 15 ? 1500 : 900;
-        if(logged_in) requiredHeight = 2250;
-
-        // only inserts an ad if the total height and paragraph count conditions are met
-        if ((adCount === 1 && pCount >= 1 && pHeight >= 400) || pHeight >= requiredHeight) {
-            // Check existing ad positions and compare with the item about to be inserted after
-            var ads = document.querySelectorAll('.tvtropes-ad-unit');
-            var nodeBottomPosition = node.getBoundingClientRect().bottom + window.scrollY; // Get bottom position of current node
-            var canInsertAd = true; // Flag to track if we can insert an ad
-
-            ads.forEach(function (ad) {
-                var adTop = ad.getBoundingClientRect().top + window.scrollY;
-                var adBottom = ad.getBoundingClientRect().bottom + window.scrollY;
-
-                // Ensure the new ad is at least requiredHeight away from any existing ads
-                if (Math.abs(nodeBottomPosition - adTop) < requiredHeight || Math.abs(nodeBottomPosition - adBottom) < requiredHeight) {
-                    canInsertAd = false;
-                    console.log('adparser: cannot insert ad, not enough space between ads.');
-                }
-            });
-            // If we can't insert an ad, skip to the next node
-            if(!canInsertAd) continue;
-
-            // after 50 ads, stop inserting. Or after 20 ads if the user is logged in
-            if ((adCount > 50 || (adCount > 20 && logged_in))) {
-                break;
-            }
-
-            console.log('adparser: insert ad '+adCount);
-            insert_ad(adCount, node, "tvtropes_m_incontent_dynamic", folder, logged_in);
-            adCount++;
-            pHeight = 0;
-            pCount = 0;
-        }
-    }
-
-    //insert one at end if room
-    var maxpHeight = 500; if(logged_in) maxpHeight=1500;
-    if(pHeight>=maxpHeight && folder==0) {
-        console.log('adparser: insert ad');
-
-        insert_ad(adCount, document.getElementById("main-article").lastElementChild, "tvtropes_m_incontent_dynamic", logged_in);
-    }
-
-    // delete ads after the 8th one to reduce load times
-    BCLighthouseTag.cmd.push(function() {
-        googletag.cmd.push(function() {
-            googletag.pubads().addEventListener('slotRequested', function(event) {
-                const slot = event.slot;
-                const slotName = slot.getAdUnitPath().split('/').pop() || slot.getAdUnitPath();
-
-                if(slotName === 'tvtropes_m_incontent_dynamic') {
-                    const slotNumber = parseInt(slot.getTargeting('slot_number')[0]);
-                    console.log(slotName+' = '+slotNumber);
-
-                    // Determine the ad slot that needs to be deleted.
-                    const adNumberToDelete = slotNumber - 8;
-
-                    if(adNumberToDelete > 0) {
-                        const adToDelete = document.getElementById(`mobile_${adNumberToDelete}`);
-                        if(adToDelete) {
-                            var adHeight = window.pageYOffset + adToDelete.getBoundingClientRect().top;
-                            var windowHeight = window.scrollY;
-
-                            // Check if the ad element exists and is above the current viewport (above the fold).
-                            if (adHeight < windowHeight) {
-                                console.log('ad delete = '+adNumberToDelete);
-                                adToDelete.remove(); 
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    });
-
-    // return pHeight 
-    return pHeight;
-}
-
-if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
-    insert_ads_in_content();
-}
-</script>
 
 
                 
@@ -2008,7 +1240,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
     <li>Sticky Header <div id="sidebar-toggle-stickyheader" class="display-toggle sticky-header"></div></li>
     <li>Wide Load <div id="sidebar-toggle-wideload" class="display-toggle wide-load"></div></li>
   </ul>
-  <script>updateDesktopPrefs();</script>
+  
 </div>
 
         <div class="sidebar-item quick-links" itemtype="http://schema.org/SiteNavigationElement">
@@ -2181,15 +1413,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
             <p style="margin-top: 20px;" class="sidebar-item-title" data-title="Advertisement">Advertisement:</p>
             <div id="asteri_cont"></div>
         </div>
-        <script>
-            //asteri enabled
-            if((tvtropes_config.asteri_stream_enabled || tvtropes_config.get_asteri_stream == 'live')) {
-                //aster stream currently live and not a logged-in troper
-                if(!tvtropes_config.is_logged_in && cookies.read('asteri_event_active') != '') {
-                    document.getElementById('asteri-sidebar').style.display="";
-                }
-            }
-        </script>
+        
 
     </div>
 
@@ -2198,42 +1422,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
 
     
         
-            <script>
-    if(!is_mobile()) {
-
-        //don't insert if content is too small on page
-        var tropes_insert_side_ad=true;
-        if(document.getElementById("main-article") && document.getElementById("main-article").clientHeight) {
-            var sidebar_height=document.getElementById("main-article").clientHeight;
-            if(sidebar_height>0 && sidebar_height<500) {
-                tropes_insert_side_ad=false;
-                console.log('ad parser: content too small for sidebar ad');
-            }
-        }
-
-        if(tropes_insert_side_ad) {
-
-       document.write(`
-        <div id="stick-cont"  class="sidebar-item sb-fad-unit">
-            <p class="sidebar-item-title" data-title="Advertisement">Advertisement:</p>
-            <div id="stick-bar" class="sidebar-section">
-                <div class="square_fad fad-size-300x600 fad-section text-center">
-                    <div class='tvtropes-ad-unit '>
-                      <div id='tvtropes_dt_inview' class='htlad-tvtropes_dt_inview'></div>
-                    </div>
-                </div>
-            </div>
-            <div class="ad-caption-subscribe-sidebar">
-                <a href="/pmwiki/ad-free-subscribe.php" class="ad-caption-subscribe">
-                    <span class="ad-caption-text">Tired of seeing ads? </span><span class="ad-caption-link">Subscribe!</span>
-                </a>
-            </div>
-        </div>
-        `);
-        }
-
-    }
-    </script>
+            
     
 
 </div>
@@ -2524,28 +1713,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
 
         
     
-        <script type="text/javascript">
-
-        var cleanCreativeEnabled = "";
-        var donation = "";
-        var live_ads = "1";
-        var img_domain = "https://static.tvtropes.org";
-        var snoozed = cookies.read('snoozedabm');
-        var elem = document.createElement('script');
-        elem.async = true;
-
-
-        // if page type is article or homepage load bundle_nojquery. otherwise load regular bundle.js
-        if(tvtropes_config.universal_page_type == "Article" || tvtropes_config.universal_page_type == "HomePage") {
-            elem.src = 'https://assets.tvtropes.org/design/assets/bundle_nojquery.js?rev=daf0219bce9c16b7cfe4c5b770942b1fa4be3afe';
-        } else {
-            elem.src = 'https://assets.tvtropes.org/design/assets/bundle.js?rev=daf0219bce9c16b7cfe4c5b770942b1fa4be3afe';
-        }
-
-        elem.onload = function() {
-                                 }
-        document.getElementsByTagName('head')[0].appendChild(elem);
-    </script>
+        
 
 
     
@@ -2553,49 +1721,12 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
 
     
     
-  <script type="text/javascript">
-      function send_analytics_event(user_type, donation){
-          // if(user_type == 'uncached' || user_type == 'cached'){
-          //   ga('send', 'event', 'caching', 'load', user_type, {'nonInteraction': 1});
-          //   return;
-          // }
-          var event_name = user_type;
-
-          if(donation == 'true'){
-              event_name += "_donation"
-          }else if(typeof(valid_user) == 'undefined'){
-              event_name += "_blocked"
-          }else if(valid_user == true){
-              event_name += "_unblocked";
-          }else{
-              event_name = "_unknown"
-          }
-          ga('send', 'event', 'ads', 'load', event_name, {'nonInteraction': 1});
-      }
-
-    
-    send_analytics_event("guest", "false");
-      </script>
+  
 
 
 
 <!-- Quantcast Tag -->
-<script type="text/javascript">
-  window._qevents = window._qevents || [];
 
-  (function() {
-    var elem = document.createElement('script');
-    elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
-    elem.async = true;
-    elem.type = "text/javascript";
-    var scpt = document.getElementsByTagName('script')[0];
-    scpt.parentNode.insertBefore(elem, scpt);
-  })();
-
-  window._qevents.push({
-      qacct:"p-mEzuYq24VEJ-3"
-  });
-</script>
 
 <noscript>
   <div style="display:none;">
@@ -2606,15 +1737,7 @@ if(1 && (document.body.clientWidth && document.body.clientWidth<=768) ) {
 
 
 <!-- Begin comScore Tag -->
-<script>
-  var _comscore = _comscore || [];
-  _comscore.push({ c1: "2", c2: "38282685" });
-  (function() {
-    var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
-    s.src = "https://sb.scorecardresearch.com/cs/38282685/beacon.js";
-    el.parentNode.insertBefore(s, el);
-  })();
-</script>
+
 <noscript>
   <img src="https://sb.scorecardresearch.com/p?c1=2&amp;c2=38282685&amp;cv=3.6.0&amp;cj=1">
 </noscript>
