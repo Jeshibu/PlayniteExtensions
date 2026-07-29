@@ -80,3 +80,9 @@ Packages:
       - "Fixed RALibretro executable detection"
       - "Profiles that are already included in Playnite 10.56, which is everything before this update, are no longer included"
       - "If you're running Playnite 10.20, you can get Playnite 10.56's emulator profiles by, in the settings, hitting [Reset to original Playnite emulator profiles] followed by [Apply patch]"
+  - Version: '1.11'
+    RequiredApiVersion: '6.2.0'
+    ReleaseDate: 2026-07-29
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-07-29/ExtraEmulatorProfiles_1_11.pext
+    Changelog:
+      - "Added SharpEmu (PS5) emulator profile (contributed by Solitair)"
