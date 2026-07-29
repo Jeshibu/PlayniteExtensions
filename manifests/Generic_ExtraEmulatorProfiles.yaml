@@ -85,4 +85,5 @@ Packages:
     ReleaseDate: 2026-07-29
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-07-29/ExtraEmulatorProfiles_1_11.pext
     Changelog:
+      - "Fixed executable detection in RALibRetro profiles"
       - "Added SharpEmu (PS5) emulator profile (contributed by Solitair)"
