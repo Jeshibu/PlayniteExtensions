@@ -83,6 +83,7 @@ function Get-ProjectNames {
         "giantbomb"             = @("GiantBombMetadata")
         "gog"                   = @("GOGMetadata")
         "ign"                   = @("IgnMetadata")
+        "importanalyzer"        = @("ImportAnalyzer")
         "itchiobundletagger"    = @("itchIoBundleTagger")
         "launchbox"             = @("LaunchBoxMetadata")
         "legacygames"           = @("LegacyGamesLibrary")
