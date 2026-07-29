@@ -3,6 +3,6 @@ Packages:
   - Version: '0.1'
     RequiredApiVersion: '6.16.0'
     ReleaseDate: '2026-07-29'
-    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-07-29/ImportAnalyzer_0_1.pext'
+    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-07-29/ImportAnalyzer_0_1.pext'
     Changelog:
       - "Initial release"
