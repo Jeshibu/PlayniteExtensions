@@ -1,8 +1,11 @@
-﻿using Playnite.SDK;
+﻿using CsvHelper;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
@@ -38,14 +41,15 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
             catch (Exception ex)
             {
                 logger.Error(ex, $"Error running GetGames for {libraryPlugin.Name}");
+                PlayniteApi.Dialogs.ShowErrorMessage($"Error getting games for {libraryPlugin.Name}: {ex}", "Error");
             }
         }, new($"Importing games from {libraryPlugin.Name} to analyze...") { IsIndeterminate = true });
 
         if (importResult == null)
-            return; //TODO: error dialog
+            return;
 
-        var window = PlayniteApi.Dialogs.CreateWindow(new() { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = false });
-        window.Content = new ImportResultView(this) { DataContext = importResult };
+        var window = PlayniteApi.Dialogs.CreateWindow(new() { ShowCloseButton = true, ShowMaximizeButton = true, ShowMinimizeButton = true });
+        window.Content = new ImportResultView(this, importResult, window);
         window.SizeToContent = SizeToContent.WidthAndHeight;
         window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
         window.Title = $"{libraryPlugin.Name} import result";
@@ -56,7 +60,7 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
     {
         var importGames = libraryPlugin.GetGames(new())?.OrderBy(g => g.Name).ToList();
         if (importGames == null)
-            return null; //TODO: error dialog
+            return null;
 
         var previouslyImported = PlayniteApi.Database.Games.Where(g => g.PluginId == libraryPlugin.Id).ToDictionary(g => g.GameId);
         var exclusions = PlayniteApi.Database.ImportExclusions.Where(i => i.LibraryId == libraryPlugin.Id).ToDictionary(i => i.GameId);
@@ -117,5 +121,77 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
             return tag;
 
         return PlayniteApi.Database.Tags.Add(name);
+    }
+
+    public bool ExportImportResult(LibraryImportResult libraryImportResult)
+    {
+        string targetPath = PlayniteApi.Dialogs.SaveFile("Comma-separated values|*.csv", true, Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments));
+        if (string.IsNullOrWhiteSpace(targetPath))
+            return false;
+
+        try
+        {
+            List<GameExportRow> rows =
+            [
+                .. libraryImportResult.NewlyImportGames.Select(g => new GameExportRow("New", g)),
+                .. libraryImportResult.AlreadyImportedGames.Select(g => new GameExportRow("Already imported", g)),
+                .. libraryImportResult.ExcludedGames.Select(g => new GameExportRow("Excluded", g)),
+                .. libraryImportResult.MissingGames.Select(g => new GameExportRow("Missing", g))
+            ];
+
+            using var writer = new StreamWriter(targetPath, false);
+            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+
+            csv.WriteHeader<GameExportRow>();
+            csv.NextRecord();
+            csv.WriteRecords(rows);
+
+            return true;
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex, "Error exporting library import analysis");
+            return false;
+        }
+    }
+
+    private class GameExportRow
+    {
+        public string Status { get; }
+        public string ID { get; }
+        public string Name { get; }
+        public bool Installed { get; }
+        public string Source { get; }
+        public ulong Playtime { get; }
+        public DateTime? LastPlayed { get; }
+        public string DifferentNameInLibrary { get; }
+
+        public GameExportRow(string status, GameMetadata m)
+        {
+            Status = status;
+            ID = m.GameId;
+            Name = m.Name;
+            Installed = m.IsInstalled;
+            Source = m.Source?.ToString();
+            Playtime = m.Playtime;
+            LastPlayed = m.LastActivity;
+        }
+
+        public GameExportRow(string status, AlreadyImportedGameInfo i): this(status, i.ImportedGame)
+        {
+            if (i.LibraryGame.Name != i.ImportedGame.Name)
+                DifferentNameInLibrary = i.LibraryGame.Name;
+        }
+
+        public GameExportRow(string status, Game g)
+        {
+            Status = status;
+            ID = g.GameId;
+            Name = g.Name;
+            Installed = g.IsInstalled;
+            Source = g.Source?.Name;
+            Playtime = g.Playtime;
+            LastPlayed = g.LastActivity;
+        }
     }
 }
