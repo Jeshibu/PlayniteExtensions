@@ -1,0 +1,9 @@
+Id: sharpemu
+Name: SharpEmu
+Website: 'https://sharpemu.app/'
+Profiles:
+  - Name: Default
+    Platforms: [sony_playstation5]
+    StartupExecutable: ^sharpemu.*\.exe$
+    StartupArguments: ' "{ImagePath}"'
+    ScriptGameImport: true
