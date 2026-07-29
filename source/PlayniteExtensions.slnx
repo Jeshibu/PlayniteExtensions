@@ -38,6 +38,7 @@
   <Project Path="GiantBombMetadata/GiantBombMetadata.csproj" />
   <Project Path="GOGMetadata/GOGMetadata.csproj" />
   <Project Path="IgnMetadata/IgnMetadata.csproj" />
+  <Project Path="ImportAnalyzer/ImportAnalyzer.csproj" />
   <Project Path="itchioBundleTagger/itchioBundleTagger.csproj" />
   <Project Path="LaunchBoxMetadata/LaunchBoxMetadata.csproj" />
   <Project Path="LegacyGamesLibrary/LegacyGamesLibrary.csproj" />

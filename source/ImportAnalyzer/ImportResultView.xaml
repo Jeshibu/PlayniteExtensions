@@ -1,0 +1,132 @@
+<!-- ReSharper disable Xaml.StaticResourceNotResolved -->
+<UserControl x:Class="ImportAnalyzer.ImportResultView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ImportAnalyzer"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance local:LibraryImportResult}"
+             d:DesignHeight="400" d:DesignWidth="600">
+    <DockPanel>
+
+        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Margin="20">
+            <WrapPanel.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Padding" Value="15 5"/>
+                    <Setter Property="Margin" Value="20 0 0 0"/>
+                </Style>
+            </WrapPanel.Resources>
+            <Button Click="TagMissingGames">Tag games missing from import</Button>
+            <!--
+            TODO: implement
+            <Button>Export</Button>
+            -->
+            <Button>Close</Button>
+        </WrapPanel>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="5">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource {x:Type Expander}}">
+                        <Setter Property="Margin" Value="0 10 0 0 " />
+                    </Style>
+                    <Style TargetType="{x:Type DataGrid}" BasedOn="{StaticResource {x:Type DataGrid}}">
+                        <Setter Property="AutoGenerateColumns" Value="False" />
+                        <Setter Property="ColumnWidth" Value="*" />
+                        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                        <Setter Property="MaxHeight" Value="800" />
+                        <Setter Property="IsReadOnly" Value="True"/>
+                        <Setter Property="CanUserSortColumns" Value="True"/>
+                        <Setter Property="CanUserResizeRows" Value="False"/>
+                    </Style>
+                    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}">
+                        <Setter Property="TextWrapping" Value="Wrap"/>
+                    </Style>
+                </StackPanel.Resources>
+
+                <TextBlock>
+                    These results represent what <Italic>would</Italic> happen during a game import, but these results have not been applied to your library. Update your game library normally to actually add new games.
+                </TextBlock>
+                <TextBlock>
+                    To remove games missing from your import, use the button below to tag those games. You will have the option to filter to those games, from where you can delete them.
+                </TextBlock>
+
+
+                <Expander>
+                    <Expander.Header>
+                        <TextBlock Text="{Binding NewlyImportGamesHeader}" />
+                    </Expander.Header>
+                    <Expander.Content>
+                        <DataGrid ItemsSource="{Binding NewlyImportGames}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding GameId}" />
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                                <DataGridTextColumn Header="Installed" Binding="{Binding IsInstalled}" />
+                                <DataGridTextColumn Header="Source" Binding="{Binding Path=Source}" />
+                                <DataGridTextColumn Header="Playtime" Binding="{Binding Path=Playtime, Converter={StaticResource PlayTimeToStringConverter}, Mode=OneWay}" />
+                                <DataGridTextColumn Header="Last played" Binding="{Binding Path=LastActivity, Mode=OneWay}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Expander.Content>
+                </Expander>
+
+                <Expander d:Expanded="True">
+                    <Expander.Header>
+                        <TextBlock Text="{Binding AlreadyImportedGamesHeader}" />
+                    </Expander.Header>
+                    <Expander.Content>
+                        <DataGrid ItemsSource="{Binding AlreadyImportedGames}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding ImportedGame.GameId}" />
+                                <DataGridTextColumn Header="Name" Binding="{Binding ImportedGame.Name}" />
+                                <DataGridTextColumn Header="Installed" Binding="{Binding ImportedGame.IsInstalled}" />
+                                <DataGridTextColumn Header="Source" Binding="{Binding ImportedGame.Source}" />
+                                <DataGridTextColumn Header="Playtime" Binding="{Binding ImportedGame.Playtime, Converter={StaticResource PlayTimeToStringConverter}, Mode=OneWay}" />
+                                <DataGridTextColumn Header="Last played" Binding="{Binding ImportedGame.LastActivity, Mode=OneWay}" />
+                                <DataGridTextColumn Header="Different name in library" Binding="{Binding DifferentNameInLibrary, Mode=OneWay}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Expander.Content>
+                </Expander>
+
+                <Expander>
+                    <Expander.Header>
+                        <TextBlock Text="{Binding ExcludedGamesHeader}" />
+                    </Expander.Header>
+                    <Expander.Content>
+                        <DataGrid ItemsSource="{Binding ExcludedGames}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding GameId}" />
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                                <DataGridTextColumn Header="Installed" Binding="{Binding IsInstalled}" />
+                                <DataGridTextColumn Header="Source" Binding="{Binding Path=Source}" />
+                                <DataGridTextColumn Header="Playtime" Binding="{Binding Path=Playtime, Converter={StaticResource PlayTimeToStringConverter}, Mode=OneWay}" />
+                                <DataGridTextColumn Header="Last played" Binding="{Binding Path=LastActivity, Mode=OneWay}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Expander.Content>
+                </Expander>
+
+                <Expander IsExpanded="True">
+                    <Expander.Header>
+                        <TextBlock Text="{Binding MissingGamesHeader}" />
+                    </Expander.Header>
+                    <Expander.Content>
+                        <DataGrid ItemsSource="{Binding MissingGames}">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ID" Binding="{Binding GameId}" />
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                                <DataGridTextColumn Header="Installed" Binding="{Binding IsInstalled}" />
+                                <DataGridTextColumn Header="Source" Binding="{Binding Path=Source}" />
+                                <DataGridTextColumn Header="Playtime" Binding="{Binding Path=Playtime, Converter={StaticResource PlayTimeToStringConverter}, Mode=OneWay}" />
+                                <DataGridTextColumn Header="Last played" Binding="{Binding Path=LastActivity, Mode=OneWay}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Expander.Content>
+                </Expander>
+
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>
