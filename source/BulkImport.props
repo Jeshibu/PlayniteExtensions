@@ -13,6 +13,6 @@
         <Compile Include="..\PlayniteExtensions.Metadata.Common\*.cs" LinkBase="Common\Metadata" />
     </ItemGroup>
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-        <Exec Command="xcopy $(SolutionDir)PlayniteExtensions.Metadata.Common\Views $(ProjectDir)Common\Metadata\Views /Y /I" />
+        <Exec Command="xcopy $(MSBuildThisFileDirectory)PlayniteExtensions.Metadata.Common\Views $(ProjectDir)Common\Metadata\Views /Y /I" />
     </Target>
 </Project>

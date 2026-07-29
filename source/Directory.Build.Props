@@ -17,8 +17,4 @@
         <DefineConstants>TRACE</DefineConstants>
         <Optimize>true</Optimize>
     </PropertyGroup>
-    <PropertyGroup>
-        <!-- Without this, dotnet build doesn't seem to know where the hell $(SolutionDir) is -->
-        <SolutionDir Condition="'$(SolutionDir)'==''">$(MSBuildThisFileDirectory)</SolutionDir>
-    </PropertyGroup>
 </Project>
