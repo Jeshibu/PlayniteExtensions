@@ -22,5 +22,5 @@ public class LibraryImportResult
     public string ExcludedGamesHeader => $"Excluded ({ExcludedGames?.Count} games)";
 
     public List<Game> MissingGames { get; set; } = [];
-    public string MissingGamesHeader => $"In library but missing from export ({MissingGames?.Count} games)";
+    public string MissingGamesHeader => $"In library but missing from import ({MissingGames?.Count} games)";
 }
