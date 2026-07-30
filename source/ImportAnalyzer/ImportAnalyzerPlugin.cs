@@ -62,12 +62,12 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
         if (importGames == null)
             return null;
 
-        var previouslyImported = PlayniteApi.Database.Games.Where(g => g.PluginId == libraryPlugin.Id).ToDictionary(g => g.GameId);
-        var exclusions = PlayniteApi.Database.ImportExclusions.Where(i => i.LibraryId == libraryPlugin.Id).ToDictionary(i => i.GameId);
-        var newlyImported = importGames.ToDictionary(g => g.GameId);
+        var previouslyImported = PlayniteApi.Database.Games.Where(g => g.PluginId == libraryPlugin.Id).ToGroupedDictionary(g => g.GameId);
+        var exclusions = PlayniteApi.Database.ImportExclusions.Where(i => i.LibraryId == libraryPlugin.Id).ToGroupedDictionary(i => i.GameId);
+        var newlyImported = importGames.ToGroupedDictionary(i => i.GameId);
         var result = new LibraryImportResult
         {
-            MissingGames = previouslyImported.Values.Where(g => !newlyImported.ContainsKey(g.GameId)).ToList(),
+            MissingGames = previouslyImported.Where(kvp => !newlyImported.ContainsKey(kvp.Key)).SelectMany(kvp => kvp.Value).ToList(),
         };
 
         foreach (var importGame in importGames)
@@ -75,8 +75,8 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
             if (exclusions.ContainsKey(importGame.GameId))
                 result.ExcludedGames.Add(importGame);
 
-            else if (previouslyImported.TryGetValue(importGame.GameId, out var libraryGame))
-                result.AlreadyImportedGames.Add(new() { ImportedGame = importGame, LibraryGame = libraryGame });
+            else if (previouslyImported.TryGetValue(importGame.GameId, out var libraryGames))
+                result.AlreadyImportedGames.AddRange(libraryGames.Select(lg => new AlreadyImportedGameInfo { ImportedGame = importGame, LibraryGame = lg }));
 
             else
                 result.NewlyImportGames.Add(importGame);
