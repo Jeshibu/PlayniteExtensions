@@ -90,24 +90,39 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
         if (libraryImportResult?.MissingGames?.Any() != true)
             return;
 
-        int newlyTaggedCount = 0;
+        int newlyTaggedCount = 0, removedTagCount = 0;
+        var missingGames = libraryImportResult.MissingGames.ToGroupedDictionary(g => g.GameId);
         var tag = GetTag("Missing from import");
         using (PlayniteApi.Database.BufferedUpdate())
         {
-            foreach (var missingGame in libraryImportResult.MissingGames)
+            foreach (var game in PlayniteApi.Database.Games)
             {
-                if (missingGame.TagIds?.Contains(tag.Id) == true)
+                if (game.PluginId != Id)
                     continue;
 
-                missingGame.TagIds ??= [];
-                missingGame.TagIds.Add(tag.Id);
-                missingGame.Modified = DateTime.Now;
-                PlayniteApi.Database.Games.Update(missingGame);
-                newlyTaggedCount++;
+                bool hasTag = game.TagIds?.Contains(tag.Id) ?? false;
+                bool shouldHaveTag = missingGames.ContainsKey(game.GameId);
+                if (hasTag == shouldHaveTag)
+                    continue;
+
+                if (shouldHaveTag)
+                {
+                    game.TagIds ??= [];
+                    game.TagIds.Add(tag.Id);
+                    newlyTaggedCount++;
+                }
+                else
+                {
+                    game.TagIds.Remove(tag.Id);
+                    removedTagCount++;
+                }
+
+                game.Modified = DateTime.Now;
+                PlayniteApi.Database.Games.Update(game);
             }
         }
 
-        var filter = PlayniteApi.Dialogs.ShowMessage($"Tagged {newlyTaggedCount} games. Filter to show the games tagged as missing from the library import?",
+        var filter = PlayniteApi.Dialogs.ShowMessage($"Added tag to {newlyTaggedCount} games, removed it from {removedTagCount} games. Filter to show the games tagged as missing from the library import?",
                                                      "Missing games tagged", MessageBoxButton.YesNo);
 
         if (filter == MessageBoxResult.Yes)
@@ -177,7 +192,7 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
             LastPlayed = m.LastActivity;
         }
 
-        public GameExportRow(string status, AlreadyImportedGameInfo i): this(status, i.ImportedGame)
+        public GameExportRow(string status, AlreadyImportedGameInfo i) : this(status, i.ImportedGame)
         {
             if (i.LibraryGame.Name != i.ImportedGame.Name)
                 DifferentNameInLibrary = i.LibraryGame.Name;
