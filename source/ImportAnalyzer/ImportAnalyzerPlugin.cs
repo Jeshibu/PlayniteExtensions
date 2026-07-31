@@ -67,6 +67,7 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
         var newlyImported = importGames.ToGroupedDictionary(i => i.GameId);
         var result = new LibraryImportResult
         {
+            LibraryPlugin = libraryPlugin,
             MissingGames = previouslyImported.Where(kvp => !newlyImported.ContainsKey(kvp.Key)).SelectMany(kvp => kvp.Value).ToList(),
         };
 
@@ -87,17 +88,14 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
 
     public void TagMissingGames(LibraryImportResult libraryImportResult)
     {
-        if (libraryImportResult?.MissingGames?.Any() != true)
-            return;
-
         int newlyTaggedCount = 0, removedTagCount = 0;
-        var missingGames = libraryImportResult.MissingGames.ToGroupedDictionary(g => g.GameId);
+        var missingGames = libraryImportResult.MissingGames?.ToGroupedDictionary(g => g.GameId) ?? [];
         var tag = GetTag("Missing from import");
         using (PlayniteApi.Database.BufferedUpdate())
         {
             foreach (var game in PlayniteApi.Database.Games)
             {
-                if (game.PluginId != Id)
+                if (game.PluginId != libraryImportResult.LibraryPlugin.Id)
                     continue;
 
                 bool hasTag = game.TagIds?.Contains(tag.Id) ?? false;

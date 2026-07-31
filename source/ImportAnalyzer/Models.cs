@@ -1,4 +1,5 @@
 using Playnite.SDK.Models;
+using Playnite.SDK.Plugins;
 using System.Collections.Generic;
 
 namespace ImportAnalyzer;
@@ -12,6 +13,8 @@ public class AlreadyImportedGameInfo
 
 public class LibraryImportResult
 {
+    public LibraryPlugin LibraryPlugin { get; set; }
+
     public List<GameMetadata> NewlyImportGames { get; set; } = [];
     public string NewlyImportGamesHeader => $"Newly imported ({NewlyImportGames?.Count} games)";
 
