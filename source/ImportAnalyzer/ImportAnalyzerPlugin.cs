@@ -124,7 +124,11 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
                                                      "Missing games tagged", MessageBoxButton.YesNo);
 
         if (filter == MessageBoxResult.Yes)
-            PlayniteApi.MainView.ApplyFilterPreset(new FilterPreset { Settings = new() { Tag = new(tag.Id) } });
+            PlayniteApi.MainView.ApplyFilterPreset(new FilterPreset { Settings = new()
+            {
+                Tag = new(tag.Id),
+                Library = new(libraryImportResult.LibraryPlugin.Id),
+            } });
     }
 
     private Tag GetTag(string name)
