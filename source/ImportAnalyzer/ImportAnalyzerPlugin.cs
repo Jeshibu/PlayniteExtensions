@@ -23,7 +23,8 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
 
         var libraryPlugins = PlayniteApi.Addons.Plugins.OfType<LibraryPlugin>().ToList();
         foreach (var libraryPlugin in libraryPlugins)
-            yield return new() { MenuSection = "@Import Analyzer", Description = libraryPlugin.Name, Icon = libraryPlugin.LibraryIcon, Action = _ => StartAnalysis(libraryPlugin) };
+            if (libraryPlugin.Properties?.HasCustomizedGameImport != true)
+                yield return new() { MenuSection = "@Import Analyzer", Description = libraryPlugin.Name, Icon = libraryPlugin.LibraryIcon, Action = _ => StartAnalysis(libraryPlugin) };
     }
 
     private void StartAnalysis(LibraryPlugin libraryPlugin)
