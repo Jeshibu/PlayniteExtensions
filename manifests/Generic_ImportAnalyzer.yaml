@@ -14,3 +14,9 @@ Packages:
       - "Tagging games missing from import now also removes the tag from games that aren't missing"
       - "Fixed exception when games with duplicate IDs are imported"
       - "Fixed typos"
+  - Version: '0.2.1'
+    RequiredApiVersion: '6.16.0'
+    ReleaseDate: '2026-07-31'
+    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/importanalyzer0.2.1/ImportAnalyzer_0_2_1.pext'
+    Changelog:
+      - "Fixed tagging not doing anything"

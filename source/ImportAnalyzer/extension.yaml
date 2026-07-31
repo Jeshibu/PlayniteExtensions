@@ -1,7 +1,7 @@
 ﻿Id: ImportAnalyzer
 Name: Import Analyzer
 Author: Jeshibu
-Version: '0.2'
+Version: '0.2.1'
 Module: ImportAnalyzer.dll
 Type: GenericPlugin
 Icon: icon.png
