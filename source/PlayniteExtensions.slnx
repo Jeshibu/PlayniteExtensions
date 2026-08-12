@@ -8,6 +8,43 @@
     <File Path="Directory.Build.Props" />
     <File Path="Tests.props" />
   </Folder>
+  <Folder Name="/Common/">
+    <Project Path="PlayniteExtensions.Common/PlayniteExtensions.Common.shproj" />
+    <Project Path="PlayniteExtensions.Metadata.Common/PlayniteExtensions.Metadata.Common.shproj" />
+    <Project Path="PlayniteExtensions.Tests.Common/PlayniteExtensions.Tests.Common.shproj" />
+  </Folder>
+  <Folder Name="/Libraries/">
+    <Project Path="BigFishLibrary/BigFishLibrary.csproj" />
+    <Project Path="EaLibrary/EaLibrary.csproj" />
+    <Project Path="GamersGateLibrary/GamersGateLibrary.csproj" />
+    <Project Path="GooglePlayLibrary/GooglePlayLibrary.csproj" />
+    <Project Path="LegacyGamesLibrary/LegacyGamesLibrary.csproj" />
+    <Project Path="LoadingBayLibrary/LoadingBayLibrary.csproj" />
+    <Project Path="ViveportLibrary/ViveportLibrary.csproj" />
+  </Folder>
+  <Folder Name="/Metadata/">
+    <Project Path="BigFishMetadata/BigFishMetadata.csproj" />
+    <Project Path="GamesSizeCalculator/GamesSizeCalculator.csproj" />
+    <Project Path="GiantBombMetadata/GiantBombMetadata.csproj" />
+    <Project Path="GOGMetadata/GOGMetadata.csproj" />
+    <Project Path="IgnMetadata/IgnMetadata.csproj" />
+    <Project Path="LaunchBoxMetadata/LaunchBoxMetadata.csproj" />
+    <Project Path="MobyGamesMetadata/MobyGamesMetadata.csproj" />
+    <Project Path="OpenCriticMetadata/OpenCriticMetadata.csproj" />
+    <Project Path="PCGamingWikiMetadata/PCGamingWikiMetadata.csproj" />
+    <Project Path="SteamTagsImporter/SteamTagsImporter.csproj" />
+    <Project Path="TvTropesMetadata/TvTropesMetadata.csproj" />
+    <Project Path="XboxMetadata/XboxMetadata.csproj" />
+  </Folder>
+  <Folder Name="/Other/">
+    <Project Path="Barnite/Barnite.csproj" />
+    <Project Path="ExtraEmulatorProfiles/ExtraEmulatorProfiles.csproj" />
+    <Project Path="FilterSearch/FilterSearch.csproj" />
+    <Project Path="ImportAnalyzer/ImportAnalyzer.csproj" />
+    <Project Path="itchioBundleTagger/itchioBundleTagger.csproj" />
+    <Project Path="MutualGames/MutualGames.csproj" />
+    <Project Path="PathReplacer/PathReplacer.csproj" />
+  </Folder>
   <Folder Name="/Tests/">
     <Project Path="Barnite.Tests/Barnite.Tests.csproj" />
     <Project Path="BigFishMetadata.Tests/BigFishMetadata.Tests.csproj" />
@@ -21,40 +58,12 @@
     <Project Path="PathReplacer.Tests/PathReplacer.Tests.csproj" />
     <Project Path="PCGamingWikiMetadata.Tests/PCGamingWikiMetadata.Tests.csproj" />
     <Project Path="PlayniteExtensions.Common.Tests/PlayniteExtensions.Common.Tests.csproj" />
-    <Project Path="PlayniteExtensions.Tests.Common/PlayniteExtensions.Tests.Common.shproj" />
     <Project Path="SteamTagsImporter.Tests/SteamTagsImporter.Tests.csproj" />
     <Project Path="TvTropesMetadata.Tests/TvTropesMetadata.Tests.csproj" />
     <Project Path="ViveportLibrary.Tests/ViveportLibrary.Tests.csproj" />
     <Project Path="XboxMetadata.Tests/XboxMetadata.Tests.csproj" />
   </Folder>
-  <Project Path="Barnite/Barnite.csproj" />
-  <Project Path="BigFishLibrary/BigFishLibrary.csproj" />
-  <Project Path="BigFishMetadata/BigFishMetadata.csproj" />
-  <Project Path="EaLibrary/EaLibrary.csproj" />
-  <Project Path="ExtraEmulatorProfiles/ExtraEmulatorProfiles.csproj" />
-  <Project Path="FilterSearch/FilterSearch.csproj" />
-  <Project Path="GamersGateLibrary/GamersGateLibrary.csproj" />
-  <Project Path="GamesSizeCalculator/GamesSizeCalculator.csproj" />
-  <Project Path="GiantBombMetadata/GiantBombMetadata.csproj" />
-  <Project Path="GOGMetadata/GOGMetadata.csproj" />
-  <Project Path="IgnMetadata/IgnMetadata.csproj" />
-  <Project Path="ImportAnalyzer/ImportAnalyzer.csproj" />
-  <Project Path="itchioBundleTagger/itchioBundleTagger.csproj" />
-  <Project Path="LaunchBoxMetadata/LaunchBoxMetadata.csproj" />
-  <Project Path="LegacyGamesLibrary/LegacyGamesLibrary.csproj" />
-  <Project Path="LoadingBayLibrary/LoadingBayLibrary.csproj" />
-  <Project Path="MobyGamesMetadata/MobyGamesMetadata.csproj" />
-  <Project Path="MutualGames/MutualGames.csproj" />
-  <Project Path="OpenCriticMetadata/OpenCriticMetadata.csproj" />
-  <Project Path="PathReplacer/PathReplacer.csproj" />
-  <Project Path="PCGamingWikiMetadata/PCGamingWikiMetadata.csproj" />
-  <Project Path="PlayniteExtensions.Common/PlayniteExtensions.Common.shproj" />
-  <Project Path="PlayniteExtensions.Metadata.Common/PlayniteExtensions.Metadata.Common.shproj" />
   <Project Path="Rawg.Common/Rawg.Common.shproj" />
   <Project Path="RawgLibrary/RawgLibrary.csproj" />
   <Project Path="RawgMetadata/RawgMetadata.csproj" />
-  <Project Path="SteamTagsImporter/SteamTagsImporter.csproj" />
-  <Project Path="TvTropesMetadata/TvTropesMetadata.csproj" />
-  <Project Path="ViveportLibrary/ViveportLibrary.csproj" />
-  <Project Path="XboxMetadata/XboxMetadata.csproj" />
 </Solution>
