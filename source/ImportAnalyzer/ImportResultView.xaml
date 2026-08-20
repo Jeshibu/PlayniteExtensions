@@ -37,18 +37,21 @@
                         <Setter Property="CanUserSortColumns" Value="True"/>
                         <Setter Property="CanUserResizeRows" Value="False"/>
                         <Setter Property="Margin" Value="20 5"/>
+                        <Setter Property="MaxColumnWidth" Value="400"/>
                     </Style>
                     <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}">
                         <Setter Property="TextWrapping" Value="Wrap"/>
                     </Style>
                 </StackPanel.Resources>
 
-                <TextBlock>
-                    These results represent what <Italic>would</Italic> happen during a game import, but these results have not been applied to your library. Update your game library normally to actually add new games.
-                </TextBlock>
-                <TextBlock>
-                    To remove games missing from your import, use the button below to tag those games. You will have the option to filter to those games, at which point you can delete them.
-                </TextBlock>
+                <StackPanel Margin="20 20 20 10">
+                    <TextBlock>
+                        These results represent what <Italic>would</Italic> happen during a game import, but these results have not been applied to your library. Update your game library normally to actually add new games.
+                    </TextBlock>
+                    <TextBlock>
+                        To remove games missing from your import, use the button below to tag those games. You will have the option to filter to those games, at which point you can delete them.
+                    </TextBlock>
+                </StackPanel>
 
 
                 <Expander>
@@ -58,12 +61,12 @@
                     <Expander.Content>
                         <DataGrid ItemsSource="{Binding NewlyImportGames}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" Binding="{Binding GameId}" />
-                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                                <DataGridTextColumn Header="Installed" Binding="{Binding IsInstalled}" />
-                                <DataGridTextColumn Header="Source" Binding="{Binding Path=Source}" />
-                                <DataGridTextColumn Header="Playtime" Binding="{Binding Path=Playtime, Converter={StaticResource PlayTimeToStringConverter}, Mode=OneWay}" />
-                                <DataGridTextColumn Header="Last played" Binding="{Binding Path=LastActivity, Converter={StaticResource DateTimeToLastPlayedConverter}, Mode=OneWay}" />
+                                <DataGridTextColumn Header="ID" Binding="{Binding ImportedGame.GameId}" />
+                                <DataGridTextColumn Header="Name" Binding="{Binding ImportedGame.Name}" />
+                                <DataGridTextColumn Header="Installed" Binding="{Binding ImportedGame.IsInstalled}" />
+                                <DataGridTextColumn Header="Source" Binding="{Binding ImportSource}" />
+                                <DataGridTextColumn Header="Playtime" Binding="{Binding ImportedGame.Playtime, Converter={StaticResource PlayTimeToStringConverter}}" />
+                                <DataGridTextColumn Header="Last played" Binding="{Binding ImportedGame.LastActivity, Converter={StaticResource DateTimeToLastPlayedConverter}}" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </Expander.Content>
@@ -79,10 +82,11 @@
                                 <DataGridTextColumn Header="ID" Binding="{Binding ImportedGame.GameId}" />
                                 <DataGridTextColumn Header="Name" Binding="{Binding ImportedGame.Name}" />
                                 <DataGridTextColumn Header="Installed" Binding="{Binding ImportedGame.IsInstalled}" />
-                                <DataGridTextColumn Header="Source" Binding="{Binding ImportedGame.Source}" />
-                                <DataGridTextColumn Header="Playtime" Binding="{Binding ImportedGame.Playtime, Converter={StaticResource PlayTimeToStringConverter}, Mode=OneWay}" />
-                                <DataGridTextColumn Header="Last played" Binding="{Binding ImportedGame.LastActivity, Converter={StaticResource DateTimeToLastPlayedConverter}, Mode=OneWay}" />
-                                <DataGridTextColumn Header="Different name in library" Binding="{Binding DifferentNameInLibrary, Mode=OneWay}"/>
+                                <DataGridTextColumn Header="Source" Binding="{Binding ImportSource}" />
+                                <DataGridTextColumn Header="Playtime" Binding="{Binding ImportedGame.Playtime, Converter={StaticResource PlayTimeToStringConverter}}" />
+                                <DataGridTextColumn Header="Last played" Binding="{Binding ImportedGame.LastActivity, Converter={StaticResource DateTimeToLastPlayedConverter}}" />
+                                <DataGridTextColumn Header="Hidden" Binding="{Binding LibraryGame.Hidden}"/>
+                                <DataGridTextColumn Header="Different name in library" Binding="{Binding DifferentNameInLibrary}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Expander.Content>
@@ -95,12 +99,12 @@
                     <Expander.Content>
                         <DataGrid ItemsSource="{Binding ExcludedGames}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" Binding="{Binding GameId}" />
-                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                                <DataGridTextColumn Header="Installed" Binding="{Binding IsInstalled}" />
-                                <DataGridTextColumn Header="Source" Binding="{Binding Path=Source}" />
-                                <DataGridTextColumn Header="Playtime" Binding="{Binding Path=Playtime, Converter={StaticResource PlayTimeToStringConverter}, Mode=OneWay}" />
-                                <DataGridTextColumn Header="Last played" Binding="{Binding Path=LastActivity, Converter={StaticResource DateTimeToLastPlayedConverter}, Mode=OneWay}" />
+                                <DataGridTextColumn Header="ID" Binding="{Binding ImportedGame.GameId}" />
+                                <DataGridTextColumn Header="Name" Binding="{Binding ImportedGame.Name}" />
+                                <DataGridTextColumn Header="Installed" Binding="{Binding ImportedGame.IsInstalled}" />
+                                <DataGridTextColumn Header="Source" Binding="{Binding ImportSource}" />
+                                <DataGridTextColumn Header="Playtime" Binding="{Binding ImportedGame.Playtime, Converter={StaticResource PlayTimeToStringConverter}}" />
+                                <DataGridTextColumn Header="Last played" Binding="{Binding ImportedGame.LastActivity, Converter={StaticResource DateTimeToLastPlayedConverter}}" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </Expander.Content>
@@ -113,12 +117,13 @@
                     <Expander.Content>
                         <DataGrid ItemsSource="{Binding MissingGames}">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" Binding="{Binding GameId}" />
-                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                                <DataGridTextColumn Header="Installed" Binding="{Binding IsInstalled}" />
-                                <DataGridTextColumn Header="Source" Binding="{Binding Path=Source}" />
-                                <DataGridTextColumn Header="Playtime" Binding="{Binding Path=Playtime, Converter={StaticResource PlayTimeToStringConverter}, Mode=OneWay}" />
-                                <DataGridTextColumn Header="Last played" Binding="{Binding Path=LastActivity, Converter={StaticResource DateTimeToLastPlayedConverter}, Mode=OneWay}" />
+                                <DataGridTextColumn Header="ID" Binding="{Binding LibraryGame.GameId}" />
+                                <DataGridTextColumn Header="Name" Binding="{Binding LibraryGame.Name}" />
+                                <DataGridTextColumn Header="Installed" Binding="{Binding LibraryGame.IsInstalled}" />
+                                <DataGridTextColumn Header="Source" Binding="{Binding LibrarySource}" />
+                                <DataGridTextColumn Header="Playtime" Binding="{Binding LibraryGame.Playtime, Converter={StaticResource PlayTimeToStringConverter}}" />
+                                <DataGridTextColumn Header="Last played" Binding="{Binding LibraryGame.LastActivity, Converter={StaticResource DateTimeToLastPlayedConverter}}" />
+                                <DataGridTextColumn Header="Hidden" Binding="{Binding LibraryGame.Hidden}" />
                             </DataGrid.Columns>
                         </DataGrid>
                     </Expander.Content>

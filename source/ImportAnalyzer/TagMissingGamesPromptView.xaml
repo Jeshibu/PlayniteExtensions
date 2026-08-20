@@ -1,0 +1,45 @@
+<UserControl x:Class="ImportAnalyzer.TagMissingGamesPromptView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:ImportAnalyzer"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance local:TagMissingGamesPromptViewModel}"
+             d:DesignHeight="300" d:DesignWidth="600">
+    <DockPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="20" HorizontalAlignment="Right" DockPanel.Dock="Bottom">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                    <Setter Property="Padding" Value="15 5"/>
+                    <Setter Property="Margin" Value="20 0 0 0"/>
+                </Style>
+            </StackPanel.Resources>
+            <Button Click="OkClick">OK</Button>
+            <Button Click="CancelClick">Cancel</Button>
+        </StackPanel>
+
+        <StackPanel Margin="20" HorizontalAlignment="Left">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}">
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                    <Setter Property="MaxWidth" Value="600"/>
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock>Tag <TextBlock Text="{Binding ImportResult.MissingGames.Count}"/> games missing from the <TextBlock Text="{Binding ImportResult.LibraryPlugin.Name}" /> import?</TextBlock>
+            <TextBlock Margin="0 10">Additionally, you can tag games imported with the following sources as missing too. This is usually not recommended, but some library plugins, like Steam, can have games that are technically imported only for their playtime while not having licenses for the user's account.</TextBlock>
+            <ListBox ItemsSource="{Binding SourceOptions}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox IsChecked="{Binding Checked}">
+                            <TextBlock>
+                                <TextBlock Text="{Binding SourceName}"/> (<TextBlock Text="{Binding Count}"/> games)
+                            </TextBlock>
+                        </CheckBox>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+    </DockPanel>
+</UserControl>

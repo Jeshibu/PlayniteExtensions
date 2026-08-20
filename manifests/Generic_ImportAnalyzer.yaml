@@ -20,3 +20,11 @@ Packages:
     PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/importanalyzer0.2.1/ImportAnalyzer_0_2_1.pext'
     Changelog:
       - "Fixed tagging not doing anything"
+  - Version: '0.3.0'
+    RequiredApiVersion: '6.16.0'
+    ReleaseDate: '{NEWDATE}'
+    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/ImportAnalyzer_0_3_0.pext'
+    Changelog:
+      - "Offer to tag specific sources of imported games as missing games too. This hooks into the recent Steam plugin update that will have games in the import just for time played in the past."
+      - "Fixed not being able to sort by source."
+      - "Fixed complex import plugins from being offered for analysis, when the result would always be empty. At this moment that's only the Humble library plugin."

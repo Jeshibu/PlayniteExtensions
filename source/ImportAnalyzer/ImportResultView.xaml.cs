@@ -11,14 +11,13 @@ public partial class ImportResultView : UserControl
 
     public ImportResultView(ImportAnalyzerPlugin importAnalyzerPlugin, LibraryImportResult data, Window window)
     {
-        Data = data;
         Window = window;
-        DataContext = data;
+        DataContext = Data = data;
         this.importAnalyzerPlugin = importAnalyzerPlugin;
         InitializeComponent();
     }
 
-    private void TagMissingGames(object sender, RoutedEventArgs e) => importAnalyzerPlugin.TagMissingGames(Data);
+    private void TagMissingGames(object sender, RoutedEventArgs e) => importAnalyzerPlugin.ShowTagGamesPrompt(Data);
 
     private void CloseWindow(object sender, RoutedEventArgs e) => Window.Close();
 

@@ -69,28 +69,35 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
         var result = new LibraryImportResult
         {
             LibraryPlugin = libraryPlugin,
-            MissingGames = previouslyImported.Where(kvp => !newlyImported.ContainsKey(kvp.Key)).SelectMany(kvp => kvp.Value).ToList(),
+            MissingGames = previouslyImported.Where(kvp => !newlyImported.ContainsKey(kvp.Key)).SelectMany(kvp => kvp.Value).Select(g => new LibGame(g)).ToList(),
         };
 
         foreach (var importGame in importGames)
         {
             if (exclusions.ContainsKey(importGame.GameId))
-                result.ExcludedGames.Add(importGame);
+                result.ExcludedGames.Add(new(importGame));
 
             else if (previouslyImported.TryGetValue(importGame.GameId, out var libraryGames))
                 result.AlreadyImportedGames.AddRange(libraryGames.Select(lg => new AlreadyImportedGameInfo { ImportedGame = importGame, LibraryGame = lg }));
 
             else
-                result.NewlyImportGames.Add(importGame);
+                result.NewlyImportGames.Add(new(importGame));
         }
 
         return result;
     }
 
-    public void TagMissingGames(LibraryImportResult libraryImportResult)
+    public void TagMissingGames(TagMissingGamesPromptViewModel tagVm)
     {
+        var libraryImportResult = tagVm.ImportResult;
         int newlyTaggedCount = 0, removedTagCount = 0;
-        var missingGames = libraryImportResult.MissingGames?.ToGroupedDictionary(g => g.GameId) ?? [];
+        var missingGames = libraryImportResult.MissingGames?.Select(x => x.LibraryGame).ToGroupedDictionary(g => g.GameId) ?? [];
+        var selectedSourceNames = tagVm.SourceOptions.Where(s => s.Checked).Select(s => s.SourceName).ToList();
+        var sourceSelectedGames = libraryImportResult.AlreadyImportedGames
+                                                     .Where(x => selectedSourceNames.Contains(x.ImportSource))
+                                                     .Select(x => x.LibraryGame)
+                                                     .ToGroupedDictionary(g => g.GameId) ?? [];
+
         var tag = GetTag("Missing from import");
         using (PlayniteApi.Database.BufferedUpdate())
         {
@@ -100,7 +107,9 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
                     continue;
 
                 bool hasTag = game.TagIds?.Contains(tag.Id) ?? false;
-                bool shouldHaveTag = missingGames.ContainsKey(game.GameId);
+                bool shouldHaveTag = missingGames.ContainsKey(game.GameId)
+                                     || sourceSelectedGames.ContainsKey(game.GameId);
+
                 if (hasTag == shouldHaveTag)
                     continue;
 
@@ -132,6 +141,31 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
             } });
     }
 
+    public void ShowTagGamesPrompt(LibraryImportResult importResult)
+    {
+        try
+        {
+            var vm = new TagMissingGamesPromptViewModel { ImportResult = importResult };
+            foreach (var sourceNameGrouping in importResult.AlreadyImportedGames.GroupBy(x => x.ImportedGame.Source?.ToString()))
+            {
+                var sourceName = sourceNameGrouping.Key;
+                bool isChecked = sourceName != null && sourceName.IndexOf("missing", StringComparison.InvariantCultureIgnoreCase) >= 0;
+                vm.SourceOptions.Add(new() { Checked = isChecked, Count = sourceNameGrouping.Count(), SourceName = sourceName });
+            }
+
+            var window = PlayniteApi.Dialogs.CreateWindow(new() { ShowCloseButton = true, ShowMaximizeButton = false, ShowMinimizeButton = false });
+            window.Content = new TagMissingGamesPromptView(this, vm, window);
+            window.SizeToContent = SizeToContent.WidthAndHeight;
+            window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            window.Title = "Tag games missing from import";
+            window.Show();
+        }
+        catch (Exception e)
+        {
+            logger.Error(e, "Error at tagging prompt");
+        }
+    }
+
     private Tag GetTag(string name)
     {
         var tag = PlayniteApi.Database.Tags.FirstOrDefault(t => t.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
@@ -151,10 +185,10 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
         {
             List<GameExportRow> rows =
             [
-                .. libraryImportResult.NewlyImportGames.Select(g => new GameExportRow("New", g)),
+                .. libraryImportResult.NewlyImportGames.Select(g => new GameExportRow("New", g.ImportedGame)),
                 .. libraryImportResult.AlreadyImportedGames.Select(g => new GameExportRow("Already imported", g)),
-                .. libraryImportResult.ExcludedGames.Select(g => new GameExportRow("Excluded", g)),
-                .. libraryImportResult.MissingGames.Select(g => new GameExportRow("Missing", g))
+                .. libraryImportResult.ExcludedGames.Select(g => new GameExportRow("Excluded", g.ImportedGame)),
+                .. libraryImportResult.MissingGames.Select(g => new GameExportRow("Missing", g.LibraryGame))
             ];
 
             using var writer = new StreamWriter(targetPath, false);
@@ -181,6 +215,7 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
         public bool Installed { get; }
         public string Source { get; }
         public ulong Playtime { get; }
+        public bool? Hidden { get; }
         public DateTime? LastPlayed { get; }
         public string DifferentNameInLibrary { get; }
 
@@ -197,6 +232,7 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
 
         public GameExportRow(string status, AlreadyImportedGameInfo i) : this(status, i.ImportedGame)
         {
+            Hidden = i.LibraryGame.Hidden;
             if (i.LibraryGame.Name != i.ImportedGame.Name)
                 DifferentNameInLibrary = i.LibraryGame.Name;
         }
@@ -210,6 +246,7 @@ public class ImportAnalyzerPlugin(IPlayniteAPI playniteApi) : GenericPlugin(play
             Source = g.Source?.Name;
             Playtime = g.Playtime;
             LastPlayed = g.LastActivity;
+            Hidden = g.Hidden;
         }
     }
 }
