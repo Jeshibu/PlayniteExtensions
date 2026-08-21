@@ -70,7 +70,17 @@ public class RawgMetadataSettingsViewModel : PluginSettingsViewModel<RawgMetadat
                 }
 
                 var apiClient = new RawgApiClient(Settings.ApiKey);
-                PlayniteApi.Dialogs.ActivateGlobalProgress(a => Database.CreateDatabase(apiClient, a), new("Preparing…", cancelable: true));
+                PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
+                {
+                    try
+                    {
+                        Database.CreateDatabase(apiClient, a);
+                    }
+                    catch (Exception ex)
+                    {
+                        PlayniteApi.Dialogs.ShowErrorMessage($"Error saving local database: {ex.Message}");
+                    }
+                }, new("Preparing…", cancelable: true));
                 OnPropertyChanged(nameof(DatabaseStatus));
             }
             catch (Exception ex)

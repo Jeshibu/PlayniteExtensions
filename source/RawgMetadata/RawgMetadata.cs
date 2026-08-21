@@ -97,7 +97,7 @@ public class RawgMetadata : MetadataPlugin
             yield break;
 
         var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-        var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation)!, "icon.png");
+        var iconPath = Path.Combine(Path.GetDirectoryName(assemblyLocation)!, "icon.jpg");
         yield return new TopPanelItem()
         {
             Icon = iconPath,
@@ -121,7 +121,7 @@ public class RawgMetadata : MetadataPlugin
         }
 
         var dataSource = new RawgTagImportDataSource(db, apiClient, settings.Settings);
-        var ui = new BulkPropertyUserInterface(PlayniteApi);
+        var ui = new BulkPropertyUserInterface(PlayniteApi) { AllowEmptySearchQuery = true };
         var platformUtility = new PlatformUtility(PlayniteApi);
         var bulkImport = new RawgTagImport(PlayniteApi.Database, ui, dataSource, platformUtility, new RawgIdUtility(), settings.Settings.MaxDegreeOfParallelism);
         bulkImport.ImportGameProperty();

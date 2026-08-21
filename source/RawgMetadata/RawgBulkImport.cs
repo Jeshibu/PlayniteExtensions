@@ -28,7 +28,10 @@ public class RawgTagImportDataSource(RawgDatabase db, RawgApiClient rawgApi, Raw
 
     public IEnumerable<RawgTag> Search(string query, CancellationToken cancellationToken = default)
     {
-        return db.SearchTags(query, 50);
+        if (string.IsNullOrEmpty(query))
+            return db.GetAllTags().OrderByDescending(t => t.GamesCount);
+
+        return db.SearchTags(query, 100);
     }
 
     public GenericItemOption<RawgTag> ToGenericItemOption(RawgTag item)
@@ -39,6 +42,9 @@ public class RawgTagImportDataSource(RawgDatabase db, RawgApiClient rawgApi, Raw
     public IEnumerable<GameDetails> GetDetails(RawgTag searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
         var apiResult = rawgApi.GetGamesByTag(searchResult, progressArgs);
-        return apiResult.Select(g => RawgMetadataHelper.ToGameDetails(g, logger, settings));
+
+        return apiResult.Deduplicate(g => g.Id,
+                                     g => RawgMetadataHelper.ToGameDetails(g, logger, settings),
+                                     logger);
     }
 }

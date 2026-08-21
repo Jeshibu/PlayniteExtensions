@@ -12,7 +12,7 @@ public partial class RawgApiClient: IRawgApiClient
     {
         var request = new RestRequest("tags")
                       .AddParameter("page", 1)
-                      .AddParameter("page_size", 50)
+                      .AddParameter("page_size", 40)
                       .AddKey(Key);
 
         return GetAllPages<RawgTag>(request, a, "Downloading RAWG tags…");
@@ -21,10 +21,10 @@ public partial class RawgApiClient: IRawgApiClient
     public ICollection<RawgGameDetails> GetGamesByTag(RawgTag tag, GlobalProgressActionArgs a = null)
     {
         var request = new RestRequest("games")
-                      .AddParameter("tag", tag.Slug)
+                      .AddParameter("tags", tag.Slug)
                       .AddParameter("ordering", "created")
                       .AddParameter("page", 1)
-                      .AddParameter("page_size", 50)
+                      .AddParameter("page_size", 40)
                       .AddKey(Key);
 
         return GetAllPages<RawgGameDetails>(request, a, $"Downloading RAWG games for tag [{tag.Name}]…");

@@ -63,11 +63,7 @@ public partial class RawgApiClient(string key)
             if (result.Next == null)
                 continue;
 
-            request.Resource = result.Next
-                .TrimStart("https://api.rawg.io/api/")
-                .Replace($"&key={Key}", "")
-                .Replace($"key={Key}&", "")
-                .Replace($"key={Key}", "");
+            request = new(result.Next.TrimStart("https://api.rawg.io/api/"));
         }
         while (result?.Next != null && a?.CancelToken.IsCancellationRequested != true);
 

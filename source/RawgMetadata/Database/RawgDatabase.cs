@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK;
+using PlayniteExtensions.Common;
 using Rawg.Common;
 using SqlNado;
 using System;
@@ -11,7 +12,7 @@ namespace RawgMetadata.Database;
 
 public class RawgDatabase
 {
-    private ILogger logger = LogManager.GetLogger();
+    private readonly ILogger logger = LogManager.GetLogger();
 
     public RawgDatabase(string userDataDirectory)
     {
@@ -49,7 +50,12 @@ public class RawgDatabase
 
             args?.IsIndeterminate = false;
             args?.CurrentProgressValue = 0;
-            args?.ProgressMaxValue = 2;
+            args?.ProgressMaxValue = 3;
+
+            args?.Text = "Deduplicating tags…";
+            var deduplicatedTags = tags.Deduplicate(t => t.Id, logger);
+            args?.CurrentProgressValue += 1;
+
             args?.Text = "Creating local database…";
 
             DeleteDatabase();
@@ -58,7 +64,7 @@ public class RawgDatabase
 
             using var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_CREATE | SQLiteOpenOptions.SQLITE_OPEN_READWRITE);
 
-            db.Save(tags);
+            db.Save(deduplicatedTags);
 
             args?.CurrentProgressValue += 1;
         }
@@ -69,10 +75,16 @@ public class RawgDatabase
         }
     }
 
-    private void DeleteDatabase()
+    public void DeleteDatabase()
     {
         if (File.Exists(DatabasePath))
             File.Delete(DatabasePath);
+    }
+
+    public IEnumerable<RawgTag> GetAllTags()
+    {
+        using var db = GetConnection(SQLiteOpenOptions.SQLITE_OPEN_READONLY);
+        return db.LoadAll<RawgTag>().ToList();
     }
 
     public IEnumerable<RawgTag> SearchTags(string search, int limit = 1000)
