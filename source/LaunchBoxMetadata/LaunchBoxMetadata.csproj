@@ -7,7 +7,7 @@
     <PackageReference Include="gong-wpf-dragdrop" Version="2.4.1" />
     <PackageReference Include="Magick.NET-Q8-x86" Version="14.11.0" NoWarn="NU1901;NU1902;NU1903" />
     <PackageReference Include="PlayniteSDK" Version="6.16.0" />
-    <PackageReference Include="SqlNado" Version="2.0.4" />
+    <PackageReference Include="SqlNado" Version="2.1.0" />
     <PackageReference Include="System.IO.Compression.ZipFile" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>

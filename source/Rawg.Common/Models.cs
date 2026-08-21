@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace Rawg.Common;
 
@@ -55,14 +56,6 @@ public class RawgResult<T>
     public string Previous { get; set; }
 }
 
-public class RawGameSearchResult
-{
-    public RawgGameBase[] Results { get; set; }
-    public int Count { get; set; }
-    public string Next { get; set; }
-    public string Previous { get; set; }
-}
-
 public class RawgGameDetails : RawgGameBase
 {
     [JsonProperty("name_original")]
@@ -77,6 +70,9 @@ public class RawgGameDetails : RawgGameBase
 
     [JsonProperty("background_image_additional")]
     public string BackgroundImageAdditional { get; set; }
+
+    [JsonProperty("short_screenshots")]
+    public List<RawgScreenshot> ShortScreenshots { get; set; } = [];
 }
 
 public class RawgUserGame
@@ -114,4 +110,22 @@ public class RawgUser
 
     [JsonProperty("api_key")]
     public string ApiKey { get; set; }
+}
+
+public class RawgGameReviews : RawgResult<RawgReview>
+{
+    public RawgReview Your { get; set; }
+}
+
+public class RawgReview
+{
+    public long Id { get; set; }
+    public int Game { get; set; }
+    public int Rating { get; set; }
+    public string Text { get; set; }
+}
+
+public class LoginResponse
+{
+    public string Key;
 }

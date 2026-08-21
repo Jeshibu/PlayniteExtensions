@@ -9,18 +9,11 @@ using System.Web;
 
 namespace Rawg.Common;
 
-public class RawgApiClient
+public partial class RawgApiClient(string key)
 {
-
-    public RawgApiClient(string key)
-    {
-        Key = key;
-        restClient = new RestClient(new RestClientOptions { BaseUrl = new Uri("https://rawg.io/api/"), MaxTimeout = 10000 });
-    }
-
-    public string Key { get; set; }
+    private string Key { get; } = key;
     private readonly ILogger logger = LogManager.GetLogger();
-    private readonly RestClient restClient;
+    private readonly RestClient restClient = new(new RestClientOptions { BaseUrl = new("https://rawg.io/api/"), MaxTimeout = 10000 });
 
     private T Execute<T>(RestRequest request)
     {
@@ -29,15 +22,8 @@ public class RawgApiClient
 
     private T Execute<T>(RestRequest request, out System.Net.HttpStatusCode statusCode)
     {
-        statusCode = System.Net.HttpStatusCode.NotImplemented;
-
         logger.Debug($"{request.Method} {request.Resource}");
         var response = restClient.Execute(request);
-        if(response == null)
-        {
-            logger.Debug("No response");
-            return default;
-        }
         statusCode = response.StatusCode;
 
         string logContent = response.Content?.Replace($"key={Key}", "key=REDACTED");
@@ -50,22 +36,41 @@ public class RawgApiClient
         return output;
     }
 
-    private List<T> GetAllPages<T>(RestRequest request)
+    private List<T> GetAllPages<T>(RestRequest request, GlobalProgressActionArgs a = null, string baseProgressString = "Downloading RAWG data…")
     {
+        a?.IsIndeterminate = false;
+        a?.Text = baseProgressString;
         var output = new List<T>();
         RawgResult<T> result;
         do
         {
             result = Execute<RawgResult<T>>(request);
-            if (result?.Results != null)
+            if (result == null)
+                continue;
+
+            if (result.Results != null)
                 output.AddRange(result.Results);
 
-            request.Resource = result?.Next?
+            if (a != null && (int)a.ProgressMaxValue != result.Count)
+                a.ProgressMaxValue = result.Count;
+
+            a?.CurrentProgressValue = output.Count;
+            a?.Text = $"""
+                       {baseProgressString}
+                       {output.Count}/{result.Count}
+                       """;
+
+            if (result.Next == null)
+                continue;
+
+            request.Resource = result.Next
                 .TrimStart("https://api.rawg.io/api/")
                 .Replace($"&key={Key}", "")
                 .Replace($"key={Key}&", "")
                 .Replace($"key={Key}", "");
-        } while (result?.Next != null);
+        }
+        while (result?.Next != null && a?.CancelToken.IsCancellationRequested != true);
+
         return output;
     }
 
@@ -192,20 +197,20 @@ public class RawgApiClient
             if (result.TryGetValue("game", out object game))
             {
                 if (game is int resultGameId && resultGameId == gameId)
-                {
                     return true;
-                }
-                else if (game is Newtonsoft.Json.Linq.JArray errorMessages)
+
+                if (game is Newtonsoft.Json.Linq.JArray errorMessages)
                 {
                     string err = string.Join(", ", errorMessages);
                     logger.Warn($"Error adding {gameId} to library: {err}");
-                    if (err == "This game is already in this profile")
-                        return false;
-                    else
-                        throw new Exception(err);
+                    return err switch
+                    {
+                        "This game is already in this profile" => false,
+                        _ => throw new(err)
+                    };
                 }
             }
-            throw new Exception("Error adding game to library: " + JsonConvert.SerializeObject(result));
+            throw new("Error adding game to library: " + JsonConvert.SerializeObject(result));
         }
         catch (Exception ex)
         {
@@ -291,43 +296,20 @@ public class RawgApiClient
 
         return statusCode == System.Net.HttpStatusCode.Accepted;
     }
-
-    private class LoginResponse
-    {
-        public string Key;
-    }
 }
 
 internal static class RawgApiClientHelpers
 {
-    internal static RestRequest AddToken(this RestRequest request, string token)
+    extension(RestRequest request)
     {
-        request.AddHeader("token", $"Token {token}");
-        return request;
+        internal RestRequest AddToken(string token) => request.AddHeader("token", $"Token {token}");
+
+        internal RestRequest AddKey(string key) => request.AddQueryParameter("key", key);
+
+        internal RestRequest AddJsonBody2(object obj)
+        {
+            var body = JsonConvert.SerializeObject(obj);
+            return request.AddBody(body);
+        }
     }
-
-    internal static RestRequest AddKey(this RestRequest request, string key)
-    {
-        request.AddQueryParameter("key", key);
-        return request;
-    }
-
-    internal static RestRequest AddJsonBody2(this RestRequest request, object obj)
-    {
-        var body = JsonConvert.SerializeObject(obj);
-        return request.AddBody(body);
-    }
-}
-
-public class RawgGameReviews : RawgResult<RawgReview>
-{
-    public RawgReview Your { get; set; }
-}
-
-public class RawgReview
-{
-    public long Id { get; set; }
-    public int Game { get; set; }
-    public int Rating { get; set; }
-    public string Text { get; set; }
 }

@@ -3,9 +3,9 @@
     <Version>0.5</Version>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" NoWarn="NU1903" />
-    <PackageReference Include="PlayniteSDK" Version="6.2.2" />
+    <PackageReference Include="PlayniteSDK" Version="6.16.0" />
     <PackageReference Include="RestSharp" Version="108.0.2" NoWarn="NU1902" />
+    <PackageReference Include="SqlNado" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -15,16 +15,9 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\PlayniteExtensions.Common\IEnumerableExtensions.cs" Link="Common\IEnumerableExtensions.cs" />
     <Compile Include="..\PlayniteExtensions.Common\IntegerFormatConverter.cs" Link="Common\IntegerFormatConverter.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\IPlatformUtility.cs" Link="Common\IPlatformUtility.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\LibraryIdUtility.cs" Link="Common\LibraryIdUtility.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\PlatformUtility.cs" Link="Common\PlatformUtility.cs" />
     <Compile Include="..\PlayniteExtensions.Common\PlayniteConvert.cs" Link="Common\PlayniteConvert.cs" />
     <Compile Include="..\PlayniteExtensions.Common\PluginSettingsViewModel.cs" Link="Common\PluginSettingsViewModel.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\SortableNameConverter.cs" Link="Common\SortableNameConverter.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\StringExtensions.cs" Link="Common\StringExtensions.cs" />
-    <Compile Include="..\PlayniteExtensions.Common\TitleComparer.cs" Link="Common\TitleComparer.cs" />
     <Compile Include="..\PlayniteExtensions.Common\WebDownloader.cs" Link="Common\WebDownloader.cs" />
     <Compile Include="..\Rawg.Common\Models.cs" Link="Common\Rawg\Models.cs" />
     <Compile Include="..\Rawg.Common\RawgApiClient.cs" Link="Common\Rawg\RawgApiClient.cs" />
@@ -41,4 +34,5 @@
     </None>
     <None Include="icon.jpg" CopyToOutputDirectory="Always" />
   </ItemGroup>
+  <Import Project="..\BulkImport.props" />
 </Project>

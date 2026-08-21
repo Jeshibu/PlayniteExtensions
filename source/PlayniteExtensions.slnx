@@ -58,6 +58,7 @@
     <Project Path="PathReplacer.Tests/PathReplacer.Tests.csproj" />
     <Project Path="PCGamingWikiMetadata.Tests/PCGamingWikiMetadata.Tests.csproj" />
     <Project Path="PlayniteExtensions.Common.Tests/PlayniteExtensions.Common.Tests.csproj" />
+    <Project Path="RawgMetadata.Tests/RawgMetadata.Tests.csproj" />
     <Project Path="SteamTagsImporter.Tests/SteamTagsImporter.Tests.csproj" />
     <Project Path="TvTropesMetadata.Tests/TvTropesMetadata.Tests.csproj" />
     <Project Path="ViveportLibrary.Tests/ViveportLibrary.Tests.csproj" />

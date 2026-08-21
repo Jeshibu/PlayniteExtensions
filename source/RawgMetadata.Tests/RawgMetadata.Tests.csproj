@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../Tests.props"/>
+
+  <ItemGroup>
+    <Using Include="Xunit"/>
+    <ProjectReference Include="..\RawgMetadata\RawgMetadata.csproj"/>
+  </ItemGroup>
+
+</Project>

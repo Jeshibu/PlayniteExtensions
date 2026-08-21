@@ -3,29 +3,64 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:r="clr-namespace:RawgMetadata"
+             xmlns:pec="clr-namespace:PlayniteExtensions.Common"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=r:RawgMetadataSettingsViewModel}"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
+        <StackPanel.Resources>
+            <pec:IntegerFormatConverter x:Key="IntConverter" />
+        </StackPanel.Resources>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="Left" Width="auto"/>
-                <ColumnDefinition x:Name="Middle" Width="*"/>
-                <ColumnDefinition x:Name="Right" Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition x:Name="Row1" Height="auto"/>
-                <RowDefinition x:Name="Spacing1" Height="15"/>
-                <RowDefinition x:Name="Row2" Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <TextBlock Text="RAWG API Key:" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBox Name="ApiKeyTextbox" Text="{Binding Settings.ApiKey}" Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding Settings.ApiKey}" Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
             <Button Content="Get API Key" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"
                         Command="{Binding LoginCommand}" Margin="10,0,0,0"/>
 
             <TextBlock Text="Tag language code:" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"/>
-            <TextBox Name="LanguageCodeTextbox" Text="{Binding Settings.LanguageCode}" Margin="10,0,0,0" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding Settings.LanguageCode}" Margin="10,0,0,0" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center"/>
             <Button Content="Language codes" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center"
                         Command="{Binding LanguageCodesReferenceCommand}" Margin="10,0,0,0"/>
+        </Grid>
+
+        <TextBlock TextWrapping="Wrap" Margin="20 30 20 10">
+            If you would like to bulk import some tags to all your games, you can do this via <Bold>main menu > Extensions > RAWG > Import tag</Bold> or via the top panel button, which you can toggle below.
+            To do this, all tags will need to be downloaded to your computer. This is because RAWG does not provide a way to search for tags.
+        </TextBlock>
+
+        <TextBlock TextWrapping="Wrap" Text="{Binding DatabaseStatus}"/>
+        <Button HorizontalAlignment="Left" Width="auto" Padding="5" Command="{Binding DownloadTagsCommand}">Refresh local tags</Button>
+
+        <Grid Margin="0 20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Parallelism:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
+            <TextBox Grid.Row="0" Grid.Column="1" Width="100" HorizontalAlignment="Left" Margin="10" Text="{Binding Settings.MaxDegreeOfParallelism, Converter={StaticResource IntConverter}}" />
+            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" TextWrapping="Wrap">
+                Parallelism dictates how many simultaneous threads can be used to process the bulk property import game matching. It is recommended to set this lower than the amount of cores in your CPU.
+            </TextBlock>
+
+            <CheckBox Grid.Row="2" Grid.Column="0" Margin="0,30" IsChecked="{Binding Settings.ShowTopPanelButton}" Grid.ColumnSpan="2">
+                <TextBlock TextWrapping="Wrap">Show top panel button to add a tag to multiple games (requires restart)</TextBlock>
+            </CheckBox>
         </Grid>
     </StackPanel>
 </UserControl>

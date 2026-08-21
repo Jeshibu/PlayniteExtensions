@@ -233,7 +233,7 @@ public class RawgLibrary : LibraryPlugin
 
                 var userLibrary = client.GetCurrentUserLibrary(settings.Settings.UserToken, statusesToImport);
                 if (userLibrary != null)
-                    output.AddRange(userLibrary.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings.LanguageCode, settings.Settings)));
+                    output.AddRange(userLibrary.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings)));
             }
 
             foreach (var collectionSettings in settings.Settings.Collections)
@@ -243,7 +243,7 @@ public class RawgLibrary : LibraryPlugin
 
                 var collectionGames = client.GetCollectionGames(collectionSettings.Collection.Id.ToString());
                 if (collectionGames != null)
-                    output.AddRange(collectionGames.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings.LanguageCode, settings.Settings)));
+                    output.AddRange(collectionGames.Select(g => RawgLibraryMetadataProvider.ToGameMetadata(g, logger, settings.Settings)));
             }
         }
         catch (Exception ex)
@@ -267,7 +267,7 @@ public class RawgLibrary : LibraryPlugin
 
     public override LibraryMetadataProvider GetMetadataDownloader()
     {
-        return base.GetMetadataDownloader();
+        return new RawgLibraryMetadataProvider(settings.Settings, new RawgApiClient(settings.Settings.ApiKey));
     }
 
     public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)

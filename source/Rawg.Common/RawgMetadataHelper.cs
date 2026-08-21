@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace Rawg.Common;
 
-public static class RawgMetadataHelper
+public static partial class RawgMetadataHelper
 {
     private static readonly Regex yearRegex = new(@" \([0-9]{4}\)$", RegexOptions.Compiled);
 
@@ -24,95 +24,41 @@ public static class RawgMetadataHelper
 
     public static MetadataProperty GetPlatform(RawgPlatform platform)
     {
-        switch (platform.Platform.Slug)
+        return platform.Platform.Slug switch
         {
-            case "pc":
-                return new MetadataSpecProperty("pc_windows"); //assumption that doesn't work for dos games, but for those there's often no data to extrapolate a proper specid
-            case "linux":
-                return new MetadataSpecProperty("pc_linux");
-
-            case "xbox-old":
-                return new MetadataSpecProperty("xbox");
-            case "xbox360":
-                return new MetadataSpecProperty("xbox360");
-            case "xbox-one":
-                return new MetadataSpecProperty("xbox_one");
-            case "xbox-series-x":
-                return new MetadataSpecProperty("xbox_series");
-
-            case "playstation1":
-                return new MetadataSpecProperty("sony_playstation");
-            case "playstation2":
-            case "playstation3":
-            case "playstation4":
-            case "playstation5":
-            case "psp":
-                return new MetadataSpecProperty("sony_" + platform.Platform.Slug);
-            case "ps-vita":
-                return new MetadataSpecProperty("sony_vita");
-
-            case "nes":
-                return new MetadataSpecProperty("nintendo_nes");
-            case "snes":
-                return new MetadataSpecProperty("nintendo_super_nes");
-            case "nintendo-ds":
-                return new MetadataSpecProperty("nintendo_ds");
-            case "nintendo-3ds":
-                return new MetadataSpecProperty("nintendo_3ds");
-            case "nintendo-switch":
-                return new MetadataSpecProperty("nintendo_switch");
-            case "nintendo-64":
-                return new MetadataSpecProperty("nintendo_64");
-            case "gamecube":
-                return new MetadataSpecProperty("nintendo_gamecube");
-            case "wii":
-                return new MetadataSpecProperty("nintendo_wii");
-            case "wii-u":
-                return new MetadataSpecProperty("nintendo_wiiu");
-            case "game-boy":
-            case "game-boy-color":
-            case "game-boy-advance":
-                return new MetadataSpecProperty("nintendo_" + platform.Platform.Slug.Replace("-", ""));
-            case "macintosh":
-                return new MetadataSpecProperty(platform.Platform.Slug);
-            case "apple-ii":
-                return new MetadataSpecProperty("apple_2");
-
-            case "jaguar":
-                return new MetadataSpecProperty("atari_jaguar");
-            case "commodore-amiga":
-            case "atari-2600":
-            case "atari-5200":
-            case "atari-7800":
-            case "atari-8-bit":
-            case "atari-st":
-            case "atari-lynx":
-            case "sega-saturn":
-            case "sega-cd":
-            case "sega-32x":
-                return new MetadataSpecProperty(platform.Platform.Slug.Replace("-", "_"));
-
-            case "genesis":
-                return new MetadataSpecProperty("sega_genesis");
-            case "sega-master-system":
-                return new MetadataSpecProperty("sega_mastersystem");
-            case "dreamcast":
-                return new MetadataSpecProperty("sega_dreamcast");
-            case "game-gear":
-                return new MetadataSpecProperty("sega_gamegear");
-            case "3do":
-                return new MetadataSpecProperty("3do");
-
-            case "atari-xegs":
-            case "atari-flashback":
-            case "ios":
-            case "android":
-            case "macos":
-            case "neogeo":
-            case "nintendo-dsi":
-            default:
-                return new MetadataNameProperty(platform.Platform.Name);
-        }
+            "pc" => new MetadataSpecProperty("pc_windows"), //assumption that doesn't work for dos games, but for those there's often no data to extrapolate a proper specid
+            "linux" => new MetadataSpecProperty("pc_linux"),
+            "xbox-old" => new MetadataSpecProperty("xbox"),
+            "xbox360" => new MetadataSpecProperty("xbox360"),
+            "xbox-one" => new MetadataSpecProperty("xbox_one"),
+            "xbox-series-x" => new MetadataSpecProperty("xbox_series"),
+            "playstation1" => new MetadataSpecProperty("sony_playstation"),
+            "playstation2" or "playstation3" or "playstation4" or "playstation5" or "psp"
+                => new MetadataSpecProperty("sony_" + platform.Platform.Slug),
+            "ps-vita" => new MetadataSpecProperty("sony_vita"),
+            "nes" => new MetadataSpecProperty("nintendo_nes"),
+            "snes" => new MetadataSpecProperty("nintendo_super_nes"),
+            "nintendo-ds" => new MetadataSpecProperty("nintendo_ds"),
+            "nintendo-3ds" => new MetadataSpecProperty("nintendo_3ds"),
+            "nintendo-switch" => new MetadataSpecProperty("nintendo_switch"),
+            "nintendo-64" => new MetadataSpecProperty("nintendo_64"),
+            "gamecube" => new MetadataSpecProperty("nintendo_gamecube"),
+            "wii" => new MetadataSpecProperty("nintendo_wii"),
+            "wii-u" => new MetadataSpecProperty("nintendo_wiiu"),
+            "game-boy" or "game-boy-color" or "game-boy-advance"
+                => new MetadataSpecProperty("nintendo_" + platform.Platform.Slug.Replace("-", "")),
+            "macintosh" => new MetadataSpecProperty(platform.Platform.Slug),
+            "apple-ii" => new MetadataSpecProperty("apple_2"),
+            "jaguar" => new MetadataSpecProperty("atari_jaguar"),
+            "commodore-amiga" or "atari-2600" or "atari-5200" or "atari-7800" or "atari-8-bit" or "atari-st" or "atari-lynx" or "sega-saturn" or "sega-cd" or "sega-32x"
+                => new MetadataSpecProperty(platform.Platform.Slug.Replace("-", "_")),
+            "genesis" => new MetadataSpecProperty("sega_genesis"),
+            "sega-master-system" => new MetadataSpecProperty("sega_mastersystem"),
+            "dreamcast" => new MetadataSpecProperty("sega_dreamcast"),
+            "game-gear" => new MetadataSpecProperty("sega_gamegear"),
+            "3do" => new MetadataSpecProperty("3do"),
+            _ => new MetadataNameProperty(platform.Platform.Name)
+        };
     }
 
     public static ReleaseDate? ParseReleaseDate(RawgGameBase data, ILogger logger)
@@ -122,7 +68,7 @@ public static class RawgMetadataHelper
 
     public static int? ParseUserScore(float? userScore)
     {
-        if (userScore == null || userScore == 0)
+        if (userScore is null or 0)
             return null;
 
         return Convert.ToInt32(userScore.Value * 20);
@@ -240,7 +186,7 @@ public static class RawgMetadataHelper
         if (game.Links == null)
             links = [];
         else
-            links = new System.Collections.ObjectModel.ObservableCollection<Link>(game.Links);
+            links = new(game.Links);
 
         links.Add(rawgLink);
         game.Links = links;
@@ -256,5 +202,25 @@ public static class RawgMetadataHelper
             return id;
 
         return null;
+    }
+
+    public static GameMetadata ToGameMetadata(RawgGameDetails data, ILogger logger, RawgBaseSettings settings)
+    {
+        return new GameMetadata
+        {
+            GameId = data.Id.ToString(),
+            Name = StripYear(data.Name),
+            Description = data.Description,
+            ReleaseDate = ParseReleaseDate(data, logger),
+            CriticScore = data.Metacritic,
+            CommunityScore = ParseUserScore(data.Rating),
+            Platforms = data.Platforms.NullIfEmpty()?.Select(GetPlatform).ToHashSet(),
+            BackgroundImage = data.BackgroundImage != null ? new MetadataFile(data.BackgroundImage) : null,
+            Tags = data.Tags.NullIfEmpty()?.Where(t => t.Language == settings.LanguageCode).Select(t => new MetadataNameProperty(t.Name)).ToHashSet<MetadataProperty>(),
+            Genres = data.Genres.NullIfEmpty()?.Select(g => new MetadataNameProperty(g.Name)).ToHashSet<MetadataProperty>(),
+            Developers = data.Developers.NullIfEmpty()?.Select(d => new MetadataNameProperty(d.Name.TrimCompanyForms())).ToHashSet<MetadataProperty>(),
+            Publishers = data.Publishers.NullIfEmpty()?.Select(p => new MetadataNameProperty(p.Name.TrimCompanyForms())).ToHashSet<MetadataProperty>(),
+            Links = GetLinks(data).NullIfEmpty()?.ToList(),
+        };
     }
 }
