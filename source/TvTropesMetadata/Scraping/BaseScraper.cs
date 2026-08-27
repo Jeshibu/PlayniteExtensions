@@ -29,60 +29,53 @@ public abstract class BaseScraper(IWebViewFactory webViewFactory): IDisposable
         "deconstructs", "averts", "inverts", "subverts"
     ];
 
-    public static string GetGoogleSearchUrl(string query)
+    public static string GetDuckDuckGoSearchUrl(string query)
     {
         var escapedQuery = HttpUtility.UrlEncode($"site:tvtropes.org {query}");
-        return $"https://www.google.com/search?hl=en&q={escapedQuery}";
+        return $"https://html.duckduckgo.com/html/?q={escapedQuery}";
     }
 
-    protected async Task<IEnumerable<TvTropesSearchResult>> GoogleSearch(string query)
+    protected async Task<IEnumerable<TvTropesSearchResult>> DuckDuckGoSearch(string query)
     {
-        var url = GetGoogleSearchUrl(query);
+        var url = GetDuckDuckGoSearchUrl(query);
 
         WebView.NavigateAndWait(url);
-        if (WebView.GetCurrentAddress().StartsWith("https://consent.google.com", StringComparison.OrdinalIgnoreCase))
-        {
-            // This rejects Google's consent form for cookies
-            await WebView.EvaluateScriptAsync("document.getElementsByTagName('form')[0].submit();");
-            await Task.Delay(3000);
-            WebView.NavigateAndWait(url);
-        }
 
         var pageSource = await WebView.GetPageSourceAsync();
         var doc = await new HtmlParser().ParseAsync(pageSource);
-        var resultElements = doc.QuerySelectorAll("#search [lang=en]").ToList();
+        var resultElements = doc.QuerySelectorAll("div.links_deep").ToList();
         var output = new List<TvTropesSearchResult>();
         foreach (var result in resultElements)
         {
-            var a = result.QuerySelector("a[href]");
-            var h3 = a?.QuerySelector("h3");
-            var breadCrumbElement = a?.QuerySelector("cite > span");
-            var lastSpan = result.QuerySelectorAll("span")?.LastOrDefault();
-            if (a == null || h3 == null)
+            var a = result.QuerySelector("a.result__url");
+            var h2 = result.QuerySelector("h2");
+            var snippetElement = result.QuerySelector("a.result__snippet");
+            if (a == null || h2 == null)
                 continue;
 
-            var name = h3.TextContent.HtmlDecode().TrimEnd([" (trope)", " (Video Game)"]);
+            var name = h2.TextContent.HtmlDecode().TrimEnd([" - TV Tropes", " (trope)", " (Video Game)"]);
+            var resultUrl = "https://" + a.TextContent.HtmlDecode();
 
             output.Add(new()
             {
                 Name = name,
                 Title = name,
-                Url = a.GetAttribute("href"),
-                Breadcrumbs = GetBreadCrumbSegments(breadCrumbElement?.TextContent.HtmlDecode()),
-                Description = lastSpan?.TextContent.HtmlDecode(),
+                Url = resultUrl,
+                Breadcrumbs = GetBreadCrumbSegments(resultUrl),
+                Description = snippetElement?.TextContent.HtmlDecode(),
             });
         }
         return output;
     }
 
-    private static List<string> GetBreadCrumbSegments(string breadCrumbs)
+    private static List<string> GetBreadCrumbSegments(string url)
     {
-        if (breadCrumbs == null)
+        if (url == null)
             return [];
 
-        // › pmwiki › pmwiki.php › Main › E...
-        return breadCrumbs.Split('›').Select(x => x.Trim())
-                          .Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+        return url.Split(['/'], StringSplitOptions.RemoveEmptyEntries)
+                  .SkipWhile(segment => segment is "https:" or "tvtropes.org" or "pmwiki" or "pmwiki.php")
+                  .ToList();
     }
 
     public abstract IEnumerable<TvTropesSearchResult> Search(string query);

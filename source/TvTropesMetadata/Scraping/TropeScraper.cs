@@ -53,8 +53,8 @@ public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewF
         if (directUrlResult != null)
             return [directUrlResult];
 
-        var results = Task.Run(async () => await GoogleSearch(query)).GetAwaiter().GetResult().ToList();
-        results.RemoveAll(sr => sr.Breadcrumbs.Count != 1 || sr.Breadcrumbs[0] != "Tropes");
+        var results = Task.Run(async () => await DuckDuckGoSearch(query)).GetAwaiter().GetResult().ToList();
+        results.RemoveAll(sr => sr.Breadcrumbs.Count < 2 || sr.Breadcrumbs[0] != "Main");
 
         return results;
     }

@@ -14,7 +14,7 @@ public class WorkScraperTests
         { "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/KingdomHeartsII", "html/KingdomHeartsII.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/KingdomHeartsII/TropesAToL", "html/KingdomHeartsII-TropesAToL.html" },
         { "https://tvtropes.org/pmwiki/pmwiki.php/KingdomHeartsII/TropesMToZ", "html/KingdomHeartsII-TropesMToZ.html" },
-        { BaseScraper.GetGoogleSearchUrl("hellblade"), "html/google-hellblade.html" },
+        { BaseScraper.GetDuckDuckGoSearchUrl("hellblade"), "html/ddg-hellblade.html" },
     });
 
     [Fact]
@@ -42,20 +42,20 @@ public class WorkScraperTests
         Assert.Contains("Kingdom Hearts", result.Franchises);
         Assert.Contains("Hercules (Disney)", result.Franchises);
     }
-    
+
     [Fact]
     public void SearchProducesResults()
     {
         var scraper = new WorkScraper(fakeWebViewFactory);
         var sp = new WorkSearchProvider(scraper, new());
-        
+
         var searchResults = sp.Search("hellblade").ToList();
-        
-        Assert.Single(searchResults);
-        
+
+        Assert.Equal(2, searchResults.Count);
+
         var result = searchResults[0];
         Assert.Equal("Hellblade: Senua's Sacrifice", result.Name);
         Assert.Equal("https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/HellbladeSenuasSacrifice", result.Url);
-        Assert.Contains("The game tells the story of the eponymous Senua, a warrior traumatized by a Viking invasion, as she embarks on a very personal journey through a hellish", result.Description);
+        Assert.Contains("Hellblade: Senua's Sacrifice is an Action-Adventure Video Game developed and — for the first time — published by Ninja Theory. Based upon Celtic and Norse Mythology, the game tells the story of the eponymous Senua, a warrior", result.Description);
     }
 }
