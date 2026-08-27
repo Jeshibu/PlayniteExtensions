@@ -5,21 +5,11 @@ using System.Text.RegularExpressions;
 
 namespace Rawg.Common;
 
-public class RawgIdUtility : SingleExternalDatabaseIdUtility
+public class RawgIdUtility : SingleExternalDatabaseIdUtilityWithRegexUrlMatching
 {
-    private static readonly Regex rawgGameUrlRegex = new(@"^https://rawg\.io/games/(?<id>[0-9]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    public override Regex UrlRegex { get; } = new(@"^https://rawg\.io/games/(?<id>[0-9]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-    public override ExternalDatabase Database { get; } = ExternalDatabase.RAWG;
+    public override ExternalDatabase Database => ExternalDatabase.RAWG;
 
     public override IEnumerable<Guid> LibraryIds { get; } = [RawgMetadataHelper.RawgLibraryId];
-
-    public override DbId GetIdFromUrl(string url)
-    {
-        var match = rawgGameUrlRegex.Match(url);
-        if (!match.Success)
-            return default;
-
-        string id = match.Groups["id"].Value;
-        return new DbId(ExternalDatabase.RAWG, id);
-    }
 }

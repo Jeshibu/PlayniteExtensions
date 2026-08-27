@@ -51,6 +51,36 @@ public static class IEnumerableExtensions
 
             return output;
         }
+
+        public IEnumerable<TIn> Deduplicate<TKey>(Func<TIn, TKey> keySelector, ILogger logger = null)
+        {
+            return input.Deduplicate(keySelector, x => x, logger);
+        }
+
+        public IEnumerable<TResult> Deduplicate<TKey,TResult>(Func<TIn,TKey> keySelector, Func<TIn,TResult> valueSelector, ILogger logger = null)
+        {
+            int total = 0, skipped = 0;
+            Dictionary<TKey, TResult> dict = [];
+            foreach (var item in input)
+            {
+                total++;
+                var key = keySelector(item);
+                if (dict.ContainsKey(key))
+                {
+                    skipped++;
+                    var itemStr = JsonConvert.SerializeObject(item);
+                    logger?.Info($"Duplicate entry: {itemStr}");
+                }
+                else
+                {
+                    dict.Add(key, valueSelector(item));
+                }
+            }
+
+            logger?.Info($"Skipped {skipped} out of {total} instances of {typeof(TIn).Name}");
+
+            return dict.Values;
+        }
     }
 
     public static ICollection<T> NullIfEmpty<T>(this ICollection<T> items)

@@ -90,31 +90,37 @@ public abstract class SingleExternalDatabaseIdUtility : ISingleExternalDatabaseI
     }
 }
 
-public class SteamIdUtility : SingleExternalDatabaseIdUtility
+public abstract class SingleExternalDatabaseIdUtilityWithRegexUrlMatching : SingleExternalDatabaseIdUtility
 {
-    public readonly Regex SteamUrlRegex = new(@"^(steam://openurl/)?https?://(store\.steampowered\.com|steamcommunity\.com|steamdb\.info)/app/(?<id>[0-9]+)",
-                                               RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
-
-    public override ExternalDatabase Database => ExternalDatabase.Steam;
-
-    public override IEnumerable<Guid> LibraryIds { get; } = [Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB")];
+    public abstract Regex UrlRegex { get; }
 
     public override DbId GetIdFromUrl(string url)
     {
         if (string.IsNullOrWhiteSpace(url))
             return default;
 
-        var match = SteamUrlRegex.Match(url);
-        if (match.Success)
-            return DbId.Steam(match.Groups["id"].Value);
+        var match = UrlRegex.Match(url);
+        if (!match.Success)
+            return default;
 
-        return default;
+        string id = match.Groups["id"].Value;
+        return new DbId(Database, id);
     }
 }
 
-public class GOGIdUtility : SingleExternalDatabaseIdUtility
+public class SteamIdUtility : SingleExternalDatabaseIdUtilityWithRegexUrlMatching
 {
-    private readonly Regex _gogUrlRegex = new(@"^https://www\.gogdb\.org/product/(?<id>[0-9]+)");
+    public override Regex UrlRegex { get; } = new(@"^(steam://openurl/)?https?://(store\.steampowered\.com|steamcommunity\.com|steamdb\.info)/app/(?<id>[0-9]+)",
+                                                  RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
+
+    public override ExternalDatabase Database => ExternalDatabase.Steam;
+
+    public override IEnumerable<Guid> LibraryIds { get; } = [Guid.Parse("CB91DFC9-B977-43BF-8E70-55F46E410FAB")];
+}
+
+public class GOGIdUtility : SingleExternalDatabaseIdUtilityWithRegexUrlMatching
+{
+    public override Regex UrlRegex { get; } = new(@"^https://www\.gogdb\.org/product/(?<id>[0-9]+)");
 
     public override ExternalDatabase Database => ExternalDatabase.GOG;
 
@@ -122,37 +128,15 @@ public class GOGIdUtility : SingleExternalDatabaseIdUtility
         Guid.Parse("AEBE8B7C-6DC3-4A66-AF31-E7375C6B5E9E"), // GOG
         Guid.Parse("03689811-3F33-4DFB-A121-2EE168FB9A5C"), // GOG OSS
     ];
-
-    public override DbId GetIdFromUrl(string url)
-    {
-        if (string.IsNullOrWhiteSpace(url))
-            return default;
-
-        var match = _gogUrlRegex.Match(url);
-        if (match.Success)
-            return DbId.GOG(match.Groups["id"].Value);
-
-        return default;
-    }
 }
 
-public class MobyGamesIdUtility : SingleExternalDatabaseIdUtility
+public class MobyGamesIdUtility : SingleExternalDatabaseIdUtilityWithRegexUrlMatching
 {
-    private readonly Regex _urlIdRegex = new(@"\bmobygames\.com/game/(?<id>[0-9]+)(/|$)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+    public override Regex UrlRegex { get; } = new(@"\bmobygames\.com/game/(?<id>[0-9]+)(/|$)", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
     public override ExternalDatabase Database => ExternalDatabase.MobyGames;
 
     public override IEnumerable<Guid> LibraryIds { get; } = [];
-
-    public override DbId GetIdFromUrl(string url)
-    {
-        if (url == null) return default;
-
-        var match = _urlIdRegex.Match(url);
-        if (!match.Success) return default;
-        var idString = match.Groups["id"].Value;
-        return DbId.Moby(idString);
-    }
 }
 
 public class WikipediaIdUtility : SingleExternalDatabaseIdUtility

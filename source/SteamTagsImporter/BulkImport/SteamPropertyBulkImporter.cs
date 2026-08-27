@@ -90,7 +90,7 @@ public class SteamPropertyBulkImporter : BulkGamePropertyAssigner<SteamProperty,
 
     private string StripSlugIfStoreUrl(string steamUrl)
     {
-        var match = steamIdUtility.SteamUrlRegex.Match(steamUrl);
+        var match = steamIdUtility.UrlRegex.Match(steamUrl);
         if (!match.Success || !steamUrl.Contains("store.steampowered.com"))
             return steamUrl;
 
