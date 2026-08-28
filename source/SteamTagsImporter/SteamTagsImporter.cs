@@ -1,8 +1,10 @@
-﻿using Playnite.SDK;
+﻿using ComposableAsync;
+using Playnite.SDK;
 using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
+using RateLimiter;
 using SteamTagsImporter.BulkImport;
 using System;
 using System.Collections.Generic;
@@ -19,7 +21,7 @@ public class SteamTagsImporter : MetadataPlugin
     private static readonly ILogger logger = LogManager.GetLogger();
     private readonly Func<ISteamAppIdUtility> getAppIdUtility;
     private readonly Func<ISteamTagScraper> getTagScraper;
-    private readonly IWebDownloader downloader = new WebDownloader();
+    private readonly IWebDownloader downloader = new WebDownloader(TimeLimiter.GetFromMaxCountByInterval(SteamPropertySearchProvider.MaxRequestsPerMinute, TimeSpan.FromMinutes(1)).AsDelegatingHandler());
 
     private SteamTagsImporterSettingsViewModel Settings { get => field ??= new(this); set; }
 

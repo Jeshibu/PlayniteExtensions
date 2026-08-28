@@ -16,6 +16,8 @@ public class SteamPropertySearchProvider(SteamSearch steamSearch) : IBulkPropert
 {
     private readonly ILogger _logger = LogManager.GetLogger();
     private SteamProperty[] SteamProperties => field ??= steamSearch.GetProperties().ToArray();
+    private const int PageSize = 100;
+    public const int MaxRequestsPerMinute = 30;
 
     public IEnumerable<GameDetails> GetDetails(SteamProperty prop, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
@@ -24,20 +26,16 @@ public class SteamPropertySearchProvider(SteamSearch steamSearch) : IBulkPropert
         var games = new List<GameDetails>();
         progressArgs?.IsIndeterminate = false;
 
-        const int pageSize = 100, maxRequestsPerMinute = 29, maxGamesPerMinute = pageSize * maxRequestsPerMinute;
-
-        var timeConstraint = TimeLimiter.GetFromMaxCountByInterval(maxRequestsPerMinute, TimeSpan.FromMinutes(1));
+        const int maxGamesPerMinute = PageSize * MaxRequestsPerMinute;
 
         do
         {
-            Task.Run(async () => await timeConstraint, progressArgs?.CancelToken ?? CancellationToken.None).GetAwaiter().GetResult();
-
-            var searchResult = steamSearch.SearchGames(prop.Param, prop.Value, start, pageSize);
+            var searchResult = steamSearch.SearchGames(prop.Param, prop.Value, start, PageSize);
             total = searchResult.TotalCount;
 
             games.AddRange(steamSearch.ParseSearchResultHtml(searchResult.ResultsHtml));
 
-            start += pageSize;
+            start += PageSize;
 
             if (progressArgs != null)
             {
@@ -45,7 +43,8 @@ public class SteamPropertySearchProvider(SteamSearch steamSearch) : IBulkPropert
                 if (total > maxGamesPerMinute)
                     progressText += $"""
 
-                                     Download will pause every {maxGamesPerMinute} per minute, to wait out rate limiting.
+                                     Download will pause every {MaxRequestsPerMinute} requests ({maxGamesPerMinute} games) per minute, to wait out rate limiting.
+                                     This request limit includes getting the tags to search.
                                      """;
 
                 progressArgs.ProgressMaxValue = searchResult.TotalCount;
@@ -76,13 +75,7 @@ public class SteamPropertySearchProvider(SteamSearch steamSearch) : IBulkPropert
         return SteamProperties.Where(sp => StringContains(sp.Name, query) || StringContains(sp.Category, query));
     }
 
-    private static bool StringContains(string str, string query)
-    {
-        if(str == null)
-            return false;
-
-        return str.Contains(query, StringComparison.InvariantCultureIgnoreCase);
-    }
+    private static bool StringContains(string str, string query) => str?.Contains(query, StringComparison.InvariantCultureIgnoreCase) ?? false;
 
     public GenericItemOption<SteamProperty> ToGenericItemOption(SteamProperty item)
     {
