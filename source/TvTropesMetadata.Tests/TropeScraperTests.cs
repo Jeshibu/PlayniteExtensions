@@ -261,6 +261,14 @@ public class TropeScraperTests
             Assert.DoesNotContain(name, allGameNames);
     }
 
+    [Fact]
+    public void SoBadItsGoodParsesRight()
+    {
+        var result = GetTropeDetails("SoBadItsGood");
+
+        ContainsGame(result, "50 Cent: Blood on the Sand", "https://tvtropes.org/pmwiki/pmwiki.php/VideoGame/FiftyCentBloodOnTheSand");
+    }
+
     private List<GameDetails> GetTropeDetails(string urlTitle, bool onlyFirstGame = false)
     {
         var scraper = new TropeScraper(webViewFactory);
