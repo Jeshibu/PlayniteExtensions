@@ -68,5 +68,4 @@
     <Project Path="ViveportLibrary.Tests/ViveportLibrary.Tests.csproj" />
     <Project Path="XboxMetadata.Tests/XboxMetadata.Tests.csproj" />
   </Folder>
-  <Project Path="../tools/PcgwDownloader/PcgwDownloader.csproj" />
 </Solution>
