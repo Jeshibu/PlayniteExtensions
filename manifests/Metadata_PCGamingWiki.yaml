@@ -269,3 +269,9 @@ Packages:
     Changelog:
       - "Implemented rate limiting that PCGW now enforces of 1 request per 2 seconds"
       - "Fixed bulk import sometimes having the category double in the suggested property name"
+  - Version: '1.9'
+    RequiredApiVersion: '6.11.0'
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/PCGamingWikiMetadata_1_9.pext
+    Changelog:
+      - "Removed bulk import due to new restrictions from PCGamingWiki. Alternative ways to provide this data are being explored."

@@ -60,6 +60,8 @@ public class PCGamingWikiMetadata : MetadataPlugin
 
     public override IEnumerable<TopPanelItem> GetTopPanelItems()
     {
+        yield break;
+
         if (!settings.Settings.ShowTopPanelButton)
             yield break;
 
@@ -76,6 +78,8 @@ public class PCGamingWikiMetadata : MetadataPlugin
 
     public override IEnumerable<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
     {
+        yield break;
+
         if (PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             yield return new() { MenuSection = "@PCGamingWiki", Description = "Import PCGamingWiki property", Action = _ => ImportGameProperty(), };
     }
