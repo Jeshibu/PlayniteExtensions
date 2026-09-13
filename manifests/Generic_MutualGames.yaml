@@ -33,7 +33,7 @@ Packages:
       - "Reworked Steam authentication and friend-game-fetching"
   - Version: '0.5.1'
     RequiredApiVersion: '6.11.0'
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/MutualGames_0_5_1.pext
+    ReleaseDate: 2026-09-14
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-09-14/MutualGames_0_5_1.pext
     Changelog:
       - "Added horizontal scrollbar to settings"

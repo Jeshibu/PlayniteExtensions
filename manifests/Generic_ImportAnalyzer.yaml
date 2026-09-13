@@ -22,8 +22,8 @@ Packages:
       - "Fixed tagging not doing anything"
   - Version: '0.3.0'
     RequiredApiVersion: '6.16.0'
-    ReleaseDate: '{NEWDATE}'
-    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/ImportAnalyzer_0_3_0.pext'
+    ReleaseDate: '2026-09-14'
+    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-09-14/ImportAnalyzer_0_3_0.pext'
     Changelog:
       - "Offer to tag specific sources of imported games as missing games too. This hooks into the recent Steam plugin update that will have games in the import just for time played in the past."
       - "Fixed not being able to sort by source."

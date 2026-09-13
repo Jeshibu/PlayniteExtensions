@@ -72,8 +72,8 @@ Packages:
       - 'Bulk property import: fixed double games being found in some cases, and improved subcategory handling'
   - Version: '0.5.2'
     RequiredApiVersion: '6.11.0'
-    ReleaseDate: {NEWDATE}
-    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/TvTropesMetadata_0_5_2.pext'
+    ReleaseDate: 2026-09-14
+    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-09-14/TvTropesMetadata_0_5_2.pext'
     Changelog:
       - 'Fixed broken search functionality'
       - 'Improved trope parsing'

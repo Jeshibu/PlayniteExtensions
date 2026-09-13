@@ -271,7 +271,7 @@ Packages:
       - "Fixed bulk import sometimes having the category double in the suggested property name"
   - Version: '1.9'
     RequiredApiVersion: '6.11.0'
-    ReleaseDate: {NEWDATE}
-    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/PCGamingWikiMetadata_1_9.pext
+    ReleaseDate: 2026-09-14
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-09-14/PCGamingWikiMetadata_1_9.pext
     Changelog:
       - "Removed bulk import due to new restrictions from PCGamingWiki. Alternative ways to provide this data are being explored."
