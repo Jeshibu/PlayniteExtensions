@@ -56,3 +56,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-02-16/RawgMetadata_0_5.pext
     Changelog:
       - "Added image size to image selection dialogs"
+  - Version: '0.6'
+    RequiredApiVersion: '6.2.2'
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/RawgMetadata_0_6.pext
+    Changelog:
+      - "Added bulk tag import"

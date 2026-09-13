@@ -9,38 +9,27 @@ namespace RawgMetadata;
 
 public class RawgMetadataSettings : RawgBaseSettings, IBulkImportPluginSettings
 {
-    public bool ShowTopPanelButton { get; set; }
-    public int MaxDegreeOfParallelism { get; set; }
-    public int Version { get; set; }
+    public bool ShowTopPanelButton { get; set; } = true;
+    public int MaxDegreeOfParallelism { get; set; } = BulkImportPluginSettings.GetDefaultMaxDegreeOfParallelism();
+    public int Version { get; set; } = 0;
 }
 
 public class RawgMetadataSettingsViewModel : PluginSettingsViewModel<RawgMetadataSettings, RawgMetadata>
 {
     public RawgMetadataSettingsViewModel(RawgMetadata plugin) : base(plugin, plugin.PlayniteApi)
     {
-        Settings = LoadSavedSettings();
-        if (Settings == null)
-        {
-            Settings = new();
-            BulkImportPluginSettings.Initialize(Settings);
-        }
+        Settings = LoadSavedSettings() ?? new();
     }
 
-    public RelayCommand<object> LoginCommand
+    public RelayCommand<object> LoginCommand => new(_ =>
     {
-        get => new(_ =>
-        {
-            Process.Start("https://rawg.io/login?forward=developer");
-        });
-    }
+        Process.Start("https://rawg.io/login?forward=developer");
+    });
 
-    public RelayCommand<object> LanguageCodesReferenceCommand
+    public RelayCommand<object> LanguageCodesReferenceCommand => new(_ =>
     {
-        get => new(_ =>
-        {
-            Process.Start("https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes");
-        });
-    }
+        Process.Start("https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes");
+    });
 
     private RawgDatabase Database => new(Plugin.GetPluginUserDataPath());
 
@@ -57,36 +46,33 @@ public class RawgMetadataSettingsViewModel : PluginSettingsViewModel<RawgMetadat
         }
     }
 
-    public RelayCommand<object> DownloadTagsCommand
+    public RelayCommand<object> DownloadTagsCommand => new(_ =>
     {
-        get => new(_ =>
+        try
         {
-            try
+            if (string.IsNullOrWhiteSpace(Settings.ApiKey))
             {
-                if (string.IsNullOrWhiteSpace(Settings.ApiKey))
-                {
-                    PlayniteApi.Dialogs.ShowErrorMessage("Please enter your API key first");
-                    return;
-                }
+                PlayniteApi.Dialogs.ShowErrorMessage("Please enter your API key first");
+                return;
+            }
 
-                var apiClient = new RawgApiClient(Settings.ApiKey);
-                PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
-                {
-                    try
-                    {
-                        Database.CreateDatabase(apiClient, a);
-                    }
-                    catch (Exception ex)
-                    {
-                        PlayniteApi.Dialogs.ShowErrorMessage($"Error saving local database: {ex.Message}");
-                    }
-                }, new("Preparing…", cancelable: true));
-                OnPropertyChanged(nameof(DatabaseStatus));
-            }
-            catch (Exception ex)
+            var apiClient = new RawgApiClient(Settings.ApiKey);
+            PlayniteApi.Dialogs.ActivateGlobalProgress(a =>
             {
-                PlayniteApi.Dialogs.ShowErrorMessage(ex.ToString());
-            }
-        });
-    }
+                try
+                {
+                    Database.CreateDatabase(apiClient, a);
+                }
+                catch (Exception ex)
+                {
+                    PlayniteApi.Dialogs.ShowErrorMessage($"Error saving local database: {ex.Message}");
+                }
+            }, new("Preparing…", cancelable: true));
+            OnPropertyChanged(nameof(DatabaseStatus));
+        }
+        catch (Exception ex)
+        {
+            PlayniteApi.Dialogs.ShowErrorMessage(ex.ToString());
+        }
+    });
 }

@@ -12,6 +12,7 @@
     <Project Path="PlayniteExtensions.Common/PlayniteExtensions.Common.shproj" />
     <Project Path="PlayniteExtensions.Metadata.Common/PlayniteExtensions.Metadata.Common.shproj" />
     <Project Path="PlayniteExtensions.Tests.Common/PlayniteExtensions.Tests.Common.shproj" />
+    <Project Path="Rawg.Common/Rawg.Common.shproj" />
   </Folder>
   <Folder Name="/Libraries/">
     <Project Path="BigFishLibrary/BigFishLibrary.csproj" />
@@ -20,6 +21,7 @@
     <Project Path="GooglePlayLibrary/GooglePlayLibrary.csproj" />
     <Project Path="LegacyGamesLibrary/LegacyGamesLibrary.csproj" />
     <Project Path="LoadingBayLibrary/LoadingBayLibrary.csproj" />
+    <Project Path="RawgLibrary/RawgLibrary.csproj" />
     <Project Path="ViveportLibrary/ViveportLibrary.csproj" />
   </Folder>
   <Folder Name="/Metadata/">
@@ -32,6 +34,7 @@
     <Project Path="MobyGamesMetadata/MobyGamesMetadata.csproj" />
     <Project Path="OpenCriticMetadata/OpenCriticMetadata.csproj" />
     <Project Path="PCGamingWikiMetadata/PCGamingWikiMetadata.csproj" />
+    <Project Path="RawgMetadata/RawgMetadata.csproj" />
     <Project Path="SteamTagsImporter/SteamTagsImporter.csproj" />
     <Project Path="TvTropesMetadata/TvTropesMetadata.csproj" />
     <Project Path="XboxMetadata/XboxMetadata.csproj" />
@@ -52,6 +55,7 @@
     <Project Path="GamersGateLibrary.Tests/GamersGateLibrary.Tests.csproj" />
     <Project Path="GamesSizeCalculator.Tests/GamesSizeCalculator.Tests.csproj" />
     <Project Path="GiantBombMetadata.Tests/GiantBombMetadata.Tests.csproj" />
+    <Project Path="GooglePlayLibrary.Tests/GooglePlayLibrary.Tests.csproj" />
     <Project Path="LaunchBoxMetadata.Tests/LaunchBoxMetadata.Tests.csproj" />
     <Project Path="LegacyGamesLibrary.Tests/LegacyGamesLibrary.Tests.csproj" />
     <Project Path="MobyGamesMetadata.Tests/MobyGamesMetadata.Tests.csproj" />
@@ -64,7 +68,5 @@
     <Project Path="ViveportLibrary.Tests/ViveportLibrary.Tests.csproj" />
     <Project Path="XboxMetadata.Tests/XboxMetadata.Tests.csproj" />
   </Folder>
-  <Project Path="Rawg.Common/Rawg.Common.shproj" />
-  <Project Path="RawgLibrary/RawgLibrary.csproj" />
-  <Project Path="RawgMetadata/RawgMetadata.csproj" />
+  <Project Path="../tools/PcgwDownloader/PcgwDownloader.csproj" />
 </Solution>

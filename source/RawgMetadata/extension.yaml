@@ -1,7 +1,7 @@
 ﻿Id: RawgMetadata
 Name: RAWG Metadata Provider
 Author: Jeshibu
-Version: '0.5'
+Version: '0.6'
 Module: RawgMetadata.dll
 Type: MetadataProvider
 Icon: icon.jpg
