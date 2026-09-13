@@ -30,13 +30,10 @@ public class itchioBundleTagger : GenericPlugin
     {
         Translator = new itchIoTranslator(api.ApplicationSettings.Language);
         Settings = new itchioBundleTaggerSettingsViewModel(this, Translator);
-        Properties = new GenericPluginProperties()
-        {
-            HasSettings = true
-        };
+        Properties = new() { HasSettings = true };
         ItchIoLibraryId = BuiltinExtensions.GetIdFromExtension(BuiltinExtension.ItchioLibrary);
         DatabaseFile = new CachedFileDownloader(
-            onlinePath: "https://randombundlegame.com/games.json",
+            onlinePath: "https://randombundlegame.com/catalog.json",
             localPath: Path.Combine(GetPluginUserDataPath(), "games.json"),
             maxCacheAge: TimeSpan.FromDays(180),
             encoding: Encoding.UTF8,
@@ -81,7 +78,8 @@ public class itchioBundleTagger : GenericPlugin
 
     private Dictionary<string, ItchIoGame> GetAllBundleGameData()
     {
-        return Playnite.SDK.Data.Serialization.FromJson<Dictionary<string, ItchIoGame>>(DatabaseFile.GetFileContents());
+        var catalog = Playnite.SDK.Data.Serialization.FromJson<Catalog>(DatabaseFile.GetFileContents());
+        return catalog.Games;
     }
 
     private readonly Dictionary<string, Tag> TagsCache = [];
@@ -226,7 +224,7 @@ public class itchioBundleTagger : GenericPlugin
             catch (Exception ex)
             {
                 logger.Error(ex, "Error while tagging itch.io bundles");
-                PlayniteApi.Notifications.Add(new NotificationMessage("itch.io bundle tagger error", Translator.ErrorDisplayMessage(ex), NotificationType.Error));
+                PlayniteApi.Notifications.Add(new("itch.io bundle tagger error", Translator.ErrorDisplayMessage(ex), NotificationType.Error));
             }
             finally
             {
@@ -262,13 +260,4 @@ public class itchioBundleTagger : GenericPlugin
 
         return false;
     }
-}
-
-public class ItchIoGame
-{
-    public string Id;
-    public string Title;
-    public string Steam;
-    public string CurrentPrice;
-    public Dictionary<string, string> Bundles;
 }

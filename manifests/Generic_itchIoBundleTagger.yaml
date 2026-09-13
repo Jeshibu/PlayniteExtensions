@@ -133,3 +133,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2026-03-13/itchIoBundleTagger_0_15.pext
     Changelog:
       - "Added support for new bundle - No ICE in Minnesota"
+  - Version: '0.15.1'
+    RequiredApiVersion: '6.2.2'
+    ReleaseDate: {NEWDATE}
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/{NEWDATE}/itchIoBundleTagger_0_15_1.pext
+    Changelog:
+      - "Fixed: failing to download catalog update"
