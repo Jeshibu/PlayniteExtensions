@@ -9,7 +9,7 @@ $projects = ConvertFrom-Json ($releaseData[3] -split '=',2)[1]
 xcopy "$PlaynitePath\Emulation\*.yaml" ".\source\ExtraEmulatorProfiles\EmulationFiles\Original" /Y /I
 xcopy "$PlaynitePath\Emulation\Emulators" ".\source\ExtraEmulatorProfiles\EmulationFiles\Original\Emulators" /Y /I /E
 
-$bulkImportProjects = @('GiantBombMetadata', 'LaunchBoxMetadata', 'MobyGamesMetadata', 'PCGamingWikiMetadata', 'SteamTagsImporter', 'TvTropesMetadata')
+$bulkImportProjects = @('GiantBombMetadata', 'LaunchBoxMetadata', 'MobyGamesMetadata', 'PCGamingWikiMetadata', 'RawgMetadata', 'SteamTagsImporter', 'TvTropesMetadata')
 foreach ($proj in $bulkImportProjects){
     xcopy ".\source\PlayniteExtensions.Metadata.Common\Views" ".\source\$proj\Common\Metadata\Views" /Y /I
 }

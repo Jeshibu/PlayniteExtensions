@@ -23,14 +23,14 @@ jobs:
 
       - name: Copy shared xaml for bulk import projects
         run: |
-          $bulkImportProjects = @('GiantBombMetadata', 'LaunchBoxMetadata', 'MobyGamesMetadata', 'PCGamingWikiMetadata', 'SteamTagsImporter', 'TvTropesMetadata')
+          $bulkImportProjects = @('GiantBombMetadata', 'LaunchBoxMetadata', 'MobyGamesMetadata', 'PCGamingWikiMetadata', 'RawgMetadata', 'SteamTagsImporter', 'TvTropesMetadata')
           foreach ($proj in $bulkImportProjects){
             xcopy "$Env:GITHUB_WORKSPACE\source\PlayniteExtensions.Metadata.Common\Views\GamePropertyImportView.xaml*" "$Env:GITHUB_WORKSPACE\source\$proj\Common\Metadata\Views" /Y /I
           }
 
       - name: Setup Playnite
         run: |
-          Invoke-WebRequest -Uri "https://github.com/JosefNemec/Playnite/releases/download/10.56/10.56.7z" -OutFile "$Env:GITHUB_WORKSPACE\Playnite.7z"
+          Invoke-WebRequest -Uri "https://github.com/JosefNemec/Playnite/releases/download/10.62/10.62.7z" -OutFile "$Env:GITHUB_WORKSPACE\Playnite.7z"
           & "$env:ProgramFiles\7-Zip\7z.exe" x "$env:GITHUB_WORKSPACE\Playnite.7z" "-o$env:GITHUB_WORKSPACE\Playnite"
 
       - name: Copy Playnite Emulation directory to ExtraEmulatorProfiles
