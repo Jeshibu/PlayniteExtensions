@@ -26,7 +26,7 @@ public class IgnApiClient(IWebDownloader downloader)
     public IgnGame Get(string slug, string region)
     {
         var variables = new { slug, objectType = "Game", region, state = "Published" };
-        var data = Call<IgnGetGameResultData>("ObjectSelectByTypeAndSlug", variables, "b9c48f45a7390ecd157229419dc9a2acb48de90c0f255b667076befb38338de6");
+        var data = Call<IgnGetGameResultData>("ObjectSelectByTypeAndSlug", variables, "b0bb38822a1ebcd779a6a2120e7e3267af853fd2162dc4a7454f19b3dfd031f4");
 
         return data?.ObjectSelectByTypeAndSlug;
     }
@@ -57,7 +57,11 @@ public class IgnApiClient(IWebDownloader downloader)
         void HeaderSetter(HttpRequestHeaders headers)
         {
             headers.Add("apollographql-client-name", "kraken");
-            headers.Add("apollographql-client-version", "v0.67.0");
+            headers.Add("apollographql-client-version", "v0.98.36");
+            headers.Add("x-apollo-operation-name", operationName);
+            headers.Add("Sec-Fetch-Dest", "empty");
+            headers.Add("Sec-Fetch-Mode", "cors");
+            headers.Add("Sec-Fetch-Site", "same-site");
         }
 
         var response = downloader.DownloadString(url, referer: "https://www.ign.com/reviews/games", headerSetter: HeaderSetter, contentType: "application/json");
