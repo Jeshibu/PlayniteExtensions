@@ -35,7 +35,7 @@ public class AppStateReaderTests
     {
         AppStateReader reader = new("./app-state-broken-no-catalog.json");
         var games = reader.GetUserOwnedGames();
-        Assert.Null(games);
+        Assert.Empty(games);
     }
 
     [Fact]
@@ -43,7 +43,7 @@ public class AppStateReaderTests
     {
         AppStateReader reader = new("./app-state-broken-no-downloads.json");
         var games = reader.GetUserOwnedGames();
-        Assert.Null(games);
+        Assert.Empty(games);
     }
 
     [Fact]
@@ -77,7 +77,7 @@ public class AppStateReaderTests
     {
         AppStateReader reader = new("./app-state-broken-no-catalog-new.json");
         var games = reader.GetUserOwnedGames();
-        Assert.Null(games);
+        Assert.Empty(games);
     }
 
     [Fact]
@@ -85,7 +85,7 @@ public class AppStateReaderTests
     {
         AppStateReader reader = new("./app-state-broken-no-downloads-new.json");
         var games = reader.GetUserOwnedGames();
-        Assert.Null(games);
+        Assert.Empty(games);
     }
 
     [Fact]
