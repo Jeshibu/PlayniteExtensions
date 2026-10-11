@@ -1,9 +1,11 @@
 ﻿using Playnite.SDK;
+using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using PlayniteExtensions.Common;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -13,9 +15,8 @@ namespace LegacyGamesLibrary;
 
 public class LegacyGamesLibrary : LibraryPlugin
 {
-    private static readonly ILogger logger = LogManager.GetLogger();
-    private static readonly string iconPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "icon.png");
-    public override string LibraryIcon => iconPath;
+    private readonly ILogger logger = LogManager.GetLogger();
+    public override string LibraryIcon { get; } = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "icon.png");
 
     private LegacyGamesLibrarySettingsViewModel settings { get; set; }
 
@@ -59,6 +60,32 @@ public class LegacyGamesLibrary : LibraryPlugin
         };
         RegistryReader = new LegacyGamesRegistryReader(new RegistryValueProvider());
         MetadataGatherer = new AggregateMetadataGatherer(RegistryReader, new AppStateReader(), api, settings.Settings);
+    }
+
+    public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
+    {
+        if (!settings.Settings.ShowLegacyGamesClosureNotificationOnStartup)
+            return;
+
+        PlayniteApi.Notifications.Add(new("legacygames-closure", "Legacy Games is shutting down. Download all your games before February 28 2027. Click here to read more or disable this warning.", NotificationType.Info, ClosureNotificationClick));
+    }
+
+    private void ClosureNotificationClick()
+    {
+        OpenUrl("https://legacygames.com/legacy-games-closure-faq-everything-you-need-to-know/");
+        OpenSettingsView();
+    }
+
+    private void OpenUrl(string url)
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex, $"Error opening URL {url}");
+        }
     }
 
     public override IEnumerable<GameMetadata> GetGames(LibraryGetGamesArgs args)

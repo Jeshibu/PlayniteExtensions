@@ -7,6 +7,7 @@ public class LegacyGamesLibrarySettings : ObservableObject
 {
     public bool UseCovers { get; set; } = false;
     public bool NormalizeGameNames { get; set; } = true;
+    public bool ShowLegacyGamesClosureNotificationOnStartup { get; set; } = true;
 }
 
 public class LegacyGamesLibrarySettingsViewModel : PluginSettingsViewModel<LegacyGamesLibrarySettings, LegacyGamesLibrary>

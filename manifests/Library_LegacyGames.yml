@@ -78,3 +78,10 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/2025-08-20/LegacyGamesLibrary_0_6_3.pext
     Changelog:
       - "Fixed platform matching failing to match some platforms if they'd been renamed"
+  - Version: '0.7'
+    RequiredApiVersion: '6.4.0'
+    ReleaseDate: 2026-10-11
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/legacygames0.7/LegacyGamesLibrary_0_7.pext
+    Changelog:
+      - "🚨🚨🚨 Legacy Games (the service/website, not just this plugin) is shutting down. You will not be able to download your games anymore after February 28 2027. 🚨🚨🚨"
+      - "Added a warning about the Legacy Games shutdown on every Playnite startup until it's disabled in the plugin settings"

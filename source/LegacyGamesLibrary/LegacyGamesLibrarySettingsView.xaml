@@ -3,13 +3,29 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:LegacyGamesLibrary"
              mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance local:LegacyGamesLibrarySettingsViewModel}"
              d:DesignHeight="400" d:DesignWidth="600">
     <StackPanel Margin="20">
+        <Border BorderBrush="Red" CornerRadius="10" BorderThickness="5" Padding="5" Margin="0 0 0 20">
+            <StackPanel>
+                <TextBlock TextWrapping="Wrap">
+                    ⚠️ Legacy Games is shutting down. Download all your games before February 28 2027.<LineBreak/>
+                    Read more: <Hyperlink NavigateUri="https://legacygames.com/legacy-games-closure-faq-everything-you-need-to-know/" RequestNavigate="Hyperlink_OnRequestNavigate">
+                        https://legacygames.com/legacy-games-closure-faq-everything-you-need-to-know/
+                    </Hyperlink>
+                </TextBlock>
+                <CheckBox IsChecked="{Binding Settings.ShowLegacyGamesClosureNotificationOnStartup}" Margin="0 10 0 0">
+                    Show this warning on Playnite startup
+                </CheckBox>
+            </StackPanel>
+        </Border>
+
         <CheckBox IsChecked="{Binding Settings.UseCovers}" Content="Use Legacy Games covers (square)"/>
 
         <TextBlock TextWrapping="Wrap" Margin="0,20,0,10">Many Legacy Games game names end with "CE", which stands for Collector's Edition. In order for metadata collection to match titles with, for example, Steam, you can check the box below to expand those abbreviations.</TextBlock>
-        
+
         <CheckBox IsChecked="{Binding Settings.NormalizeGameNames}" Content="Normalize game names"/>
     </StackPanel>
 </UserControl>

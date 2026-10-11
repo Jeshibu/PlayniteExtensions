@@ -27,7 +27,7 @@ public class AppStateReader(string appStatePath = null) : IAppStateReader
             return null;
         }
 
-        var fileContents = File.ReadAllText(AppStatePath);
+        string fileContents = File.ReadAllText(AppStatePath);
         var appState = JsonConvert.DeserializeObject<AppStateRoot>(fileContents);
 
         var user = appState?.User;
@@ -37,27 +37,18 @@ public class AppStateReader(string appStatePath = null) : IAppStateReader
         if (user?.Profile?.Downloads != null)
             downloads.AddRange(user.Profile.Downloads);
 
-        var catalog = appState?.SiteData?.Catalog;
+        var catalog = appState?.SiteData?.Catalog ?? [];
 
-        if (downloads.Count == 0 || catalog == null)
-        {
-            if (catalog == null)
-                logger.Warn($"Missing catalog section in {AppStatePath}");
-
-            return null;
-        }
+        if (catalog.Count == 0)
+            logger.Warn($"Missing catalog section in {AppStatePath}");
 
         var ownedBundleIds = downloads.Select(d => d.ProductId).ToHashSet();
 
         var ownedBundles = new List<AppStateBundle>();
         foreach (int ownedBundleId in ownedBundleIds)
         {
-            var bundle = catalog.FirstOrDefault(b => b.Id == ownedBundleId);
-            if (bundle?.Games == null || bundle.Games.Count == 0)
-            {
-                logger.Info($"No catalog bundle found with games for {ownedBundleId}. Catalog entry: {bundle?.Name}");
-                bundle = appState?.SiteData?.GiveawayCatalog?.FirstOrDefault(b => b.Id == ownedBundleId);
-            }
+            var bundle = catalog.FirstOrDefault(b => b.Id == ownedBundleId)
+                ?? appState?.SiteData?.GiveawayCatalog?.FirstOrDefault(b => b.Id == ownedBundleId);
 
             if (bundle == null)
                 logger.Warn($"Could not find a bundle with ID {ownedBundleId}");
