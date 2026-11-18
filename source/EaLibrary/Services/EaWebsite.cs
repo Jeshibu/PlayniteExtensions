@@ -36,6 +36,7 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
     private const string HomeUrl = "https://www.ea.com/";
     private const string LoginUrl = "https://www.ea.com/login";
     private const string DealsUrl = "https://www.ea.com/sales/deals";
+    private const string TokenInterceptBaseUrl = "https://drop-api.ea.com/";
     private const string GraphQlBaseUrl = "https://service-aggregation-layer.juno.ea.com/graphql";
     private readonly ILogger _logger = LogManager.GetLogger();
     private readonly string _version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
@@ -79,10 +80,10 @@ public class EaWebsite(IWebViewFactory webViewFactory, IWebDownloader downloader
             PassResourceContentStreamToCallback = false,
             ResourceLoadedCallback = resource =>
             {
-                if (cancellationTokenSource.IsCancellationRequested || !resource.Request.Url.StartsWith(GraphQlBaseUrl))
+                if (cancellationTokenSource.IsCancellationRequested || !resource.Request.Url.StartsWith(TokenInterceptBaseUrl))
                     return;
 
-                if (resource.Request.Headers.TryGetValue("authorization", out string authHeader))
+                if (resource.Request.Headers.TryGetValue("Authorization", out string authHeader))
                 {
                     _logger.Info($"Auth header nabbed from {resource.Request.Url}");
                     auth = authHeader.TrimStart("Bearer ");

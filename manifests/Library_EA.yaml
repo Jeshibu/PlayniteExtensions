@@ -56,3 +56,9 @@ Packages:
     PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ea3.2.2/EaLibrary_3_2_2.pext
     Changelog:
       - "Fixed broken game import (again)"
+  - Version: '3.2.3'
+    RequiredApiVersion: '6.13.0'
+    ReleaseDate: 2026-11-18
+    PackageUrl: https://github.com/Jeshibu/PlayniteExtensions/releases/download/ea3.2.3/EaLibrary_3_2_3.pext
+    Changelog:
+      - "Fixed broken authentication and game import"
