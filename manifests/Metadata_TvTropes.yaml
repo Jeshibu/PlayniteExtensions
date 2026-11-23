@@ -77,3 +77,9 @@ Packages:
     Changelog:
       - 'Fixed broken search functionality'
       - 'Improved trope parsing'
+  - Version: '0.5.3'
+    RequiredApiVersion: '6.11.0'
+    ReleaseDate: 2026-11-23
+    PackageUrl: 'https://github.com/Jeshibu/PlayniteExtensions/releases/download/tvtropes0.5.3/TvTropesMetadata_0_5_3.pext'
+    Changelog:
+      - 'Fixed broken page parsing'

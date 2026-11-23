@@ -36,9 +36,9 @@ public class WorkScraperTests
         Assert.DoesNotContain("Critical Existence Failure", result.Tropes);
         Assert.DoesNotContain("One-Steve Limit", result.Tropes);
 
-        Assert.Contains("TRON", result.Franchises);
+        Assert.Contains("Lilo & Stitch", result.Franchises);
         Assert.Contains("The Lion King", result.Franchises);
-        Assert.Contains("The Little Mermaid", result.Franchises);
+        Assert.Contains("The Little Mermaid (Disney)", result.Franchises);
         Assert.Contains("Kingdom Hearts", result.Franchises);
         Assert.Contains("Hercules (Disney)", result.Franchises);
     }

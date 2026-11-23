@@ -65,7 +65,7 @@ public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewF
     {
         var doc = GetDocument(url);
         var output = new ParsedTropePage { Title = GetTitle(doc) };
-        var articleContent = doc.QuerySelector(".article-content")?.InnerHtml;
+        var articleContent = doc.QuerySelector("article#main-article")?.InnerHtml;
         var listElements = GetTropePageListElements(articleContent, getAllUnfiltered: pageIsSubsection);
         output.Items.AddRange(listElements.Select(ParseTropePageListItem));
         if (pageIsSubsection)
@@ -112,7 +112,7 @@ public class TropeScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewF
     private IEnumerable<string> GetSubcategoryUrls(IHtmlDocument doc, string pageUrl)
     {
         var lastUrlSegment = GetWikiPathSegments(pageUrl).Last();
-        var links = doc.QuerySelectorAll(".article-content > ul > li > a.twikilink[href]");
+        var links = doc.QuerySelectorAll("article#main-article > ul > li > a.twikilink[href]");
 
         bool IsSubcategoryLink(IElement a, out string absoluteUrl)
         {

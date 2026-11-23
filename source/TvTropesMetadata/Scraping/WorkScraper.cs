@@ -55,7 +55,7 @@ public class WorkScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewFa
 
     private IEnumerable<string> GetTropesOnPage(IHtmlDocument doc)
     {
-        var listItems = doc.QuerySelectorAll(".article-content > ul > li:has(a[href*=\"/Main/\"]), .article-content > .folder > ul > li:has(a[href*=\"/Main/\"])");
+        var listItems = doc.QuerySelectorAll("article#main-article > ul > li:has(a[href*=\"/Main/\"]), article#main-article > .folder > ul > li:has(a[href*=\"/Main/\"])");
         foreach (var item in listItems)
         {
             var text = item.TextContent;
@@ -70,7 +70,7 @@ public class WorkScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewFa
     private IEnumerable<string> GetSubcategoryUrls(IHtmlDocument doc, string pageUrl)
     {
         var lastUrlSegment = GetWikiPathSegments(pageUrl).Last();
-        var links = doc.QuerySelectorAll(".article-content > ul > li > a.twikilink[href]");
+        var links = doc.QuerySelectorAll("article#main-article > ul > li > a.twikilink[href]");
         foreach (var a in links)
         {
             var linkUrl = a.GetAttribute("href");
@@ -80,13 +80,13 @@ public class WorkScraper(IWebViewFactory webViewFactory) : BaseScraper(webViewFa
         }
     }
 
-    private IEnumerable<string> GetCoverImageUrls(IHtmlDocument doc)
+    private static IEnumerable<string> GetCoverImageUrls(IHtmlDocument doc)
     {
         var imgs = doc.QuerySelectorAll("img.embeddedimage[src]");
         return imgs.Select(i => i.GetAttribute("src").GetAbsoluteUrl("https://tvtropes.org/"));
     }
 
-    private IEnumerable<string> GetFranchises(IHtmlDocument doc)
+    private static IEnumerable<string> GetFranchises(IHtmlDocument doc)
     {
         var links = doc.QuerySelectorAll(".section-links > .links > ul > li:nth-child(2) > a[href*=\"/Franchise/\"]");
         if (links == null)

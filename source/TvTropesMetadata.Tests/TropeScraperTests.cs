@@ -165,7 +165,7 @@ public class TropeScraperTests
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/TheHundredLineLastDefenseAcademy", webViewFactory.CalledUrls);
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/SurvivalHorrorGames", webViewFactory.CalledUrls);
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/VisualNovels", webViewFactory.CalledUrls);
-        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ClassOf09", webViewFactory.CalledUrls);
+        Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/ClassOf09SBN3", webViewFactory.CalledUrls);
         Assert.Contains("https://tvtropes.org/pmwiki/pmwiki.php/MultipleEndings/NeedyStreamerOverload", webViewFactory.CalledUrls);
         Assert.DoesNotContain("https://tvtropes.org/pmwiki/pmwiki.php/Main/AlgorithmicStoryBranching", webViewFactory.CalledUrls);
 

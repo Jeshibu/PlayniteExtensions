@@ -111,10 +111,10 @@ public abstract class BaseScraper(IWebViewFactory webViewFactory): IDisposable
             r.Remove();
 
         IElement openingH2;
-        while ((openingH2 = doc.QuerySelector(".article-content > h2:nth-child(1)")) != null)
+        while ((openingH2 = doc.QuerySelector("article#main-article > h2:nth-child(1)")) != null)
             openingH2.Remove();
 
-        var articleContent = doc.QuerySelector(".article-content")?.InnerHtml.Trim();
+        var articleContent = doc.QuerySelector("article#main-article")?.InnerHtml.Trim();
         if (articleContent == null) return null;
         var descriptionString = GetHeaderSegments(articleContent).First().Item2;
 
@@ -163,7 +163,7 @@ public abstract class BaseScraper(IWebViewFactory webViewFactory): IDisposable
 
     protected static string GetTitle(IHtmlDocument document)
     {
-        var titleElement = document.QuerySelector("h1.entry-title");
+        var titleElement = document.QuerySelector("h1.entry-title > span") ?? document.QuerySelector("h1.entry-title");
         if (titleElement == null)
             return null;
 

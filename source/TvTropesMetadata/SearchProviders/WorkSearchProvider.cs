@@ -1,6 +1,7 @@
 ﻿using Playnite.SDK;
 using Playnite.SDK.Models;
 using PlayniteExtensions.Metadata.Common;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using TvTropesMetadata.Scraping;
@@ -10,14 +11,24 @@ namespace TvTropesMetadata.SearchProviders;
 
 public class WorkSearchProvider(WorkScraper scraper, TvTropesMetadataSettings settings) : IGameSearchProvider<TvTropesSearchResult>
 {
+    private ILogger _logger = LogManager.GetLogger();
+
     public GameDetails GetDetails(TvTropesSearchResult searchResult, GlobalProgressActionArgs progressArgs = null, Game searchGame = null)
     {
-        var result = scraper.GetTropesForGame(searchResult.Url);
-        var output = new GameDetails { Description = result.Description, Series = result.Franchises, Url = searchResult.Url };
-        output.Names.Add(result.Title);
-        output.Tags.AddRange(result.Tropes.Select(t => $"{settings.TropePrefix}{t}"));
-        output.CoverOptions.AddRange(result.CoverImageUrls.Select(ci => new ImgData { Url = ci }));
-        return output;
+        try
+        {
+            var result = scraper.GetTropesForGame(searchResult.Url);
+            var output = new GameDetails { Description = result.Description, Series = result.Franchises, Url = searchResult.Url };
+            output.Names.Add(result.Title);
+            output.Tags.AddRange(result.Tropes.Select(t => $"{settings.TropePrefix}{t}"));
+            output.CoverOptions.AddRange(result.CoverImageUrls.Select(ci => new ImgData { Url = ci }));
+            return output;
+        }
+        catch (Exception ex)
+        {
+            _logger.Error(ex, "Error scraping TV Tropes work page");
+            return new();
+        }
     }
 
     private class ImgData : IImageData
